@@ -440,6 +440,20 @@ summary .cnt.pos{color:var(--good)} summary .cnt.neg{color:var(--bad)}
 .imp{display:flex;gap:3px;padding-top:7px} .imp i{width:6px;height:6px;border-radius:50%;background:#34343c} .imp i.on{background:var(--amber)} .imp i.hi{background:var(--bad)}
 .npost{display:flex;flex-direction:column;gap:4px;padding:10px 12px;border-left:2px solid var(--accent);background:var(--surface2);border-radius:0 14px 14px 0}
 @media (min-width:560px){.herostats{grid-template-columns:repeat(4,minmax(0,1fr))}}
+
+/* ---------- v8 ---------- */
+ul.stl{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+ul.stl li{position:relative;padding-left:22px;font-size:15px;line-height:1.5}
+ul.stl li::before{content:"";position:absolute;left:4px;top:.62em;width:6px;height:6px;border-radius:50%;background:var(--muted)}
+ul.stl.ok li::before{background:var(--good)} ul.stl.no li::before{background:var(--bad)}
+.sthead{display:flex;align-items:center;gap:12px}
+.stn{flex:none;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--ink);color:var(--bg);font-weight:800;font-size:15px;box-shadow:0 0 18px rgba(255,255,255,.25)}
+.stflow{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.stflow span{padding:5px 11px;border-radius:999px;border:1px solid var(--line);background:var(--surface2);font-size:13px;font-weight:600}
+.stflow i{font-style:normal;color:var(--muted)}
+.ststep button{align-self:flex-start}
+.cardprev canvas{width:100%;height:auto;border-radius:18px;display:block}
+.ob .card:has(.cardprev){max-width:420px}
 </style>
 </head>
 <body>
@@ -449,6 +463,7 @@ summary .cnt.pos{color:var(--good)} summary .cnt.neg{color:var(--bad)}
     <a href="#prehled" data-v="prehled">Přehled</a>
     <a href="#denik" data-v="denik">Deník</a>
     <a href="#kouc" data-v="kouc">Kouč</a>
+    <a href="#studium" data-v="studium">Studium</a>
     <a href="#laura" data-v="laura">Laura</a>
     <a href="#room" data-v="room">Dictator's Room</a>
     <a href="#poznatky" data-v="poznatky">Poznatky</a>
@@ -496,6 +511,12 @@ summary .cnt.pos{color:var(--good)} summary .cnt.neg{color:var(--bad)}
       <a class="go" href="#laura"><div><b>Kartičky</b><span id="d-cards">…</span></div><i>›</i></a>
       <a class="go" href="#room"><div><b>Dictator's Room</b><span>Dvanáctitýdenní kurz se zkouškou na konci každého týdne</span></div><i>›</i></a>
     </div>
+  </section>
+
+  <section class="view" id="v-studium">
+    <div class="card"><h2>Studium ICT</h2><p class="muted">Dva ucelené průvodce: Model 2022 krok za krokem a shrnutí dvanácti měsíců core contentu ze soukromého mentorshipu.</p>
+      <div class="chips" id="st-tabs"><button class="chip" type="button" data-t="model2022" aria-pressed="true">Model 2022</button><button class="chip" type="button" data-t="core" aria-pressed="false">Core content</button></div></div>
+    <div class="list" id="st-body"></div>
   </section>
 
   <section class="view" id="v-kouc">
@@ -646,6 +667,7 @@ summary .cnt.pos{color:var(--good)} summary .cnt.neg{color:var(--bad)}
         <label for="j-exit">Výstup<input id="j-exit" inputmode="decimal"></label>
         <label for="j-r">Výsledek v R<input id="j-r" inputmode="decimal" placeholder="například 2 nebo -1"></label>
         <div class="wide"><span class="kick">Chyby</span><div class="chips" id="j-tags" style="margin-top:8px"></div></div>
+        <label for="j-levels" class="wide">Úrovně, podle kterých jsi obchod bral<input id="j-levels" maxlength="160" placeholder="PDL 21310, FVG 21345, PDH 21480"></label>
         <label for="j-note" class="wide">Poznámka<input id="j-note" maxlength="400"></label>
         <div class="row wide"><label for="j-shot" class="small" style="cursor:pointer"><span class="pill info">Přiložit obrázek grafu</span><input id="j-shot" type="file" accept="image/*" hidden></label><span class="small muted" id="j-shot-name"></span></div>
         <div class="row wide"><button class="primary" type="submit">Uložit obchod</button><span class="small muted" id="j-msg"></span></div>
@@ -808,7 +830,7 @@ summary .cnt.pos{color:var(--good)} summary .cnt.neg{color:var(--bad)}
   });
 
   // Views
-  const VIEWS = ["prehled","uvod","kouc","model","poznatky","strategie","backtest","room","laura","denik","napady"];
+  const VIEWS = ["prehled","uvod","kouc","studium","model","poznatky","strategie","backtest","room","laura","denik","napady"];
   function route(){
     const h = (location.hash || "").replace("#","");
     const v = VIEWS.includes(h) ? h : "prehled"; document.body.dataset.view = v;
@@ -1909,11 +1931,13 @@ summary .cnt.pos{color:var(--good)} summary .cnt.neg{color:var(--bad)}
     tr.slice().reverse().slice(0, 60).forEach(t => {
       const it = el("div","item " + ((Number(t.r) || 0) >= 0 ? "architekt" : "bad")), head = el("div","row"), r = el("b","jr " + ((Number(t.r) || 0) >= 0 ? "pos" : "neg"), sgn(Number(t.r) || 0) + " R");
       head.appendChild(el("h3", null, (t.sym || "") + " · " + (t.dir === "short" ? "short" : "long") + " · " + (t.setup || ""))); head.appendChild(r); it.appendChild(head);
+      if (t.levels) it.appendChild(el("p","small muted", "Úrovně: " + t.levels));
       if (t.note) it.appendChild(el("p","small", t.note));
       if (t.shot) it.appendChild(shotEl(t.id));
       const meta = el("div","meta"); meta.appendChild(el("span", null, fmtDateTime(t.ts)));
       if (t.ck) meta.appendChild(el("span", null, "seznam " + t.ck.k + "/" + t.ck.n));
       (t.tags || []).forEach(x => meta.appendChild(el("span","tagx", x)));
+      const shr = el("button","ck-del","Karta"); shr.type = "button"; shr.addEventListener("click", () => openCard(t)); meta.appendChild(shr);
       const del = el("button","ck-del","Smazat"); del.type = "button"; del.addEventListener("click", () => { jr.trades = jr.trades.filter(x => x.id !== t.id); if (t.shot) shotDel(t.id); jStore(); });
       meta.appendChild(del); it.appendChild(meta); list.appendChild(it);
     });
@@ -1936,9 +1960,9 @@ summary .cnt.pos{color:var(--good)} summary .cnt.neg{color:var(--bad)}
       const d = new Date($("j-ts").value), n = ck.items.length, k = ck.items.filter(i => ckOn[i.id]).length;
       jr.trades.push({id: (lastTid = "t" + Date.now().toString(36)), ts: isNaN(d) ? new Date().toISOString() : d.toISOString(), sym: $("j-sym").value, dir: $("j-dir").value, setup: $("j-setup").value,
         entry: parseFloat($("j-entry").value) || null, stop: parseFloat($("j-stop").value) || null, exit: parseFloat($("j-exit").value) || null, r: Math.round(r * 100) / 100,
-        tags: J_TAGS.filter(x => jTags[x]), note: $("j-note").value.trim().slice(0, 400), ck: k ? {k: k, n: n} : null});
+        tags: J_TAGS.filter(x => jTags[x]), levels: $("j-levels").value.trim().slice(0, 160), note: $("j-note").value.trim().slice(0, 400), ck: k ? {k: k, n: n} : null});
       jTags = {}; Array.prototype.forEach.call($("j-tags").children, b => b.setAttribute("aria-pressed","false"));
-      ["j-entry","j-stop","j-exit","j-r","j-note"].forEach(id => { $(id).value = ""; });
+      ["j-entry","j-stop","j-exit","j-r","j-note","j-levels"].forEach(id => { $(id).value = ""; });
       ckOn = {}; renderCk(); touchDay(); jStore(); $("j-msg").textContent = "Obchod uložen."; afterTrade(lastTid);
     });
     $("j-export").addEventListener("click", () => {
@@ -2580,6 +2604,101 @@ summary .cnt.pos{color:var(--good)} summary .cnt.neg{color:var(--bad)}
   const _refreshAll2 = refreshAll;
   refreshAll = function(){ _refreshAll2(); try { renderCoach(); renderNews(); renderHero(); } catch(e){ if (window.console) console.error(e); } };
   refreshAll();
+
+  // =====================================================================================
+  // v8: study guides (Model 2022, core content) and shareable trade card
+  // =====================================================================================
+  let study = null, stTab = "model2022";
+  function stList(title, arr, cls){ const c = el("div","card"); c.appendChild(el("h2", null, title)); const u = el("ul","stl " + (cls || "")); arr.forEach(x => u.appendChild(el("li", null, x))); c.appendChild(u); return c; }
+  function stSources(arr){ const c = el("div","card"); c.appendChild(el("h2", null, "Zdroje")); arr.forEach(s => { const a = el("a","small", s[0]); a.href = s[1]; a.target = "_blank"; a.rel = "noopener"; c.appendChild(a); }); c.appendChild(el("p","small muted","Shrnuto vlastními slovy podle veřejně dostupných lekcí. Není to oficiální materiál autora.")); return c; }
+  function topicBtn(id){ const t = pa.find(x => x.id === id); if (!t) return null; const b = el("button", null, "Projít v obrázcích: " + t.title); b.type = "button"; b.addEventListener("click", () => openTopic(id)); return b; }
+  function renderStudy(){
+    const box = $("st-body"); clear(box);
+    Array.prototype.forEach.call($("st-tabs").children, b => b.setAttribute("aria-pressed", String(b.dataset.t === stTab)));
+    if (!study){ const c = el("div","card"); c.appendChild(el("p","muted","Načítám…")); box.appendChild(c); return; }
+    if (stTab === "model2022"){
+      const m = study.model2022, head = el("div","card"); head.appendChild(el("h2", null, m.title)); head.appendChild(el("p", null, m.intro));
+      const flow = el("div","stflow"); ["Směr", "Likvidita", "Čas", "Sweep", "MSS", "FVG", "Vstup", "Stop", "Cíl"].forEach((x, i) => { if (i) flow.appendChild(el("i", null, "›")); flow.appendChild(el("span", null, x)); }); head.appendChild(flow); box.appendChild(head);
+      m.steps.forEach(s => { const c = el("div","card ststep"), h = el("div","sthead"); h.appendChild(el("span","stn", s.n)); h.appendChild(el("h3", null, s.title)); c.appendChild(h); c.appendChild(el("p", null, s.text));
+        if (s.check && s.check.length){ const u = el("ul","stl ok"); s.check.forEach(x => u.appendChild(el("li", null, x))); c.appendChild(u); }
+        const b = s.topic && topicBtn(s.topic); if (b) c.appendChild(b); box.appendChild(c); });
+      box.appendChild(stList("Kdy model neobchodovat", m.avoid, "no")); box.appendChild(stList("Nejčastější chyby", m.mistakes, "no"));
+      const n = el("div","card"); n.appendChild(el("h2", null, "Co říkají čísla")); n.appendChild(el("p", null, m.numbers)); const a = el("a","small","Otevřít backtest"); a.href = "#backtest"; n.appendChild(a); box.appendChild(n);
+      box.appendChild(stSources(m.sources));
+    } else {
+      const m = study.core, head = el("div","card"); head.appendChild(el("h2", null, m.title)); head.appendChild(el("p", null, m.intro)); head.appendChild(el("p","small muted", m.how)); box.appendChild(head);
+      const list = el("div","list"); m.months.forEach(x => { const d = el("details","week"), sm = el("summary"), body = el("div","weekbody"); sm.appendChild(el("h3", null, x.n + ". měsíc: " + x.title)); sm.appendChild(el("span","cnt", x.points.length + " bodů")); d.appendChild(sm);
+        const u = el("ul","stl"); x.points.forEach(p => u.appendChild(el("li", null, p))); body.appendChild(u); const b = x.topic && topicBtn(x.topic); if (b) body.appendChild(b); d.appendChild(body); list.appendChild(d); }); box.appendChild(list);
+      box.appendChild(stSources(m.sources));
+    }
+  }
+  Array.prototype.forEach.call($("st-tabs").children, b => b.addEventListener("click", () => { stTab = b.dataset.t; renderStudy(); }));
+  fetch("data/study.json", {cache: "no-store"}).then(r => r.json()).then(v => { study = v; renderStudy(); }).catch(() => { const box = $("st-body"); clear(box); const c = el("div","card"); c.appendChild(el("p","small","Studijní materiál se nepodařilo načíst.")); box.appendChild(c); });
+
+  // ---------- shareable trade card (1080 x 1350 PNG) ----------
+  const pnum = s => { const v = parseFloat(String(s).replace(/\s/g, "").replace(",", ".")); return isFinite(v) ? v : NaN; };
+  function parseLevels(s){ const out = [], re = /([^,;\d][^,;]*?)\s+(\d[\d\s.,]*\d|\d)/g; let m; while ((m = re.exec(String(s || ""))) && out.length < 5){ const v = pnum(m[2]); if (isFinite(v)) out.push({name: m[1].trim().slice(0, 14), v: v}); } return out; }
+  function rr(ctx, x, y, w, h, r){ ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r); ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath(); }
+  function cardPath(t){
+    let h = 7; for (let i = 0; i < t.id.length; i++) h = (h * 31 + t.id.charCodeAt(i)) >>> 0;
+    const rnd = () => { h = (h * 1664525 + 1013904223) >>> 0; return h / 4294967296; };
+    const e = t.entry, x = t.exit, d = t.dir === "short" ? -1 : 1, span = Math.max(Math.abs(x - e), t.stop ? Math.abs(e - t.stop) : 0, Math.abs(e) * .0004) , n1 = 16, n2 = 22, n3 = 6, pts = [];
+    let p = e + d * span * (.9 + rnd() * .5);
+    for (let i = 0; i < n1; i++){ const k = i / (n1 - 1); pts.push(e + (p - e) * (1 - k) + (rnd() - .5) * span * .35 * (1 - k)); }
+    const floor = t.stop ? t.stop + d * span * .05 : null;
+    for (let i = 1; i <= n2; i++){ const k = i / n2; let v = e + (x - e) * (k * k * (3 - 2 * k)) + (rnd() - .5) * span * .4 * Math.sin(Math.PI * k); if (floor != null && d * (v - floor) < 0 && d * (x - e) > 0) v = floor; pts.push(v); }
+    for (let i = 1; i <= n3; i++) pts.push(x + (rnd() - .5) * span * .25);
+    pts[n1 - 1] = e; pts[n1 + n2 - 1] = x;
+    return {pts: pts, iE: n1 - 1, iX: n1 + n2 - 1};
+  }
+  async function drawCard(t){
+    const W = 1080, H = 1350, c = document.createElement("canvas"); c.width = W; c.height = H; const g = c.getContext("2d"), F = (w, s) => w + " " + s + "px 'Plus Jakarta Sans', system-ui, sans-serif";
+    const r = Number(t.r) || 0, col = r >= 0 ? "#3ddc97" : "#ff6b6b", fm = v => v == null || !isFinite(v) ? "–" : v.toLocaleString("cs-CZ", {maximumFractionDigits: 2});
+    g.fillStyle = "#09090b"; g.fillRect(0, 0, W, H);
+    const gl = g.createRadialGradient(W / 2, 330, 20, W / 2, 330, 620); gl.addColorStop(0, r >= 0 ? "rgba(61,220,151,.20)" : "rgba(255,107,107,.18)"); gl.addColorStop(1, "rgba(9,9,11,0)"); g.fillStyle = gl; g.fillRect(0, 0, W, H);
+    g.strokeStyle = "#26262c"; g.lineWidth = 2; rr(g, 30, 30, W - 60, H - 60, 44); g.stroke();
+    g.fillStyle = "#f5f5f6"; g.font = F(800, 64); g.textBaseline = "alphabetic"; g.fillText("tape", 80, 132); const tw2 = g.measureText("tape").width;
+    g.fillStyle = "#3ddc97"; g.fillRect(80 + tw2 + 12, 94, 11, 34); g.fillRect(80 + tw2 + 16, 80, 3, 58);
+    g.fillStyle = "#8e8e98"; g.font = F(500, 30); g.textAlign = "right"; g.fillText(new Date(t.ts).toLocaleDateString("cs-CZ", {day: "numeric", month: "long", year: "numeric"}), W - 80, 128); g.textAlign = "left";
+    const side = t.dir === "short" ? "SHORT" : "LONG"; g.font = F(700, 30); const sw = g.measureText(side).width + 44;
+    g.fillStyle = t.dir === "short" ? "rgba(255,107,107,.16)" : "rgba(61,220,151,.16)"; rr(g, 80, 190, sw, 56, 28); g.fill(); g.fillStyle = t.dir === "short" ? "#ff6b6b" : "#3ddc97"; g.fillText(side, 102, 229);
+    g.fillStyle = "#f5f5f6"; g.font = F(800, 44); g.fillText(t.sym || "", 80 + sw + 22, 232);
+    g.fillStyle = "#8e8e98"; g.font = F(500, 30); g.fillText(t.setup || "", 80, 292);
+    g.fillStyle = col; g.font = F(800, 190); g.shadowColor = col; g.shadowBlur = 50; g.fillText(sgn(r) + " R", 74, 500); g.shadowBlur = 0;
+    const cx = 80, cy = 570, cw = W - 160, ch = 500; g.fillStyle = "#101014"; rr(g, cx, cy, cw, ch, 30); g.fill(); g.strokeStyle = "#26262c"; g.stroke();
+    let shot = null; if (t.shot){ const data = await shotGet(t.id); if (data) shot = await new Promise(res => { const im = new Image(); im.onload = () => res(im); im.onerror = () => res(null); im.src = data; }); }
+    if (shot){ g.save(); rr(g, cx, cy, cw, ch, 30); g.clip(); const k = Math.max(cw / shot.width, ch / shot.height), w = shot.width * k, hh = shot.height * k; g.drawImage(shot, cx + (cw - w) / 2, cy + (ch - hh) / 2, w, hh); g.restore(); }
+    else if (isFinite(t.entry) && t.entry != null && isFinite(t.exit) && t.exit != null){
+      const P = cardPath(t), lv = parseLevels(t.levels), all = P.pts.concat(lv.map(l => l.v), t.stop ? [t.stop] : []); let lo = Math.min.apply(null, all), hi = Math.max.apply(null, all); const pad = (hi - lo) * .12 || 1; lo -= pad; hi += pad;
+      const X = i => cx + 30 + i / (P.pts.length - 1) * (cw - 250), Y = v => cy + 24 + (hi - v) / (hi - lo) * (ch - 48);
+      const items = lv.map(l => ({v: l.v, c: "#f2b560", t: l.name, d: [4, 8]}));
+      if (t.stop) items.push({v: t.stop, c: "#ff6b6b", t: "Stop"}); items.push({v: t.entry, c: "#f5f5f6", t: "Vstup"}); items.push({v: t.exit, c: col, t: "Výstup"});
+      items.sort((p, q) => Y(p.v) - Y(q.v)); let ly = -1e9;
+      items.forEach(it => { const y = Y(it.v); g.strokeStyle = it.c; g.lineWidth = 2; g.setLineDash(it.d || [10, 8]); g.beginPath(); g.moveTo(cx + 20, y); g.lineTo(cx + cw - 200, y); g.stroke(); g.setLineDash([]);
+        ly = Math.max(y + 8, ly + 28); g.fillStyle = it.c; g.font = F(600, 22); g.fillText(it.t + " " + fm(it.v), cx + cw - 190, ly); });
+      g.lineJoin = "round"; g.lineWidth = 5;
+      [[0, P.iE, "#5c5c66"], [P.iE, P.iX, col], [P.iX, P.pts.length - 1, "#5c5c66"]].forEach(sg => { g.strokeStyle = sg[2]; g.beginPath(); for (let i = sg[0]; i <= sg[1]; i++){ if (i === sg[0]) g.moveTo(X(i), Y(P.pts[i])); else g.lineTo(X(i), Y(P.pts[i])); } g.stroke(); });
+      [[P.iE, "#f5f5f6"], [P.iX, col]].forEach(m => { g.fillStyle = "#09090b"; g.beginPath(); g.arc(X(m[0]), Y(P.pts[m[0]]), 13, 0, 6.3); g.fill(); g.fillStyle = m[1]; g.beginPath(); g.arc(X(m[0]), Y(P.pts[m[0]]), 9, 0, 6.3); g.fill(); });
+      g.fillStyle = "#5c5c66"; g.font = F(500, 20); g.fillText("Ilustrační průběh mezi vstupem a výstupem", cx + 24, cy + ch - 18);
+    } else { g.fillStyle = "#8e8e98"; g.font = F(500, 30); g.textAlign = "center"; g.fillText("Pro graf doplň vstup a výstup nebo přilož obrázek", W / 2, cy + ch / 2); g.textAlign = "left"; }
+    const cells = [["Vstup", fm(t.entry)], ["Výstup", fm(t.exit)], ["Stop", fm(t.stop)], ["Seznam", t.ck ? t.ck.k + "/" + t.ck.n : "–"]], bw = (W - 160 - 3 * 18) / 4;
+    cells.forEach((cl, i) => { const x = 80 + i * (bw + 18); g.fillStyle = "#131316"; rr(g, x, 1100, bw, 120, 24); g.fill(); g.strokeStyle = "#26262c"; g.lineWidth = 2; g.stroke(); g.fillStyle = "#8e8e98"; g.font = F(600, 20); g.fillText(cl[0].toUpperCase(), x + 22, 1142); g.fillStyle = "#f5f5f6"; g.font = F(800, 34); g.fillText(cl[1], x + 22, 1192); });
+    g.fillStyle = "#5c5c66"; g.font = F(500, 22); g.fillText("Deník obchodníka · výsledek v násobcích rizika (R), ne v penězích", 80, 1278);
+    return c;
+  }
+  async function openCard(t){
+    const ov = el("div","ob"), card = el("div","card"), hold = el("div","cardprev"), ctl = el("div","rp-ctl");
+    card.appendChild(el("h2", null, "Karta obchodu")); card.appendChild(hold); hold.appendChild(el("p","small muted","Kreslím…")); ov.appendChild(card); document.body.appendChild(ov);
+    try { if (document.fonts && document.fonts.load) await document.fonts.load("800 60px 'Plus Jakarta Sans'"); } catch(e){}
+    const cv = await drawCard(t); clear(hold); hold.appendChild(cv);
+    const blob = () => new Promise(res => cv.toBlob(res, "image/png")), name = "tape-" + String(t.ts).slice(0, 10) + ".png";
+    const mk = (txt, fn, cls) => { const b = el("button", cls || null, txt); b.type = "button"; b.addEventListener("click", fn); ctl.appendChild(b); };
+    mk("Sdílet", async () => { const f = new File([await blob()], name, {type: "image/png"}); if (navigator.canShare && navigator.canShare({files: [f]})){ try { await navigator.share({files: [f]}); } catch(e){} } else { const a = document.createElement("a"); a.href = URL.createObjectURL(f); a.download = name; document.body.appendChild(a); a.click(); a.remove(); } }, "primary");
+    mk("Stáhnout", async () => { const a = document.createElement("a"); a.href = URL.createObjectURL(await blob()); a.download = name; document.body.appendChild(a); a.click(); a.remove(); });
+    mk("Zavřít", () => ov.remove());
+    card.appendChild(ctl); card.appendChild(el("p","small muted","Na telefonu tlačítko Sdílet otevře nabídku s Instagramem. S přiloženým obrázkem grafu se na kartě ukáže tvůj skutečný graf."));
+    ov.addEventListener("click", ev => { if (ev.target === ov) ov.remove(); });
+  }
 
   async function start(){
     $("c-save").textContent = "Postup se ukládá v tomto prohlížeči.";

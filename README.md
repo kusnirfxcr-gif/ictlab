@@ -58,3 +58,7 @@ All texts are Czech. Every file is valid JSON; arrays hold objects with a unique
  "posts": [{"date": "RRRR-MM-DD", "who": "", "text": "shrnutí vlastními slovy, žádná citace", "source": "název webu", "url": "https://…", "impact": 1-3}]}
 ```
 `events` jsou plánovaná data a události pro americké indexy na 3 až 4 týdny dopředu, minulé se mažou. `posts` je nejvýš 8 nejnovějších výroků, které pohnuly trhem. Jen ověřené zdroje, neutrálně, bez hodnocení politiků.
+
+## data/study.json
+
+Průvodci v sekci Studium: `model2022` (kroky modelu) a `core` (dvanáct měsíců core contentu). Boti ho nemění.

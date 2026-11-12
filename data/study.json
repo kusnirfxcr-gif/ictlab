@@ -1,0 +1,267 @@
+{
+ "model2022": {
+  "title": "Model 2022",
+  "intro": "Model 2022 je postup, který ICT (Michael J. Huddleston) učil ve veřejné sérii 2022 Mentorship na YouTube. Jméno mu dala komunita. Jeho kostra má tři kroky: výběr likvidity, zlom struktury s displacementem a vstup při návratu do fair value gapu. Všechno ostatní jsou podmínky, které říkají, kdy tu kostru hledat a kdy ne.",
+  "steps": [
+   {
+    "n": 1,
+    "title": "Směr dne a cíl (draw on liquidity)",
+    "text": "Než otevřeš minutový graf, řekni si na denním a hodinovém grafu, kam cena nejspíš míří. Cílem je vždy likvidita: staré high nebo low, stejně vysoké vrcholy, nevyplněný fair value gap na vyšším timeframu. Když směr neumíš říct jednou větou, ten den model neobchoduj.",
+    "topic": "struktura",
+    "check": [
+     "Vím, jestli je cena v premiu nebo discountu denního rozpětí",
+     "Mám jeden konkrétní cíl nad nebo pod cenou"
+    ]
+   },
+   {
+    "n": 2,
+    "title": "Vyznač likviditu, která se může vybrat",
+    "text": "Zakresli high a low předchozího dne, high a low noční seance (Asie a Londýn) a stejně vysoké vrcholy nebo dna. To jsou místa, kde leží stop-lossy. Model čeká, až cena jedno z nich vybere proti směru, kterým chceš obchodovat: pro long výběr pod low, pro short výběr nad high.",
+    "topic": "likvidita",
+    "check": [
+     "PDH a PDL",
+     "High a low Asie a Londýna",
+     "Equal highs a equal lows"
+    ]
+   },
+   {
+    "n": 3,
+    "title": "Počkej na správný čas",
+    "text": "Setup se hledá jen v době, kdy je na trhu objem. Pro NQ a ES je to hlavně newyorské dopoledne, zhruba 8:30 až 11:00 newyorského času (14:30 až 17:00 našeho), s otevřením burzy v 9:30. Druhé okno je odpoledne od 13:30 do 16:00 newyorského času. Mimo okna stejný obrazec platí mnohem méně.",
+    "topic": "premium-discount",
+    "check": [
+     "Jsem v okně",
+     "Vím, jestli dnes vychází důležitá zpráva"
+    ]
+   },
+   {
+    "n": 4,
+    "title": "Sweep: výběr likvidity",
+    "text": "Cena projde přes vyznačenou úroveň, vybere stopy a vrátí se zpět. Ideálně jen knotem nebo jednou dvěma svíčkami. Když za úrovní zůstane a staví tam novou strukturu, nejde o sweep, ale o průraz, a model neplatí.",
+    "topic": "likvidita",
+    "check": [
+     "Úroveň byla opravdu překonaná",
+     "Cena se vrátila zpět za úroveň"
+    ]
+   },
+   {
+    "n": 5,
+    "title": "MSS s displacementem",
+    "text": "Po sweepu musí cena rychle a silně prorazit poslední swing v opačném směru. Tomu se říká market structure shift. Důležitá je síla pohybu (displacement): velké svíčky s malými knoty, které zavírají za proraženou úrovní. Pomalý průraz s překrývajícími se svíčkami se nepočítá.",
+    "topic": "bos-mss",
+    "check": [
+     "Svíčka zavřela za swingem, nejen ho propíchla",
+     "Pohyb byl výrazně rychlejší než svíčky před ním"
+    ]
+   },
+   {
+    "n": 6,
+    "title": "Fair value gap v displacementu",
+    "text": "Silný pohyb za sebou nechá mezeru mezi knotem první a třetí svíčky. To je fair value gap a je to místo vstupu. Lepší je gap, který leží ve správné polovině pohybu: pro long v discountu (pod polovinou swingu), pro short v premiu.",
+    "topic": "fvg-up",
+    "check": [
+     "FVG vznikl v pohybu, který prorazil strukturu",
+     "Leží v discountu (long) nebo premiu (short)"
+    ]
+   },
+   {
+    "n": 7,
+    "title": "Vstup při návratu",
+    "text": "Limitní příkaz se dává na okraj gapu nebo do jeho poloviny (consequent encroachment). Okraj se plní častěji, polovina dává lepší cenu a menší stop, ale část obchodů uteče. Když se cena do gapu nevrátí během rozumné doby, setup propadl a nehoní se.",
+    "topic": "dohromady",
+    "check": [
+     "Vstup je předem daný, ne podle pocitu",
+     "Mám čas, po kterém příkaz ruším"
+    ]
+   },
+   {
+    "n": 8,
+    "title": "Stop-loss",
+    "text": "Stop patří za extrém sweepu, tedy pod low, které vybralo likviditu (long), nebo nad high (short). Těsnější varianta je za svíčku, která gap vytvořila. Když je stop větší, než dovoluje tvůj plán, obchod se nebere, velikost stopu se neupravuje přáním.",
+    "topic": "dohromady",
+    "check": [
+     "Stop je za místem, kde by myšlenka přestala platit",
+     "Riskuji předem danou částku"
+    ]
+   },
+   {
+    "n": 9,
+    "title": "Cíl a řízení obchodu",
+    "text": "Cíl je likvidita na opačné straně: nejbližší staré high nebo low a potom cíl z kroku 1. Běžný postup je část pozice vybrat na prvním cíli a zbytek nechat běžet se stopem na vstupu. Poměr zisku k riziku by měl vycházet aspoň 2 : 1, jinak setup nestojí za to.",
+    "topic": "dohromady",
+    "check": [
+     "První cíl je konkrétní úroveň",
+     "Poměr aspoň 2 : 1"
+    ]
+   }
+  ],
+  "avoid": [
+   "Sweep proběhl mimo časové okno.",
+   "MSS nemá displacement, svíčky se překrývají.",
+   "Cena je uprostřed denního rozpětí a nemá jasný cíl.",
+   "Těsně před důležitou zprávou (CPI, NFP, Fed) nebo během ní.",
+   "Po dvou ztrátách v jednom dni."
+  ],
+  "mistakes": [
+   "Vstup už při sweepu, bez čekání na MSS.",
+   "Každý průraz swingu se bere jako MSS, i když mu nepředcházel výběr likvidity.",
+   "Honění ceny, když se do gapu nevrátila.",
+   "Stop posunutý dál, když se cena blíží.",
+   "Model se hledá celý den místo v jednom okně."
+  ],
+  "numbers": "Náš vlastní backtest mechanické verze tohoto modelu na NQ (minutová data 2022 až 2025) vyšel na 115 obchodů s winrate 52,2 % a profit factorem 0,94. To znamená, že pravidla sama o sobě prokázanou výhodu nemají. Model ber jako rámec pro čtení grafu a disciplínu, ne jako stroj na peníze. Rozhoduje výběr dnů, směr a řízení rizika, a to si každý musí ověřit ve vlastním deníku.",
+  "sources": [
+   [
+    "ICT 2022 Mentorship (YouTube, kanál InnerCircleTrader)",
+    "https://www.youtube.com/@InnerCircleTrader"
+   ],
+   [
+    "LuxAlgo: Model 2022",
+    "https://www.luxalgo.com/library/concept/model-2022.md"
+   ]
+  ]
+ },
+ "core": {
+  "title": "Core content",
+  "intro": "Core content je dvanáct měsíců lekcí ze soukromého mentorshipu ICT z let 2016 a 2017, které autor později zveřejnil zdarma na YouTube. Je to teorie, ze které vychází všechno pozdější včetně Modelu 2022. Tady je obsah každého měsíce shrnutý vlastními slovy, s tím, co si z něj má odnést obchodník indexů.",
+  "months": [
+   {
+    "n": 1,
+    "title": "Základy setupu a pohled na trh",
+    "points": [
+     "Trh se pohybuje mezi likviditou a nevyvážeností: jde si pro stopy a vrací se vyplnit mezery.",
+     "Každé rozpětí má polovinu (equilibrium). Nad ní je premium, pod ní discount. Nakupuje se levně, prodává draze.",
+     "Čtyři stavy trhu: konsolidace, expanze, retracement a reversal. Setup se hledá po expanzi.",
+     "Vyšší timeframe určuje směr, nižší jen načasování."
+    ],
+    "topic": "premium-discount"
+   },
+   {
+    "n": 2,
+    "title": "Riziko a psychologie",
+    "points": [
+     "Malý účet roste malým rizikem na obchod, ne velkými sázkami.",
+     "Setup má smysl jen tehdy, když je možný zisk několikrát větší než riziko.",
+     "Ztráta je náklad podnikání. Po ztrátě se riziko snižuje, ne zvyšuje.",
+     "Falešné průrazy a učebnicové formace často slouží k nalákání do špatného směru."
+    ],
+    "topic": "likvidita"
+   },
+   {
+    "n": 3,
+    "title": "Institucionální order flow",
+    "points": [
+     "Směr určuje ten, kdo má kapitál. Hledá se, kde velcí hráči potřebují likviditu.",
+     "Výběr timeframu podle stylu: poziční, swingový, krátkodobý, denní.",
+     "Od makra k detailu: úrokové sazby a dolar nejdřív, potom teprve graf.",
+     "Trendové čáry a formace jako hlava a ramena jsou místa, kde se hromadí cizí stopy."
+    ],
+    "topic": "struktura"
+   },
+   {
+    "n": 4,
+    "title": "PD arrays: bloky, mezery a likvidita",
+    "points": [
+     "Order block je poslední opačná svíčka před silným pohybem. Platí jen s displacementem.",
+     "Breaker a mitigation block vznikají ze selhaného order blocku.",
+     "Fair value gap a liquidity void jsou místa, kam se cena vrací dorovnat obchodování.",
+     "Liquidity pools leží nad starými high a pod starými low. Jsou to cíle, ne vstupy.",
+     "Další varianty: rejection block, propulsion block, vacuum block a reclaimed order block."
+    ],
+    "topic": "ob-up"
+   },
+   {
+    "n": 5,
+    "title": "Dlouhodobý pohled",
+    "points": [
+     "Trh se přibližně po čtvrtletích mění ve směru, proto se sleduje posledních 20, 40 a 60 obchodních dní.",
+     "Sezónní tendence a vztahy mezi trhy (dluhopisy, dolar, akcie) dávají kontext, ne signál.",
+     "Poziční obchody stojí na týdenním a měsíčním grafu."
+    ],
+    "topic": null
+   },
+   {
+    "n": 6,
+    "title": "Swing trading",
+    "points": [
+     "Swingový obchod míří od jedné likvidity na denním grafu ke druhé.",
+     "Nejlepší podmínky jsou, když jsou týdenní i denní graf ve stejném směru.",
+     "Vstup se zpřesňuje na čtyřhodinovém a hodinovém grafu, riziko zůstává malé."
+    ],
+    "topic": "struktura"
+   },
+   {
+    "n": 7,
+    "title": "Krátkodobé obchodování",
+    "points": [
+     "Týden má svůj profil: high nebo low týdne často vzniká v pondělí až středu.",
+     "Manipulace na začátku týdne připravuje pohyb pro jeho zbytek.",
+     "Cílem je jeden kvalitní obchod za týden s jasným cílem na likviditě."
+    ],
+    "topic": null
+   },
+   {
+    "n": 8,
+    "title": "Denní obchodování",
+    "points": [
+     "Den má tři fáze: nahromadění (Asie), manipulaci (často Londýn nebo otevření New Yorku) a distribuci.",
+     "High a low dne se dá odhadovat z nočního rozpětí a z otevírací ceny.",
+     "Jsou dny, kdy se neobchoduje: před velkými zprávami a po velkém pohybu předchozí den.",
+     "Denní obchod má být ve směru vyššího timeframu."
+    ],
+    "topic": "likvidita"
+   },
+   {
+    "n": 9,
+    "title": "Denní rutina a základní setupy",
+    "points": [
+     "Ranní příprava: směr, úrovně, zprávy, okno, ve kterém budu obchodovat.",
+     "Základní nákupní a prodejní setup je stále stejný: výběr likvidity a návrat do bloku nebo mezery.",
+     "V konsolidaci se obchodují okraje, ne střed.",
+     "Malý denní cíl dosažený pravidelně je víc než honba za velkým dnem."
+    ],
+    "topic": "dohromady"
+   },
+   {
+    "n": 10,
+    "title": "Dluhopisy, indexy a akcie",
+    "points": [
+     "Indexové futures mají dopolední a odpolední seanci s vlastním trendem.",
+     "Otevření v 9:30 a první hodina určují charakter dne.",
+     "Dluhopisy a dolar pomáhají potvrdit, jestli je trh ochotný riskovat."
+    ],
+    "topic": null
+   },
+   {
+    "n": 11,
+    "title": "Velké obchody a opce",
+    "points": [
+     "Dlouhodobé obchody vycházejí ze stejných pojmů na měsíčním a týdenním grafu.",
+     "Opce slouží k omezení rizika u delších pozic. Pro scalping indexů nejsou potřeba."
+    ],
+    "topic": null
+   },
+   {
+    "n": 12,
+    "title": "Analýza shora dolů a market maker modely",
+    "points": [
+     "Postup: měsíční, týdenní, denní, čtyřhodinový, hodinový a teprve potom vstupní graf.",
+     "Market maker buy model a sell model popisují celý cyklus: konsolidace, falešný pohyb, obrat a návrat k původní likviditě.",
+     "Každý obchod má příběh: odkud cena jde, kam jde a proč právě teď."
+    ],
+    "topic": "dohromady"
+   }
+  ],
+  "how": "Core content je rozsáhlý a nedává jeden hotový systém. Rozumné pořadí je projít nejdřív měsíce 1, 2, 4 a 8, potom Model 2022 a ostatní měsíce brát jako rozšíření. Počítej s měsíci studia, ne s týdny.",
+  "sources": [
+   [
+    "ICT Mentorship Core Content (YouTube, kanál InnerCircleTrader)",
+    "https://www.youtube.com/@InnerCircleTrader"
+   ],
+   [
+    "Přehled lekcí po měsících (videohighlight.com)",
+    "https://videohighlight.com/playlist/PLVgHx4Z63pabb9rl1nyG58TG8PG8yzuao"
+   ]
+  ]
+ }
+}
