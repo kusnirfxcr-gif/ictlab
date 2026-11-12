@@ -19,7 +19,7 @@
   "area": "vyuka",
   "value": 2,
   "effort": 1,
-  "status": "new",
+  "status": "done",
   "what": "Opakování pojmů ze slovníčku formou kartiček. Pojmy, které neumí, se vracejí častěji.",
   "why": "Ve slovníčku je 164 pojmů a bez opakování se nedají udržet v hlavě."
  },
@@ -43,7 +43,7 @@
   "area": "denik",
   "value": 3,
   "effort": 3,
-  "status": "new",
+  "status": "done",
   "what": "Záznam obchodu: datum, směr, setup, vstup, stop, výsledek v R, snímek grafu a štítky chyb. K tomu přehled winrate a průměrného R podle setupu, dne a hodiny.",
   "why": "Je to jádro produktu, za které lidé platí, a zdroj vlastních dat místo backtestu z cizí sady."
  },
@@ -67,7 +67,7 @@
   "area": "denik",
   "value": 2,
   "effort": 2,
-  "status": "new",
+  "status": "done",
   "what": "Před seancí zápis biasu a hlídaných úrovní, večer porovnání s tím, co se stalo, a skóre správných odhadů.",
   "why": "Buduje návyk a měří, jestli se čtení trhu zlepšuje."
  },
@@ -79,7 +79,7 @@
   "area": "vyuka",
   "value": 3,
   "effort": 3,
-  "status": "new",
+  "status": "done",
   "what": "Den z historických dat puštěný svíčku po svíčce, kde si lze nanečisto zkoušet vstupy a hned vidět výsledek.",
   "why": "Nejbližší věc ke skutečnému obchodování bez rizika. Potřebuje vlastní zdroj minutových dat."
  },
@@ -91,7 +91,7 @@
   "area": "vyuka",
   "value": 1,
   "effort": 1,
-  "status": "new",
+  "status": "done",
   "what": "Počítadlo dní v řadě, kdy Laura něco prošla, a milníky za dokončená témata.",
   "why": "Malá motivace, která drží pravidelnost."
  },
@@ -103,7 +103,7 @@
   "area": "vyuka",
   "value": 2,
   "effort": 2,
-  "status": "new",
+  "status": "done",
   "what": "Deset otázek z daného týdne, část s obrázkem. Další týden se odemkne po úspěšném složení.",
   "why": "Zabrání přeskakování základů."
  },
@@ -115,7 +115,7 @@
   "area": "model",
   "value": 2,
   "effort": 2,
-  "status": "new",
+  "status": "done",
   "what": "Místo posílání souboru do chatu ho přetáhnout na stránku, která výsledky zobrazí a připraví k uložení.",
   "why": "Zkrátí smyčku mezi testem a úpravou modelu."
  },
@@ -127,7 +127,7 @@
   "area": "model",
   "value": 2,
   "effort": 1,
-  "status": "new",
+  "status": "done",
   "what": "Varianta bez MSS se dvěma filtry zapsaná jako samostatný model, aby šla pustit na dalších datech beze změny.",
   "why": "Dnes existuje jen jako dodatečné vyřazení obchodů, což není poctivý test."
  },
@@ -151,7 +151,7 @@
   "area": "produkt",
   "value": 2,
   "effort": 2,
-  "status": "new",
+  "status": "done",
   "what": "Stránka pro nové návštěvníky: co aplikace umí, ukázka animací a sběr e-mailů zájemců.",
   "why": "Ověří zájem dřív, než se postaví placená část."
  },

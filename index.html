@@ -337,33 +337,128 @@ details.week[open]>.weekbody{animation:none}
 details.week.anim[open]>.weekbody{animation:rise .35s ease both}
 @media (max-width:420px){.pa-t{font-size:16px} .pa-ctl button{min-width:96px} nav a{padding:8px 12px;font-size:14px}}
 @media (prefers-reduced-motion:reduce){.fig.pre *{animation:none!important}}
+
+/* ---------- v5: dashboard shell ---------- */
+body{background:radial-gradient(1100px 460px at 50% -120px,rgba(138,180,255,.08),transparent 62%),var(--bg);background-attachment:fixed}
+.topbar{position:sticky;top:0;z-index:8;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;padding:8px 18px;background:rgba(9,9,11,.78);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+.topbar .brand{font-size:26px;padding:.1em 0;text-decoration:none}
+.topbar nav{position:static;box-shadow:none;align-self:auto;min-width:0}
+.topbar #streak{justify-self:end}
+.app{display:grid;grid-template-columns:minmax(0,1fr);gap:18px;max-width:1500px;margin:0 auto;padding:18px 16px 56px}
+.app>.wrap{max-width:none;margin:0;padding:0;min-width:0;order:-1}
+.rail{display:none;flex-direction:column;gap:14px;min-width:0}
+body[data-view="prehled"] .rail{display:flex}
+.rail .strip{grid-template-columns:1fr}
+.rail .strip b{font-size:22px}
+.kick{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.hero{font-family:var(--display);font-weight:800;font-size:clamp(56px,11vw,92px);letter-spacing:-.045em;line-height:1;font-variant-numeric:tabular-nums;text-shadow:0 0 44px rgba(255,255,255,.34);animation:rise .6s cubic-bezier(.2,.8,.2,1) both}
+.hero.neg{color:var(--bad);text-shadow:0 0 44px rgba(255,107,107,.3)}
+.herocard{align-items:center;text-align:center;padding:30px 18px 26px;gap:10px;background:radial-gradient(520px 200px at 50% 0,rgba(255,255,255,.055),transparent 70%),var(--surface)}
+.tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.tile{border:1px solid var(--line);border-radius:16px;background:var(--surface2);padding:12px 14px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.tile span{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.tile b{font-size:21px;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.pos{color:var(--good)} .neg{color:var(--bad)}
+.jr{font-variant-numeric:tabular-nums;white-space:nowrap}
+.rrow{display:flex;justify-content:space-between;gap:10px;font-size:14px;padding:7px 0;border-bottom:1px solid var(--line)}
+.rrow:last-child{border-bottom:0}
+.rrow span{color:var(--muted)} .rrow b{font-variant-numeric:tabular-nums}
+.miles{display:flex;flex-wrap:wrap;gap:6px}
+.pill.off{color:#4c4c55}
+.rtrade{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:14px;background:var(--surface2)}
+.rtrade>b{white-space:nowrap;flex:none} .rail .list>.pill{align-self:flex-start} .go b{color:var(--ink)}
+.rtrade div{display:flex;flex-direction:column;min-width:0}
+.rtrade span{font-size:12px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.go{display:flex;justify-content:space-between;align-items:center;gap:12px;text-decoration:none;color:var(--ink);padding:14px 16px;border:1px solid var(--line);border-radius:16px;background:var(--surface2);transition:border-color .2s,transform .2s}
+.go:hover{border-color:#3a3a43;transform:translateY(-1px)}
+.go div{display:flex;flex-direction:column;gap:2px;min-width:0}
+.go span{font-size:13.5px;color:var(--muted)}
+.go i{font-style:normal;color:var(--muted);font-size:20px}
+.fgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.fgrid .wide{grid-column:1/-1}
+.tagx{color:var(--amber)}
+.item.bad{border-left-color:var(--bad)}
+.fcard{border:1px solid var(--line);border-radius:18px;background:linear-gradient(180deg,#15151a,#0e0e12);padding:26px 18px;min-height:190px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;animation:rise .35s ease both}
+.fterm{font-size:26px;font-weight:800;letter-spacing:-.02em}
+.fdef{font-size:16px;line-height:1.55;max-width:52ch;animation:fade .35s ease both}
+.exbody{display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+.exq{font-size:17px}
+button.exo{text-align:left;width:100%;font-weight:500;font-size:14.5px;line-height:1.45;padding:11px 13px}
+button.exo.ok{border-color:var(--good);color:var(--good)} button.exo.no{border-color:var(--bad);color:var(--bad)}
+.fig .eqa{opacity:.1;stroke:none} .fig .ar.eq{stroke-width:2}
+.rp-ctl{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.land h2{font-size:clamp(30px,6vw,46px);letter-spacing:-.03em;line-height:1.08}
+.land .feat{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}
+@media (min-width:560px){.tiles{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:860px){.topbar{grid-template-columns:1fr auto;padding:8px 12px} .topbar nav{grid-column:1/-1;grid-row:2;justify-self:stretch}}
+@media (min-width:1180px){
+  .app{grid-template-columns:270px minmax(0,1fr) 310px;align-items:start;gap:22px;padding:22px 22px 56px}
+  .app>.wrap{order:0;max-width:840px;width:100%;justify-self:center}
+  .rail{display:flex;position:sticky;top:74px;max-height:calc(100vh - 90px);overflow-y:auto;scrollbar-width:none}
+  .rail::-webkit-scrollbar{display:none}
+}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header class="top">
-    <h1 class="brand" aria-label="Knot"><span>kn</span><i class="o"></i><span>t</span></h1>
-    <p class="muted">Škola price action a obchodní deník. Boti každý den hledají nové poznatky, ladí model pro NQ a ES a připravují lekce.</p>
-  </header>
-
-  <div class="strip" aria-label="Stav">
-    <div><span>Verze modelu</span><b id="s-ver">…</b></div>
-    <div><span>Poslední běh botů</span><b id="s-run">…</b></div>
-    <div><span>Poznatků</span><b id="s-cnt">…</b></div>
-  </div>
-
-  <div id="banner" role="status"></div>
-
+<header class="topbar">
+  <a class="brand" href="#prehled" aria-label="Knot"><span>kn</span><i class="o"></i><span>t</span></a>
   <nav aria-label="Sekce">
-    <a href="#model" data-v="model">Model</a>
+    <a href="#prehled" data-v="prehled">Přehled</a>
+    <a href="#denik" data-v="denik">Deník</a>
+    <a href="#laura" data-v="laura">Laura</a>
+    <a href="#room" data-v="room">Dictator's Room</a>
     <a href="#poznatky" data-v="poznatky">Poznatky</a>
+    <a href="#model" data-v="model">Model</a>
     <a href="#strategie" data-v="strategie">Pine Script</a>
     <a href="#backtest" data-v="backtest">Backtest</a>
-    <a href="#room" data-v="room">Dictator's Room</a>
-    <a href="#laura" data-v="laura">Laura</a>
-    <a href="#denik" data-v="denik">Deník</a>
     <a href="#napady" data-v="napady">Nápady</a>
   </nav>
+  <span class="pill" id="streak">Série 0 dní</span>
+</header>
+<div class="app">
+<aside class="rail" aria-label="Přehled učení">
+  <div class="card"><span class="kick">Boti</span>
+    <div class="strip" aria-label="Stav">
+      <div><span>Verze modelu</span><b id="s-ver">…</b></div>
+      <div><span>Poslední běh botů</span><b id="s-run">…</b></div>
+      <div><span>Poznatků</span><b id="s-cnt">…</b></div>
+    </div>
+  </div>
+  <div class="card"><span class="kick">Učení</span><div id="rl-learn"></div></div>
+  <div class="card"><span class="kick">Milníky</span><div class="miles" id="rl-miles"></div></div>
+</aside>
+<div class="wrap">
+  <div id="banner" role="status"></div>
+
+  <section class="view" id="v-prehled">
+    <div class="card herocard">
+      <span class="kick" id="d-date"></span>
+      <div class="hero" id="d-hero">0 R</div>
+      <p class="small muted" id="d-sub"></p>
+    </div>
+    <div class="card"><div class="row"><h2>Výkon</h2><a class="small" href="#denik">Otevřít deník</a></div><div class="list" id="d-perf"><p class="small muted">Graf výsledku se objeví po druhém zapsaném obchodu.</p></div></div>
+    <div class="card"><h2>Dnes</h2>
+      <a class="go" href="#denik"><div><b>Ranní plán a kontrola před vstupem</b><span>Bias, úrovně, seznam a zápis obchodu</span></div><i>›</i></a>
+      <a class="go" href="#laura"><div><b>Price action v obrázcích</b><span id="d-next">…</span></div><i>›</i></a>
+      <a class="go" href="#laura"><div><b>Kartičky</b><span id="d-cards">…</span></div><i>›</i></a>
+      <a class="go" href="#room"><div><b>Dictator's Room</b><span>Dvanáctitýdenní kurz se zkouškou na konci každého týdne</span></div><i>›</i></a>
+    </div>
+  </section>
+
+  <section class="view land" id="v-uvod">
+    <div class="card herocard"><span class="kick">Knot</span>
+      <h2>Nauč se číst graf. Pak si veď deník, který ti řekne pravdu.</h2>
+      <p class="muted">Škola price action v animovaných obrázcích a obchodní deník v jednom. Bez slibů zisku.</p>
+      <a class="go" href="#prehled"><div><b>Otevřít aplikaci</b><span>Vše se ukládá jen v tvém prohlížeči</span></div><i>›</i></a>
+    </div>
+    <div class="feat">
+      <div class="card"><b>Price action krok za krokem</b><p class="small muted">Každý pojem se skládá svíčku po svíčce, s úlohami přímo na grafu.</p></div>
+      <div class="card"><b>Kurz na 12 týdnů</b><p class="small muted">Od svíčky po kompletní setup, se zkouškou na konci každého týdne.</p></div>
+      <div class="card"><b>Deník v R</b><p class="small muted">Winrate, profit factor a drawdown podle setupu, dne, hodiny a chyby.</p></div>
+      <div class="card"><b>Kartičky a slovníček</b><p class="small muted">164 pojmů, které se vracejí přesně ve chvíli, kdy je začínáš zapomínat.</p></div>
+    </div>
+    <p class="small muted">Sběr e-mailů a platby tu zatím nejsou, k tomu je potřeba server.</p>
+  </section>
 
   <section class="view" id="v-model">
     <div class="card">
@@ -410,6 +505,18 @@ details.week.anim[open]>.weekbody{animation:rise .35s ease both}
       <p class="small muted">Backtest běží na tvém počítači v programu ictlab_backtest.py. Soubor analyza.txt nebo vysledky.json pošli Claudovi v chatu, ten čísla zapíše sem a boti je použijí při ladění modelu.</p>
     </div>
     <div class="card">
+      <h2>Nahrát vlastní výsledky</h2>
+      <p class="small muted">Vyber soubor vysledky.json z backtesteru. Zobrazí se jen tobě, nikam se neodesílá.</p>
+      <label for="bu-file" class="small" style="cursor:pointer"><span class="pill info">Vybrat vysledky.json</span><input id="bu-file" type="file" accept="application/json,.json" hidden></label>
+      <div class="list" id="bu-out"></div>
+    </div>
+    <div class="card">
+      <h2>Přehrávání trhu</h2>
+      <p class="small muted">Nahraj CSV s minutovými svíčkami (stejné jako pro backtester). Vybere se náhodný den a svíčky přibývají po jedné. Data zůstávají v tvém počítači.</p>
+      <label for="rp-file" class="small" style="cursor:pointer"><span class="pill info">Vybrat CSV</span><input id="rp-file" type="file" accept=".csv,.txt,text/csv" hidden></label>
+      <div class="list" id="rp-out"></div>
+    </div>
+    <div class="card">
       <h2>Uložené výsledky</h2>
       <div class="tablebox"><table><thead><tr><th>Verze</th><th>Symbol</th><th>Období</th><th>Obchodů</th><th>Winrate</th><th>PF</th><th>DD</th></tr></thead><tbody id="bt-rows"></tbody></table></div>
       <p class="small muted" id="bt-empty">Zatím žádný backtest. Dokud tu nejsou čísla, winrate modelu není známý.</p>
@@ -435,12 +542,43 @@ details.week.anim[open]>.weekbody{animation:rise .35s ease both}
 
   <section class="view" id="v-denik">
     <div class="card">
+      <div class="row"><h2>Plán dne</h2><span class="small muted" id="p-score"></span></div>
+      <span class="kick">Ráno: kam čekám, že trh půjde</span>
+      <div class="chips" id="p-bias"></div>
+      <label for="p-levels">Klíčové úrovně<input id="p-levels" maxlength="200" placeholder="PDH 21 480, PDL 21 310, London high…"></label>
+      <label for="p-note">Co chci vidět, než vstoupím<input id="p-note" maxlength="400" placeholder="Sweep PDL v okně 9:30–11:00, pak MSS a FVG"></label>
+      <span class="kick">Večer: kam trh opravdu šel</span>
+      <div class="chips" id="p-actual"></div>
+    </div>
+    <div class="card">
       <div class="row"><h2>Před vstupem</h2><span class="pill" id="ck-verdict"></span></div>
       <p class="small muted">Projdi seznam před každým obchodem. Stačí jedno ne a setup není kompletní. Otázky si můžeš upravit podle vlastního plánu.</p>
       <div class="list" id="ck-items"></div>
       <form class="inline" id="ck-add"><input id="ck-new" maxlength="120" placeholder="Přidat vlastní otázku" aria-label="Nová otázka"><button type="submit">Přidat</button></form>
       <label for="ck-note">Poznámka k obchodu (nepovinná)<input id="ck-note" maxlength="200" placeholder="Například: sweep PDH, short"></label>
       <div class="row"><button class="primary" type="button" id="ck-save">Uložit kontrolu</button><span class="small muted" id="ck-msg"></span></div>
+    </div>
+    <div class="card">
+      <div class="row"><h2>Zapsat obchod</h2><span class="small muted" id="j-count"></span></div>
+      <p class="small muted">Stačí výsledek v R. Když vyplníš vstup, stop a výstup, R se dopočítá samo. K obchodu se uloží i stav seznamu nahoře.</p>
+      <form id="j-form" class="fgrid">
+        <label for="j-ts" class="wide">Kdy<input id="j-ts" type="datetime-local"></label>
+        <label for="j-sym">Trh<select id="j-sym"><option>NQ</option><option>ES</option><option>MNQ</option><option>MES</option></select></label>
+        <label for="j-dir">Směr<select id="j-dir"><option value="long">Long</option><option value="short">Short</option></select></label>
+        <label for="j-setup" class="wide">Setup<select id="j-setup"></select></label>
+        <label for="j-entry">Vstup<input id="j-entry" inputmode="decimal"></label>
+        <label for="j-stop">Stop<input id="j-stop" inputmode="decimal"></label>
+        <label for="j-exit">Výstup<input id="j-exit" inputmode="decimal"></label>
+        <label for="j-r">Výsledek v R<input id="j-r" inputmode="decimal" placeholder="například 2 nebo -1"></label>
+        <div class="wide"><span class="kick">Chyby</span><div class="chips" id="j-tags" style="margin-top:8px"></div></div>
+        <label for="j-note" class="wide">Poznámka<input id="j-note" maxlength="400"></label>
+        <div class="row wide"><button class="primary" type="submit">Uložit obchod</button><span class="small muted" id="j-msg"></span></div>
+      </form>
+    </div>
+    <div class="card"><h2>Statistiky</h2><div class="list" id="j-stats"></div></div>
+    <div class="card"><h2>Obchody</h2><div class="list" id="j-list"></div>
+      <div class="row"><button type="button" id="j-export">Stáhnout zálohu</button><label for="j-import" class="small" style="cursor:pointer">Načíst zálohu<input id="j-import" type="file" accept="application/json,.json" hidden></label></div>
+      <p class="small muted">Deník je uložený jen v tomto prohlížeči. Zálohu si stahuj pravidelně, jinak o něj při smazání dat prohlížeče přijdeš.</p>
     </div>
     <div class="card">
       <h2>Historie kontrol</h2>
@@ -488,6 +626,12 @@ details.week.anim[open]>.weekbody{animation:rise .35s ease both}
       <div class="lesson-body" id="pr-body"><p class="muted">Načítám úlohy…</p></div>
     </div>
 
+    <div class="card" id="fc-card">
+      <div class="row"><h2>Kartičky</h2><span class="small muted" id="fc-count"></span></div>
+      <p class="small muted">Deset pojmů najednou. Co umíš, vrátí se za delší dobu. Co neumíš, hned.</p>
+      <div class="lesson-body" id="fc-body"><p class="muted">Načítám pojmy…</p></div>
+    </div>
+
     <div class="card">
       <div class="row"><h2>Denní lekce</h2></div>
       <label for="l-pick">Vyber lekci<select id="l-pick" hidden></select></label>
@@ -515,7 +659,12 @@ details.week.anim[open]>.weekbody{animation:rise .35s ease both}
     </div>
   </section>
 
-  <p class="small muted">Vzdělávací nástroj, žádné investiční doporučení. Obchodování futures je rizikové a žádný model nezaručuje zisk.</p>
+  <p class="small muted">Vzdělávací nástroj, žádné investiční doporučení. Obchodování futures je rizikové a žádný model nezaručuje zisk. <a href="#uvod">O aplikaci</a></p>
+</div>
+<aside class="rail" aria-label="Dnešek">
+  <div class="card"><div class="row"><span class="kick">Plán dne</span><b id="rr-date"></b></div><div class="list" id="rr-plan"></div><a class="small" href="#denik">Upravit plán</a></div>
+  <div class="card"><span class="kick">Poslední obchody</span><div class="list" id="rr-trades"></div></div>
+</aside>
 </div>
 
 <script>
@@ -572,10 +721,10 @@ details.week.anim[open]>.weekbody{animation:rise .35s ease both}
   });
 
   // Views
-  const VIEWS = ["model","poznatky","strategie","backtest","room","laura","denik","napady"];
+  const VIEWS = ["prehled","uvod","model","poznatky","strategie","backtest","room","laura","denik","napady"];
   function route(){
     const h = (location.hash || "").replace("#","");
-    const v = VIEWS.includes(h) ? h : "model";
+    const v = VIEWS.includes(h) ? h : "prehled"; document.body.dataset.view = v;
     VIEWS.forEach(x => $("v-"+x).classList.toggle("on", x === v));
     document.querySelectorAll("nav a").forEach(a => { if (a.dataset.v === v) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current"); });
   }
@@ -591,7 +740,7 @@ details.week.anim[open]>.weekbody{animation:rise .35s ease both}
   }
   navEl.addEventListener("scroll", navHint, {passive: true});
   window.addEventListener("resize", navHint);
-  window.addEventListener("hashchange", () => { route(); navFocus(); }); route(); navFocus();
+  window.addEventListener("hashchange", () => { route(); navFocus(); refreshAll(); window.scrollTo(0, 0); }); route(); navFocus();
 
   const banner = msg => { const b = $("banner"); b.textContent = msg || ""; b.style.display = msg ? "block" : "none"; };
 
@@ -1085,6 +1234,7 @@ details.week.anim[open]>.weekbody{animation:rise .35s ease both}
         const ans = el("details","ans"); ans.appendChild(el("summary", null, "Ukázat odpověď")); ans.appendChild(el("p","small", w.check.a));
         q.appendChild(ans); body.appendChild(q);
       }
+      body.appendChild(examBlock(w.n));
       d.appendChild(body); box.appendChild(d);
     });
     courseStats();
@@ -1137,7 +1287,7 @@ details.week.anim[open]>.weekbody{animation:rise .35s ease both}
   let lp = {read:{}, quiz:{}};
   const attempt = {};
   const LS_LAURA = "ictlab-laura";
-  try { const v = JSON.parse(localStorage.getItem(LS_LAURA) || "null"); if (v && typeof v === "object") lp = {read: v.read || {}, quiz: v.quiz || {}, seen: v.seen || {}}; } catch(e){}
+  try { const v = JSON.parse(localStorage.getItem(LS_LAURA) || "null"); if (v && typeof v === "object") lp = Object.assign({}, v, {read: v.read || {}, quiz: v.quiz || {}, seen: v.seen || {}}); } catch(e){}
   function persistLaura(){
     try { localStorage.setItem(LS_LAURA, JSON.stringify(lp)); } catch(e){}
     if (saveLaura) saveLaura();
@@ -1590,6 +1740,369 @@ details.week.anim[open]>.weekbody{animation:rise .35s ease both}
   setupAsk();
   renderLesson(); renderGlossary();
 
+
+  // =====================================================================================
+  // v5: activity streak, journal, daily plan, flashcards, weekly exams, dashboard and rails
+  // =====================================================================================
+  const dayKey = d => { const x = d || new Date(); return x.getFullYear() + "-" + String(x.getMonth() + 1).padStart(2, "0") + "-" + String(x.getDate()).padStart(2, "0"); };
+  const sgn = v => (v > 0 ? "+" : "") + fnum(Math.round(v * 100) / 100);
+  const shuffled = a => { const o = a.slice(); for (let i = o.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)), t = o[i]; o[i] = o[j]; o[j] = t; } return o; };
+  let act = {};
+  try { act = JSON.parse(localStorage.getItem("knot-activity") || "{}") || {}; } catch(e){ act = {}; }
+  function touchDay(){
+    const k = dayKey();
+    if (!act[k]){ act[k] = 1; try { localStorage.setItem("knot-activity", JSON.stringify(act)); } catch(e){} }
+  }
+  function streakDays(){
+    let n = 0; const d = new Date();
+    if (!act[dayKey(d)]) d.setDate(d.getDate() - 1);
+    while (act[dayKey(d)]){ n++; d.setDate(d.getDate() - 1); }
+    return n;
+  }
+
+  // ---------- journal ----------
+  const J_KEY = "knot-journal";
+  const J_SETUPS = ["Sweep + MSS + FVG", "Sweep + FVG", "CISD", "Order block", "Breaker", "Inverzní FVG", "Jiný"];
+  const J_TAGS = ["FOMO", "Bez setupu", "Posunutý stop", "Brzký výstup", "Pozdní vstup", "Revenge", "Mimo okno"];
+  let jr = {trades: [], plans: {}}, jTags = {};
+  try { const v = JSON.parse(localStorage.getItem(J_KEY) || "null"); if (v && Array.isArray(v.trades)) jr = {trades: v.trades, plans: v.plans || {}}; } catch(e){}
+  function jStore(){ try { localStorage.setItem(J_KEY, JSON.stringify(jr)); } catch(e){} refreshAll(); }
+  function jStats(tr){
+    const rs = tr.map(t => Number(t.r) || 0), n = rs.length, wins = rs.filter(r => r > 0), losses = rs.filter(r => r < 0);
+    const gp = wins.reduce((a, b) => a + b, 0), gl = -losses.reduce((a, b) => a + b, 0);
+    let eq = 0, peak = 0, dd = 0; rs.forEach(r => { eq += r; peak = Math.max(peak, eq); dd = Math.max(dd, peak - eq); });
+    return {n: n, total: eq, wins: wins.length, losses: losses.length, winrate: n ? 100 * wins.length / n : 0, avg: n ? eq / n : 0, pf: gl > 0 ? gp / gl : null, dd: dd};
+  }
+  const jSorted = () => jr.trades.slice().sort((a, b) => String(a.ts).localeCompare(String(b.ts)));
+  function equityFig(tr){
+    if (tr.length < 2) return null;
+    const H = 150, x0 = 10, x1 = FW - 44, pts = [0]; tr.forEach(t => pts.push(pts[pts.length - 1] + (Number(t.r) || 0)));
+    let lo = Math.min.apply(null, pts), hi = Math.max.apply(null, pts); if (hi === lo) hi = lo + 1;
+    const X = i => x0 + i / (pts.length - 1) * (x1 - x0), Y = v => 14 + (hi - v) / (hi - lo) * (H - 30);
+    const d = pts.map((v, i) => (i ? "L" : "M") + X(i).toFixed(1) + " " + Y(v).toFixed(1)).join(" "), last = pts[pts.length - 1], c = last >= 0 ? "good" : "bad";
+    let s = '<line x1="' + x0 + '" y1="' + Y(0).toFixed(1) + '" x2="' + x1 + '" y2="' + Y(0).toFixed(1) + '" class="gl"/>';
+    s += '<path d="' + d + " L" + X(pts.length - 1).toFixed(1) + " " + (H - 8) + " L" + x0 + " " + (H - 8) + ' Z" class="eqa f-' + c + '"/>';
+    s += '<g class="mk aw" style="--d:150"><path d="' + d + '" pathLength="1" class="ar eq s-' + c + '"/></g>';
+    s += '<circle cx="' + X(pts.length - 1).toFixed(1) + '" cy="' + Y(last).toFixed(1) + '" r="3.5" class="f-' + c + '"/>';
+    s += '<text x="' + (x1 + 8) + '" y="' + (Y(last) + 4).toFixed(1) + '" class="brv f-' + c + '">' + esc(sgn(last)) + ' R</text>';
+    return figEl(svgWrap(H, s), "Vývoj výsledku v R, obchod po obchodu.");
+  }
+  function tile(label, value, cls){ const d = el("div","tile"); d.appendChild(el("span", null, label)); d.appendChild(el("b", cls || null, value)); return d; }
+  function groupTable(title, tr, keyFn, order){
+    const g = {}; tr.forEach(t => { const k = keyFn(t); if (k == null) return; (Array.isArray(k) ? k : [k]).forEach(x => { (g[x] = g[x] || []).push(t); }); });
+    const keys = Object.keys(g); if (!keys.length) return null;
+    if (order) keys.sort((a, b) => order.indexOf(a) - order.indexOf(b)); else keys.sort((a, b) => g[b].length - g[a].length);
+    const wrap = el("div","tablebox"), tb = el("table"), th = el("thead"), hr = el("tr"), bd = el("tbody");
+    [title, "Obchodů", "Winrate", "Průměr", "Celkem"].forEach(h => hr.appendChild(el("th", null, h))); th.appendChild(hr); tb.appendChild(th);
+    keys.forEach(k => { const s = jStats(g[k]), r = el("tr");
+      r.appendChild(el("td", null, k)); r.appendChild(el("td","num", s.n)); r.appendChild(el("td","num", Math.round(s.winrate) + " %"));
+      r.appendChild(el("td","num", sgn(s.avg) + " R")); const c = el("td","num", sgn(s.total) + " R"); c.style.color = s.total >= 0 ? "var(--good)" : "var(--bad)"; r.appendChild(c); bd.appendChild(r); });
+    tb.appendChild(bd); wrap.appendChild(tb); return wrap;
+  }
+  function renderJournal(){
+    const tr = jSorted(), st = jStats(tr), box = $("j-stats"); clear(box);
+    $("j-count").textContent = tr.length ? tr.length + " obchodů" : "";
+    if (!tr.length) box.appendChild(el("p","small muted","Statistiky se objeví po prvním zapsaném obchodu."));
+    else {
+      const g = el("div","tiles");
+      g.appendChild(tile("Celkem", sgn(st.total) + " R", st.total >= 0 ? "pos" : "neg")); g.appendChild(tile("Winrate", Math.round(st.winrate) + " %"));
+      g.appendChild(tile("Průměr", sgn(st.avg) + " R")); g.appendChild(tile("Profit factor", st.pf == null ? "–" : fnum(Math.round(st.pf * 100) / 100)));
+      g.appendChild(tile("Max. drawdown", fnum(Math.round(st.dd * 10) / 10) + " R")); g.appendChild(tile("Zisk / ztráta", st.wins + " / " + st.losses));
+      box.appendChild(g);
+      const eq = equityFig(tr); if (eq) box.appendChild(eq);
+      const D = ["Po","Út","St","Čt","Pá","So","Ne"];
+      [groupTable("Setup", tr, t => t.setup || "Jiný"),
+       groupTable("Den", tr, t => D[(new Date(t.ts).getDay() + 6) % 7], D),
+       groupTable("Hodina", tr, t => { const h = new Date(t.ts).getHours(); return isNaN(h) ? null : String(h).padStart(2, "0") + ":00"; }, Array.from({length: 24}, (x, i) => String(i).padStart(2, "0") + ":00")),
+       groupTable("Seznam", tr, t => t.ck ? (t.ck.k === t.ck.n ? "Splněný" : "Nesplněný") : null),
+       groupTable("Chyba", tr, t => (t.tags && t.tags.length) ? t.tags : null)].forEach(x => { if (x) box.appendChild(x); });
+    }
+    const list = $("j-list"); clear(list);
+    if (!tr.length) list.appendChild(el("p","small muted","Zatím žádný obchod."));
+    tr.slice().reverse().slice(0, 60).forEach(t => {
+      const it = el("div","item " + ((Number(t.r) || 0) >= 0 ? "architekt" : "bad")), head = el("div","row"), r = el("b","jr " + ((Number(t.r) || 0) >= 0 ? "pos" : "neg"), sgn(Number(t.r) || 0) + " R");
+      head.appendChild(el("h3", null, (t.sym || "") + " · " + (t.dir === "short" ? "short" : "long") + " · " + (t.setup || ""))); head.appendChild(r); it.appendChild(head);
+      if (t.note) it.appendChild(el("p","small", t.note));
+      const meta = el("div","meta"); meta.appendChild(el("span", null, fmtDateTime(t.ts)));
+      if (t.ck) meta.appendChild(el("span", null, "seznam " + t.ck.k + "/" + t.ck.n));
+      (t.tags || []).forEach(x => meta.appendChild(el("span","tagx", x)));
+      const del = el("button","ck-del","Smazat"); del.type = "button"; del.addEventListener("click", () => { jr.trades = jr.trades.filter(x => x.id !== t.id); jStore(); });
+      meta.appendChild(del); it.appendChild(meta); list.appendChild(it);
+    });
+  }
+  (function journalForm(){
+    const pad = n => String(n).padStart(2, "0"), now = new Date();
+    $("j-ts").value = now.getFullYear() + "-" + pad(now.getMonth() + 1) + "-" + pad(now.getDate()) + "T" + pad(now.getHours()) + ":" + pad(now.getMinutes());
+    J_SETUPS.forEach(x => $("j-setup").appendChild(el("option", null, x)));
+    J_TAGS.forEach(x => { const b = el("button","chip", x); b.type = "button"; b.setAttribute("aria-pressed","false");
+      b.addEventListener("click", () => { jTags[x] = !jTags[x]; b.setAttribute("aria-pressed", String(!!jTags[x])); }); $("j-tags").appendChild(b); });
+    const calc = () => {
+      const e = parseFloat($("j-entry").value), s = parseFloat($("j-stop").value), x = parseFloat($("j-exit").value);
+      if ([e, s, x].every(isFinite) && e !== s){ const r = ($("j-dir").value === "short" ? (e - x) : (x - e)) / Math.abs(e - s); $("j-r").value = (Math.round(r * 100) / 100).toString(); }
+    };
+    ["j-entry","j-stop","j-exit","j-dir"].forEach(id => $(id).addEventListener("input", calc));
+    $("j-form").addEventListener("submit", ev => {
+      ev.preventDefault();
+      const r = parseFloat($("j-r").value);
+      if (!isFinite(r)){ $("j-msg").textContent = "Doplň výsledek v R, nebo vstup, stop a výstup."; return; }
+      const d = new Date($("j-ts").value), n = ck.items.length, k = ck.items.filter(i => ckOn[i.id]).length;
+      jr.trades.push({id: "t" + Date.now().toString(36), ts: isNaN(d) ? new Date().toISOString() : d.toISOString(), sym: $("j-sym").value, dir: $("j-dir").value, setup: $("j-setup").value,
+        entry: parseFloat($("j-entry").value) || null, stop: parseFloat($("j-stop").value) || null, exit: parseFloat($("j-exit").value) || null, r: Math.round(r * 100) / 100,
+        tags: J_TAGS.filter(x => jTags[x]), note: $("j-note").value.trim().slice(0, 400), ck: k ? {k: k, n: n} : null});
+      jTags = {}; Array.prototype.forEach.call($("j-tags").children, b => b.setAttribute("aria-pressed","false"));
+      ["j-entry","j-stop","j-exit","j-r","j-note"].forEach(id => { $(id).value = ""; });
+      ckOn = {}; renderCk(); touchDay(); jStore(); $("j-msg").textContent = "Obchod uložen.";
+    });
+    $("j-export").addEventListener("click", () => {
+      const blob = new Blob([JSON.stringify({journal: jr, checklist: ck, laura: lp, course: done, activity: act}, null, 1)], {type: "application/json"}), a = document.createElement("a");
+      a.href = URL.createObjectURL(blob); a.download = "knot-zaloha-" + dayKey() + ".json"; document.body.appendChild(a); a.click(); a.remove();
+    });
+    $("j-import").addEventListener("change", ev => {
+      const f = ev.target.files && ev.target.files[0]; if (!f) return;
+      const rd = new FileReader(); rd.onload = () => { try {
+        const v = JSON.parse(rd.result);
+        if (v.journal && Array.isArray(v.journal.trades)){ const have = {}; jr.trades.forEach(t => { have[t.id] = 1; }); v.journal.trades.forEach(t => { if (t && t.id && !have[t.id]) jr.trades.push(t); }); Object.assign(jr.plans, v.journal.plans || {}); }
+        jStore(); $("j-msg").textContent = "Záloha načtena.";
+      } catch(e){ $("j-msg").textContent = "Soubor se nepodařilo načíst."; } };
+      rd.readAsText(f); ev.target.value = "";
+    });
+  })();
+
+  // ---------- daily plan ----------
+  const P_BIAS = [["long","Long"],["short","Short"],["none","Nevím"]], P_ACT = [["up","Nahoru"],["down","Dolů"],["flat","Do strany"]];
+  function planToday(){ const k = dayKey(); return jr.plans[k] || (jr.plans[k] = {bias: null, levels: "", note: "", actual: null}); }
+  function renderPlan(){
+    const p = planToday();
+    [["p-bias", P_BIAS, "bias"], ["p-actual", P_ACT, "actual"]].forEach(cfg => {
+      const box = $(cfg[0]);
+      if (!box.children.length) cfg[1].forEach(o => { const b = el("button","chip", o[1]); b.type = "button"; b.dataset.v = o[0];
+        b.addEventListener("click", () => { const q = planToday(); q[cfg[2]] = q[cfg[2]] === o[0] ? null : o[0]; touchDay(); jStore(); }); box.appendChild(b); });
+      Array.prototype.forEach.call(box.children, b => b.setAttribute("aria-pressed", String(p[cfg[2]] === b.dataset.v)));
+    });
+    if (document.activeElement !== $("p-levels")) $("p-levels").value = p.levels || "";
+    if (document.activeElement !== $("p-note")) $("p-note").value = p.note || "";
+    const days = Object.keys(jr.plans).filter(k => jr.plans[k].bias && jr.plans[k].bias !== "none" && jr.plans[k].actual);
+    const ok = days.filter(k => (jr.plans[k].bias === "long" && jr.plans[k].actual === "up") || (jr.plans[k].bias === "short" && jr.plans[k].actual === "down")).length;
+    $("p-score").textContent = days.length ? "Směr správně " + ok + " z " + days.length + " dní" : "";
+  }
+  ["p-levels","p-note"].forEach(id => $(id).addEventListener("change", () => { const p = planToday(); p.levels = $("p-levels").value.trim().slice(0, 200); p.note = $("p-note").value.trim().slice(0, 400); touchDay(); jStore(); }));
+
+  // ---------- flashcards ----------
+  const FC_DAYS = [0, 1, 3, 7, 14, 30];
+  let fcQueue = [], fcIdx = 0, fcOpen = false;
+  const fcDue = () => { lp.cards = lp.cards || {}; const now = Date.now(); return glossary.filter(g => { const c = lp.cards[g.id]; return !c || c.due <= now; }); };
+  const fcKnown = () => Object.keys(lp.cards || {}).filter(k => lp.cards[k].box >= 3).length;
+  function fcStart(){ fcQueue = shuffled(fcDue()).slice(0, 10); fcIdx = 0; fcOpen = false; renderFc(); }
+  function renderFc(){
+    const box = $("fc-body"); if (!box) return;
+    box.style.minHeight = box.offsetHeight + "px"; requestAnimationFrame(() => { box.style.minHeight = ""; });
+    clear(box);
+    if (!glossary.length){ box.appendChild(el("p","muted","Načítám pojmy…")); return; }
+    $("fc-count").textContent = "Umíš " + fcKnown() + " z " + glossary.length;
+    if (fcIdx >= fcQueue.length){
+      const due = fcDue().length;
+      box.appendChild(el("p", null, fcQueue.length ? "Tahle sada je hotová." : (due ? "K opakování je připraveno " + due + " pojmů." : "Dnes není co opakovat. Pojmy se vrátí, až na ně přijde čas.")));
+      if (due){ const b = el("button","primary", fcQueue.length ? "Další sada" : "Začít"); b.type = "button"; b.addEventListener("click", fcStart); const r = el("div","pa-ctl"); r.appendChild(el("span")); r.appendChild(b); box.appendChild(r); }
+      return;
+    }
+    const g = fcQueue[fcIdx], card = el("div","fcard" + (fcOpen ? " open" : ""));
+    card.appendChild(el("span","pa-kicker", "Kartička " + (fcIdx + 1) + " z " + fcQueue.length));
+    card.appendChild(el("b","fterm", g.term || g.id));
+    if (g.en && g.en !== g.term) card.appendChild(el("span","small muted", g.en));
+    if (fcOpen) card.appendChild(el("p","fdef", g.def || ""));
+    box.appendChild(card);
+    const ctl = el("div","pa-ctl");
+    if (!fcOpen){ const b = el("button","primary","Ukázat význam"); b.type = "button"; b.addEventListener("click", () => { fcOpen = true; renderFc(); }); ctl.appendChild(el("span")); ctl.appendChild(b); }
+    else [["Neuměla jsem", false, ""], ["Uměla jsem", true, "primary"]].forEach(o => {
+      const b = el("button", o[2], o[0]); b.type = "button";
+      b.addEventListener("click", () => {
+        const c = lp.cards[g.id] || {box: 0}; c.box = o[1] ? Math.min((c.box || 0) + 1, 5) : 0;
+        c.due = Date.now() + (c.box ? FC_DAYS[c.box] * 864e5 : 5 * 6e4); lp.cards[g.id] = c;
+        fcIdx++; fcOpen = false; touchDay(); persistLaura(); renderFc();
+      });
+      ctl.appendChild(b);
+    });
+    box.appendChild(ctl);
+  }
+
+  // ---------- weekly exam (built from the glossary terms of that week) ----------
+  function examQuestions(n){
+    let pool = glossary.filter(g => g.week === n);
+    if (pool.length < 6) pool = pool.concat(glossary.filter(g => g.week === n - 1 || g.week === n + 1));
+    return shuffled(pool).slice(0, 10).map(g => {
+      const others = shuffled(glossary.filter(x => x.id !== g.id && x.cat === g.cat)).concat(shuffled(glossary.filter(x => x.id !== g.id && x.cat !== g.cat))).slice(0, 2);
+      return {term: g.term, opts: shuffled([g].concat(others)).map(x => ({text: x.def, ok: x.id === g.id}))};
+    });
+  }
+  function examBlock(n){
+    const box = el("div","box exam"), head = el("div","row"), res = el("span","pill"), body = el("div","exbody");
+    lp.exam = lp.exam || {};
+    const paint = () => { const b = lp.exam[n]; res.style.display = b ? "" : "none"; if (b){ res.textContent = b.best + " z " + b.of; res.className = "pill " + (b.best / b.of >= 0.8 ? "good" : "warn"); } };
+    head.appendChild(el("b", null, "Zkouška týdne")); head.appendChild(res); box.appendChild(head); box.appendChild(body);
+    const idle = () => {
+      clear(body); paint();
+      body.appendChild(el("span", null, "Deset otázek na pojmy z tohoto týdne. Složeno je od osmi správných."));
+      const b = el("button", null, lp.exam[n] ? "Zkusit znovu" : "Spustit zkoušku"); b.type = "button"; b.addEventListener("click", run); body.appendChild(b);
+    };
+    const run = () => {
+      const qs = examQuestions(n); let i = 0, right = 0;
+      if (qs.length < 3){ clear(body); body.appendChild(el("span", null, "Pro tento týden zatím není dost pojmů.")); return; }
+      const ask = () => {
+        clear(body);
+        if (i >= qs.length){
+          const prev = lp.exam[n]; if (!prev || right > prev.best) lp.exam[n] = {best: right, of: qs.length};
+          touchDay(); persistLaura(); paint();
+          body.appendChild(el("span", null, "Výsledek: " + right + " z " + qs.length + ". " + (right / qs.length >= 0.8 ? "Složeno." : "Zatím to nestačí, projdi si lekce a zkus to znovu.")));
+          const b = el("button", null, "Zavřít"); b.type = "button"; b.addEventListener("click", idle); body.appendChild(b); return;
+        }
+        const q = qs[i]; let answered = false;
+        body.appendChild(el("span","pa-kicker", "Otázka " + (i + 1) + " z " + qs.length));
+        body.appendChild(el("b","exq", "Co znamená „" + q.term + "“?"));
+        const btns = q.opts.map(o => { const b = el("button","exo", o.text); b.type = "button";
+          b.addEventListener("click", () => { if (answered) return; answered = true; if (o.ok) right++;
+            btns.forEach((x, j) => { x.disabled = true; if (q.opts[j].ok) x.classList.add("ok"); }); if (!o.ok) b.classList.add("no");
+            const nx = el("button","primary", i === qs.length - 1 ? "Vyhodnotit" : "Další otázka"); nx.type = "button"; nx.addEventListener("click", () => { i++; ask(); }); body.appendChild(nx); });
+          body.appendChild(b); return b; });
+      };
+      ask();
+    };
+    idle(); return box;
+  }
+
+  // ---------- dashboard and rails ----------
+  function milestones(){
+    const seen = Object.keys(lp.seen || {}).length, ex = Object.keys(lp.exam || {}).filter(k => lp.exam[k].best / lp.exam[k].of >= 0.8).length;
+    return [["První téma price action", seen >= 1], ["Všechna témata price action", pa.length > 0 && seen >= pa.length], ["Procvičování bez chyby", !!(lp.practice && pr.length && lp.practice.best >= pr.length)],
+      ["50 pojmů v hlavě", fcKnown() >= 50], ["První zkouška týdne", ex >= 1], ["Série 7 dní", streakDays() >= 7], ["První obchod v deníku", jr.trades.length >= 1], ["20 obchodů v deníku", jr.trades.length >= 20]];
+  }
+  function railRow(box, label, value){ const r = el("div","rrow"); r.appendChild(el("span", null, label)); r.appendChild(el("b", null, value)); box.appendChild(r); }
+  function renderRails(){
+    const sd = streakDays();
+    $("streak").textContent = "Série " + sd + (sd === 1 ? " den" : (sd >= 2 && sd <= 4 ? " dny" : " dní"));
+    $("streak").className = "pill " + (sd ? "good" : "");
+    const L = $("rl-learn"); clear(L);
+    const allL = course ? course.weeks.reduce((n, w) => n + w.lessons.length, 0) : 0, gotL = course ? course.weeks.reduce((n, w) => n + w.lessons.filter(l => done[l.id]).length, 0) : 0;
+    railRow(L, "Kurz", gotL + " z " + allL); railRow(L, "Price action", Object.keys(lp.seen || {}).length + " z " + pa.length);
+    railRow(L, "Procvičování", (lp.practice && lp.practice.best ? lp.practice.best : 0) + " z " + pr.length);
+    railRow(L, "Kartičky", fcKnown() + " z " + glossary.length);
+    railRow(L, "Zkoušky", Object.keys(lp.exam || {}).filter(k => lp.exam[k].best / lp.exam[k].of >= 0.8).length + " z 12");
+    const M = $("rl-miles"); clear(M);
+    milestones().forEach(m => M.appendChild(el("span","pill " + (m[1] ? "good" : "off"), m[0])));
+    const p = planToday(), P = $("rr-plan"); clear(P);
+    const bias = (P_BIAS.find(o => o[0] === p.bias) || [null, null])[1];
+    if (bias){ P.appendChild(el("span","pill " + (p.bias === "long" ? "good" : p.bias === "short" ? "bad" : ""), "Bias: " + bias)); if (p.levels) P.appendChild(el("p","small", p.levels)); }
+    else P.appendChild(el("p","small muted","Dnešní plán ještě není napsaný."));
+    const T = $("rr-trades"); clear(T);
+    const tr = jSorted().reverse().slice(0, 6);
+    if (!tr.length) T.appendChild(el("p","small muted","Zatím žádný obchod."));
+    tr.forEach(t => { const r = el("div","rtrade"), a = el("div"), v = Number(t.r) || 0;
+      a.appendChild(el("b", null, (t.dir === "short" ? "↘ " : "↗ ") + (t.sym || ""))); a.appendChild(el("span", null, (t.setup || "") + " · " + fmtDateTime(t.ts)));
+      r.appendChild(a); r.appendChild(el("b", v >= 0 ? "pos" : "neg", sgn(v) + " R")); T.appendChild(r); });
+  }
+  function renderDash(){
+    const tr = jSorted(), st = jStats(tr), d = new Date();
+    $("d-date").textContent = d.toLocaleDateString("cs-CZ", {weekday: "long", day: "numeric", month: "long", year: "numeric"});
+    $("rr-date").textContent = d.getDate() + "/" + (d.getMonth() + 1);
+    const hero = $("d-hero"); hero.textContent = tr.length ? sgn(st.total) + " R" : "0 R"; hero.className = "hero " + (st.total < 0 ? "neg" : "");
+    const week = tr.filter(t => Date.now() - new Date(t.ts).getTime() < 7 * 864e5), ws = jStats(week);
+    $("d-sub").textContent = tr.length ? Math.round(st.winrate) + " % winrate · " + st.wins + " zisků / " + st.losses + " ztrát · za 7 dní " + sgn(ws.total) + " R" : "Zapiš první obchod a tady uvidíš svůj výsledek v R.";
+    const box = $("d-perf"); clear(box);
+    if (tr.length){
+      const g = el("div","tiles"); g.appendChild(tile("Obchodů", String(st.n))); g.appendChild(tile("Průměr", sgn(st.avg) + " R")); g.appendChild(tile("Profit factor", st.pf == null ? "–" : fnum(Math.round(st.pf * 100) / 100))); g.appendChild(tile("Max. drawdown", fnum(Math.round(st.dd * 10) / 10) + " R"));
+      box.appendChild(g); const eq = equityFig(tr); if (eq) box.appendChild(eq);
+    }
+    const due = glossary.length ? fcDue().length : 0, nextT = pa.find(t => !(lp.seen || {})[t.id]);
+    $("d-next").textContent = nextT ? "Další téma: " + nextT.title : "Všechna témata price action máš za sebou.";
+    $("d-cards").textContent = due ? due + " pojmů čeká na zopakování" : "Kartičky jsou pro dnešek hotové";
+  }
+  function refreshAll(){ try { renderJournal(); renderPlan(); renderRails(); renderDash(); } catch(e){ if (window.console) console.error(e); } }
+  const _persistLaura = persistLaura; persistLaura = function(){ touchDay(); _persistLaura(); refreshAll(); };
+  const _courseStats = courseStats; courseStats = function(){ _courseStats(); try { renderRails(); } catch(e){} };
+  function afterData(){ fcStart(); refreshAll(); }
+  refreshAll();
+
+  // ---------- backtest upload ----------
+  $("bu-file").addEventListener("change", ev => {
+    const f = ev.target.files && ev.target.files[0], out = $("bu-out"); if (!f) return; clear(out);
+    const rd = new FileReader();
+    rd.onload = () => { try {
+      const v = JSON.parse(rd.result), rows = [];
+      const add = (name, m) => { if (m && typeof m === "object" && m.trades != null) rows.push([name, m]); };
+      if (v.baseline){ add("Model 1.0 · trénink", v.baseline.train); add("Model 1.0 · test", v.baseline.test); }
+      if (v.candidate){ add("Kandidát · trénink", v.candidate.train); add("Kandidát · test", v.candidate.test); }
+      Object.keys(v.families || {}).forEach(k => { add("Rodina " + k + " · trénink", v.families[k].train); add("Rodina " + k + " · test", v.families[k].test); });
+      (v.top || []).slice(0, 5).forEach(t => add("Varianta č. " + t.rank + " · test", t.test));
+      if (!rows.length) throw new Error("empty");
+      out.appendChild(el("p","small", (v.symbol || "") + " · " + (v.period || "") + " · " + (v.days || "?") + " dní" + (v.variants_tested ? " · zkoušeno " + v.variants_tested + " variant" : "")));
+      const wrap = el("div","tablebox"), tb = el("table"), th = el("thead"), hr = el("tr"), bd = el("tbody");
+      ["", "Obchodů", "Winrate", "Průměr R", "PF", "Max DD"].forEach(h => hr.appendChild(el("th", null, h))); th.appendChild(hr); tb.appendChild(th);
+      rows.forEach(r => { const m = r[1], t = el("tr"); t.appendChild(el("td", null, r[0]));
+        [m.trades, m.winrate == null ? "–" : m.winrate + " %", m.avg_r == null ? "–" : sgn(m.avg_r), m.pf == null ? "–" : fnum(m.pf), (m.max_dd_r == null ? "–" : fnum(m.max_dd_r) + " R")].forEach(x => t.appendChild(el("td","num", x)));
+        bd.appendChild(t); });
+      tb.appendChild(bd); wrap.appendChild(tb); out.appendChild(wrap);
+      out.appendChild(el("p","small muted","Rozhoduje řádek test. Dobrý trénink a slabý test znamená, že varianta jen sedla na minulá data."));
+    } catch(e){ out.appendChild(el("p","small","Soubor nevypadá jako vysledky.json z backtesteru.")); } };
+    rd.readAsText(f); ev.target.value = "";
+  });
+
+  // ---------- market replay (user's own 1m CSV) ----------
+  (function replay(){
+    let days = [], bars = [], pos = 0, timer = null, ui = null;
+    function parse(text){
+      const lines = text.split(/\r?\n/), out = {}; let n = 0;
+      for (let i = 0; i < lines.length; i++){
+        const c = lines[i].split(/[;,\t]/); if (c.length < 5) continue;
+        let k = 1, ts = c[0].trim();
+        if (/^\d{1,2}:\d{2}/.test((c[1] || "").trim())){ ts += " " + c[1].trim(); k = 2; }
+        const o = parseFloat(c[k]), h = parseFloat(c[k + 1]), l = parseFloat(c[k + 2]), cl = parseFloat(c[k + 3]);
+        if (![o, h, l, cl].every(isFinite)) continue;
+        const day = ts.slice(0, 10).replace(/[^0-9]/g, "-");
+        (out[day] = out[day] || []).push([ts, o, h, l, cl]); n++;
+      }
+      return Object.keys(out).filter(d => out[d].length >= 200).map(d => ({day: d, bars: out[d]}));
+    }
+    function draw(){
+      const W = FW, H = 230, win = bars.slice(Math.max(0, pos - 90), pos); if (!win.length) return;
+      let lo = Infinity, hi = -Infinity; win.forEach(b => { lo = Math.min(lo, b[3]); hi = Math.max(hi, b[2]); }); if (hi === lo) hi = lo + 1;
+      const pad = (hi - lo) * .06; lo -= pad; hi += pad;
+      const cw = (W - 50) / 90, Y = v => 8 + (hi - v) / (hi - lo) * (H - 16); let s = "";
+      for (let g = 0; g <= 4; g++){ const v = lo + (hi - lo) * g / 4; s += '<line x1="0" y1="' + Y(v).toFixed(1) + '" x2="' + (W - 46) + '" y2="' + Y(v).toFixed(1) + '" class="gl"/><text x="' + (W - 42) + '" y="' + (Y(v) + 3.5).toFixed(1) + '" class="brv f-muted" style="font-size:9.5px;font-weight:500">' + esc(fnum(Math.round(v * 100) / 100)) + '</text>'; }
+      win.forEach((b, i) => { const x = 3 + i * cw + cw / 2, up = b[4] >= b[1], c = up ? "var(--good)" : "var(--bad)", t = Y(Math.max(b[1], b[4])), bt = Y(Math.min(b[1], b[4]));
+        s += '<line x1="' + x.toFixed(1) + '" y1="' + Y(b[2]).toFixed(1) + '" x2="' + x.toFixed(1) + '" y2="' + Y(b[3]).toFixed(1) + '" stroke="' + c + '" stroke-width="1"/><rect x="' + (x - cw * .32).toFixed(1) + '" y="' + t.toFixed(1) + '" width="' + (cw * .64).toFixed(1) + '" height="' + Math.max(1, bt - t).toFixed(1) + '" fill="' + c + '"/>'; });
+      ui.svg.innerHTML = svgWrap(H, s);
+      ui.info.textContent = ui.day + " · " + String(win[win.length - 1][0]).slice(11, 16) + " · svíčka " + pos + " z " + bars.length;
+    }
+    function stop(){ if (timer){ clearInterval(timer); timer = null; } if (ui) ui.play.textContent = "Přehrát"; }
+    function pick(){
+      stop(); const d = days[Math.floor(Math.random() * days.length)]; bars = d.bars; ui.day = d.day;
+      pos = Math.min(bars.length, Math.max(60, Math.floor(bars.length * .35))); draw();
+    }
+    function build(){
+      const out = $("rp-out"); clear(out);
+      const fig = el("figure","fig pa-fig"), svg = el("div","pa-svg"), info = el("span","small muted"), ctl = el("div","rp-ctl");
+      fig.appendChild(svg); out.appendChild(fig); out.appendChild(info);
+      const mk = (t, fn, cls) => { const b = el("button", cls || null, t); b.type = "button"; b.addEventListener("click", fn); ctl.appendChild(b); return b; };
+      ui = {svg: svg, info: info};
+      mk("+1", () => { stop(); if (pos < bars.length){ pos++; draw(); } });
+      mk("+5", () => { stop(); pos = Math.min(bars.length, pos + 5); draw(); });
+      ui.play = mk("Přehrát", () => { if (timer){ stop(); return; } ui.play.textContent = "Pauza"; timer = setInterval(() => { if (pos >= bars.length){ stop(); return; } pos++; draw(); }, 350); }, "primary");
+      mk("Jiný den", pick);
+      out.appendChild(ctl);
+      out.appendChild(el("p","small muted","Zkus si před každou další svíčkou říct, kde je likvidita a kam cena půjde. Časy jsou tak, jak jsou v souboru."));
+    }
+    $("rp-file").addEventListener("change", ev => {
+      const f = ev.target.files && ev.target.files[0], out = $("rp-out"); if (!f) return; clear(out);
+      out.appendChild(el("p","small muted","Načítám…"));
+      const rd = new FileReader();
+      rd.onload = () => { days = parse(String(rd.result)); clear(out);
+        if (!days.length){ out.appendChild(el("p","small","V souboru jsem nenašel minutové svíčky (čas, open, high, low, close).")); return; }
+        build(); pick(); };
+      rd.readAsText(f); ev.target.value = "";
+    });
+    window.addEventListener("hashchange", stop);
+  })();
+  setTimeout(refreshAll, 900); setTimeout(refreshAll, 2600);
+
   async function start(){
     $("c-save").textContent = "Postup se ukládá v tomto prohlížeči.";
     $("l-save").textContent = "Postup se ukládá v tomto prohlížeči.";
@@ -1606,7 +2119,7 @@ details.week.anim[open]>.weekbody{animation:rise .35s ease both}
       concepts = {}; (con || []).forEach(c => { concepts[c.id] = c; }); conceptsLoaded = true;
       insights = (ins || []).slice().sort(byTs); renderInsights(); renderConcepts();
       lessons = (les || []).slice().sort(byTs); lessonsLoaded = true; renderLesson();
-      glossary = glo || []; renderGlossary();
+      glossary = glo || []; renderGlossary(); afterData();
       get("ideas").then(x => { ideas = Array.isArray(x) ? x : []; ideasLoaded = true; renderIdeas(); }).catch(() => { ideasLoaded = true; renderIdeas(); });
       banner("");
     } catch(e){

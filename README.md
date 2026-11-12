@@ -42,3 +42,10 @@ All texts are Czech. Every file is valid JSON; arrays hold objects with a unique
 - `ideas.json`: `[{id (ascii slug), ts, date, title, area: vyuka|denik|model|vzhled|produkt|data, value: 1–3, effort: 1–3, status: new|picked|building|done|dropped, what, why}]`
   - Written by the Vizionář bot. `what` says concretely what would be built, `why` what it changes for the user. Only the owner changes `status` (through Claude in chat).
 - `practice.json`: `[{id, topic, q, answer: [candle indexes], explain, reveal: [marks], candles, h, lo, hi}]` – tasks for "Najdi to na grafu". Generated together with `priceaction.json`; the daily bot run does not change it.
+
+## Co je uložené jen v prohlížeči (boti na to nesahají)
+
+- `knot-journal`: obchodní deník (`trades`) a denní plány (`plans`).
+- `knot-activity`: dny, kdy byl uživatel aktivní (série).
+- `ictlab-laura`: postup v lekcích, kartičky (`cards`) a zkoušky týdne (`exam`).
+- Zkouška týdne se skládá z pojmů v `data/glossary.json` podle pole `week`. Každý nový pojem proto musí mít `week` 1–12 a `cat`.
