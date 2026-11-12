@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#09090b">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Knot">
+<meta name="apple-mobile-web-app-title" content="Tape">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
-<title>Knot</title>
+<title>Tape</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -397,11 +397,38 @@ button.exo.ok{border-color:var(--good);color:var(--good)} button.exo.no{border-c
   .rail{display:flex;position:sticky;top:74px;max-height:calc(100vh - 90px);overflow-y:auto;scrollbar-width:none}
   .rail::-webkit-scrollbar{display:none}
 }
+
+/* ---------- v6 ---------- */
+.brand .cd{display:block;flex:none;position:relative;width:.17em;height:.46em;margin:.1em 0 0 .13em;border-radius:.045em;background:var(--good);box-shadow:0 0 16px rgba(61,220,151,.55)}
+.brand .cd::before{content:"";position:absolute;left:50%;width:.05em;margin-left:-.025em;top:-.2em;bottom:-.13em;background:var(--good);border-radius:1em}
+.card{scroll-margin-top:124px} details.week{scroll-margin-top:124px}
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}
+.cal .dh{font-size:10.5px;text-align:center;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+.cal .dc{min-height:50px;border:1px solid var(--line);border-radius:11px;padding:5px 6px;display:flex;flex-direction:column;justify-content:space-between;font-size:11px;color:var(--muted);background:var(--surface2);min-width:0}
+.cal .dc b{font-size:11.5px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.cal .dc.w{background:rgba(61,220,151,.1);border-color:rgba(61,220,151,.35)} .cal .dc.w b{color:var(--good)}
+.cal .dc.l{background:rgba(255,107,107,.1);border-color:rgba(255,107,107,.35)} .cal .dc.l b{color:var(--bad)}
+.cal .dc.today{box-shadow:0 0 0 1.5px var(--ink)}
+.calbox{display:flex;flex-direction:column;gap:10px}
+button.calb{padding:4px 12px;border-radius:999px;font-size:17px;line-height:1.2}
+.pdots{display:flex;gap:4px;flex-wrap:wrap}
+.pdots i{width:15px;height:6px;border-radius:3px;background:#2a2a31}
+.pdots i.d{background:var(--good)} .pdots i.c{background:var(--ink);box-shadow:0 0 10px rgba(255,255,255,.6)}
+.pathbox{display:flex;flex-direction:column;gap:10px}
+button.go{width:100%;text-align:left;font:inherit;cursor:pointer}
+#goal{display:flex;align-items:center;gap:10px} #goal div{display:flex;flex-direction:column;line-height:1.25}
+img.shot{width:96px;height:64px;object-fit:cover;border-radius:10px;border:1px solid var(--line);cursor:zoom-in;transition:width .2s}
+img.shot.big{width:100%;height:auto;cursor:zoom-out}
+.lim{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.ob{position:fixed;inset:0;z-index:30;background:rgba(5,5,7,.88);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);display:grid;place-items:center;padding:16px;overflow:auto;animation:fade .3s ease both}
+.ob .card{max-width:440px;width:100%;gap:14px}
+label.rp-num{flex-direction:row;align-items:center;gap:6px;font-size:13px} label.rp-num input{width:64px;padding:7px 8px}
+summary .cnt.pos{color:var(--good)} summary .cnt.neg{color:var(--bad)}
 </style>
 </head>
 <body>
 <header class="topbar">
-  <a class="brand" href="#prehled" aria-label="Knot"><span>kn</span><i class="o"></i><span>t</span></a>
+  <a class="brand" href="#prehled" aria-label="Tape"><span>tape</span><i class="cd"></i></a>
   <nav aria-label="Sekce">
     <a href="#prehled" data-v="prehled">Přehled</a>
     <a href="#denik" data-v="denik">Deník</a>
@@ -436,7 +463,9 @@ button.exo.ok{border-color:var(--good);color:var(--good)} button.exo.no{border-c
       <div class="hero" id="d-hero">0 R</div>
       <p class="small muted" id="d-sub"></p>
     </div>
+    <div class="card"><div class="row"><h2>Tvoje cesta</h2><div id="goal"></div></div><div class="pathbox"></div></div>
     <div class="card"><div class="row"><h2>Výkon</h2><a class="small" href="#denik">Otevřít deník</a></div><div class="list" id="d-perf"><p class="small muted">Graf výsledku se objeví po druhém zapsaném obchodu.</p></div></div>
+    <div class="card"><div class="calbox"></div></div>
     <div class="card"><h2>Dnes</h2>
       <a class="go" href="#denik"><div><b>Ranní plán a kontrola před vstupem</b><span>Bias, úrovně, seznam a zápis obchodu</span></div><i>›</i></a>
       <a class="go" href="#laura"><div><b>Price action v obrázcích</b><span id="d-next">…</span></div><i>›</i></a>
@@ -446,10 +475,12 @@ button.exo.ok{border-color:var(--good);color:var(--good)} button.exo.no{border-c
   </section>
 
   <section class="view land" id="v-uvod">
-    <div class="card herocard"><span class="kick">Knot</span>
+    <div class="card herocard"><span class="kick">Tape</span>
       <h2>Nauč se číst graf. Pak si veď deník, který ti řekne pravdu.</h2>
       <p class="muted">Škola price action v animovaných obrázcích a obchodní deník v jednom. Bez slibů zisku.</p>
       <a class="go" href="#prehled"><div><b>Otevřít aplikaci</b><span>Vše se ukládá jen v tvém prohlížeči</span></div><i>›</i></a>
+      <button class="primary" type="button" id="pwa" hidden>Nainstalovat na plochu</button>
+      <p class="small muted">Na iPhonu: Sdílet a pak Přidat na plochu. Po prvním otevření funguje i bez připojení.</p>
     </div>
     <div class="feat">
       <div class="card"><b>Price action krok za krokem</b><p class="small muted">Každý pojem se skládá svíčku po svíčce, s úlohami přímo na grafu.</p></div>
@@ -549,6 +580,9 @@ button.exo.ok{border-color:var(--good);color:var(--good)} button.exo.no{border-c
       <label for="p-note">Co chci vidět, než vstoupím<input id="p-note" maxlength="400" placeholder="Sweep PDL v okně 9:30–11:00, pak MSS a FVG"></label>
       <span class="kick">Večer: kam trh opravdu šel</span>
       <div class="chips" id="p-actual"></div>
+      <span class="kick">Denní limity</span>
+      <div class="lim"><label for="lim-n">Nejvíc obchodů za den<input id="lim-n" inputmode="numeric" placeholder="například 2"></label><label for="lim-loss">Nejvyšší ztráta za den (R)<input id="lim-loss" inputmode="decimal" placeholder="například 2"></label></div>
+      <p class="small neg" id="lim-msg" hidden></p>
     </div>
     <div class="card">
       <div class="row"><h2>Před vstupem</h2><span class="pill" id="ck-verdict"></span></div>
@@ -572,10 +606,19 @@ button.exo.ok{border-color:var(--good);color:var(--good)} button.exo.no{border-c
         <label for="j-r">Výsledek v R<input id="j-r" inputmode="decimal" placeholder="například 2 nebo -1"></label>
         <div class="wide"><span class="kick">Chyby</span><div class="chips" id="j-tags" style="margin-top:8px"></div></div>
         <label for="j-note" class="wide">Poznámka<input id="j-note" maxlength="400"></label>
+        <div class="row wide"><label for="j-shot" class="small" style="cursor:pointer"><span class="pill info">Přiložit obrázek grafu</span><input id="j-shot" type="file" accept="image/*" hidden></label><span class="small muted" id="j-shot-name"></span></div>
         <div class="row wide"><button class="primary" type="submit">Uložit obchod</button><span class="small muted" id="j-msg"></span></div>
       </form>
     </div>
     <div class="card"><h2>Statistiky</h2><div class="list" id="j-stats"></div></div>
+    <div class="card"><div class="calbox"></div></div>
+    <div class="card"><h2>Týdenní souhrn</h2><div class="list" id="wk"></div></div>
+    <div class="card"><h2>Playbook</h2><p class="small muted">Každý setup má svoje pravidla a čísla z deníku. Uvidíš, který opravdu funguje.</p><div class="list" id="pb"></div></div>
+    <div class="card"><h2>Import z brokera</h2>
+      <p class="small muted">Nahraj CSV s uzavřenými obchody (Tradovate, NinjaTrader a podobné). Protože v exportu není stop, R se počítá ze zisku v dolarech.</p>
+      <label for="j-risk">Kolik dolarů je u tebe 1 R<input id="j-risk" inputmode="decimal" placeholder="například 100"></label>
+      <div class="row"><label for="j-csv" class="small" style="cursor:pointer"><span class="pill info">Vybrat CSV</span><input id="j-csv" type="file" accept=".csv,text/csv" hidden></label><span class="small muted" id="j-imp-msg"></span></div>
+    </div>
     <div class="card"><h2>Obchody</h2><div class="list" id="j-list"></div>
       <div class="row"><button type="button" id="j-export">Stáhnout zálohu</button><label for="j-import" class="small" style="cursor:pointer">Načíst zálohu<input id="j-import" type="file" accept="application/json,.json" hidden></label></div>
       <p class="small muted">Deník je uložený jen v tomto prohlížeči. Zálohu si stahuj pravidelně, jinak o něj při smazání dat prohlížeče přijdeš.</p>
@@ -612,6 +655,8 @@ button.exo.ok{border-color:var(--good);color:var(--good)} button.exo.no{border-c
       </div>
       <span class="small muted" id="l-save"></span>
     </div>
+
+    <div class="card"><h2>Tvoje cesta</h2><div class="pathbox"></div></div>
 
     <div class="card" id="pa-card">
       <div class="row"><h2>Price action v obrázcích</h2><span class="small muted" id="pa-count"></span></div>
@@ -1690,7 +1735,7 @@ button.exo.ok{border-color:var(--good);color:var(--good)} button.exo.no{border-c
     const l = lessons.find(x => x.id === curLesson);
     const lessonText = l ? "Otevřená lekce: " + (l.title || "") + "\n" + (Array.isArray(l.body) ? l.body.join("\n") : String(l.body || "")) : "Žádná lekce není otevřená.";
     const gl = glossary.map(g => "- " + g.term + (g.en ? " (" + g.en + ")" : "") + ": " + g.def).join("\n").slice(0, 12000);
-    return "Jsi trpělivý lektor na stránce Knot. Učíš Lauru, úplnou začátečnici, základy tradingu podle konceptů ICT (Inner Circle Trader) na futures NQ a ES. "
+    return "Jsi trpělivý lektor na stránce Tape. Učíš Lauru, úplnou začátečnici, základy tradingu podle konceptů ICT (Inner Circle Trader) na futures NQ a ES. "
       + "Odpovídej česky, krátce a jednoduše, s jedním konkrétním příkladem na grafu popsaným slovy. Anglické pojmy nech v originále a při prvním použití je vysvětli. "
       + "Nedávej investiční doporučení ani pokyny, co koupit nebo prodat, a neslibuj zisk. Když se ptá, jestli koncept funguje, řekni poctivě, že ICT koncepty nejsou prokázanou výhodou a musí se ověřit backtestem. "
       + "Když si nejsi jistý, řekni to. Piš prostý text bez Markdownu.\n\n"
@@ -1765,7 +1810,7 @@ button.exo.ok{border-color:var(--good);color:var(--good)} button.exo.no{border-c
   const J_SETUPS = ["Sweep + MSS + FVG", "Sweep + FVG", "CISD", "Order block", "Breaker", "Inverzní FVG", "Jiný"];
   const J_TAGS = ["FOMO", "Bez setupu", "Posunutý stop", "Brzký výstup", "Pozdní vstup", "Revenge", "Mimo okno"];
   let jr = {trades: [], plans: {}}, jTags = {};
-  try { const v = JSON.parse(localStorage.getItem(J_KEY) || "null"); if (v && Array.isArray(v.trades)) jr = {trades: v.trades, plans: v.plans || {}}; } catch(e){}
+  try { const v = JSON.parse(localStorage.getItem(J_KEY) || "null"); if (v && Array.isArray(v.trades)) jr = Object.assign({}, v, {trades: v.trades, plans: v.plans || {}}); } catch(e){}
   function jStore(){ try { localStorage.setItem(J_KEY, JSON.stringify(jr)); } catch(e){} refreshAll(); }
   function jStats(tr){
     const rs = tr.map(t => Number(t.r) || 0), n = rs.length, wins = rs.filter(r => r > 0), losses = rs.filter(r => r < 0);
@@ -1823,10 +1868,11 @@ button.exo.ok{border-color:var(--good);color:var(--good)} button.exo.no{border-c
       const it = el("div","item " + ((Number(t.r) || 0) >= 0 ? "architekt" : "bad")), head = el("div","row"), r = el("b","jr " + ((Number(t.r) || 0) >= 0 ? "pos" : "neg"), sgn(Number(t.r) || 0) + " R");
       head.appendChild(el("h3", null, (t.sym || "") + " · " + (t.dir === "short" ? "short" : "long") + " · " + (t.setup || ""))); head.appendChild(r); it.appendChild(head);
       if (t.note) it.appendChild(el("p","small", t.note));
+      if (t.shot) it.appendChild(shotEl(t.id));
       const meta = el("div","meta"); meta.appendChild(el("span", null, fmtDateTime(t.ts)));
       if (t.ck) meta.appendChild(el("span", null, "seznam " + t.ck.k + "/" + t.ck.n));
       (t.tags || []).forEach(x => meta.appendChild(el("span","tagx", x)));
-      const del = el("button","ck-del","Smazat"); del.type = "button"; del.addEventListener("click", () => { jr.trades = jr.trades.filter(x => x.id !== t.id); jStore(); });
+      const del = el("button","ck-del","Smazat"); del.type = "button"; del.addEventListener("click", () => { jr.trades = jr.trades.filter(x => x.id !== t.id); if (t.shot) shotDel(t.id); jStore(); });
       meta.appendChild(del); it.appendChild(meta); list.appendChild(it);
     });
   }
@@ -1846,16 +1892,16 @@ button.exo.ok{border-color:var(--good);color:var(--good)} button.exo.no{border-c
       const r = parseFloat($("j-r").value);
       if (!isFinite(r)){ $("j-msg").textContent = "Doplň výsledek v R, nebo vstup, stop a výstup."; return; }
       const d = new Date($("j-ts").value), n = ck.items.length, k = ck.items.filter(i => ckOn[i.id]).length;
-      jr.trades.push({id: "t" + Date.now().toString(36), ts: isNaN(d) ? new Date().toISOString() : d.toISOString(), sym: $("j-sym").value, dir: $("j-dir").value, setup: $("j-setup").value,
+      jr.trades.push({id: (lastTid = "t" + Date.now().toString(36)), ts: isNaN(d) ? new Date().toISOString() : d.toISOString(), sym: $("j-sym").value, dir: $("j-dir").value, setup: $("j-setup").value,
         entry: parseFloat($("j-entry").value) || null, stop: parseFloat($("j-stop").value) || null, exit: parseFloat($("j-exit").value) || null, r: Math.round(r * 100) / 100,
         tags: J_TAGS.filter(x => jTags[x]), note: $("j-note").value.trim().slice(0, 400), ck: k ? {k: k, n: n} : null});
       jTags = {}; Array.prototype.forEach.call($("j-tags").children, b => b.setAttribute("aria-pressed","false"));
       ["j-entry","j-stop","j-exit","j-r","j-note"].forEach(id => { $(id).value = ""; });
-      ckOn = {}; renderCk(); touchDay(); jStore(); $("j-msg").textContent = "Obchod uložen.";
+      ckOn = {}; renderCk(); touchDay(); jStore(); $("j-msg").textContent = "Obchod uložen."; afterTrade(lastTid);
     });
     $("j-export").addEventListener("click", () => {
       const blob = new Blob([JSON.stringify({journal: jr, checklist: ck, laura: lp, course: done, activity: act}, null, 1)], {type: "application/json"}), a = document.createElement("a");
-      a.href = URL.createObjectURL(blob); a.download = "knot-zaloha-" + dayKey() + ".json"; document.body.appendChild(a); a.click(); a.remove();
+      a.href = URL.createObjectURL(blob); a.download = "tape-zaloha-" + dayKey() + ".json"; document.body.appendChild(a); a.click(); a.remove();
     });
     $("j-import").addEventListener("change", ev => {
       const f = ev.target.files && ev.target.files[0]; if (!f) return;
@@ -1909,7 +1955,7 @@ button.exo.ok{border-color:var(--good);color:var(--good)} button.exo.no{border-c
     card.appendChild(el("span","pa-kicker", "Kartička " + (fcIdx + 1) + " z " + fcQueue.length));
     card.appendChild(el("b","fterm", g.term || g.id));
     if (g.en && g.en !== g.term) card.appendChild(el("span","small muted", g.en));
-    if (fcOpen) card.appendChild(el("p","fdef", g.def || ""));
+    if (fcOpen){ card.appendChild(el("p","fdef", g.def || "")); const tp = topicFor(g); if (tp){ const tb = el("button", null, "Ukázat v obrázcích"); tb.type = "button"; tb.addEventListener("click", () => openTopic(tp.id)); card.appendChild(tb); } }
     box.appendChild(card);
     const ctl = el("div","pa-ctl");
     if (!fcOpen){ const b = el("button","primary","Ukázat význam"); b.type = "button"; b.addEventListener("click", () => { fcOpen = true; renderFc(); }); ctl.appendChild(el("span")); ctl.appendChild(b); }
@@ -1931,7 +1977,7 @@ button.exo.ok{border-color:var(--good);color:var(--good)} button.exo.no{border-c
     if (pool.length < 6) pool = pool.concat(glossary.filter(g => g.week === n - 1 || g.week === n + 1));
     return shuffled(pool).slice(0, 10).map(g => {
       const others = shuffled(glossary.filter(x => x.id !== g.id && x.cat === g.cat)).concat(shuffled(glossary.filter(x => x.id !== g.id && x.cat !== g.cat))).slice(0, 2);
-      return {term: g.term, opts: shuffled([g].concat(others)).map(x => ({text: x.def, ok: x.id === g.id}))};
+      return {g: g, term: g.term, opts: shuffled([g].concat(others)).map(x => ({text: x.def, ok: x.id === g.id}))};
     });
   }
   function examBlock(n){
@@ -1960,7 +2006,7 @@ button.exo.ok{border-color:var(--good);color:var(--good)} button.exo.no{border-c
         body.appendChild(el("b","exq", "Co znamená „" + q.term + "“?"));
         const btns = q.opts.map(o => { const b = el("button","exo", o.text); b.type = "button";
           b.addEventListener("click", () => { if (answered) return; answered = true; if (o.ok) right++;
-            btns.forEach((x, j) => { x.disabled = true; if (q.opts[j].ok) x.classList.add("ok"); }); if (!o.ok) b.classList.add("no");
+            btns.forEach((x, j) => { x.disabled = true; if (q.opts[j].ok) x.classList.add("ok"); }); if (!o.ok){ b.classList.add("no"); body.appendChild(explain(q.g)); }
             const nx = el("button","primary", i === qs.length - 1 ? "Vyhodnotit" : "Další otázka"); nx.type = "button"; nx.addEventListener("click", () => { i++; ask(); }); body.appendChild(nx); });
           body.appendChild(b); return b; });
       };
@@ -2045,11 +2091,11 @@ button.exo.ok{border-color:var(--good);color:var(--good)} button.exo.no{border-c
     rd.readAsText(f); ev.target.value = "";
   });
 
-  // ---------- market replay (user's own 1m CSV) ----------
+  // ---------- market replay (user's own 1m CSV) with paper trades ----------
   (function replay(){
-    let days = [], bars = [], pos = 0, timer = null, ui = null;
+    let days = [], bars = [], pos = 0, timer = null, ui = null, tr = null;
     function parse(text){
-      const lines = text.split(/\r?\n/), out = {}; let n = 0;
+      const lines = text.split(/\r?\n/), out = {};
       for (let i = 0; i < lines.length; i++){
         const c = lines[i].split(/[;,\t]/); if (c.length < 5) continue;
         let k = 1, ts = c[0].trim();
@@ -2057,38 +2103,61 @@ button.exo.ok{border-color:var(--good);color:var(--good)} button.exo.no{border-c
         const o = parseFloat(c[k]), h = parseFloat(c[k + 1]), l = parseFloat(c[k + 2]), cl = parseFloat(c[k + 3]);
         if (![o, h, l, cl].every(isFinite)) continue;
         const day = ts.slice(0, 10).replace(/[^0-9]/g, "-");
-        (out[day] = out[day] || []).push([ts, o, h, l, cl]); n++;
+        (out[day] = out[day] || []).push([ts, o, h, l, cl]);
       }
       return Object.keys(out).filter(d => out[d].length >= 200).map(d => ({day: d, bars: out[d]}));
     }
+    function stats(){
+      const p = jr.paper || [], s = jStats(p);
+      ui.stat.textContent = p.length ? "Cvičné obchody: " + p.length + " · " + sgn(s.total) + " R · winrate " + Math.round(s.winrate) + " %" : "Zatím žádný cvičný obchod.";
+    }
+    function close(r, why){ jr.paper = jr.paper || []; jr.paper.push({ts: new Date().toISOString(), r: Math.round(r * 100) / 100}); tr = null; ui.msg.textContent = why + " Výsledek " + sgn(Math.round(r * 100) / 100) + " R."; ui.msg.className = "small " + (r >= 0 ? "pos" : "neg"); touchDay(); jStore(); stats(); }
+    function check(b){
+      if (!tr) return;
+      const stopHit = tr.dir > 0 ? b[3] <= tr.s : b[2] >= tr.s, tgtHit = tr.dir > 0 ? b[2] >= tr.t : b[3] <= tr.t;
+      if (stopHit) close(-1, "Stop zasažen."); else if (tgtHit) close(tr.rr, "Cíl zasažen.");
+    }
+    function adv(n){ for (let i = 0; i < n && pos < bars.length; i++){ pos++; check(bars[pos - 1]); } if (pos >= bars.length && tr){ const c = bars[bars.length - 1][4]; close(tr.dir * (c - tr.e) / Math.abs(tr.e - tr.s), "Konec dne."); } draw(); }
     function draw(){
       const W = FW, H = 230, win = bars.slice(Math.max(0, pos - 90), pos); if (!win.length) return;
-      let lo = Infinity, hi = -Infinity; win.forEach(b => { lo = Math.min(lo, b[3]); hi = Math.max(hi, b[2]); }); if (hi === lo) hi = lo + 1;
+      let lo = Infinity, hi = -Infinity; win.forEach(b => { lo = Math.min(lo, b[3]); hi = Math.max(hi, b[2]); });
+      if (tr){ lo = Math.min(lo, tr.s, tr.t); hi = Math.max(hi, tr.s, tr.t); } if (hi === lo) hi = lo + 1;
       const pad = (hi - lo) * .06; lo -= pad; hi += pad;
       const cw = (W - 50) / 90, Y = v => 8 + (hi - v) / (hi - lo) * (H - 16); let s = "";
       for (let g = 0; g <= 4; g++){ const v = lo + (hi - lo) * g / 4; s += '<line x1="0" y1="' + Y(v).toFixed(1) + '" x2="' + (W - 46) + '" y2="' + Y(v).toFixed(1) + '" class="gl"/><text x="' + (W - 42) + '" y="' + (Y(v) + 3.5).toFixed(1) + '" class="brv f-muted" style="font-size:9.5px;font-weight:500">' + esc(fnum(Math.round(v * 100) / 100)) + '</text>'; }
       win.forEach((b, i) => { const x = 3 + i * cw + cw / 2, up = b[4] >= b[1], c = up ? "var(--good)" : "var(--bad)", t = Y(Math.max(b[1], b[4])), bt = Y(Math.min(b[1], b[4]));
         s += '<line x1="' + x.toFixed(1) + '" y1="' + Y(b[2]).toFixed(1) + '" x2="' + x.toFixed(1) + '" y2="' + Y(b[3]).toFixed(1) + '" stroke="' + c + '" stroke-width="1"/><rect x="' + (x - cw * .32).toFixed(1) + '" y="' + t.toFixed(1) + '" width="' + (cw * .64).toFixed(1) + '" height="' + Math.max(1, bt - t).toFixed(1) + '" fill="' + c + '"/>'; });
+      if (tr) [[tr.e, "var(--ink)"], [tr.s, "var(--bad)"], [tr.t, "var(--good)"]].forEach(l => { s += '<line x1="0" y1="' + Y(l[0]).toFixed(1) + '" x2="' + (W - 46) + '" y2="' + Y(l[0]).toFixed(1) + '" stroke="' + l[1] + '" stroke-width="1" stroke-dasharray="4 3"/>'; });
       ui.svg.innerHTML = svgWrap(H, s);
       ui.info.textContent = ui.day + " · " + String(win[win.length - 1][0]).slice(11, 16) + " · svíčka " + pos + " z " + bars.length;
+      ui.long.disabled = ui.short.disabled = !!tr;
     }
     function stop(){ if (timer){ clearInterval(timer); timer = null; } if (ui) ui.play.textContent = "Přehrát"; }
     function pick(){
-      stop(); const d = days[Math.floor(Math.random() * days.length)]; bars = d.bars; ui.day = d.day;
+      stop(); tr = null; const d = days[Math.floor(Math.random() * days.length)]; bars = d.bars; ui.day = d.day; ui.msg.textContent = "";
       pos = Math.min(bars.length, Math.max(60, Math.floor(bars.length * .35))); draw();
+    }
+    function enter(dir){
+      const sd = parseFloat(String(ui.sd.value).replace(",", ".")), rr = parseFloat(String(ui.rr.value).replace(",", "."));
+      if (!(sd > 0) || !(rr > 0)){ ui.msg.textContent = "Vyplň stop v bodech a cíl v R."; ui.msg.className = "small"; return; }
+      const e = bars[pos - 1][4]; tr = {dir: dir, e: e, s: e - dir * sd, t: e + dir * sd * rr, rr: rr};
+      ui.msg.textContent = (dir > 0 ? "Long" : "Short") + " od " + fnum(e) + ", stop " + fnum(tr.s) + ", cíl " + fnum(tr.t) + "."; ui.msg.className = "small muted"; draw();
     }
     function build(){
       const out = $("rp-out"); clear(out);
-      const fig = el("figure","fig pa-fig"), svg = el("div","pa-svg"), info = el("span","small muted"), ctl = el("div","rp-ctl");
+      const fig = el("figure","fig pa-fig"), svg = el("div","pa-svg"), info = el("span","small muted"), ctl = el("div","rp-ctl"), ord = el("div","rp-ctl"), msg = el("span","small"), stat = el("span","small muted");
       fig.appendChild(svg); out.appendChild(fig); out.appendChild(info);
-      const mk = (t, fn, cls) => { const b = el("button", cls || null, t); b.type = "button"; b.addEventListener("click", fn); ctl.appendChild(b); return b; };
-      ui = {svg: svg, info: info};
-      mk("+1", () => { stop(); if (pos < bars.length){ pos++; draw(); } });
-      mk("+5", () => { stop(); pos = Math.min(bars.length, pos + 5); draw(); });
-      ui.play = mk("Přehrát", () => { if (timer){ stop(); return; } ui.play.textContent = "Pauza"; timer = setInterval(() => { if (pos >= bars.length){ stop(); return; } pos++; draw(); }, 350); }, "primary");
-      mk("Jiný den", pick);
-      out.appendChild(ctl);
-      out.appendChild(el("p","small muted","Zkus si před každou další svíčkou říct, kde je likvidita a kam cena půjde. Časy jsou tak, jak jsou v souboru."));
+      const mk = (box, t, fn, cls) => { const b = el("button", cls || null, t); b.type = "button"; b.addEventListener("click", fn); box.appendChild(b); return b; };
+      const num = (label, val) => { const lb = el("label","rp-num", label), i = el("input"); i.value = val; i.inputMode = "decimal"; lb.appendChild(i); ord.appendChild(lb); return i; };
+      ui = {svg: svg, info: info, msg: msg, stat: stat};
+      mk(ctl, "+1", () => { stop(); adv(1); }); mk(ctl, "+5", () => { stop(); adv(5); });
+      ui.play = mk(ctl, "Přehrát", () => { if (timer){ stop(); return; } ui.play.textContent = "Pauza"; timer = setInterval(() => { if (pos >= bars.length){ stop(); return; } adv(1); }, 350); }, "primary");
+      mk(ctl, "Jiný den", pick);
+      ui.sd = num("Stop (body)", "20"); ui.rr = num("Cíl (R)", "2");
+      ui.long = mk(ord, "Long", () => enter(1)); ui.short = mk(ord, "Short", () => enter(-1));
+      out.appendChild(ctl); out.appendChild(ord); out.appendChild(msg); out.appendChild(stat);
+      out.appendChild(el("p","small muted","Vstup je za zavírací cenu poslední svíčky. Když svíčka zasáhne stop i cíl zároveň, počítá se stop. Bez poplatků a skluzu, takže skutečnost bude horší."));
+      stats();
     }
     $("rp-file").addEventListener("change", ev => {
       const f = ev.target.files && ev.target.files[0], out = $("rp-out"); if (!f) return; clear(out);
@@ -2102,6 +2171,250 @@ button.exo.ok{border-color:var(--good);color:var(--good)} button.exo.no{border-c
     window.addEventListener("hashchange", stop);
   })();
   setTimeout(refreshAll, 900); setTimeout(refreshAll, 2600);
+
+  // =====================================================================================
+  // v6: calendar, limits, playbook, weekly review, CSV import, screenshots, path, daily goal, onboarding, offline
+  // =====================================================================================
+  jr.limits = jr.limits || {n: "", loss: ""}; jr.playbook = jr.playbook || {}; jr.rules = jr.rules || {}; jr.paper = jr.paper || [];
+  (function keepExtra(){ try { const v = JSON.parse(localStorage.getItem(J_KEY) || "null"); if (v) ["limits","playbook","rules","paper","risk"].forEach(k => { if (v[k] != null) jr[k] = v[k]; }); } catch(e){} })();
+  let profile = null;
+  try { profile = JSON.parse(localStorage.getItem("knot-profile") || "null"); } catch(e){}
+  const tDay = t => dayKey(new Date(t.ts));
+  const todayTrades = () => jr.trades.filter(t => tDay(t) === dayKey());
+
+  // ---------- screenshots (IndexedDB, stays on this device) ----------
+  let idb = null, pendShot = null, lastTid = null;
+  const idbOpen = () => idb || (idb = new Promise((res, rej) => { const r = indexedDB.open("tape", 1); r.onupgradeneeded = () => r.result.createObjectStore("shots"); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); }));
+  const shotPut = (k, v) => idbOpen().then(db => new Promise((res, rej) => { const t = db.transaction("shots", "readwrite"); t.objectStore("shots").put(v, k); t.oncomplete = res; t.onerror = () => rej(t.error); }));
+  const shotGet = k => idbOpen().then(db => new Promise(res => { const r = db.transaction("shots").objectStore("shots").get(k); r.onsuccess = () => res(r.result); r.onerror = () => res(null); })).catch(() => null);
+  const shotDel = k => idbOpen().then(db => { db.transaction("shots", "readwrite").objectStore("shots").delete(k); }).catch(() => {});
+  function shotEl(id){
+    const im = el("img","shot"); im.alt = "Graf k obchodu"; im.loading = "lazy";
+    shotGet(id).then(v => { if (v) im.src = v; else im.remove(); });
+    im.addEventListener("click", () => im.classList.toggle("big"));
+    return im;
+  }
+  $("j-shot").addEventListener("change", ev => {
+    const f = ev.target.files && ev.target.files[0]; pendShot = null; $("j-shot-name").textContent = "";
+    if (!f) return;
+    const rd = new FileReader();
+    rd.onload = () => { const im = new Image(); im.onload = () => {
+      const k = Math.min(1, 1200 / Math.max(im.width, im.height)), c = document.createElement("canvas"); c.width = Math.round(im.width * k); c.height = Math.round(im.height * k);
+      c.getContext("2d").drawImage(im, 0, 0, c.width, c.height); pendShot = c.toDataURL("image/jpeg", .72); $("j-shot-name").textContent = "Obrázek připraven";
+    }; im.onerror = () => { $("j-shot-name").textContent = "Obrázek se nepodařilo načíst."; }; im.src = rd.result; };
+    rd.readAsDataURL(f);
+  });
+  function afterTrade(id){
+    const t = jr.trades.find(x => x.id === id);
+    if (t && pendShot){ const data = pendShot; pendShot = null; $("j-shot").value = ""; $("j-shot-name").textContent = ""; t.shot = 1; shotPut(id, data).then(jStore, () => { delete t.shot; jStore(); }); }
+    const lm = limitState(); if (lm) $("j-msg").textContent = "Obchod uložen. " + lm;
+  }
+
+  // ---------- daily limits ----------
+  function limitState(){
+    const tr = todayTrades(), n = parseInt(jr.limits.n, 10), loss = parseFloat(String(jr.limits.loss).replace(",", ".")), sum = tr.reduce((a, t) => a + (Number(t.r) || 0), 0);
+    if (isFinite(loss) && loss > 0 && sum <= -loss) return "Denní limit ztráty je pryč (" + sgn(sum) + " R). Pro dnešek konec.";
+    if (isFinite(n) && n > 0 && tr.length >= n) return "Máš " + tr.length + " z " + n + " dnešních obchodů. Další už je mimo plán.";
+    return null;
+  }
+  function renderLimits(){
+    if (document.activeElement !== $("lim-n")) $("lim-n").value = jr.limits.n || "";
+    if (document.activeElement !== $("lim-loss")) $("lim-loss").value = jr.limits.loss || "";
+    const m = limitState(), p = $("lim-msg"); p.hidden = !m; p.textContent = m || "";
+    if (m){ const P = $("rr-plan"); P.appendChild(el("p","small neg", m)); }
+  }
+  ["lim-n","lim-loss"].forEach(id => $(id).addEventListener("change", () => { jr.limits = {n: $("lim-n").value.trim(), loss: $("lim-loss").value.trim()}; jStore(); }));
+
+  // ---------- calendar ----------
+  const calM = new Date(); calM.setDate(1);
+  function renderCal(){
+    const byDay = {}; jr.trades.forEach(t => { const k = tDay(t); (byDay[k] = byDay[k] || []).push(Number(t.r) || 0); });
+    const y = calM.getFullYear(), m = calM.getMonth(), first = (new Date(y, m, 1).getDay() + 6) % 7, days = new Date(y, m + 1, 0).getDate();
+    let tot = 0, cnt = 0; for (let d = 1; d <= days; d++){ const a = byDay[dayKey(new Date(y, m, d))]; if (a){ tot += a.reduce((p, c) => p + c, 0); cnt += a.length; } }
+    document.querySelectorAll(".calbox").forEach(box => {
+      clear(box);
+      const head = el("div","row"), nav = el("div","rp-ctl"), ttl = el("h2", null, calM.toLocaleDateString("cs-CZ", {month: "long", year: "numeric"}));
+      [["‹", -1], ["›", 1]].forEach(o => { const b = el("button","calb", o[0]); b.type = "button"; b.setAttribute("aria-label", o[1] < 0 ? "Předchozí měsíc" : "Další měsíc"); b.addEventListener("click", () => { calM.setMonth(calM.getMonth() + o[1]); renderCal(); }); nav.appendChild(b); });
+      head.appendChild(ttl); head.appendChild(nav); box.appendChild(head);
+      box.appendChild(el("span","small " + (cnt ? (tot >= 0 ? "pos" : "neg") : "muted"), cnt ? "Měsíc: " + sgn(tot) + " R z " + cnt + " obchodů" : "V tomto měsíci žádný obchod."));
+      const g = el("div","cal"); ["Po","Út","St","Čt","Pá","So","Ne"].forEach(d => g.appendChild(el("span","dh", d)));
+      for (let i = 0; i < first; i++) g.appendChild(el("span"));
+      for (let d = 1; d <= days; d++){
+        const k = dayKey(new Date(y, m, d)), a = byDay[k], c = el("div","dc" + (k === dayKey() ? " today" : ""));
+        c.appendChild(el("span", null, d));
+        if (a){ const s = a.reduce((p, x) => p + x, 0); c.classList.add(s >= 0 ? "w" : "l"); c.appendChild(el("b", null, sgn(Math.round(s * 10) / 10))); c.title = a.length + " obchodů"; }
+        g.appendChild(c);
+      }
+      box.appendChild(g);
+    });
+  }
+
+  // ---------- playbook ----------
+  const pbOpen = {};
+  function renderPlaybook(){
+    const box = $("pb"); if (box.contains(document.activeElement) && document.activeElement.tagName === "TEXTAREA") return;
+    clear(box);
+    J_SETUPS.filter(s => s !== "Jiný").forEach(name => {
+      const tr = jr.trades.filter(t => t.setup === name), st = jStats(tr), d = el("details","week"), sm = el("summary"), body = el("div","weekbody");
+      d.open = !!pbOpen[name]; d.addEventListener("toggle", () => { pbOpen[name] = d.open; });
+      sm.appendChild(el("h3", null, name)); sm.appendChild(el("span","cnt " + (tr.length ? (st.total >= 0 ? "pos" : "neg") : ""), tr.length ? sgn(st.total) + " R · " + tr.length + "×" : "bez obchodů")); d.appendChild(sm);
+      if (tr.length){ const g = el("div","tiles"); g.appendChild(tile("Winrate", Math.round(st.winrate) + " %")); g.appendChild(tile("Průměr", sgn(st.avg) + " R")); g.appendChild(tile("Profit factor", st.pf == null ? "–" : fnum(Math.round(st.pf * 100) / 100))); body.appendChild(g); }
+      const lb = el("label", null, "Moje pravidla pro tento setup"), ta = el("textarea"); ta.rows = 4; ta.maxLength = 800; ta.placeholder = "Kdy ho beru, kde je vstup, stop a cíl, kdy ho neberu."; ta.value = jr.playbook[name] || "";
+      ta.addEventListener("change", () => { jr.playbook[name] = ta.value.trim(); jStore(); }); lb.appendChild(ta); body.appendChild(lb);
+      d.appendChild(body); box.appendChild(d);
+    });
+  }
+
+  // ---------- weekly review ----------
+  let wkBack = 0;
+  function weekStart(back){ const d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() - ((d.getDay() + 6) % 7) - 7 * back); return d; }
+  function renderWeek(){
+    const box = $("wk"); if (box.contains(document.activeElement) && document.activeElement.tagName === "INPUT") return;
+    clear(box);
+    const a = weekStart(wkBack), b = new Date(a); b.setDate(b.getDate() + 7); const key = dayKey(a);
+    const tr = jSorted().filter(t => { const x = new Date(t.ts); return x >= a && x < b; }), st = jStats(tr);
+    const chips = el("div","chips"); [["Tento týden", 0], ["Minulý týden", 1]].forEach(o => { const c = el("button","chip", o[0]); c.type = "button"; c.setAttribute("aria-pressed", String(wkBack === o[1])); c.addEventListener("click", () => { wkBack = o[1]; renderWeek(); }); chips.appendChild(c); });
+    box.appendChild(chips);
+    if (!tr.length) box.appendChild(el("p","small muted","V tomto týdnu není žádný obchod."));
+    else {
+      const g = el("div","tiles"); g.appendChild(tile("Výsledek", sgn(st.total) + " R", st.total >= 0 ? "pos" : "neg")); g.appendChild(tile("Obchodů", String(st.n))); g.appendChild(tile("Winrate", Math.round(st.winrate) + " %")); box.appendChild(g);
+      const by = {}; tr.forEach(t => { const k = t.setup || "Jiný"; by[k] = (by[k] || 0) + (Number(t.r) || 0); });
+      const ks = Object.keys(by).sort((x, y) => by[y] - by[x]), tags = {}; tr.forEach(t => (t.tags || []).forEach(x => { tags[x] = (tags[x] || 0) + 1; }));
+      const tk = Object.keys(tags).sort((x, y) => tags[y] - tags[x]), withCk = tr.filter(t => t.ck), full = withCk.filter(t => t.ck.k === t.ck.n).length;
+      const rows = el("div"); railRow(rows, "Nejlepší setup", ks[0] + " (" + sgn(by[ks[0]]) + " R)");
+      if (ks.length > 1) railRow(rows, "Nejslabší setup", ks[ks.length - 1] + " (" + sgn(by[ks[ks.length - 1]]) + " R)");
+      railRow(rows, "Nejčastější chyba", tk.length ? tk[0] + " (" + tags[tk[0]] + "×)" : "žádná zapsaná");
+      if (withCk.length) railRow(rows, "Seznam splněn", full + " z " + withCk.length + " obchodů");
+      box.appendChild(rows);
+    }
+    const lb = el("label", null, "Jedno pravidlo na příští týden"), inp = el("input"); inp.maxLength = 200; inp.value = jr.rules[key] || ""; inp.placeholder = "Například: po první ztrátě dne končím";
+    inp.addEventListener("change", () => { jr.rules[key] = inp.value.trim(); jStore(); }); lb.appendChild(inp); box.appendChild(lb);
+    const prev = jr.rules[dayKey(weekStart(wkBack + 1))]; if (prev) box.appendChild(el("p","small muted","Pravidlo z týdne předtím: " + prev));
+  }
+
+  // ---------- CSV import of broker exports ----------
+  function csvRows(text){
+    const rows = []; let row = [], cur = "", q = false; const sep = (text.split(/\r?\n/)[0].match(/;/g) || []).length > (text.split(/\r?\n/)[0].match(/,/g) || []).length ? ";" : ",";
+    for (let i = 0; i < text.length; i++){ const ch = text[i];
+      if (q){ if (ch === '"'){ if (text[i + 1] === '"'){ cur += '"'; i++; } else q = false; } else cur += ch; }
+      else if (ch === '"') q = true; else if (ch === sep || ch === "\t"){ row.push(cur); cur = ""; }
+      else if (ch === "\n"){ row.push(cur); rows.push(row); row = []; cur = ""; } else if (ch !== "\r") cur += ch; }
+    if (cur || row.length){ row.push(cur); rows.push(row); }
+    return rows.filter(r => r.some(c => c.trim() !== ""));
+  }
+  const money = s => { let v = String(s || "").trim(); const neg = /^\(.*\)$/.test(v.replace(/[$€\s]/g, "")) || /-/.test(v); v = v.replace(/[^0-9.,]/g, ""); if (/,\d{1,2}$/.test(v) && !/\./.test(v)) v = v.replace(",", "."); v = parseFloat(v.replace(/,/g, "")); return isFinite(v) ? (neg ? -v : v) : NaN; };
+  function importCsv(text, risk){
+    const rows = csvRows(text); if (rows.length < 2) return {err: "V souboru nejsou žádné řádky."};
+    const hd = rows[0].map(h => h.toLowerCase().replace(/[^a-z]/g, "")), col = re => hd.findIndex(h => re.test(h));
+    const c = {sym: col(/^(symbol|instrument|contract|ticker|product)/), pnl: col(/^(pnl|pl$|profit|netpl|netprofit|realizedpnl|realizedpl|profitloss)/), side: col(/^(side|marketpos|direction|buysell|longshort|action|type)/),
+      en: col(/^(entryprice|buyprice|avgentry|openprice|entry$)/), ex: col(/^(exitprice|sellprice|avgexit|closeprice|exit$)/), t: col(/^(entrytime|boughttimestamp|opentime|opendate|date|time|timestamp)/), sold: col(/^soldtimestamp/)};
+    if (c.pnl < 0) return {err: "Nenašel jsem sloupec se ziskem (PnL, Profit). Podporovaný je export uzavřených obchodů."};
+    const have = {}; jr.trades.forEach(t => { have[t.id] = 1; }); let add = 0, skip = 0;
+    rows.slice(1).forEach(r => {
+      const pnl = money(r[c.pnl]); if (!isFinite(pnl)){ skip++; return; }
+      let h = 0; const line = r.join("|"); for (let i = 0; i < line.length; i++) h = (h * 31 + line.charCodeAt(i)) | 0;
+      const id = "i" + (h >>> 0).toString(36); if (have[id]){ skip++; return; } have[id] = 1;
+      let d = c.t >= 0 ? new Date(r[c.t]) : new Date(NaN), dir = "long";
+      if (c.side >= 0) dir = /short|sell|^s$/i.test(r[c.side]) ? "short" : "long";
+      else if (c.sold >= 0 && c.t >= 0){ const s = new Date(r[c.sold]); if (!isNaN(s) && !isNaN(d) && s < d){ dir = "short"; d = s; } }
+      const en = c.en >= 0 ? money(r[c.en]) : NaN, ex = c.ex >= 0 ? money(r[c.ex]) : NaN;
+      jr.trades.push({id: id, ts: (isNaN(d) ? new Date() : d).toISOString(), sym: c.sym >= 0 ? String(r[c.sym]).trim().slice(0, 12) : "", dir: dir, setup: "Import",
+        entry: isFinite(en) ? Math.abs(dir === "short" && c.side < 0 ? ex : en) : null, stop: null, exit: isFinite(ex) ? Math.abs(dir === "short" && c.side < 0 ? en : ex) : null, r: Math.round(pnl / risk * 100) / 100, tags: [], note: "", ck: null, usd: pnl});
+      add++;
+    });
+    return {add: add, skip: skip};
+  }
+  $("j-risk").value = jr.risk || "";
+  $("j-csv").addEventListener("change", ev => {
+    const f = ev.target.files && ev.target.files[0]; if (!f) return;
+    const risk = parseFloat(String($("j-risk").value).replace(",", "."));
+    if (!isFinite(risk) || risk <= 0){ $("j-imp-msg").textContent = "Nejdřív vyplň, kolik dolarů je u tebe 1 R."; ev.target.value = ""; return; }
+    jr.risk = risk; const rd = new FileReader();
+    rd.onload = () => { const res = importCsv(String(rd.result), risk); $("j-imp-msg").textContent = res.err || ("Přidáno " + res.add + " obchodů, přeskočeno " + res.skip + "."); if (!res.err){ touchDay(); jStore(); } };
+    rd.readAsText(f); ev.target.value = "";
+  });
+
+  // ---------- learning path ----------
+  const examOk = n => !!(lp.exam && lp.exam[n] && lp.exam[n].best / lp.exam[n].of >= 0.8);
+  function pathSteps(){
+    const s = pa.map(t => ({kind: "pa", id: t.id, title: t.title, done: !!(lp.seen || {})[t.id]}));
+    if (pr.length) s.push({kind: "pr", title: "Najdi to na grafu", done: !!(lp.practice && lp.practice.runs)});
+    if (course) course.weeks.forEach(w => s.push({kind: "ex", n: w.n, title: "Zkouška " + w.n + ". týdne", done: examOk(w.n)}));
+    return s;
+  }
+  function openTopic(id){ location.hash = "#laura"; paCur = id; paStep = 0; paBuild(); setTimeout(() => $("pa-card").scrollIntoView({block: "start"}), 80); }
+  function goStep(st){
+    if (st.kind === "pa") openTopic(st.id);
+    else if (st.kind === "pr"){ location.hash = "#laura"; setTimeout(() => $("pr-card").scrollIntoView({block: "start"}), 80); }
+    else { location.hash = "#room"; openWeek = st.n; renderCourse(); setTimeout(() => { const r = courseRefs[st.n]; if (r) r.d.scrollIntoView({block: "start"}); }, 80); }
+  }
+  function renderPath(){
+    const s = pathSteps(), cur = s.findIndex(x => !x.done), got = s.filter(x => x.done).length;
+    document.querySelectorAll(".pathbox").forEach(box => {
+      clear(box); if (!s.length){ box.appendChild(el("p","small muted","Načítám…")); return; }
+      const dots = el("div","pdots"); s.forEach((x, i) => { const d = el("i", x.done ? "d" : (i === cur ? "c" : "")); d.title = x.title; dots.appendChild(d); }); box.appendChild(dots);
+      box.appendChild(el("span","small muted","Krok " + Math.min(got + 1, s.length) + " z " + s.length));
+      if (cur < 0){ box.appendChild(el("p", null, "Celá cesta je hotová. Teď už jen opakovat a vést deník.")); return; }
+      const a = el("button","go"), w = el("div"); a.type = "button"; w.appendChild(el("b", null, s[cur].title)); w.appendChild(el("span", null, s[cur].kind === "pa" ? "Téma v obrázcích, pár minut" : s[cur].kind === "pr" ? "Úlohy přímo na grafu" : "Deset otázek, složeno od osmi"));
+      a.appendChild(w); a.appendChild(el("i", null, "›")); a.addEventListener("click", () => goStep(s[cur])); box.appendChild(a);
+      if (s[cur + 1]) box.appendChild(el("span","small muted","Potom: " + s[cur + 1].title));
+    });
+  }
+  function topicFor(g){
+    const keys = [g.en, g.term, g.id].filter(Boolean).map(x => String(x).toLowerCase());
+    return pa.find(t => { const tt = (t.title + " " + t.id).toLowerCase(); return keys.some(k => k.length >= 3 && tt.includes(k)); }) || null;
+  }
+  function explain(g){
+    const box = el("div","box"); box.appendChild(el("b", null, g.term)); box.appendChild(el("span", null, g.def));
+    lp.cards = lp.cards || {}; lp.cards[g.id] = {box: 0, due: Date.now()};
+    box.appendChild(el("span","small muted","Pojem se ti dnes vrátí v kartičkách."));
+    const t = topicFor(g); if (t){ const b = el("button", null, "Projít v obrázcích: " + t.title); b.type = "button"; b.addEventListener("click", () => openTopic(t.id)); box.appendChild(b); }
+    return box;
+  }
+
+  // ---------- daily goal (minutes spent learning) ----------
+  let mins = {};
+  try { mins = JSON.parse(localStorage.getItem("knot-minutes") || "{}") || {}; } catch(e){ mins = {}; }
+  const goalMin = () => (profile && Number(profile.goal)) || 10;
+  setInterval(() => {
+    const v = document.body.dataset.view; if (document.hidden || (v !== "laura" && v !== "room")) return;
+    const k = dayKey(), before = Math.floor((mins[k] || 0) / 60); mins[k] = (mins[k] || 0) + 10;
+    try { localStorage.setItem("knot-minutes", JSON.stringify(mins)); } catch(e){}
+    if (Math.floor(mins[k] / 60) !== before){ touchDay(); renderGoal(); }
+  }, 10000);
+  function renderGoal(){
+    const box = $("goal"), m = Math.floor((mins[dayKey()] || 0) / 60), g = goalMin(), p = Math.min(1, m / g), C = 2 * Math.PI * 17;
+    box.innerHTML = '<svg viewBox="0 0 44 44" width="44" height="44" aria-hidden="true"><circle cx="22" cy="22" r="17" fill="none" stroke="#26262c" stroke-width="5"/><circle cx="22" cy="22" r="17" fill="none" stroke="' + (p >= 1 ? "var(--good)" : "var(--ink)") + '" stroke-width="5" stroke-linecap="round" stroke-dasharray="' + (C * p).toFixed(1) + " " + C.toFixed(1) + '" transform="rotate(-90 22 22)"/></svg>';
+    const t = el("div"); t.appendChild(el("b", null, m + " z " + g + " min")); t.appendChild(el("span","small muted", p >= 1 ? "Dnešní cíl splněn" : "Dnešní cíl učení")); box.appendChild(t);
+  }
+
+  // ---------- onboarding ----------
+  (function onboarding(){
+    const used = jr.trades.length || Object.keys(lp.seen || {}).length || Object.keys(done).length || Object.keys(act).length;
+    if (profile || used){ if (profile && profile.sym) $("j-sym").value = profile.sym; return; }
+    const ov = el("div","ob"), card = el("div","card"), ans = {level: "start", sym: "NQ", goal: 10};
+    card.appendChild(el("span","kick","Vítej v Tape")); card.appendChild(el("h2", null, "Tři otázky a můžeš začít"));
+    [["Kde teď jsi?", "level", [["start","Začínám od nuly"],["trade","Už obchoduji"]]], ["Jaký trh tě zajímá?", "sym", [["NQ","NQ"],["ES","ES"],["MNQ","MNQ"],["MES","MES"]]], ["Kolik času denně na učení?", "goal", [[5,"5 minut"],[10,"10 minut"],[20,"20 minut"]]]].forEach(q => {
+      card.appendChild(el("span","small muted", q[0])); const ch = el("div","chips");
+      q[2].forEach(o => { const b = el("button","chip", o[1]); b.type = "button"; b.setAttribute("aria-pressed", String(ans[q[1]] === o[0]));
+        b.addEventListener("click", () => { ans[q[1]] = o[0]; Array.prototype.forEach.call(ch.children, x => x.setAttribute("aria-pressed", String(x === b))); }); ch.appendChild(b); });
+      card.appendChild(ch);
+    });
+    const go = el("button","primary","Začít"); go.type = "button";
+    go.addEventListener("click", () => { profile = ans; try { localStorage.setItem("knot-profile", JSON.stringify(profile)); } catch(e){} $("j-sym").value = ans.sym; ov.remove(); touchDay(); refreshAll(); if (ans.level === "trade") location.hash = "#denik"; });
+    card.appendChild(go); card.appendChild(el("span","small muted","Odpovědi zůstávají jen v tomto prohlížeči."));
+    ov.appendChild(card); document.body.appendChild(ov);
+  })();
+
+  // ---------- install and offline ----------
+  if ("serviceWorker" in navigator && location.protocol === "https:") navigator.serviceWorker.register("sw.js").catch(() => {});
+  let deferred = null;
+  window.addEventListener("beforeinstallprompt", ev => { ev.preventDefault(); deferred = ev; $("pwa").hidden = false; });
+  $("pwa").addEventListener("click", () => { if (deferred){ deferred.prompt(); deferred = null; $("pwa").hidden = true; } });
+
+  const _refreshAll = refreshAll;
+  refreshAll = function(){ _refreshAll(); try { renderLimits(); renderCal(); renderPlaybook(); renderWeek(); renderPath(); renderGoal(); } catch(e){ if (window.console) console.error(e); } };
+  refreshAll();
 
   async function start(){
     $("c-save").textContent = "Postup se ukládá v tomto prohlížeči.";

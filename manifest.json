@@ -1,6 +1,6 @@
 {
- "name": "Knot",
- "short_name": "Knot",
+ "name": "Tape",
+ "short_name": "Tape",
  "start_url": "./",
  "display": "standalone",
  "background_color": "#09090b",

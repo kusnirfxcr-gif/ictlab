@@ -175,7 +175,7 @@
   "area": "denik",
   "value": 3,
   "effort": 2,
-  "status": "new",
+  "status": "done",
   "what": "Načtení CSV exportu z Tradovate, NinjaTraderu nebo TradingView přímo do deníku.",
   "why": "Ruční zápis je hlavní důvod, proč lidé deník přestanou vést. Nejlepší deníky stojí na importu."
  },
@@ -187,7 +187,7 @@
   "area": "denik",
   "value": 3,
   "effort": 1,
-  "status": "new",
+  "status": "done",
   "what": "Měsíční kalendář, každý den zelený nebo červený s výsledkem v R a počtem obchodů.",
   "why": "Jeden pohled ukáže, které dny a týdny fungují. Je to nejpoužívanější obrazovka v placených denících."
  },
@@ -199,7 +199,7 @@
   "area": "denik",
   "value": 3,
   "effort": 2,
-  "status": "new",
+  "status": "done",
   "what": "K obchodu jde přiložit screenshot grafu a kreslit do něj poznámky.",
   "why": "Bez obrázku se z obchodu nedá zpětně nic naučit."
  },
@@ -211,7 +211,7 @@
   "area": "denik",
   "value": 3,
   "effort": 2,
-  "status": "new",
+  "status": "done",
   "what": "Karta pro každý setup: pravidla, vzorový obrázek a živé statistiky z deníku.",
   "why": "Ukáže, který setup opravdu vydělává a který jen vypadá dobře."
  },
@@ -223,7 +223,7 @@
   "area": "denik",
   "value": 2,
   "effort": 2,
-  "status": "new",
+  "status": "done",
   "what": "Každou neděli stránka: co fungovalo, nejčastější chyba, jedno pravidlo na příští týden.",
   "why": "Čísla sama nic nezmění, změní to až závěr, který si z nich člověk udělá."
  },
@@ -235,7 +235,7 @@
   "area": "denik",
   "value": 2,
   "effort": 1,
-  "status": "new",
+  "status": "done",
   "what": "Vlastní pravidla: maximum obchodů a maximální ztráta za den. Po překročení deník upozorní.",
   "why": "Největší ztráty vznikají po první ztrátě dne."
  },
@@ -247,7 +247,7 @@
   "area": "vyuka",
   "value": 3,
   "effort": 2,
-  "status": "new",
+  "status": "done",
   "what": "Jedna mapa od první svíčky po celý setup. Další krok se odemkne po splnění předchozího.",
   "why": "Laura teď musí sama vědět, kam jít dál. Jasná cesta drží u učení."
  },
@@ -259,7 +259,7 @@
   "area": "vyuka",
   "value": 2,
   "effort": 1,
-  "status": "new",
+  "status": "done",
   "what": "Cíl deset minut denně s kroužkem postupu na přehledu.",
   "why": "Krátká každodenní dávka funguje líp než dlouhé učení jednou týdně."
  },
@@ -271,7 +271,7 @@
   "area": "vyuka",
   "value": 2,
   "effort": 2,
-  "status": "new",
+  "status": "done",
   "what": "Po chybě ve zkoušce nebo na kartičce se ukáže obrázek pojmu a odkaz na lekci.",
   "why": "Chyba je nejlepší chvíle na učení, teď se jen přebarví tlačítko."
  },
@@ -283,7 +283,7 @@
   "area": "vyuka",
   "value": 3,
   "effort": 3,
-  "status": "new",
+  "status": "done",
   "what": "V přehrávání trhu jde zadat vstup, stop a cíl a výsledek se zapíše do cvičného deníku.",
   "why": "Trénink bez rizika, který se počítá stejně jako ostrý deník."
  },
@@ -295,7 +295,7 @@
   "area": "produkt",
   "value": 3,
   "effort": 1,
-  "status": "new",
+  "status": "done",
   "what": "Tři otázky při prvním otevření: začátečník nebo obchodník, jaký trh, kolik času denně. Podle toho se nastaví přehled.",
   "why": "První minuta rozhoduje, jestli se člověk vrátí."
  },
@@ -307,7 +307,7 @@
   "area": "produkt",
   "value": 2,
   "effort": 2,
-  "status": "new",
+  "status": "done",
   "what": "Aplikace jde přidat na plochu telefonu a funguje bez připojení.",
   "why": "Působí jako skutečná aplikace bez obchodu s aplikacemi."
  }

@@ -1,4 +1,4 @@
-# Knot
+# Tape
 
 Web, na kterém boti denně zapisují poznatky z ICT obsahu (včetně kanálu ICT Gems), ladí scalpingový model pro NQ a ES a připravují lekce pro začátečníky. Běží na GitHub Pages z větve `main`.
 
@@ -49,3 +49,4 @@ All texts are Czech. Every file is valid JSON; arrays hold objects with a unique
 - `knot-activity`: dny, kdy byl uživatel aktivní (série).
 - `ictlab-laura`: postup v lekcích, kartičky (`cards`) a zkoušky týdne (`exam`).
 - Zkouška týdne se skládá z pojmů v `data/glossary.json` podle pole `week`. Každý nový pojem proto musí mít `week` 1–12 a `cat`.
+- `sw.js` zajišťuje práci offline. Boti ho nemění. Další klíče v prohlížeči: `knot-profile` (úvodní průvodce), `knot-minutes` (denní cíl), IndexedDB `tape` (obrázky k obchodům).
