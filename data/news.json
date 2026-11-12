@@ -1,0 +1,79 @@
+{
+ "updated": "2026-11-12T21:30:00Z",
+ "events": [
+  {
+   "date": "2026-11-13",
+   "time": "14:30",
+   "title": "PPI (ceny výrobců), říjen",
+   "impact": 2,
+   "note": "Inflace na straně firem. Datum podle jednoho zdroje, ověř si ho."
+  },
+  {
+   "date": "2026-11-17",
+   "time": "14:30",
+   "title": "Maloobchodní tržby USA, říjen",
+   "impact": 3,
+   "note": "Útraty spotřebitelů. Kolem zveřejnění bývá na NQ a ES prudký pohyb."
+  },
+  {
+   "date": "2026-11-17",
+   "time": "22:20",
+   "title": "Výsledky Nvidia",
+   "impact": 3,
+   "note": "Po zavření trhu. Hýbe hlavně NQ."
+  },
+  {
+   "date": "2026-11-18",
+   "time": "20:00",
+   "title": "Zápis ze zasedání Fedu (FOMC minutes)",
+   "impact": 2,
+   "note": "Podrobnosti z říjnového zasedání o sazbách."
+  },
+  {
+   "date": "2026-11-25",
+   "time": "14:30",
+   "title": "HDP USA (2. odhad) a inflace PCE",
+   "impact": 3,
+   "note": "PCE je měřítko inflace, které sleduje Fed."
+  },
+  {
+   "date": "2026-12-04",
+   "time": "14:30",
+   "title": "Zpráva o zaměstnanosti (NFP), listopad",
+   "impact": 3,
+   "note": "Nejsledovanější data měsíce."
+  },
+  {
+   "date": "2026-12-09",
+   "time": "20:00",
+   "title": "Rozhodnutí Fedu o sazbách",
+   "impact": 3,
+   "note": "Tisková konference začíná ve 20:30."
+  },
+  {
+   "date": "2026-12-10",
+   "time": "14:30",
+   "title": "Inflace CPI, listopad",
+   "impact": 3,
+   "note": ""
+  }
+ ],
+ "posts": [
+  {
+   "date": "2026-11-12",
+   "who": "Donald Trump",
+   "text": "Na Truth Social pohrozil zdvojnásobením cel na Mexiko, pokud nezastaví karavany migrantů. Časový plán ani dotčené zboží neuvedl. Akcie spotřebitelských firem ten den mírně oslabily.",
+   "source": "WSMH",
+   "url": "https://midmichigannow.com/news/nation-world/trump-threatens-to-double-tariffs-mexico-if-it-fails-to-stop-migrant-caravan-truth-social",
+   "impact": 2
+  },
+  {
+   "date": "2026-11-05",
+   "who": "Donald Trump",
+   "text": "Po propadu indexu Dow o 1 833 bodů napsal, že za pokles akcií může volební výsledek demokratů.",
+   "source": "The Hill",
+   "url": "https://thehill.com/homenews/administration/6203425-donald-trump-stock-market-losses-2026-midterms-economy/",
+   "impact": 1
+  }
+ ]
+}

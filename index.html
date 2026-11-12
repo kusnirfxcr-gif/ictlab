@@ -377,7 +377,7 @@ body[data-view="prehled"] .rail{display:flex}
 .fgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .fgrid .wide{grid-column:1/-1}
 .tagx{color:var(--amber)}
-.item.bad{border-left-color:var(--bad)}
+.item.bad::before{background:var(--bad)} .item.c-good::before{background:var(--good)} .item.c-bad::before{background:var(--bad)} .item.c-warn::before{background:var(--amber)}
 .fcard{border:1px solid var(--line);border-radius:18px;background:linear-gradient(180deg,#15151a,#0e0e12);padding:26px 18px;min-height:190px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;animation:rise .35s ease both}
 .fterm{font-size:26px;font-weight:800;letter-spacing:-.02em}
 .fdef{font-size:16px;line-height:1.55;max-width:52ch;animation:fade .35s ease both}
@@ -424,6 +424,22 @@ img.shot.big{width:100%;height:auto;cursor:zoom-out}
 .ob .card{max-width:440px;width:100%;gap:14px}
 label.rp-num{flex-direction:row;align-items:center;gap:6px;font-size:13px} label.rp-num input{width:64px;padding:7px 8px}
 summary .cnt.pos{color:var(--good)} summary .cnt.neg{color:var(--bad)}
+
+/* ---------- v7 ---------- */
+.brand.big{font-size:clamp(68px,17vw,120px);justify-content:center;padding:.05em 0 0;filter:drop-shadow(0 0 34px rgba(255,255,255,.22))}
+.herocard{padding:34px 18px 26px;gap:14px}
+.lead{font-size:17px;color:var(--muted);max-width:44ch}
+.herostats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;width:100%;text-align:left}
+.cta{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.abtn{padding:11px 18px;border-radius:999px;border:1px solid var(--line);text-decoration:none;color:var(--ink);font-weight:600;font-size:14.5px;background:var(--surface2);transition:transform .2s,border-color .2s}
+.abtn:hover{transform:translateY(-1px);border-color:#3a3a43}
+.abtn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink);box-shadow:0 0 26px rgba(255,255,255,.22)}
+.nrow{display:grid;grid-template-columns:48px minmax(0,1fr) auto;gap:10px;align-items:start;padding:10px 12px;border:1px solid var(--line);border-radius:14px;background:var(--surface2)}
+.nrow div{display:flex;flex-direction:column;gap:2px;min-width:0} .nrow div span{font-size:13px;color:var(--muted)}
+.ntime{font-variant-numeric:tabular-nums;color:var(--muted);font-weight:600}
+.imp{display:flex;gap:3px;padding-top:7px} .imp i{width:6px;height:6px;border-radius:50%;background:#34343c} .imp i.on{background:var(--amber)} .imp i.hi{background:var(--bad)}
+.npost{display:flex;flex-direction:column;gap:4px;padding:10px 12px;border-left:2px solid var(--accent);background:var(--surface2);border-radius:0 14px 14px 0}
+@media (min-width:560px){.herostats{grid-template-columns:repeat(4,minmax(0,1fr))}}
 </style>
 </head>
 <body>
@@ -432,6 +448,7 @@ summary .cnt.pos{color:var(--good)} summary .cnt.neg{color:var(--bad)}
   <nav aria-label="Sekce">
     <a href="#prehled" data-v="prehled">Přehled</a>
     <a href="#denik" data-v="denik">Deník</a>
+    <a href="#kouc" data-v="kouc">Kouč</a>
     <a href="#laura" data-v="laura">Laura</a>
     <a href="#room" data-v="room">Dictator's Room</a>
     <a href="#poznatky" data-v="poznatky">Poznatky</a>
@@ -459,18 +476,42 @@ summary .cnt.pos{color:var(--good)} summary .cnt.neg{color:var(--bad)}
 
   <section class="view" id="v-prehled">
     <div class="card herocard">
+      <div class="brand big" aria-hidden="true"><span>tape</span><i class="cd"></i></div>
       <span class="kick" id="d-date"></span>
-      <div class="hero" id="d-hero">0 R</div>
-      <p class="small muted" id="d-sub"></p>
+      <div class="hero" id="d-hero" hidden></div>
+      <p class="lead" id="d-sub"></p>
+      <div class="herostats" id="d-hs"></div>
+      <div class="cta"><a class="abtn primary" href="#denik">Zapsat obchod</a><a class="abtn" href="#laura">Pokračovat v učení</a><a class="abtn" href="#kouc">Zeptat se kouče</a></div>
+    </div>
+    <div class="card"><div class="row"><h2>Kalendář zpráv</h2><span class="small muted" id="nw-upd"></span></div>
+      <div class="list" id="nw"></div>
+      <p class="small muted">Časy jsou v našem čase. Kalendář doplňují boti, není to živý přenos. Výroky jsou shrnuté vlastními slovy s odkazem na zdroj.</p>
     </div>
     <div class="card"><div class="row"><h2>Tvoje cesta</h2><div id="goal"></div></div><div class="pathbox"></div></div>
-    <div class="card"><div class="row"><h2>Výkon</h2><a class="small" href="#denik">Otevřít deník</a></div><div class="list" id="d-perf"><p class="small muted">Graf výsledku se objeví po druhém zapsaném obchodu.</p></div></div>
+    <div class="card" id="d-perf-card"><div class="row"><h2>Výkon</h2><a class="small" href="#denik">Otevřít deník</a></div><div class="list" id="d-perf"><p class="small muted">Graf výsledku se objeví po druhém zapsaném obchodu.</p></div></div>
     <div class="card"><div class="calbox"></div></div>
     <div class="card"><h2>Dnes</h2>
       <a class="go" href="#denik"><div><b>Ranní plán a kontrola před vstupem</b><span>Bias, úrovně, seznam a zápis obchodu</span></div><i>›</i></a>
       <a class="go" href="#laura"><div><b>Price action v obrázcích</b><span id="d-next">…</span></div><i>›</i></a>
       <a class="go" href="#laura"><div><b>Kartičky</b><span id="d-cards">…</span></div><i>›</i></a>
       <a class="go" href="#room"><div><b>Dictator's Room</b><span>Dvanáctitýdenní kurz se zkouškou na konci každého týdne</span></div><i>›</i></a>
+    </div>
+  </section>
+
+  <section class="view" id="v-kouc">
+    <div class="card"><div class="row"><h2>Kouč</h2><span class="pill info">AI</span></div>
+      <p class="muted">Čte tvůj deník a hodnotí proces: které obchody byly podle plánu, kde se opakují chyby a na čem pracovat. Neříká, co koupit nebo prodat.</p></div>
+    <div class="card"><h2>Rozbor deníku</h2><p class="small muted">Počítá se přímo z tvých obchodů, bez AI a zdarma.</p><div class="list" id="co-find"></div></div>
+    <div class="card"><h2>Zeptej se kouče</h2>
+      <div class="chips" id="co-quick"></div>
+      <div class="chat" id="co-log"></div>
+      <div class="askrow"><textarea id="co-box" rows="2" placeholder="Třeba: Zhodnoť moje obchody z tohoto týdne"></textarea><button class="primary" id="co-send" type="button">Odeslat</button></div>
+      <div class="row"><button type="button" id="co-copy">Zkopírovat podklady pro Claude</button><span class="small muted" id="co-msg"></span></div>
+      <details class="ans"><summary>Nastavení AI</summary>
+        <p class="small muted">Aby kouč odpovídal přímo tady, potřebuje API klíč od Anthropic. Platí se podle spotřeby. Klíč se uloží jen v tomto prohlížeči a posílá se jen na api.anthropic.com spolu s daty z deníku.</p>
+        <form class="inline" onsubmit="return false"><input id="co-key" type="password" autocomplete="off" placeholder="sk-ant-…" aria-label="API klíč"><button type="button" id="co-key-save">Uložit</button><button type="button" id="co-key-del">Smazat</button></form>
+        <span class="small muted" id="co-key-state"></span>
+      </details>
     </div>
   </section>
 
@@ -707,6 +748,7 @@ summary .cnt.pos{color:var(--good)} summary .cnt.neg{color:var(--bad)}
   <p class="small muted">Vzdělávací nástroj, žádné investiční doporučení. Obchodování futures je rizikové a žádný model nezaručuje zisk. <a href="#uvod">O aplikaci</a></p>
 </div>
 <aside class="rail" aria-label="Dnešek">
+  <div class="card"><span class="kick">V kalendáři</span><div id="rr-news"></div></div>
   <div class="card"><div class="row"><span class="kick">Plán dne</span><b id="rr-date"></b></div><div class="list" id="rr-plan"></div><a class="small" href="#denik">Upravit plán</a></div>
   <div class="card"><span class="kick">Poslední obchody</span><div class="list" id="rr-trades"></div></div>
 </aside>
@@ -766,7 +808,7 @@ summary .cnt.pos{color:var(--good)} summary .cnt.neg{color:var(--bad)}
   });
 
   // Views
-  const VIEWS = ["prehled","uvod","model","poznatky","strategie","backtest","room","laura","denik","napady"];
+  const VIEWS = ["prehled","uvod","kouc","model","poznatky","strategie","backtest","room","laura","denik","napady"];
   function route(){
     const h = (location.hash || "").replace("#","");
     const v = VIEWS.includes(h) ? h : "prehled"; document.body.dataset.view = v;
@@ -2049,9 +2091,9 @@ summary .cnt.pos{color:var(--good)} summary .cnt.neg{color:var(--bad)}
     const tr = jSorted(), st = jStats(tr), d = new Date();
     $("d-date").textContent = d.toLocaleDateString("cs-CZ", {weekday: "long", day: "numeric", month: "long", year: "numeric"});
     $("rr-date").textContent = d.getDate() + "/" + (d.getMonth() + 1);
-    const hero = $("d-hero"); hero.textContent = tr.length ? sgn(st.total) + " R" : "0 R"; hero.className = "hero " + (st.total < 0 ? "neg" : "");
+    const hero = $("d-hero"); hero.textContent = tr.length ? sgn(st.total) + " R" : ""; hero.hidden = !tr.length; hero.className = "hero " + (st.total < 0 ? "neg" : "");
     const week = tr.filter(t => Date.now() - new Date(t.ts).getTime() < 7 * 864e5), ws = jStats(week);
-    $("d-sub").textContent = tr.length ? Math.round(st.winrate) + " % winrate · " + st.wins + " zisků / " + st.losses + " ztrát · za 7 dní " + sgn(ws.total) + " R" : "Zapiš první obchod a tady uvidíš svůj výsledek v R.";
+    $("d-sub").textContent = tr.length ? Math.round(st.winrate) + " % winrate · " + st.wins + " zisků / " + st.losses + " ztrát · za 7 dní " + sgn(ws.total) + " R" : "Čti graf. Veď deník. Zlepšuj se každý den.";
     const box = $("d-perf"); clear(box);
     if (tr.length){
       const g = el("div","tiles"); g.appendChild(tile("Obchodů", String(st.n))); g.appendChild(tile("Průměr", sgn(st.avg) + " R")); g.appendChild(tile("Profit factor", st.pf == null ? "–" : fnum(Math.round(st.pf * 100) / 100))); g.appendChild(tile("Max. drawdown", fnum(Math.round(st.dd * 10) / 10) + " R"));
@@ -2414,6 +2456,129 @@ summary .cnt.pos{color:var(--good)} summary .cnt.neg{color:var(--bad)}
 
   const _refreshAll = refreshAll;
   refreshAll = function(){ _refreshAll(); try { renderLimits(); renderCal(); renderPlaybook(); renderWeek(); renderPath(); renderGoal(); } catch(e){ if (window.console) console.error(e); } };
+  refreshAll();
+
+  // =====================================================================================
+  // v7: coach (rule-based review + optional AI chat), news calendar, hero
+  // =====================================================================================
+  function coachFindings(){
+    const tr = jSorted(), n = tr.length, out = [], R = t => Number(t.r) || 0, avg = a => a.length ? a.reduce((p, t) => p + R(t), 0) / a.length : 0, sum = a => a.reduce((p, t) => p + R(t), 0);
+    const add = (c, t, d) => out.push({c: c, t: t, d: d});
+    if (n < 5){ add("info", "Zatím málo dat", "V deníku je " + n + " obchodů. Rozbor začne dávat smysl od pěti, spolehlivější je od třiceti."); return out; }
+    const st = jStats(tr);
+    add(st.total >= 0 ? "good" : "bad", "Celkový obraz", n + " obchodů, " + sgn(st.total) + " R, winrate " + Math.round(st.winrate) + " %, průměr " + sgn(st.avg) + " R na obchod." + (n < 30 ? " Na pevné závěry je to málo, ber vše níže jako náznak." : ""));
+    const grp = fn => { const g = {}; tr.forEach(t => { const k = fn(t); if (k != null) (g[k] = g[k] || []).push(t); }); return g; };
+    const gs = grp(t => t.setup || "Jiný"), sk = Object.keys(gs).filter(k => gs[k].length >= 3).sort((a, b) => avg(gs[b]) - avg(gs[a]));
+    if (sk.length){ add(avg(gs[sk[0]]) > 0 ? "good" : "info", "Nejsilnější setup", sk[0] + ": průměr " + sgn(avg(gs[sk[0]])) + " R z " + gs[sk[0]].length + " obchodů.");
+      const w = sk[sk.length - 1]; if (sk.length > 1 && avg(gs[w]) < 0) add("bad", "Setup, který tě stojí peníze", w + ": průměr " + sgn(avg(gs[w])) + " R z " + gs[w].length + " obchodů. Zvaž ho na čas vynechat nebo zpřísnit pravidla v playbooku."); }
+    const full = tr.filter(t => t.ck && t.ck.k === t.ck.n), part = tr.filter(t => t.ck && t.ck.k < t.ck.n), none = tr.filter(t => !t.ck && t.setup !== "Import");
+    if (full.length >= 2 && part.length >= 2) add(avg(full) > avg(part) ? "good" : "info", "Seznam před vstupem", "Splněný seznam: průměr " + sgn(avg(full)) + " R (" + full.length + "×). Nesplněný: " + sgn(avg(part)) + " R (" + part.length + "×).");
+    if (none.length >= 3 && none.length / n > .4) add("warn", "Obchody bez kontroly", none.length + " z " + n + " obchodů jsi zapsal bez vyplněného seznamu. Bez něj se nedá poznat, jestli šlo o setup podle plánu.");
+    const tg = {}; tr.forEach(t => (t.tags || []).forEach(x => { (tg[x] = tg[x] || []).push(t); }));
+    Object.keys(tg).filter(k => tg[k].length >= 2).sort((a, b) => sum(tg[a]) - sum(tg[b])).slice(0, 2).forEach(k => { if (sum(tg[k]) < 0) add("bad", "Chyba: " + k, "Objevila se u " + tg[k].length + " obchodů a dohromady stála " + sgn(sum(tg[k])) + " R."); });
+    const after = []; tr.forEach((t, i) => { if (i && tDay(tr[i - 1]) === tDay(t) && R(tr[i - 1]) < 0) after.push(t); });
+    if (after.length >= 3) add(avg(after) < 0 ? "bad" : "info", "Obchody po ztrátě", "Po ztrátě ve stejný den jsi vzal " + after.length + " obchodů s průměrem " + sgn(avg(after)) + " R." + (avg(after) < 0 ? " To vypadá na snahu ztrátu rychle dohnat." : ""));
+    const gd = grp(tDay), busy = [], calm = []; Object.keys(gd).forEach(k => (gd[k].length >= 3 ? busy : calm).push.apply(gd[k].length >= 3 ? busy : calm, gd[k]));
+    if (busy.length >= 3 && calm.length >= 3) add(avg(busy) < avg(calm) ? "warn" : "info", "Počet obchodů za den", "Dny se třemi a více obchody: průměr " + sgn(avg(busy)) + " R. Klidnější dny: " + sgn(avg(calm)) + " R.");
+    const gh = grp(t => { const h = new Date(t.ts).getHours(); return isNaN(h) ? null : h; }), hk = Object.keys(gh).filter(k => gh[k].length >= 3).sort((a, b) => avg(gh[a]) - avg(gh[b]));
+    if (hk.length && avg(gh[hk[0]]) < 0) add("warn", "Slabá hodina", "Mezi " + hk[0] + ":00 a " + (Number(hk[0]) + 1) + ":00 máš průměr " + sgn(avg(gh[hk[0]])) + " R z " + gh[hk[0]].length + " obchodů.");
+    const lo = tr.filter(t => t.dir !== "short"), sh = tr.filter(t => t.dir === "short");
+    if (lo.length >= 3 && sh.length >= 3 && Math.abs(avg(lo) - avg(sh)) > .3) add("info", "Long proti shortu", "Long: " + sgn(avg(lo)) + " R (" + lo.length + "×). Short: " + sgn(avg(sh)) + " R (" + sh.length + "×).");
+    const losses = tr.filter(t => R(t) < 0);
+    if (losses.length >= 3 && avg(losses) < -1.15) add("bad", "Ztráty větší než 1 R", "Průměrná ztráta je " + sgn(avg(losses)) + " R. Stop se zřejmě posouvá nebo nedrží.");
+    let run = 0, worst = 0; tr.forEach(t => { run = R(t) < 0 ? run + 1 : 0; worst = Math.max(worst, run); });
+    if (worst >= 4) add("info", "Nejdelší série ztrát", worst + " ztrát za sebou. S takovou sérií musí počítat velikost pozice.");
+    const pd = Object.keys(jr.plans).filter(k => jr.plans[k].bias && jr.plans[k].bias !== "none" && jr.plans[k].actual);
+    if (pd.length >= 5){ const ok = pd.filter(k => (jr.plans[k].bias === "long" && jr.plans[k].actual === "up") || (jr.plans[k].bias === "short" && jr.plans[k].actual === "down")).length; add(ok / pd.length >= .55 ? "good" : "warn", "Ranní odhad směru", "Směr dne jsi trefil " + ok + " z " + pd.length + " dní."); }
+    return out;
+  }
+  const CO_COL = {good: "var(--good)", bad: "var(--bad)", warn: "var(--amber)", info: "var(--accent)"};
+  function renderCoach(){
+    const box = $("co-find"); clear(box);
+    coachFindings().forEach(f => { const it = el("div","item c-" + f.c); it.appendChild(el("h3", null, f.t)); it.appendChild(el("p","small", f.d)); box.appendChild(it); });
+  }
+  const COACH_SYS = "Jsi kouč obchodníka v aplikaci Tape (deník a škola price action pro futures NQ a ES). Mluvíš česky, stručně a věcně, tykáš. Hodnotíš proces podle deníku: dodržení plánu a seznamu před vstupem, výběr setupů, čas, opakované chyby a velikost ztrát. Opírej se jen o data níže. U každého závěru řekni, z kolika obchodů plyne, a při malém vzorku to otevřeně přiznej. Nedáváš obchodní signály, neříkáš, co koupit nebo prodat, nepředpovídáš trh a neslibuješ zisk. Odpověď zakonči nejvýš třemi konkrétními kroky na příští seanci.";
+  function coachContext(){
+    const tr = jSorted(), st = jStats(tr), p = planToday();
+    const rows = tr.slice(-50).map(t => [String(t.ts).slice(0, 16), t.sym || "", t.dir, t.setup || "", "R=" + t.r, t.ck ? "seznam " + t.ck.k + "/" + t.ck.n : "bez seznamu", (t.tags || []).join("+"), t.note || ""].join(" | "));
+    const pb = Object.keys(jr.playbook || {}).filter(k => jr.playbook[k]).map(k => k + ": " + jr.playbook[k]);
+    return "DATA Z DENÍKU\nCelkem: " + st.n + " obchodů, " + sgn(st.total) + " R, winrate " + Math.round(st.winrate) + " %, průměr " + sgn(st.avg) + " R, max. drawdown " + fnum(Math.round(st.dd * 10) / 10) + " R.\n"
+      + "Automatický rozbor:\n" + coachFindings().map(f => "- " + f.t + ": " + f.d).join("\n") + "\n"
+      + "Dnešní plán: bias " + (p.bias || "nevyplněn") + ", úrovně " + (p.levels || "–") + ", podmínky " + (p.note || "–") + ".\n"
+      + "Denní limity: obchodů " + (jr.limits.n || "–") + ", ztráta " + (jr.limits.loss || "–") + " R.\n"
+      + (pb.length ? "Pravidla z playbooku:\n" + pb.join("\n") + "\n" : "")
+      + "Posledních " + rows.length + " obchodů (čas UTC | trh | směr | setup | výsledek | seznam | chyby | poznámka):\n" + (rows.join("\n") || "žádné");
+  }
+  (function coachChat(){
+    const K = "tape-key", turns = []; let busy = false;
+    const key = () => { try { return localStorage.getItem(K) || ""; } catch(e){ return ""; } };
+    const keyState = () => { $("co-key-state").textContent = key() ? "Klíč je uložený v tomto prohlížeči." : "Klíč není nastavený. Kouč zatím funguje přes tlačítko Zkopírovat podklady."; $("co-key").value = ""; };
+    $("co-key-save").addEventListener("click", () => { const v = $("co-key").value.trim(); if (v){ try { localStorage.setItem(K, v); } catch(e){} } keyState(); });
+    $("co-key-del").addEventListener("click", () => { try { localStorage.removeItem(K); } catch(e){} keyState(); });
+    keyState();
+    ["Zhodnoť moje obchody z posledního týdne", "Zhodnoť můj poslední obchod", "Co dělám nejčastěji špatně?", "Na čem mám pracovat zítra?"].forEach(q => { const b = el("button","chip", q); b.type = "button"; b.addEventListener("click", () => { $("co-box").value = q; send(); }); $("co-quick").appendChild(b); });
+    $("co-copy").addEventListener("click", async () => {
+      const q = $("co-box").value.trim() || "Zhodnoť moje obchody a řekni, na čem mám pracovat.";
+      try { await navigator.clipboard.writeText(COACH_SYS + "\n\n" + coachContext() + "\n\nOTÁZKA: " + q); $("co-msg").textContent = "Zkopírováno. Vlož to do chatu s Claudem."; }
+      catch(e){ $("co-msg").textContent = "Kopírování se nepodařilo."; }
+    });
+    async function send(){
+      const text = $("co-box").value.trim(); if (!text || busy) return;
+      if (!key()){ $("co-msg").textContent = "Pro odpověď přímo tady nastav API klíč níže, nebo použij Zkopírovat podklady."; return; }
+      busy = true; $("co-send").disabled = true; $("co-msg").textContent = ""; $("co-box").value = "";
+      const log = $("co-log"); log.appendChild(el("div","msg me", text)); const bub = el("div","msg ai","Přemýšlím…"); log.appendChild(bub);
+      turns.push({role: "user", content: text}); while (turns.length > 10) turns.shift(); while (turns.length && turns[0].role !== "user") turns.shift();
+      try {
+        const r = await fetch("https://api.anthropic.com/v1/messages", {method: "POST", headers: {"content-type": "application/json", "x-api-key": key(), "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true"},
+          body: JSON.stringify({model: "claude-sonnet-5-5", max_tokens: 1200, system: COACH_SYS + "\n\n" + coachContext(), messages: turns})});
+        const j = await r.json();
+        if (!r.ok) throw new Error(r.status === 401 ? "Klíč není platný." : (j && j.error && j.error.message) || ("Chyba " + r.status));
+        const out = (j.content || []).filter(c => c.type === "text").map(c => c.text).join("\n").trim() || "Bez odpovědi.";
+        bub.textContent = out; turns.push({role: "assistant", content: out});
+      } catch(e){ bub.remove(); turns.pop(); $("co-box").value = text; $("co-msg").textContent = "Odpověď se nepodařila: " + (e && e.message ? e.message : "zkus to znovu") ; }
+      busy = false; $("co-send").disabled = false;
+    }
+    $("co-send").addEventListener("click", send);
+    $("co-box").addEventListener("keydown", ev => { if (ev.key === "Enter" && !ev.shiftKey){ ev.preventDefault(); send(); } });
+  })();
+
+  // ---------- news calendar (data/news.json, refreshed by the bots) ----------
+  let news = null, newsTried = false;
+  const impEl = n => { const s = el("span","imp"); for (let i = 1; i <= 3; i++) s.appendChild(el("i", i <= n ? (n >= 3 ? "hi" : "on") : "")); s.title = ["", "malý dopad", "střední dopad", "velký dopad"][n] || ""; return s; };
+  function renderNews(){
+    const box = $("nw"), rail = $("rr-news"); clear(box); clear(rail);
+    if (!news){ box.appendChild(el("p","small muted", newsTried ? "Kalendář se nepodařilo načíst." : "Načítám…")); return; }
+    const today = dayKey(), ev = (news.events || []).filter(e => e.date >= today).sort((a, b) => (a.date + (a.time || "")).localeCompare(b.date + (b.time || ""))).slice(0, 10);
+    let last = "";
+    ev.forEach(e => {
+      if (e.date !== last){ last = e.date; const d = new Date(e.date + "T12:00:00"); box.appendChild(el("span","kick", e.date === today ? "Dnes" : d.toLocaleDateString("cs-CZ", {weekday: "long", day: "numeric", month: "numeric"}))); }
+      const r = el("div","nrow"), m = el("div"); r.appendChild(el("b","ntime", e.time || "")); m.appendChild(el("b", null, e.title)); if (e.note) m.appendChild(el("span", null, e.note)); r.appendChild(m); r.appendChild(impEl(Number(e.impact) || 1)); box.appendChild(r);
+    });
+    if (!ev.length) box.appendChild(el("p","small muted","V nejbližších dnech není v kalendáři nic zapsaného."));
+    const posts = (news.posts || []).slice().sort((a, b) => String(b.date).localeCompare(String(a.date))).slice(0, 6);
+    if (posts.length){
+      box.appendChild(el("span","kick","Výroky, které hýbou trhem"));
+      posts.forEach(p => { const it = el("div","npost"), h = el("div","row"); h.appendChild(el("b", null, p.who)); h.appendChild(el("span","small muted", new Date(p.date + "T12:00:00").toLocaleDateString("cs-CZ", {day: "numeric", month: "numeric"}))); it.appendChild(h);
+        it.appendChild(el("p","small", p.text)); if (/^https:\/\//.test(p.url || "")){ const a = el("a","small", p.source || "Zdroj"); a.href = p.url; a.target = "_blank"; a.rel = "noopener"; it.appendChild(a); } box.appendChild(it); });
+    }
+    $("nw-upd").textContent = news.updated ? "Aktualizováno " + fmtDateTime(news.updated) : "";
+    const td = ev.filter(e => e.date === today), nx = td.length ? td : ev.slice(0, 1);
+    if (!nx.length) rail.appendChild(el("p","small muted","Nic důležitého."));
+    nx.forEach(e => { const r = el("div","rrow"); r.appendChild(el("span", null, (td.length ? "" : new Date(e.date + "T12:00:00").toLocaleDateString("cs-CZ", {day: "numeric", month: "numeric"}) + " ") + (e.time || ""))); r.appendChild(el("b", null, e.title)); rail.appendChild(r); });
+  }
+  fetch("data/news.json", {cache: "no-store"}).then(r => { if (!r.ok) throw 0; return r.json(); }).then(v => { news = v; }).catch(() => {}).then(() => { newsTried = true; renderNews(); });
+
+  function renderHero(){
+    const hs = $("d-hs"); clear(hs);
+    const s = pathSteps(), got = s.filter(x => x.done).length, sd = streakDays(), m = Math.floor((mins[dayKey()] || 0) / 60);
+    hs.appendChild(tile("Série", sd + (sd === 1 ? " den" : (sd >= 2 && sd <= 4 ? " dny" : " dní"))));
+    hs.appendChild(tile("Dnešní cíl", m + " / " + goalMin() + " min"));
+    hs.appendChild(tile("Cesta", s.length ? got + " / " + s.length : "…"));
+    hs.appendChild(tile("Obchodů", String(jr.trades.length)));
+    $("d-perf-card").hidden = !jr.trades.length;
+  }
+  const _refreshAll2 = refreshAll;
+  refreshAll = function(){ _refreshAll2(); try { renderCoach(); renderNews(); renderHero(); } catch(e){ if (window.console) console.error(e); } };
   refreshAll();
 
   async function start(){

@@ -50,3 +50,11 @@ All texts are Czech. Every file is valid JSON; arrays hold objects with a unique
 - `ictlab-laura`: postup v lekcích, kartičky (`cards`) a zkoušky týdne (`exam`).
 - Zkouška týdne se skládá z pojmů v `data/glossary.json` podle pole `week`. Každý nový pojem proto musí mít `week` 1–12 a `cat`.
 - `sw.js` zajišťuje práci offline. Boti ho nemění. Další klíče v prohlížeči: `knot-profile` (úvodní průvodce), `knot-minutes` (denní cíl), IndexedDB `tape` (obrázky k obchodům).
+
+## data/news.json (bot Zpravodaj)
+
+```
+{"updated": "ISO čas", "events": [{"date": "RRRR-MM-DD", "time": "HH:MM pražského času", "title": "", "impact": 1-3, "note": ""}],
+ "posts": [{"date": "RRRR-MM-DD", "who": "", "text": "shrnutí vlastními slovy, žádná citace", "source": "název webu", "url": "https://…", "impact": 1-3}]}
+```
+`events` jsou plánovaná data a události pro americké indexy na 3 až 4 týdny dopředu, minulé se mažou. `posts` je nejvýš 8 nejnovějších výroků, které pohnuly trhem. Jen ověřené zdroje, neutrálně, bez hodnocení politiků.
