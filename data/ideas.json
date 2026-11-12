@@ -1483,7 +1483,7 @@
   "area": "model",
   "value": 3,
   "effort": 2,
-  "status": "new",
+  "status": "done",
   "what": "Cvičné obchody z přehrávání s vlastním setupem a statistikou podle setupu.",
   "why": "Ruční backtest je nejrychlejší cesta k důvěře v plán."
  },

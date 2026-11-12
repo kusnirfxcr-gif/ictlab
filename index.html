@@ -2413,8 +2413,10 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
     function stats(){
       const p = jr.paper || [], s = jStats(p);
       ui.stat.textContent = p.length ? "Cvičné obchody: " + p.length + " · " + sgn(s.total) + " R · winrate " + Math.round(s.winrate) + " %" : "Zatím žádný cvičný obchod.";
+      clear(ui.tbl); const g = p.length >= 2 ? groupTable("Setup", p, t => t.setup || "Bez setupu") : null; if (g) ui.tbl.appendChild(g);
+      ui.wipe.hidden = !p.length;
     }
-    function close(r, why){ jr.paper = jr.paper || []; jr.paper.push({ts: new Date().toISOString(), r: Math.round(r * 100) / 100}); tr = null; ui.msg.textContent = why + " Výsledek " + sgn(Math.round(r * 100) / 100) + " R."; ui.msg.className = "small " + (r >= 0 ? "pos" : "neg"); touchDay(); jStore(); stats(); }
+    function close(r, why){ jr.paper = jr.paper || []; jr.paper.push({ts: new Date().toISOString(), r: Math.round(r * 100) / 100, setup: tr ? tr.setup : ""}); tr = null; ui.msg.textContent = why + " Výsledek " + sgn(Math.round(r * 100) / 100) + " R."; ui.msg.className = "small " + (r >= 0 ? "pos" : "neg"); touchDay(); jStore(); stats(); }
     function check(b){
       if (!tr) return;
       const stopHit = tr.dir > 0 ? b[3] <= tr.s : b[2] >= tr.s, tgtHit = tr.dir > 0 ? b[2] >= tr.t : b[3] <= tr.t;
@@ -2443,7 +2445,7 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
     function enter(dir){
       const sd = parseFloat(String(ui.sd.value).replace(",", ".")), rr = parseFloat(String(ui.rr.value).replace(",", "."));
       if (!(sd > 0) || !(rr > 0)){ ui.msg.textContent = "Vyplň stop v bodech a cíl v R."; ui.msg.className = "small"; return; }
-      const e = bars[pos - 1][4]; tr = {dir: dir, e: e, s: e - dir * sd, t: e + dir * sd * rr, rr: rr};
+      const e = bars[pos - 1][4]; tr = {dir: dir, e: e, s: e - dir * sd, t: e + dir * sd * rr, rr: rr, setup: ui.setup.value};
       ui.msg.textContent = (dir > 0 ? "Long" : "Short") + " od " + fnum(e) + ", stop " + fnum(tr.s) + ", cíl " + fnum(tr.t) + "."; ui.msg.className = "small muted"; draw();
     }
     function build(){
@@ -2452,13 +2454,15 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
       fig.appendChild(svg); out.appendChild(fig); out.appendChild(info);
       const mk = (box, t, fn, cls) => { const b = el("button", cls || null, t); b.type = "button"; b.addEventListener("click", fn); box.appendChild(b); return b; };
       const num = (label, val) => { const lb = el("label","rp-num", label), i = el("input"); i.value = val; i.inputMode = "decimal"; lb.appendChild(i); ord.appendChild(lb); return i; };
-      ui = {svg: svg, info: info, msg: msg, stat: stat};
+      const tbl = el("div","list"), wipe = el("button","danger","Smazat cvičné obchody"); wipe.type = "button"; twoStep(wipe, "Smazat cvičné obchody", () => { jr.paper = []; jStore(); stats(); });
+      ui = {svg: svg, info: info, msg: msg, stat: stat, tbl: tbl, wipe: wipe};
       mk(ctl, "+1", () => { stop(); adv(1); }); mk(ctl, "+5", () => { stop(); adv(5); });
       ui.play = mk(ctl, "Přehrát", () => { if (timer){ stop(); return; } ui.play.textContent = "Pauza"; timer = setInterval(() => { if (pos >= bars.length){ stop(); return; } adv(1); }, 350); }, "primary");
       mk(ctl, "Jiný den", pick);
+      ui.setup = sel(J_SETUPS, J_SETUPS[0]); ui.setup.setAttribute("aria-label", "Setup"); ui.setup.style.width = "auto"; ord.appendChild(ui.setup);
       ui.sd = num("Stop (body)", "20"); ui.rr = num("Cíl (R)", "2");
       ui.long = mk(ord, "Long", () => enter(1)); ui.short = mk(ord, "Short", () => enter(-1));
-      out.appendChild(ctl); out.appendChild(ord); out.appendChild(msg); out.appendChild(stat);
+      out.appendChild(ctl); out.appendChild(ord); out.appendChild(msg); out.appendChild(stat); out.appendChild(tbl); out.appendChild(wipe);
       out.appendChild(el("p","small muted","Vstup je za zavírací cenu poslední svíčky. Když svíčka zasáhne stop i cíl zároveň, počítá se stop. Bez poplatků a skluzu, takže skutečnost bude horší."));
       stats();
     }
