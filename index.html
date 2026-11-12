@@ -331,6 +331,7 @@ details.week.anim[open]>.weekbody{animation:rise .35s ease both}
     <a href="#backtest" data-v="backtest">Backtest</a>
     <a href="#room" data-v="room">Dictator's Room</a>
     <a href="#laura" data-v="laura">Laura</a>
+    <a href="#napady" data-v="napady">Nápady</a>
   </nav>
 
   <section class="view" id="v-model">
@@ -401,6 +402,19 @@ details.week.anim[open]>.weekbody{animation:rise .35s ease both}
   </section>
 
 
+  <section class="view" id="v-napady">
+    <div class="card">
+      <div class="row"><h2>Nápady na vylepšení</h2><span class="small muted" id="i-count"></span></div>
+      <p class="small muted">Bot Vizionář sem každý den přidává návrhy, co do aplikace doplnit nebo změnit. Nahoře jsou ty s největším přínosem za nejméně práce. Co chceš postavit, napiš Claudovi v chatu.</p>
+      <div class="chips" id="i-filters">
+        <button class="chip" data-f="open" aria-pressed="true">Otevřené</button>
+        <button class="chip" data-f="done" aria-pressed="false">Hotové</button>
+        <button class="chip" data-f="all" aria-pressed="false">Vše</button>
+      </div>
+    </div>
+    <div class="list" id="i-list"></div>
+  </section>
+
   <section class="view" id="v-laura">
     <div class="card">
       <h2>Lauřin prostor</h2>
@@ -457,8 +471,37 @@ details.week.anim[open]>.weekbody{animation:rise .35s ease both}
   const clear = n => { while (n.firstChild) n.removeChild(n.firstChild); };
   const fmtDate = v => { if (!v) return "—"; const d = new Date(v); return isNaN(d) ? String(v) : d.toLocaleDateString("cs-CZ", {day:"numeric", month:"numeric", year:"numeric"}); };
   const fmtDateTime = v => { if (!v) return "zatím neproběhl"; const d = new Date(v); return isNaN(d) ? String(v) : d.toLocaleString("cs-CZ", {day:"numeric", month:"numeric", hour:"2-digit", minute:"2-digit"}); };
-  const BOT_NAMES = {skaut:"Skaut", gems:"Gems", architekt:"Architekt", ucitel:"Učitel"};
+  const BOT_NAMES = {skaut:"Skaut", gems:"Gems", architekt:"Architekt", ucitel:"Učitel", vizionar:"Vizionář"};
   const STATUS = {untested:["Neověřeno backtestem","warn"], testing:["V testování","info"], validated:["Ověřeno backtestem","good"], failing:["Backtest nevychází","bad"]};
+
+  // Ideas from the Vizionář bot
+  let ideas = [], ideasLoaded = false, ideaFilter = "open";
+  const I_AREA = {vyuka:"Výuka", denik:"Deník", model:"Model", vzhled:"Vzhled", produkt:"Produkt", data:"Data"};
+  const I_EFFORT = {1:"malá práce", 2:"střední práce", 3:"velká práce"}, I_VALUE = {1:"menší přínos", 2:"střední přínos", 3:"velký přínos"};
+  const I_STATUS = {new:["Nový","info"], picked:["Vybráno","warn"], building:["Staví se","warn"], done:["Hotovo","good"], dropped:["Zamítnuto","bad"]};
+  function renderIdeas(){
+    const box = $("i-list"); clear(box);
+    const open = ideas.filter(i => !["done","dropped"].includes(i.status));
+    $("i-count").textContent = ideasLoaded ? open.length + " otevřených" : "";
+    const rows = ideas.filter(i => ideaFilter === "all" || (ideaFilter === "done" ? i.status === "done" : !["done","dropped"].includes(i.status)))
+      .sort((a, b) => ((b.value || 0) - (b.effort || 0)) - ((a.value || 0) - (a.effort || 0)) || (b.value || 0) - (a.value || 0) || String(b.ts || "").localeCompare(String(a.ts || "")));
+    if (!rows.length){ const c = el("div","card"); c.appendChild(el("p","small muted", ideasLoaded ? "Tady zatím nic není." : "Načítám nápady…")); box.appendChild(c); return; }
+    rows.forEach(i => {
+      const c = el("div","card"), head = el("div","row"), st = I_STATUS[i.status] || I_STATUS.new;
+      head.appendChild(el("h3", null, i.title || "Bez názvu")); head.appendChild(el("span","pill " + st[1], st[0]));
+      c.appendChild(head);
+      if (i.what) c.appendChild(el("p", null, i.what));
+      if (i.why) c.appendChild(el("p","small muted","Proč: " + i.why));
+      const meta = el("div","meta");
+      [I_AREA[i.area] || i.area, I_VALUE[i.value], I_EFFORT[i.effort], fmtDate(i.date || i.ts)].filter(Boolean).forEach(t => meta.appendChild(el("span", null, t)));
+      c.appendChild(meta); box.appendChild(c);
+    });
+  }
+  document.querySelectorAll("#i-filters button").forEach(b => b.addEventListener("click", () => {
+    ideaFilter = b.dataset.f;
+    document.querySelectorAll("#i-filters button").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+    renderIdeas();
+  }));
 
   // Wait briefly for the web font so label plates are measured with the real letter widths.
   const fontGate = (function(){
@@ -475,7 +518,7 @@ details.week.anim[open]>.weekbody{animation:rise .35s ease both}
   });
 
   // Views
-  const VIEWS = ["model","poznatky","strategie","backtest","room","laura"];
+  const VIEWS = ["model","poznatky","strategie","backtest","room","laura","napady"];
   function route(){
     const h = (location.hash || "").replace("#","");
     const v = VIEWS.includes(h) ? h : "model";
@@ -1383,6 +1426,7 @@ details.week.anim[open]>.weekbody{animation:rise .35s ease both}
       insights = (ins || []).slice().sort(byTs); renderInsights(); renderConcepts();
       lessons = (les || []).slice().sort(byTs); lessonsLoaded = true; renderLesson();
       glossary = glo || []; renderGlossary();
+      get("ideas").then(x => { ideas = Array.isArray(x) ? x : []; ideasLoaded = true; renderIdeas(); }).catch(() => { ideasLoaded = true; renderIdeas(); });
       banner("");
     } catch(e){
       banner("Data se nepodařilo načíst. Zkus stránku obnovit.");

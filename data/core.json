@@ -1,34 +1,172 @@
 {
- "state": {"lastRun": "2026-11-12T05:52:00Z", "modelVersion": "1.0", "runCount": 3},
+ "state": {
+  "lastRun": "2026-11-12T05:52:00Z",
+  "modelVersion": "1.0",
+  "runCount": 3
+ },
  "model": {
-  "version": "1.0", "name": "Sweep → MSS → FVG (NY dopoledne)", "market": "NQ, ES", "timeframe": "1m (kontext 15m)", "status": "failing",
+  "version": "1.0",
+  "name": "Sweep → MSS → FVG (NY dopoledne)",
+  "market": "NQ, ES",
+  "timeframe": "1m (kontext 15m)",
+  "status": "failing",
   "summary": "Scalpingový model pro NQ a ES na kostře ICT modelu 2022: výběr likvidity, změna struktury a vstup do FVG v newyorském dopoledním okně. První backtest na třech letech dat NQ (115 obchodů) vyšel kolem nuly: winrate 52,2 %, profit factor 0,94. Ani nejlepší z 864 variant parametrů na neviděných datech výhodu neukázala.",
   "rules": [
-   {"title": "Čas: 9:30–11:00 newyorského času", "detail": "Vstupy jen po otevření cash seance a během okna Silver Bullet 10:00–11:00. Mimo okno se neobchoduje, vše se zavírá nejpozději ve 12:00."},
-   {"title": "Označ likviditu", "detail": "High a low předchozího dne a overnight high a low (18:00–9:30). To jsou úrovně, kde leží stopy."},
-   {"title": "Počkej na sweep", "detail": "Cena musí jednu z úrovní prorazit. Sweep highs hledá short, sweep lows hledá long. Filtr midnight open: short jen nad otevírací cenou půlnoci, long jen pod ní."},
-   {"title": "Potvrzení: MSS s displacementem", "detail": "Svíčka musí zavřít za posledním swingem proti směru sweepu a pohyb musí zanechat FVG aspoň 4 ticky. Do 20 svíček od sweepu, jinak setup padá."},
-   {"title": "Vstup limitkou do FVG", "detail": "Limitní příkaz na 50 % FVG (consequent encroachment). Platí 10 svíček, pak se ruší."},
-   {"title": "Stop za sweepem", "detail": "Stop 4 ticky za extrémem sweepu. Když vychází stop větší než 40 bodů, obchod se nebere."},
-   {"title": "Výstup: polovina na 1R, zbytek na 2R", "detail": "Po dosažení 1R se půlka pozice zavře a stop jde na vstup. Zbytek míří na 2R. Nejvýš jeden obchod denně."}],
+   {
+    "title": "Čas: 9:30–11:00 newyorského času",
+    "detail": "Vstupy jen po otevření cash seance a během okna Silver Bullet 10:00–11:00. Mimo okno se neobchoduje, vše se zavírá nejpozději ve 12:00."
+   },
+   {
+    "title": "Označ likviditu",
+    "detail": "High a low předchozího dne a overnight high a low (18:00–9:30). To jsou úrovně, kde leží stopy."
+   },
+   {
+    "title": "Počkej na sweep",
+    "detail": "Cena musí jednu z úrovní prorazit. Sweep highs hledá short, sweep lows hledá long. Filtr midnight open: short jen nad otevírací cenou půlnoci, long jen pod ní."
+   },
+   {
+    "title": "Potvrzení: MSS s displacementem",
+    "detail": "Svíčka musí zavřít za posledním swingem proti směru sweepu a pohyb musí zanechat FVG aspoň 4 ticky. Do 20 svíček od sweepu, jinak setup padá."
+   },
+   {
+    "title": "Vstup limitkou do FVG",
+    "detail": "Limitní příkaz na 50 % FVG (consequent encroachment). Platí 10 svíček, pak se ruší."
+   },
+   {
+    "title": "Stop za sweepem",
+    "detail": "Stop 4 ticky za extrémem sweepu. Když vychází stop větší než 40 bodů, obchod se nebere."
+   },
+   {
+    "title": "Výstup: polovina na 1R, zbytek na 2R",
+    "detail": "Po dosažení 1R se půlka pozice zavře a stop jde na vstup. Zbytek míří na 2R. Nejvýš jeden obchod denně."
+   }
+  ],
   "params": [
-   {"name": "Okno pro vstupy", "value": "9:30–11:00 NY", "why": "Otevření seance a Silver Bullet okno"},
-   {"name": "Max. doba setupu", "value": "20 svíček", "why": "Reakce po sweepu má být rychlá"},
-   {"name": "Min. FVG", "value": "4 ticky", "why": "Odfiltruje šum na 1m"},
-   {"name": "Vstup", "value": "50 % FVG", "why": "Lepší RR než okraj, méně vyplnění"},
-   {"name": "Max. stop", "value": "40 bodů", "why": "Strop pro NQ v NY seanci, pro ES je třeba snížit"},
-   {"name": "TP1 / TP2", "value": "1R / 2R", "why": "Částečný výběr zvedá winrate, 2R drží přiměřené RR"},
-   {"name": "Obchodů denně", "value": "1", "why": "Okno málokdy dá dvě čisté sekvence"}]
+   {
+    "name": "Okno pro vstupy",
+    "value": "9:30–11:00 NY",
+    "why": "Otevření seance a Silver Bullet okno"
+   },
+   {
+    "name": "Max. doba setupu",
+    "value": "20 svíček",
+    "why": "Reakce po sweepu má být rychlá"
+   },
+   {
+    "name": "Min. FVG",
+    "value": "4 ticky",
+    "why": "Odfiltruje šum na 1m"
+   },
+   {
+    "name": "Vstup",
+    "value": "50 % FVG",
+    "why": "Lepší RR než okraj, méně vyplnění"
+   },
+   {
+    "name": "Max. stop",
+    "value": "40 bodů",
+    "why": "Strop pro NQ v NY seanci, pro ES je třeba snížit"
+   },
+   {
+    "name": "TP1 / TP2",
+    "value": "1R / 2R",
+    "why": "Částečný výběr zvedá winrate, 2R drží přiměřené RR"
+   },
+   {
+    "name": "Obchodů denně",
+    "value": "1",
+    "why": "Okno málokdy dá dvě čisté sekvence"
+   }
+  ]
  },
  "bots": [
-  {"id": "skaut", "order": 1, "name": "Skaut", "role": "hledá nový ICT obsah", "lastRun": "2026-11-12T05:52:00Z", "lastReport": "Tři nové zdroje: kladný backtest sweepu s FVG bez MSS na forexu a zlatě (od prodejce platformy, bez jasných nákladů), statistika menšího pondělního rozpětí na NQ a ES a otevřený skript se směrem dne podle svíčky 9:00–10:00."},
-  {"id": "gems", "order": 2, "name": "Gems", "role": "studuje kanál ICT Gems", "lastRun": "2026-11-12T05:52:00Z", "lastReport": "Jedno nové video přes veřejné shrnutí: obchodování bez denního biasu podle ranních equal highs a lows. Shrnutí k Opening Range Gap a ke dvěma videím o Turtle Soup byla bez konkrétních pravidel, proto nejsou zapsána."},
-  {"id": "architekt", "order": 3, "name": "Architekt", "role": "upravuje model a Pine Script", "lastRun": "2026-11-12T05:52:00Z", "lastReport": "Model beze změny, verze 1.0 a stav Backtest nevychází (115 obchodů, profit factor 0,94). Od včerejška nepřibyl žádný nový backtest a kandidát 2.0 bez MSS má profit factor 1,27 jen z dodatečného vyřazení obchodů, takže před změnou pravidel potřebuje samostatný běh na neviděných datech."},
-  {"id": "ucitel", "order": 4, "name": "Učitel", "role": "připravuje denní lekce pro Lauru", "lastRun": "2026-11-12T05:52:00Z", "lastReport": "Lekce 3 (týden 1): seance, cash open v 9:30 a overnight range. Do slovníčku přibyly tři pojmy: newyorský čas, cash open a overnight."}],
+  {
+   "id": "skaut",
+   "order": 1,
+   "name": "Skaut",
+   "role": "hledá nový ICT obsah",
+   "lastRun": "2026-11-12T05:52:00Z",
+   "lastReport": "Tři nové zdroje: kladný backtest sweepu s FVG bez MSS na forexu a zlatě (od prodejce platformy, bez jasných nákladů), statistika menšího pondělního rozpětí na NQ a ES a otevřený skript se směrem dne podle svíčky 9:00–10:00."
+  },
+  {
+   "id": "gems",
+   "order": 2,
+   "name": "Gems",
+   "role": "studuje kanál ICT Gems",
+   "lastRun": "2026-11-12T05:52:00Z",
+   "lastReport": "Jedno nové video přes veřejné shrnutí: obchodování bez denního biasu podle ranních equal highs a lows. Shrnutí k Opening Range Gap a ke dvěma videím o Turtle Soup byla bez konkrétních pravidel, proto nejsou zapsána."
+  },
+  {
+   "id": "architekt",
+   "order": 3,
+   "name": "Architekt",
+   "role": "upravuje model a Pine Script",
+   "lastRun": "2026-11-12T05:52:00Z",
+   "lastReport": "Model beze změny, verze 1.0 a stav Backtest nevychází (115 obchodů, profit factor 0,94). Od včerejška nepřibyl žádný nový backtest a kandidát 2.0 bez MSS má profit factor 1,27 jen z dodatečného vyřazení obchodů, takže před změnou pravidel potřebuje samostatný běh na neviděných datech."
+  },
+  {
+   "id": "ucitel",
+   "order": 4,
+   "name": "Učitel",
+   "role": "připravuje denní lekce pro Lauru",
+   "lastRun": "2026-11-12T05:52:00Z",
+   "lastReport": "Lekce 3 (týden 1): seance, cash open v 9:30 a overnight range. Do slovníčku přibyly tři pojmy: newyorský čas, cash open a overnight."
+  },
+  {
+   "id": "vizionar",
+   "order": 5,
+   "name": "Vizionář",
+   "role": "navrhuje vylepšení aplikace",
+   "lastRun": "2026-11-12T16:10:00Z",
+   "lastReport": "Založil seznam nápadů: 14 návrhů pro výuku, deník, model a produkt, seřazených podle přínosu a pracnosti."
+  }
+ ],
  "versions": [
-  {"id": "v1-0", "version": "1.0", "ts": "2026-11-11T13:40:00Z", "date": "2026-11-11", "change": "První verze: sweep PDH/PDL nebo overnight range, MSS, vstup na 50 % FVG, výstup 1R a 2R.", "reason": "Výchozí kostra podle ICT modelu 2022 a okna Silver Bullet."}],
+  {
+   "id": "v1-0",
+   "version": "1.0",
+   "ts": "2026-11-11T13:40:00Z",
+   "date": "2026-11-11",
+   "change": "První verze: sweep PDH/PDL nebo overnight range, MSS, vstup na 50 % FVG, výstup 1R a 2R.",
+   "reason": "Výchozí kostra podle ICT modelu 2022 a okna Silver Bullet."
+  }
+ ],
  "backtests": [
-  {"id": "20261111-kandidat-nomss", "ts": "2026-11-11T19:26:00Z", "modelVersion": "kandidát 2.0", "symbol": "NQ", "period": "testovací část, 24. 1. – 11. 12. 2025", "trades": 125, "winrate": 40, "pf": 1.27, "dd": null, "note": "Sweep + FVG bez MSS, cíl 2 R, bez pondělí a bez shortů při otevření v dolní půlce nočního range. Průměr +0,166 R, max. drawdown 9,8 R. Filtr určen z tréninku, ale jde o dodatečné vyřazení obchodů, ne o samostatný běh modelu."},
-  {"id": "20261111-model-1-0", "ts": "2026-11-11T16:15:00Z", "modelVersion": "1.0", "symbol": "NQ", "period": "28. 12. 2022 – 11. 12. 2025 (763 dní)", "trades": 115, "winrate": 52.2, "pf": 0.94, "dd": null, "note": "Python backtester, data z Kaggle. Průměr -0,031 R na obchod, celkem -3,6 R, max. drawdown 9,2 R. Náklady 0,75 bodu na obchod."},
-  {"id": "20261111-varianta-test", "ts": "2026-11-11T16:14:00Z", "modelVersion": "varianta", "symbol": "NQ", "period": "testovací část, posledních 30 % dní", "trades": 23, "winrate": 34.8, "pf": 1.04, "dd": null, "note": "Nejlepší z 864 variant podle tréninku (jen overnight likvidita, okno do 11:30, RR 1,5, bez částečného výběru, setup 30 svíček). Trénink +0,228 R na obchod, test +0,018 R. Výhoda se na neviděných datech nepotvrdila."}]
+  {
+   "id": "20261111-kandidat-nomss",
+   "ts": "2026-11-11T19:26:00Z",
+   "modelVersion": "kandidát 2.0",
+   "symbol": "NQ",
+   "period": "testovací část, 24. 1. – 11. 12. 2025",
+   "trades": 125,
+   "winrate": 40,
+   "pf": 1.27,
+   "dd": null,
+   "note": "Sweep + FVG bez MSS, cíl 2 R, bez pondělí a bez shortů při otevření v dolní půlce nočního range. Průměr +0,166 R, max. drawdown 9,8 R. Filtr určen z tréninku, ale jde o dodatečné vyřazení obchodů, ne o samostatný běh modelu."
+  },
+  {
+   "id": "20261111-model-1-0",
+   "ts": "2026-11-11T16:15:00Z",
+   "modelVersion": "1.0",
+   "symbol": "NQ",
+   "period": "28. 12. 2022 – 11. 12. 2025 (763 dní)",
+   "trades": 115,
+   "winrate": 52.2,
+   "pf": 0.94,
+   "dd": null,
+   "note": "Python backtester, data z Kaggle. Průměr -0,031 R na obchod, celkem -3,6 R, max. drawdown 9,2 R. Náklady 0,75 bodu na obchod."
+  },
+  {
+   "id": "20261111-varianta-test",
+   "ts": "2026-11-11T16:14:00Z",
+   "modelVersion": "varianta",
+   "symbol": "NQ",
+   "period": "testovací část, posledních 30 % dní",
+   "trades": 23,
+   "winrate": 34.8,
+   "pf": 1.04,
+   "dd": null,
+   "note": "Nejlepší z 864 variant podle tréninku (jen overnight likvidita, okno do 11:30, RR 1,5, bez částečného výběru, setup 30 svíček). Trénink +0,228 R na obchod, test +0,018 R. Výhoda se na neviděných datech nepotvrdila."
+  }
+ ]
 }
