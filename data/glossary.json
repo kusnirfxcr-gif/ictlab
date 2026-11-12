@@ -1,23 +1,1314 @@
 [
- {"id": "backtest", "term": "Backtest", "en": "backtest", "week": 11, "def": "Ověření pravidel na historických datech. Bez něj se neví, jestli model něco vydělává."},
- {"id": "bod", "term": "Bod", "en": "point", "week": 1, "def": "Jednotka ceny futures. Jeden bod jsou čtyři ticky."},
- {"id": "cash-open", "term": "Cash open", "en": "cash open", "week": 1, "def": "Otevření americké akciové burzy v 9:30 newyorského času. Od té chvíle bývá na NQ a ES nejvíc pohybu a objemu."},
- {"id": "displacement", "term": "Displacement", "en": "displacement", "week": 5, "def": "Rychlý, silný pohyb jedním směrem s velkými těly svíček."},
- {"id": "es", "term": "ES", "en": "E-mini S&P 500", "week": 1, "def": "Futures na index S&P 500. Bod má hodnotu 50 USD. Menší verze je MES s bodem za 5 USD."},
- {"id": "futures", "term": "Futures", "en": "futures", "week": 1, "def": "Smlouva, jejíž cena kopíruje nějaký trh, třeba akciový index. Obchoduje se na burze téměř celý den."},
- {"id": "fvg", "term": "FVG", "en": "fair value gap", "week": 5, "def": "Mezera mezi knotem první a třetí svíčky ve třísvíčkovém pohybu. ICT ji bere jako zónu, kam se cena může vrátit."},
- {"id": "likvidita", "term": "Likvidita", "en": "liquidity", "week": 4, "def": "Místa, kde čeká hodně příkazů, hlavně stop-lossů. Typicky nad starými vrcholy a pod starými dny."},
- {"id": "mss", "term": "MSS", "en": "market structure shift", "week": 3, "def": "Změna struktury trhu. Svíčka zavře za posledním swingem proti dosavadnímu směru."},
- {"id": "newyorsky-cas", "term": "Newyorský čas", "en": "New York time (ET)", "week": 1, "def": "Časové pásmo, ve kterém se uvádějí všechny časy v ICT. Proti Česku je většinou o šest hodin pozadu, pár týdnů v roce o pět."},
- {"id": "nq", "term": "NQ", "en": "E-mini Nasdaq 100", "week": 1, "def": "Futures na index Nasdaq 100. Bod má hodnotu 20 USD. Menší verze je MNQ s bodem za 2 USD."},
- {"id": "ohlc", "term": "OHLC", "en": "open, high, low, close", "week": 1, "def": "Čtyři ceny svíčky: otevírací, nejvyšší, nejnižší a zavírací."},
- {"id": "overnight", "term": "Overnight", "en": "overnight session", "week": 1, "def": "Noční obchodování futures od 18:00 do 9:30 newyorského času. Jeho nejvyšší a nejnižší cena se jmenují overnight high a overnight low."},
- {"id": "r", "term": "R", "en": "risk unit", "week": 10, "def": "Velikost rizika na jeden obchod. Zisk 2R znamená dvojnásobek toho, co bylo v sázce."},
- {"id": "seance", "term": "Seance", "en": "session", "week": 1, "def": "Část dne, kdy obchoduje určitá část světa: Asie, Londýn, New York. Nejvíc pohybu na NQ a ES bývá po 9:30 newyorského času."},
- {"id": "stop", "term": "Stop-loss", "en": "stop-loss", "week": 9, "def": "Příkaz, který obchod sám zavře při určené ztrátě. V modelu leží za extrémem sweepu."},
- {"id": "svicka", "term": "Svíčka", "en": "candle", "week": 1, "def": "Obrázek jednoho úseku času na grafu. Ukazuje open, high, low a close."},
- {"id": "sweep", "term": "Sweep", "en": "liquidity sweep", "week": 4, "def": "Cena krátce prorazí vrchol nebo dno, vybere příkazy za ním a vrátí se zpět."},
- {"id": "swing", "term": "Swing high a swing low", "en": "swing high / swing low", "week": 2, "def": "Místní vrchol nebo dno na grafu. Svíčka, která má vyšší high (nebo nižší low) než sousední svíčky po obou stranách."},
- {"id": "tick", "term": "Tick", "en": "tick", "week": 1, "def": "Nejmenší krok, o který se cena může pohnout. Na NQ a ES je to 0,25 bodu."},
- {"id": "timeframe", "term": "Timeframe", "en": "timeframe", "week": 1, "def": "Délka času, kterou pokrývá jedna svíčka, například 1m, 5m nebo 15m."}
+ {
+  "id": "am-session",
+  "term": "AM seance",
+  "en": "AM session",
+  "cat": "cas",
+  "week": 7,
+  "def": "Newyorské dopoledne, zhruba 9:30 až 12:00. Nejaktivnější část dne pro indexy."
+ },
+ {
+  "id": "top-down",
+  "term": "Analýza shora dolů",
+  "en": "top-down analysis",
+  "cat": "zaklady",
+  "week": 8,
+  "def": "Postup od vyššího timeframu k nižšímu: nejdřív směr a cíl na denním grafu, potom struktura na hodinovém a nakonec vstup na minutách."
+ },
+ {
+  "id": "asia-range",
+  "term": "Asia range",
+  "en": "Asian range",
+  "cat": "likvidita",
+  "week": 7,
+  "def": "Rozpětí asijské seance. Jeho high a low slouží v Londýně a New Yorku jako likvidita."
+ },
+ {
+  "id": "backtest",
+  "term": "Backtest",
+  "en": "backtest",
+  "week": 11,
+  "def": "Ověření pravidel na historických datech. Bez něj se neví, jestli model něco vydělává.",
+  "cat": "praxe"
+ },
+ {
+  "id": "bearish",
+  "term": "Bearish",
+  "en": "bearish",
+  "cat": "zaklady",
+  "week": 1,
+  "def": "Klesající, medvědí. Bearish svíčka zavřela pod svým otevřením, bearish trh klesá."
+ },
+ {
+  "id": "bisi",
+  "term": "BISI",
+  "en": "buyside imbalance, sellside inefficiency",
+  "cat": "mezery",
+  "week": 5,
+  "def": "Jiný název pro bullish FVG: mezera vzniklá při silném růstu."
+ },
+ {
+  "id": "bod",
+  "term": "Bod",
+  "en": "point",
+  "week": 1,
+  "def": "Jednotka ceny futures. Jeden bod jsou čtyři ticky.",
+  "cat": "zaklady"
+ },
+ {
+  "id": "bos",
+  "term": "BOS",
+  "en": "break of structure",
+  "cat": "struktura",
+  "week": 3,
+  "def": "Svíčka zavře za posledním vrcholem nebo dnem po směru trendu. Potvrzuje, že trend pokračuje."
+ },
+ {
+  "id": "bpr",
+  "term": "BPR",
+  "en": "balanced price range",
+  "cat": "mezery",
+  "week": 5,
+  "def": "Pásmo, kde se překrývá bullish a bearish FVG. Cena jím prošla rychle oběma směry a ICT ho bere jako silnou zónu."
+ },
+ {
+  "id": "break-even",
+  "term": "Break-even",
+  "en": "BE",
+  "cat": "praxe",
+  "week": 9,
+  "def": "Posun stop-lossu na vstupní cenu. Obchod pak už nemůže skončit ztrátou."
+ },
+ {
+  "id": "breaker",
+  "term": "Breaker",
+  "en": "breaker block",
+  "cat": "bloky",
+  "week": 6,
+  "def": "Order block, který cena po výběru likvidity prorazila. Při návratu funguje z opačné strany."
+ },
+ {
+  "id": "bsl",
+  "term": "BSL",
+  "en": "buy-side liquidity",
+  "cat": "likvidita",
+  "week": 4,
+  "def": "Likvidita nad vrcholy. Leží tam stop-lossy prodávajících a příkazy na nákup při průrazu."
+ },
+ {
+  "id": "bullish",
+  "term": "Bullish",
+  "en": "bullish",
+  "cat": "zaklady",
+  "week": 1,
+  "def": "Rostoucí, býčí. Bullish svíčka zavřela nad svým otevřením, bullish trh roste."
+ },
+ {
+  "id": "buy-stops",
+  "term": "Buy stops a sell stops",
+  "en": "buy stops, sell stops",
+  "cat": "likvidita",
+  "week": 4,
+  "def": "Čekající příkazy na nákup nad cenou a na prodej pod cenou. Většinou jde o stop-lossy, dohromady tvoří likviditu."
+ },
+ {
+  "id": "cash-open",
+  "term": "Cash open",
+  "en": "cash open",
+  "week": 1,
+  "def": "Otevření americké akciové burzy v 9:30 newyorského času. Od té chvíle bývá na NQ a ES nejvíc pohybu a objemu.",
+  "cat": "cas"
+ },
+ {
+  "id": "cbdr",
+  "term": "CBDR",
+  "en": "central bank dealers range",
+  "cat": "cas",
+  "week": 7,
+  "def": "Rozpětí mezi 14:00 a 20:00 newyorského času. ICT ho na forexu používá k odhadu denního high a low."
+ },
+ {
+  "id": "ce",
+  "term": "CE",
+  "en": "consequent encroachment",
+  "cat": "mezery",
+  "week": 5,
+  "def": "Střed mezery, tedy 50 % FVG. Častá úroveň pro vstup. Když svíčka zavře za ním, mezera slábne."
+ },
+ {
+  "id": "choch",
+  "term": "CHoCH",
+  "en": "change of character",
+  "cat": "struktura",
+  "week": 3,
+  "def": "První průraz swingu proti dosavadnímu trendu. Pojem z příbuzného směru SMC, v ICT se pro totéž říká MSS."
+ },
+ {
+  "id": "cisd",
+  "term": "CISD",
+  "en": "change in state of delivery",
+  "cat": "struktura",
+  "week": 3,
+  "def": "Svíčka zavře za otevírací cenou poslední svíčky (nebo řady svíček), která šla starým směrem. Je to dřívější signál obratu než MSS, protože neláme swing, jen otevření svíčky. Knot nestačí, musí zavřít tělo."
+ },
+ {
+  "id": "dealing-range",
+  "term": "Dealing range",
+  "en": "dealing range",
+  "cat": "struktura",
+  "week": 6,
+  "def": "Úsek mezi výrazným swing high a swing low, ve kterém se právě obchoduje. V něm se měří premium, discount a equilibrium."
+ },
+ {
+  "id": "demo",
+  "term": "Demo účet",
+  "en": "paper trading",
+  "cat": "praxe",
+  "week": 12,
+  "def": "Obchodování s cvičnými penězi. Slouží k ověření plánu bez rizika."
+ },
+ {
+  "id": "bias",
+  "term": "Denní bias",
+  "en": "daily bias",
+  "cat": "modely",
+  "week": 8,
+  "def": "Pracovní předpoklad, kterým směrem dnes cena spíš půjde. Podle něj se berou obchody jen jedním směrem."
+ },
+ {
+  "id": "daily-loss",
+  "term": "Denní limit ztráty",
+  "en": "max daily loss",
+  "cat": "praxe",
+  "week": 10,
+  "def": "Nejvyšší ztráta, po které ten den končíš. U prop firem je to pevné pravidlo."
+ },
+ {
+  "id": "daily-profile",
+  "term": "Denní profil",
+  "en": "daily profile",
+  "cat": "cas",
+  "week": 8,
+  "def": "Typický průběh dne: kdy vznikne high a low a kdy přijde hlavní pohyb."
+ },
+ {
+  "id": "discount",
+  "term": "Discount",
+  "en": "discount",
+  "cat": "bloky",
+  "week": 6,
+  "def": "Dolní polovina dealing range. Cena je tam levná, hledají se nákupy."
+ },
+ {
+  "id": "displacement",
+  "term": "Displacement",
+  "en": "displacement",
+  "week": 5,
+  "def": "Rychlý, silný pohyb jedním směrem s velkými těly svíček.",
+  "cat": "struktura"
+ },
+ {
+  "id": "dol",
+  "term": "Draw on liquidity",
+  "en": "DOL",
+  "cat": "likvidita",
+  "week": 8,
+  "def": "Likvidita nebo mezera, ke které cena nejspíš míří. Slouží jako směr i jako cíl obchodu."
+ },
+ {
+  "id": "drawdown",
+  "term": "Drawdown",
+  "en": "drawdown",
+  "cat": "praxe",
+  "week": 10,
+  "def": "Pokles účtu od posledního maxima. Ukazuje, jak hlubokou sérii ztrát model nebo obchodník zažil."
+ },
+ {
+  "id": "eqh",
+  "term": "Equal highs",
+  "en": "EQH, relative equal highs",
+  "cat": "likvidita",
+  "week": 4,
+  "def": "Dva nebo víc vrcholů skoro ve stejné ceně. Nad nimi se hromadí stopy, takže je cena často vybere."
+ },
+ {
+  "id": "eql",
+  "term": "Equal lows",
+  "en": "EQL, relative equal lows",
+  "cat": "likvidita",
+  "week": 4,
+  "def": "Dvě nebo víc den skoro ve stejné ceně. Pod nimi se hromadí stopy."
+ },
+ {
+  "id": "equilibrium",
+  "term": "Equilibrium",
+  "en": "equilibrium, EQ",
+  "cat": "bloky",
+  "week": 6,
+  "def": "Přesná polovina dealing range, hranice mezi premium a discount."
+ },
+ {
+  "id": "erl",
+  "term": "ERL",
+  "en": "external range liquidity",
+  "cat": "likvidita",
+  "week": 8,
+  "def": "Likvidita na okrajích dealing range, tedy nad jeho vrcholem a pod jeho dnem."
+ },
+ {
+  "id": "es",
+  "term": "ES",
+  "en": "E-mini S&P 500",
+  "week": 1,
+  "def": "Futures na index S&P 500. Bod má hodnotu 50 USD. Menší verze je MES s bodem za 5 USD.",
+  "cat": "zaklady"
+ },
+ {
+  "id": "eth",
+  "term": "ETH",
+  "en": "electronic trading hours",
+  "cat": "cas",
+  "week": 1,
+  "def": "Elektronické obchodování futures skoro po celý den, včetně noci."
+ },
+ {
+  "id": "evaluation",
+  "term": "Evaluace",
+  "en": "evaluation, challenge",
+  "cat": "praxe",
+  "week": 12,
+  "def": "Zkouška u prop firmy: dosáhnout cílového zisku a přitom nepřekročit povolenou denní a celkovou ztrátu."
+ },
+ {
+  "id": "expanze",
+  "term": "Expanze",
+  "en": "expansion",
+  "cat": "struktura",
+  "week": 2,
+  "def": "Rychlý pohyb ven z konsolidace. Spolu s konsolidací, retracementem a obratem tvoří čtyři fáze, kterými cena podle ICT prochází."
+ },
+ {
+  "id": "failure-swing",
+  "term": "Failure swing",
+  "en": "failure swing",
+  "cat": "struktura",
+  "week": 3,
+  "def": "Trh se pokusí o nový vrchol nebo dno, ale nedosáhne ho a otočí se. Od sweepu se liší tím, že starý extrém nepřekoná."
+ },
+ {
+  "id": "fib",
+  "term": "Fibonacci",
+  "en": "Fibonacci retracement",
+  "cat": "bloky",
+  "week": 6,
+  "def": "Nástroj, který rozdělí pohyb na procenta. V ICT se sleduje hlavně 50 %, 62 %, 70,5 % a 79 %."
+ },
+ {
+  "id": "flout",
+  "term": "Flout",
+  "en": "flout",
+  "cat": "cas",
+  "week": 7,
+  "def": "Rozpětí od 15:00 do půlnoci newyorského času, tedy CBDR spojené s asijskou seancí. Používá se podobně jako CBDR."
+ },
+ {
+  "id": "fomo",
+  "term": "FOMO",
+  "en": "fear of missing out",
+  "cat": "praxe",
+  "week": 12,
+  "def": "Strach, že ti pohyb uteče. Vede ke vstupům bez setupu."
+ },
+ {
+  "id": "forward-test",
+  "term": "Forward test",
+  "en": "forward test",
+  "cat": "praxe",
+  "week": 11,
+  "def": "Zkouška modelu na nových datech v reálném čase, typicky na demo účtu. Navazuje na backtest."
+ },
+ {
+  "id": "futures",
+  "term": "Futures",
+  "en": "futures",
+  "week": 1,
+  "def": "Smlouva, jejíž cena kopíruje nějaký trh, třeba akciový index. Obchoduje se na burze téměř celý den.",
+  "cat": "zaklady"
+ },
+ {
+  "id": "fvg",
+  "term": "FVG",
+  "en": "fair value gap",
+  "week": 5,
+  "def": "Mezera mezi knotem první a třetí svíčky ve třísvíčkovém pohybu. ICT ji bere jako zónu, kam se cena může vrátit.",
+  "cat": "mezery"
+ },
+ {
+  "id": "gap",
+  "term": "Gap",
+  "en": "gap",
+  "cat": "zaklady",
+  "week": 5,
+  "def": "Cenová mezera mezi zavřením jedné svíčky a otevřením další. Vzniká hlavně přes přestávku nebo víkend."
+ },
+ {
+  "id": "hh-hl",
+  "term": "HH a HL",
+  "en": "higher high, higher low",
+  "cat": "struktura",
+  "week": 2,
+  "def": "Vyšší vrchol a vyšší dno. Jejich řada znamená trend nahoru."
+ },
+ {
+  "id": "hrlr",
+  "term": "HRLR",
+  "en": "high resistance liquidity run",
+  "cat": "likvidita",
+  "week": 8,
+  "def": "Cesta k likviditě s velkým odporem: v cestě jsou zóny a swingy, na kterých se cena zadrhává, pohyb je pomalý a trhaný."
+ },
+ {
+  "id": "htf",
+  "term": "HTF",
+  "en": "higher timeframe",
+  "cat": "zaklady",
+  "week": 1,
+  "def": "Vyšší timeframe, například denní, čtyřhodinový nebo hodinový graf. Určuje směr a cíle."
+ },
+ {
+  "id": "imbalance",
+  "term": "Imbalance",
+  "en": "imbalance, inefficiency",
+  "cat": "mezery",
+  "week": 5,
+  "def": "Místo, kde se obchodovalo skoro jen jedním směrem. ICT mu říká i neefektivita a čeká, že se k němu cena vrátí."
+ },
+ {
+  "id": "immediate-rebalance",
+  "term": "Immediate rebalance",
+  "en": "immediate rebalance",
+  "cat": "mezery",
+  "week": 5,
+  "def": "Po velké svíčce se hned další svíčka knotem dotkne úrovně svíčky před ní, takže žádný FVG nezůstane. Nerovnováha se srovnala okamžitě. ICT to čte jako sílu a nečeká, že se cena pod to místo vrátí."
+ },
+ {
+  "id": "implied-fvg",
+  "term": "Implied FVG",
+  "en": "implied fair value gap",
+  "cat": "mezery",
+  "week": 5,
+  "def": "Skrytá mezera u velké svíčky, kde se knoty sousedních svíček překrývají, takže klasický FVG není vidět. Počítá se mezi polovinami těch dvou knotů."
+ },
+ {
+  "id": "impuls",
+  "term": "Impuls a korekce",
+  "en": "impulse, retracement",
+  "cat": "struktura",
+  "week": 2,
+  "def": "Impuls je silný pohyb po směru trendu, korekce (retracement) pomalejší návrat proti němu. Vstupy se hledají v korekci."
+ },
+ {
+  "id": "inducement",
+  "term": "Inducement",
+  "en": "IDM",
+  "cat": "likvidita",
+  "week": 4,
+  "def": "Menší vrchol nebo dno, které láká obchodníky ke vstupu. Jejich stopy pak cena vybere dřív, než se vydá skutečným směrem. Pojem hlavně z SMC."
+ },
+ {
+  "id": "ifvg",
+  "term": "Inverzní FVG",
+  "en": "IFVG, inversion FVG",
+  "cat": "mezery",
+  "week": 5,
+  "def": "FVG, který cena prorazila zavřením těla. Od té chvíle funguje z opačné strany."
+ },
+ {
+  "id": "ipda",
+  "term": "IPDA",
+  "en": "interbank price delivery algorithm",
+  "cat": "bloky",
+  "week": 8,
+  "def": "Představa ICT, že cenu doručuje algoritmus, který střídavě hledá likviditu a vyrovnává mezery. Je to výkladový rámec, ne ověřený fakt."
+ },
+ {
+  "id": "ipda-ranges",
+  "term": "IPDA data ranges",
+  "en": "20, 40, 60 day look back",
+  "cat": "bloky",
+  "week": 8,
+  "def": "Posledních 20, 40 a 60 obchodních dní. V nich ICT hledá nejvyšší a nejnižší ceny a nevyplněné mezery jako cíle."
+ },
+ {
+  "id": "irl",
+  "term": "IRL",
+  "en": "internal range liquidity",
+  "cat": "likvidita",
+  "week": 8,
+  "def": "Zóny uvnitř dealing range, hlavně FVG a order blocky. Podle ICT cena střídá cestu od vnitřní likvidity k vnější a zpět."
+ },
+ {
+  "id": "ith-itl",
+  "term": "ITH a ITL",
+  "en": "intermediate-term high / low",
+  "cat": "struktura",
+  "week": 2,
+  "def": "Střednědobý vrchol nebo dno: krátkodobý swing, který má po obou stranách méně výrazné krátkodobé swingy."
+ },
+ {
+  "id": "judas-swing",
+  "term": "Judas swing",
+  "en": "Judas swing",
+  "cat": "likvidita",
+  "week": 7,
+  "def": "Falešný pohyb na začátku seance proti skutečnému směru dne. Vybere likviditu na jedné straně a trh se pak otočí."
+ },
+ {
+  "id": "killzone",
+  "term": "Killzone",
+  "en": "killzone",
+  "cat": "cas",
+  "week": 7,
+  "def": "Časové okno s největší aktivitou. Zhruba asijská 20:00 až 0:00, londýnská 2:00 až 5:00 a newyorská 7:00 až 10:00 newyorského času, u indexů hlavně 8:30 až 11:00."
+ },
+ {
+  "id": "knot",
+  "term": "Knot",
+  "en": "wick",
+  "cat": "zaklady",
+  "week": 1,
+  "def": "Tenká čárka nad nebo pod tělem svíčky. Ukazuje, kam cena zašla a vrátila se."
+ },
+ {
+  "id": "konfluence",
+  "term": "Konfluence",
+  "en": "confluence",
+  "cat": "bloky",
+  "week": 6,
+  "def": "Víc důvodů na jednom místě, třeba FVG uvnitř OTE v killzone. Čím víc se jich sejde, tím větší váhu ICT setupu dává."
+ },
+ {
+  "id": "konsolidace",
+  "term": "Konsolidace",
+  "en": "consolidation",
+  "cat": "struktura",
+  "week": 2,
+  "def": "Trh se pohybuje do strany v úzkém pásmu. Podle ICT se v ní hromadí příkazy před dalším pohybem."
+ },
+ {
+  "id": "kontrakt",
+  "term": "Kontrakt",
+  "en": "contract",
+  "cat": "zaklady",
+  "week": 1,
+  "def": "Jedna obchodovaná jednotka futures. Kontrakty mají datum vypršení, u indexů jednou za čtvrt roku, a pak se přechází na další."
+ },
+ {
+  "id": "lh-ll",
+  "term": "LH a LL",
+  "en": "lower high, lower low",
+  "cat": "struktura",
+  "week": 2,
+  "def": "Nižší vrchol a nižší dno. Jejich řada znamená trend dolů."
+ },
+ {
+  "id": "likvidita",
+  "term": "Likvidita",
+  "en": "liquidity",
+  "week": 4,
+  "def": "Místa, kde čeká hodně příkazů, hlavně stop-lossů. Typicky nad starými vrcholy a pod starými dny.",
+  "cat": "likvidita"
+ },
+ {
+  "id": "limit-order",
+  "term": "Limitní příkaz",
+  "en": "limit order",
+  "cat": "praxe",
+  "week": 9,
+  "def": "Příkaz, který se provede jen za určenou nebo lepší cenu. Nemusí se vyplnit."
+ },
+ {
+  "id": "liquidity-pool",
+  "term": "Liquidity pool",
+  "en": "liquidity pool",
+  "cat": "likvidita",
+  "week": 4,
+  "def": "Místo s velkým množstvím čekajících příkazů, typicky za výrazným vrcholem, dnem nebo equal highs a lows."
+ },
+ {
+  "id": "liquidity-void",
+  "term": "Liquidity void",
+  "en": "liquidity void",
+  "cat": "mezery",
+  "week": 5,
+  "def": "Delší jednosměrný úsek s velkými svíčkami skoro bez překryvu. Podle ICT ho cena později znovu projde."
+ },
+ {
+  "id": "london-close",
+  "term": "London close",
+  "en": "London close",
+  "cat": "cas",
+  "week": 7,
+  "def": "Zavírání londýnské seance, zhruba 10:00 až 12:00 newyorského času. Častý čas korekce dopoledního pohybu."
+ },
+ {
+  "id": "long",
+  "term": "Long",
+  "en": "long",
+  "cat": "zaklady",
+  "week": 1,
+  "def": "Nákup. Vyděláváš, když cena roste."
+ },
+ {
+  "id": "lrlr",
+  "term": "LRLR",
+  "en": "low resistance liquidity run",
+  "cat": "likvidita",
+  "week": 8,
+  "def": "Cesta k likviditě s malým odporem: v cestě leží řada nevybraných vrcholů nebo den a žádná silná zóna, takže cena prochází snadno."
+ },
+ {
+  "id": "ltf",
+  "term": "LTF",
+  "en": "lower timeframe",
+  "cat": "zaklady",
+  "week": 1,
+  "def": "Nižší timeframe, například 15m, 5m nebo 1m. Slouží k načasování vstupu."
+ },
+ {
+  "id": "lth-ltl",
+  "term": "LTH a LTL",
+  "en": "long-term high / low",
+  "cat": "struktura",
+  "week": 2,
+  "def": "Dlouhodobý vrchol nebo dno: střednědobý swing, který má po obou stranách méně výrazné střednědobé swingy. Bývá u něj hodně likvidity."
+ },
+ {
+  "id": "macro",
+  "term": "Makro",
+  "en": "macro",
+  "cat": "cas",
+  "week": 7,
+  "def": "Krátké, asi dvacetiminutové okno, ve kterém podle ICT cena hledá likviditu nebo vyplňuje mezeru. Například 9:50 až 10:10 nebo 10:50 až 11:10 newyorského času."
+ },
+ {
+  "id": "margin",
+  "term": "Margin a páka",
+  "en": "margin, leverage",
+  "cat": "zaklady",
+  "week": 10,
+  "def": "Záloha, kterou broker drží za otevřený kontrakt. Díky páce ovládáš malou částkou velkou pozici, takže zisky i ztráty rostou rychle."
+ },
+ {
+  "id": "mean-threshold",
+  "term": "Mean threshold",
+  "en": "mean threshold",
+  "cat": "bloky",
+  "week": 6,
+  "def": "Střed těla order blocku. Když svíčka zavře za ním, order block slábne."
+ },
+ {
+  "id": "midnight-open",
+  "term": "Midnight open",
+  "en": "midnight open, true day open",
+  "cat": "cas",
+  "week": 7,
+  "def": "Cena o půlnoci newyorského času. Nad ní je trh pro daný den drahý, pod ní levný."
+ },
+ {
+  "id": "mitigation-block",
+  "term": "Mitigation block",
+  "en": "mitigation block",
+  "cat": "bloky",
+  "week": 6,
+  "def": "Podobný breakeru, ale bez výběru likvidity: trh neudělal nový extrém, zlomil strukturu a zóna před zlomem pak funguje z opačné strany."
+ },
+ {
+  "id": "mmbm",
+  "term": "MMBM",
+  "en": "market maker buy model",
+  "cat": "modely",
+  "week": 9,
+  "def": "Model nákupu: konsolidace, pokles po etapách do zóny z vyššího timeframu, obrat a růst zpět přes stejné úrovně."
+ },
+ {
+  "id": "mmsm",
+  "term": "MMSM",
+  "en": "market maker sell model",
+  "cat": "modely",
+  "week": 9,
+  "def": "Zrcadlový model prodeje: konsolidace, růst po etapách do zóny z vyššího timeframu, obrat a pokles zpět."
+ },
+ {
+  "id": "mnq-mes",
+  "term": "MNQ a MES",
+  "en": "micro futures",
+  "cat": "zaklady",
+  "week": 1,
+  "def": "Desetkrát menší verze kontraktů NQ a ES. Cena je stejná, bod má hodnotu 2 USD (MNQ) a 5 USD (MES)."
+ },
+ {
+  "id": "model-2022",
+  "term": "Model 2022",
+  "en": "ICT 2022 model",
+  "cat": "modely",
+  "week": 9,
+  "def": "Postup z veřejného mentorshipu ICT: výběr likvidity, změna struktury s displacementem a vstup při návratu do FVG."
+ },
+ {
+  "id": "mss",
+  "term": "MSS",
+  "en": "market structure shift",
+  "week": 3,
+  "def": "Změna struktury trhu. Svíčka zavře za posledním swingem proti dosavadnímu směru.",
+  "cat": "struktura"
+ },
+ {
+  "id": "ndog",
+  "term": "NDOG",
+  "en": "new day opening gap",
+  "cat": "mezery",
+  "week": 7,
+  "def": "Mezera mezi zavřením futures v 17:00 a otevřením v 18:00 newyorského času."
+ },
+ {
+  "id": "lunch",
+  "term": "Newyorský oběd",
+  "en": "NY lunch",
+  "cat": "cas",
+  "week": 7,
+  "def": "Zhruba 12:00 až 13:30 newyorského času. Trh bývá pomalý a ICT v té době neobchoduje."
+ },
+ {
+  "id": "newyorsky-cas",
+  "term": "Newyorský čas",
+  "en": "New York time (ET)",
+  "week": 1,
+  "def": "Časové pásmo, ve kterém se uvádějí všechny časy v ICT. Proti Česku je většinou o šest hodin pozadu, pár týdnů v roce o pět.",
+  "cat": "cas"
+ },
+ {
+  "id": "nq",
+  "term": "NQ",
+  "en": "E-mini Nasdaq 100",
+  "week": 1,
+  "def": "Futures na index Nasdaq 100. Bod má hodnotu 20 USD. Menší verze je MNQ s bodem za 2 USD.",
+  "cat": "zaklady"
+ },
+ {
+  "id": "nwog",
+  "term": "NWOG",
+  "en": "new week opening gap",
+  "cat": "mezery",
+  "week": 7,
+  "def": "Mezera mezi pátečním zavřením a nedělním otevřením futures. ICT ji sleduje jako zónu po celý týden."
+ },
+ {
+  "id": "denik",
+  "term": "Obchodní deník",
+  "en": "trading journal",
+  "cat": "praxe",
+  "week": 11,
+  "def": "Záznam každého obchodu: důvod, vstup, stop, výsledek a snímek grafu. Bez něj nepoznáš, co dělat jinak."
+ },
+ {
+  "id": "plan",
+  "term": "Obchodní plán",
+  "en": "trading plan",
+  "cat": "praxe",
+  "week": 12,
+  "def": "Sepsaná pravidla: co, kdy a jak obchoduješ, kolik riskuješ a kdy končíš."
+ },
+ {
+  "id": "objem",
+  "term": "Objem",
+  "en": "volume",
+  "cat": "zaklady",
+  "week": 1,
+  "def": "Počet kontraktů zobchodovaných za dané období. ICT s ním pracuje málo, rozhoduje cena a čas."
+ },
+ {
+  "id": "reversal",
+  "term": "Obrat",
+  "en": "reversal",
+  "cat": "struktura",
+  "week": 3,
+  "def": "Změna směru trhu. ICT ho čeká hlavně po výběru likvidity na úrovni z vyššího timeframu."
+ },
+ {
+  "id": "ohlc",
+  "term": "OHLC",
+  "en": "open, high, low, close",
+  "week": 1,
+  "def": "Čtyři ceny svíčky: otevírací, nejvyšší, nejnižší a zavírací.",
+  "cat": "zaklady"
+ },
+ {
+  "id": "old-high-low",
+  "term": "Old high a old low",
+  "en": "old high / old low",
+  "cat": "likvidita",
+  "week": 4,
+  "def": "Starší vrchol nebo dno, za kterým ještě leží nevybrané stopy."
+ },
+ {
+  "id": "opening-range",
+  "term": "Opening range",
+  "en": "opening range",
+  "cat": "cas",
+  "week": 7,
+  "def": "Rozpětí první půlhodiny po otevření v 9:30. Jeho high a low jsou krátkodobá likvidita."
+ },
+ {
+  "id": "order-block",
+  "term": "Order block",
+  "en": "OB",
+  "cat": "bloky",
+  "week": 6,
+  "def": "Poslední svíčka proti směru těsně před silným pohybem. Bullish order block je poslední klesající svíčka před růstem, bearish poslední rostoucí před poklesem."
+ },
+ {
+  "id": "order-flow",
+  "term": "Order flow",
+  "en": "institutional order flow",
+  "cat": "struktura",
+  "week": 8,
+  "def": "V ICT směr, kterým cena respektuje zóny. V bullish order flow drží nákupní zóny a prodejní zóny cena proráží. Nejde o tok příkazů z knihy objednávek."
+ },
+ {
+  "id": "org",
+  "term": "ORG",
+  "en": "opening range gap",
+  "cat": "mezery",
+  "week": 7,
+  "def": "Mezera mezi zavřením běžné seance předchozího dne a otevřením v 9:30 newyorského času."
+ },
+ {
+  "id": "ote",
+  "term": "OTE",
+  "en": "optimal trade entry",
+  "cat": "bloky",
+  "week": 6,
+  "def": "Pásmo 62 až 79 % návratu podle Fibonacciho. Nejhlubší část korekce, kde ICT hledá vstup."
+ },
+ {
+  "id": "open-830",
+  "term": "Otevření 8:30",
+  "en": "8:30 open",
+  "cat": "cas",
+  "week": 7,
+  "def": "Cena v 8:30 newyorského času, kdy vycházejí americká ekonomická data. Druhá referenční cena dne."
+ },
+ {
+  "id": "overnight",
+  "term": "Overnight",
+  "en": "overnight session",
+  "week": 1,
+  "def": "Noční obchodování futures od 18:00 do 9:30 newyorského času. Jeho nejvyšší a nejnižší cena se jmenují overnight high a overnight low.",
+  "cat": "cas"
+ },
+ {
+  "id": "expectancy",
+  "term": "Očekávaná hodnota",
+  "en": "expectancy",
+  "cat": "praxe",
+  "week": 10,
+  "def": "Průměrný výsledek jednoho obchodu v R. Když je kladná, model dlouhodobě vydělává."
+ },
+ {
+  "id": "pd-array",
+  "term": "PD array",
+  "en": "premium / discount array",
+  "cat": "bloky",
+  "week": 6,
+  "def": "Souhrnný název pro zóny, na které cena reaguje: order block, FVG, breaker, mitigation block, rejection block, liquidity void a staré vrcholy a dna."
+ },
+ {
+  "id": "pdh-pdl",
+  "term": "PDH a PDL",
+  "en": "previous day high / low",
+  "cat": "likvidita",
+  "week": 4,
+  "def": "Nejvyšší a nejnižší cena předchozího dne. Jedny z nejsledovanějších úrovní likvidity."
+ },
+ {
+  "id": "pm-session",
+  "term": "PM seance",
+  "en": "PM session",
+  "cat": "cas",
+  "week": 7,
+  "def": "Newyorské odpoledne, zhruba 13:30 až 16:00."
+ },
+ {
+  "id": "poi",
+  "term": "POI",
+  "en": "point of interest",
+  "cat": "bloky",
+  "week": 6,
+  "def": "Zóna, kde čekáš reakci ceny a hledáš vstup. Pojem hlavně z SMC, v ICT se mluví o PD arrays."
+ },
+ {
+  "id": "wick-ce",
+  "term": "Polovina knotu",
+  "en": "wick CE",
+  "cat": "mezery",
+  "week": 5,
+  "def": "Střed dlouhého knotu. ICT ho používá jako úroveň stejně jako střed FVG."
+ },
+ {
+  "id": "poplatky",
+  "term": "Poplatky",
+  "en": "commissions",
+  "cat": "praxe",
+  "week": 11,
+  "def": "Cena za provedení obchodu. U scalpingu s malými cíli ukousnou velkou část výsledku."
+ },
+ {
+  "id": "po3",
+  "term": "Power of three",
+  "en": "PO3, AMD",
+  "cat": "cas",
+  "week": 7,
+  "def": "Tři fáze dne nebo svíčky: akumulace (klid), manipulace (falešný výpad) a distribuce (skutečný pohyb)."
+ },
+ {
+  "id": "premium",
+  "term": "Premium",
+  "en": "premium",
+  "cat": "bloky",
+  "week": 6,
+  "def": "Horní polovina dealing range. Cena je tam drahá, hledají se prodeje."
+ },
+ {
+  "id": "profit-factor",
+  "term": "Profit factor",
+  "en": "profit factor",
+  "cat": "praxe",
+  "week": 11,
+  "def": "Součet zisků dělený součtem ztrát. Nad 1 model vydělává, pod 1 prodělává."
+ },
+ {
+  "id": "prop-firm",
+  "term": "Prop firma",
+  "en": "prop firm, funded account",
+  "cat": "praxe",
+  "week": 12,
+  "def": "Firma, která po složení zkoušky svěří obchodníkovi svůj kapitál a dělí se s ním o zisk. Má přísná pravidla pro maximální ztrátu."
+ },
+ {
+  "id": "propulsion-block",
+  "term": "Propulsion block",
+  "en": "propulsion block",
+  "cat": "bloky",
+  "week": 6,
+  "def": "Svíčka, která se vrátila do order blocku a odrazila se od něj. Stává se novou zónou pro pokračování pohybu."
+ },
+ {
+  "id": "first-fvg",
+  "term": "První FVG po otevření",
+  "en": "first presented FVG",
+  "cat": "mezery",
+  "week": 7,
+  "def": "První FVG, který vznikne po otevření v 9:30. ICT ho používá jako referenční zónu pro zbytek dopoledne."
+ },
+ {
+  "id": "pwh-pwl",
+  "term": "PWH a PWL",
+  "en": "previous week high / low",
+  "cat": "likvidita",
+  "week": 4,
+  "def": "Nejvyšší a nejnižší cena předchozího týdne. Cíle na vyšším timeframu."
+ },
+ {
+  "id": "overfitting",
+  "term": "Přeučení",
+  "en": "overfitting",
+  "cat": "praxe",
+  "week": 11,
+  "def": "Pravidla vyladěná tak, aby skvěle seděla na minulá data. Na nových datech pak obvykle selžou."
+ },
+ {
+  "id": "r",
+  "term": "R",
+  "en": "risk unit",
+  "week": 10,
+  "def": "Velikost rizika na jeden obchod. Zisk 2R znamená dvojnásobek toho, co bylo v sázce.",
+  "cat": "praxe"
+ },
+ {
+  "id": "range",
+  "term": "Range",
+  "en": "range",
+  "cat": "zaklady",
+  "week": 2,
+  "def": "Rozpětí mezi nejvyšší a nejnižší cenou za dané období. Také trh, který jde do strany mezi dvěma hranicemi."
+ },
+ {
+  "id": "rebalance",
+  "term": "Rebalance",
+  "en": "rebalance",
+  "cat": "mezery",
+  "week": 5,
+  "def": "Návrat ceny do mezery, při kterém se dorovná jednostranné obchodování."
+ },
+ {
+  "id": "reclaimed-ob",
+  "term": "Reclaimed order block",
+  "en": "reclaimed order block",
+  "cat": "bloky",
+  "week": 6,
+  "def": "Starší order block, který cena znovu použije po obratu, tentokrát ve směru nového pohybu."
+ },
+ {
+  "id": "rejection-block",
+  "term": "Rejection block",
+  "en": "rejection block",
+  "cat": "bloky",
+  "week": 6,
+  "def": "Zóna tvořená dlouhým knotem na výrazném vrcholu nebo dně, od těla svíčky po konec knotu."
+ },
+ {
+  "id": "revenge",
+  "term": "Revenge trading",
+  "en": "revenge trading",
+  "cat": "praxe",
+  "week": 12,
+  "def": "Snaha vyhrát ztrátu hned zpátky dalším, obvykle větším a horším obchodem."
+ },
+ {
+  "id": "rollover",
+  "term": "Rollover",
+  "en": "rollover",
+  "cat": "zaklady",
+  "week": 1,
+  "def": "Přechod z končícího kontraktu na následující. Na grafu se v ten den může objevit cenový skok, který není skutečným pohybem trhu."
+ },
+ {
+  "id": "rr",
+  "term": "RR",
+  "en": "risk-reward ratio",
+  "cat": "praxe",
+  "week": 10,
+  "def": "Poměr možného zisku k riziku. RR 2 znamená, že cíl je dvakrát dál než stop."
+ },
+ {
+  "id": "rth",
+  "term": "RTH",
+  "en": "regular trading hours",
+  "cat": "cas",
+  "week": 1,
+  "def": "Běžná obchodní doba americké burzy, 9:30 až 16:00 newyorského času."
+ },
+ {
+  "id": "seance",
+  "term": "Seance",
+  "en": "session",
+  "week": 1,
+  "def": "Část dne, kdy obchoduje určitá část světa: Asie, Londýn, New York. Nejvíc pohybu na NQ a ES bývá po 9:30 newyorského času.",
+  "cat": "cas"
+ },
+ {
+  "id": "seek-and-destroy",
+  "term": "Seek and destroy",
+  "en": "seek and destroy",
+  "cat": "likvidita",
+  "week": 8,
+  "def": "Den bez směru, kdy cena vybírá stopy nad i pod trhem. Bývá před velkou zprávou a ICT v něm doporučuje neobchodovat."
+ },
+ {
+  "id": "setup",
+  "term": "Setup",
+  "en": "setup",
+  "cat": "modely",
+  "week": 9,
+  "def": "Situace na grafu, která splňuje všechna pravidla modelu. Chybí-li jedno, není to setup."
+ },
+ {
+  "id": "short",
+  "term": "Short",
+  "en": "short",
+  "cat": "zaklady",
+  "week": 1,
+  "def": "Prodej nakrátko. Vyděláváš, když cena klesá."
+ },
+ {
+  "id": "sibi",
+  "term": "SIBI",
+  "en": "sellside imbalance, buyside inefficiency",
+  "cat": "mezery",
+  "week": 5,
+  "def": "Jiný název pro bearish FVG: mezera vzniklá při silném poklesu."
+ },
+ {
+  "id": "silver-bullet",
+  "term": "Silver Bullet",
+  "en": "Silver Bullet",
+  "cat": "cas",
+  "week": 7,
+  "def": "Setup vázaný na tři hodinová okna newyorského času: 3:00 až 4:00, 10:00 až 11:00 a 14:00 až 15:00. Hledá se FVG po výběru likvidity."
+ },
+ {
+  "id": "slippage",
+  "term": "Skluz",
+  "en": "slippage",
+  "cat": "praxe",
+  "week": 11,
+  "def": "Rozdíl mezi cenou, kterou jsi chtěla, a cenou, za kterou se příkaz provedl. Nejvíc se projeví u stopů a při zprávách."
+ },
+ {
+  "id": "smart-money",
+  "term": "Smart money",
+  "en": "smart money",
+  "cat": "modely",
+  "week": 4,
+  "def": "Velcí hráči, banky a fondy. ICT vychází z představy, že právě oni hýbou cenou k likviditě drobných obchodníků."
+ },
+ {
+  "id": "smr",
+  "term": "Smart money reversal",
+  "en": "SMR",
+  "cat": "modely",
+  "week": 9,
+  "def": "Bod obratu v market maker modelu: výběr likvidity na zóně z vyššího timeframu následovaný změnou struktury."
+ },
+ {
+  "id": "smc",
+  "term": "SMC",
+  "en": "smart money concepts",
+  "cat": "modely",
+  "week": 9,
+  "def": "Příbuzný směr, který vychází z ICT a používá částečně jiné názvy, například CHoCH, inducement nebo POI."
+ },
+ {
+  "id": "smt",
+  "term": "SMT divergence",
+  "en": "smart money technique",
+  "cat": "struktura",
+  "week": 8,
+  "def": "Dva příbuzné trhy, třeba NQ a ES, se rozejdou: jeden udělá nový vrchol nebo dno a druhý ne. ICT to čte jako slabost pohybu a možný obrat."
+ },
+ {
+  "id": "ssl",
+  "term": "SSL",
+  "en": "sell-side liquidity",
+  "cat": "likvidita",
+  "week": 4,
+  "def": "Likvidita pod dny. Leží tam stop-lossy kupujících a příkazy na prodej při průrazu."
+ },
+ {
+  "id": "std",
+  "term": "Standardní odchylky",
+  "en": "standard deviation projections",
+  "cat": "bloky",
+  "week": 10,
+  "def": "Násobky velikosti výchozího rozsahu, například konsolidace nebo falešného výpadu, promítnuté dál. ICT je používá k odhadu cíle pohybu."
+ },
+ {
+  "id": "sth-stl",
+  "term": "STH a STL",
+  "en": "short-term high / low",
+  "cat": "struktura",
+  "week": 2,
+  "def": "Krátkodobý vrchol nebo dno: svíčka, která má po obou stranách nižší high (nebo vyšší low)."
+ },
+ {
+  "id": "stop-hunt",
+  "term": "Stop hunt",
+  "en": "stop hunt, liquidity raid, run on stops",
+  "cat": "likvidita",
+  "week": 4,
+  "def": "Pohyb, který záměrně dojde pro stop-lossy za úrovní. Liquidity raid, run on stops a sweep popisují totéž."
+ },
+ {
+  "id": "stop",
+  "term": "Stop-loss",
+  "en": "stop-loss",
+  "week": 9,
+  "def": "Příkaz, který obchod sám zavře při určené ztrátě. V modelu leží za extrémem sweepu.",
+  "cat": "praxe"
+ },
+ {
+  "id": "struktura-trhu",
+  "term": "Struktura trhu",
+  "en": "market structure",
+  "cat": "struktura",
+  "week": 2,
+  "def": "Pořadí vrcholů a den na grafu. Podle něj se pozná, jestli je trh v trendu nahoru, v trendu dolů, nebo jde do strany."
+ },
+ {
+  "id": "svicka",
+  "term": "Svíčka",
+  "en": "candle",
+  "week": 1,
+  "def": "Obrázek jednoho úseku času na grafu. Ukazuje open, high, low a close.",
+  "cat": "zaklady"
+ },
+ {
+  "id": "sweep",
+  "term": "Sweep",
+  "en": "liquidity sweep",
+  "week": 4,
+  "def": "Cena krátce prorazí vrchol nebo dno, vybere příkazy za ním a vrátí se zpět.",
+  "cat": "likvidita"
+ },
+ {
+  "id": "swing",
+  "term": "Swing high a swing low",
+  "en": "swing high / swing low",
+  "week": 2,
+  "def": "Místní vrchol nebo dno na grafu. Svíčka, která má vyšší high (nebo nižší low) než sousední svíčky po obou stranách.",
+  "cat": "struktura"
+ },
+ {
+  "id": "take-profit",
+  "term": "Take profit",
+  "en": "TP",
+  "cat": "praxe",
+  "week": 9,
+  "def": "Příkaz, který obchod zavře se ziskem na určené ceně."
+ },
+ {
+  "id": "tick",
+  "term": "Tick",
+  "en": "tick",
+  "week": 1,
+  "def": "Nejmenší krok, o který se cena může pohnout. Na NQ a ES je to 0,25 bodu.",
+  "cat": "zaklady"
+ },
+ {
+  "id": "time-and-price",
+  "term": "Time and price",
+  "en": "time and price",
+  "cat": "cas",
+  "week": 7,
+  "def": "Zásada ICT, že setup platí jen tehdy, když sedí cena i čas. Správná zóna ve špatnou hodinu nestačí."
+ },
+ {
+  "id": "timeframe",
+  "term": "Timeframe",
+  "en": "timeframe",
+  "week": 1,
+  "def": "Délka času, kterou pokrývá jedna svíčka, například 1m, 5m nebo 15m.",
+  "cat": "zaklady"
+ },
+ {
+  "id": "trailing-stop",
+  "term": "Trailing stop",
+  "en": "trailing stop",
+  "cat": "praxe",
+  "week": 10,
+  "def": "Stop-loss, který se posouvá za cenou, jak obchod roste do zisku."
+ },
+ {
+  "id": "trend",
+  "term": "Trend",
+  "en": "trend",
+  "cat": "struktura",
+  "week": 2,
+  "def": "Převládající směr trhu. Nahoru při vyšších vrcholech a dnech, dolů při nižších."
+ },
+ {
+  "id": "market-order",
+  "term": "Tržní příkaz",
+  "en": "market order",
+  "cat": "praxe",
+  "week": 9,
+  "def": "Příkaz, který se provede hned za aktuální cenu."
+ },
+ {
+  "id": "turtle-soup",
+  "term": "Turtle soup",
+  "en": "turtle soup",
+  "cat": "likvidita",
+  "week": 4,
+  "def": "Obchod proti falešnému průrazu: cena překoná starý vrchol nebo dno, vybere stopy a vrátí se zpět. Název pochází od traderky Lindy Raschke."
+ },
+ {
+  "id": "weekly-profile",
+  "term": "Týdenní profil",
+  "en": "weekly profile",
+  "cat": "cas",
+  "week": 8,
+  "def": "Typický průběh týdne: který den vznikne týdenní high nebo low a kdy se trh rozjede."
+ },
+ {
+  "id": "telo",
+  "term": "Tělo svíčky",
+  "en": "body",
+  "cat": "zaklady",
+  "week": 1,
+  "def": "Tlustá část svíčky mezi otevírací a zavírací cenou. V ICT se u průrazů počítá zavření těla, ne knot."
+ },
+ {
+  "id": "unicorn",
+  "term": "Unicorn",
+  "en": "unicorn model",
+  "cat": "bloky",
+  "week": 9,
+  "def": "Breaker, který se překrývá s FVG. Dvě zóny na jednom místě bere ICT jako silnější vstup."
+ },
+ {
+  "id": "vacuum-block",
+  "term": "Vacuum block",
+  "en": "vacuum block",
+  "cat": "mezery",
+  "week": 5,
+  "def": "Mezera vzniklá skokem ceny, typicky po zprávě nebo při otevření. Cena ji podle ICT později vyplní."
+ },
+ {
+  "id": "position-size",
+  "term": "Velikost pozice",
+  "en": "position sizing",
+  "cat": "praxe",
+  "week": 10,
+  "def": "Kolik kontraktů do obchodu dát. Počítá se od vzdálenosti stopu tak, aby ztráta nepřesáhla předem dané riziko."
+ },
+ {
+  "id": "news",
+  "term": "Velké zprávy",
+  "en": "high-impact news",
+  "cat": "cas",
+  "week": 8,
+  "def": "Události, které trhem hýbou nejvíc: rozhodnutí o sazbách (FOMC), inflace (CPI) a zaměstnanost (NFP). Kolem nich bývá pohyb prudký a nepředvídatelný."
+ },
+ {
+  "id": "volatilita",
+  "term": "Volatilita",
+  "en": "volatility",
+  "cat": "zaklady",
+  "week": 1,
+  "def": "Jak moc se cena za určitou dobu hýbe. Ve volatilním trhu jsou svíčky velké a stopy i cíle dál."
+ },
+ {
+  "id": "volume-imbalance",
+  "term": "Volume imbalance",
+  "en": "VI",
+  "cat": "mezery",
+  "week": 5,
+  "def": "Mezera mezi těly dvou sousedních svíček, zatímco jejich knoty se překrývají. Menší příbuzná FVG."
+ },
+ {
+  "id": "entry-model",
+  "term": "Vstupní model",
+  "en": "entry model",
+  "cat": "modely",
+  "week": 9,
+  "def": "Přesný postup, jak do obchodu vstoupit: kde je příkaz, kde stop a kde cíl."
+ },
+ {
+  "id": "winrate",
+  "term": "Winrate",
+  "en": "win rate",
+  "cat": "praxe",
+  "week": 10,
+  "def": "Podíl ziskových obchodů. Sám nic neříká, vždy se posuzuje spolu s RR."
+ },
+ {
+  "id": "partial",
+  "term": "Částečný výběr",
+  "en": "partial",
+  "cat": "praxe",
+  "week": 9,
+  "def": "Zavření části pozice dřív, než cena dojde k hlavnímu cíli."
+ }
 ]

@@ -115,7 +115,7 @@ button.opt.no{border-color:var(--bad);box-shadow:inset 3px 0 0 var(--bad)}
 dl.gl{margin:0;display:flex;flex-direction:column;gap:10px}
 dl.gl div{display:flex;flex-direction:column;gap:2px;border-bottom:1px solid var(--line);padding-bottom:10px}
 dl.gl dt{font-weight:600}
-dl.gl dt span{font-family:var(--mono);font-size:12.5px;color:var(--muted);font-weight:400;margin-left:6px}
+dl.gl dt span{font-family:var(--body);font-size:12.5px;color:var(--muted);font-weight:500;margin-left:8px}
 dl.gl dd{margin:0;font-size:14.5px;color:var(--muted)}
 .card a{color:var(--accent)}
 
@@ -440,7 +440,9 @@ details.week.anim[open]>.weekbody{animation:rise .35s ease both}
 
     <div class="card">
       <h2>Slovníček</h2>
-      <label for="g-q">Hledat pojem<input id="g-q" type="search" placeholder="FVG, sweep, likvidita…"></label>
+      <label for="g-q">Hledat pojem<input id="g-q" type="search" placeholder="CISD, FVG, immediate rebalance…"></label>
+      <div class="chips pa-chips" id="g-cats"></div>
+      <span class="small muted" id="g-count"></span>
       <dl class="gl" id="g-list"></dl>
     </div>
   </section>
@@ -1248,11 +1250,22 @@ details.week.anim[open]>.weekbody{animation:rise .35s ease both}
 
   $("l-pick").addEventListener("change", ev => { curLesson = ev.target.value; renderLesson(); });
 
+  const G_CATS = [["all","Vše"],["zaklady","Základy"],["struktura","Struktura"],["likvidita","Likvidita"],["mezery","Mezery"],["bloky","Bloky a zóny"],["cas","Čas"],["modely","Modely"],["praxe","Riziko a praxe"]];
+  let gCat = "all";
   function renderGlossary(){
-    const box = $("g-list"); clear(box);
+    const box = $("g-list"), cats = $("g-cats");
+    box.style.minHeight = box.offsetHeight + "px"; requestAnimationFrame(() => { box.style.minHeight = ""; });
+    clear(box);
+    if (!cats.children.length) G_CATS.forEach(c => {
+      const b = el("button","chip", c[1]); b.type = "button"; b.dataset.c = c[0];
+      b.addEventListener("click", () => { gCat = c[0]; renderGlossary(); });
+      cats.appendChild(b);
+    });
+    Array.prototype.forEach.call(cats.children, b => b.setAttribute("aria-pressed", String(b.dataset.c === gCat)));
     const q = $("g-q").value.trim().toLowerCase();
-    const rows = glossary.filter(g => !q || [g.term, g.en, g.def].some(v => String(v || "").toLowerCase().includes(q)))
+    const rows = glossary.filter(g => (q || gCat === "all" || g.cat === gCat) && (!q || [g.term, g.en, g.def].some(v => String(v || "").toLowerCase().includes(q))))
       .sort((a,b) => String(a.term || "").localeCompare(String(b.term || ""), "cs"));
+    $("g-count").textContent = glossary.length ? (q ? rows.length + " nalezeno ve všech " + glossary.length + " pojmech" : rows.length + " pojmů") : "";
     if (!rows.length){ box.appendChild(el("p","small muted", glossary.length ? "Žádný pojem neodpovídá hledání." : "Slovníček je zatím prázdný. Pojmy přibývají s lekcemi.")); return; }
     rows.forEach(g => {
       const d = el("div"), dt = el("dt", null, g.term || g.id);
