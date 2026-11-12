@@ -1929,7 +1929,7 @@
    },
    {
     "show": 14,
-    "text": "6. Cíl. Trh klesá k cíli, který je stejně daleko jako stop. Tohle je přesně model, který Knot testuje. V backtestu zatím nevydělává, takže ho ber jako cvičení ve čtení grafu, ne jako návod k obchodu.",
+    "text": "6. Cíl. Trh klesá k cíli, který je stejně daleko jako stop. Tohle je přesně model, který Tape testuje. V backtestu zatím nevydělává, takže ho ber jako cvičení ve čtení grafu, ne jako návod k obchodu.",
     "add": [
      {
       "t": "line",
@@ -2381,5 +2381,571 @@
    }
   ],
   "remember": "BPR = překryv bullish a bearish FVG. Rozhoduje směr té novější."
+ },
+ {
+  "id": "model-2022-long",
+  "title": "Model 2022: long",
+  "en": "sweep · MSS · FVG",
+  "week": 9,
+  "intro": "Celý Model 2022 na jednom grafu, krok za krokem. Tady nákup: trh míří nahoru a nejdřív si dojde pro stopy pod low předchozího dne.",
+  "h": 290,
+  "lo": 100.44,
+  "hi": 123.56,
+  "candles": [
+   [
+    112,
+    113,
+    109,
+    110
+   ],
+   [
+    110,
+    111,
+    106,
+    107
+   ],
+   [
+    107,
+    110,
+    106,
+    109.5
+   ],
+   [
+    109.5,
+    109.8,
+    105.0,
+    106.0
+   ],
+   [
+    106.0,
+    107.0,
+    104.2,
+    104.5
+   ],
+   [
+    104.5,
+    104.8,
+    102.6,
+    104.3
+   ],
+   [
+    104.3,
+    107.0,
+    104.1,
+    106.8
+   ],
+   [
+    106.8,
+    111.3,
+    106.6,
+    111.0
+   ],
+   [
+    111.0,
+    112.9,
+    109.4,
+    112.5
+   ],
+   [
+    112.5,
+    113.0,
+    110.3,
+    111.3
+   ],
+   [
+    111.3,
+    112.3,
+    108.0,
+    108.3
+   ],
+   [
+    108.3,
+    112.5,
+    107.9,
+    111.5
+   ],
+   [
+    111.5,
+    116.3,
+    110.5,
+    115.3
+   ],
+   [
+    115.3,
+    119.5,
+    114.3,
+    118.5
+   ],
+   [
+    118.5,
+    121.8,
+    117.5,
+    121.3
+   ]
+  ],
+  "steps": [
+   {
+    "show": 5,
+    "text": "1. Směr a cíl. Na vyšším timeframu trh roste a nad cenou zůstává high předchozího dne. Tam leží likvidita, ke které cena nejspíš míří. Hledáš tedy jen nákup.",
+    "add": [
+     {
+      "t": "line",
+      "y": 121,
+      "x1": 0,
+      "x2": 14.4,
+      "c": "good",
+      "dash": true,
+      "label": "PDH · cíl",
+      "la": "start",
+      "lv": "below"
+     }
+    ]
+   },
+   {
+    "show": 5,
+    "text": "2. Likvidita. Pod low předchozího dne leží stop-lossy kupujících. Pro nákup čekáš, až je cena vybere.",
+    "add": [
+     {
+      "t": "line",
+      "y": 104,
+      "x1": 0,
+      "x2": 9.4,
+      "c": "amber",
+      "dash": false,
+      "label": "PDL · likvidita",
+      "la": "start",
+      "lv": "below"
+     }
+    ],
+    "focus": [
+     3,
+     4
+    ]
+   },
+   {
+    "show": 5,
+    "text": "3. Čas. Blíží se otevření burzy v 9:30 newyorského času. Setup má váhu jen v okně, zhruba do 11:00.",
+    "add": [
+     {
+      "t": "text",
+      "x": 4,
+      "y": 110.6,
+      "s": "9:30 NY",
+      "a": "middle",
+      "c": "accent",
+      "dy": -8,
+      "ttl": 2
+     }
+    ],
+    "focus": [
+     4
+    ]
+   },
+   {
+    "show": 6,
+    "text": "4. Sweep. Knot propadne pod PDL, vybere stopy a svíčka zavře zpátky nad úrovní. Kdyby pod ní cena zůstala, byl by to průraz a model neplatí.",
+    "add": [
+     {
+      "t": "text",
+      "x": 5,
+      "y": 102.6,
+      "s": "sweep",
+      "a": "middle",
+      "c": "bad",
+      "dy": 14
+     }
+    ],
+    "focus": [
+     5
+    ]
+   },
+   {
+    "show": 8,
+    "text": "5. MSS s displacementem. Dvě velké svíčky bez zaváhání prorazí poslední vrchol na 110 a druhá nad ním zavře. Směr se zlomil nahoru.",
+    "add": [
+     {
+      "t": "line",
+      "y": 110,
+      "x1": 2.5,
+      "x2": 8.4,
+      "c": "muted",
+      "dash": false,
+      "label": "MSS",
+      "la": "start",
+      "lv": "above"
+     }
+    ],
+    "focus": [
+     6,
+     7
+    ]
+   },
+   {
+    "show": 9,
+    "text": "6. Fair value gap. Mezi high první svíčky pohybu (107) a low třetí (109,4) zůstala mezera. Leží v dolní polovině celého pohybu, tedy v discountu.",
+    "add": [
+     {
+      "t": "box",
+      "x1": 6,
+      "x2": 13,
+      "y1": 107,
+      "y2": 109.4,
+      "c": "accent",
+      "label": "FVG",
+      "la": "end",
+      "lv": "below"
+     }
+    ],
+    "focus": [
+     6,
+     7,
+     8
+    ]
+   },
+   {
+    "show": 11,
+    "text": "7. Vstup. Limitní nákup čeká v polovině mezery na 108,2. Cena se do mezery vrátí a příkaz se naplní.",
+    "add": [
+     {
+      "t": "line",
+      "y": 108.2,
+      "x1": 9,
+      "x2": 14.4,
+      "c": "good",
+      "dash": true,
+      "label": "vstup",
+      "la": "end",
+      "lv": "above"
+     }
+    ],
+    "focus": [
+     10
+    ]
+   },
+   {
+    "show": 11,
+    "text": "8. Stop. Stop-loss patří pod knot sweepu, na 102,2. Vzdálenost od vstupu je riziko, tady 6 bodů. Tomu se říká 1R.",
+    "add": [
+     {
+      "t": "line",
+      "y": 102.2,
+      "x1": 5,
+      "x2": 14.4,
+      "c": "bad",
+      "dash": true,
+      "label": "stop",
+      "la": "end",
+      "lv": "below"
+     },
+     {
+      "t": "span",
+      "x": 9.45,
+      "y1": 102.2,
+      "y2": 108.2,
+      "c": "bad",
+      "label": "1R"
+     }
+    ],
+    "focus": [
+     5,
+     10
+    ]
+   },
+   {
+    "show": 15,
+    "text": "9. Cíl. Cena dojde k high předchozího dne na 121. To je 12,8 bodu, něco přes 2R. Část pozice se běžně vybírá už na 1R a zbytek jede se stopem na vstupu. V našem backtestu tenhle model výhodu neprokázal, ber ho jako rámec pro čtení grafu.",
+    "add": [],
+    "focus": [
+     11,
+     12,
+     13,
+     14
+    ]
+   }
+  ],
+  "remember": "Směr, likvidita, čas, sweep, MSS, FVG, vstup, stop, cíl. Když jeden krok chybí, není to Model 2022."
+ },
+ {
+  "id": "model-2022-short",
+  "title": "Model 2022: short",
+  "en": "sweep · MSS · FVG",
+  "week": 9,
+  "intro": "Stejný postup zrcadlově. Trh míří dolů a nejdřív si dojde pro stopy nad high předchozího dne.",
+  "h": 290,
+  "lo": 100.44,
+  "hi": 123.56,
+  "candles": [
+   [
+    112,
+    115,
+    111,
+    114
+   ],
+   [
+    114,
+    118,
+    113,
+    117
+   ],
+   [
+    117,
+    118,
+    114,
+    114.5
+   ],
+   [
+    114.5,
+    119.0,
+    114.2,
+    118.0
+   ],
+   [
+    118.0,
+    119.8,
+    117.0,
+    119.5
+   ],
+   [
+    119.5,
+    121.4,
+    119.2,
+    119.7
+   ],
+   [
+    119.7,
+    119.9,
+    117.0,
+    117.2
+   ],
+   [
+    117.2,
+    117.4,
+    112.7,
+    113.0
+   ],
+   [
+    113.0,
+    114.6,
+    111.1,
+    111.5
+   ],
+   [
+    111.5,
+    113.7,
+    111.0,
+    112.7
+   ],
+   [
+    112.7,
+    116.0,
+    111.7,
+    115.7
+   ],
+   [
+    115.7,
+    116.1,
+    111.5,
+    112.5
+   ],
+   [
+    112.5,
+    113.5,
+    107.7,
+    108.7
+   ],
+   [
+    108.7,
+    109.7,
+    104.5,
+    105.5
+   ],
+   [
+    105.5,
+    106.5,
+    102.2,
+    102.7
+   ]
+  ],
+  "steps": [
+   {
+    "show": 5,
+    "text": "1. Směr a cíl. Na vyšším timeframu trh klesá a pod cenou zůstává low předchozího dne. Tam leží likvidita, ke které cena nejspíš míří. Hledáš tedy jen prodej.",
+    "add": [
+     {
+      "t": "line",
+      "y": 103,
+      "x1": 0,
+      "x2": 14.4,
+      "c": "good",
+      "dash": true,
+      "label": "PDL · cíl",
+      "la": "start",
+      "lv": "above"
+     }
+    ]
+   },
+   {
+    "show": 5,
+    "text": "2. Likvidita. Nad high předchozího dne leží stop-lossy prodávajících. Pro prodej čekáš, až je cena vybere.",
+    "add": [
+     {
+      "t": "line",
+      "y": 120,
+      "x1": 0,
+      "x2": 9.4,
+      "c": "amber",
+      "dash": false,
+      "label": "PDH · likvidita",
+      "la": "start",
+      "lv": "above"
+     }
+    ],
+    "focus": [
+     3,
+     4
+    ]
+   },
+   {
+    "show": 5,
+    "text": "3. Čas. Blíží se otevření burzy v 9:30 newyorského času. Setup má váhu jen v okně, zhruba do 11:00.",
+    "add": [
+     {
+      "t": "text",
+      "x": 4,
+      "y": 113.4,
+      "s": "9:30 NY",
+      "a": "middle",
+      "c": "accent",
+      "dy": 16,
+      "ttl": 2
+     }
+    ],
+    "focus": [
+     4
+    ]
+   },
+   {
+    "show": 6,
+    "text": "4. Sweep. Knot vyletí nad PDH, vybere stopy a svíčka zavře zpátky pod úrovní. Kdyby nad ní cena zůstala, byl by to průraz a model neplatí.",
+    "add": [
+     {
+      "t": "text",
+      "x": 5,
+      "y": 121.4,
+      "s": "sweep",
+      "a": "middle",
+      "c": "bad",
+      "dy": -6
+     }
+    ],
+    "focus": [
+     5
+    ]
+   },
+   {
+    "show": 8,
+    "text": "5. MSS s displacementem. Dvě velké svíčky bez zaváhání prorazí poslední dno na 114 a druhá pod ním zavře. Směr se zlomil dolů.",
+    "add": [
+     {
+      "t": "line",
+      "y": 114,
+      "x1": 2.5,
+      "x2": 8.4,
+      "c": "muted",
+      "dash": false,
+      "label": "MSS",
+      "la": "start",
+      "lv": "below"
+     }
+    ],
+    "focus": [
+     6,
+     7
+    ]
+   },
+   {
+    "show": 9,
+    "text": "6. Fair value gap. Mezi low první svíčky pohybu (117) a high třetí (114,6) zůstala mezera. Leží v horní polovině celého pohybu, tedy v premiu.",
+    "add": [
+     {
+      "t": "box",
+      "x1": 6,
+      "x2": 13,
+      "y1": 114.6,
+      "y2": 117,
+      "c": "accent",
+      "label": "FVG",
+      "la": "end",
+      "lv": "above"
+     }
+    ],
+    "focus": [
+     6,
+     7,
+     8
+    ]
+   },
+   {
+    "show": 11,
+    "text": "7. Vstup. Limitní prodej čeká v polovině mezery na 115,8. Cena se do mezery vrátí a příkaz se naplní.",
+    "add": [
+     {
+      "t": "line",
+      "y": 115.8,
+      "x1": 9,
+      "x2": 14.4,
+      "c": "good",
+      "dash": true,
+      "label": "vstup",
+      "la": "end",
+      "lv": "below"
+     }
+    ],
+    "focus": [
+     10
+    ]
+   },
+   {
+    "show": 11,
+    "text": "8. Stop. Stop-loss patří nad knot sweepu, na 121,8. Vzdálenost od vstupu je riziko, tady 6 bodů. Tomu se říká 1R.",
+    "add": [
+     {
+      "t": "line",
+      "y": 121.8,
+      "x1": 5,
+      "x2": 14.4,
+      "c": "bad",
+      "dash": true,
+      "label": "stop",
+      "la": "end",
+      "lv": "above"
+     },
+     {
+      "t": "span",
+      "x": 9.45,
+      "y1": 115.8,
+      "y2": 121.8,
+      "c": "bad",
+      "label": "1R"
+     }
+    ],
+    "focus": [
+     5,
+     10
+    ]
+   },
+   {
+    "show": 15,
+    "text": "9. Cíl. Cena dojde k low předchozího dne na 103. To je 12,8 bodu, něco přes 2R. Část pozice se běžně vybírá už na 1R a zbytek jede se stopem na vstupu. Ani tady neplatí, že model sám vydělává. Rozhoduje výběr dnů a disciplína.",
+    "add": [],
+    "focus": [
+     11,
+     12,
+     13,
+     14
+    ]
+   }
+  ],
+  "remember": "Short je zrcadlo longu: sweep nad high, MSS dolů, FVG v premiu, stop nad knotem, cíl na low."
  }
 ]

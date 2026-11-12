@@ -11,7 +11,17 @@
     "check": [
      "Vím, jestli je cena v premiu nebo discountu denního rozpětí",
      "Mám jeden konkrétní cíl nad nebo pod cenou"
-    ]
+    ],
+    "quiz": {
+     "q": "Na denním grafu neumíš říct, jestli cena míří nahoru, nebo dolů. Co uděláš?",
+     "opts": [
+      "Model ten den neobchoduji",
+      "Vezmu první sweep, který přijde",
+      "Rozhodnu se až podle minutového grafu"
+     ],
+     "ok": "Model ten den neobchoduji",
+     "why": "Bez směru a cíle nemá setup kam jít. Minutový graf určuje jen načasování."
+    }
    },
    {
     "n": 2,
@@ -22,7 +32,17 @@
      "PDH a PDL",
      "High a low Asie a Londýna",
      "Equal highs a equal lows"
-    ]
+    ],
+    "quiz": {
+     "q": "Chceš nakupovat. Který výběr likvidity hledáš?",
+     "opts": [
+      "Výběr pod starým low",
+      "Výběr nad starým high",
+      "Je to jedno, hlavně že je sweep"
+     ],
+     "ok": "Výběr pod starým low",
+     "why": "Pro nákup se čeká na výběr stopů pod low, pro prodej nad high."
+    }
    },
    {
     "n": 3,
@@ -32,7 +52,17 @@
     "check": [
      "Jsem v okně",
      "Vím, jestli dnes vychází důležitá zpráva"
-    ]
+    ],
+    "quiz": {
+     "q": "Stejný obrazec se objeví ve 12:30 newyorského času. Jak se na něj díváš?",
+     "opts": [
+      "Je mimo okna, beru ho s rezervou nebo vůbec",
+      "Je stejně dobrý jako v 10:00",
+      "Je lepší, protože je na trhu klid"
+     ],
+     "ok": "Je mimo okna, beru ho s rezervou nebo vůbec",
+     "why": "Model stojí na době, kdy je na trhu objem. Kolem newyorského oběda bývá pohyb slabý a nespolehlivý."
+    }
    },
    {
     "n": 4,
@@ -42,7 +72,17 @@
     "check": [
      "Úroveň byla opravdu překonaná",
      "Cena se vrátila zpět za úroveň"
-    ]
+    ],
+    "quiz": {
+     "q": "Cena prorazí PDL, tři svíčky pod ním zavírá a staví tam nové dno. Co to je?",
+     "opts": [
+      "Průraz, ne sweep",
+      "Ukázkový sweep",
+      "Market structure shift"
+     ],
+     "ok": "Průraz, ne sweep",
+     "why": "Sweep úroveň jen vybere a vrátí se zpět. Když cena za úrovní zůstane, je to průraz."
+    }
    },
    {
     "n": 5,
@@ -52,7 +92,17 @@
     "check": [
      "Svíčka zavřela za swingem, nejen ho propíchla",
      "Pohyb byl výrazně rychlejší než svíčky před ním"
-    ]
+    ],
+    "quiz": {
+     "q": "Po sweepu cena pomalu, překrývajícími se svíčkami, překoná poslední swing. Počítá se to jako MSS?",
+     "opts": [
+      "Ne, chybí displacement",
+      "Ano, stačí překonat swing",
+      "Ano, pokud je to v okně"
+     ],
+     "ok": "Ne, chybí displacement",
+     "why": "Bez silného pohybu nevznikne ani fair value gap, do kterého by se vstupovalo."
+    }
    },
    {
     "n": 6,
@@ -62,7 +112,17 @@
     "check": [
      "FVG vznikl v pohybu, který prorazil strukturu",
      "Leží v discountu (long) nebo premiu (short)"
-    ]
+    ],
+    "quiz": {
+     "q": "Kde má ležet fair value gap pro nákup?",
+     "opts": [
+      "V discountu, pod polovinou pohybu",
+      "V premiu, nad polovinou pohybu",
+      "Kdekoli, na poloze nezáleží"
+     ],
+     "ok": "V discountu, pod polovinou pohybu",
+     "why": "Nakupuje se levně. Mezera v horní polovině pohybu dává horší cenu a větší stop."
+    }
    },
    {
     "n": 7,
@@ -72,7 +132,17 @@
     "check": [
      "Vstup je předem daný, ne podle pocitu",
      "Mám čas, po kterém příkaz ruším"
-    ]
+    ],
+    "quiz": {
+     "q": "Cena se do mezery nevrátila a odjela bez tebe. Co teď?",
+     "opts": [
+      "Nic, setup propadl",
+      "Nakoupím za tržní cenu, ať mi to neuteče",
+      "Posunu příkaz výš za cenou"
+     ],
+     "ok": "Nic, setup propadl",
+     "why": "Honění ceny mění plánovaný obchod v impulzivní. Další setup přijde."
+    }
    },
    {
     "n": 8,
@@ -82,7 +152,17 @@
     "check": [
      "Stop je za místem, kde by myšlenka přestala platit",
      "Riskuji předem danou částku"
-    ]
+    ],
+    "quiz": {
+     "q": "Stop vychází dvakrát větší, než dovoluje tvůj plán. Co uděláš?",
+     "opts": [
+      "Obchod neberu",
+      "Dám stop blíž, aby se vešel do limitu",
+      "Vezmu ho s větším rizikem"
+     ],
+     "ok": "Obchod neberu",
+     "why": "Stop patří tam, kde myšlenka přestává platit. Když je moc daleko, obchod se vynechá."
+    }
    },
    {
     "n": 9,
@@ -92,7 +172,17 @@
     "check": [
      "První cíl je konkrétní úroveň",
      "Poměr aspoň 2 : 1"
-    ]
+    ],
+    "quiz": {
+     "q": "Nejbližší likvidita ve směru obchodu je stejně daleko jako tvůj stop. Stojí setup za to?",
+     "opts": [
+      "Ne, poměr je jen 1 : 1",
+      "Ano, hlavně že sedí všechny kroky",
+      "Ano, cíl si prostě posunu dál"
+     ],
+     "ok": "Ne, poměr je jen 1 : 1",
+     "why": "Model má smysl od poměru zhruba 2 : 1. Cíl musí být skutečná úroveň, ne přání."
+    }
    }
   ],
   "avoid": [
@@ -261,6 +351,120 @@
    [
     "Přehled lekcí po měsících (videohighlight.com)",
     "https://videohighlight.com/playlist/PLVgHx4Z63pabb9rl1nyG58TG8PG8yzuao"
+   ]
+  ]
+ },
+ "day": {
+  "title": "Den obchodníka",
+  "intro": "Takhle vypadá jeden obchodní den, když se Model 2022 spojí s deníkem. Časy jsou naše, tedy středoevropské.",
+  "blocks": [
+   {
+    "time": "Večer předtím",
+    "title": "Podívej se do kalendáře",
+    "text": "Zjisti, jestli zítra vycházejí důležitá data. V den s velkou zprávou se obchoduje až po ní, nebo vůbec.",
+    "hash": "prehled",
+    "label": "Kalendář zpráv"
+   },
+   {
+    "time": "14:00",
+    "title": "Příprava",
+    "text": "Řekni si směr jednou větou. Vyznač high a low předchozího dne a noční seance. Napiš, co musíš vidět, než vstoupíš. Celé to zabere deset minut.",
+    "hash": "denik",
+    "label": "Plán dne"
+   },
+   {
+    "time": "14:30",
+    "title": "Zprávy",
+    "text": "Většina amerických dat vychází v 8:30 newyorského času. První minuty po zprávě se nechávají být, pohyb je prudký a spready široké.",
+    "hash": null,
+    "label": null
+   },
+   {
+    "time": "15:30",
+    "title": "Otevření burzy",
+    "text": "Začíná hlavní okno. Nečekáš na obchod, čekáš na výběr likvidity. Když nepřijde, není co obchodovat.",
+    "hash": "nastroje",
+    "label": "Hodiny seancí"
+   },
+   {
+    "time": "Před vstupem",
+    "title": "Seznam a kontrola",
+    "text": "Projdi seznam před vstupem. Deník tě upozorní, když jdeš proti plánu, po ztrátě, nad limit nebo těsně před zprávou.",
+    "hash": "denik",
+    "label": "Seznam před vstupem"
+   },
+   {
+    "time": "V obchodu",
+    "title": "Nech ho být",
+    "text": "Stop se neposouvá dál. Část pozice se vybírá na 1R, zbytek jede se stopem na vstupu. Do grafu se nesahá.",
+    "hash": null,
+    "label": null
+   },
+   {
+    "time": "Po obchodu",
+    "title": "Zapiš hned",
+    "text": "Vstup, stop, výstup, obrázek grafu, úrovně a poctivě chyby. Za hodinu už si to nebudeš pamatovat přesně.",
+    "hash": "denik",
+    "label": "Zapsat obchod"
+   },
+   {
+    "time": "17:00",
+    "title": "Konec okna",
+    "text": "Po jedenácté newyorského času hlavní okno končí. Kdo má splněný limit obchodů nebo ztráty, končí dřív.",
+    "hash": null,
+    "label": null
+   },
+   {
+    "time": "Večer",
+    "title": "Kontrola dne",
+    "text": "Doplň, kam trh opravdu šel, a zeptej se kouče, co z dneška plyne.",
+    "hash": "kouc",
+    "label": "Kouč"
+   },
+   {
+    "time": "Neděle",
+    "title": "Týdenní souhrn",
+    "text": "Co fungovalo, která chyba se opakovala a jedno pravidlo na příští týden. Jedno, ne pět.",
+    "hash": "denik",
+    "label": "Týdenní souhrn"
+   }
+  ]
+ },
+ "myths": {
+  "title": "Časté omyly",
+  "intro": "ICT se na internetu často prodává jako jistota. Tady je, co pojmy neznamenají a co čísla nepotvrdila.",
+  "items": [
+   [
+    "ICT koncepty mají prokázanou výhodu.",
+    "Nezávislý důkaz chybí. Náš vlastní backtest mechanického modelu na NQ skončil kolem nuly. Výsledek záleží na výběru dnů, provedení a riziku, a to si každý musí ověřit sám."
+   ],
+   [
+    "Fair value gap se vždycky vyplní.",
+    "Nevyplní. Řada mezer zůstane otevřená dlouho a jiné cena projde bez reakce. Mezera je místo, kde má smysl hledat obchod, ne záruka."
+   ],
+   [
+    "Sweep znamená obrat.",
+    "Výběr likvidity často pokračuje dál jako obyčejný průraz. Proto model po sweepu vyžaduje zlom struktury s displacementem."
+   ],
+   [
+    "Order block je místo, kde nakupují banky.",
+    "Je to popis obrazce na grafu. Kdo v té svíčce obchodoval, zvenku nikdo neví."
+   ],
+   [
+    "Cenu řídí jeden algoritmus a dá se předvídat.",
+    "Tohle tvrzení nejde ověřit. Ceny na futures vznikají z příkazů velkého množství účastníků. Pojmy ber jako způsob čtení grafu, ne jako popis skrytého mechanismu."
+   ],
+   [
+    "Čím víc potvrzení, tím jistější obchod.",
+    "Víc podmínek znamená méně obchodů, ne jistotu. Deset filtrů vyladěných na minulost se v budoucnu obvykle rozpadne."
+   ],
+   [
+    "Vysoký winrate znamená dobrý systém.",
+    "Záleží na poměru zisku a ztráty. Úspěšnost 40 % s průměrným ziskem 2R vydělává, 70 % se ziskem 0,3R ne."
+   ],
+   [
+    "Kdo zná model, deník nepotřebuje.",
+    "Bez záznamů nevíš, jestli pravidla opravdu dodržuješ ani který setup ti vydělává. Většina chyb je v provedení, ne v teorii."
    ]
   ]
  }

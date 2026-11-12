@@ -451,7 +451,7 @@
   "area": "produkt",
   "value": 2,
   "effort": 1,
-  "status": "new",
+  "status": "done",
   "what": "Jedno tlačítko stáhne deník, obrázky i postup v jednom souboru.",
   "why": "Zákazník musí mít jistotu, že svá data kdykoli dostane."
  },
@@ -487,7 +487,7 @@
   "area": "produkt",
   "value": 1,
   "effort": 1,
-  "status": "new",
+  "status": "done",
   "what": "Stránka Co je nového s daty.",
   "why": "Platící zákazník vidí, že se produkt vyvíjí."
  },
@@ -499,7 +499,7 @@
   "area": "produkt",
   "value": 2,
   "effort": 2,
-  "status": "new",
+  "status": "done",
   "what": "Krátké návody ke každé sekci a prohlídka aplikace po první registraci.",
   "why": "Sníží počet lidí, kteří odejdou první den."
  },
@@ -559,7 +559,7 @@
   "area": "produkt",
   "value": 3,
   "effort": 2,
-  "status": "new",
+  "status": "done",
   "what": "Pět položek: Přehled, Deník, Učení, Kouč, Více. Model, Pine Script, backtest a nápady pod Více.",
   "why": "Jedenáct položek v liště je moc a na telefonu se schovávají."
  },
@@ -571,7 +571,7 @@
   "area": "produkt",
   "value": 3,
   "effort": 2,
-  "status": "new",
+  "status": "done",
   "what": "Navigace dole pod palcem jako v běžných aplikacích.",
   "why": "Horní posuvná lišta se na telefonu špatně ovládá."
  },
@@ -583,7 +583,7 @@
   "area": "produkt",
   "value": 3,
   "effort": 2,
-  "status": "new",
+  "status": "done",
   "what": "Dva režimy: Deník pro toho, kdo obchoduje, a Škola pro toho, kdo se učí. Každý vidí jen své.",
   "why": "Laura nepotřebuje playbook a ty nepotřebuješ lekci o svíčkách."
  },
@@ -595,7 +595,7 @@
   "area": "denik",
   "value": 3,
   "effort": 2,
-  "status": "new",
+  "status": "done",
   "what": "Záložky Dnes, Obchody, Statistiky, Playbook místo jedné dlouhé stránky.",
   "why": "Stránka deníku je teď několik obrazovek dlouhá."
  },
@@ -607,7 +607,7 @@
   "area": "denik",
   "value": 3,
   "effort": 1,
-  "status": "new",
+  "status": "done",
   "what": "Plovoucí tlačítko plus na každé stránce, formulář na tři pole.",
   "why": "Čím méně kroků, tím častěji se obchod zapíše."
  },
@@ -619,7 +619,7 @@
   "area": "produkt",
   "value": 2,
   "effort": 2,
-  "status": "new",
+  "status": "done",
   "what": "Jedno pole najde pojem, lekci, obchod i poznatek.",
   "why": "Obsahu je už hodně a špatně se v něm orientuje."
  },
@@ -631,7 +631,7 @@
   "area": "produkt",
   "value": 2,
   "effort": 1,
-  "status": "new",
+  "status": "done",
   "what": "Stránka s profilem, trhy, cílem, limity, zálohou a AI klíčem.",
   "why": "Nastavení je teď roztroušené po sekcích."
  },
@@ -667,7 +667,7 @@
   "area": "produkt",
   "value": 1,
   "effort": 1,
-  "status": "new",
+  "status": "done",
   "what": "N nový obchod, lomítko hledání, čísla přepínají sekce.",
   "why": "Na počítači to zrychlí každodenní práci."
  },
@@ -679,7 +679,7 @@
   "area": "produkt",
   "value": 1,
   "effort": 1,
-  "status": "new",
+  "status": "done",
   "what": "Levý a pravý sloupec jdou schovat.",
   "why": "Na menším notebooku zabírají místo obsahu."
  },
@@ -739,7 +739,7 @@
   "area": "denik",
   "value": 3,
   "effort": 2,
-  "status": "new",
+  "status": "done",
   "what": "Klepnutí na obchod otevře stránku s grafem, úrovněmi, poznámkami, chybami a kartou.",
   "why": "Seznam je na rozbor jednotlivého obchodu málo."
  },
@@ -751,7 +751,7 @@
   "area": "denik",
   "value": 3,
   "effort": 1,
-  "status": "new",
+  "status": "done",
   "what": "Každý obchod jde otevřít a opravit.",
   "why": "Teď se dá jen smazat a zapsat znovu."
  },
@@ -775,7 +775,7 @@
   "area": "denik",
   "value": 2,
   "effort": 2,
-  "status": "new",
+  "status": "done",
   "what": "Tři vzhledy karty: čtverec, příběh na výšku a široký formát.",
   "why": "Každá síť chce jiný rozměr."
  },
@@ -787,7 +787,7 @@
   "area": "denik",
   "value": 3,
   "effort": 2,
-  "status": "new",
+  "status": "done",
   "what": "Sdílitelná karta s kalendářem a souhrnem za období.",
   "why": "Obchodníci nejčastěji sdílejí týdenní a měsíční výsledek."
  },
@@ -799,7 +799,7 @@
   "area": "denik",
   "value": 1,
   "effort": 1,
-  "status": "new",
+  "status": "done",
   "what": "Volba ukázat jen R, procenta nebo dolary.",
   "why": "Ne každý chce zveřejnit velikost účtu."
  },
@@ -811,7 +811,7 @@
   "area": "denik",
   "value": 2,
   "effort": 3,
-  "status": "new",
+  "status": "done",
   "what": "Čáry, obdélníky a text přímo na přiloženém screenshotu.",
   "why": "Popisky ukážou, proč obchod vznikl."
  },
@@ -823,7 +823,7 @@
   "area": "denik",
   "value": 2,
   "effort": 2,
-  "status": "new",
+  "status": "done",
   "what": "Před vstupem, při vstupu a po výstupu.",
   "why": "Porovnání plánu a skutečnosti je základ rozboru."
  },
@@ -835,7 +835,7 @@
   "area": "denik",
   "value": 2,
   "effort": 1,
-  "status": "new",
+  "status": "done",
   "what": "Screenshot jde vložit klávesou Ctrl+V.",
   "why": "Ukládat soubor a vybírat ho je zdlouhavé."
  },
@@ -847,7 +847,7 @@
   "area": "denik",
   "value": 3,
   "effort": 1,
-  "status": "new",
+  "status": "done",
   "what": "Uživatel si přidá, přejmenuje a smaže setupy i štítky chyb.",
   "why": "Každý má jiný plán a jiné chyby."
  },
@@ -859,7 +859,7 @@
   "area": "denik",
   "value": 3,
   "effort": 2,
-  "status": "new",
+  "status": "done",
   "what": "U obchodu počet kontraktů a částka, statistiky přepínatelné mezi R a penězi.",
   "why": "Většina obchodníků chce vidět obojí."
  },
@@ -871,7 +871,7 @@
   "area": "denik",
   "value": 2,
   "effort": 1,
-  "status": "new",
+  "status": "done",
   "what": "Pole pro poplatek, čistý výsledek ve statistikách.",
   "why": "Hrubý a čistý výsledek se u scalpingu výrazně liší."
  },
@@ -883,7 +883,7 @@
   "area": "denik",
   "value": 3,
   "effort": 2,
-  "status": "new",
+  "status": "done",
   "what": "Oddělené deníky pro osobní účet, prop firmu a demo.",
   "why": "Kdo obchoduje prop účty, má jich několik."
  },
@@ -895,7 +895,7 @@
   "area": "denik",
   "value": 3,
   "effort": 2,
-  "status": "new",
+  "status": "done",
   "what": "Nastavíš denní ztrátu a maximální drawdown, deník ukazuje, kolik zbývá.",
   "why": "Porušení pravidla je nejčastější důvod ztráty prop účtu."
  },
@@ -907,7 +907,7 @@
   "area": "denik",
   "value": 2,
   "effort": 2,
-  "status": "new",
+  "status": "done",
   "what": "U obchodu největší pohyb proti a pro, graf, kolik zisku se nechává na stole.",
   "why": "Ukáže, jestli jsou stopy a cíle dobře nastavené."
  },
@@ -919,7 +919,7 @@
   "area": "denik",
   "value": 1,
   "effort": 1,
-  "status": "new",
+  "status": "done",
   "what": "Čas vstupu a výstupu, statistika podle délky.",
   "why": "Odhalí předčasné výstupy."
  },
@@ -931,7 +931,7 @@
   "area": "denik",
   "value": 2,
   "effort": 2,
-  "status": "new",
+  "status": "done",
   "what": "Zápis prvního cíle a zbytku pozice zvlášť.",
   "why": "Model s částečným výstupem se teď nedá přesně zapsat."
  },
@@ -943,7 +943,7 @@
   "area": "denik",
   "value": 2,
   "effort": 1,
-  "status": "new",
+  "status": "done",
   "what": "Rychlá volba nálady, statistika výsledku podle ní.",
   "why": "Špatné obchody často souvisí se stavem, ne se setupem."
  },
@@ -955,7 +955,7 @@
   "area": "denik",
   "value": 2,
   "effort": 1,
-  "status": "new",
+  "status": "done",
   "what": "Známka 1 až 5 za dodržení plánu, nezávisle na výsledku.",
   "why": "Dobrý obchod může skončit ztrátou a naopak."
  },
@@ -967,7 +967,7 @@
   "area": "denik",
   "value": 3,
   "effort": 1,
-  "status": "new",
+  "status": "done",
   "what": "Filtrování podle data, trhu, setupu, směru, chyby a výsledku.",
   "why": "Bez filtrů se v delším deníku nedá hledat."
  },
@@ -979,7 +979,7 @@
   "area": "denik",
   "value": 2,
   "effort": 2,
-  "status": "new",
+  "status": "done",
   "what": "Tento měsíc proti minulému vedle sebe.",
   "why": "Ukáže, jestli se zlepšuješ."
  },
@@ -991,7 +991,7 @@
   "area": "denik",
   "value": 2,
   "effort": 1,
-  "status": "new",
+  "status": "done",
   "what": "Sloupcový graf, kolik obchodů skončilo na -1, 0, +1, +2 a víc.",
   "why": "Na první pohled je vidět, kde se zisk tvoří."
  },
@@ -1015,7 +1015,7 @@
   "area": "denik",
   "value": 2,
   "effort": 1,
-  "status": "new",
+  "status": "done",
   "what": "Dny, kdy obchod odpovídal rannímu biasu, proti ostatním.",
   "why": "Ověří, jestli ranní příprava pomáhá."
  },
@@ -1027,7 +1027,7 @@
   "area": "denik",
   "value": 2,
   "effort": 1,
-  "status": "new",
+  "status": "done",
   "what": "Vlastní cíl procesu, například 90 % obchodů se splněným seznamem, s ukazatelem.",
   "why": "Cíl na proces je lepší než cíl na zisk."
  },
@@ -1039,7 +1039,7 @@
   "area": "denik",
   "value": 2,
   "effort": 1,
-  "status": "new",
+  "status": "done",
   "what": "Zápis dne, kdy jsi neobchodoval, a proč.",
   "why": "Nevzít obchod je také rozhodnutí, které stojí za záznam."
  },
@@ -1051,7 +1051,7 @@
   "area": "denik",
   "value": 2,
   "effort": 1,
-  "status": "new",
+  "status": "done",
   "what": "Zápis setupu, který jsi viděl a nevzal, s výsledkem.",
   "why": "Ukáže, kolik stojí váhání."
  },
@@ -1159,7 +1159,7 @@
   "area": "denik",
   "value": 2,
   "effort": 2,
-  "status": "new",
+  "status": "done",
   "what": "Krátká kontrola: odpovídá tenhle obchod tvému playbooku a limitům.",
   "why": "Zastaví impulzivní vstup dřív, než vznikne."
  },
@@ -1171,7 +1171,7 @@
   "area": "denik",
   "value": 2,
   "effort": 2,
-  "status": "new",
+  "status": "done",
   "what": "Z opakovaných chyb kouč navrhne pravidlo a přidá ho do seznamu před vstupem.",
   "why": "Propojí rozbor s každodenní rutinou."
  },
@@ -1183,7 +1183,7 @@
   "area": "denik",
   "value": 2,
   "effort": 3,
-  "status": "new",
+  "status": "done",
   "what": "Kouč si pamatuje minulé rozhovory a sliby.",
   "why": "Jinak každý rozhovor začíná od nuly."
  },
@@ -1195,7 +1195,7 @@
   "area": "vyuka",
   "value": 3,
   "effort": 2,
-  "status": "new",
+  "status": "done",
   "what": "Devět kroků modelu na jednom grafu, svíčka po svíčce, pro long i short.",
   "why": "Text s odkazy nestačí, model je vizuální."
  },
@@ -1219,7 +1219,7 @@
   "area": "vyuka",
   "value": 2,
   "effort": 2,
-  "status": "new",
+  "status": "done",
   "what": "Po každém kroku úloha na grafu.",
   "why": "Ověří pochopení dřív, než se jde dál."
  },
@@ -1267,7 +1267,7 @@
   "area": "vyuka",
   "value": 2,
   "effort": 2,
-  "status": "new",
+  "status": "done",
   "what": "Jedna úloha denně na grafu, společná pro všechny.",
   "why": "Důvod otevřít aplikaci každý den."
  },
@@ -1303,7 +1303,7 @@
   "area": "vyuka",
   "value": 2,
   "effort": 2,
-  "status": "new",
+  "status": "done",
   "what": "Po dvanácti týdnech velká zkouška a stažitelný certifikát.",
   "why": "Jasný cíl kurzu a věc ke sdílení."
  },
@@ -1315,7 +1315,7 @@
   "area": "vyuka",
   "value": 2,
   "effort": 2,
-  "status": "new",
+  "status": "done",
   "what": "Aplikace sleduje, kde se chybuje, a vrací právě ta témata.",
   "why": "Opakovat všechno stejně je neefektivní."
  },
@@ -1339,7 +1339,7 @@
   "area": "vyuka",
   "value": 1,
   "effort": 1,
-  "status": "new",
+  "status": "done",
   "what": "Vlastní poznámka u každé lekce a tématu.",
   "why": "Vlastními slovy se učí nejlíp."
  },
@@ -1399,7 +1399,7 @@
   "area": "vyuka",
   "value": 2,
   "effort": 2,
-  "status": "new",
+  "status": "done",
   "what": "Jeden celý obchodní den rozebraný od přípravy po večerní kontrolu.",
   "why": "Ukáže, jak všechny části do sebe zapadají."
  },
@@ -1411,7 +1411,7 @@
   "area": "vyuka",
   "value": 2,
   "effort": 1,
-  "status": "new",
+  "status": "done",
   "what": "Stránka s tím, co pojmy neznamenají a co backtesty nepotvrdily.",
   "why": "Poctivost odliší produkt od prodejců zázraků."
  },
@@ -1423,7 +1423,7 @@
   "area": "model",
   "value": 3,
   "effort": 1,
-  "status": "new",
+  "status": "done",
   "what": "Zadáš účet, riziko v procentech a stop v bodech, dostaneš počet kontraktů pro NQ, MNQ, ES a MES.",
   "why": "Nejpoužívanější nástroj každého obchodníka futures."
  },
@@ -1435,7 +1435,7 @@
   "area": "model",
   "value": 2,
   "effort": 1,
-  "status": "new",
+  "status": "done",
   "what": "Pruh s Asií, Londýnem a New Yorkem v našem čase a odpočet do dalšího okna.",
   "why": "Časová okna jsou jádro modelu a přepočet na náš čas plete."
  },
@@ -1447,7 +1447,7 @@
   "area": "model",
   "value": 2,
   "effort": 2,
-  "status": "new",
+  "status": "done",
   "what": "Varování deset minut před událostí z kalendáře.",
   "why": "Obchod těsně před zprávou je častá chyba."
  },
@@ -1495,7 +1495,7 @@
   "area": "model",
   "value": 2,
   "effort": 3,
-  "status": "new",
+  "status": "done",
   "what": "Ukáže, které tvé obchody odpovídaly pravidlům modelu a jak dopadly proti ostatním.",
   "why": "Oddělí výsledek modelu od výsledku improvizace."
  },
@@ -1531,7 +1531,7 @@
   "area": "model",
   "value": 2,
   "effort": 2,
-  "status": "new",
+  "status": "done",
   "what": "Simulace, jak může vypadat dalších sto obchodů při tvém winrate a průměru.",
   "why": "Ukáže realistický drawdown, na který se připravit."
  },
@@ -1567,7 +1567,7 @@
   "area": "produkt",
   "value": 2,
   "effort": 1,
-  "status": "new",
+  "status": "done",
   "what": "Na sdílené kartě adresa aplikace.",
   "why": "Každé sdílení je reklama zdarma."
  },
