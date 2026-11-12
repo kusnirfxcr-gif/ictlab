@@ -105,9 +105,9 @@
   },
   {
    "n": 9, "title": "Model krok za krokem",
-   "goal": "Umíš na grafu najít kompletní setup, který testuje ICT Lab.",
+   "goal": "Umíš na grafu najít kompletní setup, který testuje Knot.",
    "lessons": [
-    {"id": "9a", "title": "Pět kroků", "text": "Model z ICT Lab skládá vše, co už znáš. Čas: okno 9:30 až 11:00 NY. Likvidita: high a low předchozího dne a noční seance. Sweep: cena jednu úroveň vybere. Potvrzení: MSS s displacementem, který nechá FVG. Vstup: limitní příkaz ve středu FVG."},
+    {"id": "9a", "title": "Pět kroků", "text": "Model z Knotu skládá vše, co už znáš. Čas: okno 9:30 až 11:00 NY. Likvidita: high a low předchozího dne a noční seance. Sweep: cena jednu úroveň vybere. Potvrzení: MSS s displacementem, který nechá FVG. Vstup: limitní příkaz ve středu FVG."},
     {"id": "9b", "title": "Stop a cíl", "text": "Stop-loss patří těsně za extrém sweepu. Kdyby se cena vrátila až tam, myšlenka obchodu neplatí. Polovina pozice se zavírá, když zisk dosáhne velikosti rizika, zbytek míří na dvojnásobek. Podrobná pravidla najdeš v sekci Model."},
     {"id": "9c", "title": "Kdy setup neplatí", "text": "Chybí sweep. MSS proběhl pomalu a bez FVG. Od sweepu uběhlo moc času. Stop vychází příliš daleko. Okno skončilo. Každý z těchto bodů znamená žádný obchod. Většinu dní model žádný setup nedá, a to je v pořádku."},
     {"id": "9d", "title": "Poctivá poznámka", "text": "Tenhle model je hypotéza. Dokud neprojde testem na historických datech, nikdo neví, jestli vydělává. Tvým úkolem zatím není mu věřit, ale umět ho na grafu přesně poznat."}
@@ -122,7 +122,7 @@
     {"id": "10a", "title": "Jednotka R", "text": "R je částka, kterou riskuješ na jeden obchod, tedy vzdálenost vstupu od stopu krát velikost pozice. Všechno ostatní se měří v R: ztráta je minus 1R, zisk na dvojnásobku rizika plus 2R. Díky tomu můžeš porovnávat obchody bez ohledu na peníze."},
     {"id": "10b", "title": "Winrate a RR patří k sobě", "text": "Při poměru zisku k riziku 1:1 potřebuješ vyhrát víc než 50 % obchodů, při 2:1 stačí víc než 33 %, při 3:1 víc než 25 %. Vysoký winrate s malým RR může prodělávat a nízký winrate s velkým RR vydělávat. Rozhoduje jejich kombinace."},
     {"id": "10c", "title": "Velikost pozice", "text": "Běžné pravidlo je neriskovat na obchod víc než 1 % účtu, začátečník klidně polovinu. Série pěti až osmi ztrát po sobě přijde i u dobrého modelu a účet ji musí přežít. Velikost pozice se počítá od stopu, nikdy obráceně."},
-    {"id": "10d", "title": "Denní stopka", "text": "Stanov si předem, po kolika ztrátách v jednom dni končíš. Model v ICT Lab bere nejvýš jeden obchod denně právě proto, aby po ztrátě nepřišel pokus vyhrát ji zpátky."}
+    {"id": "10d", "title": "Denní stopka", "text": "Stanov si předem, po kolika ztrátách v jednom dni končíš. Model v Knotu bere nejvýš jeden obchod denně právě proto, aby po ztrátě nepřišel pokus vyhrát ji zpátky."}
    ],
    "task": "Vezmi setupy z devátého týdne a u každého spočítej riziko v bodech a výsledek v R. Sečti je. Pak spočítej, jak by vypadal účet 10 000 dolarů při riziku 1 % a při riziku 5 % na obchod po nejhorší sérii ztrát, kterou jsi našla.",
    "check": {"q": "Model má winrate 40 % a průměrný zisk 2R při ztrátě 1R. Vydělává?", "a": "Ano. Ze 100 obchodů je 40 výher po 2R (plus 80R) a 60 ztrát po 1R (minus 60R). Výsledek je plus 20R před poplatky."}
@@ -134,7 +134,7 @@
     {"id": "11a", "title": "Ruční backtest", "text": "V TradingView použij funkci Replay: graf se vrátí do minulosti a svíčky přibývají po jedné. Rozhoduj se, jako by to bylo naživo, a výsledek si zapiš dřív, než posuneš graf dál. Jen tak se vyhneš tomu, že budeš vidět setupy až zpětně."},
     {"id": "11b", "title": "Co zapisovat", "text": "Datum, směr, která likvidita byla vybraná, vstup, stop, výsledek v R, snímek grafu a jedna věta, co bys příště udělala jinak. Tabulka stačí. Bez deníku nepoznáš, jestli chybuje model, nebo ty."},
     {"id": "11c", "title": "Kolik obchodů je dost", "text": "Deset obchodů neříká nic, třicet je první náznak, stovka už něco znamená. Výsledky ber z různých měsíců, trh se chová jinak v klidném a jinak v divokém období."},
-    {"id": "11d", "title": "Past přeučení", "text": "Když budeš pravidla upravovat tak dlouho, až na minulých datech vyjdou skvěle, na nových datech nejspíš selžou. Proto se pravidla ladí na jedné části historie a ověřují na jiné, kterou jsi při ladění neviděla. Stejně pracuje backtester v ICT Lab."}
+    {"id": "11d", "title": "Past přeučení", "text": "Když budeš pravidla upravovat tak dlouho, až na minulých datech vyjdou skvěle, na nových datech nejspíš selžou. Proto se pravidla ladí na jedné části historie a ověřují na jiné, kterou jsi při ladění neviděla. Stejně pracuje backtester v Knot."}
    ],
    "task": "Udělej v režimu Replay ruční backtest modelu na třiceti obchodních dnech, které jsi ještě neprocházela. Veď deník podle lekce 11b a na konci spočítej winrate, průměrné R a nejdelší sérii ztrát.",
    "check": {"q": "Proč nestačí otestovat model na stejných datech, na kterých jsi ladila jeho pravidla?", "a": "Protože pravidla jsou těm datům přizpůsobená a výsledek je nadhodnocený. Jestli model opravdu funguje, ukážou až data, která při ladění neviděl."}

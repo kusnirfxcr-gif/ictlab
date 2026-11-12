@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#0b6b7d">
+<meta name="theme-color" content="#09090b">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="ICT Lab">
+<meta name="apple-mobile-web-app-title" content="Knot">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
-<title>ICT Lab</title>
+<title>Knot</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -283,6 +283,36 @@ td.num{font-weight:600}
 .lesson input:active{transform:scale(.92)}
 nav.more{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 44px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 44px),transparent)}
 
+/* ---------- v4: brand, practice, checklist ---------- */
+.brand{display:flex;align-items:center;font-size:44px;font-weight:800;letter-spacing:-.055em;line-height:1;padding:.2em 0 .12em}
+.brand span{background:linear-gradient(180deg,#ffffff 30%,#a9adb8 100%);-webkit-background-clip:text;background-clip:text;color:transparent;padding-bottom:.08em}
+.brand .o{display:block;flex:none;position:relative;width:.56em;height:.56em;margin:.2em .035em 0 .045em;border:.145em solid #eceef2;border-radius:50%;box-shadow:0 0 18px rgba(255,255,255,.28)}
+.brand .o::before,.brand .o::after{content:"";position:absolute;left:50%;width:.075em;margin-left:-.0375em;background:#eceef2;border-radius:1em}
+.brand .o::before{bottom:calc(100% + .145em);height:.3em}
+.brand .o::after{top:calc(100% + .145em);height:.16em}
+.fig .hit{fill:transparent;cursor:pointer}
+.fig .hit:hover{fill:rgba(255,255,255,.05)}
+.pr-q{font-size:17.5px;font-weight:600;line-height:1.45;margin:0;min-height:2.9em}
+.pr-fb{display:none;flex-direction:column;gap:8px}
+.pr-fb.on{display:flex;animation:rise .4s cubic-bezier(.2,.8,.2,1) both}
+.pr-fb p{margin:0}
+.pr-fb .pill{align-self:flex-start}
+.pr-score{font-size:12px;font-weight:600;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+form.inline{display:flex;gap:10px;align-items:stretch}
+form.inline input{flex:1;min-width:0}
+.ck-row{display:grid;grid-template-columns:24px 1fr auto;gap:12px;align-items:start}
+.ck-row label{display:block;color:var(--ink);font-size:15.5px;gap:0;cursor:pointer;padding-top:1px}
+.ck-row.on label{color:var(--muted)}
+button.ck-del{padding:2px 9px;border-radius:8px;font-size:15px;line-height:1.2;color:var(--muted);background:transparent;border-color:transparent}
+button.ck-del:hover{color:var(--bad);border-color:var(--line)}
+.ck-row input[type=checkbox]{appearance:none;-webkit-appearance:none;width:22px;height:22px;margin:2px 0 0;padding:0;border-radius:7px;border:1.5px solid #3a3a43;background:#0d0d10;display:grid;place-items:center;cursor:pointer;transition:background .2s,border-color .2s,transform .15s}
+.ck-row input[type=checkbox]::after{content:"";width:10px;height:5px;margin-top:-2px;border-left:2px solid var(--bg);border-bottom:2px solid var(--bg);transform:rotate(-45deg) scale(0);transition:transform .2s cubic-bezier(.2,.8,.2,1)}
+.ck-row input[type=checkbox]:checked{background:var(--ink);border-color:var(--ink)}
+.ck-row input[type=checkbox]:checked::after{transform:rotate(-45deg) scale(1)}
+.ck-res{display:flex;gap:6px;flex-wrap:wrap}
+.ck-res button{font-size:12.5px;padding:4px 10px;border-radius:999px}
+@media (max-width:420px){.brand{font-size:38px}}
+
 /* ---------- v3: price action stepper ---------- */
 #pa-body{gap:14px}
 .pa-title{font-size:20px}
@@ -312,8 +342,8 @@ details.week.anim[open]>.weekbody{animation:rise .35s ease both}
 <body>
 <div class="wrap">
   <header class="top">
-    <h1>ICT Lab</h1>
-    <p class="muted">Boti denně studují ICT obsah a kanál ICT Gems, zpřesňují scalpingový model pro NQ a ES a připravují lekce pro Lauru.</p>
+    <h1 class="brand" aria-label="Knot"><span>kn</span><i class="o"></i><span>t</span></h1>
+    <p class="muted">Škola price action a obchodní deník. Boti každý den hledají nové poznatky, ladí model pro NQ a ES a připravují lekce.</p>
   </header>
 
   <div class="strip" aria-label="Stav">
@@ -331,6 +361,7 @@ details.week.anim[open]>.weekbody{animation:rise .35s ease both}
     <a href="#backtest" data-v="backtest">Backtest</a>
     <a href="#room" data-v="room">Dictator's Room</a>
     <a href="#laura" data-v="laura">Laura</a>
+    <a href="#denik" data-v="denik">Deník</a>
     <a href="#napady" data-v="napady">Nápady</a>
   </nav>
 
@@ -402,6 +433,23 @@ details.week.anim[open]>.weekbody{animation:rise .35s ease both}
   </section>
 
 
+  <section class="view" id="v-denik">
+    <div class="card">
+      <div class="row"><h2>Před vstupem</h2><span class="pill" id="ck-verdict"></span></div>
+      <p class="small muted">Projdi seznam před každým obchodem. Stačí jedno ne a setup není kompletní. Otázky si můžeš upravit podle vlastního plánu.</p>
+      <div class="list" id="ck-items"></div>
+      <form class="inline" id="ck-add"><input id="ck-new" maxlength="120" placeholder="Přidat vlastní otázku" aria-label="Nová otázka"><button type="submit">Přidat</button></form>
+      <label for="ck-note">Poznámka k obchodu (nepovinná)<input id="ck-note" maxlength="200" placeholder="Například: sweep PDH, short"></label>
+      <div class="row"><button class="primary" type="button" id="ck-save">Uložit kontrolu</button><span class="small muted" id="ck-msg"></span></div>
+    </div>
+    <div class="card">
+      <h2>Historie kontrol</h2>
+      <p class="small muted" id="ck-stats">U každé kontroly pak doplň, jak obchod dopadl. Uvidíš, jestli ztráty přicházejí z obchodů, kde seznam nebyl splněný.</p>
+      <div class="list" id="ck-log"></div>
+      <p class="small muted">Záznamy se ukládají jen v tomto prohlížeči.</p>
+    </div>
+  </section>
+
   <section class="view" id="v-napady">
     <div class="card">
       <div class="row"><h2>Nápady na vylepšení</h2><span class="small muted" id="i-count"></span></div>
@@ -432,6 +480,12 @@ details.week.anim[open]>.weekbody{animation:rise .35s ease both}
       <p class="small muted">Každé téma se skládá krok za krokem. Klikej na Další a sleduj, co na grafu přibylo. Obrázky jsou zjednodušená schémata, ne skutečné grafy.</p>
       <div class="chips pa-chips" id="pa-chips"></div>
       <div class="lesson-body" id="pa-body"><p class="muted">Načítám témata…</p></div>
+    </div>
+
+    <div class="card" id="pr-card">
+      <div class="row"><h2>Najdi to na grafu</h2><span class="small muted" id="pr-count"></span></div>
+      <p class="small muted">Klepni na svíčku, která odpovídá otázce. Hned uvidíš, jestli to sedí, a proč.</p>
+      <div class="lesson-body" id="pr-body"><p class="muted">Načítám úlohy…</p></div>
     </div>
 
     <div class="card">
@@ -518,7 +572,7 @@ details.week.anim[open]>.weekbody{animation:rise .35s ease both}
   });
 
   // Views
-  const VIEWS = ["model","poznatky","strategie","backtest","room","laura","napady"];
+  const VIEWS = ["model","poznatky","strategie","backtest","room","laura","denik","napady"];
   function route(){
     const h = (location.hash || "").replace("#","");
     const v = VIEWS.includes(h) ? h : "model";
@@ -779,7 +833,9 @@ details.week.anim[open]>.weekbody{animation:rise .35s ease both}
       lp = '<g class="mk lp' + (fresh ? "" : " still") + '" style="--d:' + (fresh * st + 80) + '"><line x1="' + padL + '" y1="' + num(y) + '" x2="' + num(plotR) + '" y2="' + num(y) + '" class="lpl s-' + cls + '"/>' +
         '<rect x="' + num(plotR + 1) + '" y="' + num(y - 7.5) + '" width="' + (AXW - 2) + '" height="15" rx="3" class="lpb f-' + cls + '"/><text x="' + num(plotR + 6) + '" y="' + num(y + 3.2) + '" class="lpt">' + fmtP(lastC[3]) + '</text></g>';
     }
-    return svgWrap(H, grid + zones + lp + cnd + lines + top, "--st:" + st + "ms");
+    let hits = "";
+    if (spec.pick) cs.forEach((c, i) => { if (c) hits += '<rect x="' + num(X(i) - step / 2) + '" y="0" width="' + num(step) + '" height="' + H + '" class="hit" data-i="' + i + '"/>'; });
+    return svgWrap(H, grid + zones + lp + cnd + lines + top + hits, "--st:" + st + "ms");
   }
   function figOhlc(){
     let s = "";
@@ -829,7 +885,7 @@ details.week.anim[open]>.weekbody{animation:rise .35s ease both}
          "Pohyb ode dna k vrcholu se rozdělí v půlce. Nakupovat se má v dolní polovině (discount), prodávat v horní (premium)."],
         [() => chart({candles: mk(105, [-2,-3,6,5,2,-3,-4,-3,5,5], {7:{l:101.5}}), marks: [{t:"box",x1:1,x2:8,y1:100,y2:103,c:"amber"}, tx(4.5,100,"order block",{dy:13,c:"amber"}), tx(7,101.5,"návrat",{dy:27})]}),
          "Bullish order block: poslední klesající svíčka před silným růstem. Když se do ní cena vrátí, ICT tam hledá nákup."]],
-    7: [[figTime, "Den v newyorském čase. ICT sleduje půlnoční otevírací cenu, data v 8:30 a otevření burzy v 9:30. Tři okna Silver Bullet jsou žlutě, okno modelu ICT Lab modře."]],
+    7: [[figTime, "Den v newyorském čase. ICT sleduje půlnoční otevírací cenu, data v 8:30 a otevření burzy v 9:30. Tři okna Silver Bullet jsou žlutě, okno modelu Knot modře."]],
     8: [[() => chart({candles: mk(100, [3,-1,3,2,-2,3,2]), n: 11, marks: [{t:"line",y:118,x1:0,x2:10,c:"amber"}, tx(-0.4,118,"high předchozího dne: likvidita",{a:"start",dy:-5,c:"amber"}), {t:"line",y:95,x1:0,x2:10,c:"muted"}, tx(-0.4,95,"low předchozího dne",{a:"start",dy:13,c:"muted"}), {t:"arrow",x1:7,y1:111,x2:10,y2:117,c:"accent"}, tx(10.4,109.5,"draw on liquidity",{a:"end",c:"accent",dy:8})]}),
          "Bias je odpověď na otázku, ke které likviditě cena nejspíš míří. Tady roste k high předchozího dne, bias je long."]],
     9: [[() => chart({candles: mk(110, [3,3,-2,-2,3,1,-3,-6,-3,2,3,-4,-4,-3], {5:{h:119},10:{h:110}}), h: 240, marks: [
@@ -915,6 +971,7 @@ details.week.anim[open]>.weekbody{animation:rise .35s ease both}
       if (spec.hi != null && isFinite(Number(spec.hi))) out.hi = Number(spec.hi);
       if (spec.newFrom != null && isFinite(Number(spec.newFrom))) out.newFrom = Number(spec.newFrom);
       if (spec.last) out.last = true;
+      if (spec.pick) out.pick = true;
       out.focus = ints(spec.focus); out.prevFocus = ints(spec.prevFocus);
       return chart(out);
     } catch(e){ return ""; }
@@ -1275,6 +1332,130 @@ details.week.anim[open]>.weekbody{animation:rise .35s ease both}
     paChips(); paDraw(true);
     requestAnimationFrame(() => { box.style.minHeight = ""; });
   }
+  // Practice: tap the candle that answers the question
+  let pr = [], prLoaded = false, prOrder = [], prPos = 0, prRight = 0, prPicked = null, prUI = null;
+  function prShuffle(){
+    prOrder = pr.map((x, i) => i);
+    for (let i = prOrder.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)), t = prOrder[i]; prOrder[i] = prOrder[j]; prOrder[j] = t; }
+    prPos = 0; prRight = 0;
+  }
+  function prShow(){
+    const t = pr[prOrder[prPos]]; prPicked = null;
+    prUI.q.textContent = t.q;
+    prUI.kick.textContent = "Úloha " + (prPos + 1) + " z " + pr.length;
+    prUI.score.textContent = "Správně " + prRight;
+    prUI.svg.innerHTML = safeChart({candles: t.candles, n: t.candles.length, lo: t.lo, hi: t.hi, h: t.h || 240, pick: true});
+    prUI.fb.classList.remove("on"); prUI.next.style.visibility = "hidden";
+  }
+  function prAnswer(i){
+    if (prPicked != null || !prUI) return;
+    const t = pr[prOrder[prPos]], ans = Array.isArray(t.answer) ? t.answer : [], ok = ans.includes(i); prPicked = i;
+    if (ok) prRight++;
+    const marks = (Array.isArray(t.reveal) ? t.reveal : []).map(m => Object.assign({}, m, {fresh: true}));
+    const hiOf = k => (t.candles[k] ? t.candles[k][1] : 0);
+    marks.push({t: "badge", x: i, y: hiOf(i), s: ok ? "✓" : "✕", c: ok ? "good" : "bad", fresh: true});
+    if (!ok && ans.length) marks.push({t: "badge", x: ans[0], y: hiOf(ans[0]), s: "✓", c: "good", fresh: true});
+    prUI.svg.innerHTML = safeChart({candles: t.candles, n: t.candles.length, lo: t.lo, hi: t.hi, h: t.h || 240, marks: marks, newFrom: t.candles.length, focus: ok ? ans : ans.concat([i]), prevFocus: null});
+    clear(prUI.fb);
+    prUI.fb.appendChild(el("span","pill " + (ok ? "good" : "bad"), ok ? "Správně" : "Tohle to není"));
+    prUI.fb.appendChild(el("p", null, (ok ? "" : "Správná svíčka je označená zeleně. ") + (t.explain || "")));
+    prUI.fb.classList.add("on");
+    prUI.score.textContent = "Správně " + prRight;
+    prUI.next.textContent = prPos === pr.length - 1 ? "Vyhodnotit" : "Další úloha";
+    prUI.next.style.visibility = "visible";
+  }
+  function prNext(){
+    if (prPos < pr.length - 1){ prPos++; prShow(); return; }
+    if (prUI.next.dataset.end === "1"){ prUI.next.dataset.end = ""; prShuffle(); prShow(); return; }
+    lp.practice = lp.practice || {best: 0, runs: 0};
+    lp.practice.best = Math.max(lp.practice.best || 0, prRight); lp.practice.runs = (lp.practice.runs || 0) + 1; persistLaura();
+    clear(prUI.fb);
+    prUI.fb.appendChild(el("span","pill info","Hotovo"));
+    prUI.fb.appendChild(el("p", null, "Správně " + prRight + " z " + pr.length + ". Nejlepší výsledek: " + lp.practice.best + " z " + pr.length + ". Úlohy se příště zamíchají jinak."));
+    prUI.fb.classList.add("on");
+    prUI.next.textContent = "Začít znovu"; prUI.next.dataset.end = "1";
+    $("pr-count").textContent = "Nejlepší výsledek " + lp.practice.best + " z " + pr.length;
+  }
+  function prBuild(){
+    const box = $("pr-body"); clear(box);
+    if (!pr.length){ box.appendChild(el("p","muted", prLoaded ? "Úlohy se nepodařilo načíst. Zkus stránku obnovit." : "Načítám úlohy…")); return; }
+    const q = el("p","pr-q"), fig = el("figure","fig pa-fig"), bar = el("div","pa-bar"), kick = el("span","pa-kicker"), score = el("span","pr-score"), svg = el("div","pa-svg");
+    bar.appendChild(kick); bar.appendChild(score); fig.appendChild(bar); fig.appendChild(svg);
+    const fb = el("div","pr-fb"), ctl = el("div","pa-ctl"), next = el("button","primary","Další úloha"); next.type = "button";
+    ctl.appendChild(el("span")); ctl.appendChild(next);
+    box.appendChild(q); box.appendChild(fig); box.appendChild(fb); box.appendChild(ctl);
+    svg.addEventListener("click", ev => { const v = ev.target && ev.target.getAttribute ? ev.target.getAttribute("data-i") : null; if (v != null) prAnswer(Number(v)); });
+    next.addEventListener("click", prNext);
+    prUI = {q: q, kick: kick, score: score, svg: svg, fb: fb, next: next};
+    if (lp.practice && lp.practice.best) $("pr-count").textContent = "Nejlepší výsledek " + lp.practice.best + " z " + pr.length;
+    prShuffle(); prShow();
+  }
+  (async function loadPractice(){
+    try {
+      const r = await fetch("data/practice.json", {cache: "no-store"});
+      if (!r.ok) throw new Error("http");
+      pr = await r.json(); if (!Array.isArray(pr)) pr = [];
+    } catch(e){ pr = []; }
+    await fontGate;
+    prLoaded = true; prBuild();
+  })();
+
+  // Pre-trade checklist, kept in this browser
+  const CK_KEY = "knot-checklist";
+  const CK_DEFAULT = ["Jsem v okně 9:30 až 11:00 newyorského času?", "Vybrala cena likviditu (sweep)?", "Zavřela svíčka za strukturou (MSS nebo CISD) s displacementem?", "Mám FVG, do kterého se cena vrací?", "Vychází stop do mého limitu?", "Riskuju jen tolik, kolik mám v plánu?"];
+  let ck = {items: [], log: []}, ckOn = {};
+  try { const v = JSON.parse(localStorage.getItem(CK_KEY) || "null"); if (v && Array.isArray(v.items)) ck = {items: v.items, log: Array.isArray(v.log) ? v.log : []}; } catch(e){}
+  if (!ck.items.length) ck.items = CK_DEFAULT.map((t, i) => ({id: "d" + i, text: t}));
+  const ckStore = () => { try { localStorage.setItem(CK_KEY, JSON.stringify(ck)); } catch(e){} };
+  function ckVerdict(){
+    const n = ck.items.length, k = ck.items.filter(i => ckOn[i.id]).length, v = $("ck-verdict");
+    v.textContent = k + " z " + n; v.className = "pill " + (n && k === n ? "good" : "warn");
+    $("ck-msg").textContent = n && k === n ? "Setup je kompletní." : "Chybí " + (n - k) + ". Podle plánu obchod neber.";
+  }
+  function renderCk(){
+    const box = $("ck-items"); clear(box);
+    ck.items.forEach(it => {
+      const row = el("div","ck-row" + (ckOn[it.id] ? " on" : "")), cb = el("input"), lb = el("label", null, it.text), del = el("button","ck-del","×");
+      cb.type = "checkbox"; cb.id = "ck-" + it.id; cb.checked = !!ckOn[it.id]; lb.htmlFor = cb.id; del.type = "button"; del.setAttribute("aria-label", "Smazat otázku");
+      cb.addEventListener("change", () => { ckOn[it.id] = cb.checked; row.classList.toggle("on", cb.checked); ckVerdict(); });
+      del.addEventListener("click", () => { ck.items = ck.items.filter(x => x.id !== it.id); delete ckOn[it.id]; ckStore(); renderCk(); });
+      row.appendChild(cb); row.appendChild(lb); row.appendChild(del); box.appendChild(row);
+    });
+    ckVerdict();
+  }
+  function renderCkLog(){
+    const box = $("ck-log"); clear(box);
+    const done = ck.log.filter(l => l.res === "win" || l.res === "loss"), part = full => { const a = done.filter(l => (l.k === l.n) === full); return a.length ? Math.round(100 * a.filter(l => l.res === "win").length / a.length) + " % ziskových z " + a.length : "zatím bez výsledku"; };
+    if (done.length) $("ck-stats").textContent = "Splněný seznam: " + part(true) + ". Nesplněný seznam: " + part(false) + ".";
+    if (!ck.log.length){ box.appendChild(el("p","small muted","Zatím žádná kontrola.")); return; }
+    ck.log.slice(0, 40).forEach(l => {
+      const it = el("div","item"), head = el("div","row");
+      head.appendChild(el("h3", null, fmtDateTime(l.ts))); head.appendChild(el("span","pill " + (l.k === l.n ? "good" : "warn"), l.k + " z " + l.n));
+      it.appendChild(head);
+      if (l.note) it.appendChild(el("p","small", l.note));
+      if (l.miss && l.miss.length) it.appendChild(el("p","small muted","Chybělo: " + l.miss.join(" · ")));
+      const res = el("div","ck-res");
+      [["win","Zisk"],["loss","Ztráta"],["none","Bez obchodu"]].forEach(o => {
+        const b = el("button","chip", o[1]); b.type = "button"; b.setAttribute("aria-pressed", String(l.res === o[0]));
+        b.addEventListener("click", () => { l.res = l.res === o[0] ? null : o[0]; ckStore(); renderCkLog(); });
+        res.appendChild(b);
+      });
+      it.appendChild(res); box.appendChild(it);
+    });
+  }
+  $("ck-add").addEventListener("submit", ev => {
+    ev.preventDefault(); const t = $("ck-new").value.trim(); if (!t) return;
+    ck.items.push({id: "u" + Date.now().toString(36), text: t.slice(0, 120)}); $("ck-new").value = ""; ckStore(); renderCk();
+  });
+  $("ck-save").addEventListener("click", () => {
+    const n = ck.items.length; if (!n) return;
+    const miss = ck.items.filter(i => !ckOn[i.id]).map(i => i.text);
+    ck.log.unshift({ts: new Date().toISOString(), n: n, k: n - miss.length, miss: miss, note: $("ck-note").value.trim().slice(0, 200), res: null});
+    ck.log = ck.log.slice(0, 300); ckOn = {}; $("ck-note").value = ""; ckStore(); renderCk(); renderCkLog();
+    $("ck-msg").textContent = "Uloženo do historie.";
+  });
+  renderCk(); renderCkLog();
+
   document.addEventListener("keydown", ev => {
     if (!$("v-laura").classList.contains("on") || !paUI) return;
     const tg = ev.target && ev.target.tagName;
@@ -1359,7 +1540,7 @@ details.week.anim[open]>.weekbody{animation:rise .35s ease both}
     const l = lessons.find(x => x.id === curLesson);
     const lessonText = l ? "Otevřená lekce: " + (l.title || "") + "\n" + (Array.isArray(l.body) ? l.body.join("\n") : String(l.body || "")) : "Žádná lekce není otevřená.";
     const gl = glossary.map(g => "- " + g.term + (g.en ? " (" + g.en + ")" : "") + ": " + g.def).join("\n").slice(0, 12000);
-    return "Jsi trpělivý lektor na stránce ICT Lab. Učíš Lauru, úplnou začátečnici, základy tradingu podle konceptů ICT (Inner Circle Trader) na futures NQ a ES. "
+    return "Jsi trpělivý lektor na stránce Knot. Učíš Lauru, úplnou začátečnici, základy tradingu podle konceptů ICT (Inner Circle Trader) na futures NQ a ES. "
       + "Odpovídej česky, krátce a jednoduše, s jedním konkrétním příkladem na grafu popsaným slovy. Anglické pojmy nech v originále a při prvním použití je vysvětli. "
       + "Nedávej investiční doporučení ani pokyny, co koupit nebo prodat, a neslibuj zisk. Když se ptá, jestli koncept funguje, řekni poctivě, že ICT koncepty nejsou prokázanou výhodou a musí se ověřit backtestem. "
       + "Když si nejsi jistý, řekni to. Piš prostý text bez Markdownu.\n\n"

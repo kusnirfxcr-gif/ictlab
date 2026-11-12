@@ -7,7 +7,7 @@
   "area": "vyuka",
   "value": 3,
   "effort": 2,
-  "status": "new",
+  "status": "done",
   "what": "Laura dostane schéma a má sama kliknout, kde je FVG, order block nebo sweep. Aplikace odpověď vyhodnotí a ukáže správné místo.",
   "why": "Rozdíl mezi „rozumím“ a „poznám to“ se učí jen opakovaným hledáním na grafu."
  },
@@ -31,7 +31,7 @@
   "area": "vyuka",
   "value": 2,
   "effort": 1,
-  "status": "new",
+  "status": "done",
   "what": "Tři nová témata v Price action v obrázcích ve stejném stylu jako FVG.",
   "why": "Jsou to pojmy, které se z textu chápou nejhůř."
  },
@@ -55,7 +55,7 @@
   "area": "denik",
   "value": 2,
   "effort": 1,
-  "status": "new",
+  "status": "done",
   "what": "Vlastní seznam otázek, který se před každým obchodem odškrtává. Výsledek se uloží k obchodu v deníku.",
   "why": "Ukáže, jestli ztráty přicházejí z obchodů, kde seznam nebyl splněný."
  },
@@ -163,7 +163,7 @@
   "area": "produkt",
   "value": 2,
   "effort": 1,
-  "status": "new",
+  "status": "done",
   "what": "Název a logo, které nestojí na zkratce ICT ani na cizím kanálu.",
   "why": "U placeného produktu je cizí jméno v názvu právní riziko."
  }

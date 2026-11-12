@@ -16,7 +16,7 @@
   "explain": ["Model spojuje předchozí pojmy do jednoho postupu: cena vybere likviditu (sweep), změní strukturu (MSS), nechá po sobě FVG a vstupuje se při návratu do něj. Stop je za extrémem sweepu.", "Je to hypotéza, ne zaručený recept. Mechanická verze tohoto postupu v našem backtestu na NQ nevydělávala."],
   "remember": "Umět setup na grafu přesně poznat je první krok. Jestli vydělává, musí ukázat test."},
  {"id": "cas", "order": 5, "title": "Čas a Silver Bullet", "en": "killzones", "fig": "cas", "week": 7,
-  "caption": "Den v newyorském čase. Okna Silver Bullet jsou žlutě, okno modelu ICT Lab modře.",
+  "caption": "Den v newyorském čase. Okna Silver Bullet jsou žlutě, okno modelu Knot modře.",
   "explain": ["ICT hledá obchody jen v určitých hodinách newyorského času, hlavně po otevření burzy v 9:30. Silver Bullet jsou tři hodinová okna: 3:00 až 4:00, 10:00 až 11:00 a 14:00 až 15:00.", "Čas je jen filtr. Testy, které boti našli, neukázaly, že by samotná hodina dávala výhodu."],
   "remember": "Správná hodina bez sweepu a FVG není setup."},
  {"id": "bias", "order": 6, "title": "Denní bias", "en": "draw on liquidity", "fig": "bias", "week": 8,

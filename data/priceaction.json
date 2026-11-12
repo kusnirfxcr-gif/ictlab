@@ -1929,7 +1929,7 @@
    },
    {
     "show": 14,
-    "text": "6. Cíl. Trh klesá k cíli, který je stejně daleko jako stop. Tohle je přesně model, který ICT Lab testuje. V backtestu zatím nevydělává, takže ho ber jako cvičení ve čtení grafu, ne jako návod k obchodu.",
+    "text": "6. Cíl. Trh klesá k cíli, který je stejně daleko jako stop. Tohle je přesně model, který Knot testuje. V backtestu zatím nevydělává, takže ho ber jako cvičení ve čtení grafu, ne jako návod k obchodu.",
     "add": [
      {
       "t": "line",
@@ -1950,5 +1950,436 @@
    }
   ],
   "remember": "Likvidita, sweep, MSS, FVG, vstup. Chybí-li jeden krok, není to setup."
+ },
+ {
+  "id": "cisd",
+  "title": "CISD: změna doručování",
+  "en": "change in state of delivery",
+  "week": 3,
+  "intro": "CISD je nejranější signál, že se směr mění. Nesleduje vrcholy a dna, ale otevírací cenu svíček.",
+  "h": 250,
+  "lo": 96.83,
+  "hi": 112.17,
+  "candles": [
+   [
+    110,
+    111,
+    107,
+    108
+   ],
+   [
+    108,
+    109,
+    104,
+    105
+   ],
+   [
+    105,
+    106,
+    102,
+    103
+   ],
+   [
+    103,
+    107.5,
+    102,
+    104
+   ],
+   [
+    104,
+    105,
+    100,
+    101
+   ],
+   [
+    101,
+    102,
+    98,
+    99
+   ],
+   [
+    99,
+    103,
+    98,
+    102
+   ],
+   [
+    102,
+    107,
+    101,
+    106
+   ],
+   [
+    106,
+    110,
+    105,
+    109
+   ],
+   null
+  ],
+  "steps": [
+   {
+    "show": 6,
+    "text": "Cena klesá. Najdi poslední řadu klesajících svíček a označ si cenu, na které ta řada otevřela.",
+    "add": [
+     {
+      "t": "line",
+      "y": 104,
+      "x1": 4,
+      "x2": 9.4,
+      "c": "accent",
+      "dash": false,
+      "label": "open řady",
+      "la": "end",
+      "lv": "below"
+     }
+    ],
+    "focus": [
+     4,
+     5
+    ]
+   },
+   {
+    "show": 7,
+    "text": "Přijde první rostoucí svíčka. Zavřela ale pod čarou, takže se zatím nic nezměnilo.",
+    "add": [],
+    "focus": [
+     6
+    ]
+   },
+   {
+    "show": 8,
+    "text": "Další svíčka zavře celým tělem nad čarou. To je CISD, change in state of delivery. Trh přestal doručovat cenu dolů a začal ji doručovat nahoru.",
+    "add": [
+     {
+      "t": "text",
+      "x": 7,
+      "y": 107,
+      "s": "CISD",
+      "a": "middle",
+      "c": "good",
+      "dy": -6
+     }
+    ],
+    "focus": [
+     7
+    ]
+   },
+   {
+    "show": 9,
+    "text": "Porovnej to s MSS. Ten potřebuje zavření nad posledním vrcholem, a to přišlo až o svíčku později. CISD je dřív, ale také častěji selže, protože vrchol ještě drží. Knot nad čarou nestačí, musí zavřít tělo.",
+    "add": [
+     {
+      "t": "line",
+      "y": 107.5,
+      "x1": 3,
+      "x2": 8.4,
+      "c": "muted",
+      "dash": true,
+      "label": "MSS až tady",
+      "la": "start",
+      "lv": "above"
+     }
+    ],
+    "focus": [
+     7,
+     8
+    ]
+   }
+  ],
+  "remember": "CISD = zavření těla za otevírací cenou poslední řady svíček starého směru."
+ },
+ {
+  "id": "immediate-rebalance",
+  "title": "Immediate rebalance",
+  "en": "immediate rebalance",
+  "week": 5,
+  "intro": "Někdy po velké svíčce žádná mezera nezůstane. I to něco říká.",
+  "h": 250,
+  "lo": 97.38,
+  "hi": 118.62,
+  "candles": [
+   [
+    100,
+    102,
+    99,
+    101
+   ],
+   [
+    101,
+    103,
+    100,
+    102
+   ],
+   [
+    102,
+    109,
+    101,
+    108
+   ],
+   [
+    108,
+    112,
+    103,
+    111
+   ],
+   [
+    111,
+    115,
+    110,
+    114
+   ],
+   [
+    114,
+    117,
+    113,
+    116
+   ],
+   null
+  ],
+  "steps": [
+   {
+    "show": 3,
+    "text": "Velká rostoucí svíčka. U FVG bys teď čekala, že mezi knotem první a třetí svíčky zůstane mezera.",
+    "add": [
+     {
+      "t": "badge",
+      "x": 1,
+      "y": 100,
+      "s": "1",
+      "dy": 13,
+      "ttl": 2
+     },
+     {
+      "t": "badge",
+      "x": 2,
+      "y": 101,
+      "s": "2",
+      "dy": 13,
+      "ttl": 2
+     },
+     {
+      "t": "line",
+      "y": 103,
+      "x1": 1,
+      "x2": 6.4,
+      "c": "accent",
+      "dash": false,
+      "label": "high 1. svíčky",
+      "la": "end",
+      "lv": "below"
+     }
+    ],
+    "focus": [
+     1,
+     2
+    ]
+   },
+   {
+    "show": 4,
+    "text": "Třetí svíčka se ale knotem vrátí přesně k high první svíčky. Knoty se dotknou, takže žádný FVG nevznikl.",
+    "add": [
+     {
+      "t": "badge",
+      "x": 3,
+      "y": 112,
+      "s": "3",
+      "ttl": 1
+     },
+     {
+      "t": "text",
+      "x": 3.5,
+      "y": 104.6,
+      "s": "dotek, žádná mezera",
+      "a": "start",
+      "c": "accent"
+     }
+    ],
+    "focus": [
+     1,
+     3
+    ]
+   },
+   {
+    "show": 4,
+    "text": "Tomu se říká immediate rebalance. Nerovnováha po velké svíčce se srovnala okamžitě, hned v další svíčce.",
+    "add": [],
+    "focus": [
+     3
+    ]
+   },
+   {
+    "show": 6,
+    "text": "ICT to čte jako známku síly. Trh si nenechal žádnou mezeru, ke které by se musel vracet, a pod to místo by už neměl klesnout. Kdyby pod něj svíčka zavřela, síla je pryč.",
+    "add": [],
+    "focus": [
+     4,
+     5
+    ]
+   }
+  ],
+  "remember": "Immediate rebalance = knot třetí svíčky se dotkne první. Mezera nevznikne a cena pokračuje."
+ },
+ {
+  "id": "bpr",
+  "title": "BPR: dvě mezery přes sebe",
+  "en": "balanced price range",
+  "week": 5,
+  "intro": "Když trh rychle projde stejným místem dolů i nahoru, vzniknou tam dvě mezery. Jejich průnik je BPR.",
+  "h": 260,
+  "lo": 99.74,
+  "hi": 116.26,
+  "candles": [
+   [
+    112,
+    113,
+    110,
+    111
+   ],
+   [
+    111,
+    112,
+    104,
+    105
+   ],
+   [
+    105,
+    106,
+    102,
+    103
+   ],
+   [
+    103,
+    104,
+    101,
+    102
+   ],
+   [
+    102,
+    104,
+    101,
+    103
+   ],
+   [
+    103,
+    111,
+    102,
+    110
+   ],
+   [
+    110,
+    113,
+    108.5,
+    112
+   ],
+   [
+    112,
+    113,
+    109,
+    110
+   ],
+   [
+    110,
+    111,
+    107,
+    107
+   ],
+   [
+    107,
+    111,
+    106,
+    110
+   ],
+   [
+    110,
+    115,
+    109,
+    114
+   ],
+   null,
+   null
+  ],
+  "steps": [
+   {
+    "show": 3,
+    "text": "Prudký pokles nechá bearish FVG mezi 106 a 110.",
+    "add": [
+     {
+      "t": "box",
+      "x1": 1,
+      "x2": 12,
+      "y1": 106,
+      "y2": 110,
+      "c": "bad",
+      "label": "bearish FVG",
+      "la": "end",
+      "lv": "top"
+     }
+    ],
+    "focus": [
+     0,
+     1,
+     2
+    ]
+   },
+   {
+    "show": 7,
+    "text": "Hned nato přijde stejně prudký růst a nechá bullish FVG mezi 104 a 108,5.",
+    "add": [
+     {
+      "t": "box",
+      "x1": 5,
+      "x2": 12,
+      "y1": 104,
+      "y2": 108.5,
+      "c": "good",
+      "label": "bullish FVG",
+      "la": "end",
+      "lv": "bottom"
+     }
+    ],
+    "focus": [
+     4,
+     5,
+     6
+    ]
+   },
+   {
+    "show": 7,
+    "text": "Obě mezery se překrývají mezi 106 a 108,5. Tomu průniku se říká balanced price range, BPR. Cena jím prošla rychle oběma směry.",
+    "add": [
+     {
+      "t": "box",
+      "x1": 5,
+      "x2": 12,
+      "y1": 106,
+      "y2": 108.5,
+      "c": "amber",
+      "label": "BPR",
+      "la": "end",
+      "lv": "middle"
+     }
+    ]
+   },
+   {
+    "show": 9,
+    "text": "Když se cena do BPR vrátí, ICT tam čeká silnou reakci. Směr určuje ta mezera, která vznikla jako druhá, tady bullish.",
+    "add": [],
+    "focus": [
+     8
+    ]
+   },
+   {
+    "show": 11,
+    "text": "Z BPR trh pokračuje nahoru. Platí to stejně jako u FVG: kdyby svíčka zavřela pod celým pásmem, zóna selhala.",
+    "add": [],
+    "focus": [
+     8,
+     9,
+     10
+    ]
+   }
+  ],
+  "remember": "BPR = překryv bullish a bearish FVG. Rozhoduje směr té novější."
  }
 ]

@@ -1,0 +1,1560 @@
+[
+ {
+  "id": "swing-high",
+  "topic": "struktura",
+  "q": "Klepni na některý swing high: svíčku na vrcholu, od kterého se cena otočila dolů.",
+  "answer": [
+   1,
+   5
+  ],
+  "explain": "Swing high má po obou stranách svíčky s nižším high. Tady jsou dva, ten druhý je výš než první.",
+  "reveal": [
+   {
+    "t": "line",
+    "y": 111,
+    "x1": 1,
+    "x2": 5.4,
+    "c": "muted",
+    "dash": true
+   }
+  ],
+  "candles": [
+   [
+    100,
+    105,
+    99,
+    104
+   ],
+   [
+    104,
+    111,
+    103,
+    109
+   ],
+   [
+    109,
+    109.5,
+    105,
+    106
+   ],
+   [
+    106,
+    107,
+    102.5,
+    104
+   ],
+   [
+    104,
+    110,
+    103,
+    109
+   ],
+   [
+    109,
+    117,
+    108,
+    115
+   ],
+   [
+    115,
+    116,
+    111,
+    112
+   ],
+   [
+    112,
+    113,
+    107.5,
+    109
+   ],
+   [
+    109,
+    116,
+    108,
+    115
+   ],
+   [
+    115,
+    121,
+    114,
+    120
+   ]
+  ],
+  "h": 240,
+  "lo": 96.36,
+  "hi": 123.64
+ },
+ {
+  "id": "swing-low",
+  "topic": "struktura",
+  "q": "Klepni na některý swing low: svíčku na dně, od kterého se cena otočila nahoru.",
+  "answer": [
+   3,
+   7
+  ],
+  "explain": "Swing low má po obou stranách svíčky s vyšším low. Druhé dno je výš než první, proto je to trend nahoru.",
+  "reveal": [
+   {
+    "t": "line",
+    "y": 102.5,
+    "x1": 3,
+    "x2": 7.4,
+    "c": "muted",
+    "dash": true
+   }
+  ],
+  "candles": [
+   [
+    100,
+    105,
+    99,
+    104
+   ],
+   [
+    104,
+    111,
+    103,
+    109
+   ],
+   [
+    109,
+    109.5,
+    105,
+    106
+   ],
+   [
+    106,
+    107,
+    102.5,
+    104
+   ],
+   [
+    104,
+    110,
+    103,
+    109
+   ],
+   [
+    109,
+    117,
+    108,
+    115
+   ],
+   [
+    115,
+    116,
+    111,
+    112
+   ],
+   [
+    112,
+    113,
+    107.5,
+    109
+   ],
+   [
+    109,
+    116,
+    108,
+    115
+   ],
+   [
+    115,
+    121,
+    114,
+    120
+   ]
+  ],
+  "h": 240,
+  "lo": 96.36,
+  "hi": 123.64
+ },
+ {
+  "id": "bos",
+  "topic": "bos-mss",
+  "q": "Která svíčka udělala BOS, tedy zavřela nad posledním vrcholem?",
+  "answer": [
+   5
+  ],
+  "explain": "BOS je zavření těla nad posledním vrcholem po směru trendu. Svíčky před ní zůstaly pod čarou.",
+  "reveal": [
+   {
+    "t": "line",
+    "y": 110.5,
+    "x1": -0.4,
+    "x2": 5.4,
+    "c": "amber",
+    "dash": false,
+    "label": "poslední vrchol",
+    "la": "start",
+    "lv": "above"
+   }
+  ],
+  "candles": [
+   [
+    100,
+    106,
+    99,
+    105
+   ],
+   [
+    105,
+    110.5,
+    104,
+    109
+   ],
+   [
+    109,
+    109.5,
+    105,
+    106
+   ],
+   [
+    106,
+    107,
+    103,
+    104
+   ],
+   [
+    104,
+    109,
+    103,
+    108
+   ],
+   [
+    108,
+    114,
+    107,
+    113
+   ],
+   [
+    113,
+    114,
+    110,
+    111
+   ],
+   [
+    111,
+    112,
+    107,
+    108
+   ],
+   [
+    108,
+    112.5,
+    107.5,
+    111
+   ],
+   [
+    111,
+    112,
+    105,
+    106
+   ],
+   [
+    106,
+    107,
+    101,
+    102
+   ]
+  ],
+  "h": 240,
+  "lo": 97.2,
+  "hi": 115.8
+ },
+ {
+  "id": "mss",
+  "topic": "bos-mss",
+  "q": "Která svíčka udělala MSS, tedy první zavření proti trendu?",
+  "answer": [
+   9
+  ],
+  "explain": "MSS je zavření pod posledním vyšším dnem. Je to první varování, že se trend nahoru láme.",
+  "reveal": [
+   {
+    "t": "line",
+    "y": 107,
+    "x1": 7,
+    "x2": 10.4,
+    "c": "bad",
+    "dash": false,
+    "label": "vyšší dno",
+    "la": "left"
+   }
+  ],
+  "candles": [
+   [
+    100,
+    106,
+    99,
+    105
+   ],
+   [
+    105,
+    110.5,
+    104,
+    109
+   ],
+   [
+    109,
+    109.5,
+    105,
+    106
+   ],
+   [
+    106,
+    107,
+    103,
+    104
+   ],
+   [
+    104,
+    109,
+    103,
+    108
+   ],
+   [
+    108,
+    114,
+    107,
+    113
+   ],
+   [
+    113,
+    114,
+    110,
+    111
+   ],
+   [
+    111,
+    112,
+    107,
+    108
+   ],
+   [
+    108,
+    112.5,
+    107.5,
+    111
+   ],
+   [
+    111,
+    112,
+    105,
+    106
+   ],
+   [
+    106,
+    107,
+    101,
+    102
+   ]
+  ],
+  "h": 240,
+  "lo": 97.2,
+  "hi": 115.8
+ },
+ {
+  "id": "sweep",
+  "topic": "likvidita",
+  "q": "Která svíčka udělala sweep, tedy vybrala stopy nad vrcholy a vrátila se?",
+  "answer": [
+   8
+  ],
+  "explain": "Knot vyletěl nad equal highs, ale svíčka zavřela zpátky pod úrovní. To je sweep, ne průraz.",
+  "reveal": [
+   {
+    "t": "line",
+    "y": 108,
+    "x1": 0.6,
+    "x2": 8.4,
+    "c": "amber",
+    "dash": true,
+    "label": "equal highs",
+    "la": "start",
+    "lv": "above"
+   }
+  ],
+  "candles": [
+   [
+    100,
+    105,
+    99,
+    104
+   ],
+   [
+    104,
+    108,
+    103,
+    107
+   ],
+   [
+    107,
+    108,
+    103,
+    104
+   ],
+   [
+    104,
+    105,
+    101,
+    102
+   ],
+   [
+    102,
+    106,
+    101,
+    105
+   ],
+   [
+    105,
+    108,
+    104,
+    107
+   ],
+   [
+    107,
+    108,
+    104,
+    105
+   ],
+   [
+    105,
+    108,
+    104,
+    107
+   ],
+   [
+    107,
+    111.5,
+    105,
+    106
+   ],
+   [
+    106,
+    107,
+    101,
+    102
+   ],
+   [
+    102,
+    103,
+    97,
+    98
+   ]
+  ],
+  "h": 240,
+  "lo": 95.26,
+  "hi": 113.24
+ },
+ {
+  "id": "fvg-up",
+  "topic": "fvg-up",
+  "q": "Klepni na svíčku, která po sobě nechala bullish FVG.",
+  "answer": [
+   3
+  ],
+  "explain": "FVG tvoří velká prostřední svíčka. Mezera leží mezi high svíčky před ní a low svíčky po ní.",
+  "reveal": [
+   {
+    "t": "box",
+    "x1": 3,
+    "x2": 9,
+    "y1": 103,
+    "y2": 108,
+    "c": "accent",
+    "label": "FVG",
+    "la": "end",
+    "lv": "top"
+   }
+  ],
+  "candles": [
+   [
+    100,
+    101,
+    98,
+    99
+   ],
+   [
+    99,
+    101,
+    98,
+    100
+   ],
+   [
+    100,
+    103,
+    99,
+    102
+   ],
+   [
+    102,
+    110,
+    101,
+    109
+   ],
+   [
+    109,
+    113,
+    108,
+    112
+   ],
+   [
+    112,
+    114,
+    111,
+    113
+   ],
+   [
+    113,
+    114,
+    109,
+    110
+   ],
+   [
+    110,
+    111,
+    105.5,
+    107
+   ],
+   [
+    107,
+    112,
+    106,
+    111
+   ],
+   [
+    111,
+    116,
+    110,
+    115
+   ]
+  ],
+  "h": 240,
+  "lo": 95.84,
+  "hi": 118.16
+ },
+ {
+  "id": "fvg-up-return",
+  "topic": "fvg-up",
+  "q": "Která svíčka se vrátila do středu mezery?",
+  "answer": [
+   7
+  ],
+  "explain": "Tahle svíčka sáhla knotem na 50 % mezery. Tam ICT hledá nákup.",
+  "reveal": [
+   {
+    "t": "box",
+    "x1": 3,
+    "x2": 9,
+    "y1": 103,
+    "y2": 108,
+    "c": "accent",
+    "label": "FVG",
+    "la": "end",
+    "lv": "top"
+   },
+   {
+    "t": "line",
+    "y": 105.5,
+    "x1": 3,
+    "x2": 9.4,
+    "c": "accent",
+    "dash": true,
+    "label": "50 %",
+    "la": "end",
+    "lv": "below"
+   }
+  ],
+  "candles": [
+   [
+    100,
+    101,
+    98,
+    99
+   ],
+   [
+    99,
+    101,
+    98,
+    100
+   ],
+   [
+    100,
+    103,
+    99,
+    102
+   ],
+   [
+    102,
+    110,
+    101,
+    109
+   ],
+   [
+    109,
+    113,
+    108,
+    112
+   ],
+   [
+    112,
+    114,
+    111,
+    113
+   ],
+   [
+    113,
+    114,
+    109,
+    110
+   ],
+   [
+    110,
+    111,
+    105.5,
+    107
+   ],
+   [
+    107,
+    112,
+    106,
+    111
+   ],
+   [
+    111,
+    116,
+    110,
+    115
+   ]
+  ],
+  "h": 240,
+  "lo": 95.84,
+  "hi": 118.16
+ },
+ {
+  "id": "fvg-down",
+  "topic": "fvg-down",
+  "q": "Klepni na svíčku, která po sobě nechala bearish FVG.",
+  "answer": [
+   3
+  ],
+  "explain": "Velká klesající svíčka uprostřed. Mezera leží mezi low svíčky před ní a high svíčky po ní.",
+  "reveal": [
+   {
+    "t": "box",
+    "x1": 3,
+    "x2": 9,
+    "y1": 112,
+    "y2": 117,
+    "c": "accent",
+    "label": "FVG",
+    "la": "end",
+    "lv": "bottom"
+   }
+  ],
+  "candles": [
+   [
+    120,
+    122,
+    119,
+    121
+   ],
+   [
+    121,
+    122,
+    119,
+    120
+   ],
+   [
+    120,
+    121,
+    117,
+    118
+   ],
+   [
+    118,
+    119,
+    110,
+    111
+   ],
+   [
+    111,
+    112,
+    107,
+    108
+   ],
+   [
+    108,
+    109,
+    106,
+    107
+   ],
+   [
+    107,
+    111,
+    106,
+    110
+   ],
+   [
+    110,
+    114.5,
+    109,
+    113
+   ],
+   [
+    113,
+    114,
+    108,
+    109
+   ],
+   [
+    109,
+    110,
+    104,
+    105
+   ]
+  ],
+  "h": 240,
+  "lo": 101.84,
+  "hi": 124.16
+ },
+ {
+  "id": "ifvg",
+  "topic": "ifvg",
+  "q": "Která svíčka zavřela tělem pod mezerou a udělala z ní inverzní FVG?",
+  "answer": [
+   6
+  ],
+  "explain": "Teprve zavření celého těla pod mezerou mění její roli. Svíčka před ní do mezery jen vešla.",
+  "reveal": [
+   {
+    "t": "box",
+    "x1": 2,
+    "x2": 11,
+    "y1": 104,
+    "y2": 109,
+    "c": "bad",
+    "label": "inverzní FVG",
+    "la": "end",
+    "lv": "above"
+   }
+  ],
+  "candles": [
+   [
+    100,
+    102,
+    99,
+    101
+   ],
+   [
+    101,
+    104,
+    100,
+    103
+   ],
+   [
+    103,
+    111,
+    102,
+    110
+   ],
+   [
+    110,
+    114,
+    109,
+    113
+   ],
+   [
+    113,
+    114,
+    110,
+    111
+   ],
+   [
+    111,
+    112,
+    105,
+    106
+   ],
+   [
+    106,
+    107,
+    99,
+    100
+   ],
+   [
+    100,
+    101,
+    97,
+    98
+   ],
+   [
+    98,
+    102,
+    97,
+    101
+   ],
+   [
+    101,
+    106.5,
+    100,
+    104
+   ],
+   [
+    104,
+    105,
+    99,
+    100
+   ],
+   [
+    100,
+    101,
+    94,
+    95
+   ]
+  ],
+  "h": 240,
+  "lo": 91.6,
+  "hi": 116.4
+ },
+ {
+  "id": "ob-up",
+  "topic": "ob-up",
+  "q": "Která svíčka je bullish order block?",
+  "answer": [
+   1
+  ],
+  "explain": "Bullish order block je poslední klesající svíčka před silným růstem.",
+  "reveal": [
+   {
+    "t": "box",
+    "x1": 1,
+    "x2": 9,
+    "y1": 99,
+    "y2": 104,
+    "c": "amber",
+    "label": "order block",
+    "la": "end",
+    "lv": "bottom"
+   }
+  ],
+  "candles": [
+   [
+    105,
+    106,
+    102,
+    103
+   ],
+   [
+    103,
+    104,
+    99,
+    100
+   ],
+   [
+    100,
+    107,
+    99,
+    106
+   ],
+   [
+    106,
+    112,
+    105,
+    111
+   ],
+   [
+    111,
+    114,
+    110,
+    113
+   ],
+   [
+    113,
+    114,
+    109,
+    110
+   ],
+   [
+    110,
+    111,
+    105,
+    106
+   ],
+   [
+    106,
+    107,
+    101.5,
+    103
+   ],
+   [
+    103,
+    109,
+    102,
+    108
+   ],
+   [
+    108,
+    114,
+    107,
+    113
+   ]
+  ],
+  "h": 240,
+  "lo": 97.2,
+  "hi": 115.8
+ },
+ {
+  "id": "ob-up-disp",
+  "topic": "ob-up",
+  "q": "Klepni na svíčku, která patří k displacementu, tedy k silnému pohybu nahoru.",
+  "answer": [
+   2,
+   3
+  ],
+  "explain": "Displacement jsou velké svíčky jedním směrem hned po order blocku. Bez něj by order block neměl váhu.",
+  "reveal": [
+   {
+    "t": "box",
+    "x1": 1,
+    "x2": 9,
+    "y1": 99,
+    "y2": 104,
+    "c": "amber",
+    "label": "order block",
+    "la": "end",
+    "lv": "bottom"
+   }
+  ],
+  "candles": [
+   [
+    105,
+    106,
+    102,
+    103
+   ],
+   [
+    103,
+    104,
+    99,
+    100
+   ],
+   [
+    100,
+    107,
+    99,
+    106
+   ],
+   [
+    106,
+    112,
+    105,
+    111
+   ],
+   [
+    111,
+    114,
+    110,
+    113
+   ],
+   [
+    113,
+    114,
+    109,
+    110
+   ],
+   [
+    110,
+    111,
+    105,
+    106
+   ],
+   [
+    106,
+    107,
+    101.5,
+    103
+   ],
+   [
+    103,
+    109,
+    102,
+    108
+   ],
+   [
+    108,
+    114,
+    107,
+    113
+   ]
+  ],
+  "h": 240,
+  "lo": 97.2,
+  "hi": 115.8
+ },
+ {
+  "id": "ob-down",
+  "topic": "ob-down",
+  "q": "Která svíčka je bearish order block?",
+  "answer": [
+   1
+  ],
+  "explain": "Bearish order block je poslední rostoucí svíčka před silným poklesem.",
+  "reveal": [
+   {
+    "t": "box",
+    "x1": 1,
+    "x2": 9,
+    "y1": 101,
+    "y2": 106,
+    "c": "amber",
+    "label": "order block",
+    "la": "end",
+    "lv": "top"
+   }
+  ],
+  "candles": [
+   [
+    100,
+    103,
+    99,
+    102
+   ],
+   [
+    102,
+    106,
+    101,
+    105
+   ],
+   [
+    105,
+    106,
+    98,
+    99
+   ],
+   [
+    99,
+    100,
+    93,
+    94
+   ],
+   [
+    94,
+    95,
+    91,
+    92
+   ],
+   [
+    92,
+    96,
+    91,
+    95
+   ],
+   [
+    95,
+    100,
+    94,
+    99
+   ],
+   [
+    99,
+    104,
+    98,
+    102
+   ],
+   [
+    102,
+    103,
+    96,
+    97
+   ],
+   [
+    97,
+    98,
+    91,
+    92
+   ]
+  ],
+  "h": 240,
+  "lo": 89.2,
+  "hi": 107.8
+ },
+ {
+  "id": "breaker",
+  "topic": "breaker",
+  "q": "Která svíčka zavřela nad order blockem a udělala z něj breaker?",
+  "answer": [
+   6
+  ],
+  "explain": "Order block selhal ve chvíli, kdy nad ním svíčka zavřela tělem. Od té doby funguje jako podpora.",
+  "reveal": [
+   {
+    "t": "box",
+    "x1": 1,
+    "x2": 11,
+    "y1": 101,
+    "y2": 106,
+    "c": "good",
+    "label": "breaker",
+    "la": "end",
+    "lv": "below"
+   }
+  ],
+  "candles": [
+   [
+    100,
+    103,
+    99,
+    102
+   ],
+   [
+    102,
+    106,
+    101,
+    105
+   ],
+   [
+    105,
+    106,
+    99,
+    100
+   ],
+   [
+    100,
+    101,
+    95,
+    96
+   ],
+   [
+    96,
+    99,
+    95,
+    98
+   ],
+   [
+    98,
+    105,
+    97,
+    104
+   ],
+   [
+    104,
+    111,
+    103,
+    110
+   ],
+   [
+    110,
+    113,
+    109,
+    112
+   ],
+   [
+    112,
+    113,
+    108,
+    109
+   ],
+   [
+    109,
+    110,
+    104,
+    105
+   ],
+   [
+    105,
+    110,
+    104,
+    109
+   ],
+   [
+    109,
+    115,
+    108,
+    114
+   ]
+  ],
+  "h": 240,
+  "lo": 92.6,
+  "hi": 117.4
+ },
+ {
+  "id": "cisd",
+  "topic": "cisd",
+  "q": "Která svíčka udělala CISD?",
+  "answer": [
+   7
+  ],
+  "explain": "CISD je zavření těla nad otevírací cenou poslední řady klesajících svíček. Svíčka před ní zavřela ještě pod čarou.",
+  "reveal": [
+   {
+    "t": "line",
+    "y": 104,
+    "x1": 4,
+    "x2": 9.4,
+    "c": "accent",
+    "dash": false,
+    "label": "open řady",
+    "la": "end",
+    "lv": "below"
+   }
+  ],
+  "candles": [
+   [
+    110,
+    111,
+    107,
+    108
+   ],
+   [
+    108,
+    109,
+    104,
+    105
+   ],
+   [
+    105,
+    106,
+    102,
+    103
+   ],
+   [
+    103,
+    107.5,
+    102,
+    104
+   ],
+   [
+    104,
+    105,
+    100,
+    101
+   ],
+   [
+    101,
+    102,
+    98,
+    99
+   ],
+   [
+    99,
+    103,
+    98,
+    102
+   ],
+   [
+    102,
+    107,
+    101,
+    106
+   ],
+   [
+    106,
+    110,
+    105,
+    109
+   ],
+   null
+  ],
+  "h": 240,
+  "lo": 96.44,
+  "hi": 112.56
+ },
+ {
+  "id": "ir",
+  "topic": "immediate-rebalance",
+  "q": "Která svíčka srovnala nerovnováhu hned, takže žádný FVG nevznikl?",
+  "answer": [
+   3
+  ],
+  "explain": "Její knot se vrátil přesně k high svíčky před velkým pohybem. Tomu se říká immediate rebalance.",
+  "reveal": [
+   {
+    "t": "line",
+    "y": 103,
+    "x1": 1,
+    "x2": 6.4,
+    "c": "accent",
+    "dash": false,
+    "label": "high 1. svíčky",
+    "la": "end",
+    "lv": "below"
+   }
+  ],
+  "candles": [
+   [
+    100,
+    102,
+    99,
+    101
+   ],
+   [
+    101,
+    103,
+    100,
+    102
+   ],
+   [
+    102,
+    109,
+    101,
+    108
+   ],
+   [
+    108,
+    112,
+    103,
+    111
+   ],
+   [
+    111,
+    115,
+    110,
+    114
+   ],
+   [
+    114,
+    117,
+    113,
+    116
+   ],
+   null
+  ],
+  "h": 240,
+  "lo": 96.84,
+  "hi": 119.16
+ },
+ {
+  "id": "model-sweep",
+  "topic": "dohromady",
+  "q": "V celém setupu najdi svíčku, která vybrala likviditu.",
+  "answer": [
+   5
+  ],
+  "explain": "Knot nad posledním vrcholem vybral stopy a svíčka zavřela zpátky. Tím setup začíná.",
+  "reveal": [
+   {
+    "t": "line",
+    "y": 117,
+    "x1": 0.6,
+    "x2": 5.4,
+    "c": "amber",
+    "dash": false,
+    "label": "likvidita",
+    "la": "start",
+    "lv": "above"
+   }
+  ],
+  "candles": [
+   [
+    110,
+    114,
+    109,
+    113
+   ],
+   [
+    113,
+    117,
+    112,
+    116
+   ],
+   [
+    116,
+    117,
+    113,
+    114
+   ],
+   [
+    114,
+    115,
+    111,
+    112
+   ],
+   [
+    112,
+    116,
+    111,
+    115
+   ],
+   [
+    115,
+    119,
+    114,
+    116
+   ],
+   [
+    116,
+    117,
+    112,
+    113
+   ],
+   [
+    113,
+    114,
+    106,
+    107
+   ],
+   [
+    107,
+    108,
+    103,
+    104
+   ],
+   [
+    104,
+    107,
+    103,
+    106
+   ],
+   [
+    106,
+    110,
+    105,
+    109
+   ],
+   [
+    109,
+    110,
+    104,
+    105
+   ],
+   [
+    105,
+    106,
+    100,
+    101
+   ],
+   [
+    101,
+    102,
+    97,
+    98
+   ]
+  ],
+  "h": 260,
+  "lo": 94.36,
+  "hi": 121.64
+ },
+ {
+  "id": "model-mss",
+  "topic": "dohromady",
+  "q": "A která svíčka potvrdila změnu struktury (MSS)?",
+  "answer": [
+   7
+  ],
+  "explain": "Velká svíčka zavřela pod posledním dnem. Po sweepu je to druhý krok setupu.",
+  "reveal": [
+   {
+    "t": "line",
+    "y": 111,
+    "x1": 3,
+    "x2": 7.4,
+    "c": "muted",
+    "dash": false,
+    "label": "MSS",
+    "la": "left"
+   },
+   {
+    "t": "box",
+    "x1": 7,
+    "x2": 12,
+    "y1": 108,
+    "y2": 112,
+    "c": "accent",
+    "label": "FVG",
+    "la": "end",
+    "lv": "above"
+   }
+  ],
+  "candles": [
+   [
+    110,
+    114,
+    109,
+    113
+   ],
+   [
+    113,
+    117,
+    112,
+    116
+   ],
+   [
+    116,
+    117,
+    113,
+    114
+   ],
+   [
+    114,
+    115,
+    111,
+    112
+   ],
+   [
+    112,
+    116,
+    111,
+    115
+   ],
+   [
+    115,
+    119,
+    114,
+    116
+   ],
+   [
+    116,
+    117,
+    112,
+    113
+   ],
+   [
+    113,
+    114,
+    106,
+    107
+   ],
+   [
+    107,
+    108,
+    103,
+    104
+   ],
+   [
+    104,
+    107,
+    103,
+    106
+   ],
+   [
+    106,
+    110,
+    105,
+    109
+   ],
+   [
+    109,
+    110,
+    104,
+    105
+   ],
+   [
+    105,
+    106,
+    100,
+    101
+   ],
+   [
+    101,
+    102,
+    97,
+    98
+   ]
+  ],
+  "h": 260,
+  "lo": 94.36,
+  "hi": 121.64
+ }
+]

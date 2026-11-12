@@ -1,10 +1,10 @@
 {
- "name": "ICT Lab",
- "short_name": "ICT Lab",
+ "name": "Knot",
+ "short_name": "Knot",
  "start_url": "./",
  "display": "standalone",
- "background_color": "#0f171c",
- "theme_color": "#0b6b7d",
+ "background_color": "#09090b",
+ "theme_color": "#09090b",
  "icons": [
   {
    "src": "icon.svg",
