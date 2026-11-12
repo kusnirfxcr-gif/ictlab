@@ -1,0 +1,23 @@
+[
+ {"id": "backtest", "term": "Backtest", "en": "backtest", "week": 11, "def": "Ověření pravidel na historických datech. Bez něj se neví, jestli model něco vydělává."},
+ {"id": "bod", "term": "Bod", "en": "point", "week": 1, "def": "Jednotka ceny futures. Jeden bod jsou čtyři ticky."},
+ {"id": "cash-open", "term": "Cash open", "en": "cash open", "week": 1, "def": "Otevření americké akciové burzy v 9:30 newyorského času. Od té chvíle bývá na NQ a ES nejvíc pohybu a objemu."},
+ {"id": "displacement", "term": "Displacement", "en": "displacement", "week": 5, "def": "Rychlý, silný pohyb jedním směrem s velkými těly svíček."},
+ {"id": "es", "term": "ES", "en": "E-mini S&P 500", "week": 1, "def": "Futures na index S&P 500. Bod má hodnotu 50 USD. Menší verze je MES s bodem za 5 USD."},
+ {"id": "futures", "term": "Futures", "en": "futures", "week": 1, "def": "Smlouva, jejíž cena kopíruje nějaký trh, třeba akciový index. Obchoduje se na burze téměř celý den."},
+ {"id": "fvg", "term": "FVG", "en": "fair value gap", "week": 5, "def": "Mezera mezi knotem první a třetí svíčky ve třísvíčkovém pohybu. ICT ji bere jako zónu, kam se cena může vrátit."},
+ {"id": "likvidita", "term": "Likvidita", "en": "liquidity", "week": 4, "def": "Místa, kde čeká hodně příkazů, hlavně stop-lossů. Typicky nad starými vrcholy a pod starými dny."},
+ {"id": "mss", "term": "MSS", "en": "market structure shift", "week": 3, "def": "Změna struktury trhu. Svíčka zavře za posledním swingem proti dosavadnímu směru."},
+ {"id": "newyorsky-cas", "term": "Newyorský čas", "en": "New York time (ET)", "week": 1, "def": "Časové pásmo, ve kterém se uvádějí všechny časy v ICT. Proti Česku je většinou o šest hodin pozadu, pár týdnů v roce o pět."},
+ {"id": "nq", "term": "NQ", "en": "E-mini Nasdaq 100", "week": 1, "def": "Futures na index Nasdaq 100. Bod má hodnotu 20 USD. Menší verze je MNQ s bodem za 2 USD."},
+ {"id": "ohlc", "term": "OHLC", "en": "open, high, low, close", "week": 1, "def": "Čtyři ceny svíčky: otevírací, nejvyšší, nejnižší a zavírací."},
+ {"id": "overnight", "term": "Overnight", "en": "overnight session", "week": 1, "def": "Noční obchodování futures od 18:00 do 9:30 newyorského času. Jeho nejvyšší a nejnižší cena se jmenují overnight high a overnight low."},
+ {"id": "r", "term": "R", "en": "risk unit", "week": 10, "def": "Velikost rizika na jeden obchod. Zisk 2R znamená dvojnásobek toho, co bylo v sázce."},
+ {"id": "seance", "term": "Seance", "en": "session", "week": 1, "def": "Část dne, kdy obchoduje určitá část světa: Asie, Londýn, New York. Nejvíc pohybu na NQ a ES bývá po 9:30 newyorského času."},
+ {"id": "stop", "term": "Stop-loss", "en": "stop-loss", "week": 9, "def": "Příkaz, který obchod sám zavře při určené ztrátě. V modelu leží za extrémem sweepu."},
+ {"id": "svicka", "term": "Svíčka", "en": "candle", "week": 1, "def": "Obrázek jednoho úseku času na grafu. Ukazuje open, high, low a close."},
+ {"id": "sweep", "term": "Sweep", "en": "liquidity sweep", "week": 4, "def": "Cena krátce prorazí vrchol nebo dno, vybere příkazy za ním a vrátí se zpět."},
+ {"id": "swing", "term": "Swing high a swing low", "en": "swing high / swing low", "week": 2, "def": "Místní vrchol nebo dno na grafu. Svíčka, která má vyšší high (nebo nižší low) než sousední svíčky po obou stranách."},
+ {"id": "tick", "term": "Tick", "en": "tick", "week": 1, "def": "Nejmenší krok, o který se cena může pohnout. Na NQ a ES je to 0,25 bodu."},
+ {"id": "timeframe", "term": "Timeframe", "en": "timeframe", "week": 1, "def": "Délka času, kterou pokrývá jedna svíčka, například 1m, 5m nebo 15m."}
+]

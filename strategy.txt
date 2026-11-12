@@ -1,0 +1,222 @@
+//@version=6
+// ICT Lab – Sweep → MSS → FVG scalper, verze 1.0
+// Trh: NQ / ES (i MNQ / MES), graf 1m (lze 2m–5m). Časy jsou v newyorském čase.
+// Neověřeno backtestem – nejdřív otestuj ve Strategy Testeru a na demo účtu.
+strategy("ICT Lab Sweep-MSS-FVG v1.0", overlay = true, initial_capital = 50000,
+     default_qty_type = strategy.fixed, default_qty_value = 2,
+     commission_type = strategy.commission.cash_per_contract, commission_value = 2.0,
+     slippage = 1, calc_on_every_tick = false, process_orders_on_close = false)
+
+// ───── Nastavení ─────
+TZ = "America/New_York"
+tradeSess    = input.session("0930-1100", "Okno pro vstupy (NY čas)", group = "Čas")
+onSess       = input.session("1800-0930", "Overnight range (NY čas)", group = "Čas")
+flatSess     = input.session("1155-1200", "Zavřít vše (NY čas)", group = "Čas")
+
+usePD        = input.bool(true, "Likvidita: high/low předchozího dne", group = "Likvidita")
+useON        = input.bool(true, "Likvidita: overnight high/low", group = "Likvidita")
+useBias      = input.bool(true, "Filtr midnight open (short jen nad, long jen pod)", group = "Likvidita")
+
+pivLen       = input.int(2, "Délka swingu pro MSS", minval = 1, group = "Setup")
+setupBars    = input.int(20, "Max. svíček od sweepu po MSS + FVG", minval = 3, group = "Setup")
+minFvgTicks  = input.int(4, "Min. velikost FVG (ticky)", minval = 1, group = "Setup")
+entryMode    = input.string("CE (50 %)", "Vstup do FVG", options = ["Okraj FVG", "CE (50 %)"], group = "Setup")
+orderBars    = input.int(10, "Platnost limitky (svíčky)", minval = 1, group = "Setup")
+
+rr           = input.float(2.0, "Cílové RR", minval = 0.5, step = 0.25, group = "Řízení obchodu")
+tp1R         = input.float(1.0, "Částečný výběr na (R)", minval = 0.25, step = 0.25, group = "Řízení obchodu")
+tp1Pct       = input.int(50, "Částečný výběr (% pozice, 0 = vypnuto)", minval = 0, maxval = 90, group = "Řízení obchodu")
+useBE        = input.bool(true, "Po dosažení TP1 posunout stop na vstup", group = "Řízení obchodu")
+stopBufTicks = input.int(4, "Rezerva stopu za sweepem (ticky)", minval = 0, group = "Řízení obchodu")
+maxStopPts   = input.float(40.0, "Max. stop v bodech (0 = bez limitu)", minval = 0, group = "Řízení obchodu")
+maxTrades    = input.int(1, "Max. obchodů za den", minval = 1, group = "Řízení obchodu")
+
+// ───── Čas a úrovně likvidity ─────
+inSess(string s) => not na(time(timeframe.period, s, TZ))
+inTrade = inSess(tradeSess)
+inON    = inSess(onSess)
+inFlat  = inSess(flatSess)
+
+[pdh, pdl] = request.security(syminfo.tickerid, "D", [high[1], low[1]], lookahead = barmerge.lookahead_on)
+
+var float onH = na
+var float onL = na
+if inON and not inON[1]
+    onH := high
+    onL := low
+else if inON
+    onH := math.max(onH, high)
+    onL := math.min(onL, low)
+
+var float midOpen = na
+if dayofmonth(time, TZ) != dayofmonth(time[1], TZ)
+    midOpen := open
+
+// ───── Swingy pro MSS ─────
+ph = ta.pivothigh(pivLen, pivLen)
+pl = ta.pivotlow(pivLen, pivLen)
+var float lastPH = na
+var float lastPL = na
+if not na(ph)
+    lastPH := ph
+if not na(pl)
+    lastPL := pl
+
+// ───── Stav ─────
+var int   dir        = 0      // -1 = po sweepu highs hledáme short, 1 = po sweepu lows hledáme long
+var float sweepExt   = na
+var int   sweepBar   = na
+var float mssLvl     = na
+var bool  mssDone    = false
+var float fvgTop     = na
+var float fvgBot     = na
+var bool  pdhUsed    = false
+var bool  pdlUsed    = false
+var bool  onhUsed    = false
+var bool  onlUsed    = false
+var int   tradesToday = 0
+var bool  pending    = false
+var int   orderDir   = 0
+var int   orderBar   = na
+var float entryPx    = na
+var float curStop    = na
+var float tp1Px      = na
+var float tp2Px      = na
+
+tick   = syminfo.mintick
+buf    = stopBufTicks * tick
+minFvg = minFvgTicks * tick
+
+// Nový den = začátek okna pro vstupy
+if inTrade and not inTrade[1]
+    dir := 0
+    pdhUsed := false
+    pdlUsed := false
+    onhUsed := false
+    onlUsed := false
+    tradesToday := 0
+
+// ───── 1) Sweep likvidity ─────
+bool sweepHigh = false
+bool sweepLow  = false
+if inTrade and strategy.position_size == 0 and not pending and tradesToday < maxTrades
+    if usePD and not pdhUsed and not na(pdh) and high > pdh and close[1] <= pdh
+        sweepHigh := true
+        pdhUsed := true
+    if useON and not onhUsed and not na(onH) and high > onH and close[1] <= onH
+        sweepHigh := true
+        onhUsed := true
+    if usePD and not pdlUsed and not na(pdl) and low < pdl and close[1] >= pdl
+        sweepLow := true
+        pdlUsed := true
+    if useON and not onlUsed and not na(onL) and low < onL and close[1] >= onL
+        sweepLow := true
+        onlUsed := true
+
+shortOK = not useBias or na(midOpen) or high > midOpen
+longOK  = not useBias or na(midOpen) or low < midOpen
+
+if sweepHigh and shortOK
+    dir := -1
+    sweepExt := high
+    sweepBar := bar_index
+    mssLvl := lastPL
+    mssDone := false
+    fvgTop := na
+    fvgBot := na
+else if sweepLow and longOK
+    dir := 1
+    sweepExt := low
+    sweepBar := bar_index
+    mssLvl := lastPH
+    mssDone := false
+    fvgTop := na
+    fvgBot := na
+
+// ───── 2) MSS + 3) FVG + 4) limitní vstup ─────
+if dir == -1
+    sweepExt := math.max(sweepExt, high)
+    if not na(mssLvl) and close < mssLvl
+        mssDone := true
+    if bar_index - sweepBar >= 1 and low[2] > high and low[2] - high >= minFvg
+        fvgTop := low[2]
+        fvgBot := high
+    if bar_index - sweepBar > setupBars or not inTrade
+        dir := 0
+    else if mssDone and not na(fvgTop)
+        e = math.round_to_mintick(entryMode == "Okraj FVG" ? fvgBot : (fvgTop + fvgBot) / 2)
+        s = math.round_to_mintick(sweepExt + buf)
+        r = s - e
+        if close < e and r > 0 and (maxStopPts == 0 or r <= maxStopPts)
+            strategy.entry("S", strategy.short, limit = e)
+            entryPx := e
+            curStop := s
+            tp1Px := math.round_to_mintick(e - tp1R * r)
+            tp2Px := math.round_to_mintick(e - rr * r)
+            orderBar := bar_index
+            orderDir := -1
+            pending := true
+        dir := 0
+else if dir == 1
+    sweepExt := math.min(sweepExt, low)
+    if not na(mssLvl) and close > mssLvl
+        mssDone := true
+    if bar_index - sweepBar >= 1 and high[2] < low and low - high[2] >= minFvg
+        fvgTop := low
+        fvgBot := high[2]
+    if bar_index - sweepBar > setupBars or not inTrade
+        dir := 0
+    else if mssDone and not na(fvgTop)
+        e = math.round_to_mintick(entryMode == "Okraj FVG" ? fvgTop : (fvgTop + fvgBot) / 2)
+        s = math.round_to_mintick(sweepExt - buf)
+        r = e - s
+        if close > e and r > 0 and (maxStopPts == 0 or r <= maxStopPts)
+            strategy.entry("L", strategy.long, limit = e)
+            entryPx := e
+            curStop := s
+            tp1Px := math.round_to_mintick(e + tp1R * r)
+            tp2Px := math.round_to_mintick(e + rr * r)
+            orderBar := bar_index
+            orderDir := 1
+            pending := true
+        dir := 0
+
+// ───── Správa čekající limitky ─────
+if pending
+    filled = strategy.position_size != 0 or strategy.closedtrades != strategy.closedtrades[1]
+    if filled
+        pending := false
+        tradesToday += 1
+    else if bar_index - orderBar > orderBars or not inTrade
+        strategy.cancel("S")
+        strategy.cancel("L")
+        pending := false
+
+// ───── 5) Stop, částečný výběr, cíl ─────
+if useBE and strategy.position_size < 0 and low <= tp1Px
+    curStop := math.min(curStop, entryPx)
+if useBE and strategy.position_size > 0 and high >= tp1Px
+    curStop := math.max(curStop, entryPx)
+
+if pending or strategy.position_size != 0
+    id = orderDir == -1 ? "S" : "L"
+    if tp1Pct > 0
+        strategy.exit(id + "-TP1", id, qty_percent = tp1Pct, limit = tp1Px, stop = curStop)
+    strategy.exit(id + "-TP2", id, limit = tp2Px, stop = curStop)
+
+// ───── Časový výstup ─────
+if inFlat
+    strategy.cancel_all()
+    strategy.close_all(comment = "Čas")
+    pending := false
+    dir := 0
+
+// ───── Vykreslení ─────
+bgcolor(inTrade ? color.new(color.blue, 93) : na, title = "Okno pro vstupy")
+plot(usePD ? pdh : na, "PDH", color.new(color.red, 30), style = plot.style_linebr)
+plot(usePD ? pdl : na, "PDL", color.new(color.green, 30), style = plot.style_linebr)
+plot(useON and not inON ? onH : na, "Overnight high", color.new(color.orange, 30), style = plot.style_linebr)
+plot(useON and not inON ? onL : na, "Overnight low", color.new(color.teal, 30), style = plot.style_linebr)
+plot(useBias ? midOpen : na, "Midnight open", color.new(color.gray, 40), style = plot.style_circles)
+plotshape(sweepHigh and shortOK, "Sweep highs", shape.triangledown, location.abovebar, color.red, size = size.tiny)
+plotshape(sweepLow and longOK, "Sweep lows", shape.triangleup, location.belowbar, color.green, size = size.tiny)

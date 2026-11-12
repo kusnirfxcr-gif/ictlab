@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b6b7d">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="ICT Lab">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<title>ICT Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@87.5,600;87.5,700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Layout: one narrow column, status strip on top, four hash views below a tab bar. */
+:root{
+  --bg:#eef0ec; --surface:#fbfcfa; --ink:#16222b; --muted:#5b6870; --line:#d5dad4;
+  --accent:#0b6b7d; --accent-soft:#dcecef; --amber:#a8620a; --good:#1f7a4d; --bad:#b23b3b;
+  --display:"Archivo","Arial Narrow",Arial,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f171c; --surface:#162128; --ink:#e4eaec; --muted:#93a1a8; --line:#27353d;
+    --accent:#56bdd0; --accent-soft:#17323a; --amber:#e0a04a; --good:#5cc08e; --bad:#e58080;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f171c; --surface:#162128; --ink:#e4eaec; --muted:#93a1a8; --line:#27353d;
+  --accent:#56bdd0; --accent-soft:#17323a; --amber:#e0a04a; --good:#5cc08e; --bad:#e58080;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5}
+.wrap{max-width:760px;margin:0 auto;padding:20px 16px 56px;display:flex;flex-direction:column;gap:18px}
+h1,h2,h3{font-family:var(--display);font-stretch:87.5%;margin:0;text-wrap:balance;letter-spacing:.01em}
+h1{font-size:30px;font-weight:700}
+h2{font-size:20px;font-weight:700}
+h3{font-size:16px;font-weight:600}
+p{margin:0}
+.muted{color:var(--muted)}
+.small{font-size:13.5px}
+header.top{display:flex;flex-direction:column;gap:4px}
+.strip{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);border-radius:10px;background:var(--surface);overflow:hidden}
+.strip div{padding:10px 12px;display:flex;flex-direction:column;gap:2px;border-left:1px solid var(--line);min-width:0}
+.strip div:first-child{border-left:0}
+.strip span{font-size:12px;color:var(--muted)}
+.strip b{font-family:var(--mono);font-weight:500;font-size:15px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+nav{display:flex;gap:6px;flex-wrap:wrap}
+nav a{padding:8px 13px;border-radius:999px;border:1px solid var(--line);color:var(--ink);text-decoration:none;font-size:14.5px;font-weight:500;background:var(--surface)}
+nav a[aria-current="page"]{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+section.view{display:none;flex-direction:column;gap:16px}
+section.view.on{display:flex}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.pill{display:inline-block;font-size:12.5px;font-weight:600;padding:3px 9px;border-radius:999px;border:1px solid currentColor;white-space:nowrap}
+.pill.warn{color:var(--amber)} .pill.good{color:var(--good)} .pill.bad{color:var(--bad)} .pill.info{color:var(--accent)}
+ol.steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;counter-reset:s}
+ol.steps li{counter-increment:s;display:grid;grid-template-columns:30px 1fr;gap:10px}
+ol.steps li::before{content:counter(s);font-family:var(--mono);font-size:13px;width:28px;height:28px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center}
+.tablebox{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14.5px}
+th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12px;color:var(--muted);font-weight:500}
+td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.list{display:flex;flex-direction:column;gap:10px}
+.item{border-left:3px solid var(--accent);padding:2px 0 2px 12px;display:flex;flex-direction:column;gap:3px}
+.item.gems{border-color:var(--amber)} .item.architekt{border-color:var(--good)}
+.item a{color:var(--accent);overflow-wrap:anywhere}
+.meta{font-size:12.5px;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+button{font:inherit;cursor:pointer;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:8px 13px;font-weight:500}
+button.primary{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+button.chip{border-radius:999px;padding:5px 11px;font-size:13.5px}
+button.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+pre{margin:0;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:12px;font-family:var(--mono);font-size:12.5px;line-height:1.45;overflow:auto;max-height:420px;white-space:pre}
+form{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+label{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--muted)}
+label.wide{grid-column:1/-1}
+input,textarea{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px;width:100%}
+.note{font-size:13.5px;border:1px dashed var(--line);border-radius:8px;padding:10px 12px;color:var(--muted)}
+#banner{display:none;border:1px solid var(--amber);color:var(--amber);border-radius:8px;padding:10px 12px;font-size:14px}
+.bar{height:8px;border-radius:999px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--accent);border-radius:999px}
+.phase{font-family:var(--display);font-size:13px;font-weight:600;color:var(--amber);letter-spacing:.06em;text-transform:uppercase;margin-top:6px}
+details.week{background:var(--surface);border:1px solid var(--line);border-radius:12px}
+details.week>summary{cursor:pointer;padding:14px 16px;display:flex;gap:10px;align-items:baseline;justify-content:space-between;list-style:none}
+details.week>summary::-webkit-details-marker{display:none}
+details.week>summary h3{font-size:17px}
+details.week>summary .cnt{font-family:var(--mono);font-size:13px;color:var(--muted);white-space:nowrap}
+details.week.done>summary .cnt{color:var(--good)}
+.weekbody{padding:0 16px 16px;display:flex;flex-direction:column;gap:14px}
+.lesson{display:grid;grid-template-columns:24px 1fr;gap:10px;align-items:start}
+.lesson input{width:20px;height:20px;margin:3px 0 0;accent-color:var(--accent);padding:0}
+.lesson label{display:block;color:var(--ink);font-size:15px;gap:0}
+.lesson label b{display:block;font-weight:600}
+.lesson.on label span{color:var(--muted)}
+.box{border-radius:8px;padding:10px 12px;background:var(--accent-soft);font-size:14.5px;display:flex;flex-direction:column;gap:4px}
+.box b{font-size:12.5px;color:var(--accent);letter-spacing:.04em;text-transform:uppercase}
+details.ans summary{cursor:pointer;color:var(--accent);font-size:14px;font-weight:500}
+
+.strip.four{grid-template-columns:repeat(3,1fr)}
+select{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px;width:100%;min-width:0}
+.lesson-body{display:flex;flex-direction:column;gap:12px;max-width:65ch}
+.lesson-body p{font-size:16px}
+.quiz{display:flex;flex-direction:column;gap:16px;border-top:1px solid var(--line);padding-top:14px}
+.q{display:flex;flex-direction:column;gap:8px}
+.opts{display:flex;flex-direction:column;gap:6px}
+button.opt{text-align:left;font-weight:400;background:var(--bg)}
+button.opt:disabled{cursor:default;opacity:1;color:var(--ink)}
+button.opt.ok{border-color:var(--good);box-shadow:inset 3px 0 0 var(--good)}
+button.opt.no{border-color:var(--bad);box-shadow:inset 3px 0 0 var(--bad)}
+.verdict{font-size:14px}
+.verdict.ok{color:var(--good)} .verdict.no{color:var(--bad)}
+.chat{display:flex;flex-direction:column;gap:8px}
+.msg{border-radius:10px;padding:9px 12px;font-size:15px;white-space:pre-wrap;overflow-wrap:anywhere;max-width:92%}
+.msg.me{align-self:flex-end;background:var(--accent-soft)}
+.msg.ai{align-self:flex-start;background:var(--bg);border:1px solid var(--line)}
+.askrow{display:flex;gap:8px;align-items:flex-end}
+.askrow textarea{flex:1;min-width:0;resize:vertical}
+dl.gl{margin:0;display:flex;flex-direction:column;gap:10px}
+dl.gl div{display:flex;flex-direction:column;gap:2px;border-bottom:1px solid var(--line);padding-bottom:10px}
+dl.gl dt{font-weight:600}
+dl.gl dt span{font-family:var(--mono);font-size:12.5px;color:var(--muted);font-weight:400;margin-left:6px}
+dl.gl dd{margin:0;font-size:14.5px;color:var(--muted)}
+.card a{color:var(--accent)}
+
+figure.fig{margin:0;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 10px 8px;display:flex;flex-direction:column;gap:6px;align-items:center}
+.fig svg{display:block;width:100%;max-width:520px;height:auto}
+.fig figcaption{font-size:13.5px;color:var(--muted);max-width:520px;width:100%}
+.fig text{font-family:var(--body);font-size:11px;fill:var(--ink)}
+.fig text.big{font-size:18px;font-weight:600}
+.fig .up{fill:var(--good);stroke:var(--good)} .fig .dn{fill:var(--bad);stroke:var(--bad)}
+.fig .ln{fill:none;stroke-width:1.3} .fig .ln.dash{stroke-dasharray:4 3}
+.fig .z{fill-opacity:.16;stroke-width:1}
+.fig .s-accent{stroke:var(--accent)} .fig .s-amber{stroke:var(--amber)} .fig .s-good{stroke:var(--good)} .fig .s-bad{stroke:var(--bad)} .fig .s-muted{stroke:var(--muted)}
+.fig .f-accent{fill:var(--accent)} .fig .f-amber{fill:var(--amber)} .fig .f-good{fill:var(--good)} .fig .f-bad{fill:var(--bad)} .fig .f-muted{fill:var(--muted)}
+@media (max-width:420px){form{grid-template-columns:1fr} h1{font-size:26px}}
+#ask-card{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <h1>ICT Lab</h1>
+    <p class="muted">Boti denně studují ICT obsah a kanál ICT Gems, zpřesňují scalpingový model pro NQ a ES a připravují lekce pro Lauru.</p>
+  </header>
+
+  <div class="strip" aria-label="Stav">
+    <div><span>Verze modelu</span><b id="s-ver">…</b></div>
+    <div><span>Poslední běh botů</span><b id="s-run">…</b></div>
+    <div><span>Poznatků</span><b id="s-cnt">…</b></div>
+  </div>
+
+  <div id="banner" role="status"></div>
+
+  <nav aria-label="Sekce">
+    <a href="#model" data-v="model">Model</a>
+    <a href="#poznatky" data-v="poznatky">Poznatky</a>
+    <a href="#strategie" data-v="strategie">Pine Script</a>
+    <a href="#backtest" data-v="backtest">Backtest</a>
+    <a href="#room" data-v="room">Dictator's Room</a>
+    <a href="#laura" data-v="laura">Laura</a>
+  </nav>
+
+  <section class="view" id="v-model">
+    <div class="card">
+      <div class="row"><h2 id="m-name">Aktuální model</h2><span class="pill warn" id="m-status">Načítám</span></div>
+      <p id="m-summary" class="muted">Načítám model…</p>
+      <ol class="steps" id="m-rules"></ol>
+    </div>
+    <div class="card">
+      <h2>Parametry</h2>
+      <div class="tablebox"><table><thead><tr><th>Parametr</th><th>Hodnota</th><th>Proč</th></tr></thead><tbody id="m-params"></tbody></table></div>
+    </div>
+    <div class="card">
+      <h2>Boti</h2>
+      <div class="list" id="bots"></div>
+    </div>
+    <div class="card">
+      <h2>Historie verzí</h2>
+      <div class="list" id="versions"></div>
+    </div>
+  </section>
+
+  <section class="view" id="v-poznatky">
+    <div class="chips" id="filters">
+      <button class="chip" data-f="all" aria-pressed="true">Vše</button>
+      <button class="chip" data-f="skaut" aria-pressed="false">Skaut</button>
+      <button class="chip" data-f="gems" aria-pressed="false">Gems</button>
+      <button class="chip" data-f="architekt" aria-pressed="false">Architekt</button>
+    </div>
+    <div class="card"><div class="list" id="insights"></div></div>
+  </section>
+
+  <section class="view" id="v-strategie">
+    <div class="card">
+      <div class="row"><h2>Strategie pro TradingView</h2><button class="primary" id="copy">Zkopírovat kód</button></div>
+      <p class="small muted" id="p-ver"></p>
+      <pre id="pine">Načítám kód…</pre>
+      <div class="note">Postup: TradingView → Pine Editor → vlož kód → Add to chart na 1m grafu NQ1! nebo ES1! → záložka Strategy Tester. Výsledky pak zapiš v sekci Backtest, boti je použijí při ladění.</div>
+    </div>
+  </section>
+
+  <section class="view" id="v-backtest">
+    <div class="card">
+      <h2>Jak sem přibývají výsledky</h2>
+      <p class="small muted">Backtest běží na tvém počítači v programu ictlab_backtest.py. Soubor analyza.txt nebo vysledky.json pošli Claudovi v chatu, ten čísla zapíše sem a boti je použijí při ladění modelu.</p>
+    </div>
+    <div class="card">
+      <h2>Uložené výsledky</h2>
+      <div class="tablebox"><table><thead><tr><th>Verze</th><th>Symbol</th><th>Období</th><th>Obchodů</th><th>Winrate</th><th>PF</th><th>DD</th></tr></thead><tbody id="bt-rows"></tbody></table></div>
+      <p class="small muted" id="bt-empty">Zatím žádný backtest. Dokud tu nejsou čísla, winrate modelu není známý.</p>
+    </div>
+  </section>
+
+  <section class="view" id="v-room">
+    <div class="card">
+      <h2>Dictator's Room</h2>
+      <p id="c-intro" class="muted">Načítám kurz…</p>
+      <p class="small muted">Obrázky u jednotlivých týdnů jsou zjednodušená schémata nakreslená pro tento kurz, ne skutečné grafy.</p>
+      <div class="row"><span class="small" id="c-count">0 z 0 lekcí</span><span class="small muted" id="c-save"></span></div>
+      <div class="bar" aria-hidden="true"><i id="c-bar"></i></div>
+    </div>
+    <div class="card">
+      <h2>Pojmy z poznatků</h2>
+      <p class="small muted">Každý poznatek botů patří k jednomu pojmu. Tady je pojem vysvětlený od začátku, s obrázkem, a pod ním stručně, co k němu boti našli.</p>
+      <div class="list" id="k-list"><p class="small muted">Načítám pojmy…</p></div>
+    </div>
+    <div class="list" id="c-weeks"></div>
+  </section>
+
+
+  <section class="view" id="v-laura">
+    <div class="card">
+      <h2>Lauřin prostor</h2>
+      <p class="muted">Každý den jedna krátká lekce od bota Učitele, kvíz a slovníček pojmů. Dvanáctitýdenní kurz s úkoly najdeš v sekci <a href="#room">Dictator's Room</a>.</p>
+      <div class="strip four" aria-label="Postup">
+        <div><span>Přečtené lekce</span><b id="l-read">…</b></div>
+        <div><span>Hotové kvízy</span><b id="l-quiz">…</b></div>
+        <div><span>Úspěšnost v kvízech</span><b id="l-rate">…</b></div>
+      </div>
+      <span class="small muted" id="l-save"></span>
+    </div>
+
+    <div class="card">
+      <div class="row"><h2>Denní lekce</h2></div>
+      <label for="l-pick">Vyber lekci<select id="l-pick" hidden></select></label>
+      <div class="lesson-body" id="l-body"><p class="muted">Načítám lekce…</p></div>
+    </div>
+
+    <div class="card" id="ask-card">
+      <h2>Zeptej se</h2>
+      <p class="small muted" id="ask-note">Odpovídá Claude z tvého účtu. Zná otevřenou lekci a slovníček. Vysvětluje pojmy, neradí, co koupit nebo prodat.</p>
+      <div class="chat" id="ask-log"></div>
+      <div class="askrow" id="ask-row">
+        <textarea id="ask-box" rows="2" placeholder="Třeba: Jaký je rozdíl mezi sweepem a průrazem?"></textarea>
+        <button class="primary" id="ask-send" type="button">Zeptat se</button>
+        <button id="ask-stop" type="button" hidden>Zastavit</button>
+      </div>
+      <span class="small muted" id="ask-msg"></span>
+    </div>
+
+    <div class="card">
+      <h2>Slovníček</h2>
+      <label for="g-q">Hledat pojem<input id="g-q" type="search" placeholder="FVG, sweep, likvidita…"></label>
+      <dl class="gl" id="g-list"></dl>
+    </div>
+  </section>
+
+  <p class="small muted">Vzdělávací nástroj, žádné investiční doporučení. Obchodování futures je rizikové a žádný model nezaručuje zisk.</p>
+</div>
+
+<script>
+(function(){
+  const $ = id => document.getElementById(id);
+  const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = String(text); return n; };
+  const clear = n => { while (n.firstChild) n.removeChild(n.firstChild); };
+  const fmtDate = v => { if (!v) return "—"; const d = new Date(v); return isNaN(d) ? String(v) : d.toLocaleDateString("cs-CZ", {day:"numeric", month:"numeric", year:"numeric"}); };
+  const fmtDateTime = v => { if (!v) return "zatím neproběhl"; const d = new Date(v); return isNaN(d) ? String(v) : d.toLocaleString("cs-CZ", {day:"numeric", month:"numeric", hour:"2-digit", minute:"2-digit"}); };
+  const BOT_NAMES = {skaut:"Skaut", gems:"Gems", architekt:"Architekt", ucitel:"Učitel"};
+  const STATUS = {untested:["Neověřeno backtestem","warn"], testing:["V testování","info"], validated:["Ověřeno backtestem","good"], failing:["Backtest nevychází","bad"]};
+
+  // Views
+  const VIEWS = ["model","poznatky","strategie","backtest","room","laura"];
+  function route(){
+    const h = (location.hash || "").replace("#","");
+    const v = VIEWS.includes(h) ? h : "model";
+    VIEWS.forEach(x => $("v-"+x).classList.toggle("on", x === v));
+    document.querySelectorAll("nav a").forEach(a => { if (a.dataset.v === v) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current"); });
+  }
+  window.addEventListener("hashchange", route); route();
+
+  const banner = msg => { const b = $("banner"); b.textContent = msg || ""; b.style.display = msg ? "block" : "none"; };
+
+  // State
+  let insights = [], filter = "all", modelVersion = "";
+
+  function renderModel(m){
+    if (!m){ $("m-summary").textContent = "Model zatím není uložen. Objeví se po prvním běhu botů."; $("m-status").textContent = "Bez dat"; return; }
+    modelVersion = m.version || "";
+    $("s-ver").textContent = m.version || "—";
+    $("m-name").textContent = m.name || "Aktuální model";
+    const st = STATUS[m.status] || STATUS.untested;
+    $("m-status").textContent = st[0]; $("m-status").className = "pill " + st[1];
+    $("m-summary").textContent = m.summary || "";
+    const ol = $("m-rules"); clear(ol);
+    (Array.isArray(m.rules) ? m.rules : []).forEach(r => {
+      const li = el("li"), box = el("div");
+      box.appendChild(el("h3", null, r.title)); box.appendChild(el("p", "small muted", r.detail));
+      li.appendChild(box); ol.appendChild(li);
+    });
+    const tb = $("m-params"); clear(tb);
+    (Array.isArray(m.params) ? m.params : []).forEach(p => {
+      const tr = el("tr");
+      tr.appendChild(el("td", null, p.name)); tr.appendChild(el("td", "num", p.value)); tr.appendChild(el("td", "small muted", p.why));
+      tb.appendChild(tr);
+    });
+  }
+  function renderBots(docs){
+    const box = $("bots"); clear(box);
+    if (!docs.length){ box.appendChild(el("p","small muted","Boti zatím nemají žádný záznam.")); return; }
+    docs.sort((a,b) => (a.order||0) - (b.order||0)).forEach(b => {
+      const it = el("div", "item " + (b.id || ""));
+      it.appendChild(el("h3", null, (b.name || b.id) + " · " + (b.role || "")));
+      it.appendChild(el("p", "small", b.lastReport || "Zatím bez hlášení."));
+      const meta = el("div","meta"); meta.appendChild(el("span", null, "Naposledy: " + fmtDateTime(b.lastRun))); it.appendChild(meta);
+      box.appendChild(it);
+    });
+  }
+  function renderVersions(docs){
+    const box = $("versions"); clear(box);
+    if (!docs.length){ box.appendChild(el("p","small muted","Zatím žádná změna.")); return; }
+    docs.forEach(v => {
+      const it = el("div","item architekt");
+      it.appendChild(el("h3", null, "Verze " + (v.version || "?") + " · " + fmtDate(v.date || v.ts)));
+      it.appendChild(el("p","small", v.change || ""));
+      if (v.reason) it.appendChild(el("p","small muted","Důvod: " + v.reason));
+      box.appendChild(it);
+    });
+  }
+  function renderInsights(){
+    const box = $("insights"); clear(box);
+    $("s-cnt").textContent = String(insights.length);
+    const rows = insights.filter(i => filter === "all" || i.bot === filter);
+    if (!rows.length){ box.appendChild(el("p","small muted", insights.length ? "Tento bot zatím nic nezapsal." : "Zatím žádné poznatky.")); return; }
+    rows.forEach(i => {
+      const it = el("div","item " + (i.bot || ""));
+      it.appendChild(el("h3", null, i.title || "Bez názvu"));
+      const fg = insightFig(i); if (fg) it.appendChild(fg);
+      if (i.simple){ const sp = el("p", null, i.simple); sp.style.fontWeight = "500"; it.appendChild(sp); }
+      it.appendChild(el("p","small", i.takeaway || ""));
+      if (i.effect) it.appendChild(el("p","small muted","Dopad na model: " + i.effect));
+      const meta = el("div","meta");
+      meta.appendChild(el("span", null, BOT_NAMES[i.bot] || i.bot || "Bot"));
+      meta.appendChild(el("span", null, fmtDate(i.date || i.ts)));
+      if (typeof i.url === "string" && /^https:\/\//.test(i.url)){
+        const a = el("a", null, i.source || "Zdroj"); a.href = i.url; a.rel = "noopener"; meta.appendChild(a);
+      } else if (i.source) meta.appendChild(el("span", null, i.source));
+      if (i.concept){
+        const k = el("a", null, "Pojem: " + conceptTitle(i.concept)); k.href = "#room";
+        k.addEventListener("click", () => { openConcept = i.concept; renderConcepts(); });
+        meta.appendChild(k);
+      }
+      it.appendChild(meta); box.appendChild(it);
+    });
+  }
+  function renderBacktests(docs){
+    const tb = $("bt-rows"); clear(tb);
+    $("bt-empty").style.display = docs.length ? "none" : "block";
+    docs.forEach(b => {
+      const tr = el("tr");
+      [[b.modelVersion,"num"],[b.symbol,""],[b.period,""],[b.trades,"num"],[b.winrate != null ? b.winrate + " %" : "—","num"],[b.pf,"num"],[b.dd != null && b.dd !== "" ? b.dd + " %" : "—","num"]]
+        .forEach(c => tr.appendChild(el("td", c[1], c[0] == null ? "—" : c[0])));
+      tb.appendChild(tr);
+    });
+  }
+
+  document.querySelectorAll("#filters button").forEach(b => b.addEventListener("click", () => {
+    filter = b.dataset.f;
+    document.querySelectorAll("#filters button").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+    renderInsights();
+  }));
+
+  $("copy").addEventListener("click", async () => {
+    const btn = $("copy");
+    try { await navigator.clipboard.writeText($("pine").textContent); btn.textContent = "Zkopírováno"; }
+    catch(e){ btn.textContent = "Označ kód a zkopíruj ručně"; }
+    setTimeout(() => { btn.textContent = "Zkopírovat kód"; }, 2500);
+  });
+
+  async function loadPine(){
+    try {
+      const r = await fetch("strategy.txt", {cache: "no-store"});
+      if (!r.ok) throw new Error("http");
+      const code = await r.text();
+      $("pine").textContent = code;
+      const m = code.match(/verze\s+([0-9.]+)/i);
+      $("p-ver").textContent = (m ? "Verze kódu " + m[1] + ". " : "") + "Časy v kódu jsou newyorské.";
+    } catch(e){ $("pine").textContent = "Kód se nepodařilo načíst."; }
+  }
+  loadPine();
+
+  // Diagrams for Dictator's Room: schematic charts drawn from small candle lists
+  const FW = 360;
+  const svgWrap = (h, inner) => '<svg viewBox="0 0 ' + FW + ' ' + h + '" role="img" xmlns="http://www.w3.org/2000/svg">' + inner + '</svg>';
+  const T = (x, y, s, c, a, cls) => '<text x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" text-anchor="' + (a || "middle") + '" class="' + (c ? "f-" + c : "") + (cls ? " " + cls : "") + '">' + s + '</text>';
+  const L = (x1, y1, x2, y2, c, dash) => '<line x1="' + x1.toFixed(1) + '" y1="' + y1.toFixed(1) + '" x2="' + x2.toFixed(1) + '" y2="' + y2.toFixed(1) + '" class="ln s-' + (c || "muted") + (dash ? " dash" : "") + '"/>';
+  const R = (x, y, w, h, cls) => '<rect x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" width="' + w.toFixed(1) + '" height="' + Math.max(h, 1.5).toFixed(1) + '" class="' + cls + '"/>';
+  function mk(start, moves, ov){
+    let p = start;
+    return moves.map((m, i) => { const o = p, c = p + m, k = (ov && ov[i]) || {}; p = c; return [o, k.h != null ? k.h : Math.max(o, c) + 1, k.l != null ? k.l : Math.min(o, c) - 1, c]; });
+  }
+  function chart(spec){
+    const H = spec.h || 210, padX = 12, padT = 24, padB = 24, cs = spec.candles, n = spec.n || cs.length, step = (FW - 2 * padX) / n, marks = spec.marks || [];
+    let lo = Infinity, hi = -Infinity;
+    cs.forEach(c => { if (c){ hi = Math.max(hi, c[1]); lo = Math.min(lo, c[2]); } });
+    marks.forEach(m => ["y","y1","y2"].forEach(k => { if (typeof m[k] === "number"){ hi = Math.max(hi, m[k]); lo = Math.min(lo, m[k]); } }));
+    const X = i => padX + (i + 0.5) * step, Y = v => padT + (hi - v) / (hi - lo) * (H - padT - padB);
+    let s = "";
+    marks.filter(m => m.t === "box").forEach(m => { s += R(X(m.x1) - step / 2, Y(m.y2), X(m.x2) - X(m.x1) + step, Y(m.y1) - Y(m.y2), "z f-" + m.c + " s-" + m.c); });
+    const bw = Math.min(step * 0.6, 16);
+    cs.forEach((c, i) => {
+      if (!c) return;
+      const cls = c[3] >= c[0] ? "up" : "dn", x = X(i);
+      s += '<line x1="' + x.toFixed(1) + '" y1="' + Y(c[1]).toFixed(1) + '" x2="' + x.toFixed(1) + '" y2="' + Y(c[2]).toFixed(1) + '" class="' + cls + '" stroke-width="1.4"/>';
+      s += R(x - bw / 2, Y(Math.max(c[0], c[3])), bw, Math.abs(Y(c[0]) - Y(c[3])), cls);
+    });
+    marks.forEach(m => {
+      if (m.t === "line") s += L(X(m.x1), Y(m.y), X(m.x2), Y(m.y), m.c, m.dash);
+      else if (m.t === "text") s += T(X(m.x), Y(m.y) + (m.dy == null ? 4 : m.dy), m.s, m.c, m.a, m.cls);
+      else if (m.t === "arrow"){
+        const x1 = X(m.x1), y1 = Y(m.y1), x2 = X(m.x2), y2 = Y(m.y2), a = Math.atan2(y2 - y1, x2 - x1), q = (d, r) => (x2 + r * Math.cos(a + d)).toFixed(1) + "," + (y2 + r * Math.sin(a + d)).toFixed(1);
+        s += L(x1, y1, x2, y2, m.c, true) + '<polygon points="' + x2.toFixed(1) + "," + y2.toFixed(1) + " " + q(Math.PI * 0.85, 9) + " " + q(-Math.PI * 0.85, 9) + '" class="f-' + m.c + '"/>';
+      }
+    });
+    return svgWrap(H, s);
+  }
+  function figOhlc(){
+    let s = "";
+    [[96, "up", ["High","Close","Open","Low"]], [250, "dn", ["High","Open","Close","Low"]]].forEach(c => {
+      const x = c[0];
+      s += '<line x1="' + x + '" y1="28" x2="' + x + '" y2="188" class="' + c[1] + '" stroke-width="2.5"/>' + R(x - 22, 68, 44, 80, c[1]);
+      [28, 68, 148, 188].forEach((y, i) => { const edge = (i === 0 || i === 3) ? x + 3 : x + 24; s += L(edge, y, x + 44, y, "muted") + T(x + 48, y + 4, c[2][i], null, "start"); });
+    });
+    s += T(66, 52, "knot", "muted", "end") + T(66, 112, "tělo", "muted", "end") + T(66, 172, "knot", "muted", "end");
+    s += T(110, 210, "rostoucí: close nad open", "good") + T(262, 210, "klesající: close pod open", "bad");
+    return svgWrap(218, s);
+  }
+  function figTime(){
+    const x = h => 20 + h * 20; let s = "";
+    s += L(x(0), 112, x(16), 112, "muted");
+    for (let h = 0; h <= 16; h += 2) s += L(x(h), 109, x(h), 115, "muted") + T(x(h), 128, h + ":00", "muted");
+    [[3,4],[10,11],[14,15]].forEach(b => { s += R(x(b[0]), 84, x(b[1]) - x(b[0]), 16, "z f-amber s-amber"); });
+    s += T(x(3.5), 79, "Silver Bullet", "amber");
+    s += R(x(9.5), 60, x(11) - x(9.5), 16, "z f-accent s-accent") + T(x(11) + 5, 72, "okno modelu", "accent", "start");
+    s += L(x(0), 30, x(0), 112, "muted", true) + T(x(0) + 3, 26, "půlnoc: midnight open", null, "start");
+    s += L(x(8.5), 46, x(8.5), 112, "muted", true) + T(x(8.5) - 3, 44, "8:30 data", null, "end");
+    s += L(x(9.5), 30, x(9.5), 112, "muted", true) + T(x(9.5) + 3, 26, "9:30 otevření burzy", null, "start");
+    return svgWrap(138, s);
+  }
+  function figR(){
+    let s = R(60, 30, 190, 80, "z f-good s-good") + R(60, 110, 190, 40, "z f-bad s-bad");
+    [[30, "+2R", "cíl 2: 21 020", "good"], [70, "+1R", "cíl 1: 21 010", "good"], [110, "0", "vstup: 21 000", "muted"], [150, "−1R", "stop: 20 990", "bad"]].forEach(r => {
+      s += L(60, r[0], 250, r[0], r[3]) + T(54, r[0] + 4, r[1], null, "end") + T(256, r[0] + 4, r[2], null, "start");
+    });
+    s += T(155, 54, "zisk", "good") + T(155, 134, "riziko 10 bodů = 1R", "bad");
+    return svgWrap(176, s);
+  }
+  const tx = (x, y, s, o) => Object.assign({t: "text", x: x, y: y, s: s}, o || {});
+  const FIGS = {
+    1: [[figOhlc, "Každá svíčka nese čtyři ceny: open, high, low a close (OHLC). Tělo vede od open ke close, knoty sahají k high a low."],
+        [() => chart({candles: mk(100, [2,1,-1,3,1]).concat([null, null, [100,107,99,106]]), h: 190, marks: [tx(2, 96.2, "pět 1m svíček", {c: "muted"}), tx(7.45, 96.2, "jedna 5m svíčka", {c: "muted", a: "end"}), tx(5.5, 103, "=", {cls: "big", dy: 6})]}),
+         "Timeframe je jen přiblížení. Pět minutových svíček dá jednu pětiminutovou: open první, close poslední, high a low nejzazší z celé pětice."]],
+    2: [[() => chart({candles: mk(100, [4,5,-3,-2,5,6,-3,-3,6,5,-2]), marks: [tx(1,110,"swing high",{dy:-6}), tx(5,116,"vyšší high",{dy:-6,c:"good"}), tx(9,121,"vyšší high",{dy:-6,c:"good"}), tx(3,103,"swing low",{dy:14}), tx(7,108,"vyšší low",{dy:14,c:"good"})]}),
+         "Trend nahoru: každý vrchol je výš než předchozí a každé dno taky. Dokud to platí, struktura je rostoucí."]],
+    3: [[() => chart({candles: mk(100, [5,4,-3,-2,4,5,-2,-3,3,-5,-4]), marks: [{t:"line",y:110,x1:1,x2:5,c:"amber"}, tx(3,110,"BOS",{dy:-5,c:"amber"}), {t:"line",y:107,x1:7,x2:10,c:"bad"}, tx(7.5,107,"MSS",{dy:13,c:"bad"})]}),
+         "BOS: svíčka zavře nad posledním vrcholem, trend pokračuje. MSS: svíčka zavře pod posledním vyšším dnem, první varování před změnou směru."]],
+    4: [[() => chart({candles: mk(100, [4,3,-3,-2,3,2,-2,2,-1,-4,-4], {8:{h:111}}), marks: [{t:"line",y:108,x1:1,x2:8,c:"amber",dash:true}, tx(0.6,108,"likvidita nad equal highs",{dy:-5,a:"start",c:"amber"}), tx(8,111,"sweep",{dy:-6,c:"bad"})]}),
+         "Nad stejně vysokými vrcholy leží stop-lossy. Sweep je knot, který je vybere, a svíčka pak zavře zpátky pod úrovní. Při průrazu by zavřela nad ní."]],
+    5: [[() => chart({candles: mk(100, [-1,1,2,7,3,1,-3,-3,4,4], {2:{h:103},4:{l:108},7:{l:105.5}}), marks: [{t:"box",x1:3,x2:8,y1:103,y2:108,c:"accent"}, {t:"line",y:105.5,x1:3,x2:8,c:"accent",dash:true}, tx(5.5,107,"FVG",{c:"accent",dy:3}), tx(5.5,104.3,"50 % (CE)",{c:"accent",dy:3}), tx(2.4,107,"displacement",{a:"end"})]}),
+         "Velká svíčka (displacement) nechá mezeru mezi high první a low třetí svíčky. To je FVG. Cena se později vrací k jeho středu a pokračuje původním směrem."]],
+    6: [[() => chart({candles: mk(100, [5,6,5,-3,-4,-3,2,-2]), n: 11, marks: [{t:"box",x1:0,x2:10,y1:108,y2:117,c:"bad"}, {t:"box",x1:0,x2:10,y1:99,y2:108,c:"good"}, tx(10.3,114.5,"premium: draho",{a:"end",c:"bad"}), tx(10.3,108,"50 %: equilibrium",{a:"end",dy:-4}), tx(10.3,101.5,"discount: levně",{a:"end",c:"good"})]}),
+         "Pohyb ode dna k vrcholu se rozdělí v půlce. Nakupovat se má v dolní polovině (discount), prodávat v horní (premium)."],
+        [() => chart({candles: mk(105, [-2,-3,6,5,2,-3,-4,-3,5,5], {7:{l:101.5}}), marks: [{t:"box",x1:1,x2:8,y1:100,y2:103,c:"amber"}, tx(4.5,100,"order block",{dy:13,c:"amber"}), tx(7,101.5,"návrat",{dy:27})]}),
+         "Bullish order block: poslední klesající svíčka před silným růstem. Když se do ní cena vrátí, ICT tam hledá nákup."]],
+    7: [[figTime, "Den v newyorském čase. ICT sleduje půlnoční otevírací cenu, data v 8:30 a otevření burzy v 9:30. Tři okna Silver Bullet jsou žlutě, okno modelu ICT Lab modře."]],
+    8: [[() => chart({candles: mk(100, [3,-1,3,2,-2,3,2]), n: 11, marks: [{t:"line",y:118,x1:0,x2:10,c:"amber"}, tx(-0.4,118,"high předchozího dne: likvidita",{a:"start",dy:-5,c:"amber"}), {t:"line",y:95,x1:0,x2:10,c:"muted"}, tx(-0.4,95,"low předchozího dne",{a:"start",dy:13,c:"muted"}), {t:"arrow",x1:7,y1:111,x2:10,y2:117,c:"accent"}, tx(10.4,109.5,"draw on liquidity",{a:"end",c:"accent",dy:8})]}),
+         "Bias je odpověď na otázku, ke které likviditě cena nejspíš míří. Tady roste k high předchozího dne, bias je long."]],
+    9: [[() => chart({candles: mk(110, [3,3,-2,-2,3,1,-3,-6,-3,2,3,-4,-4,-3], {5:{h:119},10:{h:110}}), h: 240, marks: [
+          {t:"line",y:118,x1:0,x2:5,c:"amber"}, tx(-0.4,118,"1 likvidita",{a:"start",dy:-5,c:"amber"}), tx(5,119,"2 sweep",{dy:-6,c:"bad"}),
+          {t:"line",y:119.5,x1:7,x2:13,c:"bad",dash:true}, tx(13.4,119.5,"stop",{a:"end",dy:-4,c:"bad"}),
+          {t:"line",y:111,x1:3,x2:7,c:"muted"}, tx(2.6,111,"3 MSS",{a:"end",dy:12}),
+          {t:"box",x1:7,x2:10,y1:108,y2:112,c:"accent"}, tx(9,112,"4 FVG",{dy:-5,c:"accent"}),
+          {t:"line",y:110,x1:10,x2:13,c:"good",dash:true}, tx(13.4,110,"5 vstup",{a:"end",dy:-4,c:"good"}),
+          {t:"line",y:100.5,x1:10,x2:13,c:"good"}, tx(10,100.5,"cíl 1R",{dy:12,c:"good"})]}),
+         "Model na jednom obrázku, short: cena vybere likviditu nad vrcholem (1, 2), zavře pod posledním dnem (3), nechá FVG (4) a vstup je limitkou na 50 % mezery se stopem za sweepem (5)."]],
+    10: [[figR, "Příklad longu na NQ. Vzdálenost vstupu od stopu je 1R. Na +1R se zavře půlka pozice a stop jde na vstup, zbytek míří na +2R."]]
+  };
+  function figures(n){
+    return (FIGS[n] || []).map(f => {
+      const fg = el("figure","fig"), box = el("div");
+      box.style.width = "100%"; box.style.display = "flex"; box.style.justifyContent = "center";
+      box.innerHTML = f[0]();
+      fg.appendChild(box); fg.appendChild(el("figcaption", null, f[1]));
+      return fg;
+    });
+  }
+
+  // Figures for insights and concepts. Text and colours coming from the database are sanitised.
+  const esc = v => String(v == null ? "" : v).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const COLS = ["accent","amber","good","bad","muted"];
+  const col = (c, d) => COLS.includes(c) ? c : (d || "muted");
+  const fnum = v => (Math.round(v * 1000) / 1000).toLocaleString("cs-CZ");
+  function figEl(html, cap){
+    const fg = el("figure","fig"), box = el("div");
+    box.style.width = "100%"; box.style.display = "flex"; box.style.justifyContent = "center";
+    box.innerHTML = html;
+    fg.appendChild(box); if (cap) fg.appendChild(el("figcaption", null, cap));
+    return fg;
+  }
+  function figBars(v){
+    const items = (Array.isArray(v && v.items) ? v.items : []).slice(0, 8)
+      .map(it => ({label: String((it && it.label) || "").slice(0, 44), value: Number(it && it.value), c: col(it && it.c, "accent")}))
+      .filter(it => isFinite(it.value));
+    if (!items.length) return "";
+    const ref = v.ref && isFinite(Number(v.ref.value)) ? {value: Number(v.ref.value), label: String(v.ref.label || "").slice(0, 34)} : null;
+    const unit = String(v.unit || "").slice(0, 10), sign = !!v.signed;
+    const vals = items.map(i => i.value).concat(ref ? [ref.value] : []);
+    let lo = Math.min(0, ...vals), hi = Math.max(0, ...vals); if (hi === lo) hi = lo + 1;
+    const x0 = 14, x1 = FW - 74, rowH = 36, top = ref ? 26 : 8, H = top + items.length * rowH + 6;
+    const X = val => x0 + (val - lo) / (hi - lo) * (x1 - x0);
+    let s = "";
+    items.forEach((it, i) => {
+      const y = top + i * rowH, a = X(Math.min(0, it.value)), b = X(Math.max(0, it.value));
+      s += T(x0, y + 12, esc(it.label), null, "start");
+      s += R(a, y + 17, Math.max(b - a, 2), 12, "f-" + it.c);
+      s += T(b + 5, y + 27, esc((sign && it.value > 0 ? "+" : "") + fnum(it.value) + (unit ? " " + unit : "")), null, "start");
+    });
+    s += L(X(0), top, X(0), H - 4, "muted");
+    if (ref) s += L(X(ref.value), 16, X(ref.value), H - 4, "amber", true) + T(X(ref.value), 11, esc(ref.label), "amber", X(ref.value) > FW * 0.55 ? "end" : "start");
+    return svgWrap(H, s);
+  }
+  function safeChart(spec){
+    try {
+      const N = v => { const n = Number(v); if (!isFinite(n)) throw new Error("num"); return n; };
+      const cs = (Array.isArray(spec.candles) ? spec.candles : []).slice(0, 40).map(c => c == null ? null : [N(c[0]), N(c[1]), N(c[2]), N(c[3])]);
+      if (cs.filter(Boolean).length < 2) return "";
+      const marks = [];
+      (Array.isArray(spec.marks) ? spec.marks : []).slice(0, 20).forEach(m => {
+        try {
+          if (m.t === "line") marks.push({t: "line", y: N(m.y), x1: N(m.x1), x2: N(m.x2), c: col(m.c), dash: !!m.dash});
+          else if (m.t === "box") marks.push({t: "box", x1: N(m.x1), x2: N(m.x2), y1: N(m.y1), y2: N(m.y2), c: col(m.c, "accent")});
+          else if (m.t === "arrow") marks.push({t: "arrow", x1: N(m.x1), y1: N(m.y1), x2: N(m.x2), y2: N(m.y2), c: col(m.c, "accent")});
+          else if (m.t === "text") marks.push({t: "text", x: N(m.x), y: N(m.y), s: esc(String(m.s || "").slice(0, 44)), c: m.c ? col(m.c) : null,
+            a: ["start","middle","end"].includes(m.a) ? m.a : "middle", dy: m.dy == null ? null : N(m.dy)});
+        } catch(e){}
+      });
+      const h = Math.min(Math.max(Number(spec.h) || 200, 120), 280);
+      return chart({candles: cs, marks: marks, h: h, n: Math.max(cs.length, Math.min(Number(spec.n) || 0, 44))});
+    } catch(e){ return ""; }
+  }
+  function figSplit(){
+    let s = R(20, 40, 224, 30, "z f-accent s-accent") + R(244, 40, 96, 30, "z f-amber s-amber");
+    s += T(132, 60, "trénink: tady se ladí pravidla", "accent") + T(292, 60, "test", "amber");
+    s += T(20, 28, "starší data", null, "start") + T(340, 28, "novější data", null, "end");
+    s += T(292, 90, "tady se jen ověřuje", "amber");
+    return svgWrap(104, s);
+  }
+  const LIB = {
+    ohlc: FIGS[1][0][0], timeframe: FIGS[1][1][0], struktura: FIGS[2][0][0], mss: FIGS[3][0][0], sweep: FIGS[4][0][0],
+    fvg: FIGS[5][0][0], "premium-discount": FIGS[6][0][0], "order-block": FIGS[6][1][0], cas: FIGS[7][0][0], bias: FIGS[8][0][0],
+    model: FIGS[9][0][0], riziko: FIGS[10][0][0], split: figSplit,
+    nahoda: () => figBars({unit: "%", items: [{label: "cíl 1R (zisk stejný jako riziko)", value: 50}, {label: "cíl 2R", value: 33.3}, {label: "cíl 3R", value: 25}]}),
+    volatilita: () => chart({candles: mk(100, [1,-1,1,-1,1]).concat([null], mk(100, [4,-5,6,-4,5])), h: 180,
+      marks: [tx(2, 96, "klidný trh", {c: "muted", dy: 16}), tx(8, 96, "rozhýbaný trh", {c: "muted", dy: 16})]})
+  };
+  let concepts = {}, conceptsLoaded = false, openConcept = null;
+  const conceptTitle = k => (concepts[k] && concepts[k].title) || String(k);
+  function conceptFig(key, withCap){
+    const c = concepts[key]; let html = "";
+    if (c){ if (c.chart) html = safeChart(c.chart); if (!html && LIB[c.fig]) html = LIB[c.fig](); }
+    if (!html && LIB[key]) html = LIB[key]();
+    return html ? figEl(html, withCap && c ? c.caption : "") : null;
+  }
+  function insightFig(i){
+    if (i.viz){ const h = figBars(i.viz); if (h) return figEl(h, String(i.viz.caption || "").slice(0, 200)); }
+    if (i.chart){ const h = safeChart(i.chart); if (h) return figEl(h, String(i.chart.caption || "").slice(0, 200)); }
+    return i.concept ? conceptFig(i.concept, false) : null;
+  }
+  function renderConcepts(){
+    const box = $("k-list"); if (!box) return; clear(box);
+    const by = {};
+    insights.forEach(i => { if (i.concept) (by[i.concept] = by[i.concept] || []).push(i); });
+    const keys = Object.keys(concepts).concat(Object.keys(by).filter(k => !concepts[k]));
+    if (!keys.length){ box.appendChild(el("p","small muted", conceptsLoaded ? "Zatím tu nejsou žádné pojmy." : "Načítám pojmy…")); return; }
+    keys.sort((a, b) => ((concepts[a] && concepts[a].order) || 999) - ((concepts[b] && concepts[b].order) || 999) || conceptTitle(a).localeCompare(conceptTitle(b), "cs"));
+    keys.forEach(k => {
+      const c = concepts[k] || {}, list = by[k] || [];
+      const d = el("details","week"); if (k === openConcept) d.open = true;
+      d.addEventListener("toggle", () => { if (d.open) openConcept = k; else if (openConcept === k) openConcept = null; });
+      const sm = el("summary");
+      sm.appendChild(el("h3", null, conceptTitle(k) + (c.en ? " (" + c.en + ")" : "")));
+      sm.appendChild(el("span","cnt", list.length + (list.length === 1 ? " poznatek" : (list.length >= 2 && list.length <= 4 ? " poznatky" : " poznatků"))));
+      d.appendChild(sm);
+      const body = el("div","weekbody");
+      const fg = conceptFig(k, true); if (fg) body.appendChild(fg);
+      (Array.isArray(c.explain) ? c.explain : (c.explain ? [c.explain] : [])).forEach(t => body.appendChild(el("p", null, t)));
+      if (c.remember){ const rm = el("div","box"); rm.appendChild(el("b", null, "Zapamatuj si")); rm.appendChild(el("span", null, c.remember)); body.appendChild(rm); }
+      if (c.week) body.appendChild(el("p","small muted","V kurzu se tomu věnuje " + c.week + ". týden."));
+      if (list.length){
+        body.appendChild(el("h3", null, "Co k tomu našli boti"));
+        list.forEach(i => {
+          const it = el("div","item " + (i.bot || ""));
+          it.appendChild(el("p","small", i.simple || i.takeaway || ""));
+          const meta = el("div","meta");
+          meta.appendChild(el("span", null, i.title || ""));
+          if (typeof i.url === "string" && /^https:\/\//.test(i.url)){ const a = el("a", null, "zdroj"); a.href = i.url; a.rel = "noopener"; meta.appendChild(a); }
+          it.appendChild(meta); body.appendChild(it);
+        });
+      }
+      d.appendChild(body); box.appendChild(d);
+    });
+  }
+
+  // Dictator's Room: course content from course.json, progress per viewer
+  let course = null, done = {}, saveDone = null, openWeek = null;
+  const LS_KEY = "ictlab-course-done";
+  try { done = JSON.parse(localStorage.getItem(LS_KEY) || "{}") || {}; } catch(e){ done = {}; }
+  function persist(){
+    try { localStorage.setItem(LS_KEY, JSON.stringify(done)); } catch(e){}
+    if (saveDone) saveDone();
+  }
+  function renderCourse(){
+    if (!course) return;
+    $("c-intro").textContent = course.intro || "";
+    const all = course.weeks.reduce((n,w) => n + w.lessons.length, 0);
+    const got = course.weeks.reduce((n,w) => n + w.lessons.filter(l => done[l.id]).length, 0);
+    $("c-count").textContent = got + " z " + all + " lekcí hotovo";
+    $("c-bar").style.width = (all ? Math.round(100 * got / all) : 0) + "%";
+    if (openWeek == null){
+      const first = course.weeks.find(w => w.lessons.some(l => !done[l.id]));
+      openWeek = first ? first.n : course.weeks[0].n;
+    }
+    const box = $("c-weeks"); clear(box);
+    course.weeks.forEach(w => {
+      const ph = (course.phases || []).find(p => p.weeks[0] === w.n);
+      if (ph) box.appendChild(el("div","phase", ph.name));
+      const wd = w.lessons.filter(l => done[l.id]).length;
+      const d = el("details","week" + (wd === w.lessons.length ? " done" : ""));
+      if (w.n === openWeek) d.open = true;
+      d.addEventListener("toggle", () => { if (d.open) openWeek = w.n; });
+      const sm = el("summary");
+      sm.appendChild(el("h3", null, w.n + ". týden: " + w.title));
+      sm.appendChild(el("span","cnt", wd + "/" + w.lessons.length));
+      d.appendChild(sm);
+      const body = el("div","weekbody");
+      body.appendChild(el("p","small muted","Cíl: " + w.goal));
+      figures(w.n).forEach(f => body.appendChild(f));
+      w.lessons.forEach(l => {
+        const row = el("div","lesson" + (done[l.id] ? " on" : ""));
+        const cb = el("input"); cb.type = "checkbox"; cb.id = "l-" + l.id; cb.checked = !!done[l.id];
+        cb.addEventListener("change", () => { if (cb.checked) done[l.id] = true; else delete done[l.id]; persist(); renderCourse(); });
+        const lb = el("label"); lb.htmlFor = cb.id;
+        lb.appendChild(el("b", null, l.title)); lb.appendChild(el("span", null, l.text));
+        row.appendChild(cb); row.appendChild(lb); body.appendChild(row);
+      });
+      const task = el("div","box"); task.appendChild(el("b", null, "Úkol týdne")); task.appendChild(el("span", null, w.task)); body.appendChild(task);
+      if (w.check){
+        const q = el("div","box"); q.appendChild(el("b", null, "Kontrolní otázka")); q.appendChild(el("span", null, w.check.q));
+        const ans = el("details","ans"); ans.appendChild(el("summary", null, "Ukázat odpověď")); ans.appendChild(el("p","small", w.check.a));
+        q.appendChild(ans); body.appendChild(q);
+      }
+      d.appendChild(body); box.appendChild(d);
+    });
+  }
+  (async function loadCourse(){
+    try {
+      const r = await fetch("course.json", {cache: "no-store"});
+      if (!r.ok) throw new Error("http");
+      course = await r.json(); renderCourse();
+    } catch(e){ $("c-intro").textContent = "Kurz se nepodařilo načíst."; }
+  })();
+  async function syncCourse(db){
+    try {
+      const user = await window.claude.use("user");
+      const uid = user ? await user.id() : null;
+      if (!uid) { $("c-save").textContent = "Postup se ukládá jen v tomto zařízení."; return; }
+      const ref = db.doc("data/users/" + uid + "/course");
+      const snap = await ref.get();
+      const remote = snap.exists && snap.data().done ? snap.data().done : {};
+      const before = Object.keys(done).length;
+      Object.keys(remote).forEach(k => { done[k] = true; });
+      renderCourse();
+      let busy = false, again = false;
+      saveDone = async function(){
+        if (busy) { again = true; return; }
+        busy = true;
+        try { await ref.set({done: done, updatedAt: new Date().toISOString()}); $("c-save").textContent = "Postup uložen k tvému účtu."; }
+        catch(e){ $("c-save").textContent = "Postup se ukládá jen v tomto zařízení."; saveDone = null; }
+        busy = false;
+        if (again && saveDone) { again = false; saveDone(); }
+      };
+      $("c-save").textContent = "Postup se ukládá k tvému účtu.";
+      if (before > Object.keys(remote).length) saveDone();
+    } catch(e){ $("c-save").textContent = "Postup se ukládá jen v tomto zařízení."; }
+  }
+
+  // Laura: daily lessons, quizzes, glossary, questions for Claude
+  let lessons = [], glossary = [], curLesson = null, saveLaura = null, lessonsLoaded = false;
+  let lp = {read:{}, quiz:{}};
+  const attempt = {};
+  const LS_LAURA = "ictlab-laura";
+  try { const v = JSON.parse(localStorage.getItem(LS_LAURA) || "null"); if (v && typeof v === "object") lp = {read: v.read || {}, quiz: v.quiz || {}}; } catch(e){}
+  function persistLaura(){
+    try { localStorage.setItem(LS_LAURA, JSON.stringify(lp)); } catch(e){}
+    if (saveLaura) saveLaura();
+  }
+  function lauraStats(){
+    const ids = {}; lessons.forEach(l => { ids[l.id] = true; });
+    const read = Object.keys(lp.read).filter(k => ids[k]).length;
+    const qs = Object.keys(lp.quiz).filter(k => ids[k]).map(k => lp.quiz[k]);
+    const right = qs.reduce((n,q) => n + (Number(q.score) || 0), 0), tot = qs.reduce((n,q) => n + (Number(q.total) || 0), 0);
+    $("l-read").textContent = lessonsLoaded ? read + " z " + lessons.length : "…";
+    $("l-quiz").textContent = lessonsLoaded ? String(qs.length) : "…";
+    $("l-rate").textContent = lessonsLoaded ? (tot ? Math.round(100 * right / tot) + " %" : "—") : "…";
+  }
+  function quizOf(l){
+    return (Array.isArray(l.quiz) ? l.quiz : []).filter(q => q && Array.isArray(q.options) && q.options.length > 1);
+  }
+  function renderLesson(){
+    const box = $("l-body"), pick = $("l-pick"); clear(box); clear(pick);
+    lauraStats();
+    if (!lessons.length){
+      pick.hidden = true;
+      box.appendChild(el("p","muted", lessonsLoaded ? "Zatím tu není žádná lekce. Učitel přidá první při dalším ranním běhu botů." : "Načítám lekce…"));
+      return;
+    }
+    pick.hidden = false;
+    if (!curLesson || !lessons.some(l => l.id === curLesson)) curLesson = lessons[0].id;
+    lessons.forEach(l => {
+      const o = el("option", null, (l.n ? l.n + ". " : "") + (l.title || "Lekce") + (lp.read[l.id] ? " (přečteno)" : ""));
+      o.value = l.id; pick.appendChild(o);
+    });
+    pick.value = curLesson;
+    const l = lessons.find(x => x.id === curLesson);
+    box.appendChild(el("h3", null, (l.n ? "Lekce " + l.n + ": " : "") + (l.title || "")));
+    const meta = el("div","meta");
+    meta.appendChild(el("span", null, fmtDate(l.date || l.ts)));
+    if (l.week) meta.appendChild(el("span", null, "Navazuje na " + l.week + ". týden kurzu"));
+    box.appendChild(meta);
+    (Array.isArray(l.body) ? l.body : [l.body]).forEach(p => { if (p) box.appendChild(el("p", null, p)); });
+    if (l.example){ const ex = el("div","box"); ex.appendChild(el("b", null, "Příklad")); ex.appendChild(el("span", null, l.example)); box.appendChild(ex); }
+    if (l.remember){ const rm = el("div","box"); rm.appendChild(el("b", null, "Zapamatuj si")); rm.appendChild(el("span", null, l.remember)); box.appendChild(rm); }
+    const qz = quizOf(l);
+    if (!qz.length){
+      const b = el("button", lp.read[l.id] ? "" : "primary", lp.read[l.id] ? "Přečteno" : "Mám přečteno");
+      b.type = "button"; b.disabled = !!lp.read[l.id];
+      b.addEventListener("click", () => { lp.read[l.id] = true; persistLaura(); renderLesson(); });
+      box.appendChild(b);
+      return;
+    }
+    const saved = lp.quiz[l.id];
+    const ans = attempt[l.id] || (saved && Array.isArray(saved.answers) ? saved.answers : []);
+    const wrap = el("div","quiz");
+    wrap.appendChild(el("h3", null, "Kvíz"));
+    let answered = 0, right = 0;
+    qz.forEach((q, i) => {
+      const a = ans[i], done = a != null, correct = Number(q.correct);
+      if (done){ answered++; if (a === correct) right++; }
+      const qd = el("div","q");
+      qd.appendChild(el("p", null, (i + 1) + ". " + q.q));
+      const opts = el("div","opts");
+      q.options.forEach((t, j) => {
+        const b = el("button","opt", t); b.type = "button";
+        if (done){
+          b.disabled = true;
+          if (j === correct) b.classList.add("ok"); else if (j === a) b.classList.add("no");
+        } else b.addEventListener("click", () => {
+          const cur = (attempt[l.id] || ans).slice(); cur[i] = j; attempt[l.id] = cur;
+          if (qz.every((x, k) => cur[k] != null)){
+            const sc = qz.filter((x, k) => cur[k] === Number(x.correct)).length;
+            lp.quiz[l.id] = {score: sc, total: qz.length, answers: cur, ts: new Date().toISOString()};
+            lp.read[l.id] = true; persistLaura();
+          }
+          renderLesson();
+        });
+        opts.appendChild(b);
+      });
+      qd.appendChild(opts);
+      if (done) qd.appendChild(el("p","verdict " + (a === correct ? "ok" : "no"), (a === correct ? "Správně. " : "Špatně. ") + (q.why || "")));
+      wrap.appendChild(qd);
+    });
+    if (answered === qz.length){
+      const row = el("div","row");
+      row.appendChild(el("b", null, "Výsledek: " + right + " z " + qz.length));
+      const again = el("button", null, "Zkusit znovu"); again.type = "button";
+      again.addEventListener("click", () => { attempt[l.id] = qz.map(() => null); renderLesson(); });
+      row.appendChild(again); wrap.appendChild(row);
+    }
+    box.appendChild(wrap);
+  }
+  $("l-pick").addEventListener("change", ev => { curLesson = ev.target.value; renderLesson(); });
+
+  function renderGlossary(){
+    const box = $("g-list"); clear(box);
+    const q = $("g-q").value.trim().toLowerCase();
+    const rows = glossary.filter(g => !q || [g.term, g.en, g.def].some(v => String(v || "").toLowerCase().includes(q)))
+      .sort((a,b) => String(a.term || "").localeCompare(String(b.term || ""), "cs"));
+    if (!rows.length){ box.appendChild(el("p","small muted", glossary.length ? "Žádný pojem neodpovídá hledání." : "Slovníček je zatím prázdný. Pojmy přibývají s lekcemi.")); return; }
+    rows.forEach(g => {
+      const d = el("div"), dt = el("dt", null, g.term || g.id);
+      if (g.en && g.en !== g.term) dt.appendChild(el("span", null, g.en));
+      d.appendChild(dt); d.appendChild(el("dd", null, g.def || "")); box.appendChild(d);
+    });
+  }
+  $("g-q").addEventListener("input", renderGlossary);
+
+  async function syncLaura(db){
+    const note = $("l-save");
+    try {
+      const user = await window.claude.use("user");
+      const uid = user ? await user.id() : null;
+      if (!uid){ note.textContent = "Postup se ukládá jen v tomto zařízení."; return; }
+      const ref = db.doc("data/users/" + uid + "/laura");
+      const snap = await ref.get();
+      const remote = snap.exists ? snap.data() : {};
+      const before = JSON.stringify(lp);
+      Object.keys(remote.read || {}).forEach(k => { lp.read[k] = true; });
+      Object.keys(remote.quiz || {}).forEach(k => { if (!lp.quiz[k]) lp.quiz[k] = remote.quiz[k]; });
+      renderLesson();
+      let busy = false, again = false;
+      saveLaura = async function(){
+        if (busy){ again = true; return; }
+        busy = true;
+        try { await ref.set({read: lp.read, quiz: lp.quiz, updatedAt: new Date().toISOString()}); note.textContent = "Postup uložen k tvému účtu."; }
+        catch(e){ note.textContent = "Postup se ukládá jen v tomto zařízení."; saveLaura = null; }
+        busy = false;
+        if (again && saveLaura){ again = false; saveLaura(); }
+      };
+      note.textContent = "Postup se ukládá k tvému účtu.";
+      if (before !== JSON.stringify({read: remote.read || {}, quiz: remote.quiz || {}})) saveLaura();
+    } catch(e){ note.textContent = "Postup se ukládá jen v tomto zařízení."; }
+  }
+
+  // Ask Claude
+  const ASK_ERR = {
+    not_granted: "Dotazy na Clauda nejsou pro tuto stránku povolené.",
+    sampling_disabled: "Claude není pro tento účet dostupný.",
+    rate_limited: "Příliš mnoho dotazů nebo vyčerpaný limit. Zkus to později.",
+    session_expired: "Přihlášení vypršelo. Přihlas se znovu do Claude.",
+    refused: "Na tohle Claude neodpoví. Zkus otázku položit jinak.",
+    prompt_too_large: "Otázka je moc dlouhá. Zkrať ji."
+  };
+  const turns = [];
+  function askRules(){
+    const l = lessons.find(x => x.id === curLesson);
+    const lessonText = l ? "Otevřená lekce: " + (l.title || "") + "\n" + (Array.isArray(l.body) ? l.body.join("\n") : String(l.body || "")) : "Žádná lekce není otevřená.";
+    const gl = glossary.map(g => "- " + g.term + (g.en ? " (" + g.en + ")" : "") + ": " + g.def).join("\n").slice(0, 12000);
+    return "Jsi trpělivý lektor na stránce ICT Lab. Učíš Lauru, úplnou začátečnici, základy tradingu podle konceptů ICT (Inner Circle Trader) na futures NQ a ES. "
+      + "Odpovídej česky, krátce a jednoduše, s jedním konkrétním příkladem na grafu popsaným slovy. Anglické pojmy nech v originále a při prvním použití je vysvětli. "
+      + "Nedávej investiční doporučení ani pokyny, co koupit nebo prodat, a neslibuj zisk. Když se ptá, jestli koncept funguje, řekni poctivě, že ICT koncepty nejsou prokázanou výhodou a musí se ověřit backtestem. "
+      + "Když si nejsi jistý, řekni to. Piš prostý text bez Markdownu.\n\n"
+      + lessonText.slice(0, 6000) + "\n\nSlovníček stránky:\n" + (gl || "prázdný");
+  }
+  async function setupAsk(){
+    let sample = null;
+    try { if (window.claude && typeof window.claude.use === "function") sample = await window.claude.use("sample"); } catch(e){ sample = null; }
+    const off = msg => { $("ask-row").hidden = true; $("ask-note").textContent = msg; };
+    if (!sample){ off("Dotazy na Clauda jsou dostupné jen po otevření stránky v Claude."); return; }
+    let ctl = null, running = false;
+    $("ask-stop").addEventListener("click", () => { if (ctl) ctl.abort(); });
+    async function send(){
+      const text = $("ask-box").value.trim();
+      if (!text || running) return;
+      running = true; $("ask-msg").textContent = "";
+      $("ask-box").value = ""; $("ask-send").disabled = true; $("ask-stop").hidden = false;
+      const log = $("ask-log");
+      log.appendChild(el("div","msg me", text));
+      const bubble = el("div","msg ai","Přemýšlím…"); log.appendChild(bubble);
+      turns.push({role: "user", content: text});
+      while (turns.length > 12) turns.shift();
+      while (turns.length && turns[0].role !== "user") turns.shift();
+      ctl = new AbortController();
+      let failed = false;
+      try {
+        const res = await sample([{role: "user", content: askRules()}].concat(turns), {
+          cache: false, signal: ctl.signal, onText: u => { bubble.textContent = u.text; }
+        });
+        bubble.textContent = res.text;
+        turns.push({role: "assistant", content: res.text});
+        if (res.truncated) $("ask-msg").textContent = "Odpověď byla zkrácena. Zeptej se na menší část.";
+      } catch(e){
+        failed = true;
+        const code = e && e.code;
+        if (e && e.text){ bubble.textContent = e.text; turns.push({role: "assistant", content: e.text}); }
+        else { bubble.remove(); turns.pop(); }
+        if (code !== "cancelled") $("ask-msg").textContent = ASK_ERR[code] || "Odpověď se nepodařilo získat. Zkus to znovu.";
+        if (code === "not_granted" || code === "sampling_disabled" || code === "not_declared" || code === "capability_disabled") off(ASK_ERR[code] || "Dotazy na Clauda tu nejsou dostupné.");
+      }
+      running = false; $("ask-send").disabled = false; $("ask-stop").hidden = true;
+      if (failed && !$("ask-box").value) $("ask-box").value = text;
+    }
+    $("ask-send").addEventListener("click", send);
+    $("ask-box").addEventListener("keydown", ev => { if (ev.key === "Enter" && !ev.shiftKey){ ev.preventDefault(); send(); } });
+  }
+  setupAsk();
+  renderLesson(); renderGlossary();
+
+  async function start(){
+    $("c-save").textContent = "Postup se ukládá v tomto prohlížeči.";
+    $("l-save").textContent = "Postup se ukládá v tomto prohlížeči.";
+    const get = async f => { const r = await fetch("data/" + f + ".json", {cache: "no-store"}); if (!r.ok) throw new Error(f); return r.json(); };
+    const byTs = (a, b) => String(b.ts || "").localeCompare(String(a.ts || ""));
+    try {
+      const [core, ins, con, les, glo] = await Promise.all(["core","insights","concepts","lessons","glossary"].map(get));
+      renderModel(core.model || null);
+      $("s-run").textContent = fmtDateTime(core.state && core.state.lastRun);
+      renderBots((core.bots || []).slice());
+      renderVersions((core.versions || []).slice().sort(byTs));
+      renderBacktests((core.backtests || []).slice().sort(byTs));
+      concepts = {}; (con || []).forEach(c => { concepts[c.id] = c; }); conceptsLoaded = true;
+      insights = (ins || []).slice().sort(byTs); renderInsights(); renderConcepts();
+      lessons = (les || []).slice().sort(byTs); lessonsLoaded = true; renderLesson();
+      glossary = glo || []; renderGlossary();
+      banner("");
+    } catch(e){
+      banner("Data se nepodařilo načíst. Zkus stránku obnovit.");
+      ["s-ver","s-run","s-cnt"].forEach(i => $(i).textContent = "—");
+      $("m-summary").textContent = "Data nejsou k dispozici."; $("m-status").textContent = "Bez dat";
+    }
+  }
+  start();
+})();
+</script>
+
+
+</body></html>

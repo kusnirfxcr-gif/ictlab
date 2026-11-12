@@ -1,0 +1,16 @@
+{
+ "name": "ICT Lab",
+ "short_name": "ICT Lab",
+ "start_url": "./",
+ "display": "standalone",
+ "background_color": "#0f171c",
+ "theme_color": "#0b6b7d",
+ "icons": [
+  {
+   "src": "icon.svg",
+   "sizes": "any",
+   "type": "image/svg+xml",
+   "purpose": "any"
+  }
+ ]
+}
