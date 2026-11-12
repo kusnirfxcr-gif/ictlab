@@ -1,0 +1,1853 @@
+[
+ {
+  "id": "struktura",
+  "title": "Struktura trhu a trend",
+  "en": "market structure",
+  "week": 2,
+  "intro": "Než začneš hledat mezery a bloky, potřebuješ vědět, kterým směrem trh vůbec jde. To se čte z vrcholů a den.",
+  "h": 230,
+  "lo": 97.68,
+  "hi": 122.32,
+  "candles": [
+   [
+    100,
+    105,
+    99,
+    104
+   ],
+   [
+    104,
+    110,
+    103,
+    109
+   ],
+   [
+    109,
+    110,
+    105,
+    106
+   ],
+   [
+    106,
+    107,
+    103,
+    104
+   ],
+   [
+    104,
+    110,
+    103,
+    109
+   ],
+   [
+    109,
+    116,
+    108,
+    115
+   ],
+   [
+    115,
+    116,
+    111,
+    112
+   ],
+   [
+    112,
+    113,
+    108,
+    109
+   ],
+   [
+    109,
+    116,
+    108,
+    115
+   ],
+   [
+    115,
+    121,
+    114,
+    120
+   ]
+  ],
+  "steps": [
+   {
+    "show": 2,
+    "text": "Cena roste a pak se zastaví. Nejvyšší bod, od kterého se otočí dolů, je swing high.",
+    "add": [
+     {
+      "t": "text",
+      "x": 1,
+      "y": 110,
+      "s": "swing high",
+      "a": "middle",
+      "dy": -6
+     }
+    ]
+   },
+   {
+    "show": 4,
+    "text": "Chvíli klesá a znovu se otočí nahoru. Nejnižší bod toho poklesu je swing low.",
+    "add": [
+     {
+      "t": "text",
+      "x": 3,
+      "y": 103,
+      "s": "swing low",
+      "a": "middle",
+      "dy": 14
+     }
+    ]
+   },
+   {
+    "show": 6,
+    "text": "Další vrchol je výš než ten minulý. Říká se mu higher high, vyšší vrchol.",
+    "add": [
+     {
+      "t": "line",
+      "y": 110,
+      "x1": 1,
+      "x2": 5,
+      "c": "muted",
+      "dash": true
+     },
+     {
+      "t": "text",
+      "x": 5,
+      "y": 116,
+      "s": "vyšší high",
+      "a": "middle",
+      "c": "good",
+      "dy": -6
+     }
+    ]
+   },
+   {
+    "show": 8,
+    "text": "I další dno je výš než to minulé. To je higher low, vyšší dno.",
+    "add": [
+     {
+      "t": "line",
+      "y": 103,
+      "x1": 3,
+      "x2": 7,
+      "c": "muted",
+      "dash": true
+     },
+     {
+      "t": "text",
+      "x": 7,
+      "y": 108,
+      "s": "vyšší low",
+      "a": "middle",
+      "c": "good",
+      "dy": 14
+     }
+    ]
+   },
+   {
+    "show": 10,
+    "text": "Vyšší vrcholy a vyšší dna dohromady znamenají trend nahoru. Dokud ta řada platí, hledají se hlavně nákupy. Trend dolů vypadá zrcadlově: nižší vrcholy a nižší dna.",
+    "add": [
+     {
+      "t": "arrow",
+      "x1": 0.2,
+      "y1": 99,
+      "x2": 9.4,
+      "y2": 113,
+      "c": "good"
+     }
+    ]
+   }
+  ],
+  "remember": "Trend nahoru = vyšší vrcholy a vyšší dna. Trend dolů = nižší vrcholy a nižší dna."
+ },
+ {
+  "id": "bos-mss",
+  "title": "BOS a MSS: pokračování a zlom",
+  "en": "break of structure, market structure shift",
+  "week": 3,
+  "intro": "Dvě zkratky, které uslyšíš pořád. Jedna říká, že trend pokračuje, druhá, že se možná láme.",
+  "h": 230,
+  "lo": 98.1,
+  "hi": 114.9,
+  "candles": [
+   [
+    100,
+    106,
+    99,
+    105
+   ],
+   [
+    105,
+    110,
+    104,
+    109
+   ],
+   [
+    109,
+    110,
+    105,
+    106
+   ],
+   [
+    106,
+    107,
+    103,
+    104
+   ],
+   [
+    104,
+    109,
+    103,
+    108
+   ],
+   [
+    108,
+    114,
+    107,
+    113
+   ],
+   [
+    113,
+    114,
+    110,
+    111
+   ],
+   [
+    111,
+    112,
+    107,
+    108
+   ],
+   [
+    108,
+    112,
+    107,
+    111
+   ],
+   [
+    111,
+    112,
+    105,
+    106
+   ],
+   [
+    106,
+    107,
+    101,
+    102
+   ]
+  ],
+  "steps": [
+   {
+    "show": 4,
+    "text": "Trh roste, udělá vrchol a vrátí se kousek dolů. Vrchol si označ čarou.",
+    "add": [
+     {
+      "t": "line",
+      "y": 110,
+      "x1": 1,
+      "x2": 5,
+      "c": "amber",
+      "dash": false
+     },
+     {
+      "t": "text",
+      "x": 0.6,
+      "y": 110,
+      "s": "poslední vrchol",
+      "a": "start",
+      "c": "amber",
+      "dy": -5
+     }
+    ]
+   },
+   {
+    "show": 6,
+    "text": "Další svíčka zavře celým tělem nad tou čarou. To je BOS, break of structure. Trend nahoru se potvrdil.",
+    "add": [
+     {
+      "t": "text",
+      "x": 5,
+      "y": 114,
+      "s": "BOS",
+      "a": "middle",
+      "c": "amber",
+      "dy": -6
+     }
+    ]
+   },
+   {
+    "show": 8,
+    "text": "Po novém vrcholu přijde další pokles. Jeho dno je poslední vyšší dno, to teď hlídáš.",
+    "add": [
+     {
+      "t": "line",
+      "y": 107,
+      "x1": 7,
+      "x2": 10,
+      "c": "bad",
+      "dash": false
+     },
+     {
+      "t": "text",
+      "x": 6.6,
+      "y": 107,
+      "s": "vyšší dno",
+      "a": "end",
+      "c": "bad",
+      "dy": 13
+     }
+    ]
+   },
+   {
+    "show": 10,
+    "text": "Cena se pokusí nahoru, ale nový vrchol neudělá. Pak svíčka zavře pod posledním vyšším dnem. To je MSS, market structure shift.",
+    "add": [
+     {
+      "t": "text",
+      "x": 9,
+      "y": 105,
+      "s": "MSS",
+      "a": "middle",
+      "c": "bad",
+      "dy": 16
+     }
+    ]
+   },
+   {
+    "show": 11,
+    "text": "MSS je první varování, že se směr mění. Není to jistota. Počítá se jen zavření těla svíčky za úrovní, samotný knot nestačí.",
+    "add": []
+   }
+  ],
+  "remember": "BOS = zavření za úrovní po směru trendu. MSS = první zavření proti trendu."
+ },
+ {
+  "id": "likvidita",
+  "title": "Likvidita a sweep",
+  "en": "liquidity sweep",
+  "week": 4,
+  "intro": "Cena nechodí náhodně. Často míří tam, kde mají ostatní obchodníci stop-lossy.",
+  "h": 230,
+  "lo": 96.16,
+  "hi": 111.84,
+  "candles": [
+   [
+    100,
+    105,
+    99,
+    104
+   ],
+   [
+    104,
+    108,
+    103,
+    107
+   ],
+   [
+    107,
+    108,
+    103,
+    104
+   ],
+   [
+    104,
+    105,
+    101,
+    102
+   ],
+   [
+    102,
+    106,
+    101,
+    105
+   ],
+   [
+    105,
+    108,
+    104,
+    107
+   ],
+   [
+    107,
+    108,
+    104,
+    105
+   ],
+   [
+    105,
+    108,
+    104,
+    107
+   ],
+   [
+    107,
+    111,
+    105,
+    106
+   ],
+   [
+    106,
+    107,
+    101,
+    102
+   ],
+   [
+    102,
+    103,
+    97,
+    98
+   ]
+  ],
+  "steps": [
+   {
+    "show": 6,
+    "text": "Trh udělá vrchol, klesne a vrátí se skoro přesně na stejnou cenu. Dvěma stejně vysokým vrcholům se říká equal highs.",
+    "add": [
+     {
+      "t": "line",
+      "y": 108,
+      "x1": 1,
+      "x2": 5,
+      "c": "amber",
+      "dash": true
+     },
+     {
+      "t": "text",
+      "x": 3,
+      "y": 108,
+      "s": "equal highs",
+      "a": "middle",
+      "c": "amber",
+      "dy": -6
+     }
+    ]
+   },
+   {
+    "show": 8,
+    "text": "Kdo tady prodal, dal si stop-loss těsně nad vrcholy. Nad čarou se tak nahromadí spousta příkazů. Tomu se říká likvidita.",
+    "add": [
+     {
+      "t": "line",
+      "y": 108,
+      "x1": 5,
+      "x2": 8,
+      "c": "amber",
+      "dash": true
+     },
+     {
+      "t": "text",
+      "x": 6.5,
+      "y": 110,
+      "s": "tady leží stopy",
+      "a": "middle",
+      "c": "amber",
+      "dy": 0
+     }
+    ]
+   },
+   {
+    "show": 9,
+    "text": "Cena vystřelí nad čáru a stopy spustí. Jenže svíčka nahoře nezůstane a zavře zpátky pod úrovní. Tomu knotu se říká sweep, výběr likvidity.",
+    "add": [
+     {
+      "t": "text",
+      "x": 8,
+      "y": 111,
+      "s": "sweep",
+      "a": "middle",
+      "c": "bad",
+      "dy": -6
+     }
+    ]
+   },
+   {
+    "show": 11,
+    "text": "Po sweepu se trh otočí a klesá. Kdyby svíčka zavřela nad čarou a pokračovala výš, nebyl by to sweep, ale průraz. Rozdíl poznáš až podle zavření svíčky.",
+    "add": []
+   }
+  ],
+  "remember": "Nad vrcholy a pod dny leží stopy. Sweep je knot, který je vybere a vrátí se."
+ },
+ {
+  "id": "fvg-up",
+  "title": "Fair value gap nahoru",
+  "en": "bullish FVG",
+  "week": 5,
+  "intro": "FVG je nejdůležitější vstupní zóna v ICT. Skládá se ze tří svíček a pozná se podle knotů.",
+  "h": 240,
+  "lo": 96.92,
+  "hi": 117.08,
+  "candles": [
+   [
+    100,
+    101,
+    98,
+    99
+   ],
+   [
+    99,
+    101,
+    98,
+    100
+   ],
+   [
+    100,
+    103,
+    99,
+    102
+   ],
+   [
+    102,
+    110,
+    101,
+    109
+   ],
+   [
+    109,
+    113,
+    108,
+    112
+   ],
+   [
+    112,
+    114,
+    111,
+    113
+   ],
+   [
+    113,
+    114,
+    109,
+    110
+   ],
+   [
+    110,
+    111,
+    105.5,
+    107
+   ],
+   [
+    107,
+    112,
+    106,
+    111
+   ],
+   [
+    111,
+    116,
+    110,
+    115
+   ]
+  ],
+  "steps": [
+   {
+    "show": 3,
+    "text": "Klidný trh. Malé svíčky, nikdo nemá navrch.",
+    "add": []
+   },
+   {
+    "show": 4,
+    "text": "Najednou přijde jedna velká svíčka. Kupci na chvíli úplně převládli. Takovému rychlému pohybu se říká displacement.",
+    "add": [
+     {
+      "t": "text",
+      "x": 3,
+      "y": 110,
+      "s": "displacement",
+      "a": "middle",
+      "dy": -6
+     }
+    ]
+   },
+   {
+    "show": 5,
+    "text": "Teď se podívej na svíčku před ní a na svíčku po ní. Horní knot první končí na 103. Dolní knot třetí začíná na 108. Nepřekrývají se.",
+    "add": [
+     {
+      "t": "line",
+      "y": 103,
+      "x1": 2,
+      "x2": 4.4,
+      "c": "accent",
+      "dash": false
+     },
+     {
+      "t": "text",
+      "x": 1.7,
+      "y": 103,
+      "s": "high 1. svíčky",
+      "a": "end",
+      "c": "accent"
+     },
+     {
+      "t": "line",
+      "y": 108,
+      "x1": 2.6,
+      "x2": 4.4,
+      "c": "accent",
+      "dash": false
+     },
+     {
+      "t": "text",
+      "x": 2.4,
+      "y": 108,
+      "s": "low 3. svíčky",
+      "a": "end",
+      "c": "accent"
+     }
+    ]
+   },
+   {
+    "show": 5,
+    "text": "Pásmo mezi těmi dvěma knoty je fair value gap. Obchodovalo se v něm jen směrem nahoru, prodejci se tam skoro nedostali ke slovu.",
+    "add": [
+     {
+      "t": "box",
+      "x1": 3,
+      "x2": 9,
+      "y1": 103,
+      "y2": 108,
+      "c": "accent"
+     },
+     {
+      "t": "text",
+      "x": 9.4,
+      "y": 108,
+      "s": "FVG",
+      "a": "end",
+      "c": "accent",
+      "dy": 13
+     }
+    ]
+   },
+   {
+    "show": 8,
+    "text": "Cena se do mezery později vrací. ICT tam hledá nákup, nejčastěji kolem středu mezery. Tomu středu se říká consequent encroachment, zkráceně CE.",
+    "add": [
+     {
+      "t": "line",
+      "y": 105.5,
+      "x1": 3,
+      "x2": 9,
+      "c": "accent",
+      "dash": true
+     },
+     {
+      "t": "text",
+      "x": 9.4,
+      "y": 105.5,
+      "s": "50 % (CE)",
+      "a": "end",
+      "c": "accent",
+      "dy": 13
+     }
+    ]
+   },
+   {
+    "show": 10,
+    "text": "Z mezery trh pokračuje původním směrem. Kdyby jí propadl a svíčka zavřela pod ní, FVG selhal a nákup neplatí.",
+    "add": [
+     {
+      "t": "arrow",
+      "x1": 7.2,
+      "y1": 106,
+      "x2": 9.2,
+      "y2": 114,
+      "c": "good"
+     }
+    ]
+   }
+  ],
+  "remember": "Bullish FVG = mezera mezi high první a low třetí svíčky. Čeká se na návrat do ní."
+ },
+ {
+  "id": "fvg-down",
+  "title": "Fair value gap dolů",
+  "en": "bearish FVG",
+  "week": 5,
+  "intro": "Totéž obráceně. Místo nákupu se v mezeře hledá prodej.",
+  "h": 240,
+  "lo": 102.92,
+  "hi": 123.08,
+  "candles": [
+   [
+    120,
+    122,
+    119,
+    121
+   ],
+   [
+    121,
+    122,
+    119,
+    120
+   ],
+   [
+    120,
+    121,
+    117,
+    118
+   ],
+   [
+    118,
+    119,
+    110,
+    111
+   ],
+   [
+    111,
+    112,
+    107,
+    108
+   ],
+   [
+    108,
+    109,
+    106,
+    107
+   ],
+   [
+    107,
+    111,
+    106,
+    110
+   ],
+   [
+    110,
+    114.5,
+    109,
+    113
+   ],
+   [
+    113,
+    114,
+    108,
+    109
+   ],
+   [
+    109,
+    110,
+    104,
+    105
+   ]
+  ],
+  "steps": [
+   {
+    "show": 5,
+    "text": "Velká klesající svíčka. Dolní knot první svíčky končí na 117, horní knot třetí začíná na 112. Mezera mezi nimi je bearish FVG.",
+    "add": [
+     {
+      "t": "box",
+      "x1": 3,
+      "x2": 9,
+      "y1": 112,
+      "y2": 117,
+      "c": "accent"
+     },
+     {
+      "t": "text",
+      "x": 9.4,
+      "y": 117,
+      "s": "FVG",
+      "a": "end",
+      "c": "accent",
+      "dy": 13
+     },
+     {
+      "t": "text",
+      "x": 3,
+      "y": 110,
+      "s": "displacement",
+      "a": "middle",
+      "dy": 16
+     }
+    ]
+   },
+   {
+    "show": 8,
+    "text": "Cena se do mezery vrátí zdola. Tady ICT hledá prodej, opět kolem středu mezery.",
+    "add": [
+     {
+      "t": "line",
+      "y": 114.5,
+      "x1": 3,
+      "x2": 9,
+      "c": "accent",
+      "dash": true
+     },
+     {
+      "t": "text",
+      "x": 9.4,
+      "y": 114.5,
+      "s": "50 % (CE)",
+      "a": "end",
+      "c": "accent",
+      "dy": 13
+     }
+    ]
+   },
+   {
+    "show": 10,
+    "text": "Z mezery pokračuje dolů. Kdyby svíčka zavřela nad mezerou, FVG selhal.",
+    "add": [
+     {
+      "t": "arrow",
+      "x1": 7.2,
+      "y1": 114,
+      "x2": 9.2,
+      "y2": 106,
+      "c": "bad"
+     }
+    ]
+   }
+  ],
+  "remember": "Bearish FVG = mezera mezi low první a high třetí svíčky."
+ },
+ {
+  "id": "ifvg",
+  "title": "Inverzní FVG",
+  "en": "inversion FVG",
+  "week": 5,
+  "intro": "Co se stane s mezerou, kterou cena prorazí? Nezmizí, jen změní roli.",
+  "h": 240,
+  "lo": 92.8,
+  "hi": 115.2,
+  "candles": [
+   [
+    100,
+    102,
+    99,
+    101
+   ],
+   [
+    101,
+    104,
+    100,
+    103
+   ],
+   [
+    103,
+    111,
+    102,
+    110
+   ],
+   [
+    110,
+    114,
+    109,
+    113
+   ],
+   [
+    113,
+    114,
+    110,
+    111
+   ],
+   [
+    111,
+    112,
+    105,
+    106
+   ],
+   [
+    106,
+    107,
+    99,
+    100
+   ],
+   [
+    100,
+    101,
+    97,
+    98
+   ],
+   [
+    98,
+    102,
+    97,
+    101
+   ],
+   [
+    101,
+    106.5,
+    100,
+    104
+   ],
+   [
+    104,
+    105,
+    99,
+    100
+   ],
+   [
+    100,
+    101,
+    94,
+    95
+   ]
+  ],
+  "steps": [
+   {
+    "show": 4,
+    "text": "Silný růst nechal bullish FVG mezi 104 a 109. Čekalo by se, že při návratu cenu podrží.",
+    "add": [
+     {
+      "t": "box",
+      "x1": 2,
+      "x2": 11,
+      "y1": 104,
+      "y2": 109,
+      "c": "accent"
+     },
+     {
+      "t": "text",
+      "x": 7,
+      "y": 109,
+      "s": "FVG",
+      "a": "start",
+      "c": "accent",
+      "dy": -5
+     }
+    ]
+   },
+   {
+    "show": 7,
+    "text": "Tentokrát ji nepodrží. Cena mezerou propadne a svíčka zavře celým tělem pod ní.",
+    "add": [
+     {
+      "t": "text",
+      "x": 5.6,
+      "y": 100,
+      "s": "zavření pod mezerou",
+      "a": "end",
+      "c": "bad"
+     }
+    ]
+   },
+   {
+    "show": 7,
+    "text": "Mezera tím mění roli. Z místa, kde se nakupovalo, se stává místo, kde se prodává. Říká se jí inverzní FVG.",
+    "add": [
+     {
+      "t": "box",
+      "x1": 2,
+      "x2": 11,
+      "y1": 104,
+      "y2": 109,
+      "c": "bad"
+     },
+     {
+      "t": "text",
+      "x": 11.4,
+      "y": 109,
+      "s": "inverzní FVG",
+      "a": "end",
+      "c": "bad",
+      "dy": -5
+     }
+    ]
+   },
+   {
+    "show": 10,
+    "text": "Cena se k ní vrátí zdola, vejde do ní a odrazí se zpátky dolů.",
+    "add": []
+   },
+   {
+    "show": 12,
+    "text": "Inverzní FVG se často používá jako vstup po změně směru. Platí jen tehdy, když mezeru prorazilo tělo svíčky, ne pouhý knot.",
+    "add": [
+     {
+      "t": "arrow",
+      "x1": 9.3,
+      "y1": 105,
+      "x2": 11.2,
+      "y2": 96,
+      "c": "bad"
+     }
+    ]
+   }
+  ],
+  "remember": "Proražený FVG nemizí. Funguje z opačné strany."
+ },
+ {
+  "id": "ob-up",
+  "title": "Order block nahoru",
+  "en": "bullish order block",
+  "week": 6,
+  "intro": "Order block je jedna konkrétní svíčka. Najdeš ji vždy těsně před silným pohybem.",
+  "h": 230,
+  "lo": 98.1,
+  "hi": 114.9,
+  "candles": [
+   [
+    105,
+    106,
+    102,
+    103
+   ],
+   [
+    103,
+    104,
+    99,
+    100
+   ],
+   [
+    100,
+    107,
+    99,
+    106
+   ],
+   [
+    106,
+    112,
+    105,
+    111
+   ],
+   [
+    111,
+    114,
+    110,
+    113
+   ],
+   [
+    113,
+    114,
+    109,
+    110
+   ],
+   [
+    110,
+    111,
+    105,
+    106
+   ],
+   [
+    106,
+    107,
+    101.5,
+    103
+   ],
+   [
+    103,
+    109,
+    102,
+    108
+   ],
+   [
+    108,
+    114,
+    107,
+    113
+   ]
+  ],
+  "steps": [
+   {
+    "show": 2,
+    "text": "Cena klesá. Zapamatuj si poslední klesající svíčku.",
+    "add": []
+   },
+   {
+    "show": 4,
+    "text": "Hned po ní přijde silný růst, displacement, který otočí směr nahoru.",
+    "add": [
+     {
+      "t": "text",
+      "x": 2.5,
+      "y": 113,
+      "s": "displacement",
+      "a": "middle",
+      "dy": 0
+     }
+    ]
+   },
+   {
+    "show": 4,
+    "text": "Ta poslední klesající svíčka před růstem je bullish order block. ICT ji čte jako místo, kde se před pohybem ve velkém nakupovalo.",
+    "add": [
+     {
+      "t": "box",
+      "x1": 1,
+      "x2": 9,
+      "y1": 99,
+      "y2": 104,
+      "c": "amber"
+     },
+     {
+      "t": "text",
+      "x": 8.8,
+      "y": 100,
+      "s": "order block",
+      "a": "end",
+      "c": "amber",
+      "dy": 6
+     }
+    ]
+   },
+   {
+    "show": 8,
+    "text": "Cena se k ní později vrátí. Tady ICT hledá nákup.",
+    "add": []
+   },
+   {
+    "show": 10,
+    "text": "Z order blocku trh znovu roste. Order block má váhu jen tehdy, když po něm přišel opravdu silný pohyb. Obyčejná červená svíčka uprostřed ničeho order block není.",
+    "add": [
+     {
+      "t": "arrow",
+      "x1": 7.3,
+      "y1": 103,
+      "x2": 9.2,
+      "y2": 113,
+      "c": "good"
+     }
+    ]
+   }
+  ],
+  "remember": "Bullish order block = poslední klesající svíčka před silným růstem."
+ },
+ {
+  "id": "ob-down",
+  "title": "Order block dolů",
+  "en": "bearish order block",
+  "week": 6,
+  "intro": "Zrcadlový případ: poslední rostoucí svíčka před silným poklesem.",
+  "h": 230,
+  "lo": 90.1,
+  "hi": 106.9,
+  "candles": [
+   [
+    100,
+    103,
+    99,
+    102
+   ],
+   [
+    102,
+    106,
+    101,
+    105
+   ],
+   [
+    105,
+    106,
+    98,
+    99
+   ],
+   [
+    99,
+    100,
+    93,
+    94
+   ],
+   [
+    94,
+    95,
+    91,
+    92
+   ],
+   [
+    92,
+    96,
+    91,
+    95
+   ],
+   [
+    95,
+    100,
+    94,
+    99
+   ],
+   [
+    99,
+    104,
+    98,
+    102
+   ],
+   [
+    102,
+    103,
+    96,
+    97
+   ],
+   [
+    97,
+    98,
+    91,
+    92
+   ]
+  ],
+  "steps": [
+   {
+    "show": 4,
+    "text": "Cena roste a pak přijde prudký pokles. Poslední rostoucí svíčka před ním je bearish order block.",
+    "add": [
+     {
+      "t": "box",
+      "x1": 1,
+      "x2": 9,
+      "y1": 101,
+      "y2": 106,
+      "c": "amber"
+     },
+     {
+      "t": "text",
+      "x": 8.8,
+      "y": 105,
+      "s": "order block",
+      "a": "end",
+      "c": "amber",
+      "dy": 6
+     },
+     {
+      "t": "text",
+      "x": 2.5,
+      "y": 92,
+      "s": "displacement",
+      "a": "middle",
+      "dy": 0
+     }
+    ]
+   },
+   {
+    "show": 8,
+    "text": "Cena se k ní vrátí zdola. Tady ICT hledá prodej.",
+    "add": []
+   },
+   {
+    "show": 10,
+    "text": "Z order blocku trh znovu klesá.",
+    "add": [
+     {
+      "t": "arrow",
+      "x1": 7.3,
+      "y1": 102,
+      "x2": 9.2,
+      "y2": 92,
+      "c": "bad"
+     }
+    ]
+   }
+  ],
+  "remember": "Bearish order block = poslední rostoucí svíčka před silným poklesem."
+ },
+ {
+  "id": "breaker",
+  "title": "Breaker",
+  "en": "breaker block",
+  "week": 6,
+  "intro": "Když order block selže, nezahazuje se. Dostane nové jméno a novou roli.",
+  "h": 230,
+  "lo": 93.8,
+  "hi": 116.2,
+  "candles": [
+   [
+    100,
+    103,
+    99,
+    102
+   ],
+   [
+    102,
+    106,
+    101,
+    105
+   ],
+   [
+    105,
+    106,
+    99,
+    100
+   ],
+   [
+    100,
+    101,
+    95,
+    96
+   ],
+   [
+    96,
+    99,
+    95,
+    98
+   ],
+   [
+    98,
+    105,
+    97,
+    104
+   ],
+   [
+    104,
+    111,
+    103,
+    110
+   ],
+   [
+    110,
+    113,
+    109,
+    112
+   ],
+   [
+    112,
+    113,
+    108,
+    109
+   ],
+   [
+    109,
+    110,
+    104,
+    105
+   ],
+   [
+    105,
+    110,
+    104,
+    109
+   ],
+   [
+    109,
+    115,
+    108,
+    114
+   ]
+  ],
+  "steps": [
+   {
+    "show": 4,
+    "text": "Poslední rostoucí svíčka před poklesem je bearish order block. Čekal by se od něj odraz dolů.",
+    "add": [
+     {
+      "t": "box",
+      "x1": 1,
+      "x2": 11,
+      "y1": 101,
+      "y2": 106,
+      "c": "bad"
+     },
+     {
+      "t": "text",
+      "x": 11.4,
+      "y": 101,
+      "s": "bearish order block",
+      "a": "end",
+      "c": "bad",
+      "dy": 13
+     }
+    ]
+   },
+   {
+    "show": 7,
+    "text": "Cena se ale vrátí, projde jím a zavře nad ním. Order block selhal.",
+    "add": [
+     {
+      "t": "text",
+      "x": 6,
+      "y": 111,
+      "s": "zavření nad",
+      "a": "middle",
+      "c": "good",
+      "dy": -6
+     }
+    ]
+   },
+   {
+    "show": 7,
+    "text": "Selhanému order blocku se říká breaker. Od teď funguje z druhé strany: z odporu se stala podpora.",
+    "add": [
+     {
+      "t": "box",
+      "x1": 1,
+      "x2": 11,
+      "y1": 101,
+      "y2": 106,
+      "c": "good"
+     },
+     {
+      "t": "text",
+      "x": 4,
+      "y": 103.5,
+      "s": "breaker",
+      "a": "middle",
+      "c": "good"
+     }
+    ]
+   },
+   {
+    "show": 10,
+    "text": "Když se cena vrátí shora, ICT v breakeru hledá nákup.",
+    "add": []
+   },
+   {
+    "show": 12,
+    "text": "A trh z něj pokračuje nahoru. Je to stejná myšlenka jako u inverzního FVG: proražená zóna mění roli.",
+    "add": [
+     {
+      "t": "arrow",
+      "x1": 9.3,
+      "y1": 105,
+      "x2": 11.2,
+      "y2": 114,
+      "c": "good"
+     }
+    ]
+   }
+  ],
+  "remember": "Breaker = order block, který cena prorazila. Funguje z opačné strany."
+ },
+ {
+  "id": "premium-discount",
+  "title": "Premium, discount a OTE",
+  "en": "premium / discount",
+  "week": 6,
+  "intro": "Stejná mezera může být dobrá i špatná. Záleží na tom, jestli leží levně, nebo draho.",
+  "h": 240,
+  "lo": 97.92,
+  "hi": 118.08,
+  "candles": [
+   [
+    100,
+    106,
+    99,
+    105
+   ],
+   [
+    105,
+    112,
+    104,
+    111
+   ],
+   [
+    111,
+    117,
+    110,
+    116
+   ],
+   [
+    116,
+    117,
+    112,
+    113
+   ],
+   [
+    113,
+    114,
+    108,
+    109
+   ],
+   [
+    109,
+    110,
+    105,
+    106
+   ],
+   [
+    106,
+    109,
+    105,
+    108
+   ],
+   [
+    108,
+    112,
+    107,
+    111
+   ],
+   [
+    111,
+    116,
+    110,
+    115
+   ]
+  ],
+  "steps": [
+   {
+    "show": 3,
+    "text": "Vezmi poslední výrazný pohyb. Označ jeho dno a vrchol.",
+    "add": [
+     {
+      "t": "line",
+      "y": 99,
+      "x1": 0,
+      "x2": 8,
+      "c": "muted",
+      "dash": false
+     },
+     {
+      "t": "text",
+      "x": 8.3,
+      "y": 99,
+      "s": "dno",
+      "a": "end",
+      "c": "muted",
+      "dy": 13
+     },
+     {
+      "t": "line",
+      "y": 117,
+      "x1": 0,
+      "x2": 8,
+      "c": "muted",
+      "dash": false
+     },
+     {
+      "t": "text",
+      "x": 8.3,
+      "y": 117,
+      "s": "vrchol",
+      "a": "end",
+      "c": "muted",
+      "dy": -5
+     }
+    ]
+   },
+   {
+    "show": 3,
+    "text": "Rozděl ho přesně v půlce. Té půlce se říká equilibrium.",
+    "add": [
+     {
+      "t": "line",
+      "y": 108,
+      "x1": 0,
+      "x2": 8,
+      "c": "muted",
+      "dash": true
+     },
+     {
+      "t": "text",
+      "x": -0.4,
+      "y": 108,
+      "s": "50 %",
+      "a": "start",
+      "c": "muted",
+      "dy": -4
+     }
+    ]
+   },
+   {
+    "show": 3,
+    "text": "Horní polovina je premium, tedy draho. Dolní polovina je discount, tedy levně. Nakupovat se má levně, prodávat draho.",
+    "add": [
+     {
+      "t": "box",
+      "x1": 0,
+      "x2": 8,
+      "y1": 108,
+      "y2": 117,
+      "c": "bad"
+     },
+     {
+      "t": "box",
+      "x1": 0,
+      "x2": 8,
+      "y1": 99,
+      "y2": 108,
+      "c": "good"
+     },
+     {
+      "t": "text",
+      "x": 0,
+      "y": 114.5,
+      "s": "premium",
+      "a": "start",
+      "c": "bad"
+     },
+     {
+      "t": "text",
+      "x": 8.3,
+      "y": 100.5,
+      "s": "discount",
+      "a": "end",
+      "c": "good"
+     }
+    ]
+   },
+   {
+    "show": 6,
+    "text": "Cena se vrací dolů do discountu. Nejhlubší část návratu, 62 až 79 procent, se jmenuje OTE, optimal trade entry.",
+    "add": [
+     {
+      "t": "box",
+      "x1": 3.6,
+      "x2": 8,
+      "y1": 102.8,
+      "y2": 105.8,
+      "c": "amber"
+     },
+     {
+      "t": "text",
+      "x": 8.3,
+      "y": 104.3,
+      "s": "OTE",
+      "a": "end",
+      "c": "amber"
+     }
+    ]
+   },
+   {
+    "show": 9,
+    "text": "Odtud trh pokračuje nahoru. FVG nebo order block má podle ICT větší váhu, když leží v discountu (pro nákup) nebo v premium (pro prodej).",
+    "add": [
+     {
+      "t": "arrow",
+      "x1": 5.3,
+      "y1": 105,
+      "x2": 8.2,
+      "y2": 114,
+      "c": "good"
+     }
+    ]
+   }
+  ],
+  "remember": "Nakupuj v dolní polovině pohybu, prodávej v horní."
+ },
+ {
+  "id": "dohromady",
+  "title": "Všechno dohromady",
+  "en": "sweep, MSS, FVG",
+  "week": 9,
+  "intro": "Teď už znáš všechny dílky. Takhle z nich ICT skládá jeden obchod, tady na prodej.",
+  "h": 250,
+  "lo": 95.65,
+  "hi": 120.85,
+  "candles": [
+   [
+    110,
+    114,
+    109,
+    113
+   ],
+   [
+    113,
+    117,
+    112,
+    116
+   ],
+   [
+    116,
+    117,
+    113,
+    114
+   ],
+   [
+    114,
+    115,
+    111,
+    112
+   ],
+   [
+    112,
+    116,
+    111,
+    115
+   ],
+   [
+    115,
+    119,
+    114,
+    116
+   ],
+   [
+    116,
+    117,
+    112,
+    113
+   ],
+   [
+    113,
+    114,
+    106,
+    107
+   ],
+   [
+    107,
+    108,
+    103,
+    104
+   ],
+   [
+    104,
+    107,
+    103,
+    106
+   ],
+   [
+    106,
+    110,
+    105,
+    109
+   ],
+   [
+    109,
+    110,
+    104,
+    105
+   ],
+   [
+    105,
+    106,
+    100,
+    101
+   ],
+   [
+    101,
+    102,
+    97,
+    98
+   ]
+  ],
+  "steps": [
+   {
+    "show": 5,
+    "text": "1. Likvidita. Nad posledním vrcholem leží stop-lossy.",
+    "add": [
+     {
+      "t": "line",
+      "y": 117,
+      "x1": 1,
+      "x2": 5,
+      "c": "amber",
+      "dash": false
+     },
+     {
+      "t": "text",
+      "x": 0.6,
+      "y": 117,
+      "s": "likvidita",
+      "a": "start",
+      "c": "amber",
+      "dy": -5
+     }
+    ]
+   },
+   {
+    "show": 6,
+    "text": "2. Sweep. Knot vyletí nad vrchol, vybere stopy a svíčka zavře zpátky pod ním.",
+    "add": [
+     {
+      "t": "text",
+      "x": 5,
+      "y": 119,
+      "s": "sweep",
+      "a": "middle",
+      "c": "bad",
+      "dy": -6
+     }
+    ]
+   },
+   {
+    "show": 8,
+    "text": "3. MSS. Velká svíčka zavře pod posledním dnem. Směr se láme dolů.",
+    "add": [
+     {
+      "t": "line",
+      "y": 111,
+      "x1": 3,
+      "x2": 7,
+      "c": "muted",
+      "dash": false
+     },
+     {
+      "t": "text",
+      "x": 2.7,
+      "y": 111,
+      "s": "MSS",
+      "a": "end",
+      "dy": 13
+     }
+    ]
+   },
+   {
+    "show": 9,
+    "text": "4. FVG. Ten prudký pokles po sobě nechal mezeru mezi 108 a 112.",
+    "add": [
+     {
+      "t": "box",
+      "x1": 7,
+      "x2": 11,
+      "y1": 108,
+      "y2": 112,
+      "c": "accent"
+     },
+     {
+      "t": "text",
+      "x": 9,
+      "y": 112,
+      "s": "FVG",
+      "a": "middle",
+      "c": "accent",
+      "dy": -5
+     }
+    ]
+   },
+   {
+    "show": 11,
+    "text": "5. Vstup. Cena se vrátí do středu mezery. Tam je prodejní příkaz, stop-loss leží nad knotem sweepu.",
+    "add": [
+     {
+      "t": "line",
+      "y": 110,
+      "x1": 9,
+      "x2": 13,
+      "c": "good",
+      "dash": true
+     },
+     {
+      "t": "text",
+      "x": 13.4,
+      "y": 110,
+      "s": "vstup",
+      "a": "end",
+      "c": "good",
+      "dy": -4
+     },
+     {
+      "t": "line",
+      "y": 119.5,
+      "x1": 6,
+      "x2": 13,
+      "c": "bad",
+      "dash": true
+     },
+     {
+      "t": "text",
+      "x": 13.4,
+      "y": 119.5,
+      "s": "stop",
+      "a": "end",
+      "c": "bad",
+      "dy": -4
+     }
+    ]
+   },
+   {
+    "show": 14,
+    "text": "6. Cíl. Trh klesá k cíli. Vzdálenost vstupu od stopu je riziko, 1R. Tohle je přesně model, který ICT Lab testuje. V backtestu zatím nevydělává, takže ho ber jako cvičení ve čtení grafu, ne jako návod k obchodu.",
+    "add": [
+     {
+      "t": "line",
+      "y": 100.5,
+      "x1": 10,
+      "x2": 13,
+      "c": "good",
+      "dash": false
+     },
+     {
+      "t": "text",
+      "x": 10,
+      "y": 100.5,
+      "s": "cíl 1R",
+      "a": "start",
+      "c": "good",
+      "dy": 13
+     }
+    ]
+   }
+  ],
+  "remember": "Likvidita, sweep, MSS, FVG, vstup. Chybí-li jeden krok, není to setup."
+ }
+]

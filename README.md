@@ -14,6 +14,7 @@ Vzdělávací projekt, žádné investiční doporučení. Model zatím v backte
 - `data/concepts.json` – pojmy s vysvětlením a obrázkem.
 - `data/lessons.json` – denní lekce.
 - `data/glossary.json` – slovníček.
+- `data/priceaction.json` – témata „Price action v obrázcích“ v Lauřině prostoru, skládaná krok za krokem. Denní běh botů je nemění.
 
 ## Data format (for the daily bot run)
 
