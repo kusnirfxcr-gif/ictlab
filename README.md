@@ -79,3 +79,7 @@ Průvodci v sekci Studium: `model2022` (kroky modelu) a `core` (dvanáct měsíc
 ## Denní studium (běží z chatu, dokud naplánovaná úloha neumí ukládat)
 
 Kromě šesti botů se každý den dělá i studium Zeussyho přístupu: veřejná vlákna, veřejná shrnutí přednášek a rozbory obchodů. Nové poznatky se zapisují do `data/insights.json` s `bot: "skaut"` a konceptem `cas` nebo jiným vhodným, vždy vlastními slovy a s odkazem. Placený obsah se nepřebírá.
+
+## Účet a synchronizace
+
+Přihlášení a ukládání dat k účtu běží přes Supabase (adresa projektu a veřejný klíč jsou v `index.html` v objektu `SB`; tajný klíč do repozitáře nepatří). Každý člověk má jeden řádek v tabulce `public.tape_data` (`user_id`, `data` jsonb, `updated_at`) chráněný pravidly RLS. Do účtu jdou klíče z `SYNC_KEYS`; obrázky (IndexedDB), `tape-key` a `tape-coach-chat` zůstávají v zařízení. Stav přihlášení je v `tape-auth`, stav synchronizace v `tape-sync`.

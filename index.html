@@ -845,9 +845,10 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
   </section>
 
   <section class="view" id="v-soukromi">
-    <div class="card"><h2>Soukromí a data</h2><p class="muted">Tape zatím nemá účty ani vlastní server. Tady je přesně, kde tvoje data jsou.</p>
+    <div class="card"><h2>Soukromí a data</h2><p class="muted">Bez účtu zůstává všechno jen v tvém prohlížeči. Tady je přesně, kde tvoje data jsou.</p>
       <ul class="stl">
-        <li><b>V tvém prohlížeči:</b> deník, plány, seznam před vstupem, postup v učení, nastavení a obrázky k obchodům. Nikam se neodesílají.</li>
+        <li><b>V tvém prohlížeči:</b> deník, plány, seznam před vstupem, postup v učení, nastavení a obrázky k obchodům. Bez přihlášení se nikam neodesílají.</li>
+        <li><b>Účet:</b> když se přihlásíš, uloží se tvůj e-mail, deník, plány, postup v učení a nastavení u služby Supabase, aby se načetly i na jiném zařízení. Obrázky k obchodům a klíč ke kouči se neposílají.</li>
         <li><b>Hosting:</b> stránka je statická a běží na GitHub Pages. Poskytovatel hostingu vidí běžné údaje o připojení, například IP adresu.</li>
         <li><b>Písma:</b> načítají se z Google Fonts, takže prohlížeč pošle požadavek Googlu.</li>
         <li><b>AI kouč:</b> jen když si sám nastavíš API klíč. Pak se otázka a údaje z deníku posílají společnosti Anthropic.</li>
@@ -4080,6 +4081,115 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
   }
   renderPremium();
   fetch("data/premium.json", {cache: "no-store"}).then(r => r.json()).then(v => { if (Array.isArray(v)) premTopics = v; renderPremium(); }).catch(() => {});
+
+  // ---------- account: sign-in and sync through Supabase (auth and one row of data per person) ----------
+  const SB = {url: "https://eqzcsmqfykihipzppdih.supabase.co", key: "sb_publishable_lYAf4dK6PbTx0aZ4W-8hNQ_FnoS7nhZ"}, AUTH_KEY = "tape-auth", SYNC_KEY = "tape-sync", SYNC_KEYS = LS_KEYS.filter(k => k !== "tape-coach-chat");
+  let auth = null; try { auth = JSON.parse(localStorage.getItem(AUTH_KEY) || "null"); } catch(e){}
+  let accMsg = "", accMode = "in", accBusy = false, accConflict = null, accLast = "", refreshing = null, syncing = false;
+  const accBox = el("div","card"), accBack = () => location.origin + location.pathname;
+  function authSave(s){ auth = s; try { if (s) localStorage.setItem(AUTH_KEY, JSON.stringify(s)); else localStorage.removeItem(AUTH_KEY); } catch(e){} }
+  function sessOf(j){ return {at: j.access_token, rt: j.refresh_token, exp: Date.now() + (Number(j.expires_in) || 3600) * 1000, id: j.user && j.user.id, email: j.user && j.user.email}; }
+  async function sbAuth(path, body, tok, method){
+    const h = {"apikey": SB.key, "Content-Type": "application/json"}; if (tok) h.Authorization = "Bearer " + tok;
+    const r = await fetch(SB.url + "/auth/v1/" + path, {method: method || "POST", headers: h, body: body ? JSON.stringify(body) : undefined}); let j = null; try { j = await r.json(); } catch(e){}
+    if (!r.ok){ const e = new Error("auth"); e.status = r.status; e.code = j && (j.error_code || j.error || j.code); throw e; } return j || {};
+  }
+  function accToken(){
+    if (!auth) return Promise.resolve(null); if (auth.exp - Date.now() > 60000) return Promise.resolve(auth.at);
+    if (!refreshing) refreshing = sbAuth("token?grant_type=refresh_token", {refresh_token: auth.rt}).then(j => { authSave(sessOf(j)); return auth.at; })
+      .catch(e => { if (e.status >= 400 && e.status < 500){ authSave(null); accMsg = "Přihlášení vypršelo. Přihlas se znovu."; accRender(); } return null; }).then(v => { refreshing = null; return v; });
+    return refreshing;
+  }
+  async function sbData(method, q, body){
+    const t = await accToken(); if (!t) throw new Error("auth");
+    const r = await fetch(SB.url + "/rest/v1/tape_data" + q, {method: method, headers: {"apikey": SB.key, "Authorization": "Bearer " + t, "Content-Type": "application/json", "Prefer": "resolution=merge-duplicates,return=representation"}, body: body ? JSON.stringify(body) : undefined});
+    if (!r.ok){ const e = new Error("data"); e.status = r.status; throw e; } return r.json();
+  }
+  const accErr = e => { const c = String(e && e.code || ""), s = e && e.status;
+    if (c === "invalid_credentials" || c === "invalid_grant") return "E-mail nebo heslo nesedí.";
+    if (c === "email_not_confirmed") return "Nejdřív potvrď e-mail odkazem, který jsme ti poslali.";
+    if (c === "weak_password") return "Heslo je moc slabé. Dej aspoň 8 znaků.";
+    if (c === "user_already_exists" || c === "email_exists") return "Účet s tímhle e-mailem už existuje. Přihlas se.";
+    if (c === "same_password") return "Nové heslo musí být jiné než staré.";
+    if (c === "signup_disabled") return "Registrace je teď vypnutá.";
+    if (s === 429 || /rate_limit/.test(c)) return "Příliš mnoho pokusů. Zkus to za chvíli.";
+    if (!s) return "Nejde se připojit. Zkontroluj internet.";
+    return "Nepovedlo se to. Zkus to znovu."; };
+  // sync: local data are compared with the row in the account by a short fingerprint
+  function snap(){ const o = {}; SYNC_KEYS.forEach(k => { let v = null; try { v = localStorage.getItem(k); } catch(e){} if (v != null) o[k] = v; }); return o; }
+  function sigOf(o){ const s = SYNC_KEYS.map(k => o && o[k] != null ? o[k] : "").join("\u0001"); let h = 5381; for (let i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) | 0; return s.length + ":" + h; }
+  function syncState(){ try { return JSON.parse(localStorage.getItem(SYNC_KEY) || "null"); } catch(e){ return null; } }
+  function syncMark(at, sig){ try { localStorage.setItem(SYNC_KEY, JSON.stringify({uid: auth.id, at: at, sig: sig})); } catch(e){} accLast = at; }
+  async function accPush(){ const o = snap(), rows = await sbData("POST", "?on_conflict=user_id", {user_id: auth.id, data: o, updated_at: new Date().toISOString()}); syncMark(rows && rows[0] ? rows[0].updated_at : "", sigOf(o)); accConflict = null; }
+  function accPull(row){ const d = row.data || {}; SYNC_KEYS.forEach(k => { try { if (d[k] != null) localStorage.setItem(k, d[k]); else localStorage.removeItem(k); } catch(e){} }); syncMark(row.updated_at, sigOf(d)); accConflict = null; location.reload(); }
+  async function syncNow(){
+    if (!auth || syncing || accConflict || accMode === "newpass") return; syncing = true;
+    try {
+      const rows = await sbData("GET", "?select=data,updated_at&user_id=eq." + encodeURIComponent(auth.id)), row = rows && rows[0], o = snap(), sig = sigOf(o), st = syncState(), mine = st && st.uid === auth.id;
+      const hasLocal = jr.trades.length || Object.keys(lp.seen || {}).length || Object.keys(done).length;
+      if (!row) await accPush();
+      else if (sigOf(row.data) === sig) syncMark(row.updated_at, sig);
+      else if (mine && row.updated_at === st.at) await accPush();
+      else if ((mine && sig === st.sig) || (!mine && !hasLocal)){ if (!document.querySelector(".ob") && !softLock) accPull(row); }
+      else { accConflict = row; toast("Data v účtu a v tomhle zařízení se liší. Vyber v Nastavení, která platí."); }
+      if (accMsg === "Synchronizace se nepovedla. Zkusím to znovu.") accMsg = "";
+    } catch(e){ if (auth) accMsg = e.status === 404 ? "Účet funguje, ale úložiště dat ještě není připravené." : "Synchronizace se nepovedla. Zkusím to znovu."; }
+    syncing = false; accRender();
+  }
+  function accRender(){
+    clear(accBox); accBox.appendChild(el("h2", null, "Účet"));
+    const msg = el("p","small"), run = (b, fn) => b.addEventListener("click", async ev => { ev.preventDefault(); if (accBusy) return; accBusy = true; b.disabled = true; accMsg = ""; try { await fn(); } catch(e){ accMsg = accErr(e); } accBusy = false; accRender(); });
+    const btn = (cls, text) => { const b = el("button", cls, text); b.type = "button"; return b; };
+    if (auth && accMode === "newpass"){
+      accBox.appendChild(el("p","small muted","Nastav si nové heslo k účtu " + (auth.email || "") + "."));
+      const p = inp("password", "", "Nové heslo"), b = btn("primary","Uložit heslo"); p.autocomplete = "new-password"; p.setAttribute("aria-label","Nové heslo");
+      run(b, async () => { if (p.value.length < 8){ accMsg = "Heslo musí mít aspoň 8 znaků."; return; } await sbAuth("user", {password: p.value}, await accToken(), "PUT"); accMode = "in"; accMsg = "Heslo je změněné."; setTimeout(syncNow, 50); });
+      accBox.appendChild(p); accBox.appendChild(b);
+    } else if (auth){
+      accBox.appendChild(el("p","small muted","Přihlášen jako " + (auth.email || "") + ". Deník, postup v učení a nastavení se ukládají k účtu a načtou se i na jiném zařízení. Obrázky k obchodům zatím zůstávají jen v tomhle zařízení."));
+      if (accConflict){
+        const w = el("div","box"), a = btn("primary","Použít data z účtu"), c = btn(null,"Nahrát data z tohoto zařízení"), r = el("div","rp-ctl");
+        w.appendChild(el("b", null, "Data se liší")); w.appendChild(el("p","small muted","V účtu jsou uložená jiná data než v tomhle zařízení (v účtu naposledy " + fmtDateTime(accConflict.updated_at) + "). Vyber, která platí. Druhá se přepíšou, takže si případně nejdřív stáhni zálohu níž."));
+        a.addEventListener("click", () => accPull(accConflict)); run(c, async () => { await accPush(); accMsg = "Data z tohoto zařízení jsou v účtu."; }); r.appendChild(a); r.appendChild(c); w.appendChild(r); accBox.appendChild(w);
+      } else if (accLast) accBox.appendChild(el("p","small muted","Naposledy uloženo do účtu: " + fmtDateTime(accLast) + "."));
+      const r = el("div","rp-ctl"), s = btn(null,"Synchronizovat teď"), o = btn("ck-del","Odhlásit se");
+      s.addEventListener("click", () => { syncNow(); }); run(o, async () => { try { await sbAuth("logout", null, await accToken()); } catch(e){} authSave(null); accConflict = null; accMsg = "Odhlášeno. Data v tomhle zařízení zůstala."; });
+      r.appendChild(s); r.appendChild(o); accBox.appendChild(r);
+    } else {
+      accBox.appendChild(el("p","small muted", accMode === "up" ? "Založ si účet. Deník a postup v učení se pak uloží k němu a načtou se na telefonu i počítači." : accMode === "reset" ? "Napiš e-mail účtu. Pošleme ti odkaz, přes který si nastavíš nové heslo." : "Přihlas se a tvoje data budou na všech zařízeních. Bez účtu zůstávají jen v tomhle prohlížeči."));
+      const f = el("form","tform"), e = inp("email", "", "E-mail"), p = inp("password", "", "Heslo"), b = el("button","primary", accMode === "up" ? "Založit účet" : accMode === "reset" ? "Poslat odkaz" : "Přihlásit se"), links = el("div","rp-ctl");
+      e.autocomplete = "email"; e.required = true; e.setAttribute("aria-label","E-mail"); p.autocomplete = accMode === "up" ? "new-password" : "current-password"; p.setAttribute("aria-label","Heslo"); b.type = "submit"; f.noValidate = true;
+      f.appendChild(e); if (accMode !== "reset") f.appendChild(p); f.appendChild(b); f.addEventListener("submit", ev => ev.preventDefault());
+      run(b, async () => { const em = e.value.trim();
+        if (!/^\S+@\S+\.\S+$/.test(em)){ accMsg = "Napiš platný e-mail."; return; }
+        if (accMode === "reset"){ await sbAuth("recover?redirect_to=" + encodeURIComponent(accBack()), {email: em}); accMode = "in"; accMsg = "Pokud účet existuje, přišel ti e-mail s odkazem na nové heslo."; return; }
+        if (p.value.length < 8 && accMode === "up"){ accMsg = "Heslo musí mít aspoň 8 znaků."; return; }
+        if (accMode === "up"){ const j = await sbAuth("signup?redirect_to=" + encodeURIComponent(accBack()), {email: em, password: p.value});
+          if (j.access_token){ authSave(sessOf(j)); syncNow(); } else { accMode = "in"; accMsg = "Poslali jsme ti e-mail. Klikni v něm na potvrzovací odkaz a jsi přihlášen."; } return; }
+        authSave(sessOf(await sbAuth("token?grant_type=password", {email: em, password: p.value}))); syncNow(); });
+      accBox.appendChild(f);
+      const sw = (text, m) => { const a = btn("ck-del", text); a.addEventListener("click", () => { accMode = m; accMsg = ""; accRender(); }); links.appendChild(a); };
+      if (accMode !== "in") sw("Mám účet, přihlásit se", "in"); if (accMode !== "up") sw("Založit účet", "up"); if (accMode === "in") sw("Zapomenuté heslo", "reset"); accBox.appendChild(links);
+    }
+    if (accMsg){ msg.textContent = accMsg; msg.setAttribute("role","status"); accBox.appendChild(msg); }
+    try { renderAccLink(); } catch(e){}
+  }
+  function renderAccLink(){ const c = $("d-cta"); if (!c) return; let a = $("d-acc"); if (!a){ a = el("a","small muted"); a.id = "d-acc"; a.href = "#nastaveni"; c.parentNode.insertBefore(a, c.nextSibling); } a.textContent = auth ? "Přihlášen: " + (auth.email || "účet") : "Přihlásit se nebo založit účet"; }
+  const _renderSettingsAcc = renderSettings;
+  renderSettings = function(){ _renderSettingsAcc(); const box = $("set"); if (box.firstChild !== accBox) box.insertBefore(accBox, box.firstChild); };
+  // the link from the confirmation or password e-mail comes back with the session in the address
+  async function accFromHash(){
+    const h = (location.hash || "").replace(/^#/, ""); if (!/(^|&)(access_token|error_description)=/.test(h)) return;
+    const q = {}; h.split("&").forEach(x => { const i = x.indexOf("="); if (i > 0) q[x.slice(0, i)] = decodeURIComponent(x.slice(i + 1).replace(/\+/g, " ")); });
+    try { history.replaceState(null, "", location.pathname + "#nastaveni"); } catch(e){ location.hash = "#nastaveni"; } route();
+    if (q.access_token){ try { const u = await sbAuth("user", null, q.access_token, "GET"); authSave(sessOf({access_token: q.access_token, refresh_token: q.refresh_token, expires_in: q.expires_in, user: u})); if (q.type === "recovery") accMode = "newpass"; else accMsg = "Jsi přihlášen."; } catch(e){ accMsg = "Odkaz už neplatí. Přihlas se nebo si nech poslat nový."; } }
+    else accMsg = /expired|invalid/i.test(q.error_description || "") ? "Odkaz už neplatí. Nech si poslat nový." : "Přihlášení přes odkaz se nepovedlo.";
+    refreshAll();
+  }
+  { const st = syncState(); if (st && auth && st.uid === auth.id) accLast = st.at; }
+  accRender(); accFromHash().then(() => { accRender(); syncNow(); });
+  setInterval(() => { if (auth && !document.hidden) syncNow(); }, 30000);
+  document.addEventListener("visibilitychange", () => { if (auth) syncNow(); });
 
   // ---------- moving to a new address without losing data ----------
   // data/site.json: {"move": "https://new-address", "from": ["https://old-address"]}. The old site hands the data to the new one in a window the person opens.
