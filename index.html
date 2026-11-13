@@ -574,7 +574,7 @@ input.gnum{width:54px;padding:5px 6px;text-align:center}
 .stn.ok{background:var(--good);box-shadow:0 0 18px rgba(61,220,151,.4)}
 .sttime{flex:none;padding:5px 11px;border-radius:999px;background:var(--surface2);border:1px solid var(--line);font-size:13px;font-weight:700;white-space:nowrap}
 .exam .exbody>span.small{line-height:1.5}
-#v-prehled>.herocard,#v-prehled>#d-remind{order:0}
+#v-prehled>.herocard,#v-prehled>#d-remind,#v-prehled>#d-move{order:0}
 #v-prehled>[data-card]{order:5}
 body[data-mode="trader"] #v-prehled>[data-card="hodiny"]{order:1}
 body[data-mode="trader"] #v-prehled>[data-card="zpravy"]{order:2}
@@ -608,6 +608,8 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
   .tbig{font-size:44px}
   body[data-mode="trader"] #j-new{display:none}
 }
+.pavatar{flex:none;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--ink);color:var(--bg);font-weight:800}
+.post .tbig{font-size:44px}
 </style>
 </head>
 <body>
@@ -652,6 +654,7 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
       <div class="herostats" id="d-hs"></div>
       <div class="cta" id="d-cta"></div>
     </div>
+    <div class="card" id="d-move" hidden></div>
     <div class="card" id="d-remind" hidden></div>
     <div class="card" data-card="hodiny"><h2>Seance</h2><div class="clkbox"></div></div>
     <div class="card" data-card="zpravy"><div class="row"><h2>Kalendář zpráv</h2><span class="small muted" id="nw-upd"></span></div>
@@ -697,6 +700,7 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
 
   <section class="view" id="v-vice">
     <div class="card"><h2>Více</h2><div class="vgrid">
+      <a class="go" href="#komunita"><div><b>Komunita</b><span>Sdílej analýzu a obchod odkazem</span></div><i>›</i></a>
       <a class="go" href="#nastroje"><div><b>Nástroje</b><span>Kalkulačka pozice a hodiny seancí</span></div><i>›</i></a>
       <a class="go" href="#poznatky"><div><b>Poznatky botů</b><span>Co boti našli v ICT materiálech</span></div><i>›</i></a>
       <a class="go" href="#model"><div><b>Model</b><span>Pravidla testovaného modelu a jeho verze</span></div><i>›</i></a>
@@ -709,6 +713,26 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
       <a class="go" href="#soukromi"><div><b>Soukromí a data</b><span>Co se kam ukládá</span></div><i>›</i></a>
       <a class="go" href="#uvod"><div><b>O aplikaci</b><span>Co Tape umí a pro koho je</span></div><i>›</i></a>
     </div></div>
+  </section>
+
+  <section class="view" id="v-komunita">
+    <div class="card"><div class="row"><h2>Komunita</h2><span class="pill warn">První verze</span></div>
+      <p class="muted">Ukaž, jak jsi obchod vzal: analýza, úrovně, vstup, výstup a výsledek. Příspěvek vytvoříš z obchodu v deníku a pošleš odkazem. Kdo ho otevře, uvidí ho v Tape a může si ho uložit.</p>
+      <p class="small muted">Společný feed, kde se příspěvky zobrazí všem, potřebuje server a účty. Do té doby se sdílí odkazem a příspěvky jsou uložené jen u tebe.</p></div>
+    <div class="card"><h2>Nový příspěvek</h2>
+      <p class="small muted" id="cm-empty">Nejdřív zapiš obchod do deníku. Příspěvek se tvoří z něj.</p>
+      <form id="cm-form" class="fgrid">
+        <label for="cm-trade" class="wide">Obchod z deníku<select id="cm-trade"></select></label>
+        <label for="cm-name" class="wide">Jméno nebo přezdívka<input id="cm-name" maxlength="30" placeholder="Jak se má příspěvek podepsat"></label>
+        <label for="cm-bias" class="wide">Analýza před obchodem<textarea id="cm-bias" rows="2" maxlength="300" placeholder="Směr dne, kde ležela likvidita, co jsem čekal"></textarea></label>
+        <label for="cm-why" class="wide">Jak jsem obchod vzal<textarea id="cm-why" rows="3" maxlength="600" placeholder="Sweep, MSS, FVG, kde byl vstup a stop. Když necháš prázdné, použije se poznámka z deníku."></textarea></label>
+        <label for="cm-lesson" class="wide">Co si z toho beru<textarea id="cm-lesson" rows="2" maxlength="300"></textarea></label>
+        <label class="wide chk"><input type="checkbox" id="cm-usd"><span>Ukázat i výsledek v dolarech</span></label>
+        <div class="row wide"><button class="primary" type="submit">Vytvořit příspěvek</button><span class="small muted" id="cm-msg"></span></div>
+      </form>
+    </div>
+    <div class="list" id="cm-feed"></div>
+    <p class="small muted">Sdílej jen vlastní obchody. Výsledky nikdo neověřuje a příspěvky nejsou doporučení k obchodu.</p>
   </section>
 
   <section class="view" id="v-nastroje">
@@ -1146,10 +1170,10 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
   });
 
   // Views
-  const VIEWS = ["prehled","denik","kouc","laura","room","studium","vice","nastroje","poznatky","model","strategie","backtest","napady","nastaveni","napoveda","novinky","soukromi","uvod"];
+  const VIEWS = ["prehled","denik","kouc","laura","room","studium","vice","nastroje","poznatky","model","strategie","backtest","napady","komunita","nastaveni","napoveda","novinky","soukromi","uvod"];
   const GROUP = {prehled: "prehled", denik: "denik", kouc: "kouc", laura: "uceni", room: "uceni", studium: "uceni"};
   const SUBNAV = {uceni: [["laura","Obrázky a lekce"],["room","Kurz 12 týdnů"],["studium","Studium ICT"]]};
-  const VTITLE = {nastroje: "Nástroje", poznatky: "Poznatky botů", model: "Model", strategie: "Pine Script", backtest: "Backtest", napady: "Nápady", nastaveni: "Nastavení", napoveda: "Nápověda", novinky: "Co je nového", soukromi: "Soukromí a data", uvod: "O aplikaci"};
+  const VTITLE = {komunita: "Komunita", nastroje: "Nástroje", poznatky: "Poznatky botů", model: "Model", strategie: "Pine Script", backtest: "Backtest", napady: "Nápady", nastaveni: "Nastavení", napoveda: "Nápověda", novinky: "Co je nového", soukromi: "Soukromí a data", uvod: "O aplikaci"};
   function route(){
     const h = (location.hash || "").replace("#",""), v = VIEWS.includes(h) ? h : "prehled", g = GROUP[v] || "vice";
     document.body.dataset.view = v; document.body.dataset.group = g;
@@ -2671,12 +2695,14 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
   (function onboarding(){
     const used = jr.trades.length || Object.keys(lp.seen || {}).length || Object.keys(done).length || Object.keys(act).length;
     if (profile || used) return;
-    const ov = el("div","ob"), card = el("div","card"), ans = {level: "start", sym: "NQ", goal: 10};
+    const ov = el("div","ob"), card = el("div","card"), ans = {level: "start", sym: "NQ", syms: ["NQ"], goal: 10};
     card.appendChild(el("span","kick","Vítej v Tape")); card.appendChild(el("h2", null, "Tři otázky a můžeš začít"));
-    [["Kde teď jsi?", "level", [["start","Začínám od nuly"],["trade","Už obchoduji"]]], ["Jaký trh tě zajímá?", "sym", [["NQ","NQ"],["ES","ES"],["MNQ","MNQ"],["MES","MES"]]], ["Kolik času denně na učení?", "goal", [[5,"5 minut"],[10,"10 minut"],[20,"20 minut"]]]].forEach(q => {
+    [["Kde teď jsi?", "level", [["start","Začínám od nuly"],["trade","Už obchoduji"]]], ["Které trhy obchoduješ? Můžeš vybrat víc.", "sym", [["NQ","NQ"],["ES","ES"],["MNQ","MNQ"],["MES","MES"]]], ["Kolik času denně na učení?", "goal", [[5,"5 minut"],[10,"10 minut"],[20,"20 minut"]]]].forEach(q => {
       card.appendChild(el("span","small muted", q[0])); const ch = el("div","chips");
       q[2].forEach(o => { const b = el("button","chip", o[1]); b.type = "button"; b.setAttribute("aria-pressed", String(ans[q[1]] === o[0]));
-        b.addEventListener("click", () => { ans[q[1]] = o[0]; Array.prototype.forEach.call(ch.children, x => x.setAttribute("aria-pressed", String(x === b))); }); ch.appendChild(b); });
+        b.addEventListener("click", () => {
+          if (q[1] === "sym"){ const i = ans.syms.indexOf(o[0]); if (i >= 0){ if (ans.syms.length > 1) ans.syms.splice(i, 1); } else ans.syms.push(o[0]); ans.sym = ans.syms[0]; Array.prototype.forEach.call(ch.children, x => x.setAttribute("aria-pressed", String(ans.syms.indexOf(x.textContent) >= 0))); return; }
+          ans[q[1]] = o[0]; Array.prototype.forEach.call(ch.children, x => x.setAttribute("aria-pressed", String(x === b))); }); ch.appendChild(b); });
       card.appendChild(ch);
     });
     const go = el("button","primary","Začít"); go.type = "button";
@@ -2905,7 +2931,7 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
     const g = el("div","fgrid"); card.appendChild(g);
 
     const fTs = inp("datetime-local", toLocalInput(t.ts));
-    const syms = Object.keys(PV); if (t.sym && syms.indexOf(t.sym) < 0) syms.push(t.sym);
+    const mine = ((profile && profile.syms) || []).filter(k => PV[k]), syms = mine.concat(Object.keys(PV).filter(k => mine.indexOf(k) < 0)); if (t.sym && syms.indexOf(t.sym) < 0) syms.push(t.sym);
     const setups = J_SETUPS.slice(); if (t.setup && setups.indexOf(t.setup) < 0) setups.push(t.setup);
     const fSym = sel(syms, t.sym), fSetup = sel(setups, t.setup), fAcct = sel(cfg.accounts.map(a => [a.id, a.name]), cfg.accounts.some(a => a.id === t.acct) ? t.acct : cfg.accounts[0].id);
     const seg = el("div","seg"), segWrap = el("div","flab");
@@ -3470,7 +3496,7 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
   ["calc-acct","calc-pct","calc-stop"].forEach(id => { const k = id.slice(5); if (cfg.calc[k] != null) $(id).value = cfg.calc[k]; $(id).addEventListener("input", () => { cfg.calc[k] = $(id).value; cfgStore(); renderCalc(); }); });
 
   // ---------- backup, restore, wipe ----------
-  const LS_KEYS = ["knot-journal","knot-checklist","ictlab-laura","ictlab-course-done","knot-activity","knot-profile","knot-minutes","tape-settings","tape-coach-chat"];
+  const LS_KEYS = ["tape-posts","knot-journal","knot-checklist","ictlab-laura","ictlab-course-done","knot-activity","knot-profile","knot-minutes","tape-settings","tape-coach-chat"];
   function download(blob, name){ const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); a.remove(); }
   async function exportAll(){
     const ls = {}; LS_KEYS.forEach(k => { let v = null; try { v = localStorage.getItem(k); } catch(e){} if (v != null) ls[k] = v; });
@@ -3511,8 +3537,10 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
     const chipRow = (opts, cur, fn) => { const r = el("div","chips"); opts.forEach(o => { const b = el("button","chip", o[1]); b.type = "button"; b.setAttribute("aria-pressed", String(o[0] === cur)); b.addEventListener("click", () => fn(o[0])); r.appendChild(b); }); return r; };
     let c = card("Režim", "Obchodník má na přehledu výkon, kalendář a zprávy. Student má nahoře cestu učením a úlohu dne. Změna režimu znovu nastaví, které karty jsou na přehledu vidět.");
     c.appendChild(chipRow([["trader","Obchodník"],["student","Student"]], cfg.mode, setMode));
-    c = card("Trh a denní cíl"); const pf = profile || {sym: "NQ", goal: 10}, saveP = soft => { profile = pf; try { localStorage.setItem("knot-profile", JSON.stringify(pf)); } catch(e){} if (soft) softRefresh(); else refreshAll(); };
-    const sy = sel(Object.keys(PV), pf.sym || "NQ"); sy.addEventListener("change", () => { pf.sym = sy.value; saveP(true); }); c.appendChild(lab("Trh, který se předvyplní v novém obchodu", sy));
+    c = card("Trhy a denní cíl"); const pf = profile || {sym: "NQ", goal: 10}, saveP = soft => { profile = pf; try { localStorage.setItem("knot-profile", JSON.stringify(pf)); } catch(e){} if (soft) softRefresh(); else refreshAll(); };
+    if (!Array.isArray(pf.syms) || !pf.syms.length) pf.syms = [pf.sym || "NQ"];
+    c.appendChild(el("span","small muted","Trhy, které obchoduješ. První vybraný se předvyplní v novém obchodu."));
+    const sr = el("div","chips"); Object.keys(PV).forEach(k => { const b = el("button","chip", k); b.type = "button"; b.setAttribute("aria-pressed", String(pf.syms.indexOf(k) >= 0)); b.addEventListener("click", () => { const i = pf.syms.indexOf(k); if (i >= 0){ if (pf.syms.length > 1) pf.syms.splice(i, 1); } else pf.syms.push(k); pf.sym = pf.syms[0]; saveP(); }); sr.appendChild(b); }); c.appendChild(sr);
     c.appendChild(el("span","small muted","Denní cíl učení")); c.appendChild(chipRow([[5,"5 minut"],[10,"10 minut"],[20,"20 minut"]], Number(pf.goal) || 10, v => { pf.goal = v; saveP(); }));
     c = card("Karty na přehledu", "Vyber, co chceš na úvodní stránce vidět."); const cg = el("div","chkgrid");
     DASH.forEach(d => { const l = el("label","chk"), i = inp("checkbox"); i.checked = !cfg.hide[d[0]]; i.addEventListener("change", () => { if (i.checked) delete cfg.hide[d[0]]; else cfg.hide[d[0]] = 1; cfgStore(); applyShell(); }); l.appendChild(i); l.appendChild(el("span", null, d[1])); cg.appendChild(l); }); c.appendChild(cg);
@@ -3709,13 +3737,98 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
   const _renderFc = renderFc;
   renderFc = function(){ _renderFc(); renderWeak(); };
 
+
+  // =====================================================================================
+  // v10: community — posts built from journal trades, shared by link (no server yet)
+  // =====================================================================================
+  const POSTS_KEY = "tape-posts";
+  let posts = []; try { const v = JSON.parse(localStorage.getItem(POSTS_KEY) || "[]"); if (Array.isArray(v)) posts = v; } catch(e){}
+  const postsStore = () => { try { localStorage.setItem(POSTS_KEY, JSON.stringify(posts.slice(0, 200))); } catch(e){} };
+  const b64e = s => { const b = new TextEncoder().encode(s); let x = ""; b.forEach(c => { x += String.fromCharCode(c); }); return btoa(x).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, ""); };
+  const b64d = s => { const x = atob(s.replace(/-/g, "+").replace(/_/g, "/")), b = new Uint8Array(x.length); for (let i = 0; i < x.length; i++) b[i] = x.charCodeAt(i); return new TextDecoder().decode(b); };
+  const postLink = p => location.origin + location.pathname + "#post=" + b64e(JSON.stringify({a: p.author, t: p.ts, s: p.sym, d: p.dir, u: p.setup, e: p.entry, o: p.stop, x: p.exit, r: p.r, m: p.usd, l: p.levels, b: p.bias, w: p.why, n: p.lesson}));
+  function postFromLink(code){
+    const v = JSON.parse(b64d(code)), n = x => (typeof x === "number" && isFinite(x)) ? x : null, s = (x, m) => String(x == null ? "" : x).slice(0, m);
+    if (!v || typeof v !== "object" || !isFinite(Number(v.r))) throw new Error("bad");
+    return {id: "s" + Date.now().toString(36), author: s(v.a, 30) || "Bez jména", ts: s(v.t, 30), sym: s(v.s, 12), dir: v.d === "short" ? "short" : "long", setup: s(v.u, 40), entry: n(v.e), stop: n(v.o), exit: n(v.x), r: Number(v.r), usd: n(v.m), levels: s(v.l, 160), bias: s(v.b, 300), why: s(v.w, 600), lesson: s(v.n, 300), saved: 1};
+  }
+  function postEl(p, opts){
+    const c = el("div","card post"), head = el("div","row"), who = el("div","tdh"), r = Number(p.r) || 0, big = el("div","tbig " + (r >= 0 ? "pos" : "neg"), sgn(r) + " R");
+    who.appendChild(el("span","pavatar", (p.author || "?").trim().charAt(0).toUpperCase())); const nm = el("div","tinfo"); nm.appendChild(el("b", null, p.author || "Bez jména"));
+    nm.appendChild(el("span", null, (p.sym || "") + " · " + (p.dir === "short" ? "Short" : "Long") + (p.setup ? " · " + p.setup : "") + (p.ts && !isNaN(new Date(p.ts)) ? " · " + fmtDateTime(p.ts) : ""))); who.appendChild(nm);
+    head.appendChild(who); head.appendChild(el("span","pill " + (p.saved ? "info" : "good"), p.saved ? "Uložený" : "Můj")); c.appendChild(head);
+    if (p.usd != null) big.appendChild(el("span", null, usd(p.usd))); c.appendChild(big);
+    const g = el("div","tiles"), f = x => x == null ? null : fnum(x); [["Vstup", f(p.entry)], ["Stop", f(p.stop)], ["Výstup", f(p.exit)]].forEach(x => { if (x[1] != null) g.appendChild(tile(x[0], x[1])); }); if (g.children.length) c.appendChild(g);
+    [["Úrovně", p.levels], ["Analýza před obchodem", p.bias], ["Jak jsem obchod vzal", p.why], ["Co si z toho beru", p.lesson]].forEach(x => { if (x[1]){ const b = el("div","box"); b.appendChild(el("b", null, x[0])); b.appendChild(el("span", null, x[1])); c.appendChild(b); } });
+    const act = el("div","rp-ctl"), mk = (t, fn, cls) => { const b = el("button", cls || null, t); b.type = "button"; if (fn) b.addEventListener("click", fn); act.appendChild(b); return b; };
+    if (opts && opts.incoming) mk("Uložit do mého feedu", opts.onSave, "primary");
+    else { mk("Sdílet odkazem", async () => { const url = postLink(p); try { if (navigator.share) await navigator.share({title: "Obchod v Tape", url: url}); else { await navigator.clipboard.writeText(url); toast("Odkaz zkopírován."); } } catch(e){ try { await navigator.clipboard.writeText(url); toast("Odkaz zkopírován."); } catch(e2){} } }, "primary");
+      twoStep(mk("Smazat", null, "danger"), "Smazat", () => { posts = posts.filter(x => x.id !== p.id); postsStore(); renderCommunity(); }); }
+    mk("Karta jako obrázek", () => openCard({id: p.id, ts: p.ts || new Date().toISOString(), sym: p.sym, dir: p.dir, setup: p.setup, entry: p.entry, stop: p.stop, exit: p.exit, r: p.r, usd: p.usd, levels: p.levels}));
+    c.appendChild(act); return c;
+  }
+  function renderCommunity(){
+    const box = $("cm-feed"), pick = $("cm-trade"), tr = jSorted().reverse().slice(0, 60); clear(box);
+    if (document.activeElement !== pick){ const cur = pick.value; clear(pick); tr.forEach(t => { const o = el("option", null, fmtDateTime(t.ts) + " · " + (t.sym || "") + " " + (t.dir === "short" ? "short" : "long") + " · " + sgn(Number(t.r) || 0) + " R"); o.value = t.id; pick.appendChild(o); }); if (cur && tr.some(t => t.id === cur)) pick.value = cur; }
+    $("cm-form").hidden = !tr.length; $("cm-empty").hidden = !!tr.length;
+    if (document.activeElement !== $("cm-name") && !$("cm-name").value) $("cm-name").value = (profile && profile.name) || "";
+    if (!posts.length) box.appendChild(el("p","small muted","Zatím tu nic není. Vytvoř první příspěvek z obchodu v deníku, nebo otevři odkaz, který ti někdo poslal."));
+    posts.forEach(p => box.appendChild(postEl(p)));
+  }
+  $("cm-form").addEventListener("submit", ev => {
+    ev.preventDefault(); const t = jr.trades.find(x => x.id === $("cm-trade").value), name = $("cm-name").value.trim().slice(0, 30);
+    if (!t){ $("cm-msg").textContent = "Vyber obchod z deníku."; return; } if (!name){ $("cm-msg").textContent = "Doplň jméno nebo přezdívku."; $("cm-name").focus(); return; }
+    const net = tNet(t), pf = profile || {}; pf.name = name; profile = pf; try { localStorage.setItem("knot-profile", JSON.stringify(pf)); } catch(e){}
+    posts.unshift({id: "p" + Date.now().toString(36), author: name, ts: t.ts, sym: t.sym, dir: t.dir, setup: t.setup, entry: t.entry, stop: t.stop, exit: t.exit, r: Number(t.r) || 0, usd: $("cm-usd").checked && net != null ? Math.round(net) : null, levels: t.levels || "",
+      bias: $("cm-bias").value.trim().slice(0, 300), why: ($("cm-why").value.trim() || t.note || "").slice(0, 600), lesson: $("cm-lesson").value.trim().slice(0, 300)});
+    postsStore(); ["cm-bias","cm-why","cm-lesson"].forEach(id => { $(id).value = ""; }); $("cm-msg").textContent = ""; toast("Příspěvek vytvořen. Pošli ho odkazem."); renderCommunity();
+  });
+  function checkShared(){
+    const m = /^#post=([A-Za-z0-9_-]+)$/.exec(location.hash || ""); if (!m) return;
+    let p = null; try { p = postFromLink(m[1]); } catch(e){}
+    history.replaceState(null, "", location.pathname + "#komunita"); route(); refreshAll();
+    if (!p){ toast("Odkaz na příspěvek je poškozený."); return; }
+    const o = overlay("tdetail"), head = el("div","row"), xb = el("button","ck-del","Zavřít"); xb.type = "button"; xb.addEventListener("click", o.close);
+    head.appendChild(el("h2", null, "Sdílený obchod")); head.appendChild(xb); o.card.appendChild(head);
+    o.card.appendChild(postEl(p, {incoming: true, onSave: () => { posts.unshift(p); postsStore(); o.close(); renderCommunity(); toast("Uloženo do tvého feedu."); }}));
+    o.card.appendChild(el("p","small muted","Údaje v příspěvku zadal jeho autor a nikdo je neověřil. Není to doporučení k obchodu."));
+  }
+  window.addEventListener("hashchange", checkShared);
+  const _refreshAll5 = refreshAll;
+  refreshAll = function(){ _refreshAll5(); try { renderCommunity(); } catch(e){ if (window.console) console.error(e); } };
+
+  // ---------- moving to a new address without losing data ----------
+  // data/site.json: {"move": "https://new-address", "from": ["https://old-address"]}. The old site hands the data to the new one in a window the person opens.
+  let site = {move: "", from: []};
+  function renderMove(){
+    const c = $("d-move"); clear(c); const to = String(site.move || "").replace(/\/$/, ""); c.hidden = !(to && /^https?:\/\//.test(to) && to.indexOf(location.origin) !== 0); if (c.hidden) return;
+    const b = el("button","primary","Přenést moje data na novou adresu"), msg = el("span","small muted"); b.type = "button";
+    c.appendChild(el("b", null, "Tape se stěhuje")); c.appendChild(el("p","small muted","Aplikace má novou adresu " + to.replace(/^https?:\/\//, "") + ". Jedním klepnutím tam přeneseš deník, obrázky, postup v učení i nastavení."));
+    b.addEventListener("click", async () => {
+      const ls = {}; LS_KEYS.forEach(k => { let v = null; try { v = localStorage.getItem(k); } catch(e){} if (v != null) ls[k] = v; });
+      const data = {app: "tape", v: 2, date: new Date().toISOString(), ls: ls, shots: await shotAll()}, origin = new URL(to).origin, w = window.open(to + "/#prijem");
+      if (!w){ msg.textContent = "Prohlížeč zablokoval nové okno. Povol vyskakovací okna a zkus to znovu."; return; }
+      msg.textContent = "Čekám na novou stránku…";
+      const on = ev => { if (ev.origin !== origin || !ev.data || ev.data.type !== "tape-ready") return; window.removeEventListener("message", on); w.postMessage({type: "tape-data", data: data}, origin); msg.textContent = "Data odeslána. Pokračuj v novém okně."; };
+      window.addEventListener("message", on);
+    });
+    c.appendChild(b); c.appendChild(msg);
+  }
+  fetch("data/site.json", {cache: "no-store"}).then(r => r.json()).then(v => { if (v && typeof v === "object") site = v; renderMove();
+    if (location.hash === "#prijem" && window.opener){ history.replaceState(null, "", location.pathname + "#prehled");
+      const ok = (site.from || []).map(x => { try { return new URL(x).origin; } catch(e){ return ""; } }).filter(Boolean); let got = false;
+      window.addEventListener("message", ev => { if (got || ok.indexOf(ev.origin) < 0 || !ev.data || ev.data.type !== "tape-data") return; got = true;
+        const o = overlay("tdetail", true), m = el("p", null, "Přenáším data ze staré adresy…"); o.card.appendChild(el("h2", null, "Stěhování dat")); o.card.appendChild(m); importAll(new Blob([JSON.stringify(ev.data.data)]), m); });
+      ok.forEach(x => { try { window.opener.postMessage({type: "tape-ready"}, x); } catch(e){} });
+    } }).catch(() => {});
+
   // ---------- v9: wiring ----------
   $("j-share-day").addEventListener("click", () => openPeriodCard("day"));
   $("j-share-week").addEventListener("click", () => openPeriodCard("week"));
   $("j-share-month").addEventListener("click", () => openPeriodCard("month"));
   const _refreshAll4 = refreshAll;
   refreshAll = function(){ _refreshAll4(); try { finalExam(); } catch(e){ if (window.console) console.error(e); } };
-  renderCalc(); refreshAll(); setTimeout(refreshAll, 900); setTimeout(refreshAll, 2600);
+  renderCalc(); refreshAll(); checkShared(); setTimeout(refreshAll, 900); setTimeout(refreshAll, 2600);
 
   async function start(){
     $("c-save").textContent = "Postup se ukládá v tomto prohlížeči.";

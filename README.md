@@ -69,3 +69,5 @@ Průvodci v sekci Studium: `model2022` (kroky modelu) a `core` (dvanáct měsíc
 - `tape-coach-chat`: rozhovor s koučem. `tape-key`: API klíč kouče, nikdy se nezálohuje.
 - Obchod v `knot-journal` má navíc pole `tsx`, `qty`, `usd`, `fee`, `acct`, `tp1`, `tp1pct`, `mae`, `mfe`, `emo`, `grade`, `missed`, `levels`, `shots` (počet obrázků, klíče v IndexedDB jsou `id#0` až `id#2`).
 - `data/priceaction.json` obsahuje i témata `model-2022-long` a `model-2022-short`. Generuje se skriptem mimo repozitář, boti ho nemění.
+
+- `data/site.json` řídí stěhování na novou adresu (`move`, `from`). Boti ho nemění. `tape-posts` v prohlížeči jsou příspěvky komunity.
