@@ -1795,7 +1795,7 @@
   "area": "denik",
   "value": 3,
   "effort": 1,
-  "status": "new",
+  "status": "done",
   "what": "Deník u obchodu sám určí, ve kterém devadesátiminutovém cyklu vznikl, a přidá rozpad statistik podle cyklu.",
   "why": "Ukáže, ve kterém cyklu ti styl založený na čase opravdu funguje."
  },
@@ -1831,7 +1831,7 @@
   "area": "vyuka",
   "value": 3,
   "effort": 2,
-  "status": "new",
+  "status": "done",
   "what": "Přehrávání trhu vyznačí cykly a po každém se zeptá, kde byla manipulace a kam šla distribuce.",
   "why": "Spojí teorii času s rozhodováním na grafu."
  },

@@ -2475,19 +2475,40 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
       const stopHit = tr.dir > 0 ? b[3] <= tr.s : b[2] >= tr.s, tgtHit = tr.dir > 0 ? b[2] >= tr.t : b[3] <= tr.t;
       if (stopHit) close(-1, "Stop zasažen."); else if (tgtHit) close(tr.rr, "Cíl zasažen.");
     }
-    function adv(n){ for (let i = 0; i < n && pos < bars.length; i++){ pos++; check(bars[pos - 1]); } if (pos >= bars.length && tr){ const c = bars[bars.length - 1][4]; close(tr.dir * (c - tr.e) / Math.abs(tr.e - tr.s), "Konec dne."); } draw(); }
+    // cycle training: 90-minute session cycles in New York time, a question after each finished cycle
+    let train = false, tzOff = 0, cq = {ok: 0, n: 0};
+    const bm = i => { const t = String(bars[i][0]).slice(11, 16), m = Number(t.slice(0, 2)) * 60 + Number(t.slice(3, 5)); return isFinite(m) ? ((m + tzOff) % 1440 + 1440) % 1440 : -1; };
+    const cycOf = m => m >= 420 && m < 960 ? Math.floor((m - 420) / 90) : -1;
+    function cycRange(end){ const c = cycOf(bm(end)); if (c < 0) return null; let a = end; while (a > 0 && cycOf(bm(a - 1)) === c) a--; let hi = -Infinity, lo = Infinity; for (let i = a; i <= end; i++){ hi = Math.max(hi, bars[i][2]); lo = Math.min(lo, bars[i][3]); } return {c: c, a: a, b: end, hi: hi, lo: lo}; }
+    function prevCycle(){ if (pos < 2) return null; const cur = cycRange(pos - 1); if (!cur || cur.a === 0) return null; const pv = cycRange(cur.a - 1); return pv && pv.c === cur.c - 1 ? pv : null; }
+    function askCycle(endIdx){
+      const done = cycRange(endIdx); if (!done || done.a === 0) return false; const pv = cycRange(done.a - 1); if (!pv || pv.c !== done.c - 1) return false;
+      let iH = -1, iL = -1; for (let i = done.a; i <= done.b; i++){ if (iH < 0 && bars[i][2] > pv.hi) iH = i; if (iL < 0 && bars[i][3] < pv.lo) iL = i; }
+      const first = iH < 0 && iL < 0 ? "none" : iL < 0 || (iH >= 0 && iH < iL) ? "high" : iH < 0 || iL < iH ? "low" : "both", up = bars[done.b][4] >= bars[done.a][1];
+      const box = ui.q; clear(box); box.hidden = false; let step = 0, right = 0;
+      const qs = [["Cyklus „" + CYCN[done.c] + "“ skončil. Kterou stranu předchozího cyklu cena vybrala jako první?", [["high","High (PCH)"],["low","Low (PCL)"],["none","Žádnou"]], first === "both" ? ["high","low"] : [first], first === "none" ? "Cena zůstala uvnitř rozpětí předchozího cyklu." : first === "both" ? "Jedna svíčka vybrala obě strany." : "Jako první padlo " + (first === "high" ? "high" : "low") + " předchozího cyklu. To byla manipulace, nebo začátek distribuce."],
+        ["Kde cyklus zavřel proti své otevírací ceně?", [["up","Nad ní"],["down","Pod ní"]], [up ? "up" : "down"], "Cyklus otevřel na " + fnum(bars[done.a][1]) + " a zavřel na " + fnum(bars[done.b][4]) + "."]];
+      const show = () => { clear(box); if (step >= qs.length){ cq.n += qs.length; cq.ok += right; box.appendChild(el("span","small", "Tento cyklus " + right + " ze " + qs.length + ". Celkem " + cq.ok + " z " + cq.n + ".")); const go = el("button","primary","Pokračovat"); go.type = "button"; go.addEventListener("click", () => { box.hidden = true; draw(); }); box.appendChild(go); return; }
+        const q = qs[step]; let ans = false; box.appendChild(el("b","exq", q[0])); const btns = q[1].map(o => { const b = el("button","exo", o[1]); b.type = "button"; b.addEventListener("click", () => { if (ans) return; ans = true; const ok = q[2].indexOf(o[0]) >= 0; if (ok) right++; else b.classList.add("no"); btns.forEach((x, j) => { x.disabled = true; if (q[2].indexOf(q[1][j][0]) >= 0) x.classList.add("ok"); });
+          box.appendChild(el("span","small", q[3])); const nx = el("button","primary","Dál"); nx.type = "button"; nx.addEventListener("click", () => { step++; show(); }); box.appendChild(nx); }); box.appendChild(b); return b; }); };
+      show(); return true;
+    }
+    function adv(n){ for (let i = 0; i < n && pos < bars.length; i++){ pos++; check(bars[pos - 1]); if (train && pos >= 2 && cycOf(bm(pos - 2)) >= 0 && cycOf(bm(pos - 1)) !== cycOf(bm(pos - 2)) && askCycle(pos - 2)){ stop(); break; } } if (pos >= bars.length && tr){ const c = bars[bars.length - 1][4]; close(tr.dir * (c - tr.e) / Math.abs(tr.e - tr.s), "Konec dne."); } draw(); }
     function draw(){
       const W = FW, H = 230, win = bars.slice(Math.max(0, pos - 90), pos); if (!win.length) return;
       let lo = Infinity, hi = -Infinity; win.forEach(b => { lo = Math.min(lo, b[3]); hi = Math.max(hi, b[2]); });
+      const pvc = train ? prevCycle() : null; if (pvc){ lo = Math.min(lo, pvc.lo); hi = Math.max(hi, pvc.hi); }
       if (tr){ lo = Math.min(lo, tr.s, tr.t); hi = Math.max(hi, tr.s, tr.t); } if (hi === lo) hi = lo + 1;
       const pad = (hi - lo) * .06; lo -= pad; hi += pad;
       const cw = (W - 50) / 90, Y = v => 8 + (hi - v) / (hi - lo) * (H - 16); let s = "";
       for (let g = 0; g <= 4; g++){ const v = lo + (hi - lo) * g / 4; s += '<line x1="0" y1="' + Y(v).toFixed(1) + '" x2="' + (W - 46) + '" y2="' + Y(v).toFixed(1) + '" class="gl"/><text x="' + (W - 42) + '" y="' + (Y(v) + 3.5).toFixed(1) + '" class="brv f-muted" style="font-size:9.5px;font-weight:500">' + esc(fnum(Math.round(v * 100) / 100)) + '</text>'; }
       win.forEach((b, i) => { const x = 3 + i * cw + cw / 2, up = b[4] >= b[1], c = up ? "var(--good)" : "var(--bad)", t = Y(Math.max(b[1], b[4])), bt = Y(Math.min(b[1], b[4]));
         s += '<line x1="' + x.toFixed(1) + '" y1="' + Y(b[2]).toFixed(1) + '" x2="' + x.toFixed(1) + '" y2="' + Y(b[3]).toFixed(1) + '" stroke="' + c + '" stroke-width="1"/><rect x="' + (x - cw * .32).toFixed(1) + '" y="' + t.toFixed(1) + '" width="' + (cw * .64).toFixed(1) + '" height="' + Math.max(1, bt - t).toFixed(1) + '" fill="' + c + '"/>'; });
+      if (pvc) [[pvc.hi, "PCH"], [pvc.lo, "PCL"]].forEach(l => { s += '<line x1="0" y1="' + Y(l[0]).toFixed(1) + '" x2="' + (W - 46) + '" y2="' + Y(l[0]).toFixed(1) + '" stroke="#c58aff" stroke-width="1" stroke-dasharray="2 4"/><text x="4" y="' + (Y(l[0]) - 4).toFixed(1) + '" class="brv" style="font-size:10px;fill:#c58aff">' + l[1] + '</text>'; });
       if (tr) [[tr.e, "var(--ink)"], [tr.s, "var(--bad)"], [tr.t, "var(--good)"]].forEach(l => { s += '<line x1="0" y1="' + Y(l[0]).toFixed(1) + '" x2="' + (W - 46) + '" y2="' + Y(l[0]).toFixed(1) + '" stroke="' + l[1] + '" stroke-width="1" stroke-dasharray="4 3"/>'; });
       ui.svg.innerHTML = svgWrap(H, s);
-      ui.info.textContent = ui.day + " · " + String(win[win.length - 1][0]).slice(11, 16) + " · svíčka " + pos + " z " + bars.length;
+      const cc = train ? cycOf(bm(pos - 1)) : -1;
+      ui.info.textContent = ui.day + " · " + String(win[win.length - 1][0]).slice(11, 16) + " · svíčka " + pos + " z " + bars.length + (train ? " · " + (cc >= 0 ? "cyklus " + CYCN[cc].toLowerCase() : "mimo cykly") : "");
       ui.long.disabled = ui.short.disabled = !!tr;
     }
     function stop(){ if (timer){ clearInterval(timer); timer = null; } if (ui) ui.play.textContent = "Přehrát"; }
@@ -2515,7 +2536,10 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
       ui.setup = sel(J_SETUPS, J_SETUPS[0]); ui.setup.setAttribute("aria-label", "Setup"); ui.setup.style.width = "auto"; ord.appendChild(ui.setup);
       ui.sd = num("Stop (body)", "20"); ui.rr = num("Cíl (R)", "2");
       ui.long = mk(ord, "Long", () => enter(1)); ui.short = mk(ord, "Short", () => enter(-1));
-      out.appendChild(ctl); out.appendChild(ord); out.appendChild(msg); out.appendChild(stat); out.appendChild(tbl); out.appendChild(wipe);
+      const tr2 = el("div","rp-ctl"), tl = el("label","chk"), tc = inp("checkbox"), tz = sel([["0","Časy v souboru: New York"],["-300","UTC, zimní čas"],["-240","UTC, letní čas"],["-360","Praha"]], String(tzOff)), q = el("div","box exam"); q.hidden = true; ui.q = q;
+      tc.checked = train; tc.addEventListener("change", () => { train = tc.checked; q.hidden = true; draw(); }); tz.style.width = "auto"; tz.setAttribute("aria-label", "Časové pásmo souboru"); tz.addEventListener("change", () => { tzOff = Number(tz.value) || 0; draw(); });
+      tl.appendChild(tc); tl.appendChild(el("span", null, "Trénink cyklů: PCH a PCL na grafu a otázky po každém cyklu")); tr2.appendChild(tl); tr2.appendChild(tz);
+      out.appendChild(ctl); out.appendChild(tr2); out.appendChild(q); out.appendChild(ord); out.appendChild(msg); out.appendChild(stat); out.appendChild(tbl); out.appendChild(wipe);
       out.appendChild(el("p","small muted","Vstup je za zavírací cenu poslední svíčky. Když svíčka zasáhne stop i cíl zároveň, počítá se stop. Bez poplatků a skluzu, takže skutečnost bude horší."));
       stats();
     }
@@ -3059,7 +3083,7 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
     if (t.tsx){ const m = Math.round((new Date(t.tsx) - new Date(t.ts)) / 60000); if (m >= 0) add("Doba držení", m < 60 ? m + " min" : Math.floor(m / 60) + " h " + (m % 60) + " min"); }
     const rk = t.entry != null && t.stop != null ? Math.abs(t.entry - t.stop) : 0, inR = x => rk ? " (" + fnum(Math.round(x / rk * 100) / 100) + " R)" : "";
     if (t.mae != null) add("MAE", fnum(t.mae) + " b." + inR(t.mae)); if (t.mfe != null) add("MFE", fnum(t.mfe) + " b." + inR(t.mfe));
-    if (t.ck) add("Seznam před vstupem", t.ck.k + " z " + t.ck.n); if (t.grade) add("Provedení", t.grade + " z 5"); if (t.emo) add("Před vstupem", t.emo);
+    add("Cyklus", tradeCycle(t)); if (t.ck) add("Seznam před vstupem", t.ck.k + " z " + t.ck.n); if (t.grade) add("Provedení", t.grade + " z 5"); if (t.emo) add("Před vstupem", t.emo);
     if (cfg.accounts.length > 1){ const a = cfg.accounts.find(x => x.id === tAcct(t)); if (a) add("Účet", a.name); }
     if (g.children.length) card.appendChild(g);
     if (t.levels){ const b = el("div","box"); b.appendChild(el("b", null, "Úrovně")); b.appendChild(el("span", null, t.levels)); card.appendChild(b); }
@@ -3220,6 +3244,10 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
     const losses = tr.filter(t => (Number(t.r) || 0) < 0), al = losses.length ? losses.reduce((s, t) => s + Number(t.r), 0) / losses.length : null;
     row("Průměrná ztráta nejvýš 1,1 R", al == null ? null : sgn(al) + " R", al >= -1.1, losses.length ? "z " + losses.length + " ztrátových obchodů" : null);
   }
+  function tradeCycle(t){
+    try { const p = {}; new Intl.DateTimeFormat("en-US", {timeZone: "America/New_York", hour: "2-digit", minute: "2-digit", hourCycle: "h23"}).formatToParts(new Date(t.ts)).forEach(x => { p[x.type] = x.value; });
+      const m = (Number(p.hour) % 24) * 60 + Number(p.minute); if (!isFinite(m)) return null; return m >= 420 && m < 960 ? CYCN[Math.floor((m - 420) / 90)] : m >= 120 && m < 300 ? "Londýn" : m >= 1200 ? "Asie" : "Mimo cykly"; } catch(e){ return null; }
+  }
   const symsOf = tr => Object.keys(tr.reduce((o, t) => { o[t.sym || ""] = 1; return o; }, {})).length;
   function renderStats(){
     const unit = cfg.unit === "$" ? "$" : "R", tr = jFiltered(), st = jStats(tr, unit), box = $("j-stats"); clear(box);
@@ -3251,7 +3279,7 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
       const bias = t => { const p = jr.plans[tDay(t)]; if (!p || !p.bias || p.bias === "none") return "Bez plánu"; return (p.bias === "long") === (t.dir !== "short") ? "Ve směru plánu" : "Proti plánu"; };
       [groupTable("Setup", tr, t => t.setup || "Jiný", null, unit), symsOf(tr) > 1 ? groupTable("Trh", tr, t => t.sym || "–", null, unit) : null, groupTable("Den", tr, t => D[(new Date(t.ts).getDay() + 6) % 7], D, unit),
        groupTable("Hodina", tr, t => { const h = new Date(t.ts).getHours(); return isNaN(h) ? null : String(h).padStart(2, "0") + ":00"; }, Array.from({length: 24}, (x, i) => String(i).padStart(2, "0") + ":00"), unit),
-       groupTable("Směr", tr, t => t.dir === "short" ? "Short" : "Long", null, unit), groupTable("Plán dne", tr, bias, ["Ve směru plánu","Proti plánu","Bez plánu"], unit),
+       groupTable("Cyklus (New York)", tr, tradeCycle, CYCN.concat(["Londýn", "Asie", "Mimo cykly"]), unit), groupTable("Směr", tr, t => t.dir === "short" ? "Short" : "Long", null, unit), groupTable("Plán dne", tr, bias, ["Ve směru plánu","Proti plánu","Bez plánu"], unit),
        groupTable("Seznam", tr, t => t.ck ? (t.ck.k === t.ck.n ? "Splněný" : "Nesplněný") : null, null, unit), groupTable("Chyba", tr, t => (t.tags && t.tags.length) ? t.tags : null, null, unit),
        groupTable("Před vstupem", tr, t => t.emo || null, EMO, unit), groupTable("Provedení", tr, t => t.grade ? String(t.grade) + " z 5" : null, ["5 z 5","4 z 5","3 z 5","2 z 5","1 z 5"], unit),
        groupTable("Doba držení", tr, hold, ["do 5 min","5–15 min","15–60 min","přes hodinu"], unit)].forEach(x => { if (x) tb.appendChild(x); }); }
