@@ -702,6 +702,7 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
 
   <section class="view" id="v-vice">
     <div class="card"><h2>Více</h2><div class="vgrid">
+      <a class="go" href="#premium"><div><b>Premium</b><span>Čas v doručování ceny, na heslo</span></div><i>›</i></a>
       <a class="go" href="#komunita"><div><b>Komunita</b><span>Sdílej analýzu a obchod odkazem</span></div><i>›</i></a>
       <a class="go" href="#nastroje"><div><b>Nástroje</b><span>Kalkulačka pozice a hodiny seancí</span></div><i>›</i></a>
       <a class="go" href="#poznatky"><div><b>Poznatky botů</b><span>Co boti našli v ICT materiálech</span></div><i>›</i></a>
@@ -716,6 +717,8 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
       <a class="go" href="#uvod"><div><b>O aplikaci</b><span>Co Tape umí a pro koho je</span></div><i>›</i></a>
     </div></div>
   </section>
+
+  <section class="view" id="v-premium"><div class="list" id="prem"></div></section>
 
   <section class="view" id="v-komunita">
     <div class="card"><div class="row"><h2>Komunita</h2><span class="pill warn">První verze</span></div>
@@ -1188,10 +1191,10 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
   });
 
   // Views
-  const VIEWS = ["prehled","denik","kouc","laura","room","studium","vice","nastroje","poznatky","model","strategie","backtest","napady","komunita","nastaveni","napoveda","novinky","soukromi","uvod"];
+  const VIEWS = ["prehled","denik","kouc","laura","room","studium","vice","nastroje","poznatky","model","strategie","backtest","napady","komunita","premium","nastaveni","napoveda","novinky","soukromi","uvod"];
   const GROUP = {prehled: "prehled", denik: "denik", kouc: "kouc", laura: "uceni", room: "uceni", studium: "uceni"};
   const SUBNAV = {uceni: [["laura","Obrázky a lekce"],["room","Kurz 12 týdnů"],["studium","Studium ICT"]]};
-  const VTITLE = {komunita: "Komunita", nastroje: "Nástroje", poznatky: "Poznatky botů", model: "Model", strategie: "Pine Script", backtest: "Backtest", napady: "Nápady", nastaveni: "Nastavení", napoveda: "Nápověda", novinky: "Co je nového", soukromi: "Soukromí a data", uvod: "O aplikaci"};
+  const VTITLE = {premium: "Premium", komunita: "Komunita", nastroje: "Nástroje", poznatky: "Poznatky botů", model: "Model", strategie: "Pine Script", backtest: "Backtest", napady: "Nápady", nastaveni: "Nastavení", napoveda: "Nápověda", novinky: "Co je nového", soukromi: "Soukromí a data", uvod: "O aplikaci"};
   function route(){
     const h = (location.hash || "").replace("#",""), v = VIEWS.includes(h) ? h : "prehled", g = GROUP[v] || "vice";
     document.body.dataset.view = v; document.body.dataset.group = g;
@@ -3925,6 +3928,40 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
   }
   const _refreshAll7 = refreshAll;
   refreshAll = function(){ _refreshAll7(); try { renderDemoRoad(); if (pa.length && $("pa-chips").children.length) paChips(); } catch(e){ if (window.console) console.error(e); } };
+
+
+  // =====================================================================================
+  // v13: Premium — behind a password (a curtain, not real protection: the page is public)
+  // =====================================================================================
+  const PREM_HASH = "2570b1a7f7eeb7df461c21e283dc302635de44780b60adfcb1be2bcab63ef9b2";
+  const PREM = [
+    ["Hlavní myšlenka", "Graf má dvě osy a většina lidí řeší jen cenu. Tenhle pohled říká, že stejně důležité je, kdy se něco stane. Setup má větší váhu, když se správná cena potká se správným časem. Když čas nesedí, je to slabší příležitost, i kdyby obrazec vypadal učebnicově."],
+    ["Na high a low záleží podle toho, kdy vznikly", "Staré high nebo low samo o sobě moc neznamená. Důležité je, ve kterém časovém úseku vzniklo. High a low předchozí seance nebo předchozího cyklu fungují jako magnety pro cenu v tom dalším. Čím delší úsek, tím víc likvidity se u jeho okrajů nahromadí a tím větší váhu ta úroveň má."],
+    ["Časové cykly", "Den se dá rozdělit na cykly po 30, 60, 90 a 240 minutách. Devadesátiminutový cyklus se skládá ze tří třicetiminutových a každý z nich může mít vlastní malý průběh nahromadění, manipulace a distribuce. Cílem obchodu bývá high nebo low předchozího cyklu."],
+    ["Otevírací cena cyklu", "Manipulace se měří od otevírací ceny cyklu. Když čekáš pokles, chceš nejdřív vidět falešný pohyb nad otevírací cenu, tam vznikne high cyklu, a teprve potom pohyb dolů. U růstu je to zrcadlově: nejdřív výpad pod otevírací cenu, potom růst. Bez manipulace není setup."],
+    ["Power of three v čase", "Nahromadění, manipulace, distribuce. Manipulaci se říká také Judas swing. Podstatné je, že se dá čekat v konkrétní časy, typicky při otevření burzy v 9:30 newyorského času a potom kolem 10:00 a 14:00. Když v tu dobu falešný pohyb nepřijde, seance má menší váhu."],
+    ["Dopoledne, oběd, odpoledne", "Dopolední okno trvá od 7:00 do 12:00 newyorského času a dá se rozdělit na půlhodiny, z nichž každá mívá svůj charakter. Před zprávou v 8:30 trh často jen přešlapuje a sbírá likviditu. Cyklus kolem oběda (11:30 až 13:00) bývá konsolidace nebo návrat a neobchoduje se. Jeho high a low se pak hodí jako cíl pro odpoledne (13:00 až 16:00)."],
+    ["Jak to použít", "Vyber si jedno časové okno a jeden opakující se jev, například výpad v 9:30 proti směru dne. Ten sleduj týdny a zapisuj si, kdy přesně se co stalo. Nemusíš sedět u grafu celý den, stačí být u něj ve chvíli, kdy tvůj setup může přijít. Deník v Tape ti k tomu počítá výsledky podle hodiny."]];
+  const CYC90 = [0, 90, 180, 270, 360, 450, 540, 630, 720, 810, 900, 990];
+  function renderPremium(){
+    const box = $("prem"); clear(box); let open = false; try { open = localStorage.getItem("tape-premium") === "1"; } catch(e){}
+    if (!open){ const c = el("div","card"), f = el("form","inline"), i = inp("password", "", "Heslo"), b = el("button","primary","Odemknout"), m = el("span","small muted"); i.setAttribute("aria-label","Heslo"); i.autocomplete = "off"; b.type = "submit";
+      c.appendChild(el("h2", null, "Premium")); c.appendChild(el("p","muted","Tahle část je zamčená heslem.")); f.appendChild(i); f.appendChild(b); c.appendChild(f); c.appendChild(m); box.appendChild(c);
+      f.addEventListener("submit", async ev => { ev.preventDefault(); try { const d = await crypto.subtle.digest("SHA-256", new TextEncoder().encode("tape:" + i.value.trim())), h = Array.prototype.map.call(new Uint8Array(d), x => x.toString(16).padStart(2, "0")).join("");
+        if (h === PREM_HASH){ try { localStorage.setItem("tape-premium", "1"); } catch(e){} renderPremium(); } else { m.textContent = "Heslo nesedí."; i.value = ""; } } catch(e){ m.textContent = "Ověření se nepodařilo."; } });
+      return; }
+    const head = el("div","card"), lock = el("button","ck-del","Zamknout"), row = el("div","row"); lock.type = "button"; lock.addEventListener("click", () => { try { localStorage.removeItem("tape-premium"); } catch(e){} renderPremium(); });
+    row.appendChild(el("h2", null, "Čas v doručování ceny")); row.appendChild(lock); head.appendChild(row);
+    head.appendChild(el("p", null, "Stručný výklad toho, jak s časem pracuje obchodník Zeussy (The Ones That Know) ve svém materiálu TIME z března 2023. Je to shrnutí hlavních myšlenek vlastními slovy, ne kopie materiálu.")); box.appendChild(head);
+    PREM.forEach((x, i) => { const c = el("div","card ststep"), h = el("div","sthead"); h.appendChild(el("span","stn", i + 1)); h.appendChild(el("h3", null, x[0])); c.appendChild(h); c.appendChild(el("p", null, x[1])); box.appendChild(c); });
+    const ny = tzNow("America/New_York"), loc = new Date(), off = ny ? (((loc.getHours() * 60 + loc.getMinutes()) - ny.mins) % 1440 + 1440) % 1440 : 0, hm = m => { m = ((m % 1440) + 1440) % 1440; return String(Math.floor(m / 60)).padStart(2, "0") + ":" + String(m % 60).padStart(2, "0"); };
+    const t = el("div","card"), wrap = el("div","tablebox"), tb = el("table"), th = el("thead"), hr = el("tr"), bd = el("tbody"); ["Cyklus", "New York", "Náš čas"].forEach(h => hr.appendChild(el("th", null, h))); th.appendChild(hr); tb.appendChild(th);
+    CYC90.forEach((m, i) => { const r = el("tr"); r.appendChild(el("td", null, (i + 1) + ".")); r.appendChild(el("td","num", hm(m) + "–" + hm(m + 90))); r.appendChild(el("td","num", hm(m + off) + "–" + hm(m + 90 + off))); if (ny && ny.mins >= m && ny.mins < m + 90) r.style.color = "var(--good)"; bd.appendChild(r); });
+    tb.appendChild(bd); wrap.appendChild(tb); t.appendChild(el("h2", null, "Devadesátiminutové cykly na indexech")); t.appendChild(el("p","small muted","Otevírací časy devadesátiminutových svíček od půlnoci newyorského času. Zeleně je cyklus, který právě běží.")); t.appendChild(wrap); box.appendChild(t);
+    const w = el("div","card"); w.appendChild(el("h2", null, "Na rovinu")); w.appendChild(el("p", null, "Celý přístup stojí na předpokladu, že cenu řídí algoritmus podle času. Ten předpoklad nejde ověřit a sám autor píše, že si to má každý prověřit na grafech. Ber to jako návod, na co se dívat a co si zapisovat, ne jako pravidla, která vydělávají."));
+    w.appendChild(el("p","small muted","Původní materiál je chráněný autorským právem a jeho autor výslovně žádá o svolení k dalšímu použití. Pro placenou verzi aplikace je potřeba souhlas autora, případně tuhle část nahradit vlastním obsahem.")); box.appendChild(w);
+  }
+  renderPremium();
 
   // ---------- moving to a new address without losing data ----------
   // data/site.json: {"move": "https://new-address", "from": ["https://old-address"]}. The old site hands the data to the new one in a window the person opens.
