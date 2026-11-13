@@ -1786,5 +1786,65 @@
   "status": "done",
   "what": "Tři kroky po kurzu: závěrečná zkouška, 20 cvičných obchodů v přehrávání, 20 obchodů na demo účtu.",
   "why": "Kurz má končit praxí, ne certifikátem."
+ },
+ {
+  "id": "cykly-v-deniku",
+  "ts": "2026-11-13T12:45:00Z",
+  "date": "2026-11-13",
+  "title": "Cyklus u každého obchodu",
+  "area": "denik",
+  "value": 3,
+  "effort": 1,
+  "status": "new",
+  "what": "Deník u obchodu sám určí, ve kterém devadesátiminutovém cyklu vznikl, a přidá rozpad statistik podle cyklu.",
+  "why": "Ukáže, ve kterém cyklu ti styl založený na čase opravdu funguje."
+ },
+ {
+  "id": "indikator-cykly-a-modely",
+  "ts": "2026-11-13T12:45:00Z",
+  "date": "2026-11-13",
+  "title": "Indikátor: cykly, MSS, FVG a sweepy",
+  "area": "model",
+  "value": 3,
+  "effort": 3,
+  "status": "new",
+  "what": "Druhá verze indikátoru s boxy cyklů a značkami sweepu, zlomu struktury a mezer, každá vrstva vypínatelná.",
+  "why": "Graf pak ukáže totéž, co kurz učí."
+ },
+ {
+  "id": "databaze-recapu",
+  "ts": "2026-11-13T12:45:00Z",
+  "date": "2026-11-13",
+  "title": "Databáze rozborů obchodů",
+  "area": "vyuka",
+  "value": 3,
+  "effort": 3,
+  "status": "new",
+  "what": "Sbírka veřejných rozborů obchodů od sledovaných traderů, shrnutých do kroků: cyklus, manipulace, obrat, vstup, cíl.",
+  "why": "Styl se nejlíp učí na desítkách skutečných příkladů."
+ },
+ {
+  "id": "trenink-cyklu",
+  "ts": "2026-11-13T12:45:00Z",
+  "date": "2026-11-13",
+  "title": "Trénink cyklů v přehrávání",
+  "area": "vyuka",
+  "value": 3,
+  "effort": 2,
+  "status": "new",
+  "what": "Přehrávání trhu vyznačí cykly a po každém se zeptá, kde byla manipulace a kam šla distribuce.",
+  "why": "Spojí teorii času s rozhodováním na grafu."
+ },
+ {
+  "id": "premium-jako-tarif",
+  "ts": "2026-11-13T12:45:00Z",
+  "date": "2026-11-13",
+  "title": "Premium jako placený tarif",
+  "area": "produkt",
+  "value": 3,
+  "effort": 3,
+  "status": "new",
+  "what": "Analýza dne, indikátor a pokročilé modely jen pro platící účty, se skutečným zamčením na serveru.",
+  "why": "Heslo na veřejné stránce obsah neochrání."
  }
 ]

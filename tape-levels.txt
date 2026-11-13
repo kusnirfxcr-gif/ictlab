@@ -10,6 +10,7 @@ bool   showOpens = input.bool(true,  "Otevírací ceny 18:00, 00:00, 9:30, 10:00
 bool   showPD    = input.bool(true,  "High a low předchozího dne")
 bool   showAsia  = input.bool(true,  "High a low Asie (20:00 až 00:00)")
 bool   showLon   = input.bool(true,  "High a low Londýna (02:00 až 05:00)")
+bool   showCyc   = input.bool(true,  "High a low předchozího 90minutového cyklu (7:00 až 16:00)")
 bool   showLunch = input.bool(false, "High a low oběda (11:30 až 13:00)")
 bool   showProj  = input.bool(false, "Předpokládané high a low dne podle průměrného rozpětí")
 bool   showTable = input.bool(true,  "Tabulka s analýzou")
@@ -124,6 +125,33 @@ if inLunch
         luL := math.min(luL, low)
 lunOn := inLunch
 
+// 90-minute session cycles start at 7:00, 8:30, 10:00, 11:30, 13:00 and 14:30
+int cycIdx = mod >= 420 and mod < 960 ? int(math.floor((mod - 420) / 90.0)) : -1
+var int   lastCyc = -1
+var float cH = na
+var float cL = na
+var float pcH = na
+var float pcL = na
+if cycIdx != lastCyc
+    if cycIdx >= 0
+        if lastCyc >= 0
+            pcH := cH
+            pcL := cL
+        else
+            pcH := na
+            pcL := na
+        cH := high
+        cL := low
+    else
+        pcH := na
+        pcL := na
+        cH := na
+        cL := na
+    lastCyc := cycIdx
+else if cycIdx >= 0
+    cH := math.max(cH, high)
+    cL := math.min(cL, low)
+
 float adr = array.size(ranges) > 0 ? array.avg(ranges) : na
 float dayRange = dH - dL
 float projH = dL + adr
@@ -140,6 +168,8 @@ plot(showAsia and not inAsia ? asH : na, "High Asie", cAsia, 1, plot.style_lineb
 plot(showAsia and not inAsia ? asL : na, "Low Asie",  cAsia, 1, plot.style_linebr)
 plot(showLon and not inLondon ? loH : na, "High Londýna", cLon, 1, plot.style_linebr)
 plot(showLon and not inLondon ? loL : na, "Low Londýna",  cLon, 1, plot.style_linebr)
+plot(showCyc ? pcH : na, "High předchozího cyklu (PCH)", color.new(color.fuchsia, 20), 1, plot.style_linebr)
+plot(showCyc ? pcL : na, "Low předchozího cyklu (PCL)",  color.new(color.fuchsia, 20), 1, plot.style_linebr)
 plot(showLunch and not inLunch ? luH : na, "High oběda", cLun, 1, plot.style_linebr)
 plot(showLunch and not inLunch ? luL : na, "Low oběda",  cLun, 1, plot.style_linebr)
 plot(showProj ? projH : na, "Předpokládané high dne", color.new(color.green, 60), 1, plot.style_circles)
@@ -200,6 +230,8 @@ string amNote = up ? "Směr nahoru. Čekej výpad dolů v 9:30 nebo 10:00" + (na
 
 string pmNote = na(luH) ? "Oběd (11:30 až 13:00) ještě neproběhl. Jeho high a low budou cíle na odpoledne." : "Oběd " + fmt(luL) + " až " + fmt(luH) + ". " + (up ? "Ve směru nahoru je cílem high oběda a potom high dne " + fmt(dH) + "." : dn ? "Ve směru dolů je cílem low oběda a potom low dne " + fmt(dL) + "." : "Sleduj, kterou stranu oběda cena vybere po 13:30.")
 
+string cycNote = cycIdx < 0 ? "Mimo newyorské cykly (7:00 až 16:00)." : "Běží cyklus " + str.tostring(cycIdx + 1) + " ze 6" + (cycIdx == 3 ? " (oběd, neobchoduje se). " : ". ") + (na(pcH) ? "První cyklus dne, předchozí high a low ještě nejsou." : up ? "Směr nahoru: čekej výpad k PCL " + fmt(pcL) + " a potom cestu k PCH " + fmt(pcH) + "." : dn ? "Směr dolů: čekej výpad k PCH " + fmt(pcH) + " a potom cestu k PCL " + fmt(pcL) + "." : "PCH " + fmt(pcH) + ", PCL " + fmt(pcL) + ". Sleduj, kterou stranu cena vybere první.")
+
 string rangeNote = na(adr) ? "Průměr se spočítá po prvním celém dni." : pts(dayRange) + " z " + pts(adr) + " b. (" + str.tostring(math.round(dayRange / adr * 100)) + " %). " + (dayRange >= adr ? "Průměrné rozpětí je vyčerpané, další velký pohyb je méně pravděpodobný." : "Zbývá zhruba " + pts(adr - dayRange) + " b. Při růstu vychází high kolem " + fmt(projH) + ", při poklesu low kolem " + fmt(projL) + ".")
 
 // ---------- table ----------
@@ -208,7 +240,7 @@ if showTable and barstate.islast
     string pos = tblPos == "Vpravo nahoře" ? position.top_right : tblPos == "Vpravo dole" ? position.bottom_right : position.bottom_left
     if not na(tb)
         table.delete(tb)
-    tb := table.new(pos, 2, 7, bgcolor = color.new(color.black, 20), border_width = 1, border_color = color.new(color.gray, 70))
+    tb := table.new(pos, 2, 8, bgcolor = color.new(color.black, 20), border_width = 1, border_color = color.new(color.gray, 70))
     color tc = color.white
     table.cell(tb, 0, 0, "Tape", text_color = tc, text_size = size.small, text_halign = text.align_left)
     table.cell(tb, 1, 0, "Směr: " + biasTxt + " (" + str.tostring(score) + " ze 4)", text_color = biasCol, text_size = size.small, text_halign = text.align_left)
@@ -222,8 +254,10 @@ if showTable and barstate.islast
     table.cell(tb, 1, 4, amNote, text_color = tc, text_size = size.small, text_halign = text.align_left)
     table.cell(tb, 0, 5, "New York odpoledne", text_color = tc, text_size = size.small, text_halign = text.align_left)
     table.cell(tb, 1, 5, pmNote, text_color = tc, text_size = size.small, text_halign = text.align_left)
-    table.cell(tb, 0, 6, "Pozor", text_color = color.gray, text_size = size.tiny, text_halign = text.align_left)
-    table.cell(tb, 1, 6, "Rozbor podle pravidel, ne signál. Nic z toho nemusí nastat.", text_color = color.gray, text_size = size.tiny, text_halign = text.align_left)
+    table.cell(tb, 0, 6, "Cyklus 90 min", text_color = tc, text_size = size.small, text_halign = text.align_left)
+    table.cell(tb, 1, 6, cycNote, text_color = tc, text_size = size.small, text_halign = text.align_left)
+    table.cell(tb, 0, 7, "Pozor", text_color = color.gray, text_size = size.tiny, text_halign = text.align_left)
+    table.cell(tb, 1, 7, "Rozbor podle pravidel, ne signál. Nic z toho nemusí nastat.", text_color = color.gray, text_size = size.tiny, text_halign = text.align_left)
 
 // ---------- labels on the right ----------
 var label[] labs = array.new_label(0)
@@ -247,3 +281,6 @@ if showLabels and barstate.islast
     if showLon and not inLondon
         addLab(loH, "Londýn H", cLon)
         addLab(loL, "Londýn L", cLon)
+    if showCyc
+        addLab(pcH, "PCH", color.fuchsia)
+        addLab(pcL, "PCL", color.fuchsia)

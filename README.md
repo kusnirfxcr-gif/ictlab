@@ -75,3 +75,7 @@ Průvodci v sekci Studium: `model2022` (kroky modelu) a `core` (dvanáct měsíc
 - Každé téma v `data/priceaction.json` má navíc `traps` (dvě časté záměny) a `check` (kontrolní otázka). Doplňuje je skript mimo repozitář.
 - `data/premium.json` jsou grafy pro sekci Premium. Boti ho nemění.
 - `tape-levels.txt` je indikátor pro TradingView (Pine v6). Boti ho nemění.
+
+## Denní studium (běží z chatu, dokud naplánovaná úloha neumí ukládat)
+
+Kromě šesti botů se každý den dělá i studium Zeussyho přístupu: veřejná vlákna, veřejná shrnutí přednášek a rozbory obchodů. Nové poznatky se zapisují do `data/insights.json` s `bot: "skaut"` a konceptem `cas` nebo jiným vhodným, vždy vlastními slovy a s odkazem. Placený obsah se nepřebírá.

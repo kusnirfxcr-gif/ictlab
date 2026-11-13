@@ -571,5 +571,279 @@
    }
   ],
   "remember": "Pod otevírací cenou je discount, nad ní premium. Nákup se hledá pod ní, prodej nad ní, a nejlépe tam, kde se potká víc otevíracích cen."
+ },
+ {
+  "id": "prem-mmbm",
+  "title": "Market maker buy model: tři vstupy",
+  "en": "MMBM",
+  "week": 9,
+  "intro": "Celý nákupní model na jednom grafu: levá strana křivky dolů, obrat a pravá strana nahoru.",
+  "h": 300,
+  "lo": 95.97,
+  "hi": 114.73,
+  "candles": [
+   [
+    110,
+    111.5,
+    109,
+    110.5
+   ],
+   [
+    110.5,
+    111.5,
+    108.9,
+    109.9
+   ],
+   [
+    109.9,
+    111.2,
+    108.9,
+    110.2
+   ],
+   [
+    110.2,
+    111.2,
+    106.7,
+    107.7
+   ],
+   [
+    107.7,
+    108.7,
+    104.7,
+    105.7
+   ],
+   [
+    105.7,
+    108.2,
+    104.7,
+    107.2
+   ],
+   [
+    107.2,
+    108.2,
+    103.2,
+    104.2
+   ],
+   [
+    104.2,
+    105.2,
+    100.7,
+    101.7
+   ],
+   [
+    101.7,
+    103.9,
+    100.7,
+    102.9
+   ],
+   [
+    102.9,
+    103.9,
+    99.10000000000001,
+    100.10000000000001
+   ],
+   [
+    100.10000000000001,
+    101.10000000000001,
+    97.4,
+    98.50000000000001
+   ],
+   [
+    98.50000000000001,
+    102.50000000000001,
+    97.50000000000001,
+    101.50000000000001
+   ],
+   [
+    101.50000000000001,
+    105.00000000000001,
+    100.50000000000001,
+    104.00000000000001
+   ],
+   [
+    104.00000000000001,
+    105.00000000000001,
+    102.0,
+    102.70000000000002
+   ],
+   [
+    102.70000000000002,
+    106.70000000000002,
+    101.70000000000002,
+    105.70000000000002
+   ],
+   [
+    105.70000000000002,
+    108.90000000000002,
+    104.70000000000002,
+    107.90000000000002
+   ],
+   [
+    107.90000000000002,
+    108.90000000000002,
+    105.9,
+    106.70000000000002
+   ],
+   [
+    106.70000000000002,
+    110.70000000000002,
+    105.70000000000002,
+    109.70000000000002
+   ],
+   [
+    109.70000000000002,
+    113.30000000000001,
+    108.70000000000002,
+    112.30000000000001
+   ]
+  ],
+  "steps": [
+   {
+    "show": 3,
+    "text": "Původní konsolidace. Tady model začíná a tady také skončí: nákupní model je hotový, až se cena vrátí nad ni.",
+    "add": [
+     {
+      "t": "box",
+      "x1": 0,
+      "x2": 2.4,
+      "y1": 109.3,
+      "y2": 111.2,
+      "c": "muted",
+      "label": "původní konsolidace",
+      "la": "start",
+      "lv": "above"
+     }
+    ]
+   },
+   {
+    "show": 9,
+    "text": "Levá strana křivky. Cena klesá k cíli na vyšším timeframu a cestou udělá dva návraty. Zapamatuj si je, na pravé straně se budou hodit.",
+    "add": [
+     {
+      "t": "text",
+      "x": 5,
+      "y": 108.2,
+      "s": "1. návrat",
+      "a": "middle",
+      "c": "amber",
+      "dy": -6
+     },
+     {
+      "t": "text",
+      "x": 8,
+      "y": 103.9,
+      "s": "2. návrat",
+      "a": "middle",
+      "c": "amber",
+      "dy": -6
+     }
+    ],
+    "focus": [
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ]
+   },
+   {
+    "show": 11,
+    "text": "Smart money reversal. Cena vybere low předchozího cyklu a dál už neklesá. Tady velcí hráči nakupují.",
+    "add": [
+     {
+      "t": "line",
+      "y": 99,
+      "x1": 6,
+      "x2": 18.4,
+      "c": "bad",
+      "dash": true,
+      "label": "PCL",
+      "la": "end",
+      "lv": "below"
+     },
+     {
+      "t": "text",
+      "x": 10,
+      "y": 97.4,
+      "s": "SMR",
+      "a": "middle",
+      "c": "good",
+      "dy": 14
+     }
+    ],
+    "focus": [
+     9,
+     10
+    ]
+   },
+   {
+    "show": 13,
+    "text": "Zlom struktury. Dvě silné svíčky prorazí vrchol druhého návratu. Směr se otočil nahoru.",
+    "add": [
+     {
+      "t": "line",
+      "y": 103.9,
+      "x1": 8,
+      "x2": 13.4,
+      "c": "muted",
+      "dash": false,
+      "label": "MSS",
+      "la": "end",
+      "lv": "above"
+     }
+    ],
+    "focus": [
+     11,
+     12
+    ]
+   },
+   {
+    "show": 14,
+    "text": "První vstup: low-risk buy. Nákup při prvním návratu po zlomu, stop pod jeho dno. Je to nejlepší cena, ale obrat ještě není jistý.",
+    "add": [
+     {
+      "t": "text",
+      "x": 13,
+      "y": 102.0,
+      "s": "1. vstup",
+      "a": "middle",
+      "c": "good",
+      "dy": 14
+     }
+    ],
+    "focus": [
+     13
+    ]
+   },
+   {
+    "show": 17,
+    "text": "Druhý vstup. Cena se vrátí k úrovni prvního návratu z levé strany a ta teď drží jako podpora. Kdyby neudržela, model přestává platit.",
+    "add": [
+     {
+      "t": "text",
+      "x": 16,
+      "y": 105.9,
+      "s": "2. vstup",
+      "a": "middle",
+      "c": "good",
+      "dy": 14
+     }
+    ],
+    "focus": [
+     16
+    ]
+   },
+   {
+    "show": 19,
+    "text": "Dokončení. Cena se vrátí nad původní konsolidaci. Poslední vstup bývá těsně před ní, s nejmenším zbývajícím ziskem.",
+    "add": [],
+    "focus": [
+     17,
+     18
+    ]
+   }
+  ],
+  "remember": "Konsolidace, pokles se dvěma návraty, obrat na likviditě, zlom struktury, vstupy při návratech a cíl nad původní konsolidací."
  }
 ]
