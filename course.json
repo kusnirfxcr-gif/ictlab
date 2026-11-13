@@ -610,7 +610,7 @@
     {
      "id": "11b",
      "title": "Co zapisovat",
-     "text": "Datum, směr, která likvidita byla vybraná, vstup, stop, výsledek v R, snímek grafu a jedna věta, co bys příště udělala jinak. Tabulka stačí. Bez deníku nepoznáš, jestli chybuje model, nebo ty.",
+     "text": "Datum, směr, která likvidita byla vybraná, vstup, stop, výsledek v R, snímek grafu a jedna věta, co příště uděláš jinak. Tabulka stačí. Bez deníku nepoznáš, jestli chybuje model, nebo ty.",
      "key": "Zapisuj datum, směr, vybranou likviditu, vstup, stop, výsledek v R, snímek a jednu větu poučení.",
      "tf": {
       "s": "Bez deníku nepoznáš, jestli chybuje model, nebo ty.",
@@ -632,7 +632,7 @@
     {
      "id": "11d",
      "title": "Past přeučení",
-     "text": "Když budeš pravidla upravovat tak dlouho, až na minulých datech vyjdou skvěle, na nových datech nejspíš selžou. Proto se pravidla ladí na jedné části historie a ověřují na jiné, kterou jsi při ladění neviděla. Stejně pracuje backtester v Tape.",
+     "text": "Když budeš pravidla upravovat tak dlouho, až na minulých datech vyjdou skvěle, na nových datech nejspíš selžou. Proto se pravidla ladí na jedné části historie a ověřují na jiné, kterou jsi při ladění neměl před očima. Stejně pracuje backtester v Tape.",
      "key": "Pravidla se ladí na jedné části historie a ověřují na jiné.",
      "tf": {
       "s": "Čím déle pravidla upravuješ, aby minulost vyšla skvěle, tím líp budou fungovat na nových datech.",

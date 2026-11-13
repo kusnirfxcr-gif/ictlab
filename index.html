@@ -1352,7 +1352,7 @@ body.sakura.modal .sk-pal,body.sakura.copen .sk-pal{display:none}
 
   <section class="view" id="v-room">
     <div class="card">
-      <h2>Dictator's Room</h2>
+      <h2>Kurz 12 týdnů</h2>
       <p id="c-intro" class="muted">Načítám kurz…</p>
       <p class="small muted">Obrázky u jednotlivých týdnů jsou zjednodušená schémata nakreslená pro tento kurz, ne skutečné grafy.</p>
       <div class="row"><span class="small" id="c-count">0 z 0 lekcí</span><span class="small muted" id="c-save"></span></div>
@@ -1452,8 +1452,8 @@ body.sakura.modal .sk-pal,body.sakura.copen .sk-pal{display:none}
 
   <section class="view" id="v-laura">
     <div class="card">
-      <h2>Lauřin prostor</h2>
-      <p class="muted">Price action krok za krokem v obrázcích, každý den jedna krátká lekce od bota Učitele, kvíz a slovníček pojmů. Dvanáctitýdenní kurz s úkoly najdeš v sekci <a href="#room">Dictator's Room</a>.</p>
+      <h2>Obrázky a lekce</h2>
+      <p class="muted">Price action krok za krokem v obrázcích, každý den jedna krátká lekce, kvíz, kartičky a slovníček pojmů. Dvanáctitýdenní kurz s úkoly najdeš v sekci <a href="#room">Kurz 12 týdnů</a>.</p>
       <div class="strip four" aria-label="Postup">
         <div><span>Přečtené lekce</span><b id="l-read">…</b></div>
         <div><span>Hotové kvízy</span><b id="l-quiz">…</b></div>
@@ -2536,7 +2536,7 @@ body.sakura.modal .sk-pal,body.sakura.copen .sk-pal{display:none}
     const l = lessons.find(x => x.id === curLesson);
     const lessonText = l ? "Otevřená lekce: " + (l.title || "") + "\n" + (Array.isArray(l.body) ? l.body.join("\n") : String(l.body || "")) : "Žádná lekce není otevřená.";
     const gl = glossary.map(g => "- " + g.term + (g.en ? " (" + g.en + ")" : "") + ": " + g.def).join("\n").slice(0, 12000);
-    return "Jsi trpělivý lektor na stránce Tape. Učíš Lauru, úplnou začátečnici, základy tradingu podle konceptů ICT (Inner Circle Trader) na futures NQ a ES. "
+    return "Jsi trpělivý lektor na stránce Tape. Učíš úplného začátečníka základy tradingu podle konceptů ICT (Inner Circle Trader) na futures NQ a ES. "
       + "Odpovídej česky, krátce a jednoduše, s jedním konkrétním příkladem na grafu popsaným slovy. Anglické pojmy nech v originále a při prvním použití je vysvětli. "
       + "Nedávej investiční doporučení ani pokyny, co koupit nebo prodat, a neslibuj zisk. Když se ptá, jestli koncept funguje, řekni poctivě, že ICT koncepty nejsou prokázanou výhodou a musí se ověřit backtestem. "
       + "Když si nejsi jistý, řekni to. Piš prostý text bez Markdownu.\n\n"
@@ -2725,7 +2725,7 @@ body.sakura.modal .sk-pal,body.sakura.copen .sk-pal{display:none}
     const shown = Date.now();
     const ctl = el("div","pa-ctl");
     if (!fcOpen){ const b = el("button","primary","Ukázat význam"); b.type = "button"; b.addEventListener("click", () => { fcOpen = true; renderFc(); }); ctl.appendChild(el("span")); ctl.appendChild(b); }
-    else [["Neuměla jsem", false, ""], ["Uměla jsem", true, "primary"]].forEach(o => {
+    else [["Ještě neumím", false, ""], ["Umím", true, "primary"]].forEach(o => {
       const b = el("button", o[2], o[0]); b.type = "button";
       b.addEventListener("click", () => {
         if (Date.now() - shown < 280) return;
