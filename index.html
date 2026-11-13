@@ -801,8 +801,7 @@ body.sakura .toast{background:#43163f;color:#fff}
 body.sakura .ldots i.c{background:linear-gradient(90deg,#ff6fb1,#b98cff);box-shadow:0 0 10px rgba(226,69,154,.45)}
 body.sakura .sk-btn[aria-pressed="true"],body.sakura .sk-btn[aria-pressed="true"] span{color:#fff}
 body.sakura .sk-btn[aria-pressed="true"] svg{color:#fff}
-body.sakura figure.fig,body.sakura .fcard,body.sakura .ob,body.sakura .copop{--bg:#09090b;--surface:#1a1222;--surface2:#241a2e;--ink:#f5f5f6;--muted:#a79bb0;--line:#3a2c44;--accent:#ff9cc2;--accent-soft:rgba(255,156,194,.14);--amber:#f2b560;--good:#3ddc97;--bad:#ff6b6b;color:var(--ink)}
-body.sakura figure.fig,body.sakura figure.fig.pa-fig,body.sakura .fcard{background:linear-gradient(180deg,#2b1439,#1b0d27);border-color:rgba(255,255,255,.55);box-shadow:0 12px 30px rgba(120,40,110,.22)}
+body.sakura .ob,body.sakura .copop{--bg:#09090b;--surface:#1a1222;--surface2:#241a2e;--ink:#f5f5f6;--muted:#a79bb0;--line:#3a2c44;--accent:#ff9cc2;--accent-soft:rgba(255,156,194,.14);--amber:#f2b560;--good:#3ddc97;--bad:#ff6b6b;color:var(--ink)}
 body.sakura .ob .card{background:#1a1222;border-color:#3a2c44;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
 body.sakura .ob button.primary{color:#fff}
 @media (hover:hover){
@@ -830,9 +829,118 @@ button.tcard,button.trow,details.week,.tile{transition:transform .25s cubic-bezi
 .fontdemo{font-size:17px;line-height:1.5;padding:12px 14px;border-radius:14px;background:var(--surface2);border:1px solid var(--line)}
 .fontdemo b{display:block;font-size:26px;font-weight:800;letter-spacing:-.03em}
 @media (prefers-reduced-motion:reduce){.rbw-ring{display:none}.ob>.card,.tcards.fresh .tbg svg,.tcards.fresh .tdot,.tcards.fresh .tlab{animation:none}}
+/* ---------- lesson figures: time lanes, activity curve, glossy candles ---------- */
+.fig .wk{stroke-width:1.5}
+.fig .bh{fill:#fff!important;fill-opacity:.2;stroke:none!important}
+.fig rect.up,.fig rect.dn{rx:3px}
+.fig .tb{stroke:none}
+.fig .tb.rbf,.fig .rbf{fill:var(--amber)}
+.fig .tz{stroke:none;fill-opacity:.07}
+.fig text.lt{font-size:9.5px;font-weight:700;letter-spacing:.09em;fill:var(--muted)}
+.fig text.tl{font-size:10px;font-weight:700}
+.fig text.tl.in{font-size:9.5px;fill:#0b0b0d}
+.fig .area{stroke:none;fill-opacity:.13;animation:fade 1s ease .9s both}
+.fig .dr{fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;animation:figdraw 1.7s cubic-bezier(.4,.1,.2,1) .3s forwards}
+.fig .rb{stroke:var(--accent)}
+.fig .pulse{transform-box:fill-box;transform-origin:center;animation:figpulse 1.9s ease-in-out infinite}
+@keyframes figdraw{to{stroke-dashoffset:0}}
+@keyframes figpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.8)}}
+body.sakura .fig .rb{stroke:url(#figrb)}
+body.sakura .fig .tb.rbf{fill:url(#figrb)}
+body.sakura figure.fig{--bg:#ffffff;--surface:#ffffff;--surface2:#fff3f9;--ink:#43163f;--muted:#9a6f95;--line:rgba(180,110,160,.28);--accent:#8f6bf2;--accent-soft:rgba(143,107,242,.12);--amber:#e8811c;--good:#12b596;--bad:#ff5a93;color:var(--ink)}
+body.sakura figure.fig,body.sakura figure.fig.pa-fig{background:linear-gradient(180deg,#ffffff,#fff0f8);border-color:rgba(226,69,154,.2);box-shadow:0 10px 30px rgba(214,90,160,.14),inset 0 1px 0 #fff}
+body.sakura .fcard{background:linear-gradient(180deg,#ffffff,#fff0f8);border-color:rgba(226,69,154,.2);box-shadow:0 10px 30px rgba(214,90,160,.14)}
+body.sakura .fig .gl{stroke:rgba(150,90,140,.16)}
+body.sakura .fig .tgb{fill:rgba(255,255,255,.96)}
+body.sakura .fig .tgb:not([class*="s-"]){stroke:rgba(150,90,140,.4)}
+body.sakura .fig .bgc{fill:#fff}
+body.sakura .fig text.lpt,body.sakura .fig text.tl.in{fill:#fff}
+body.sakura .fig .brt{fill:rgba(150,90,140,.1)}
+body.sakura .fig .z{fill-opacity:.2}
+body.sakura .fig .bh{fill-opacity:.38}
+body.sakura .fig .hit:hover{fill:rgba(226,69,154,.08)}
+body.sakura{--display:"Quicksand","Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;--body:"Nunito","Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+body.sakura .brand,body.sakura .ob,body.sakura .copop{--display:"Plus Jakarta Sans",system-ui,sans-serif;--body:"Plus Jakarta Sans",system-ui,sans-serif;font-family:var(--body)}
+body.sakura .view h2,body.sakura .view h3,body.sakura #c-now h2{font-family:var(--display);font-weight:700;letter-spacing:-.01em}
+body.sakura .lkey{position:relative;border-left:0;padding-left:20px;border-radius:14px}
+body.sakura .lkey::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;border-radius:5px;background:linear-gradient(180deg,#ff5fa2,#ff9f5a,#b98cff,#5fb8ff,#3ed6c2,#ff5fa2);background-size:100% 400%;animation:lkeyrb 7s linear infinite}
+@keyframes lkeyrb{to{background-position:0 400%}}
+body.sakura .ldots i.d{background:linear-gradient(90deg,#3ed6c2,#5fb8ff)}
+@media (prefers-reduced-motion:reduce){.fig .dr{animation:none;stroke-dashoffset:0}.fig .pulse,body.sakura .lkey::before{animation:none}}
+/* ---------- coach window ---------- */
+.copop{padding:0;overflow:hidden;display:flex;flex-direction:column;height:min(640px,calc(100dvh - 120px));max-height:none;border:0;background:rgba(13,13,17,.97);transform-origin:100% 100%;animation:copopin .4s cubic-bezier(.2,.9,.3,1.15) both}
+.copop[hidden]{display:none}
+.copop::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.5px;background:conic-gradient(from var(--ra),#ff5f6d,#ffc371,#f9f871,#3ddc97,#8ab4ff,#c58aff,#ff5f6d);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:cospin 7s linear infinite;opacity:.8;pointer-events:none;z-index:3}
+.copop.closing{animation:copopout .19s ease forwards}
+@keyframes cospin{to{--ra:360deg}}
+@keyframes copopin{from{opacity:0;transform:translateY(20px) scale(.84)}to{opacity:1;transform:none}}
+@keyframes copopout{to{opacity:0;transform:translateY(14px) scale(.9)}}
+.cohead{position:relative;display:flex;align-items:center;gap:12px;padding:14px 14px 13px;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.07);flex:none}
+.cohead::before{content:"";position:absolute;left:-20%;right:-20%;top:-70%;height:240%;background:radial-gradient(40% 50% at 18% 42%,rgba(138,180,255,.32),transparent 70%),radial-gradient(40% 50% at 76% 30%,rgba(197,138,255,.3),transparent 70%),radial-gradient(34% 44% at 52% 82%,rgba(61,220,151,.18),transparent 70%);animation:coaurora 8s ease-in-out infinite alternate;pointer-events:none}
+@keyframes coaurora{from{transform:translate3d(-7%,0,0) rotate(-5deg)}to{transform:translate3d(7%,5%,0) rotate(6deg)}}
+.coav{position:relative;flex:none;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;isolation:isolate;color:#fff}
+.coav::before{content:"";position:absolute;inset:-2px;border-radius:50%;background:conic-gradient(#ff5f6d,#ffc371,#f9f871,#3ddc97,#8ab4ff,#c58aff,#ff5f6d);z-index:-2;animation:orbspin 3.2s linear infinite}
+.coav::after{content:"";position:absolute;inset:1px;border-radius:50%;background:radial-gradient(circle at 35% 28%,#2a2a33,#0c0c0f 72%);z-index:-1}
+.coav svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linejoin:round;stroke-linecap:round;animation:cobeat 2.4s ease-in-out infinite}
+@keyframes cobeat{0%,100%{transform:scale(1) rotate(0)}50%{transform:scale(1.16) rotate(12deg)}}
+.cottl{position:relative;display:flex;flex-direction:column;gap:1px;min-width:0;flex:1}
+.cottl b{font-size:16.5px;font-weight:800;letter-spacing:-.01em}
+.costat{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.costat::before{content:"";flex:none;width:7px;height:7px;border-radius:50%;background:var(--good);animation:coping 1.8s ease-out infinite}
+.costat.off::before{background:var(--amber);animation:none}
+@keyframes coping{from{box-shadow:0 0 0 0 rgba(61,220,151,.65)}to{box-shadow:0 0 0 8px rgba(61,220,151,0)}}
+.coclose{position:relative;flex:none;width:34px;height:34px;padding:0;border-radius:50%;display:grid;place-items:center}
+.coclose svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+.cosp{position:absolute;width:9px;height:9px;clip-path:polygon(50% 0,60% 40%,100% 50%,60% 60%,50% 100%,40% 60%,0 50%,40% 40%);background:#fff;animation:cotwk 2.6s ease-in-out infinite alternate;pointer-events:none}
+.cosp.s0{left:58%;top:20%}.cosp.s1{left:74%;top:62%;animation-delay:-.9s;background:#c58aff}.cosp.s2{left:44%;top:68%;animation-delay:-1.7s;background:#8ab4ff;width:6px;height:6px}.cosp.s3{left:66%;top:36%;animation-delay:-.4s;width:5px;height:5px}
+@keyframes cotwk{from{opacity:.1;transform:scale(.4) rotate(0)}to{opacity:.95;transform:scale(1) rotate(45deg)}}
+.cohello{flex:none;padding:14px 16px 4px;display:flex;flex-direction:column;gap:3px}
+.cohello b{font-size:19px;font-weight:800;letter-spacing:-.02em;min-height:1.35em;color:#fff}
+.cohello span{font-size:13.5px;color:var(--muted);animation:fade .6s ease .9s both}
+.copop.chatting .cohello{display:none}
+.copop .card{flex:1;min-height:0;display:flex;flex-direction:column;gap:10px;overflow:hidden;padding:10px 12px 12px}
+.copop .card>.row:first-child{flex:none;justify-content:flex-end;min-height:0}
+.copop .card>.row:first-child h2{display:none}
+.copop .card>*{flex:none}
+.copop #co-quick{display:grid;grid-template-columns:1fr 1fr;gap:8px;flex:1 1 auto;min-height:0;overflow-y:auto;align-content:start;padding:2px}
+.copop #co-quick .chip{position:relative;white-space:normal;text-align:left;line-height:1.3;font-size:13.5px;font-weight:600;padding:11px 12px 11px 34px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);color:var(--ink);flex:initial}
+.copop.run #co-quick .chip{animation:rise .5s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(160ms + var(--i,0)*55ms)}
+.copop #co-quick .chip::before{content:"";position:absolute;left:11px;top:12px;width:14px;height:14px;background:linear-gradient(135deg,#8ab4ff,#c58aff);clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%)}
+.copop #co-quick .chip:nth-child(3n+2)::before{background:linear-gradient(135deg,#3ddc97,#8ab4ff)}
+.copop #co-quick .chip:nth-child(3n)::before{background:linear-gradient(135deg,#ffc371,#ff5f6d)}
+.copop .has-chat #co-quick{display:flex;flex-wrap:nowrap;flex:none;overflow-x:auto;overflow-y:hidden;scrollbar-width:none}
+.copop .has-chat #co-quick .chip{flex:none;white-space:nowrap;padding:7px 12px 7px 30px;font-size:13px}
+.copop .has-chat #co-quick .chip::before{top:8px;left:10px;width:12px;height:12px}
+.copop .chat{flex:1 1 auto;min-height:0;max-height:none;overflow-y:auto;padding:2px;gap:9px}
+.copop .card:not(.has-chat) .chat{display:none}
+.chat .msg:nth-last-child(-n+2){animation:msgin .34s cubic-bezier(.2,.8,.2,1) both}
+.msg.me{transform-origin:100% 100%}.msg.ai{transform-origin:0 100%}
+@keyframes msgin{from{opacity:0;transform:translateY(10px) scale(.94)}to{opacity:1;transform:none}}
+.copop .msg{border-radius:16px;padding:10px 13px;font-size:14.5px;line-height:1.5}
+.copop .msg.me{background:linear-gradient(135deg,#8ab4ff,#c58aff);color:#0b0b0d;font-weight:600;border-bottom-right-radius:6px}
+.copop .msg.ai{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-bottom-left-radius:6px}
+.msg.think{display:flex;align-items:center;gap:5px}
+.msg.think i{width:7px;height:7px;border-radius:50%;background:linear-gradient(135deg,#8ab4ff,#c58aff);animation:codot 1.1s ease-in-out infinite}
+.msg.think i:nth-child(2){animation-delay:.15s}.msg.think i:nth-child(3){animation-delay:.3s}
+.msg.think span{margin-left:6px;font-size:13.5px;background:linear-gradient(90deg,#8e8e98 30%,#fff 50%,#8e8e98 70%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:coshim 1.6s linear infinite}
+@keyframes codot{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-5px);opacity:1}}
+@keyframes coshim{to{background-position:-200% 0}}
+.typing::after{content:"";display:inline-block;width:2px;height:1em;margin-left:2px;vertical-align:-2px;background:currentColor;animation:cocaret .7s steps(1) infinite}
+@keyframes cocaret{50%{opacity:0}}
+.copop .askrow{align-items:center;gap:8px;padding:6px;border-radius:18px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);transition:border-color .2s,box-shadow .2s}
+.copop .askrow:focus-within{border-color:rgba(138,180,255,.65);box-shadow:0 0 0 3px rgba(138,180,255,.14),0 0 26px rgba(197,138,255,.2)}
+.copop .askrow textarea{border:0;background:transparent;resize:none;padding:8px;outline:0;max-height:110px}
+.copop #co-send{border:0;border-radius:14px;padding:10px 15px;background:linear-gradient(135deg,#8ab4ff,#c58aff);color:#0b0b0d;font-weight:800}
+.copop #co-copy{font-size:13px;padding:7px 11px}
+.copop details.ans{font-size:13.5px}
+details.flash{animation:coflash 1.4s ease}
+@keyframes coflash{0%,100%{box-shadow:0 0 0 0 rgba(242,181,96,0)}25%,60%{box-shadow:0 0 0 3px rgba(242,181,96,.55)}}
+@media (max-width:859px){.copop{height:calc(100dvh - 150px);max-height:none}}
+@media (prefers-reduced-motion:reduce){.copop,.copop::before,.cohead::before,.coav::before,.coav svg,.cosp,.costat::before,.chat .msg,.copop.run #co-quick .chip{animation:none!important}}
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><linearGradient id="figrb" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ff5fa2"/><stop offset=".25" stop-color="#ff9f5a"/><stop offset=".5" stop-color="#b98cff"/><stop offset=".75" stop-color="#5fb8ff"/><stop offset="1" stop-color="#3ed6c2"/></linearGradient></defs></svg>
 <header class="topbar">
   <a class="brand" href="#prehled" aria-label="Tape"><span>tape</span><i class="cd"></i></a>
   <nav class="nav1" aria-label="Hlavní">
@@ -1560,7 +1668,7 @@ button.tcard,button.trow,details.week,.tile{transition:transform .25s cubic-bezi
     const str = String(s).replace(/&(amp|lt|gt|quot|#39);/g, "x");
     try {
       if (!_mc) _mc = document.createElement("canvas").getContext("2d");
-      if (!_mf) _mf = getComputedStyle(document.documentElement).getPropertyValue("--body").trim() || "sans-serif";
+      if (!_mf) _mf = getComputedStyle(document.body).getPropertyValue("--body").trim() || "sans-serif";
       _mc.font = "600 " + px + "px " + _mf;
       return _mc.measureText(str).width;
     } catch(e){ return str.length * px * 0.56; }
@@ -1666,7 +1774,8 @@ button.tcard,button.trow,details.week,.tile{transition:transform .25s cubic-bezi
       const dc = nowDim ? ((still && !wasDim) ? " dimA" : " dim") : (wasDim ? " undimA" : "");
       cnd += '<g class="cd' + (still ? " still" : "") + dc + '" style="--i:' + (stepper ? i - nf : i) + '">' +
         '<line x1="' + num(x) + '" y1="' + num(Y(c[1])) + '" x2="' + num(x) + '" y2="' + num(Y(c[2])) + '" class="wk ' + cls + '"/>' +
-        '<rect x="' + num(x - bw / 2) + '" y="' + num(Y(Math.max(c[0], c[3]))) + '" width="' + num(bw) + '" height="' + num(Math.max(Math.abs(Y(c[0]) - Y(c[3])), 1.6)) + '" rx="1.6" class="bd ' + cls + '"/></g>';
+        '<rect x="' + num(x - bw / 2) + '" y="' + num(Y(Math.max(c[0], c[3]))) + '" width="' + num(bw) + '" height="' + num(Math.max(Math.abs(Y(c[0]) - Y(c[3])), 1.6)) + '" rx="2.4" class="bd ' + cls + '"/>' +
+        '<rect x="' + num(x - bw / 2 + bw * 0.14) + '" y="' + num(Y(Math.max(c[0], c[3])) + 1) + '" width="' + num(bw * 0.26) + '" height="' + num(Math.max(Math.abs(Y(c[0]) - Y(c[3])) - 2, 0.4)) + '" rx="1" class="bd bh"/></g>';
     });
 
     let lp = "";
@@ -1690,17 +1799,29 @@ button.tcard,button.trow,details.week,.tile{transition:transform .25s cubic-bezi
     s += T(110, 210, "rostoucí: close nad open", "good") + T(262, 210, "klesající: close pod open", "bad");
     return svgWrap(218, s);
   }
+  // timeline blocks, lane titles and flags shared by the two time figures
+  const tBlk = (x1, x2, y, c, i, cls) => '<rect x="' + x1.toFixed(1) + '" y="' + y + '" width="' + (x2 - x1).toFixed(1) + '" height="16" rx="6" class="tb gr ' + (cls || "f-" + c) + '" style="--i:' + i + '"/>';
+  const tFlag = (x, y1, y2, s, c, a, H, d) => '<g class="mk" style="--d:' + d + '"><line x1="' + x.toFixed(1) + '" y1="' + (y1 + 9) + '" x2="' + x.toFixed(1) + '" y2="' + y2 + '" class="ln dash s-' + (c || "muted") + '"/><circle cx="' + x.toFixed(1) + '" cy="' + y2 + '" r="3" class="f-' + (c || "muted") + '"/>' + tag(a === "end" ? x - 4 : a === "start" ? x + 4 : x, y1, s, c, a, H, FW - 2) + "</g>";
   function figTime(){
-    const x = h => 20 + h * 20; let s = "";
-    s += L(x(0), 112, x(16), 112, "muted");
-    for (let h = 0; h <= 16; h += 2) s += L(x(h), 109, x(h), 115, "muted") + T(x(h), 128, h + ":00", "muted");
-    [[3,4],[10,11],[14,15]].forEach(b => { s += R(x(b[0]), 84, x(b[1]) - x(b[0]), 16, "z f-amber s-amber"); });
-    s += T(x(3.5), 79, "Silver Bullet", "amber");
-    s += R(x(9.5), 60, x(11) - x(9.5), 16, "z f-accent s-accent") + T(x(11) + 5, 72, "okno modelu", "accent", "start");
-    s += L(x(0), 30, x(0), 112, "muted", true) + T(x(0) + 3, 26, "půlnoc: midnight open", null, "start");
-    s += L(x(8.5), 46, x(8.5), 112, "muted", true) + T(x(8.5) - 3, 44, "8:30 data", null, "end");
-    s += L(x(9.5), 30, x(9.5), 112, "muted", true) + T(x(9.5) + 3, 26, "9:30 otevření burzy", null, "start");
-    return svgWrap(138, s);
+    const x = h => 18 + h * 20.25, H = 196, AX = 170; let s = "";
+    for (let h = 0; h <= 16; h += 2) s += '<line x1="' + x(h).toFixed(1) + '" y1="52" x2="' + x(h).toFixed(1) + '" y2="' + AX + '" class="gl"/>';
+    s += tFlag(x(0), 14, AX, "0:00 půlnoční open", null, "start", H, 500) + tFlag(x(8.5), 36, AX, "8:30 data", "amber", "end", H, 700) + tFlag(x(9.5), 14, AX, "9:30 otevření burzy", "good", "start", H, 900);
+    s += T(24, 62, "KILLZONES", null, "start", "lt") + tBlk(x(2), x(5), 66, "accent", 0) + T((x(2) + x(5)) / 2, 77.5, "Londýn", null, "middle", "tl in") + tBlk(x(8.5), x(11), 66, "accent", 1) + T((x(8.5) + x(11)) / 2, 77.5, "New York", null, "middle", "tl in");
+    s += T(24, 98, "SILVER BULLET", null, "start", "lt"); [[3, 4, "3–4"], [10, 11, "10–11"], [14, 15, "14–15"]].forEach((b, i) => { s += tBlk(x(b[0]), x(b[1]), 102, "amber", 2 + i, "rbf") + T(x(b[1]) + 4, 113.5, b[2], "amber", "start", "tl"); });
+    s += T(24, 134, "OKNO MODELU", null, "start", "lt") + tBlk(x(9.5), x(11), 138, "good", 5) + T(x(11) + 4, 149.5, "9:30–11:00", "good", "start", "tl");
+    s += L(x(0), AX, x(16), AX, "muted"); for (let h = 0; h <= 16; h += 2) s += L(x(h), AX - 3, x(h), AX + 3, "muted") + T(x(h), AX + 16, h + ":00", null, "middle", "axt");
+    return svgWrap(H, s);
+  }
+  // the trading day from 18:00 to 18:00 New York time: three sessions and a rough activity curve
+  function figSess(){
+    const p = h => 16 + h * 13.6, H = 196, B = 152, lv = [[0,.1],[2,.2],[4,.26],[6,.16],[8,.44],[9.5,.5],[11,.34],[13,.28],[14.5,.46],[15.5,.92],[16.4,1],[17.5,.78],[18.6,.46],[19.6,.44],[20.6,.62],[21.7,.72],[22.3,.44],[23.2,.2],[24,.1]].map(q => [p(q[0]), B - q[1] * 66]);
+    let d = "M" + lv[0][0].toFixed(1) + " " + lv[0][1].toFixed(1), s = "";
+    for (let i = 0; i < lv.length - 1; i++){ const a = lv[Math.max(i - 1, 0)], b = lv[i], c = lv[i + 1], e = lv[Math.min(i + 2, lv.length - 1)]; d += " C" + (b[0] + (c[0] - a[0]) / 6).toFixed(1) + " " + (b[1] + (c[1] - a[1]) / 6).toFixed(1) + " " + (c[0] - (e[0] - b[0]) / 6).toFixed(1) + " " + (c[1] - (e[1] - b[1]) / 6).toFixed(1) + " " + c[0].toFixed(1) + " " + c[1].toFixed(1); }
+    [[2, 6, "Asie", "accent"], [8, 11, "Londýn", "amber"], [15.5, 22, "New York", "good"]].forEach((b, i) => { s += tBlk(p(b[0]), p(b[1]), 48, b[3], i) + T((p(b[0]) + p(b[1])) / 2, 42, b[2], b[3], "middle", "tl") + '<rect x="' + p(b[0]).toFixed(1) + '" y="66" width="' + (p(b[1]) - p(b[0])).toFixed(1) + '" height="' + (B - 66) + '" class="tz f-' + b[3] + '"/>'; });
+    s += '<path d="' + d + " L" + p(24).toFixed(1) + " " + B + " L" + p(0).toFixed(1) + " " + B + 'Z" class="area f-accent"/><path d="' + d + '" pathLength="1" class="dr rb"/>';
+    s += L(p(0), B, p(24), B, "muted"); ["18:00","21:00","0:00","3:00","6:00","9:00","12:00","15:00","18:00"].forEach((t, i) => { s += L(p(i * 3), B - 3, p(i * 3), B + 3, "muted") + T(p(i * 3), B + 16, t, null, "middle", "axt"); });
+    s += tFlag(p(15.5), 14, B, "9:30 v New Yorku = 15:30 u nás", "good", "middle", H, 1300) + '<g class="mk" style="--d:1700"><circle cx="' + lv[10][0].toFixed(1) + '" cy="' + lv[10][1].toFixed(1) + '" r="7" class="pulse f-bad" opacity=".35"/><circle cx="' + lv[10][0].toFixed(1) + '" cy="' + lv[10][1].toFixed(1) + '" r="3.4" class="f-bad"/>' + tag(lv[10][0] + 10, lv[10][1] - 2, "nejvíc pohybu", "bad", "start", H, FW - 2) + "</g>";
+    return svgWrap(H, s);
   }
   function figR(){
     let s = R(60, 30, 190, 80, "z f-good s-good") + R(60, 110, 190, 40, "z f-bad s-bad");
@@ -1727,7 +1848,7 @@ button.tcard,button.trow,details.week,.tile{transition:transform .25s cubic-bezi
          "Pohyb ode dna k vrcholu se rozdělí v půlce. Nakupovat se má v dolní polovině (discount), prodávat v horní (premium)."],
         [() => chart({candles: mk(105, [-2,-3,6,5,2,-3,-4,-3,5,5], {7:{l:101.5}}), marks: [{t:"box",x1:1,x2:8,y1:100,y2:103,c:"amber"}, tx(4.5,100,"order block",{dy:13,c:"amber"}), tx(7,101.5,"návrat",{dy:27})]}),
          "Bullish order block: poslední klesající svíčka před silným růstem. Když se do ní cena vrátí, ICT tam hledá nákup."]],
-    7: [[figTime, "Den v newyorském čase. ICT sleduje půlnoční otevírací cenu, data v 8:30 a otevření burzy v 9:30. Tři okna Silver Bullet jsou žlutě, okno modelu Tape modře."]],
+    7: [[figTime, "Den v newyorském čase. Svislé čáry jsou půlnoční otevírací cena, data v 8:30 a otevření burzy v 9:30. Pod nimi vidíš killzones, tři hodinová okna Silver Bullet a okno modelu Tape."]],
     8: [[() => chart({candles: mk(100, [3,-1,3,2,-2,3,2]), n: 11, marks: [{t:"line",y:118,x1:0,x2:10,c:"amber"}, tx(-0.4,118,"high předchozího dne: likvidita",{a:"start",dy:-5,c:"amber"}), {t:"line",y:95,x1:0,x2:10,c:"muted"}, tx(-0.4,95,"low předchozího dne",{a:"start",dy:13,c:"muted"}), {t:"arrow",x1:7,y1:111,x2:10,y2:117,c:"accent"}, tx(10.4,109.5,"draw on liquidity",{a:"end",c:"accent",dy:8})]}),
          "Bias je odpověď na otázku, ke které likviditě cena nejspíš míří. Tady roste k high předchozího dne, bias je long."]],
     9: [[() => chart({candles: mk(110, [3,3,-2,-2,3,1,-3,-6,-3,2,3,-4,-4,-3], {5:{h:119},10:{h:110}}), h: 240, marks: [
@@ -3887,7 +4008,7 @@ button.tcard,button.trow,details.week,.tile{transition:transform .25s cubic-bezi
     const store = () => { try { localStorage.setItem(CK, JSON.stringify(chat.slice(-30))); } catch(e){} };
     const key = () => { try { return localStorage.getItem(K) || ""; } catch(e){ return ""; } };
     const keyState = () => { $("co-key-state").textContent = key() ? "Klíč je uložený v tomto prohlížeči." : "Klíč není nastavený. Kouč zatím funguje přes tlačítko Zkopírovat podklady."; $("co-key").value = ""; };
-    const paint = () => { const log = $("co-log"); clear(log); chat.forEach(m => log.appendChild(el("div","msg " + (m.role === "user" ? "me" : "ai"), m.content))); $("co-clear").hidden = !chat.length; };
+    const paint = () => { const log = $("co-log"); clear(log); chat.forEach(m => log.appendChild(el("div","msg " + (m.role === "user" ? "me" : "ai"), m.content))); $("co-clear").hidden = !chat.length; $("co-card").classList.toggle("has-chat", chat.length > 0); const pp = document.querySelector(".copop"); if (pp) pp.classList.toggle("chatting", chat.length > 0); coachScroll(); };
     $("co-key-save").addEventListener("click", () => { const v = $("co-key").value.trim(); if (v){ try { localStorage.setItem(K, v); } catch(e){} } keyState(); });
     $("co-key-del").addEventListener("click", () => { try { localStorage.removeItem(K); } catch(e){} keyState(); });
     $("co-clear").addEventListener("click", () => { chat = []; store(); paint(); });
@@ -3899,9 +4020,9 @@ button.tcard,button.trow,details.week,.tile{transition:transform .25s cubic-bezi
     });
     async function send(){
       const text = $("co-box").value.trim(); if (!text || busy) return;
-      if (!key()){ $("co-msg").textContent = "Pro odpověď přímo tady nastav API klíč níže, nebo použij Zkopírovat podklady."; return; }
+      if (!key()){ $("co-msg").textContent = "Pro odpověď přímo tady nastav API klíč níže, nebo použij Zkopírovat podklady."; coachNeedKey(); return; }
       busy = true; $("co-send").disabled = true; $("co-msg").textContent = ""; $("co-box").value = "";
-      chat.push({role: "user", content: text}); paint(); const bub = el("div","msg ai","Přemýšlím…"); $("co-log").appendChild(bub);
+      chat.push({role: "user", content: text}); paint(); const bub = el("div","msg ai think"); bub.innerHTML = "<i></i><i></i><i></i><span>Kouč přemýšlí</span>"; $("co-log").appendChild(bub); coachScroll();
       const turns = chat.slice(-10); while (turns.length && turns[0].role !== "user") turns.shift();
       try {
         const r = await fetch("https://api.anthropic.com/v1/messages", {method: "POST", headers: {"content-type": "application/json", "x-api-key": key(), "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true"},
@@ -3909,7 +4030,7 @@ button.tcard,button.trow,details.week,.tile{transition:transform .25s cubic-bezi
         const j = await r.json();
         if (!r.ok) throw new Error(r.status === 401 ? "Klíč není platný." : (j && j.error && j.error.message) || ("Chyba " + r.status));
         const out = (j.content || []).filter(c => c.type === "text").map(c => c.text).join("\n").trim() || "Bez odpovědi.";
-        chat.push({role: "assistant", content: out}); store(); paint();
+        chat.push({role: "assistant", content: out}); store(); paint(); coachType($("co-log").lastElementChild, out);
       } catch(e){ chat.pop(); paint(); $("co-box").value = text; $("co-msg").textContent = "Odpověď se nepodařila: " + (e && e.message ? e.message : "zkus to znovu"); }
       busy = false; $("co-send").disabled = false;
     }
@@ -4466,17 +4587,31 @@ button.tcard,button.trow,details.week,.tile{transition:transform .25s cubic-bezi
   { const v = $("v-prehled"), r = logRow(); r.id = "d-log"; v.insertBefore(r, v.firstChild);
     const tq = el("button", null, "Rychlý zápis"); tq.type = "button"; tq.id = "tb-quick"; tq.addEventListener("click", openQuick); $("tb-new").parentNode.insertBefore(tq, $("tb-new")); $("tb-new").textContent = "+ Podrobný zápis"; }
 
-  // ---------- coach in a pop-up window: the chat card moves into a floating panel and back ----------
+  // ---------- coach window: animated header, typed greeting, suggestion cards, typing dots and typed answers ----------
+  function coachScroll(){ const lg = $("co-log"); if (lg) lg.scrollTop = lg.scrollHeight; }
+  function coachType(node, text, maxMs){ if (!node) return; const full = String(text); let still = false; try { still = window.matchMedia("(prefers-reduced-motion: reduce)").matches; } catch(e){}
+    node._tk = (node._tk || 0) + 1; const tk = node._tk; if (still || full.length < 2){ node.textContent = full; return; }
+    const dur = Math.min(maxMs || 2600, full.length * 16), t0 = performance.now(); node.classList.add("typing");
+    (function step(){ if (node._tk !== tk) return; const k = Math.min(1, (performance.now() - t0) / dur); node.textContent = full.slice(0, Math.max(1, Math.round(full.length * k))); coachScroll(); if (k < 1) requestAnimationFrame(step); else node.classList.remove("typing"); })(); }
+  function coachNeedKey(){ const k = $("co-key"), d = k && k.closest("details"); if (!d) return; d.open = true; d.classList.remove("flash"); void d.offsetWidth; d.classList.add("flash"); try { d.scrollIntoView({behavior: "smooth", block: "nearest"}); k.focus({preventScroll: true}); } catch(e){} }
   (function coachPop(){
     const card = $("co-card"), orb = $("orb"); if (!card || !orb) return;
-    const home = document.createComment("coach chat"), pop = el("div","copop"), head = el("div","row"), xb = el("button","ck-del","Zavřít"); card.parentNode.insertBefore(home, card);
-    pop.hidden = true; pop.setAttribute("role","dialog"); pop.setAttribute("aria-label","AI kouč"); xb.type = "button"; head.appendChild(el("b", null, "AI kouč")); head.appendChild(xb); pop.appendChild(head); document.body.appendChild(pop);
+    const home = document.createComment("coach chat"), pop = el("div","copop"), head = el("div","cohead"), av = el("div","coav"), ttl = el("div","cottl"), stat = el("span","costat"), xb = el("button","icon coclose"), hello = el("div","cohello"), hb = el("b"), hs = el("span", null, "Znám tvůj deník. Vyber si otázku, nebo napiš vlastní."); let tok = 0;
+    card.parentNode.insertBefore(home, card); pop.hidden = true; pop.setAttribute("role","dialog"); pop.setAttribute("aria-label","AI kouč"); xb.type = "button"; xb.setAttribute("aria-label","Zavřít");
+    av.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.5l1.7 4.3 4.3 1.7-4.3 1.700L12 16.500l-1.7-4.300L6 10.500l4.3-1.700z"/><path d="M18 15.500l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7z"/></svg>'; xb.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+    ttl.appendChild(el("b", null, "Kouč")); ttl.appendChild(stat); head.appendChild(av); head.appendChild(ttl); head.appendChild(xb); [0, 1, 2, 3].forEach(i => head.appendChild(el("i","cosp s" + i)));
+    hello.appendChild(hb); hello.appendChild(hs); pop.appendChild(head); pop.appendChild(hello); document.body.appendChild(pop);
     ["Jaký setup mi vychází nejlíp?", "Ve které hodině mi to jde a kdy ne?", "Dodržuju svůj plán dne?", "Jak se připravit na zítřejší seanci?", "Vysvětli mi FVG na příkladu"].forEach(q => { const b = el("button","chip", q); b.type = "button"; b.addEventListener("click", () => { $("co-box").value = q; $("co-send").click(); }); $("co-quick").appendChild(b); });
-    const close = () => { if (pop.hidden) return; pop.hidden = true; document.body.classList.remove("copen"); home.parentNode.insertBefore(card, home.nextSibling); };
-    const open = () => { pop.appendChild(card); pop.hidden = false; document.body.classList.add("copen"); const lg = $("co-log"); lg.scrollTop = lg.scrollHeight; try { $("co-box").focus({preventScroll: true}); } catch(e){} };
-    orb.addEventListener("click", ev => { ev.preventDefault(); if (pop.hidden) open(); else close(); });
+    Array.prototype.forEach.call($("co-quick").children, (b, i) => b.style.setProperty("--i", i));
+    const status = () => { let has = false; try { has = !!localStorage.getItem("tape-key"); } catch(e){} const n = jr.trades.filter(t => !t.missed).length; stat.className = "costat " + (has ? "on" : "off"); stat.textContent = has ? "Připraven · čte " + pl(n, "obchod", "obchody", "obchodů") + " z deníku" : "Bez klíče · nastav ho dole a odpovím přímo tady"; };
+    const close = () => { if (pop.hidden || pop.classList.contains("closing")) return; const t = ++tok; pop.classList.add("closing"); document.body.classList.remove("copen"); setTimeout(() => { if (t !== tok) return; pop.hidden = true; pop.classList.remove("closing", "run"); home.parentNode.insertBefore(card, home.nextSibling); }, 190); };
+    const open = () => { tok++; pop.classList.remove("closing", "run"); pop.appendChild(card); pop.hidden = false; void pop.offsetWidth; pop.classList.add("run"); pop.classList.toggle("chatting", card.classList.contains("has-chat")); document.body.classList.add("copen"); status(); coachScroll();
+      const hh = new Date().getHours(); coachType(hb, (hh < 11 ? "Dobré ráno" : hh < 18 ? "Ahoj" : "Dobrý večer") + (profile && profile.name ? ", " + String(profile.name).split(" ")[0] : "") + ". Na co se podíváme?", 1100);
+      if (window.innerWidth > 860) try { $("co-box").focus({preventScroll: true}); } catch(e){} };
+    orb.addEventListener("click", ev => { ev.preventDefault(); if (pop.hidden || pop.classList.contains("closing")) open(); else close(); });
     xb.addEventListener("click", close); window.addEventListener("hashchange", () => { if (document.body.dataset.view === "kouc") close(); });
     document.addEventListener("keydown", ev => { if (ev.key === "Escape" && !pop.hidden && !document.querySelector(".ob")) close(); });
+    $("co-key-save").addEventListener("click", () => setTimeout(status, 30)); $("co-key-del").addEventListener("click", () => setTimeout(status, 30));
   })();
 
   // ---------- home: trade cards with a schematic price line (no tick data is stored, the line is drawn from entry, exit, MAE and MFE) ----------
@@ -4532,7 +4667,9 @@ button.tcard,button.trow,details.week,.tile{transition:transform .25s cubic-bezi
       skPetals(pet, window.innerWidth < 700 ? 34 : 60, 9, 30);
       box.appendChild(pet); return box;
     }
-    function apply(){ const act = on && document.body.dataset.group === "uceni"; if (act && !scene){ scene = buildSky(); document.body.insertBefore(scene, document.body.firstChild); const fr = el("div","sk-petals sk-front"); skPetals(fr, window.innerWidth < 700 ? 9 : 12, 10, 16); document.body.appendChild(fr);
+    function apply(){ const act = on && document.body.dataset.group === "uceni"; if (act && !document.getElementById("gf-room")){ const l = document.createElement("link"); l.id = "gf-room"; l.rel = "stylesheet"; l.href = "https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Quicksand:wght@500;600;700&display=swap"; document.head.appendChild(l); }
+      if (document.body.classList.contains("sakura") !== act) _mf = null;
+      if (act && !scene){ scene = buildSky(); document.body.insertBefore(scene, document.body.firstChild); const fr = el("div","sk-petals sk-front"); skPetals(fr, window.innerWidth < 700 ? 9 : 12, 10, 16); document.body.appendChild(fr);
         const hd = el("div","sk-head"), tx = el("div"), hh = new Date().getHours(), sn = $("subnav"), pt = [0, 72, 144, 216, 288].map(r => '<path transform="rotate(' + r + ' 24 24)" d="M24 22 C17.5 19 16 11.5 21 6.5 L24 9 L27 6.5 C32 11.5 30.5 19 24 22Z" fill="url(#skem)" stroke="#f472b6" stroke-width=".7"/>').join("");
         hd.insertAdjacentHTML("afterbegin", '<svg class="sk-emb" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="skem" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#ff9ccb"/></linearGradient></defs>' + pt + '<circle cx="24" cy="24" r="3.4" fill="#ff5fa2"/><g fill="#ffe08a"><circle cx="24" cy="19.6" r="1"/><circle cx="28.2" cy="22.6" r="1"/><circle cx="26.6" cy="27.6" r="1"/><circle cx="21.4" cy="27.6" r="1"/><circle cx="19.8" cy="22.6" r="1"/></g></svg>');
         tx.appendChild(el("b", null, "Lauřin room")); tx.appendChild(el("span", null, (hh < 11 ? "Dobré ráno" : hh < 18 ? "Krásné odpoledne" : "Krásný večer") + ", Lauro. Tohle místo je jen tvoje.")); hd.appendChild(tx); sn.parentNode.insertBefore(hd, sn.nextSibling); }
@@ -4556,7 +4693,8 @@ button.tcard,button.trow,details.week,.tile{transition:transform .25s cubic-bezi
   })();
 
   // ---------- room: lesson player. The next lesson sits right at the top: short steps, a picture, one takeaway, one quick check ----------
-  const LFIG = {"1b":[1,0],"1c":[1,1],"1d":[7,0],"2a":[2,0],"2b":[2,0],"3a":[3,0],"3b":[3,0],"4a":[4,0],"4c":[4,0],"5a":[5,0],"5b":[5,0],"5c":[5,0],"6a":[6,1],"6c":[6,0],"7a":[7,0],"7b":[7,0],"7d":[7,0],"8a":[8,0],"8b":[8,0],"9a":[9,0],"9b":[9,0],"10a":[10,0],"10c":[10,0]};
+  FIGS[1].push([figSess, "Den v newyorském čase. Barevné pruhy jsou tři seance. Křivka ukazuje, kdy se indexy hýbou nejvíc: trochu po otevření Londýna a hlavně po 9:30 v New Yorku. Křivka je jen orientační."]);
+  const LFIG = {"1b":[1,0],"1c":[1,1],"1d":[1,2],"2a":[2,0],"2b":[2,0],"3a":[3,0],"3b":[3,0],"4a":[4,0],"4c":[4,0],"5a":[5,0],"5b":[5,0],"5c":[5,0],"6a":[6,1],"6c":[6,0],"7a":[7,0],"7b":[7,0],"7d":[7,0],"8a":[8,0],"8b":[8,0],"9a":[9,0],"9b":[9,0],"10a":[10,0],"10c":[10,0]};
   let lnCur = null, lnGl = -1;
   { const room = $("v-room"), now = el("div","card lnow"), kc = $("k-list").closest(".card"); now.id = "c-now"; room.insertBefore(now, room.firstChild); room.appendChild(kc); }
   const lnSplit = t => { const out = []; (String(t || "").match(/[^.!?]+[.!?]+(?:\s+|$)|[^.!?]+$/g) || []).forEach(q => { const s = q.trim(); if (!s) return; if (out.length && /^[a-zá-ž0-9(]/.test(s)) out[out.length - 1] += " " + s; else out.push(s); }); return out; };
