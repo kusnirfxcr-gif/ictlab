@@ -1750,5 +1750,41 @@
   "status": "done",
   "what": "Příspěvek z obchodu v deníku s analýzou, který se pošle odkazem a příjemce si ho uloží.",
   "why": "První krok ke komunitě, který funguje bez serveru."
+ },
+ {
+  "id": "past-u-kazdeho-pojmu",
+  "ts": "2026-11-13T09:20:00Z",
+  "date": "2026-11-13",
+  "title": "Blok „tohle to není“ u každého tématu",
+  "area": "vyuka",
+  "value": 3,
+  "effort": 1,
+  "status": "done",
+  "what": "Pod každým tématem v obrázcích dvě nejčastější záměny.",
+  "why": "Většina chyb začátečníků jsou záměny podobných obrazců."
+ },
+ {
+  "id": "odemykani-temat",
+  "ts": "2026-11-13T09:20:00Z",
+  "date": "2026-11-13",
+  "title": "Témata se odemykají po kontrolní otázce",
+  "area": "vyuka",
+  "value": 3,
+  "effort": 2,
+  "status": "done",
+  "what": "Další téma se ve studentském režimu otevře až po správné odpovědi. V Nastavení jde odemknout vše.",
+  "why": "Přečtení není pochopení."
+ },
+ {
+  "id": "cesta-na-demo",
+  "ts": "2026-11-13T09:20:00Z",
+  "date": "2026-11-13",
+  "title": "Cesta na demo",
+  "area": "vyuka",
+  "value": 2,
+  "effort": 1,
+  "status": "done",
+  "what": "Tři kroky po kurzu: závěrečná zkouška, 20 cvičných obchodů v přehrávání, 20 obchodů na demo účtu.",
+  "why": "Kurz má končit praxí, ne certifikátem."
  }
 ]

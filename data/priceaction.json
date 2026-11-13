@@ -244,7 +244,21 @@
     ]
    }
   ],
-  "remember": "Trend nahoru = vyšší vrcholy a vyšší dna. Trend dolů = nižší vrcholy a nižší dna."
+  "remember": "Trend nahoru = vyšší vrcholy a vyšší dna. Trend dolů = nižší vrcholy a nižší dna.",
+  "traps": [
+   "Jeden vyšší vrchol ještě není uptrend. Potřebuješ vyšší vrchol i vyšší dno.",
+   "Trend na minutovém grafu může jít proti trendu na hodinovém. Rozhoduje vyšší timeframe."
+  ],
+  "check": {
+   "q": "Cena udělala vyšší high, ale potom nižší low než minule. Je to uptrend?",
+   "opts": [
+    "Ne, uptrend potřebuje vyšší high i vyšší low",
+    "Ano, stačí vyšší high",
+    "Ano, pokud je poslední svíčka zelená"
+   ],
+   "ok": "Ne, uptrend potřebuje vyšší high i vyšší low",
+   "why": "Uptrend jsou stoupající vrcholy i dna. Nižší low znamená, že struktura je narušená."
+  }
  },
  {
   "id": "bos-mss",
@@ -409,7 +423,21 @@
     ]
    }
   ],
-  "remember": "BOS = zavření za úrovní po směru trendu. MSS = první zavření proti trendu."
+  "remember": "BOS = zavření za úrovní po směru trendu. MSS = první zavření proti trendu.",
+  "traps": [
+   "Propíchnutí úrovně knotem není BOS ani MSS. Počítá se zavření svíčky za úrovní.",
+   "MSS bez předchozího výběru likvidity bývá jen korekce, ne obrat."
+  ],
+  "check": {
+   "q": "V uptrendu cena zavře pod posledním vyšším low. Co to je?",
+   "opts": [
+    "MSS, zlom struktury",
+    "BOS, pokračování trendu",
+    "Sweep"
+   ],
+   "ok": "MSS, zlom struktury",
+   "why": "BOS je průraz ve směru trendu. Průraz proti trendu je MSS."
+  }
  },
  {
   "id": "likvidita",
@@ -564,7 +592,21 @@
     ]
    }
   ],
-  "remember": "Nad vrcholy a pod dny leží stopy. Sweep je knot, který je vybere a vrátí se."
+  "remember": "Nad vrcholy a pod dny leží stopy. Sweep je knot, který je vybere a vrátí se.",
+  "traps": [
+   "Když cena za úrovní zůstane a zavírá tam, je to průraz, ne sweep.",
+   "Likvidita je cíl, ne místo vstupu. Samotný sweep není důvod obchodovat."
+  ],
+  "check": {
+   "q": "Knot svíčky projde pod staré low a svíčka zavře zpět nad ním. Co se stalo?",
+   "opts": [
+    "Sweep, výběr likvidity",
+    "Průraz dolů",
+    "BOS"
+   ],
+   "ok": "Sweep, výběr likvidity",
+   "why": "Sweep úroveň jen vybere a vrátí se. Průraz za ní zůstane."
+  }
  },
  {
   "id": "fvg-up",
@@ -770,7 +812,21 @@
     ]
    }
   ],
-  "remember": "Bullish FVG = mezera mezi high první a low třetí svíčky. Čeká se na návrat do ní."
+  "remember": "Bullish FVG = mezera mezi high první a low třetí svíčky. Čeká se na návrat do ní.",
+  "traps": [
+   "Mezera vzniká mezi knoty první a třetí svíčky, ne mezi těly.",
+   "Malá mezera v pomalém pohybu bez displacementu nemá váhu."
+  ],
+  "check": {
+   "q": "První svíčka má high 100, třetí má low 103. Kde je bullish FVG?",
+   "opts": [
+    "Mezi 100 a 103",
+    "Mezi open a close druhé svíčky",
+    "Žádný tam není"
+   ],
+   "ok": "Mezi 100 a 103",
+   "why": "Bullish FVG je prostor mezi high první a low třetí svíčky."
+  }
  },
  {
   "id": "fvg-down",
@@ -926,7 +982,21 @@
     ]
    }
   ],
-  "remember": "Bearish FVG = mezera mezi low první a high třetí svíčky."
+  "remember": "Bearish FVG = mezera mezi low první a high třetí svíčky.",
+  "traps": [
+   "U bearish mezery se měří low první svíčky proti high třetí.",
+   "Když cena mezeru celou projde a zavře nad ní, přestává platit jako odpor."
+  ],
+  "check": {
+   "q": "První svíčka má low 110, třetí má high 107. Co mezi nimi vzniklo?",
+   "opts": [
+    "Bearish FVG mezi 107 a 110",
+    "Bullish FVG",
+    "Order block"
+   ],
+   "ok": "Bearish FVG mezi 107 a 110",
+   "why": "Když high třetí svíčky nedosáhne na low první, zůstane bearish mezera."
+  }
  },
  {
   "id": "ifvg",
@@ -1101,7 +1171,21 @@
     ]
    }
   ],
-  "remember": "Proražený FVG nemizí. Funguje z opačné strany."
+  "remember": "Proražený FVG nemizí. Funguje z opačné strany.",
+  "traps": [
+   "K inverzi nestačí knot. Svíčka musí za mezerou zavřít.",
+   "Inverzní FVG působí opačně než původní: z podpory se stává odpor a naopak."
+  ],
+  "check": {
+   "q": "Cena zavře pod bullish FVG. Jak se na tu zónu díváš dál?",
+   "opts": [
+    "Jako na možný odpor",
+    "Pořád jako na podporu",
+    "Jako na cíl pro nákup"
+   ],
+   "ok": "Jako na možný odpor",
+   "why": "Proražená mezera mění roli. Z podpory je odpor."
+  }
  },
  {
   "id": "ob-up",
@@ -1248,7 +1332,21 @@
     ]
    }
   ],
-  "remember": "Bullish order block = poslední klesající svíčka před silným růstem."
+  "remember": "Bullish order block = poslední klesající svíčka před silným růstem.",
+  "traps": [
+   "Order block je poslední opačná svíčka před silným pohybem. Bez displacementu je to obyčejná svíčka.",
+   "Když cena blok projde a zavře za ním, přestává platit."
+  ],
+  "check": {
+   "q": "Co je bullish order block?",
+   "opts": [
+    "Poslední červená svíčka před silným pohybem nahoru",
+    "První zelená svíčka dne",
+    "Každá svíčka s dlouhým knotem"
+   ],
+   "ok": "Poslední červená svíčka před silným pohybem nahoru",
+   "why": "Blok je poslední svíčka proti směru, po které přišel displacement."
+  }
  },
  {
   "id": "ob-down",
@@ -1368,7 +1466,21 @@
     ]
    }
   ],
-  "remember": "Bearish order block = poslední rostoucí svíčka před silným poklesem."
+  "remember": "Bearish order block = poslední rostoucí svíčka před silným poklesem.",
+  "traps": [
+   "Bearish order block je poslední zelená svíčka před silným pohybem dolů, ne libovolný vrchol.",
+   "Blok, do kterého se cena vrací potřetí a počtvrté, slábne."
+  ],
+  "check": {
+   "q": "Cena se vrátí do bearish order blocku. Co model čeká?",
+   "opts": [
+    "Reakci dolů",
+    "Průraz nahoru",
+    "Nic, blok je jen kresba"
+   ],
+   "ok": "Reakci dolů",
+   "why": "Bearish blok má fungovat jako odpor. Jistota to ale není."
+  }
  },
  {
   "id": "breaker",
@@ -1531,7 +1643,21 @@
     ]
    }
   ],
-  "remember": "Breaker = order block, který cena prorazila. Funguje z opačné strany."
+  "remember": "Breaker = order block, který cena prorazila. Funguje z opačné strany.",
+  "traps": [
+   "Breaker vzniká až z order blocku, který selhal a cena ho prorazila.",
+   "Působí v opačném směru než původní blok. Nepleť si ho s běžným order blockem."
+  ],
+  "check": {
+   "q": "Z čeho vzniká breaker?",
+   "opts": [
+    "Z order blocku, který cena prorazila",
+    "Z fair value gapu",
+    "Z každého swingu"
+   ],
+   "ok": "Z order blocku, který cena prorazila",
+   "why": "Selhaný blok změní roli stejně jako proražená mezera."
+  }
  },
  {
   "id": "premium-discount",
@@ -1710,7 +1836,21 @@
     ]
    }
   ],
-  "remember": "Nakupuj v dolní polovině pohybu, prodávej v horní."
+  "remember": "Nakupuj v dolní polovině pohybu, prodávej v horní.",
+  "traps": [
+   "Premium a discount se měří vždy v konkrétním rozpětí. Když změníš swingy, změní se i polovina.",
+   "Discount sám není důvod nakoupit. Je to jen lepší cena pro setup, který už máš."
+  ],
+  "check": {
+   "q": "Rozpětí je 100 až 120. Kde je discount?",
+   "opts": [
+    "Pod 110",
+    "Nad 110",
+    "Přesně na 120"
+   ],
+   "ok": "Pod 110",
+   "why": "Polovina rozpětí je 110. Pod ní je discount, nad ní premium."
+  }
  },
  {
   "id": "dohromady",
@@ -1949,7 +2089,21 @@
     ]
    }
   ],
-  "remember": "Likvidita, sweep, MSS, FVG, vstup. Chybí-li jeden krok, není to setup."
+  "remember": "Likvidita, sweep, MSS, FVG, vstup. Chybí-li jeden krok, není to setup.",
+  "traps": [
+   "Vstup už při sweepu, bez MSS, je nejčastější chyba.",
+   "Když chybí jeden krok, není to setup. Počkej na další."
+  ],
+  "check": {
+   "q": "Jaké je správné pořadí?",
+   "opts": [
+    "Sweep, MSS, FVG, vstup",
+    "FVG, sweep, vstup, MSS",
+    "Vstup, sweep, MSS, FVG"
+   ],
+   "ok": "Sweep, MSS, FVG, vstup",
+   "why": "Nejdřív výběr likvidity, potom zlom struktury, mezera a teprve vstup."
+  }
  },
  {
   "id": "cisd",
@@ -2087,7 +2241,21 @@
     ]
    }
   ],
-  "remember": "CISD = zavření těla za otevírací cenou poslední řady svíček starého směru."
+  "remember": "CISD = zavření těla za otevírací cenou poslední řady svíček starého směru.",
+  "traps": [
+   "CISD se počítá zavřením přes otevírací cenu poslední série opačných svíček, ne přes swing.",
+   "Je rychlejší než MSS, a proto dává víc falešných signálů."
+  ],
+  "check": {
+   "q": "Čím se CISD liší od MSS?",
+   "opts": [
+    "Sleduje otevírací cenu série svíček, ne swing",
+    "Ničím, je to totéž",
+    "Platí jen na denním grafu"
+   ],
+   "ok": "Sleduje otevírací cenu série svíček, ne swing",
+   "why": "MSS potřebuje průraz swingu. CISD stačí zavření přes open série svíček."
+  }
  },
  {
   "id": "immediate-rebalance",
@@ -2218,7 +2386,21 @@
     ]
    }
   ],
-  "remember": "Immediate rebalance = knot třetí svíčky se dotkne první. Mezera nevznikne a cena pokračuje."
+  "remember": "Immediate rebalance = knot třetí svíčky se dotkne první. Mezera nevznikne a cena pokračuje.",
+  "traps": [
+   "Immediate rebalance nenechává mezeru. Knot třetí svíčky se dotkne první.",
+   "Ukazuje sílu pohybu, ale sám není místem vstupu."
+  ],
+  "check": {
+   "q": "Co je immediate rebalance?",
+   "opts": [
+    "Třetí svíčka se knotem hned vrátí k první, takže mezera nezůstane",
+    "Velká mezera, která se nikdy nevyplní",
+    "Jiný název pro order block"
+   ],
+   "ok": "Třetí svíčka se knotem hned vrátí k první, takže mezera nezůstane",
+   "why": "Cena nerovnováhu dorovná okamžitě a pokračuje."
+  }
  },
  {
   "id": "bpr",
@@ -2380,7 +2562,21 @@
     ]
    }
   ],
-  "remember": "BPR = překryv bullish a bearish FVG. Rozhoduje směr té novější."
+  "remember": "BPR = překryv bullish a bearish FVG. Rozhoduje směr té novější.",
+  "traps": [
+   "BPR je jen překryv dvou opačných mezer, ne obě mezery celé.",
+   "Bez překryvu to BPR není, i když jsou mezery blízko sebe."
+  ],
+  "check": {
+   "q": "Co je BPR?",
+   "opts": [
+    "Překryv bullish a bearish FVG",
+    "Dvě mezery stejným směrem",
+    "Rozpětí celého dne"
+   ],
+   "ok": "Překryv bullish a bearish FVG",
+   "why": "Balanced price range je místo, kde se dvě opačné mezery překrývají."
+  }
  },
  {
   "id": "model-2022-long",
@@ -2663,7 +2859,21 @@
     ]
    }
   ],
-  "remember": "Směr, likvidita, čas, sweep, MSS, FVG, vstup, stop, cíl. Když jeden krok chybí, není to Model 2022."
+  "remember": "Směr, likvidita, čas, sweep, MSS, FVG, vstup, stop, cíl. Když jeden krok chybí, není to Model 2022.",
+  "traps": [
+   "Sweep mimo časové okno má malou váhu.",
+   "Stop se neposouvá dál, když se k němu cena blíží."
+  ],
+  "check": {
+   "q": "Kam patří stop u nákupu podle Modelu 2022?",
+   "opts": [
+    "Pod knot sweepu",
+    "Do poloviny FVG",
+    "Nad vstup"
+   ],
+   "ok": "Pod knot sweepu",
+   "why": "Pod knotem sweepu přestává myšlenka obchodu platit."
+  }
  },
  {
   "id": "model-2022-short",
@@ -2946,6 +3156,20 @@
     ]
    }
   ],
-  "remember": "Short je zrcadlo longu: sweep nad high, MSS dolů, FVG v premiu, stop nad knotem, cíl na low."
+  "remember": "Short je zrcadlo longu: sweep nad high, MSS dolů, FVG v premiu, stop nad knotem, cíl na low.",
+  "traps": [
+   "Short hledej jen tehdy, když vyšší timeframe míří dolů.",
+   "Cíl je konkrétní likvidita pod cenou, ne libovolný počet bodů."
+  ],
+  "check": {
+   "q": "Kde leží FVG pro short vstup?",
+   "opts": [
+    "V premiu, v horní polovině pohybu",
+    "V discountu",
+    "Pod cílem"
+   ],
+   "ok": "V premiu, v horní polovině pohybu",
+   "why": "Prodává se draho. Mezera pro short má být nad polovinou pohybu."
+  }
  }
 ]

@@ -610,6 +610,7 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
 }
 .pavatar{flex:none;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--ink);color:var(--bg);font-weight:800}
 .post .tbig{font-size:44px}
+.chip.lock{opacity:.45}
 </style>
 </head>
 <body>
@@ -968,6 +969,7 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
     </div>
     <div class="list" id="c-weeks"></div>
     <div class="card"><h2>Závěrečná zkouška</h2><div class="list" id="fx"></div></div>
+    <div class="card"><h2>Cesta na demo</h2><p class="small muted">Tři kroky mezi kurzem a prvním obchodem za skutečné peníze.</p><div id="demo-road"></div></div>
   </section>
 
 
@@ -1071,6 +1073,7 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
       <p class="small muted">Každé téma se skládá krok za krokem. Klikej na Další a sleduj, co na grafu přibylo. Obrázky jsou zjednodušená schémata, ne skutečné grafy.</p>
       <div class="chips pa-chips" id="pa-chips"></div>
       <div class="lesson-body" id="pa-body"><p class="muted">Načítám témata…</p></div>
+      <div class="list" id="pa-extra"></div>
       <label for="pa-note">Moje poznámka k tématu<textarea id="pa-note" rows="2" maxlength="800" placeholder="Co si z tohoto tématu chci zapamatovat"></textarea></label>
     </div>
 
@@ -1873,7 +1876,8 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
     if (dir < 0){ if (paStep > 0){ paStep--; paDraw(false); } return; }
     if (!last){ paStep++; paDraw(true); return; }
     lp.seen = lp.seen || {};
-    if (!lp.seen[t.id]){ lp.seen[t.id] = true; persistLaura(); paChips(); }
+    if (!lp.seen[t.id] && !t.check){ lp.seen[t.id] = true; persistLaura(); paChips(); }
+    if (idx < pa.length - 1 && topicLocked(idx + 1)){ toast("Odpověz na kontrolní otázku pod grafem a odemkne se další téma."); const ex = $("pa-extra"); if (ex) ex.scrollIntoView({block: "center", behavior: "smooth"}); return; }
     if (idx < pa.length - 1){
       const before = paUI.next.getBoundingClientRect().top;
       paCur = pa[idx + 1].id; paStep = 0; paBuild();
@@ -3556,6 +3560,7 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
     const chipRow = (opts, cur, fn) => { const r = el("div","chips"); opts.forEach(o => { const b = el("button","chip", o[1]); b.type = "button"; b.setAttribute("aria-pressed", String(o[0] === cur)); b.addEventListener("click", () => fn(o[0])); r.appendChild(b); }); return r; };
     let c = card("Režim", "Obchodník má na přehledu výkon, kalendář a zprávy. Student má nahoře cestu učením a úlohu dne. Změna režimu znovu nastaví, které karty jsou na přehledu vidět.");
     c.appendChild(chipRow([["trader","Obchodník"],["student","Student"]], cfg.mode, setMode));
+    const ul = el("label","chk"), ui2 = inp("checkbox"); ui2.checked = !!cfg.unlock; ui2.addEventListener("change", () => { cfg.unlock = ui2.checked; cfgStore(); softRefresh(); }); ul.appendChild(ui2); ul.appendChild(el("span", null, "Odemknout všechna témata v obrázcích (ve studentském režimu se jinak odemykají postupně)")); c.appendChild(ul);
     c = card("Trhy a denní cíl"); const pf = profile || {sym: "NQ", goal: 10}, saveP = soft => { profile = pf; try { localStorage.setItem("knot-profile", JSON.stringify(pf)); } catch(e){} if (soft) softRefresh(); else refreshAll(); };
     if (!Array.isArray(pf.syms) || !pf.syms.length) pf.syms = [pf.sym || "NQ"];
     c.appendChild(el("span","small muted","Trhy, které obchoduješ. První vybraný se předvyplní v novém obchodu."));
@@ -3882,6 +3887,44 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
   }
   const _refreshAll6 = refreshAll;
   refreshAll = function(){ _refreshAll6(); try { renderScore(); renderWeekly(); } catch(e){ if (window.console) console.error(e); } };
+
+
+  // =====================================================================================
+  // v12: every picture topic has "what it is not" and a control question; topics unlock in order
+  // =====================================================================================
+  const G2T = {fvg: "fvg-up", bisi: "fvg-up", imbalance: "fvg-up", ce: "fvg-up", sibi: "fvg-down", ifvg: "ifvg", "order-block": "ob-up", "mean-threshold": "ob-up", breaker: "breaker", bos: "bos-mss", mss: "bos-mss", choch: "bos-mss", displacement: "bos-mss", cisd: "cisd",
+    "immediate-rebalance": "immediate-rebalance", bpr: "bpr", likvidita: "likvidita", sweep: "likvidita", bsl: "likvidita", ssl: "likvidita", "buy-stops": "likvidita", eqh: "likvidita", eql: "likvidita", "stop-hunt": "likvidita", "liquidity-pool": "likvidita", "old-high-low": "likvidita", "pdh-pdl": "likvidita", "turtle-soup": "likvidita", "judas-swing": "likvidita",
+    "hh-hl": "struktura", "lh-ll": "struktura", swing: "struktura", trend: "struktura", "struktura-trhu": "struktura", "sth-stl": "struktura", premium: "premium-discount", discount: "premium-discount", equilibrium: "premium-discount", ote: "premium-discount", "dealing-range": "premium-discount", fib: "premium-discount",
+    "model-2022": "model-2022-long", "entry-model": "model-2022-long", setup: "dohromady"};
+  const _topicFor = topicFor;
+  topicFor = g => { const id = G2T[g.id]; return (id && pa.find(t => t.id === id)) || _topicFor(g); };
+  const topicLocked = i => cfg.mode === "student" && !cfg.unlock && i > 0 && !(lp.seen || {})[pa[i].id] && !(lp.seen || {})[pa[i - 1].id];
+  function renderPaExtra(){
+    const box = $("pa-extra"); clear(box); const t = pa.find(x => x.id === paCur); if (!t) return; lp.seen = lp.seen || {};
+    if (t.traps && t.traps.length){ const u = el("ul","stl no"); t.traps.forEach(x => u.appendChild(el("li", null, x))); box.appendChild(el("span","kick","Pozor, tohle to není")); box.appendChild(u); }
+    if (!t.check) return;
+    const q = el("div","box exam"), head = el("div","row"), body = el("div","exbody"); let done = false;
+    head.appendChild(el("b", null, "Kontrolní otázka")); if (lp.seen[t.id]) head.appendChild(el("span","pill good","Téma splněno")); q.appendChild(head); body.appendChild(el("b","exq", t.check.q));
+    const opts = shuffled(t.check.opts), btns = opts.map(o => { const b = el("button","exo", o); b.type = "button";
+      b.addEventListener("click", () => { if (done) return; done = true; const ok = o === t.check.ok; btns.forEach((x, j) => { x.disabled = true; if (opts[j] === t.check.ok) x.classList.add("ok"); }); if (!ok) b.classList.add("no");
+        body.appendChild(el("span","small", (ok ? "Správně. " : "Tohle ne. ") + t.check.why));
+        if (ok){ if (!lp.seen[t.id]){ lp.seen[t.id] = true; persistLaura(); paChips(); } const i = pa.findIndex(x => x.id === t.id), nx = pa[i + 1]; if (nx){ const nb = el("button","primary","Další téma: " + nx.title); nb.type = "button"; nb.addEventListener("click", () => { paCur = nx.id; paStep = 0; paBuild(); $("pa-card").scrollIntoView({block: "start"}); }); body.appendChild(nb); } }
+        else { const rb = el("button", null, "Zkusit znovu"); rb.type = "button"; rb.addEventListener("click", renderPaExtra); body.appendChild(rb); } });
+      body.appendChild(b); return b; });
+    q.appendChild(body); box.appendChild(q);
+  }
+  const _paBuild2 = paBuild; paBuild = function(){ _paBuild2(); renderPaExtra(); };
+  const _paChips = paChips;
+  paChips = function(){ _paChips(); Array.prototype.forEach.call($("pa-chips").children, (b, i) => { const l = topicLocked(i); b.classList.toggle("lock", l); if (l) b.textContent += " · zamčeno"; }); };
+  $("pa-chips").addEventListener("click", ev => { const b = ev.target.closest(".chip"); if (!b) return; const i = Array.prototype.indexOf.call($("pa-chips").children, b); if (i >= 0 && topicLocked(i)){ ev.stopPropagation(); toast("Nejdřív odpověz na kontrolní otázku u předchozího tématu."); } }, true);
+  function renderDemoRoad(){
+    const box = $("demo-road"); clear(box); const demo = cfg.accounts.filter(a => a.type === "demo").map(a => a.id), nd = jr.trades.filter(t => !t.missed && demo.indexOf(tAcct(t)) >= 0).length, np = (jr.paper || []).length, fin = !!(lp.final && lp.final.best / lp.final.of >= 0.8);
+    [["Závěrečná zkouška", fin ? "složeno" : "čeká", fin], ["Cvičné obchody v přehrávání trhu", Math.min(np, 20) + " z 20", np >= 20], ["Obchody na demo účtu zapsané v deníku", Math.min(nd, 20) + " z 20", nd >= 20]].forEach(x => { const r = el("div","rrow"); r.appendChild(el("span", null, x[0])); r.appendChild(el("span","pill " + (x[2] ? "good" : ""), x[1])); box.appendChild(r); });
+    box.appendChild(el("p","small muted", demo.length ? "Demo obchody zapisuj na účet typu Demo." : "V Nastavení si přidej účet typu Demo a zapisuj na něj obchody z demo účtu u brokera."));
+    box.appendChild(el("p","small muted","Teprve po všech třech krocích má smysl uvažovat o živém účtu. Ani pak to není záruka výsledku."));
+  }
+  const _refreshAll7 = refreshAll;
+  refreshAll = function(){ _refreshAll7(); try { renderDemoRoad(); if (pa.length && $("pa-chips").children.length) paChips(); } catch(e){ if (window.console) console.error(e); } };
 
   // ---------- moving to a new address without losing data ----------
   // data/site.json: {"move": "https://new-address", "from": ["https://old-address"]}. The old site hands the data to the new one in a window the person opens.

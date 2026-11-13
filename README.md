@@ -72,3 +72,4 @@ Průvodci v sekci Studium: `model2022` (kroky modelu) a `core` (dvanáct měsíc
 
 - `data/site.json` řídí stěhování na novou adresu (`move`, `from`). Boti ho nemění. `tape-posts` v prohlížeči jsou příspěvky komunity.
 - Událost v `data/news.json` může mít volitelné pole `markets` (například `["NQ","MNQ"]`). Bez něj se výsledky firem ("Výsledky …") ukazují jen těm, kdo obchodují NQ nebo MNQ.
+- Každé téma v `data/priceaction.json` má navíc `traps` (dvě časté záměny) a `check` (kontrolní otázka). Doplňuje je skript mimo repozitář.
