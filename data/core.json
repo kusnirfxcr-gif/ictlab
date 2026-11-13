@@ -1,8 +1,8 @@
 {
  "state": {
-  "lastRun": "2026-11-12T05:52:00Z",
+  "lastRun": "2026-11-13T07:44:01Z",
   "modelVersion": "1.0",
-  "runCount": 3
+  "runCount": 4
  },
  "model": {
   "version": "1.0",
@@ -85,40 +85,40 @@
    "order": 1,
    "name": "Skaut",
    "role": "hledá nový ICT obsah",
-   "lastRun": "2026-11-12T05:52:00Z",
-   "lastReport": "Tři nové zdroje: kladný backtest sweepu s FVG bez MSS na forexu a zlatě (od prodejce platformy, bez jasných nákladů), statistika menšího pondělního rozpětí na NQ a ES a otevřený skript se směrem dne podle svíčky 9:00–10:00."
+   "lastRun": "2026-11-13T07:44:01Z",
+   "lastReport": "Dva nové zdroje o fair value gapech: test s kontrolními zónami nenašel výhodu proti náhodně umístěným zónám a studie vyplňování ukázala, že cena se vrací i k náhodným úrovním."
   },
   {
    "id": "gems",
    "order": 2,
    "name": "Gems",
    "role": "studuje kanál ICT Gems",
-   "lastRun": "2026-11-12T05:52:00Z",
-   "lastReport": "Jedno nové video přes veřejné shrnutí: obchodování bez denního biasu podle ranních equal highs a lows. Shrnutí k Opening Range Gap a ke dvěma videím o Turtle Soup byla bez konkrétních pravidel, proto nejsou zapsána."
+   "lastRun": "2026-11-13T07:44:01Z",
+   "lastReport": "Dnes nic nového. Veřejná shrnutí videí ICT Gems, která šla dohledat, už v poznatcích jsou, a jedno nové neobsahovalo nic konkrétního."
   },
   {
    "id": "architekt",
    "order": 3,
    "name": "Architekt",
    "role": "upravuje model a Pine Script",
-   "lastRun": "2026-11-12T05:52:00Z",
-   "lastReport": "Model beze změny, verze 1.0 a stav Backtest nevychází (115 obchodů, profit factor 0,94). Od včerejška nepřibyl žádný nový backtest a kandidát 2.0 bez MSS má profit factor 1,27 jen z dodatečného vyřazení obchodů, takže před změnou pravidel potřebuje samostatný běh na neviděných datech."
+   "lastRun": "2026-11-13T07:44:01Z",
+   "lastReport": "Model beze změny, verze 1.0 a stav Backtest nevychází (115 obchodů, profit factor 0,94). Nové poznatky o FVG potvrzují, že mezera sama výhodu nedává. Pravidla se budou měnit až podle nového vlastního backtestu."
   },
   {
    "id": "ucitel",
    "order": 4,
    "name": "Učitel",
    "role": "připravuje denní lekce pro Lauru",
-   "lastRun": "2026-11-12T05:52:00Z",
-   "lastReport": "Lekce 3 (týden 1): seance, cash open v 9:30 a overnight range. Do slovníčku přibyly tři pojmy: newyorský čas, cash open a overnight."
+   "lastRun": "2026-11-13T07:44:01Z",
+   "lastReport": "Lekce 4 (týden 2): swing high a swing low, jak je poznat na třech svíčkách a proč se k nim cena vrací."
   },
   {
    "id": "vizionar",
    "order": 5,
    "name": "Vizionář",
    "role": "navrhuje vylepšení aplikace",
-   "lastRun": "2026-11-12T16:10:00Z",
-   "lastReport": "Založil seznam nápadů: 14 návrhů pro výuku, deník, model a produkt, seřazených podle přínosu a pracnosti."
+   "lastRun": "2026-11-13T07:44:01Z",
+   "lastReport": "Přidán jeden nápad, protože otevřených je přes čtyřicet: test pojmu proti náhodě na vlastních datech."
   }
  ],
  "versions": [

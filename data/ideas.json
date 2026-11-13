@@ -1606,5 +1606,17 @@
   "status": "new",
   "what": "Skutečné ohlasy prvních zákazníků na prodejní stránce, s jejich souhlasem.",
   "why": "Důvěru nejvíc buduje zkušenost jiných lidí."
+ },
+ {
+  "id": "test-pojmu-proti-nahode",
+  "ts": "2026-11-13T07:44:01Z",
+  "date": "2026-11-13",
+  "title": "Test pojmu proti náhodě",
+  "area": "model",
+  "value": 2,
+  "effort": 3,
+  "status": "new",
+  "what": "Na nahraných minutových datech aplikace spočítá, jak často cena reaguje na fair value gapy, a totéž pro stejně velké zóny na náhodných místech. Obě čísla ukáže vedle sebe.",
+  "why": "Odliší skutečnou výhodu od dojmu. Stejným způsobem dnes pojmy testují nezávislé studie."
  }
 ]
