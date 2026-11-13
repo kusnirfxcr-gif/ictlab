@@ -811,8 +811,7 @@ body.sakura .ob button.primary{color:#fff}
 @media (prefers-reduced-motion:reduce){.sk-scene *,.sk-emb,.sk-head b{animation:none!important}.sk-petals,.sk-bub,body.sakura .sk-front{display:none}}
 /* ---------- animations across the app ---------- */
 @property --ra{syntax:"<angle>";inherits:false;initial-value:0deg}
-.rbw-host{position:relative}
-.rbw-ring{position:absolute;inset:0;border-radius:inherit;z-index:4;pointer-events:none;padding:2.5px;background:conic-gradient(from var(--ra),transparent 0 34%,#ff5f6d 42%,#ffc371 52%,#f9f871 62%,#3ddc97 72%,#8ab4ff 82%,#c58aff 92%,transparent 100%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;filter:drop-shadow(0 0 5px rgba(255,255,255,.6));animation:rbwrun .8s cubic-bezier(.35,.1,.25,1) forwards}
+.rbw-ring{position:fixed;left:0;top:0;z-index:90;pointer-events:none;will-change:transform;padding:2.5px;background:conic-gradient(from var(--ra),transparent 0 34%,#ff5f6d 42%,#ffc371 52%,#f9f871 62%,#3ddc97 72%,#8ab4ff 82%,#c58aff 92%,transparent 100%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;filter:drop-shadow(0 0 5px rgba(255,255,255,.6));animation:rbwrun .8s cubic-bezier(.35,.1,.25,1) forwards}
 @keyframes rbwrun{0%{--ra:-40deg;opacity:0}10%{opacity:1}78%{opacity:1}100%{--ra:400deg;opacity:0}}
 .ob>.card{animation:obpop .34s cubic-bezier(.2,.9,.3,1.15) both}
 @keyframes obpop{from{opacity:0;transform:translateY(16px) scale(.96)}to{opacity:1;transform:none}}
@@ -4793,8 +4792,20 @@ body.sakura.modal .sk-pal,body.sakura.copen .sk-pal{display:none}
   document.addEventListener("click", ev => {
     const t = ev.target && ev.target.closest ? ev.target.closest("button,.abtn,.chip,a.go,.tb-acc,.orb,.prem-btn,.subnav a,.nav1 a,.bottombar a") : null; if (!t || t.disabled) return;
     try { if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return; } catch(e){}
-    const r = t.getBoundingClientRect(); if (r.width < 8 || r.height < 8) return; if (getComputedStyle(t).position === "static") t.classList.add("rbw-host");
-    Array.prototype.forEach.call(t.querySelectorAll(":scope > .rbw-ring"), x => x.remove()); const ring = el("span","rbw-ring"); t.appendChild(ring); setTimeout(() => ring.remove(), 850);
+    let r = t.getBoundingClientRect(); if (r.width < 8 || r.height < 8) return;
+    // the ring floats above the page and follows the button every frame; if the button was redrawn, it finds its twin
+    const ring = el("div","rbw-ring"), tag = t.tagName, txt = (t.textContent || "").trim().slice(0, 60), rad = parseFloat(getComputedStyle(t).borderTopLeftRadius) || 0, t0 = performance.now();
+    let node = t, sx = window.scrollX, sy = window.scrollY, tries = 0;
+    const seen = q => q.width > 7 && q.bottom > 0 && q.top < window.innerHeight && q.right > 0 && q.left < window.innerWidth;
+    const place = () => {
+      if (!node.isConnected && tries < 4){ tries++; let best = null, bd = 1e9; const all = document.getElementsByTagName(tag);
+        for (let i = 0; i < all.length; i++){ const c = all[i]; if ((c.textContent || "").trim().slice(0, 60) !== txt) continue; const q = c.getBoundingClientRect(); if (!seen(q)) continue; const d = Math.abs(q.left - r.left) + Math.abs(q.top - (r.top + sy - window.scrollY)); if (d < bd){ bd = d; best = c; } }
+        if (best) node = best; }
+      let ox = sx - window.scrollX, oy = sy - window.scrollY;
+      if (node.isConnected){ const q = node.getBoundingClientRect(); if (q.width > 7){ r = q; sx = window.scrollX; sy = window.scrollY; ox = oy = 0; } }
+      ring.style.transform = "translate3d(" + (r.left - 3 + ox).toFixed(1) + "px," + (r.top - 3 + oy).toFixed(1) + "px,0)"; ring.style.width = (r.width + 6).toFixed(1) + "px"; ring.style.height = (r.height + 6).toFixed(1) + "px";
+      if (performance.now() - t0 < 840) requestAnimationFrame(place); else ring.remove(); };
+    ring.style.borderRadius = Math.min(rad + 3, (r.height + 6) / 2) + "px"; document.body.appendChild(ring); place();
   }, true);
   // home trade cards draw their line only when the set of trades changes
   { let sig = null; const _rht = renderHomeTrades; renderHomeTrades = function(){ _rht(); const box = $("d-trades"); if (!box) return; const s = Array.prototype.map.call(box.children, (c, i) => i).length + ":" + jr.trades.length + ":" + (jr.trades.length ? jr.trades[jr.trades.length - 1].id : ""); box.classList.toggle("fresh", s !== sig); sig = s; }; }
