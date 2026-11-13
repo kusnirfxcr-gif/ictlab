@@ -1,0 +1,249 @@
+//@version=6
+// Tape Levels: opening prices, session highs and lows, daily range and a simple daily analysis.
+// Use on a 1 to 30 minute chart of MNQ, NQ, MES or ES. All times are New York time.
+// Educational tool. It does not give trade signals and nothing it shows has to happen.
+indicator("Tape Levels", "Tape", overlay = true, max_labels_count = 50)
+
+// ---------- settings ----------
+string TZ = "America/New_York"
+bool   showOpens = input.bool(true,  "Otevírací ceny 18:00, 00:00, 9:30, 10:00")
+bool   showPD    = input.bool(true,  "High a low předchozího dne")
+bool   showAsia  = input.bool(true,  "High a low Asie (20:00 až 00:00)")
+bool   showLon   = input.bool(true,  "High a low Londýna (02:00 až 05:00)")
+bool   showLunch = input.bool(false, "High a low oběda (11:30 až 13:00)")
+bool   showProj  = input.bool(false, "Předpokládané high a low dne podle průměrného rozpětí")
+bool   showTable = input.bool(true,  "Tabulka s analýzou")
+bool   showLabels = input.bool(true, "Popisky úrovní vpravo")
+int    adrLen    = input.int(5, "Kolik dní se počítá do průměrného rozpětí", minval = 1, maxval = 20)
+string tblPos    = input.string("Vpravo nahoře", "Umístění tabulky", options = ["Vpravo nahoře", "Vpravo dole", "Vlevo dole"])
+
+color cOpen = color.new(color.gray, 20)
+color cMid  = color.new(color.blue, 10)
+color cPD   = color.new(color.orange, 10)
+color cAsia = color.new(color.purple, 20)
+color cLon  = color.new(color.teal, 20)
+color cLun  = color.new(color.silver, 40)
+color cUp   = color.new(color.green, 0)
+color cDn   = color.new(color.red, 0)
+
+// ---------- time ----------
+int hh  = hour(time, TZ)
+int mi  = minute(time, TZ)
+int mod = hh * 60 + mi
+int prevMod = nz(mod[1], mod)
+bool wrapped = mod < prevMod
+crossed(int t) =>
+    mod >= t and (prevMod < t or wrapped)
+
+bool newDay   = crossed(1080)          // 18:00, a new trading day on futures
+bool midnight = wrapped                // 00:00
+bool at930    = crossed(570) and not wrapped
+bool at1000   = crossed(600) and not wrapped
+bool inAsia   = mod >= 1200
+bool inLondon = mod >= 120 and mod < 300
+bool inAM     = mod >= 420 and mod < 720
+bool inLunch  = mod >= 690 and mod < 780
+bool inPM     = mod >= 780 and mod < 960
+
+// ---------- state ----------
+var float o18 = na
+var float o00 = na
+var float o930 = na
+var float o10 = na
+var float dH = na
+var float dL = na
+var float pdH = na
+var float pdL = na
+var float pdC = na
+var float asH = na
+var float asL = na
+var float loH = na
+var float loL = na
+var float luH = na
+var float luL = na
+var bool  asiaOn = false
+var bool  lonOn = false
+var bool  lunOn = false
+var float[] ranges = array.new_float(0)
+
+if newDay
+    if not na(dH) and not na(dL)
+        array.push(ranges, dH - dL)
+        if array.size(ranges) > adrLen
+            array.shift(ranges)
+        pdH := dH
+        pdL := dL
+        pdC := close[1]
+    dH := high
+    dL := low
+    o18 := open
+    o00 := na
+    o930 := na
+    o10 := na
+    asH := na
+    asL := na
+    loH := na
+    loL := na
+    luH := na
+    luL := na
+else
+    dH := na(dH) ? high : math.max(dH, high)
+    dL := na(dL) ? low : math.min(dL, low)
+
+if midnight
+    o00 := open
+if at930
+    o930 := open
+if at1000
+    o10 := open
+
+if inAsia
+    if not asiaOn
+        asH := high
+        asL := low
+    else
+        asH := math.max(asH, high)
+        asL := math.min(asL, low)
+asiaOn := inAsia
+
+if inLondon
+    if not lonOn
+        loH := high
+        loL := low
+    else
+        loH := math.max(loH, high)
+        loL := math.min(loL, low)
+lonOn := inLondon
+
+if inLunch
+    if not lunOn
+        luH := high
+        luL := low
+    else
+        luH := math.max(luH, high)
+        luL := math.min(luL, low)
+lunOn := inLunch
+
+float adr = array.size(ranges) > 0 ? array.avg(ranges) : na
+float dayRange = dH - dL
+float projH = dL + adr
+float projL = dH - adr
+
+// ---------- lines ----------
+plot(showOpens ? o18 : na,  "Open 18:00", cOpen, 1, plot.style_linebr)
+plot(showOpens ? o00 : na,  "Open 00:00", cMid,  2, plot.style_linebr)
+plot(showOpens ? o930 : na, "Open 9:30",  color.new(color.yellow, 10), 1, plot.style_linebr)
+plot(showOpens ? o10 : na,  "Open 10:00", color.new(color.lime, 30), 1, plot.style_linebr)
+plot(showPD ? pdH : na,     "High předchozího dne", cPD, 1, plot.style_linebr)
+plot(showPD ? pdL : na,     "Low předchozího dne",  cPD, 1, plot.style_linebr)
+plot(showAsia and not inAsia ? asH : na, "High Asie", cAsia, 1, plot.style_linebr)
+plot(showAsia and not inAsia ? asL : na, "Low Asie",  cAsia, 1, plot.style_linebr)
+plot(showLon and not inLondon ? loH : na, "High Londýna", cLon, 1, plot.style_linebr)
+plot(showLon and not inLondon ? loL : na, "Low Londýna",  cLon, 1, plot.style_linebr)
+plot(showLunch and not inLunch ? luH : na, "High oběda", cLun, 1, plot.style_linebr)
+plot(showLunch and not inLunch ? luL : na, "Low oběda",  cLun, 1, plot.style_linebr)
+plot(showProj ? projH : na, "Předpokládané high dne", color.new(color.green, 60), 1, plot.style_circles)
+plot(showProj ? projL : na, "Předpokládané low dne",  color.new(color.red, 60),   1, plot.style_circles)
+
+// ---------- helpers ----------
+nearAbove(float p, float a, float b, float c) =>
+    float r = na
+    if not na(a) and a > p
+        r := a
+    if not na(b) and b > p and (na(r) or b < r)
+        r := b
+    if not na(c) and c > p and (na(r) or c < r)
+        r := c
+    r
+nearBelow(float p, float a, float b, float c) =>
+    float r = na
+    if not na(a) and a < p
+        r := a
+    if not na(b) and b < p and (na(r) or b > r)
+        r := b
+    if not na(c) and c < p and (na(r) or c > r)
+        r := c
+    r
+fmt(float v) =>
+    na(v) ? "–" : str.tostring(v, format.mintick)
+pts(float v) =>
+    na(v) ? "–" : str.tostring(math.round(v, 1))
+
+// ---------- bias: four simple votes ----------
+int score = 0
+if not na(o00)
+    score += close > o00 ? 1 : -1
+if not na(o18)
+    score += close > o18 ? 1 : -1
+if not na(pdH) and not na(pdL)
+    score += close > (pdH + pdL) / 2 ? 1 : -1
+    if not na(pdC)
+        score += pdC > (pdH + pdL) / 2 ? 1 : -1
+string biasTxt = score >= 2 ? "Růst" : score <= -2 ? "Pokles" : "Bez jasného směru"
+color  biasCol = score >= 2 ? cUp : score <= -2 ? cDn : color.gray
+bool   up = score >= 2
+bool   dn = score <= -2
+
+float tgtUp = nearAbove(close, pdH, asH, loH)
+float tgtDn = nearBelow(close, pdL, asL, loL)
+
+// ---------- session notes ----------
+string asiaNote = na(asH) ? "Asie ještě nezačala. Po 18:00 sleduj open 18:00 a včerejší high a low." : "Rozpětí " + pts(asH - asL) + " b." + (na(adr) ? "" : " (" + str.tostring(math.round((asH - asL) / adr * 100)) + " % průměru). ") + ((not na(adr)) and (asH - asL) < adr * 0.25 ? "Úzká Asie: Londýn nebo New York má prostor pro větší pohyb." : "Široká Asie: část denního pohybu už je pryč.")
+
+string lonNote = "Čeká se na 02:00."
+if not na(loH) and not na(asH)
+    bool tookH = loH > asH
+    bool tookL = loL < asL
+    lonNote := tookH and tookL ? "Londýn vybral high i low Asie. Směr určí až New York." : tookH ? "Londýn vybral high Asie. Když se cena vrátila pod něj, cílem je low Asie " + fmt(asL) + "." : tookL ? "Londýn vybral low Asie. Když se cena vrátila nad něj, cílem je high Asie " + fmt(asH) + "." : "Londýn zůstal uvnitř rozpětí Asie. Likvidita je nad " + fmt(asH) + " i pod " + fmt(asL) + "."
+
+string amNote = up ? "Směr nahoru. Čekej výpad dolů v 9:30 nebo 10:00" + (na(tgtDn) ? "" : " k " + fmt(tgtDn)) + ", návrat nad open 00:00 a potom cíl " + (na(tgtUp) ? "nové high dne" : fmt(tgtUp)) + "." : dn ? "Směr dolů. Čekej výpad nahoru v 9:30 nebo 10:00" + (na(tgtUp) ? "" : " k " + fmt(tgtUp)) + ", návrat pod open 00:00 a potom cíl " + (na(tgtDn) ? "nové low dne" : fmt(tgtDn)) + "." : "Směr není jasný. Likvidita nahoře " + fmt(tgtUp) + ", dole " + fmt(tgtDn) + ". Počkej, kterou stranu trh vybere první."
+
+string pmNote = na(luH) ? "Oběd (11:30 až 13:00) ještě neproběhl. Jeho high a low budou cíle na odpoledne." : "Oběd " + fmt(luL) + " až " + fmt(luH) + ". " + (up ? "Ve směru nahoru je cílem high oběda a potom high dne " + fmt(dH) + "." : dn ? "Ve směru dolů je cílem low oběda a potom low dne " + fmt(dL) + "." : "Sleduj, kterou stranu oběda cena vybere po 13:30.")
+
+string rangeNote = na(adr) ? "Průměr se spočítá po prvním celém dni." : pts(dayRange) + " z " + pts(adr) + " b. (" + str.tostring(math.round(dayRange / adr * 100)) + " %). " + (dayRange >= adr ? "Průměrné rozpětí je vyčerpané, další velký pohyb je méně pravděpodobný." : "Zbývá zhruba " + pts(adr - dayRange) + " b. Při růstu vychází high kolem " + fmt(projH) + ", při poklesu low kolem " + fmt(projL) + ".")
+
+// ---------- table ----------
+var table tb = na
+if showTable and barstate.islast
+    string pos = tblPos == "Vpravo nahoře" ? position.top_right : tblPos == "Vpravo dole" ? position.bottom_right : position.bottom_left
+    if not na(tb)
+        table.delete(tb)
+    tb := table.new(pos, 2, 7, bgcolor = color.new(color.black, 20), border_width = 1, border_color = color.new(color.gray, 70))
+    color tc = color.white
+    table.cell(tb, 0, 0, "Tape", text_color = tc, text_size = size.small, text_halign = text.align_left)
+    table.cell(tb, 1, 0, "Směr: " + biasTxt + " (" + str.tostring(score) + " ze 4)", text_color = biasCol, text_size = size.small, text_halign = text.align_left)
+    table.cell(tb, 0, 1, "Rozpětí dne", text_color = tc, text_size = size.small, text_halign = text.align_left)
+    table.cell(tb, 1, 1, rangeNote, text_color = tc, text_size = size.small, text_halign = text.align_left)
+    table.cell(tb, 0, 2, "Asie", text_color = tc, text_size = size.small, text_halign = text.align_left)
+    table.cell(tb, 1, 2, asiaNote, text_color = tc, text_size = size.small, text_halign = text.align_left)
+    table.cell(tb, 0, 3, "Londýn", text_color = tc, text_size = size.small, text_halign = text.align_left)
+    table.cell(tb, 1, 3, lonNote, text_color = tc, text_size = size.small, text_halign = text.align_left)
+    table.cell(tb, 0, 4, "New York dopoledne", text_color = tc, text_size = size.small, text_halign = text.align_left)
+    table.cell(tb, 1, 4, amNote, text_color = tc, text_size = size.small, text_halign = text.align_left)
+    table.cell(tb, 0, 5, "New York odpoledne", text_color = tc, text_size = size.small, text_halign = text.align_left)
+    table.cell(tb, 1, 5, pmNote, text_color = tc, text_size = size.small, text_halign = text.align_left)
+    table.cell(tb, 0, 6, "Pozor", text_color = color.gray, text_size = size.tiny, text_halign = text.align_left)
+    table.cell(tb, 1, 6, "Rozbor podle pravidel, ne signál. Nic z toho nemusí nastat.", text_color = color.gray, text_size = size.tiny, text_halign = text.align_left)
+
+// ---------- labels on the right ----------
+var label[] labs = array.new_label(0)
+addLab(float y, string t, color c) =>
+    if not na(y)
+        array.push(labs, label.new(bar_index + 3, y, t, style = label.style_label_left, color = color.new(c, 100), textcolor = c, size = size.small))
+if showLabels and barstate.islast
+    while array.size(labs) > 0
+        label.delete(array.pop(labs))
+    if showOpens
+        addLab(o18, "18:00", cOpen)
+        addLab(o00, "00:00", cMid)
+        addLab(o930, "9:30", color.yellow)
+        addLab(o10, "10:00", color.lime)
+    if showPD
+        addLab(pdH, "PDH", cPD)
+        addLab(pdL, "PDL", cPD)
+    if showAsia and not inAsia
+        addLab(asH, "Asie H", cAsia)
+        addLab(asL, "Asie L", cAsia)
+    if showLon and not inLondon
+        addLab(loH, "Londýn H", cLon)
+        addLab(loL, "Londýn L", cLon)

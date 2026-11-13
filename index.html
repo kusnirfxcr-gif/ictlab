@@ -3961,6 +3961,9 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
     row.appendChild(el("h2", null, "Čas v doručování ceny")); row.appendChild(lock); head.appendChild(row);
     head.appendChild(el("p", null, "Stručný výklad toho, jak s časem pracuje obchodník Zeussy (The Ones That Know) ve svém materiálu TIME z března 2023. Je to shrnutí hlavních myšlenek vlastními slovy, ne kopie materiálu.")); box.appendChild(head);
     box.appendChild(premAnalysis());
+    const ind = el("div","card"), ia = el("a","abtn","Otevřít kód indikátoru"); ia.href = "tape-levels.txt"; ia.target = "_blank"; ia.rel = "noopener"; ind.appendChild(el("h2", null, "Indikátor Tape Levels pro TradingView"));
+    ind.appendChild(el("p","small muted","Vykreslí na grafu otevírací ceny 18:00, 00:00, 9:30 a 10:00, high a low předchozího dne, Asie a Londýna a v tabulce ukáže směr, rozpětí dne proti průměru a rozbor pro Asii, Londýn a obě newyorské seance. Úrovně z něj pak stačí opsat do analýzy nahoře."));
+    const ol = el("ol","steps"); ["Otevři kód a celý ho zkopíruj.", "V TradingView otevři Pine Editor, vlož kód a dej Uložit a Přidat do grafu.", "Použij graf MNQ nebo NQ na 1 až 30 minutách."].forEach(x => { const li = el("li"), d = el("div", null, x); li.appendChild(d); ol.appendChild(li); }); ind.appendChild(ol); ind.appendChild(ia); box.appendChild(ind);
     premTopics.forEach(t => box.appendChild(miniStepper(t)));
     PREM.forEach((x, i) => { const c = el("div","card ststep"), h = el("div","sthead"); h.appendChild(el("span","stn", i + 1)); h.appendChild(el("h3", null, x[0])); c.appendChild(h); c.appendChild(el("p", null, x[1])); box.appendChild(c); });
     box.appendChild(premLevels());

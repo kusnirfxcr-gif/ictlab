@@ -74,3 +74,4 @@ Průvodci v sekci Studium: `model2022` (kroky modelu) a `core` (dvanáct měsíc
 - Událost v `data/news.json` může mít volitelné pole `markets` (například `["NQ","MNQ"]`). Bez něj se výsledky firem ("Výsledky …") ukazují jen těm, kdo obchodují NQ nebo MNQ.
 - Každé téma v `data/priceaction.json` má navíc `traps` (dvě časté záměny) a `check` (kontrolní otázka). Doplňuje je skript mimo repozitář.
 - `data/premium.json` jsou grafy pro sekci Premium. Boti ho nemění.
+- `tape-levels.txt` je indikátor pro TradingView (Pine v6). Boti ho nemění.
