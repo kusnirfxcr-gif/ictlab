@@ -579,7 +579,7 @@ input.gnum{width:54px;padding:5px 6px;text-align:center}
 body[data-mode="trader"] #v-prehled>[data-card="hodiny"]{order:1}
 body[data-mode="trader"] #v-prehled>[data-card="zpravy"]{order:2}
 body[data-mode="trader"] #v-prehled>[data-card="vykon"]{order:3}
-body[data-mode="trader"] #v-prehled>[data-card="obchody"]{order:3}
+#v-prehled>[data-card="obchody"]{order:0}
 body[data-mode="trader"] #v-prehled>[data-card="kalendar"]{order:4}
 body[data-mode="student"] #v-prehled>[data-card="cesta"]{order:1}
 body[data-mode="student"] #v-prehled>[data-card="uloha"]{order:2}
@@ -663,6 +663,28 @@ body[data-view="kouc"] .orb,body.modal .orb{display:none}
 .card.qlog{max-width:420px;width:100%}
 @media (min-width:860px){.logrow{display:none}}
 @media (max-width:859px){#tb-quick{display:none}}
+#v-prehled .herocard{padding:16px 14px 16px;gap:10px}
+#v-prehled .herocard .lead{font-size:14.5px;margin:0}
+#v-prehled .hero{font-size:clamp(34px,7vw,52px)}
+#d-hs{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+#d-hs .tile{padding:8px 9px;border-radius:12px;gap:2px}
+#d-hs .tile span{font-size:9.5px;letter-spacing:.06em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#d-hs .tile b{font-size:15px;white-space:nowrap}
+#v-prehled .herocard .cta .abtn{padding:9px 14px;font-size:14px}
+#v-prehled .prem-btn{padding:9px 18px;font-size:14px}
+.tcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+button.tcard{position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-start;gap:8px;min-height:196px;padding:13px 14px;border-radius:18px;text-align:left;font-weight:400;background:var(--surface2);border:1px solid var(--line);isolation:isolate}
+.tcard .tbg{position:absolute;left:0;right:0;bottom:0;top:78px;z-index:-1}
+.tcard .tbg svg{position:absolute;inset:0;width:100%;height:100%}
+.tcard .tdot{position:absolute;width:9px;height:9px;margin:-4.5px 0 0 -4.5px;border-radius:50%;background:#fff;box-shadow:0 0 0 3px rgba(9,9,11,.85),0 0 10px rgba(255,255,255,.5)}
+.tcard .tlab{position:absolute;transform:translate(-50%,9px);font-size:10px;font-weight:700;text-decoration:none;color:var(--muted);white-space:nowrap;background:rgba(9,9,11,.72);padding:1px 5px;border-radius:6px}
+.tcard .tlab.x{transform:translate(-88%,-24px)}
+.tcard .ttop{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.tcard .tres{text-align:right;display:flex;flex-direction:column}
+.tcard .tres b{font-size:19px;font-weight:800}
+.tcard .tres span{font-size:12.5px;color:var(--muted)}
+.tcard .tfoot{display:flex;gap:6px;flex-wrap:wrap}
+.tcard .tfoot .pill{font-size:11px;padding:3px 8px;background:rgba(9,9,11,.7)}
 </style>
 </head>
 <body>
@@ -3503,7 +3525,7 @@ body[data-view="kouc"] .orb,body.modal .orb{display:none}
   // =====================================================================================
   if (!cfg.mode) cfg.mode = profile && profile.level === "start" ? "student" : "trader";
   const DASH = [["hodiny","Seance a čas"],["cesta","Tvoje cesta"],["uloha","Úloha dne"],["zpravy","Kalendář zpráv"],["vykon","Výkon"],["kalendar","Kalendář výsledků"],["dnes","Rychlé odkazy"]];
-  function setMode(m){ cfg.mode = m === "student" ? "student" : "trader"; cfg.hide = cfg.mode === "student" ? {vykon: 1, kalendar: 1, zpravy: 1, hodiny: 1, obchody: 1} : {}; cfgStore(); refreshAll(); }
+  function setMode(m){ cfg.mode = m === "student" ? "student" : "trader"; cfg.hide = cfg.mode === "student" ? {vykon: 1, kalendar: 1, zpravy: 1, hodiny: 1} : {}; cfgStore(); refreshAll(); }
   function applyShell(){
     document.body.dataset.mode = cfg.mode; document.body.classList.toggle("norails", cfg.rails === false);
     document.querySelectorAll("#v-prehled [data-card]").forEach(c => { const id = c.dataset.card; c.hidden = !!cfg.hide[id] || (id === "vykon" && !jSorted().length); });
@@ -4311,6 +4333,39 @@ body[data-view="kouc"] .orb,body.modal .orb{display:none}
     xb.addEventListener("click", close); window.addEventListener("hashchange", () => { if (document.body.dataset.view === "kouc") close(); });
     document.addEventListener("keydown", ev => { if (ev.key === "Escape" && !pop.hidden && !document.querySelector(".ob")) close(); });
   })();
+
+  // ---------- home: trade cards with a schematic price line (no tick data is stored, the line is drawn from entry, exit, MAE and MFE) ----------
+  function tradeLine(t){
+    const r = Number(t.r) || 0, d = t.dir === "short" ? -1 : 1, rk = t.entry != null && t.stop != null ? Math.abs(t.entry - t.stop) : 0, N = 36;
+    let seed = 0; String(t.id || "").split("").forEach(c => { seed = (seed * 31 + c.charCodeAt(0)) >>> 0; }); const rnd = () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; };
+    const mae = rk && t.mae != null ? Math.abs(t.mae) / rk : (r >= 0 ? 0.25 + rnd() * 0.4 : Math.abs(r)), mfe = rk && t.mfe != null ? Math.abs(t.mfe) / rk : (r >= 0 ? r + rnd() * 0.3 : 0.2 + rnd() * 0.5);
+    const tA = r >= 0 ? 0.22 : 0.3, tF = r >= 0 ? 0.8 : 0.3, pts = [];
+    for (let i = -8; i <= N + 5; i++){ const x = i / N; let y;
+      if (x <= 0) y = -x * (r >= 0 ? -1.6 : 1.4) + (rnd() - 0.5) * 0.18;
+      else if (x >= 1) y = r + (x - 1) * (r >= 0 ? -1.2 : 1.5) + (rnd() - 0.5) * 0.15;
+      else { const bump = (c, w) => Math.exp(-Math.pow((x - c) / w, 2)); y = r * x + (r >= 0 ? -mae * bump(tA, 0.16) + Math.max(0, mfe - r) * bump(tF, 0.12) : mfe * bump(tF, 0.16)) * (1 - 0.0) + (rnd() - 0.5) * 0.22 * Math.sin(Math.PI * x); if (r < 0) y = Math.max(y, -Math.max(mae, Math.abs(r))); }
+      pts.push([i, (i === 0 ? 0 : i === N ? r : y) * d]); }
+    let lo = Infinity, hi = -Infinity; pts.forEach(p => { lo = Math.min(lo, p[1]); hi = Math.max(hi, p[1]); }); if (hi - lo < 0.5){ hi += 0.25; lo -= 0.25; }
+    const W = 300, H = 120, X = i => (i + 8) / (N + 13) * W, Y = v => 30 + (hi - v) / (hi - lo) * (H - 62), c = r >= 0 ? "var(--good)" : "var(--bad)", f = v => v.toFixed(1);
+    const dpath = pts.map((p, i) => (i ? "L" : "M") + f(X(p[0])) + " " + f(Y(p[1]))).join(" "), ex = X(0), ey = Y(0), xx = X(N), xy = Y(r * d);
+    return '<svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none" aria-hidden="true"><path d="' + dpath + ' L' + W + ' ' + H + ' L0 ' + H + ' Z" fill="' + c + '" opacity=".07"/>' +
+      '<line x1="0" y1="' + f(ey) + '" x2="' + W + '" y2="' + f(ey) + '" stroke="rgba(255,255,255,.28)" stroke-width="1" stroke-dasharray="3 4" vector-effect="non-scaling-stroke"/>' +
+      '<line x1="' + f(ex) + '" y1="' + f(xy) + '" x2="' + W + '" y2="' + f(xy) + '" stroke="' + c + '" stroke-width="1" stroke-dasharray="3 4" opacity=".7" vector-effect="non-scaling-stroke"/>' +
+      '<path d="' + dpath + '" fill="none" stroke="' + c + '" stroke-width="1.8" stroke-linejoin="round" opacity=".85" vector-effect="non-scaling-stroke"/></svg>' +
+      '<i class="tdot en" style="left:' + f(ex / W * 100) + '%;top:' + f(ey / H * 100) + '%"></i><i class="tdot ex" style="left:' + f(xx / W * 100) + '%;top:' + f(xy / H * 100) + '%;background:' + c + '"></i>' +
+      '<u class="tlab" style="left:' + f(ex / W * 100) + '%;top:' + f(ey / H * 100) + '%">Vstup' + (t.entry != null ? " " + fnum(t.entry) : "") + '</u><u class="tlab x" style="left:' + f(xx / W * 100) + '%;top:' + f(xy / H * 100) + '%">Výstup' + (t.exit != null ? " " + fnum(t.exit) : "") + '</u>';
+  }
+  function tradeCard(t){
+    const r = Number(t.r) || 0, b = el("button","tcard " + (r >= 0 ? "w" : "l")), bg = el("div","tbg"), top = el("div","ttop"), who = el("div","tlead"), nm = el("div","tinfo"), res = el("div","tres"), net = tNet(t), foot = el("div","tfoot");
+    b.type = "button"; bg.innerHTML = tradeLine(t);
+    nm.appendChild(el("b", null, (t.sym || "") + " · " + (t.dir === "short" ? "Short" : "Long"))); nm.appendChild(el("span", null, fmtDateTime(t.ts)));
+    who.appendChild(symBadge(t.sym)); who.appendChild(nm); res.appendChild(el("b", r >= 0 ? "pos" : "neg", sgn(r) + " R")); if (net != null) res.appendChild(el("span", null, usd(net)));
+    top.appendChild(who); top.appendChild(res); foot.appendChild(el("span","pill", t.setup || "Bez setupu")); (t.tags || []).slice(0, 2).forEach(x => foot.appendChild(el("span","pill warn", x)));
+    b.appendChild(top); b.appendChild(foot); b.appendChild(bg); b.addEventListener("click", () => openTrade(t)); return b;
+  }
+  renderHomeTrades = function(){ const box = $("d-trades"); if (!box) return; clear(box); const tr = jr.trades.filter(t => !t.missed).sort((a, b) => String(b.ts).localeCompare(String(a.ts))).slice(0, 6), card = box.closest("[data-card]");
+    if (card && !cfg.hide.obchody) card.hidden = !tr.length; box.className = "tcards"; tr.forEach(t => box.appendChild(tradeCard(t)));
+    if (tr.length) box.parentNode.querySelector(".tnote") || box.parentNode.appendChild(el("p","small muted tnote","Čára je orientační náčrt průběhu obchodu mezi vstupem a výstupem, ne skutečný záznam ceny.")); };
 
   // ---------- moving to a new address without losing data ----------
   // data/site.json: {"move": "https://new-address", "from": ["https://old-address"]}. The old site hands the data to the new one in a window the person opens.
