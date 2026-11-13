@@ -576,6 +576,7 @@ input.gnum{width:54px;padding:5px 6px;text-align:center}
 .exam .exbody>span.small{line-height:1.5}
 #v-prehled>.herocard,#v-prehled>#d-remind,#v-prehled>#d-move{order:0}
 #v-prehled>[data-card]{order:5}
+body[data-mode="trader"] #v-prehled>[data-card="rychle"]{order:1}
 body[data-mode="trader"] #v-prehled>[data-card="hodiny"]{order:1}
 body[data-mode="trader"] #v-prehled>[data-card="zpravy"]{order:2}
 body[data-mode="trader"] #v-prehled>[data-card="vykon"]{order:3}
@@ -702,6 +703,7 @@ body[data-view="kouc"] .orb,body.modal .orb{display:none}
     </div>
     <div class="card" id="d-move" hidden></div>
     <div class="card" id="d-remind" hidden></div>
+    <div class="card" data-card="rychle"><div class="row"><h2>Rychlý zápis</h2><span class="small muted">Trh, směr, výsledek. Hotovo.</span></div><div class="list" id="d-quick"></div></div>
     <div class="card" data-card="hodiny"><h2>Seance</h2><div class="clkbox"></div></div>
     <div class="card" data-card="zpravy"><div class="row"><h2>Kalendář zpráv</h2><span class="small muted" id="nw-upd"></span></div>
       <div class="list" id="nw"></div>
@@ -3490,7 +3492,7 @@ body[data-view="kouc"] .orb,body.modal .orb{display:none}
   // =====================================================================================
   if (!cfg.mode) cfg.mode = profile && profile.level === "start" ? "student" : "trader";
   const DASH = [["hodiny","Seance a čas"],["cesta","Tvoje cesta"],["uloha","Úloha dne"],["zpravy","Kalendář zpráv"],["vykon","Výkon"],["kalendar","Kalendář výsledků"],["dnes","Rychlé odkazy"]];
-  function setMode(m){ cfg.mode = m === "student" ? "student" : "trader"; cfg.hide = cfg.mode === "student" ? {vykon: 1, kalendar: 1, zpravy: 1, hodiny: 1} : {}; cfgStore(); refreshAll(); }
+  function setMode(m){ cfg.mode = m === "student" ? "student" : "trader"; cfg.hide = cfg.mode === "student" ? {vykon: 1, kalendar: 1, zpravy: 1, hodiny: 1, rychle: 1, obchody: 1} : {}; cfgStore(); refreshAll(); }
   function applyShell(){
     document.body.dataset.mode = cfg.mode; document.body.classList.toggle("norails", cfg.rails === false);
     document.querySelectorAll("#v-prehled [data-card]").forEach(c => { const id = c.dataset.card; c.hidden = !!cfg.hide[id] || (id === "vykon" && !jSorted().length); });
@@ -4252,6 +4254,31 @@ body[data-view="kouc"] .orb,body.modal .orb{display:none}
 
   // light that follows the pointer across buttons
   document.addEventListener("pointermove", ev => { if (ev.pointerType === "touch") return; const t = ev.target && ev.target.closest ? ev.target.closest("button,.abtn,.chip,nav a,a.go,.tb-acc") : null; if (!t) return; const r = t.getBoundingClientRect(); t.style.setProperty("--mx", (ev.clientX - r.left) + "px"); t.style.setProperty("--my", (ev.clientY - r.top) + "px"); }, {passive: true});
+
+  // ---------- home: quick log (market, direction, result in R; the rest can be filled in later) ----------
+  let ql = null;
+  function renderQuick(force){
+    const box = $("d-quick"); if (!box || (box.firstChild && !force)) return; clear(box);
+    const mine = ((profile && profile.syms) || []).filter(k => PV[k]), syms = mine.length ? mine : [(profile && profile.sym) || "NQ"];
+    ql = {sym: ql && syms.indexOf(ql.sym) >= 0 ? ql.sym : syms[0], dir: ql ? ql.dir : "long"};
+    const sr = el("div","chips"), seg = el("div","seg"), rr = el("div","chips"), fR = inp(null, "", "Výsledek v R, například 1,5", "decimal"), row = el("div","rp-ctl"), save = el("button","primary","Uložit obchod"), full = el("button", null, "Celý formulář");
+    const press = (wrap, v) => Array.prototype.forEach.call(wrap.children, b => b.setAttribute("aria-pressed", String(b.dataset.v === v)));
+    syms.forEach(k => { const b = el("button","chip", k); b.type = "button"; b.dataset.v = k; b.addEventListener("click", () => { ql.sym = k; press(sr, k); }); sr.appendChild(b); }); press(sr, ql.sym);
+    [["long","Long"],["short","Short"]].forEach(x => { const b = el("button", null, x[1]); b.type = "button"; b.dataset.v = x[0]; b.addEventListener("click", () => { ql.dir = x[0]; press(seg, x[0]); }); seg.appendChild(b); }); press(seg, ql.dir);
+    [["2","+2 R"],["1","+1 R"],["0","0 R"],["-1","−1 R"]].forEach(x => { const b = el("button","chip", x[1]); b.type = "button"; b.addEventListener("click", () => { fR.value = x[0]; }); rr.appendChild(b); });
+    fR.setAttribute("aria-label","Výsledek v R"); save.type = full.type = "button";
+    const read = () => { const v = parseFloat(String(fR.value).replace(",", ".").replace("−", "-")); return isNaN(v) ? null : Math.round(v * 100) / 100; };
+    save.addEventListener("click", () => { const r = read(); if (r == null){ toast("Napiš výsledek v R, třeba 2 nebo -1."); fR.focus(); return; }
+      jr.trades.push({id: "t" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6), ts: new Date().toISOString(), tsx: null, sym: ql.sym, dir: ql.dir, setup: J_SETUPS[0], acct: cfg.acct === "all" ? cfg.accounts[0].id : cfg.acct, qty: 1, r: r, tags: [], note: "", quick: true});
+      touchDay(); fR.value = ""; jStore(); const lm = limitState(); toast("Obchod uložen. Detaily doplníš klepnutím na něj." + (lm ? " " + lm : "")); });
+    full.addEventListener("click", () => { const r = read(); openTradeForm(null, Object.assign({sym: ql.sym, dir: ql.dir}, r == null ? {} : {r: r})); });
+    fR.addEventListener("keydown", ev => { if (ev.key === "Enter"){ ev.preventDefault(); save.click(); } });
+    row.appendChild(save); row.appendChild(full);
+    if (syms.length > 1) box.appendChild(sr); box.appendChild(seg); box.appendChild(rr); box.appendChild(fR); box.appendChild(row);
+  }
+  const _refreshAll9 = refreshAll;
+  refreshAll = function(){ _refreshAll9(); try { renderQuick(false); } catch(e){ if (window.console) console.error(e); } };
+  DASH.unshift(["rychle","Rychlý zápis"]);
 
   // ---------- moving to a new address without losing data ----------
   // data/site.json: {"move": "https://new-address", "from": ["https://old-address"]}. The old site hands the data to the new one in a window the person opens.
