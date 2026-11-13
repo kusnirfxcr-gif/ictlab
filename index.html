@@ -2696,6 +2696,8 @@ body.sakura.modal .sk-pal,body.sakura.copen .sk-pal{display:none}
   const fcDue = () => { lp.cards = lp.cards || {}; const now = Date.now(); return glossary.filter(g => { const c = lp.cards[g.id]; return !c || c.due <= now; }); };
   const fcKnown = () => Object.keys(lp.cards || {}).filter(k => lp.cards[k].box >= 3).length;
   function fcStart(){ fcQueue = shuffled(fcDue()).slice(0, 10); fcIdx = 0; fcOpen = false; renderFc(); }
+  let fcH = 0, fcW = 0, fcBoxW = 0;
+  try { new ResizeObserver(() => { const w = $("fc-body").clientWidth; if (w && w !== fcBoxW){ fcBoxW = w; renderFc(); } }).observe($("fc-body")); } catch(e){}
   function renderFc(){
     const box = $("fc-body"); if (!box) return;
     box.style.minHeight = box.offsetHeight + "px"; requestAnimationFrame(() => { box.style.minHeight = ""; });
@@ -2712,13 +2714,21 @@ body.sakura.modal .sk-pal,body.sakura.copen .sk-pal{display:none}
     card.appendChild(el("span","pa-kicker", "Kartička " + (fcIdx + 1) + " z " + fcQueue.length));
     card.appendChild(el("b","fterm", g.term || g.id));
     if (g.en && g.en !== g.term) card.appendChild(el("span","small muted", g.en));
-    if (fcOpen){ card.appendChild(el("p","fdef", g.def || "")); const tp = topicFor(g); if (tp){ const tb = el("button", null, "Ukázat v obrázcích"); tb.type = "button"; tb.addEventListener("click", () => openTopic(tp.id)); card.appendChild(tb); } }
+    { const df = el("p","fdef", g.def || ""); card.appendChild(df); const tp = topicFor(g); let tb = null; if (tp){ tb = el("button", null, "Ukázat v obrázcích"); tb.type = "button"; tb.addEventListener("click", () => openTopic(tp.id)); card.appendChild(tb); }
+      if (!fcOpen){ df.style.visibility = "hidden"; df.style.animation = "none"; df.setAttribute("aria-hidden","true"); if (tb){ tb.style.visibility = "hidden"; tb.tabIndex = -1; } } }
     box.appendChild(card);
+    { const sig = box.clientWidth + ":" + fcQueue.length + ":" + (fcQueue[0] ? fcQueue[0].id : "") + ":" + document.body.classList.contains("sakura");   // one height for the whole set, measured once
+      if (box.clientWidth && sig !== fcW){ fcW = sig; fcH = 0; const pr = el("div","fcard"), k = el("span","pa-kicker","Kartička 00 z 00"), tm = el("b","fterm"), en = el("span","small muted"), df = el("p","fdef"), tb = el("button", null, "Ukázat v obrázcích");
+        box.style.position = "relative"; pr.style.cssText = "position:absolute;left:0;right:0;top:0;visibility:hidden;animation:none;min-height:0"; df.style.animation = "none"; [k, tm, en, df, tb].forEach(x => pr.appendChild(x)); box.appendChild(pr);
+        fcQueue.forEach(q => { tm.textContent = q.term || q.id; en.textContent = q.en || ""; en.style.display = q.en && q.en !== q.term ? "" : "none"; df.textContent = q.def || ""; tb.style.display = topicFor(q) ? "" : "none"; fcH = Math.max(fcH, pr.offsetHeight); }); pr.remove(); }
+      if (box.clientWidth && fcH) card.style.minHeight = fcH + "px"; }
+    const shown = Date.now();
     const ctl = el("div","pa-ctl");
     if (!fcOpen){ const b = el("button","primary","Ukázat význam"); b.type = "button"; b.addEventListener("click", () => { fcOpen = true; renderFc(); }); ctl.appendChild(el("span")); ctl.appendChild(b); }
     else [["Neuměla jsem", false, ""], ["Uměla jsem", true, "primary"]].forEach(o => {
       const b = el("button", o[2], o[0]); b.type = "button";
       b.addEventListener("click", () => {
+        if (Date.now() - shown < 280) return;
         const c = lp.cards[g.id] || {box: 0}; c.box = o[1] ? Math.min((c.box || 0) + 1, 5) : 0; if (!o[1]) c.fails = (c.fails || 0) + 1;
         c.due = Date.now() + (c.box ? FC_DAYS[c.box] * 864e5 : 5 * 6e4); lp.cards[g.id] = c;
         fcIdx++; fcOpen = false; touchDay(); persistLaura(); renderFc();
@@ -4794,18 +4804,20 @@ body.sakura.modal .sk-pal,body.sakura.copen .sk-pal{display:none}
     try { if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return; } catch(e){}
     let r = t.getBoundingClientRect(); if (r.width < 8 || r.height < 8) return;
     // the ring floats above the page and follows the button every frame; if the button was redrawn, it finds its twin
-    const ring = el("div","rbw-ring"), tag = t.tagName, txt = (t.textContent || "").trim().slice(0, 60), rad = parseFloat(getComputedStyle(t).borderTopLeftRadius) || 0, t0 = performance.now();
+    const SEL = "button,.abtn,.chip,a.go,.tb-acc,.orb,.prem-btn,.subnav a,.nav1 a,.bottombar a", ring = el("div","rbw-ring"), tag = t.tagName, txt = (t.textContent || "").trim().slice(0, 60), t0 = performance.now(), px = ev.clientX, py = ev.clientY;
     let node = t, sx = window.scrollX, sy = window.scrollY, tries = 0;
+    const live = n => n && n.isConnected && n.getBoundingClientRect().width > 7, round = n => { const rad = parseFloat(getComputedStyle(n).borderTopLeftRadius) || 0; ring.style.borderRadius = Math.min(rad + 3, (n.getBoundingClientRect().height + 6) / 2) + "px"; };
     const seen = q => q.width > 7 && q.bottom > 0 && q.top < window.innerHeight && q.right > 0 && q.left < window.innerWidth;
     const place = () => {
-      if (!node.isConnected && tries < 4){ tries++; let best = null, bd = 1e9; const all = document.getElementsByTagName(tag);
+      if (!live(node)){ tries++; let best = null, bd = 1e9; const all = document.getElementsByTagName(tag);
         for (let i = 0; i < all.length; i++){ const c = all[i]; if ((c.textContent || "").trim().slice(0, 60) !== txt) continue; const q = c.getBoundingClientRect(); if (!seen(q)) continue; const d = Math.abs(q.left - r.left) + Math.abs(q.top - (r.top + sy - window.scrollY)); if (d < bd){ bd = d; best = c; } }
-        if (best) node = best; }
-      let ox = sx - window.scrollX, oy = sy - window.scrollY;
-      if (node.isConnected){ const q = node.getBoundingClientRect(); if (q.width > 7){ r = q; sx = window.scrollX; sy = window.scrollY; ox = oy = 0; } }
+        if (!best && (px || py)){ const under = document.elementFromPoint(px, py), c = under && under.closest ? under.closest(SEL) : null; if (c && !c.disabled && seen(c.getBoundingClientRect())) best = c; }
+        if (best){ node = best; round(node); } else if (tries >= 3){ ring.remove(); return; } else { ring.style.visibility = "hidden"; requestAnimationFrame(place); return; } }
+      ring.style.visibility = "";
+      const q = node.getBoundingClientRect(); r = q; sx = window.scrollX; sy = window.scrollY; const ox = 0, oy = 0;
       ring.style.transform = "translate3d(" + (r.left - 3 + ox).toFixed(1) + "px," + (r.top - 3 + oy).toFixed(1) + "px,0)"; ring.style.width = (r.width + 6).toFixed(1) + "px"; ring.style.height = (r.height + 6).toFixed(1) + "px";
       if (performance.now() - t0 < 840) requestAnimationFrame(place); else ring.remove(); };
-    ring.style.borderRadius = Math.min(rad + 3, (r.height + 6) / 2) + "px"; document.body.appendChild(ring); place();
+    round(t); document.body.appendChild(ring); place();
   }, true);
   // home trade cards draw their line only when the set of trades changes
   { let sig = null; const _rht = renderHomeTrades; renderHomeTrades = function(){ _rht(); const box = $("d-trades"); if (!box) return; const s = Array.prototype.map.call(box.children, (c, i) => i).length + ":" + jr.trades.length + ":" + (jr.trades.length ? jr.trades[jr.trades.length - 1].id : ""); box.classList.toggle("fresh", s !== sig); sig = s; }; }
