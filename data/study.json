@@ -467,5 +467,279 @@
     "Bez záznamů nevíš, jestli pravidla opravdu dodržuješ ani který setup ti vydělává. Většina chyb je v provedení, ne v teorii."
    ]
   ]
+ },
+ "adv": {
+  "title": "Pokročilé lekce",
+  "intro": "Deset témat, která navazují na dvanáctitýdenní kurz. Každé rozšiřuje něco, co už znáš: sweep, MSS, FVG, order block a čas. Projdi je až ve chvíli, kdy základní model poznáš na grafu bez přemýšlení. U každého je i upozornění, kde se s tím lidé nejčastěji spálí.",
+  "lessons": [
+   {
+    "id": "smt",
+    "title": "SMT divergence: když NQ a ES nejdou spolu",
+    "text": [
+     "NQ a ES se většinu času hýbou stejným směrem. SMT divergence je chvíle, kdy jeden z nich udělá nové high nebo low a druhý to nepotvrdí.",
+     "Příklad: ES vybere low předchozího dne, ale NQ zůstane nad svým. ICT to čte tak, že prodejní tlak slábne a výběr likvidity na ES byl spíš past než začátek poklesu.",
+     "SMT se hledá u významné úrovně a v čase, kdy čekáš obrat: u high a low dne, noční seance nebo předchozího dne."
+    ],
+    "use": [
+     "Měj vedle sebe graf NQ a ES ve stejném timeframu.",
+     "Porovnávej jen stejné swingy ve stejném čase.",
+     "Ber SMT jako důvod navíc k setupu, který už máš (sweep, MSS, FVG)."
+    ],
+    "trap": "SMT samo o sobě není vstup. Rozdíl mezi trhy vzniká mnohokrát denně a většinou nic neznamená.",
+    "quiz": {
+     "q": "ES udělá nové low dne, NQ zůstane nad svým. Co to podle ICT naznačuje?",
+     "opts": [
+      "Pokles nemusí pokračovat, sweep na ES mohl být past",
+      "Oba trhy budou určitě dál klesat",
+      "Nic, trhy spolu nesouvisí"
+     ],
+     "ok": "Pokles nemusí pokračovat, sweep na ES mohl být past",
+     "why": "Jeden trh nepotvrdil nové low druhého. Je to varování, ne jistota."
+    }
+   },
+   {
+    "id": "cisd",
+    "title": "CISD: změna stavu doručování",
+    "text": [
+     "CISD (change in state of delivery) je časnější signál obratu než MSS. Nedívá se na swingy, ale na otevírací ceny svíček.",
+     "Při poklesu jde řada klesajících svíček za sebou. Bullish CISD nastane, když cena zavře nad otevírací cenou té řady, tedy nad open první klesající svíčky, která pokles začala.",
+     "Říká to: trh přestal doručovat cenu dolů a začal ji doručovat nahoru. MSS přijde obvykle až o něco později a výš."
+    ],
+    "use": [
+     "Hledej CISD až po výběru likvidity, ne kdekoli.",
+     "Počítá se zavření těla nad open řady svíček, knot nestačí.",
+     "Vstup se pak hledá při návratu do FVG nebo k úrovni CISD."
+    ],
+    "trap": "CISD je rychlejší než MSS, ale taky častěji selže. Čím dřívější signál, tím víc falešných.",
+    "quiz": {
+     "q": "Co je potřeba pro bullish CISD?",
+     "opts": [
+      "Zavření těla nad open řady klesajících svíček",
+      "Knot nad posledním swing high",
+      "Tři rostoucí svíčky po sobě"
+     ],
+     "ok": "Zavření těla nad open řady klesajících svíček",
+     "why": "CISD se počítá od otevírací ceny pohybu, ne od swingu, a potřebuje zavření těla."
+    }
+   },
+   {
+    "id": "ifvg",
+    "title": "Inverzní FVG jako vstup",
+    "text": [
+     "Když cena projde fair value gapem a zavře za ním tělem svíčky, mezera selhala. ICT ji od té chvíle čte obráceně: z podpory je odpor a naopak.",
+     "Po sweepu to bývá první viditelný důkaz obratu. Cena vybere low, otočí se a zavře nad bearish FVG, který při poklesu vznikl. Ten FVG je teď inverzní a při návratu do něj se hledá long.",
+     "Výhoda je dřívější vstup a menší stop než u čekání na MSS a nový FVG."
+    ],
+    "use": [
+     "Nejdřív sweep, potom inverze. Bez výběru likvidity je to jen proražená mezera.",
+     "Stop patří za extrém sweepu.",
+     "Lepší je inverze mezery z vyššího timeframu, třeba 5 minut, než z minutového šumu."
+    ],
+    "trap": "V range cena proráží mezery tam i zpátky. Inverzní FVG dává smysl jen se směrem z vyššího timeframu.",
+    "quiz": {
+     "q": "Kdy se z FVG stane inverzní FVG?",
+     "opts": [
+      "Když za ním cena zavře tělem svíčky",
+      "Když se ho cena jen dotkne knotem",
+      "Když je starší než jeden den"
+     ],
+     "ok": "Když za ním cena zavře tělem svíčky",
+     "why": "Rozhoduje zavření těla za mezerou, knot nestačí."
+    }
+   },
+   {
+    "id": "unicorn",
+    "title": "Unicorn: breaker a FVG na jednom místě",
+    "text": [
+     "Unicorn je vstupní model, který spojuje dvě věci: breaker block a fair value gap, které se překrývají ve stejném cenovém pásmu.",
+     "Vznikne takhle: cena vybere likviditu, otočí se a displacementem prorazí poslední opačný order block. Z něj je breaker. Stejný pohyb nechá FVG, který leží přes breaker. Průnik obou je zóna vstupu.",
+     "Zóna je užší než samotný breaker nebo samotný FVG, takže vychází menší stop."
+    ],
+    "use": [
+     "Pořadí: sweep, displacement, breaker s překrývajícím FVG, návrat do průniku.",
+     "Stop za breaker nebo za extrém sweepu.",
+     "Cíl je protilehlá likvidita."
+    ],
+    "trap": "Breaker bez FVG nebo FVG bez breakeru není unicorn. Název neznamená vyšší úspěšnost, jen přesnější zónu.",
+    "quiz": {
+     "q": "Co dělá ze setupu unicorn?",
+     "opts": [
+      "Překryv breakeru a FVG",
+      "Dva FVG pod sebou",
+      "Sweep v době killzone"
+     ],
+     "ok": "Překryv breakeru a FVG",
+     "why": "Unicorn je právě ten průnik breakeru a fair value gapu."
+    }
+   },
+   {
+    "id": "bpr",
+    "title": "Balanced price range",
+    "text": [
+     "Balanced price range (BPR) vznikne, když se překryjí dva FVG opačného směru. Cena nejdřív rychle klesla a nechala bearish FVG, pak stejně rychle vyrostla a nechala bullish FVG ve stejných cenách.",
+     "Pásmo, kde se obě mezery překrývají, bylo doručeno oběma směry. ICT ho bere jako silnější referenci než jednu mezeru.",
+     "Při návratu se od BPR čeká reakce ve směru druhého, novějšího pohybu."
+    ],
+    "use": [
+     "Vyznač jen průnik obou mezer, ne celé mezery.",
+     "Směr určuje novější z obou pohybů.",
+     "Pracuj se středem pásma stejně jako se středem FVG."
+    ],
+    "trap": "BPR vzniká často i v obyčejném pilovitém trhu. Bez kontextu vyššího timeframu je to jen další obdélník na grafu.",
+    "quiz": {
+     "q": "Z čeho se skládá balanced price range?",
+     "opts": [
+      "Z překryvu bullish a bearish FVG",
+      "Ze dvou order blocků",
+      "Z high a low předchozího dne"
+     ],
+     "ok": "Z překryvu bullish a bearish FVG",
+     "why": "BPR je průnik dvou mezer opačného směru."
+    }
+   },
+   {
+    "id": "gaps",
+    "title": "NWOG a NDOG: otevírací mezery",
+    "text": [
+     "Futures na indexy se na hodinu denně zavírají (17:00 až 18:00 newyorského času) a přes víkend úplně. Rozdíl mezi zavírací a novou otevírací cenou je mezera, ve které se neobchodovalo.",
+     "NDOG (new day opening gap) je mezera mezi zavřením v 17:00 a otevřením v 18:00. NWOG (new week opening gap) je mezera mezi pátečním zavřením a nedělním otevřením.",
+     "ICT je kreslí jako obdélník s horní hranou, dolní hranou a středem. K těmto třem úrovním se cena často vrací i po několika týdnech, proto se doporučuje nechat si na grafu několik posledních NWOG."
+    ],
+    "use": [
+     "Vyznač poslední čtyři až pět týdenních mezer.",
+     "Sleduj reakci na hranách a ve středu mezery.",
+     "Mezera, která se kryje s FVG nebo order blockem, má větší váhu."
+    ],
+    "trap": "Mezera není magnet se zárukou. Některé zůstanou nevyplněné týdny a jiné cena projde bez reakce.",
+    "quiz": {
+     "q": "Co je NWOG?",
+     "opts": [
+      "Mezera mezi pátečním zavřením a nedělním otevřením",
+      "První FVG nového týdne",
+      "High a low pondělí"
+     ],
+     "ok": "Mezera mezi pátečním zavřením a nedělním otevřením",
+     "why": "NWOG je cenový rozdíl přes víkendovou pauzu trhu."
+    }
+   },
+   {
+    "id": "makra",
+    "title": "Makra: dvacetiminutová okna",
+    "text": [
+     "Makra jsou krátká časová okna, ve kterých ICT čeká soustředěný pohyb k likviditě nebo do mezery. Typicky začínají deset minut před celou hodinou a končí deset minut po ní.",
+     "Nejčastěji uváděná newyorská okna: 8:50 až 9:10, 9:50 až 10:10, 10:50 až 11:10, 11:50 až 12:10, 13:10 až 13:40 a 15:15 až 15:45. Pro indexy se nejvíc zmiňují první dvě dopolední po otevření burzy.",
+     "Makro není setup. Je to čas, kdy má smysl čekat, že se setup, který už na grafu vidíš, dá do pohybu."
+    ],
+    "use": [
+     "Před makrem si vyznač nejbližší likviditu a FVG nad cenou i pod ní.",
+     "V okně sleduj, kterou z nich si cena vybere.",
+     "V deníku si značkuj obchody podle makra a po padesáti obchodech se podívej, jestli ti ta okna něco přidávají."
+    ],
+    "trap": "Přesné minuty se mezi zdroji liší a pohyby ve stejných časech vysvětlují i obyčejné věci, třeba data v 10:00. Ber makra jako hypotézu, kterou si ověříš ve vlastním deníku.",
+    "quiz": {
+     "q": "Co je makro?",
+     "opts": [
+      "Krátké časové okno, ve kterém se čeká pohyb k likviditě",
+      "Vstupní model s pevným stopem",
+      "Jiný název pro killzone"
+     ],
+     "ok": "Krátké časové okno, ve kterém se čeká pohyb k likviditě",
+     "why": "Makro je čas, ne setup. Killzone trvá hodiny, makro desítky minut."
+    }
+   },
+   {
+    "id": "ipda",
+    "title": "IPDA rozsahy: 20, 40 a 60 dní",
+    "text": [
+     "ICT popisuje trh jako algoritmus, který se dívá zpět na posledních 20, 40 a 60 obchodních dní. Nejvyšší a nejnižší cena každého z těch období jsou podle něj hlavní cíle na denním grafu.",
+     "V praxi to znamená: otevři denní graf, odpočítej 20, 40 a 60 svíček zpět a vyznač high a low každého úseku. Nevybraná úroveň je kandidát na draw on liquidity pro příští dny a týdny.",
+     "Slouží to k určení směru a cíle na vyšším timeframu, ne ke vstupu."
+    ],
+    "use": [
+     "Jednou týdně si úrovně přepočítej.",
+     "Dívej se i na nevyplněné denní FVG uvnitř těch rozsahů.",
+     "Když je cena uprostřed rozsahu a obě strany jsou daleko, bias je slabý."
+    ],
+    "trap": "Že trh řídí jeden algoritmus, je výklad autora, ne ověřený fakt. Užitečné je to jako disciplinovaný způsob, jak si vybrat významná high a low.",
+    "quiz": {
+     "q": "K čemu slouží rozsahy 20, 40 a 60 dní?",
+     "opts": [
+      "K určení cílů a směru na denním grafu",
+      "K načasování vstupu na minutovém grafu",
+      "K výpočtu velikosti pozice"
+     ],
+     "ok": "K určení cílů a směru na denním grafu",
+     "why": "Jsou to referenční high a low pro bias, ne vstupní signál."
+    }
+   },
+   {
+    "id": "irl",
+    "title": "Vnitřní a vnější likvidita",
+    "text": [
+     "Vezmi poslední výrazné rozpětí mezi swing high a swing low. Vnější likvidita (ERL) leží za jeho okraji: nad high a pod low. Vnitřní likvidita (IRL) jsou mezery a order blocky uvnitř rozpětí.",
+     "ICT popisuje pohyb ceny jako střídání: od vnější likvidity k vnitřní a zpět. Po výběru starého high se cena typicky vrací do FVG uvnitř rozpětí. Po vyplnění FVG míří k dalšímu high nebo low.",
+     "Pomáhá to s otázkou, co je cíl. Vstoupil jsi ve FVG, tedy ve vnitřní likviditě? Cílem je vnější. Právě se vybralo high? Čekej návrat dovnitř."
+    ],
+    "use": [
+     "Vždy si řekni, kde cena právě byla: venku, nebo uvnitř.",
+     "Cíl vol na opačném typu likvidity.",
+     "Nevstupuj uprostřed rozpětí bez FVG nebo order blocku."
+    ],
+    "trap": "Rozpětí se dá nakreslit mnoha způsoby. Drž se jednoho timeframu pro směr a neměň rozpětí podle toho, co se ti hodí.",
+    "quiz": {
+     "q": "Vstoupil jsi long ve FVG uvnitř rozpětí. Kde je podle tohoto pohledu cíl?",
+     "opts": [
+      "U vnější likvidity nad high rozpětí",
+      "V dalším FVG pod vstupem",
+      "Uprostřed rozpětí"
+     ],
+     "ok": "U vnější likvidity nad high rozpětí",
+     "why": "Pohyb jde z vnitřní likvidity k vnější."
+    }
+   },
+   {
+    "id": "mmxm",
+    "title": "Market maker model: celý příběh pohybu",
+    "text": [
+     "Market maker buy model (MMBM) a sell model (MMSM) popisují celý oblouk pohybu, ne jeden vstup. Buy model: původní konsolidace nahoře, pak pokles v několika vlnách až pod staré low do zóny z vyššího timeframu. Tam přijde obrat a cena se po stejných patrech vrací nahoru k původní konsolidaci.",
+     "Levá strana (cesta dolů) je sell-side křivka, pravá strana (cesta zpět) je buy-side křivka. Krátké konsolidace na cestě dolů se při návratu stávají cíli a místy, kde cena reaguje.",
+     "Obrat dole má stejné stavební kameny, které už znáš: sweep, CISD nebo MSS, displacement a FVG."
+    ],
+    "use": [
+     "Model hledej jen tam, kde cena došla do úrovně z vyššího timeframu.",
+     "Vstupy ber na pravé straně, po potvrzeném obratu.",
+     "Cíle jsou konsolidace z levé strany a nakonec původní konsolidace."
+    ],
+    "trap": "Zpětně je model vidět na každém grafu. Naživo nevíš, která vlna poklesu je poslední, proto se čeká na potvrzení obratu.",
+    "quiz": {
+     "q": "Kde se v buy modelu berou vstupy?",
+     "opts": [
+      "Na pravé straně po potvrzeném obratu",
+      "Na levé straně při každé vlně poklesu",
+      "Uprostřed původní konsolidace"
+     ],
+     "ok": "Na pravé straně po potvrzeném obratu",
+     "why": "Levá strana je pokles k likviditě. Nakupuje se až po obratu, na cestě zpět."
+    }
+   }
+  ],
+  "sources": [
+   [
+    "ICT (YouTube, kanál InnerCircleTrader)",
+    "https://www.youtube.com/@InnerCircleTrader"
+   ],
+   [
+    "LuxAlgo Library: ICT Macros",
+    "https://www.luxalgo.com/library/concept/ict-macros/"
+   ],
+   [
+    "LuxAlgo Library: New Week Opening Gap",
+    "https://www.luxalgo.com/library/concept/new-week-opening-gap/"
+   ],
+   [
+    "LuxAlgo Library: Unicorn",
+    "https://www.luxalgo.com/library/concept/unicorn/"
+   ]
+  ]
  }
 }

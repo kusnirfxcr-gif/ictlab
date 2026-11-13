@@ -139,7 +139,7 @@
   "area": "produkt",
   "value": 3,
   "effort": 3,
-  "status": "new",
+  "status": "done",
   "what": "Přihlášení a uložení postupu a deníku na server.",
   "why": "Bez toho nejde aplikaci prodávat ani používat na víc zařízeních. Vyžaduje vlastní server a databázi."
  },
@@ -319,7 +319,7 @@
   "area": "produkt",
   "value": 3,
   "effort": 3,
-  "status": "new",
+  "status": "done",
   "what": "Registrace e-mailem nebo Googlem, data uložená na serveru místo v prohlížeči.",
   "why": "Bez účtu nejde prodávat ani synchronizovat telefon s počítačem."
  },
@@ -439,7 +439,7 @@
   "area": "produkt",
   "value": 3,
   "effort": 3,
-  "status": "new",
+  "status": "done",
   "what": "Deník a postup stejné na telefonu i počítači.",
   "why": "Obchoduje se na počítači, učí se na telefonu."
  },
@@ -463,7 +463,7 @@
   "area": "produkt",
   "value": 2,
   "effort": 1,
-  "status": "new",
+  "status": "done",
   "what": "Uživatel si sám smaže účet se všemi daty.",
   "why": "Vyžaduje to zákon a buduje to důvěru."
  },
@@ -1135,7 +1135,7 @@
   "area": "denik",
   "value": 3,
   "effort": 2,
-  "status": "new",
+  "status": "done",
   "what": "Každou neděli hotové shrnutí týdne s třemi kroky.",
   "why": "Většina lidí si rozbor sama neudělá."
  },
@@ -1291,7 +1291,7 @@
   "area": "vyuka",
   "value": 2,
   "effort": 2,
-  "status": "new",
+  "status": "done",
   "what": "Začátečník, pokročilý, obchodník. Podle úrovně se mění úlohy.",
   "why": "Pokročilého nudí základy, začátečníka zahlcuje detail."
  },

@@ -995,6 +995,12 @@ body.sakura.modal .sk-pal,body.sakura.copen .sk-pal{display:none}
 #streak.bump{animation:stbump .9s cubic-bezier(.2,.9,.3,1.4)}
 @keyframes stbump{0%{transform:scale(1)}35%{transform:scale(1.28);box-shadow:0 0 0 6px rgba(61,220,151,.25),0 0 26px rgba(61,220,151,.7)}100%{transform:scale(1);box-shadow:none}}
 @media (prefers-reduced-motion:reduce){.sk-pal,.pal-pet,.pal-eyes,.bdg.on svg,.bdg.on .bdp,#c-now.in-r>*,#c-now.in-l>*,#streak.bump{animation:none!important}}
+.lkey.trap{border-left-color:var(--amber)}
+.lkey.trap b{color:var(--amber)}
+#co-week .rrow{align-items:flex-start;gap:14px}
+#co-week .rrow span{flex:none;color:var(--muted);min-width:118px}
+#co-week .rrow b{font-weight:600;text-align:right}
+body.sakura .lkey.trap::before{background:linear-gradient(180deg,#ffb347,#ff7a59)}
 </style>
 </head>
 <body>
@@ -1069,7 +1075,7 @@ body.sakura.modal .sk-pal,body.sakura.copen .sk-pal{display:none}
 
   <section class="view" id="v-studium">
     <div class="card"><h2>Studium ICT</h2><p class="muted">Model 2022 krok za krokem s kvízem, shrnutí dvanácti měsíců core contentu ze soukromého mentorshipu, jeden obchodní den od přípravy po večerní kontrolu a časté omyly.</p>
-      <div class="chips" id="st-tabs"><button class="chip" type="button" data-t="model2022" aria-pressed="true">Model 2022</button><button class="chip" type="button" data-t="core" aria-pressed="false">Core content</button><button class="chip" type="button" data-t="day" aria-pressed="false">Den obchodníka</button><button class="chip" type="button" data-t="myths" aria-pressed="false">Časté omyly</button></div></div>
+      <div class="chips" id="st-tabs"><button class="chip" type="button" data-t="model2022" aria-pressed="true">Model 2022</button><button class="chip" type="button" data-t="core" aria-pressed="false">Core content</button><button class="chip" type="button" data-t="adv" aria-pressed="false">Pokročilé</button><button class="chip" type="button" data-t="day" aria-pressed="false">Den obchodníka</button><button class="chip" type="button" data-t="myths" aria-pressed="false">Časté omyly</button></div></div>
     <div class="list" id="st-body"></div>
   </section>
 
@@ -4881,6 +4887,44 @@ body.sakura.modal .sk-pal,body.sakura.copen .sk-pal{display:none}
       (function step(){ if (!node.isConnected) return; const k = Math.min(1, (performance.now() - t0) / 750), v = from + (to - from) * (1 - Math.pow(1 - k, 3)); node.textContent = k >= 1 ? txt : (v < 0 ? (m[1] === "-" ? "-" : "−") : m[1] === "+" ? "+" : "") + Math.abs(v).toFixed(dec).replace(".", ",") + m[3]; if (k < 1) requestAnimationFrame(step); })(); };
     const _refreshAllCu = refreshAll; refreshAll = function(){ _refreshAllCu(); try { const h = $("d-hero"); if (h && !h.hidden) count(h, "hero"); document.querySelectorAll("#d-hs .tile").forEach(t => { const b = t.querySelector("b"), s = t.querySelector("span"); if (b && s) count(b, s.textContent); });
         const sp = $("streak"), n = parseInt((sp.textContent.match(/\d+/) || ["0"])[0], 10); if (streakN != null && n > streakN){ sp.classList.remove("bump"); void sp.offsetWidth; sp.classList.add("bump"); confetti(sp, 14); } streakN = n; } catch(e){ if (window.console) console.error(e); } }; }
+
+  // ---------- study: advanced lessons tab ----------
+  { const _renderStudyAdv = renderStudy; renderStudy = function(){ if (stTab !== "adv" || !study || !study.adv) return _renderStudyAdv();
+      const box = $("st-body"), m = study.adv, head = el("div","card"); clear(box); lp.sq = lp.sq || {};
+      Array.prototype.forEach.call($("st-tabs").children, b => b.setAttribute("aria-pressed", String(b.dataset.t === stTab)));
+      const okN = m.lessons.filter(x => lp.sq["a-" + x.id]).length, bar = el("div","bar"), bi = el("i"); bi.style.width = Math.round(100 * okN / m.lessons.length) + "%"; bar.appendChild(bi);
+      head.appendChild(el("span","kick","Úroveň: pokročilá")); head.appendChild(el("h2", null, m.title)); head.appendChild(el("p", null, m.intro)); head.appendChild(el("span","small muted","Ověřeno kvízem: " + okN + " z " + m.lessons.length)); head.appendChild(bar); box.appendChild(head);
+      m.lessons.forEach((x, i) => { const d = el("details","week" + (lp.sq["a-" + x.id] ? " done" : "")), sm = el("summary"), body = el("div","weekbody"), steps = el("ol","lsteps"), use = el("ul","stl ok"), trap = el("div","lkey trap"), cnt = el("span","cnt", lp.sq["a-" + x.id] ? "hotovo" : "lekce " + (i + 1));
+        sm.appendChild(el("h3", null, x.title)); sm.appendChild(cnt); d.appendChild(sm); if (stAdvOpen === x.id) d.open = true; d.addEventListener("toggle", () => { if (d.open) stAdvOpen = x.id; });
+        x.text.forEach(t => steps.appendChild(el("li", null, t))); body.appendChild(steps); body.appendChild(el("b","lgh","Jak s tím pracovat")); x.use.forEach(t => use.appendChild(el("li", null, t))); body.appendChild(use);
+        trap.appendChild(el("b", null, "Pozor")); trap.appendChild(el("span", null, x.trap)); body.appendChild(trap);
+        const q = el("div","box exam"), qb = el("div","exbody"); let answered = false; q.appendChild(el("b", null, "Ověř si to")); qb.appendChild(el("b","exq", x.quiz.q));
+        const opts = shuffled(x.quiz.opts), btns = opts.map(o => { const b = el("button","exo", o); b.type = "button"; b.addEventListener("click", () => { if (answered) return; answered = true; const ok = o === x.quiz.ok; btns.forEach((y, j) => { y.disabled = true; if (opts[j] === x.quiz.ok) y.classList.add("ok"); }); if (!ok) b.classList.add("no");
+            qb.appendChild(el("span","small", (ok ? "Správně. " : "Tohle ne. ") + x.quiz.why)); if (ok && !lp.sq["a-" + x.id]){ lp.sq["a-" + x.id] = 1; persistLaura(); d.classList.add("done"); cnt.textContent = "hotovo"; confetti(b, 14); } }); qb.appendChild(b); return b; });
+        q.appendChild(qb); body.appendChild(q); d.appendChild(body); box.appendChild(d); });
+      box.appendChild(stSources(m.sources)); }; }
+  let stAdvOpen = null;
+  // ---------- coach: weekly report computed from the journal, no AI ----------
+  function weeklyReport(){ const now = Date.now(), W = 7 * 864e5, all = jSorted(), cur = all.filter(t => now - new Date(t.ts) < W), prev = all.filter(t => { const a = now - new Date(t.ts); return a >= W && a < 2 * W; }), a = jStats(cur), b = jStats(prev), L = [];
+    if (!cur.length) return null; const by = (key) => { const m = {}; cur.forEach(t => { [].concat(key(t) || []).forEach(k => { (m[k] = m[k] || []).push(Number(t.r) || 0); }); }); return Object.keys(m).map(k => ({k: k, n: m[k].length, r: m[k].reduce((x, y) => x + y, 0)})); };
+    const setups = by(t => t.setup || "Jiný").sort((x, y) => y.r - x.r), tags = by(t => t.tags).sort((x, y) => y.n - x.n), planned = cur.filter(t => { const p = jr.plans[tDay(t)]; return p && p.bias && p.bias !== "none"; }), withP = planned.filter(t => (jr.plans[tDay(t)].bias === "long") === (t.dir !== "short")), ckd = cur.filter(t => t.ck), ckFull = ckd.filter(t => t.ck.k === t.ck.n);
+    L.push(["Výsledek", sgn(a.total) + " R z " + pl(a.n, "obchodu", "obchodů", "obchodů") + ", winrate " + Math.round(a.winrate) + " %" + (b.n ? ". Týden předtím " + sgn(b.total) + " R." : ".")]);
+    if (setups.length) L.push(["Setupy", "Nejlíp vyšel " + setups[0].k + " (" + sgn(setups[0].r) + " R)" + (setups.length > 1 && setups[setups.length - 1].r < 0 ? ", nejhůř " + setups[setups.length - 1].k + " (" + sgn(setups[setups.length - 1].r) + " R)." : ".")]);
+    L.push(["Plán dne", planned.length ? withP.length + " z " + planned.length + " obchodů bylo ve směru plánu." : "U žádného obchodu nebyl napsaný plán dne."]);
+    L.push(["Seznam před vstupem", ckd.length ? ckFull.length + " z " + ckd.length + " obchodů mělo splněný celý seznam." : "Seznam před vstupem jsi tento týden nepoužil."]);
+    if (tags.length) L.push(["Nejčastější chyba", tags[0].k + " (" + tags[0].n + "×, dohromady " + sgn(tags[0].r) + " R)."]);
+    const focus = !planned.length ? "Před každou seancí napiš plán dne. Bez něj se nedá říct, jestli obchoduješ podle sebe." : withP.length < planned.length ? "Ber jen obchody ve směru plánu. Proti plánu jich bylo " + (planned.length - withP.length) + "." : tags.length ? "Ohlídej si chybu „" + tags[0].k + "“. Přidej si ji jako otázku do seznamu před vstupem." : ckd.length < cur.length ? "Projdi seznam před vstupem u každého obchodu, ne jen u některých." : a.streak >= 3 ? "Po dvou ztrátách za sebou skonči. Série ztrát byla " + a.streak + "." : "Drž to, co funguje, a neměň velikost pozice.";
+    return {lines: L, focus: focus}; }
+  function renderWeekly(){ let c = $("co-week"); if (!c){ c = el("div","card"); c.id = "co-week"; const anchor = $("co-find").closest(".card"); anchor.parentNode.insertBefore(c, anchor); } clear(c);
+    const row = el("div","row"), cp = el("button","ck-del","Zkopírovat"); cp.type = "button"; row.appendChild(el("h2", null, "Týdenní zpráva")); row.appendChild(cp); c.appendChild(row); const rp = weeklyReport();
+    if (!rp){ cp.hidden = true; c.appendChild(el("p","small muted","Za posledních 7 dní tu není žádný obchod. Zpráva se objeví po prvním zápisu.")); return; }
+    rp.lines.forEach(l => { const r = el("div","rrow"); r.appendChild(el("span", null, l[0])); r.appendChild(el("b", null, l[1])); c.appendChild(r); });
+    const f = el("div","lkey"); f.appendChild(el("b", null, "Na příští týden")); f.appendChild(el("span", null, rp.focus)); c.appendChild(f); c.appendChild(el("p","small muted","Počítá se z deníku za posledních 7 dní, bez AI."));
+    cp.addEventListener("click", async () => { try { await navigator.clipboard.writeText("Týdenní zpráva z Tape\n" + rp.lines.map(l => l[0] + ": " + l[1]).join("\n") + "\nNa příští týden: " + rp.focus); toast("Zpráva zkopírována."); } catch(e){ toast("Kopírování se nepodařilo."); } }); }
+  { const _refreshAllWk = refreshAll; refreshAll = function(){ _refreshAllWk(); try { if (document.body.dataset.view === "kouc") renderWeekly(); } catch(e){ if (window.console) console.error(e); } }; }
+  // ---------- account: wipe the copy of the data stored with the account ----------
+  { const _accRenderDel = accRender; accRender = function(){ _accRenderDel(); if (!auth || accMode === "newpass" || accConflict) return; const d = el("details","ans"), b = el("button","danger","Smazat data uložená v účtu"); b.type = "button"; d.appendChild(el("summary", null, "Smazání dat z účtu")); d.appendChild(el("p","small muted","Smaže kopii deníku, postupu a nastavení uloženou u účtu a odhlásí tě. Data v tomhle zařízení zůstanou. Účet samotný (e-mail a heslo) umíme zrušit zatím jen na požádání."));
+      twoStep(b, "Opravdu smazat", async () => { try { await sbData("POST", "?on_conflict=user_id", {user_id: auth.id, data: {}, updated_at: new Date().toISOString()}); try { await sbAuth("logout", null, await accToken()); } catch(e){} authSave(null); try { localStorage.removeItem(SYNC_KEY); } catch(e){} accMsg = "Data v účtu jsou smazaná a jsi odhlášen."; } catch(e){ accMsg = "Smazání se nepovedlo. Zkus to znovu."; } accRender(); }); d.appendChild(b); accBox.appendChild(d); }; accRender(); }
 
   // ---------- moving to a new address without losing data ----------
   // data/site.json: {"move": "https://new-address", "from": ["https://old-address"]}. The old site hands the data to the new one in a window the person opens.
