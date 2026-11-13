@@ -1675,7 +1675,7 @@
   "area": "denik",
   "value": 2,
   "effort": 2,
-  "status": "new",
+  "status": "done",
   "what": "Plán dne jde sdílet stejně jako obchod a večer se k němu doplní, jak to dopadlo.",
   "why": "Lidé chtějí sdílet i přípravu, nejen výsledek."
  },
@@ -1699,7 +1699,7 @@
   "area": "produkt",
   "value": 2,
   "effort": 2,
-  "status": "new",
+  "status": "done",
   "what": "Přehled, kalendář zpráv a statistiky se přizpůsobí trhům, které sis vybral.",
   "why": "Kdo obchoduje jen ES, nepotřebuje zprávy o výsledcích technologických firem."
  },
@@ -1711,7 +1711,7 @@
   "area": "denik",
   "value": 2,
   "effort": 1,
-  "status": "new",
+  "status": "done",
   "what": "Předpřipravené otázky v poznámce: proč vstup, co bylo dobře, co příště jinak.",
   "why": "Prázdné pole lidé nevyplní, na otázky odpoví."
  },
@@ -1723,7 +1723,7 @@
   "area": "vyuka",
   "value": 2,
   "effort": 3,
-  "status": "new",
+  "status": "done",
   "what": "Jeden graf týdně, každý označí svůj obchod a pak se ukáže řešení.",
   "why": "Důvod vracet se a učit se od ostatních."
  },
@@ -1735,7 +1735,7 @@
   "area": "produkt",
   "value": 2,
   "effort": 3,
-  "status": "new",
+  "status": "done",
   "what": "Sdílený obchod jde poslat mentorovi, který do něj napíše poznámky.",
   "why": "Zpětná vazba od zkušenějšího je nejrychlejší cesta ke zlepšení."
  },

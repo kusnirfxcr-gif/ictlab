@@ -683,6 +683,7 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
   <section class="view" id="v-kouc">
     <div class="card"><div class="row"><h2>Kouč</h2><span class="pill info">AI</span></div>
       <p class="muted">Čte tvůj deník a hodnotí proces: které obchody byly podle plánu, kde se opakují chyby a na čem pracovat. Neříká, co koupit nebo prodat.</p></div>
+    <div class="card"><h2>Skóre disciplíny</h2><div class="dscore"></div></div>
     <div class="card"><div class="row"><h2>Rozbor deníku</h2><div class="chips" id="co-per"><button class="chip" type="button" data-p="all">Vše</button><button class="chip" type="button" data-p="30">30 dní</button><button class="chip" type="button" data-p="7">7 dní</button></div></div>
       <p class="small muted">Počítá se přímo z tvých obchodů, bez AI a zdarma. U nálezů, které jdou hlídat, nabídne pravidlo do seznamu před vstupem.</p><div class="list" id="co-find"></div></div>
     <div class="card"><div class="row"><h2>Zeptej se kouče</h2><button type="button" class="ck-del" id="co-clear" hidden>Smazat rozhovor</button></div>
@@ -728,10 +729,23 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
         <label for="cm-why" class="wide">Jak jsem obchod vzal<textarea id="cm-why" rows="3" maxlength="600" placeholder="Sweep, MSS, FVG, kde byl vstup a stop. Když necháš prázdné, použije se poznámka z deníku."></textarea></label>
         <label for="cm-lesson" class="wide">Co si z toho beru<textarea id="cm-lesson" rows="2" maxlength="300"></textarea></label>
         <label class="wide chk"><input type="checkbox" id="cm-usd"><span>Ukázat i výsledek v dolarech</span></label>
+        <label class="wide chk"><input type="checkbox" id="cm-score"><span>Přidat moje skóre disciplíny</span></label>
         <div class="row wide"><button class="primary" type="submit">Vytvořit příspěvek</button><span class="small muted" id="cm-msg"></span></div>
       </form>
     </div>
     <div class="list" id="cm-feed"></div>
+    <div class="card"><h2>Výzva týdne</h2><div class="list" id="wc"></div></div>
+    <div class="card"><h2>Skóre disciplíny</h2><div class="dscore"></div></div>
+    <div class="card"><h2>Pravidla komunity</h2>
+      <ul class="stl">
+        <li>Sdílej jen vlastní obchody a skutečné výsledky.</li>
+        <li>Žádné signály, výzvy ke kopírování obchodů ani sliby zisku.</li>
+        <li>Žádný prodej kurzů, účtů ani odkazy na placené skupiny.</li>
+        <li>Kritizuj obchod, ne člověka.</li>
+        <li>Příspěvek ukazuje, odkud obchod je: z importu od brokera, nebo z ručního zápisu. Ani jedno není ověření třetí stranou.</li>
+      </ul>
+      <p class="small muted">Nahlašování a moderace přijdou se společným feedem. Do té doby vidíš jen příspěvky, které si sám uložíš, a kterýkoli můžeš smazat.</p>
+    </div>
     <p class="small muted">Sdílej jen vlastní obchody. Výsledky nikdo neověřuje a příspěvky nejsou doporučení k obchodu.</p>
   </section>
 
@@ -979,6 +993,7 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
         <span class="kick">Večer: kam trh opravdu šel</span>
         <div class="chips" id="p-actual"></div>
         <label for="p-skip">Dnes neobchoduji, protože<input id="p-skip" maxlength="200" placeholder="Vyplň jen v den, kdy obchod vědomě vynecháš"></label>
+        <button type="button" id="p-share">Sdílet plán v Komunitě</button>
         <span class="kick">Denní limity</span>
         <div class="lim"><label for="lim-n">Nejvíc obchodů za den<input id="lim-n" inputmode="numeric" placeholder="například 2"></label><label for="lim-loss">Nejvyšší ztráta za den (R)<input id="lim-loss" inputmode="decimal" placeholder="například 2"></label></div>
         <p class="small neg" id="lim-msg" hidden></p>
@@ -2777,7 +2792,8 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
   function renderNews(){
     const box = $("nw"), rail = $("rr-news"); clear(box); clear(rail);
     if (!news){ box.appendChild(el("p","small muted", newsTried ? "Kalendář se nepodařilo načíst." : "Načítám…")); return; }
-    const today = dayKey(), ev = (news.events || []).filter(e => e.date >= today).sort((a, b) => (a.date + (a.time || "")).localeCompare(b.date + (b.time || ""))).slice(0, 10);
+    const mk = (profile && profile.syms) || [], tech = !mk.length || mk.indexOf("NQ") >= 0 || mk.indexOf("MNQ") >= 0;
+    const today = dayKey(), ev = (news.events || []).filter(e => e.date >= today && (Array.isArray(e.markets) ? !mk.length || e.markets.some(x => mk.indexOf(x) >= 0) : tech || !/^Výsledky /.test(e.title || ""))).sort((a, b) => (a.date + (a.time || "")).localeCompare(b.date + (b.time || ""))).slice(0, 10);
     let last = "";
     ev.forEach(e => {
       if (e.date !== last){ last = e.date; const d = new Date(e.date + "T12:00:00"); box.appendChild(el("span","kick", e.date === today ? "Dnes" : d.toLocaleDateString("cs-CZ", {weekday: "long", day: "numeric", month: "numeric"}))); }
@@ -2949,6 +2965,7 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
     allTags.forEach(x => { const b = el("button","chip", x); b.type = "button"; b.setAttribute("aria-pressed", String(!!tags[x])); b.addEventListener("click", () => { tags[x] = !tags[x]; b.setAttribute("aria-pressed", String(!!tags[x])); }); tagBox.appendChild(b); });
     tw.appendChild(el("span", null, "Chyby")); tw.appendChild(tagBox); g.appendChild(tw);
     const fNote = el("textarea"); fNote.rows = 2; fNote.maxLength = 600; fNote.value = t.note || ""; fNote.placeholder = "Proč jsem obchod vzal a co bych příště udělal jinak"; g.appendChild(lab("Poznámka", fNote, "wide"));
+    const tpl = el("button","ck-del","Vložit otázky k poznámce"); tpl.type = "button"; tpl.addEventListener("click", () => { const q = "Proč jsem vstoupil: \nCo bylo dobře: \nCo příště jinak: "; if (fNote.value.indexOf("Proč jsem vstoupil") < 0) fNote.value = (fNote.value ? fNote.value.trim() + "\n" : "") + q; fNote.rows = 4; fNote.focus(); }); const tplw = el("div","wide"); tplw.appendChild(tpl); g.appendChild(tplw);
 
     const shBox = el("div","shots"), shIn = inp("file"), sw = el("div","wide flab"); shIn.accept = "image/*"; shIn.multiple = true; shIn.hidden = true;
     const drawShots = () => { clear(shBox);
@@ -3069,7 +3086,7 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
   }
 
   // ---------- filters and lists ----------
-  const jf = {per: "all", setup: "", dir: "", res: "", tag: "", q: ""};
+  const jf = {per: "all", sym: "", setup: "", dir: "", res: "", tag: "", q: ""};
   const PERIODS = [["all","Celé období"],["today","Dnes"],["7","Posledních 7 dní"],["30","Posledních 30 dní"],["month","Tento měsíc"],["prev","Minulý měsíc"],["year","Letos"]];
   function inPeriod(t, per){
     const d = new Date(t.ts), n = new Date();
@@ -3082,11 +3099,11 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
   }
   function jFiltered(){
     const q = jf.q.trim().toLowerCase(), R = t => Number(t.r) || 0;
-    return jSorted().filter(t => inPeriod(t, jf.per) && (!jf.setup || (t.setup || "Jiný") === jf.setup) && (!jf.dir || (t.dir === "short" ? "short" : "long") === jf.dir)
+    return jSorted().filter(t => inPeriod(t, jf.per) && (!jf.sym || (t.sym || "") === jf.sym) && (!jf.setup || (t.setup || "Jiný") === jf.setup) && (!jf.dir || (t.dir === "short" ? "short" : "long") === jf.dir)
       && (!jf.res || (jf.res === "win" ? R(t) > 0 : R(t) < 0)) && (!jf.tag || (t.tags || []).indexOf(jf.tag) >= 0)
       && (!q || [t.sym, t.setup, t.note, t.levels, (t.tags || []).join(" "), fmtDateTime(t.ts)].some(v => String(v || "").toLowerCase().indexOf(q) >= 0)));
   }
-  const jfActive = () => jf.per !== "all" || jf.setup || jf.dir || jf.res || jf.tag || jf.q.trim();
+  const jfActive = () => jf.per !== "all" || jf.sym || jf.setup || jf.dir || jf.res || jf.tag || jf.q.trim();
   function tradeRow(t){
     const r = Number(t.r) || 0, b = el("button","trow " + (t.missed ? "miss" : r >= 0 ? "w" : "l")), a = el("div","tinfo"), c = el("div","tres"), net = tNet(t), n = shotKeys(t).length;
     b.type = "button"; a.appendChild(el("b", null, (t.sym || "") + " · " + (t.dir === "short" ? "Short" : "Long") + (t.missed ? " · zmeškaný" : "")));
@@ -3102,12 +3119,13 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
     if (cfg.accounts.length > 1){ const s = sel([["all","Všechny účty"]].concat(cfg.accounts.map(a => [a.id, a.name])), cfg.acct); s.setAttribute("aria-label","Účet"); s.addEventListener("change", () => { cfg.acct = s.value; cfgStore(); refreshAll(); }); box.appendChild(s); }
     const used = {}; jr.trades.forEach(t => { used[t.setup || "Jiný"] = 1; (t.tags || []).forEach(x => { used["#" + x] = 1; }); });
     const setups = J_SETUPS.concat(Object.keys(used).filter(k => k[0] !== "#" && J_SETUPS.indexOf(k) < 0)), tgs = J_TAGS.concat(Object.keys(used).filter(k => k[0] === "#").map(k => k.slice(1)).filter(k => J_TAGS.indexOf(k) < 0));
-    [["per", PERIODS, "Období"], ["setup", [["","Všechny setupy"]].concat(setups.map(x => [x, x])), "Setup"], ["dir", [["","Long i short"],["long","Long"],["short","Short"]], "Směr"],
-     ["res", [["","Zisky i ztráty"],["win","Jen zisky"],["loss","Jen ztráty"]], "Výsledek"], ["tag", [["","Všechny chyby"]].concat(tgs.map(x => [x, x])), "Chyba"]].forEach(f => {
+    const symsUsed = Object.keys(jr.trades.reduce((o, t) => { if (t.sym) o[t.sym] = 1; return o; }, {}));
+    [["per", PERIODS, "Období"]].concat(symsUsed.length > 1 ? [["sym", [["","Všechny trhy"]].concat(symsUsed.map(x => [x, x])), "Trh"]] : []).concat([["setup", [["","Všechny setupy"]].concat(setups.map(x => [x, x])), "Setup"], ["dir", [["","Long i short"],["long","Long"],["short","Short"]], "Směr"],
+     ["res", [["","Zisky i ztráty"],["win","Jen zisky"],["loss","Jen ztráty"]], "Výsledek"], ["tag", [["","Všechny chyby"]].concat(tgs.map(x => [x, x])), "Chyba"]]).forEach(f => {
       const s = sel(f[1], jf[f[0]]); s.setAttribute("aria-label", f[2]); if (jf[f[0]] && f[0] !== "per" || (f[0] === "per" && jf.per !== "all")) s.classList.add("on");
       s.addEventListener("change", () => { jf[f[0]] = s.value; listMax = 40; refreshAll(); }); box.appendChild(s); });
     const q = inp("search", jf.q, "Hledat v obchodech"); q.setAttribute("aria-label","Hledat v obchodech"); q.addEventListener("input", () => { jf.q = q.value; listMax = 40; renderTradeList(); renderStats(); }); box.appendChild(q);
-    if (jfActive()){ const b = el("button","ck-del","Zrušit filtry"); b.type = "button"; b.addEventListener("click", () => { jf.per = "all"; jf.setup = jf.dir = jf.res = jf.tag = jf.q = ""; refreshAll(); }); box.appendChild(b); }
+    if (jfActive()){ const b = el("button","ck-del","Zrušit filtry"); b.type = "button"; b.addEventListener("click", () => { jf.per = "all"; jf.sym = jf.setup = jf.dir = jf.res = jf.tag = jf.q = ""; refreshAll(); }); box.appendChild(b); }
   }
   let listMax = 40;
   function renderTradeList(){
@@ -3188,6 +3206,7 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
     const losses = tr.filter(t => (Number(t.r) || 0) < 0), al = losses.length ? losses.reduce((s, t) => s + Number(t.r), 0) / losses.length : null;
     row("Průměrná ztráta nejvýš 1,1 R", al == null ? null : sgn(al) + " R", al >= -1.1, losses.length ? "z " + losses.length + " ztrátových obchodů" : null);
   }
+  const symsOf = tr => Object.keys(tr.reduce((o, t) => { o[t.sym || ""] = 1; return o; }, {})).length;
   function renderStats(){
     const unit = cfg.unit === "$" ? "$" : "R", tr = jFiltered(), st = jStats(tr, unit), box = $("j-stats"); clear(box);
     Array.prototype.forEach.call($("j-unit").children, b => b.setAttribute("aria-pressed", String(b.dataset.u === unit)));
@@ -3216,7 +3235,7 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
     const tb = $("j-tables"); clear(tb);
     if (tr.length){ const D = ["Po","Út","St","Čt","Pá","So","Ne"], hold = t => { if (!t.tsx) return null; const m = (new Date(t.tsx) - new Date(t.ts)) / 60000; return m < 0 ? null : m < 5 ? "do 5 min" : m < 15 ? "5–15 min" : m < 60 ? "15–60 min" : "přes hodinu"; };
       const bias = t => { const p = jr.plans[tDay(t)]; if (!p || !p.bias || p.bias === "none") return "Bez plánu"; return (p.bias === "long") === (t.dir !== "short") ? "Ve směru plánu" : "Proti plánu"; };
-      [groupTable("Setup", tr, t => t.setup || "Jiný", null, unit), groupTable("Den", tr, t => D[(new Date(t.ts).getDay() + 6) % 7], D, unit),
+      [groupTable("Setup", tr, t => t.setup || "Jiný", null, unit), symsOf(tr) > 1 ? groupTable("Trh", tr, t => t.sym || "–", null, unit) : null, groupTable("Den", tr, t => D[(new Date(t.ts).getDay() + 6) % 7], D, unit),
        groupTable("Hodina", tr, t => { const h = new Date(t.ts).getHours(); return isNaN(h) ? null : String(h).padStart(2, "0") + ":00"; }, Array.from({length: 24}, (x, i) => String(i).padStart(2, "0") + ":00"), unit),
        groupTable("Směr", tr, t => t.dir === "short" ? "Short" : "Long", null, unit), groupTable("Plán dne", tr, bias, ["Ve směru plánu","Proti plánu","Bez plánu"], unit),
        groupTable("Seznam", tr, t => t.ck ? (t.ck.k === t.ck.n ? "Splněný" : "Nesplněný") : null, null, unit), groupTable("Chyba", tr, t => (t.tags && t.tags.length) ? t.tags : null, null, unit),
@@ -3425,7 +3444,7 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
   $("tb-rails").addEventListener("click", () => { cfg.rails = cfg.rails === false; cfgStore(); applyShell(); });
   document.addEventListener("keydown", ev => {
     if (ev.key === "Escape"){ const obs = document.querySelectorAll(".ob"); if (obs.length){ const last = obs[obs.length - 1]; if (last.closeOb) last.closeOb(); else last.remove(); } return; }
-    const a = document.activeElement, typing = a && (/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName) || a.isContentEditable);
+    const a = document.activeElement, typing = a && ((/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName) && !/^(checkbox|radio|button|file)$/.test(a.type || "")) || a.isContentEditable);
     if (typing || ev.ctrlKey || ev.metaKey || ev.altKey || document.querySelector(".ob")) return;
     if (ev.key === "/"){ ev.preventDefault(); openSearch(); }
     else if (ev.key === "n" || ev.key === "N"){ ev.preventDefault(); openTradeForm(); }
@@ -3746,7 +3765,7 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
   const postsStore = () => { try { localStorage.setItem(POSTS_KEY, JSON.stringify(posts.slice(0, 200))); } catch(e){} };
   const b64e = s => { const b = new TextEncoder().encode(s); let x = ""; b.forEach(c => { x += String.fromCharCode(c); }); return btoa(x).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, ""); };
   const b64d = s => { const x = atob(s.replace(/-/g, "+").replace(/_/g, "/")), b = new Uint8Array(x.length); for (let i = 0; i < x.length; i++) b[i] = x.charCodeAt(i); return new TextDecoder().decode(b); };
-  const postLink = p => location.origin + location.pathname + "#post=" + b64e(JSON.stringify({a: p.author, t: p.ts, s: p.sym, d: p.dir, u: p.setup, e: p.entry, o: p.stop, x: p.exit, r: p.r, m: p.usd, l: p.levels, b: p.bias, w: p.why, n: p.lesson}));
+  let postLink = p => location.origin + location.pathname + "#post=" + b64e(JSON.stringify({a: p.author, t: p.ts, s: p.sym, d: p.dir, u: p.setup, e: p.entry, o: p.stop, x: p.exit, r: p.r, m: p.usd, l: p.levels, b: p.bias, w: p.why, n: p.lesson}));
   function postFromLink(code){
     const v = JSON.parse(b64d(code)), n = x => (typeof x === "number" && isFinite(x)) ? x : null, s = (x, m) => String(x == null ? "" : x).slice(0, m);
     if (!v || typeof v !== "object" || !isFinite(Number(v.r))) throw new Error("bad");
@@ -3796,6 +3815,73 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
   window.addEventListener("hashchange", checkShared);
   const _refreshAll5 = refreshAll;
   refreshAll = function(){ _refreshAll5(); try { renderCommunity(); } catch(e){ if (window.console) console.error(e); } };
+
+
+  // =====================================================================================
+  // v11: discipline score, plan posts, comments, weekly challenge, markets
+  // =====================================================================================
+  function disciplineScore(){
+    const tr = jSorted().filter(t => inPeriod(t, "30")), own = tr.filter(t => t.setup !== "Import"); if (tr.length < 5) return null;
+    const days = {}; tr.forEach(t => { days[tDay(t)] = (days[tDay(t)] || 0) + 1; }); const dk = Object.keys(days), ln = parseInt(jr.limits.n, 10);
+    const ckp = own.length ? own.filter(t => t.ck && t.ck.k === t.ck.n).length / own.length : 0, plp = dk.filter(k => jr.plans[k] && jr.plans[k].bias).length / dk.length;
+    const lim = ln > 0 ? dk.filter(k => days[k] <= ln).length / dk.length : 1, losses = tr.filter(t => (Number(t.r) || 0) < 0), al = losses.length ? losses.reduce((s, t) => s + Number(t.r), 0) / losses.length : -1;
+    const lossOk = al >= -1.1 ? 1 : Math.max(0, 1 - (-al - 1.1) / 0.9);
+    return {score: Math.round(40 * ckp + 30 * plp + 15 * lim + 15 * lossOk), parts: [["Seznam před vstupem", ckp, 40], ["Plán dne", plp, 30], ["Limit obchodů", lim, 15], ["Velikost ztrát", lossOk, 15]], n: tr.length};
+  }
+  function renderScore(){
+    document.querySelectorAll(".dscore").forEach(box => { clear(box); const d = disciplineScore();
+      if (!d){ box.appendChild(el("p","small muted","Skóre se spočítá, až bude za posledních 30 dní aspoň pět obchodů.")); return; }
+      const top = el("div","tbig " + (d.score >= 70 ? "pos" : d.score >= 40 ? "" : "neg"), d.score + " / 100"); top.appendChild(el("span", null, "z " + pl(d.n, "obchodu", "obchodů", "obchodů") + " za 30 dní")); box.appendChild(top);
+      d.parts.forEach(p => { const r = el("div","rrow"); r.appendChild(el("span", null, p[0])); r.appendChild(el("b", null, Math.round(p[1] * p[2]) + " z " + p[2])); box.appendChild(r); });
+      box.appendChild(el("p","small muted","Skóre měří, jak dodržuješ vlastní pravidla, ne kolik vyděláváš.")); });
+  }
+
+  // ---------- posts: plans, origin label, comments ----------
+  const _postLink = postLink;
+  postLink = p => { const base = _postLink(p), code = base.split("#post=")[1], v = JSON.parse(b64d(code)); if (p.kind) v.k = p.kind; if (p.note) v.q = p.note; if (p.actual) v.y = p.actual; if (p.src) v.g = p.src; if (p.score != null) v.z = p.score; if ((p.c || []).length) v.c = p.c.slice(-10); return base.split("#post=")[0] + "#post=" + b64e(JSON.stringify(v)); };
+  const _postFromLink = postFromLink;
+  postFromLink = code => { const v = JSON.parse(b64d(code)), s = (x, m) => String(x == null ? "" : x).slice(0, m); if (v && v.k === "plan" && v.r == null) v.r = 0; const p = _postFromLink(b64e(JSON.stringify(v)));
+    if (v.k === "plan"){ p.kind = "plan"; p.note = s(v.q, 400); p.actual = s(v.y, 10); } if (v.g === "import" || v.g === "manual") p.src = v.g; if (typeof v.z === "number") p.score = Math.max(0, Math.min(100, Math.round(v.z)));
+    if (Array.isArray(v.c)) p.c = v.c.slice(-10).map(c => ({a: s(c && c.a, 30), x: s(c && c.x, 300)})).filter(c => c.x); return p; };
+  const _postEl = postEl;
+  postEl = function(p, opts){
+    const c = _postEl(p, opts), ACT = {up: "nahoru", down: "dolů", flat: "do strany"};
+    if (p.kind === "plan"){ const big = c.querySelector(".tbig"); if (big) big.remove(); const sub = c.querySelector(".tinfo span"); if (sub) sub.textContent = "Plán dne" + (p.ts && !isNaN(new Date(p.ts)) ? " · " + new Date(p.ts).toLocaleDateString("cs-CZ", {day: "numeric", month: "numeric"}) : "");
+      const act = c.querySelector(".rp-ctl"); [["Bias", p.dir === "short" ? "Short" : "Long"], ["Úrovně", p.levels], ["Co chci vidět", p.note], ["Jak to dopadlo", p.actual ? "Trh šel " + (ACT[p.actual] || p.actual) : ""]].forEach(x => { if (x[1]){ const b = el("div","box"); b.appendChild(el("b", null, x[0])); b.appendChild(el("span", null, x[1])); c.insertBefore(b, act); } });
+      Array.prototype.forEach.call(act.children, b => { if (b.textContent === "Karta jako obrázek") b.remove(); }); }
+    const meta = el("div","chips"); if (p.src) meta.appendChild(el("span","pill " + (p.src === "import" ? "good" : ""), p.src === "import" ? "Z importu od brokera" : "Ruční zápis")); if (p.score != null) meta.appendChild(el("span","pill info","Disciplína " + p.score + " / 100"));
+    if (meta.children.length) c.insertBefore(meta, c.children[1]);
+    const cm = el("div","list"), act2 = c.querySelector(".rp-ctl"); (p.c || []).forEach(x => { const b = el("div","msg ai"); b.appendChild(el("b", null, x.a + ": ")); b.appendChild(document.createTextNode(x.x)); cm.appendChild(b); });
+    if (!(opts && opts.incoming)){ const f = el("form","inline"), i = inp(null, "", "Napsat komentář"), b = el("button", null, "Přidat"); i.maxLength = 300; i.setAttribute("aria-label", "Komentář"); b.type = "submit"; f.appendChild(i); f.appendChild(b);
+      f.addEventListener("submit", ev => { ev.preventDefault(); const x = i.value.trim(); if (!x) return; const a = (profile && profile.name) || $("cm-name").value.trim(); if (!a){ toast("Nejdřív nahoře doplň jméno."); return; } p.c = (p.c || []).concat([{a: a.slice(0, 30), x: x}]).slice(-10); postsStore(); renderCommunity(); toast("Komentář přidán. Pošli příspěvek odkazem zpět."); }); cm.appendChild(f); }
+    c.insertBefore(cm, act2); return c;
+  };
+  $("cm-form").addEventListener("submit", () => { const p = posts[0], t = p && jr.trades.find(x => x.ts === p.ts && Number(x.r) === p.r); if (!p || p.src || !t) return; p.src = t.setup === "Import" || String(t.id).charAt(0) === "i" ? "import" : "manual"; const d = $("cm-score").checked ? disciplineScore() : null; if (d) p.score = d.score; postsStore(); renderCommunity(); });
+  $("p-share").addEventListener("click", () => {
+    const p = planToday(), name = (profile && profile.name) || ""; if (!p.bias || p.bias === "none"){ toast("Nejdřív vyber bias dne."); return; } if (!name){ location.hash = "#komunita"; toast("Doplň v Komunitě jméno a zkus to znovu."); return; }
+    posts.unshift({id: "p" + Date.now().toString(36), kind: "plan", author: name, ts: new Date().toISOString(), sym: (profile && profile.sym) || "", dir: p.bias === "short" ? "short" : "long", r: 0, levels: p.levels || "", note: p.note || "", actual: p.actual || ""});
+    postsStore(); location.hash = "#komunita"; toast("Plán je v Komunitě. Pošli ho odkazem.");
+  });
+
+  // ---------- weekly challenge: the same five questions for everyone in a given week ----------
+  function weekNo(){ const d = new Date(), a = new Date(d.getFullYear(), 0, 1); return d.getFullYear() * 100 + Math.ceil(((d - a) / 864e5 + ((a.getDay() + 6) % 7) + 1) / 7); }
+  function seeded(seed){ let h = seed >>> 0; return () => { h = (h * 1664525 + 1013904223) >>> 0; return h / 4294967296; }; }
+  function renderWeekly(){
+    const box = $("wc"); if (box.dataset.run === "1") return; clear(box); if (glossary.length < 40){ box.appendChild(el("p","small muted","Načítám…")); return; }
+    const wk = weekNo(), res = lp.weekly && lp.weekly.week === wk ? lp.weekly : null, go = el("button", res ? null : "primary", res ? "Zkusit znovu" : "Spustit výzvu"), row = el("div","rp-ctl"); go.type = "button";
+    box.appendChild(el("p","small muted","Pět otázek, pro všechny stejných. Každý týden nové.")); row.appendChild(go);
+    if (res){ row.appendChild(el("span","pill " + (res.right >= 4 ? "good" : "warn"), "Tento týden " + res.right + " z 5")); const sh = el("button", null, "Sdílet výsledek"); sh.type = "button"; sh.addEventListener("click", async () => { const txt = "Výzva týdne v Tape: " + res.right + " z 5. " + location.origin + location.pathname; try { if (navigator.share) await navigator.share({text: txt}); else { await navigator.clipboard.writeText(txt); toast("Zkopírováno."); } } catch(e){} }); row.appendChild(sh); }
+    box.appendChild(row);
+    go.addEventListener("click", () => { const rnd = seeded(wk), sh = a => { const o = a.slice(); for (let i = o.length - 1; i > 0; i--){ const j = Math.floor(rnd() * (i + 1)), t = o[i]; o[i] = o[j]; o[j] = t; } return o; };
+      const sorted = glossary.slice().sort((a, b) => String(a.id).localeCompare(String(b.id))), qs = sh(sorted).slice(0, 5).map(g => ({g: g, opts: sh([g].concat(sh(sorted.filter(x => x.id !== g.id && x.cat === g.cat)).slice(0, 2)))})); let i = 0, right = 0; box.dataset.run = "1";
+      const ask = () => { clear(box); if (i >= qs.length){ box.dataset.run = ""; if (!res || right > res.right) lp.weekly = {week: wk, right: right}; touchDay(); persistLaura(); renderWeekly(); return; }
+        const q = qs[i]; let done = false; box.appendChild(el("span","pa-kicker","Otázka " + (i + 1) + " z 5")); box.appendChild(el("b","exq","Co znamená „" + q.g.term + "“?"));
+        const btns = q.opts.map(o => { const b = el("button","exo", o.def); b.type = "button"; b.addEventListener("click", () => { if (done) return; done = true; if (o.id === q.g.id) right++; else b.classList.add("no"); btns.forEach((x, j) => { x.disabled = true; if (q.opts[j].id === q.g.id) x.classList.add("ok"); });
+          const nx = el("button","primary", i === 4 ? "Vyhodnotit" : "Další otázka"); nx.type = "button"; nx.addEventListener("click", () => { i++; ask(); }); box.appendChild(nx); }); box.appendChild(b); return b; }); };
+      ask(); });
+  }
+  const _refreshAll6 = refreshAll;
+  refreshAll = function(){ _refreshAll6(); try { renderScore(); renderWeekly(); } catch(e){ if (window.console) console.error(e); } };
 
   // ---------- moving to a new address without losing data ----------
   // data/site.json: {"move": "https://new-address", "from": ["https://old-address"]}. The old site hands the data to the new one in a window the person opens.
