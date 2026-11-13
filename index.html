@@ -3083,7 +3083,7 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
     if (t.tsx){ const m = Math.round((new Date(t.tsx) - new Date(t.ts)) / 60000); if (m >= 0) add("Doba držení", m < 60 ? m + " min" : Math.floor(m / 60) + " h " + (m % 60) + " min"); }
     const rk = t.entry != null && t.stop != null ? Math.abs(t.entry - t.stop) : 0, inR = x => rk ? " (" + fnum(Math.round(x / rk * 100) / 100) + " R)" : "";
     if (t.mae != null) add("MAE", fnum(t.mae) + " b." + inR(t.mae)); if (t.mfe != null) add("MFE", fnum(t.mfe) + " b." + inR(t.mfe));
-    add("Cyklus", tradeCycle(t)); if (t.ck) add("Seznam před vstupem", t.ck.k + " z " + t.ck.n); if (t.grade) add("Provedení", t.grade + " z 5"); if (t.emo) add("Před vstupem", t.emo);
+    if (premOn()) add("Cyklus", tradeCycle(t)); if (t.ck) add("Seznam před vstupem", t.ck.k + " z " + t.ck.n); if (t.grade) add("Provedení", t.grade + " z 5"); if (t.emo) add("Před vstupem", t.emo);
     if (cfg.accounts.length > 1){ const a = cfg.accounts.find(x => x.id === tAcct(t)); if (a) add("Účet", a.name); }
     if (g.children.length) card.appendChild(g);
     if (t.levels){ const b = el("div","box"); b.appendChild(el("b", null, "Úrovně")); b.appendChild(el("span", null, t.levels)); card.appendChild(b); }
@@ -3244,6 +3244,7 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
     const losses = tr.filter(t => (Number(t.r) || 0) < 0), al = losses.length ? losses.reduce((s, t) => s + Number(t.r), 0) / losses.length : null;
     row("Průměrná ztráta nejvýš 1,1 R", al == null ? null : sgn(al) + " R", al >= -1.1, losses.length ? "z " + losses.length + " ztrátových obchodů" : null);
   }
+  function premOn(){ try { return localStorage.getItem("tape-premium") === "1"; } catch(e){ return false; } }
   function tradeCycle(t){
     try { const p = {}; new Intl.DateTimeFormat("en-US", {timeZone: "America/New_York", hour: "2-digit", minute: "2-digit", hourCycle: "h23"}).formatToParts(new Date(t.ts)).forEach(x => { p[x.type] = x.value; });
       const m = (Number(p.hour) % 24) * 60 + Number(p.minute); if (!isFinite(m)) return null; return m >= 420 && m < 960 ? CYCN[Math.floor((m - 420) / 90)] : m >= 120 && m < 300 ? "Londýn" : m >= 1200 ? "Asie" : "Mimo cykly"; } catch(e){ return null; }
@@ -3279,7 +3280,7 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
       const bias = t => { const p = jr.plans[tDay(t)]; if (!p || !p.bias || p.bias === "none") return "Bez plánu"; return (p.bias === "long") === (t.dir !== "short") ? "Ve směru plánu" : "Proti plánu"; };
       [groupTable("Setup", tr, t => t.setup || "Jiný", null, unit), symsOf(tr) > 1 ? groupTable("Trh", tr, t => t.sym || "–", null, unit) : null, groupTable("Den", tr, t => D[(new Date(t.ts).getDay() + 6) % 7], D, unit),
        groupTable("Hodina", tr, t => { const h = new Date(t.ts).getHours(); return isNaN(h) ? null : String(h).padStart(2, "0") + ":00"; }, Array.from({length: 24}, (x, i) => String(i).padStart(2, "0") + ":00"), unit),
-       groupTable("Cyklus (New York)", tr, tradeCycle, CYCN.concat(["Londýn", "Asie", "Mimo cykly"]), unit), groupTable("Směr", tr, t => t.dir === "short" ? "Short" : "Long", null, unit), groupTable("Plán dne", tr, bias, ["Ve směru plánu","Proti plánu","Bez plánu"], unit),
+       premOn() ? groupTable("Cyklus (New York)", tr, tradeCycle, CYCN.concat(["Londýn", "Asie", "Mimo cykly"]), unit) : null, groupTable("Směr", tr, t => t.dir === "short" ? "Short" : "Long", null, unit), groupTable("Plán dne", tr, bias, ["Ve směru plánu","Proti plánu","Bez plánu"], unit),
        groupTable("Seznam", tr, t => t.ck ? (t.ck.k === t.ck.n ? "Splněný" : "Nesplněný") : null, null, unit), groupTable("Chyba", tr, t => (t.tags && t.tags.length) ? t.tags : null, null, unit),
        groupTable("Před vstupem", tr, t => t.emo || null, EMO, unit), groupTable("Provedení", tr, t => t.grade ? String(t.grade) + " z 5" : null, ["5 z 5","4 z 5","3 z 5","2 z 5","1 z 5"], unit),
        groupTable("Doba držení", tr, hold, ["do 5 min","5–15 min","15–60 min","přes hodinu"], unit)].forEach(x => { if (x) tb.appendChild(x); }); }
