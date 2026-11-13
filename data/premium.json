@@ -353,5 +353,223 @@
    }
   ],
   "remember": "Směr dne, falešný výpad v 9:30 proti němu, návrat nad otevírací cenu, vstup, stop pod výpadem, cíl na likviditě."
+ },
+ {
+  "id": "prem-opens",
+  "title": "Otevírací ceny dne",
+  "en": "18:00 · 00:00 · 9:30 · 10:00",
+  "week": 9,
+  "intro": "Jeden býčí den a čtyři otevírací ceny v newyorském čase. Sleduj, jak se k nim cena chová.",
+  "h": 290,
+  "lo": 92.93,
+  "hi": 110.87,
+  "candles": [
+   [
+    100,
+    101.5,
+    99,
+    100.5
+   ],
+   [
+    100.5,
+    101.5,
+    99.1,
+    100.1
+   ],
+   [
+    100.1,
+    101.69999999999999,
+    99.1,
+    100.69999999999999
+   ],
+   [
+    100.69999999999999,
+    101.69999999999999,
+    99.39999999999999,
+    100.39999999999999
+   ],
+   [
+    100.39999999999999,
+    101.39999999999999,
+    98.19999999999999,
+    99.19999999999999
+   ],
+   [
+    99.19999999999999,
+    100.19999999999999,
+    96.69999999999999,
+    97.69999999999999
+   ],
+   [
+    97.69999999999999,
+    99.49999999999999,
+    96.69999999999999,
+    98.49999999999999
+   ],
+   [
+    98.49999999999999,
+    99.49999999999999,
+    95.69999999999999,
+    96.69999999999999
+   ],
+   [
+    96.69999999999999,
+    97.69999999999999,
+    94.29999999999998,
+    95.29999999999998
+   ],
+   [
+    95.29999999999998,
+    98.79999999999998,
+    94.29999999999998,
+    97.79999999999998
+   ],
+   [
+    97.79999999999998,
+    101.79999999999998,
+    96.79999999999998,
+    100.79999999999998
+   ],
+   [
+    100.79999999999998,
+    101.79999999999998,
+    99.6,
+    99.79999999999998
+   ],
+   [
+    99.79999999999998,
+    103.19999999999999,
+    98.79999999999998,
+    102.19999999999999
+   ],
+   [
+    102.19999999999999,
+    105.79999999999998,
+    101.19999999999999,
+    104.79999999999998
+   ],
+   [
+    104.79999999999998,
+    107.99999999999999,
+    103.79999999999998,
+    106.99999999999999
+   ],
+   [
+    106.99999999999999,
+    109.49999999999999,
+    105.99999999999999,
+    108.49999999999999
+   ]
+  ],
+  "steps": [
+   {
+    "show": 4,
+    "text": "18:00. Otevírá nový obchodní den na futures. Otevírací cena 100 je první vodítko: nad ní je den zatím v plusu, pod ní v minusu.",
+    "add": [
+     {
+      "t": "line",
+      "y": 100,
+      "x1": 0,
+      "x2": 15.4,
+      "c": "muted",
+      "dash": true,
+      "label": "open 18:00",
+      "la": "start",
+      "lv": "above"
+     }
+    ]
+   },
+   {
+    "show": 7,
+    "text": "00:00. Půlnoční otevírací cena dělí den na premium a discount. V den, kdy čekáš růst, hledáš nákup pod ní.",
+    "add": [
+     {
+      "t": "line",
+      "y": 100.4,
+      "x1": 4,
+      "x2": 15.4,
+      "c": "accent",
+      "dash": true,
+      "label": "open 00:00",
+      "la": "end",
+      "lv": "above"
+     }
+    ],
+    "focus": [
+     4,
+     5,
+     6
+    ]
+   },
+   {
+    "show": 9,
+    "text": "9:30. Burza otevírá na 98,5 a cena hned vypadne dolů. Je pod všemi třemi otevíracími cenami, tedy hluboko v discountu.",
+    "add": [
+     {
+      "t": "line",
+      "y": 98.5,
+      "x1": 7,
+      "x2": 15.4,
+      "c": "amber",
+      "dash": true,
+      "label": "open 9:30",
+      "la": "end",
+      "lv": "below"
+     },
+     {
+      "t": "text",
+      "x": 8,
+      "y": 94.3,
+      "s": "výpad",
+      "a": "middle",
+      "c": "bad",
+      "dy": 14
+     }
+    ],
+    "focus": [
+     7,
+     8
+    ]
+   },
+   {
+    "show": 11,
+    "text": "Obrat. Silné svíčky vrátí cenu nad otevírací cenu z 9:30 i nad půlnoční. Úrovně, které byly nad cenou, se mění v podporu.",
+    "add": [],
+    "focus": [
+     9,
+     10
+    ]
+   },
+   {
+    "show": 12,
+    "text": "10:00. Začíná další cyklus. Cena se od něj vrátí dolů k půlnoční a k večerní otevírací ceně a tam se zastaví. Na jednom místě se potkává víc úrovní.",
+    "add": [
+     {
+      "t": "text",
+      "x": 11,
+      "y": 101.8,
+      "s": "open 10:00",
+      "a": "middle",
+      "c": "good",
+      "dy": -8
+     }
+    ],
+    "focus": [
+     11
+    ]
+   },
+   {
+    "show": 16,
+    "text": "Od shluku otevíracích cen cena pokračuje nahoru. Čím víc úrovní se na jednom místě potká, tím větší váhu vstup má. Jistotu ale nedává žádná z nich.",
+    "add": [],
+    "focus": [
+     12,
+     13,
+     14,
+     15
+    ]
+   }
+  ],
+  "remember": "Pod otevírací cenou je discount, nad ní premium. Nákup se hledá pod ní, prodej nad ní, a nejlépe tam, kde se potká víc otevíracích cen."
  }
 ]

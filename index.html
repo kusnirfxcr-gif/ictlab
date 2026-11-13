@@ -611,6 +611,12 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
 .pavatar{flex:none;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--ink);color:var(--bg);font-weight:800}
 .post .tbig{font-size:44px}
 .chip.lock{opacity:.45}
+.prem-btn{position:relative;display:inline-flex;align-items:center;padding:12px 24px;border-radius:999px;color:var(--ink)!important;font-weight:800;font-size:15px;text-decoration:none;isolation:isolate}
+.prem-btn::before{content:"";position:absolute;inset:-2px;border-radius:inherit;background:linear-gradient(90deg,#ff5f6d,#ffc371,#f9f871,#3ddc97,#8ab4ff,#c58aff,#ff5f6d,#ffc371,#f9f871,#3ddc97,#8ab4ff,#c58aff,#ff5f6d);background-size:200% 100%;animation:rbw 3.5s linear infinite;z-index:-2;filter:saturate(1.2)}
+.prem-btn::after{content:"";position:absolute;inset:0;border-radius:inherit;background:#0c0c0f;z-index:-1}
+.prem-btn:hover{box-shadow:0 0 28px rgba(138,180,255,.35)}
+@keyframes rbw{to{background-position:-200% 0}}
+@media (prefers-reduced-motion:reduce){.prem-btn::before{animation:none}}
 </style>
 </head>
 <body>
@@ -654,6 +660,7 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
       <p class="lead" id="d-sub"></p>
       <div class="herostats" id="d-hs"></div>
       <div class="cta" id="d-cta"></div>
+      <a class="prem-btn" href="#premium">Premium: analýza dne</a>
     </div>
     <div class="card" id="d-move" hidden></div>
     <div class="card" id="d-remind" hidden></div>
@@ -3953,14 +3960,60 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
     const head = el("div","card"), lock = el("button","ck-del","Zamknout"), row = el("div","row"); lock.type = "button"; lock.addEventListener("click", () => { try { localStorage.removeItem("tape-premium"); } catch(e){} renderPremium(); });
     row.appendChild(el("h2", null, "Čas v doručování ceny")); row.appendChild(lock); head.appendChild(row);
     head.appendChild(el("p", null, "Stručný výklad toho, jak s časem pracuje obchodník Zeussy (The Ones That Know) ve svém materiálu TIME z března 2023. Je to shrnutí hlavních myšlenek vlastními slovy, ne kopie materiálu.")); box.appendChild(head);
-    PREM.forEach((x, i) => { const c = el("div","card ststep"), h = el("div","sthead"); h.appendChild(el("span","stn", i + 1)); h.appendChild(el("h3", null, x[0])); c.appendChild(h); c.appendChild(el("p", null, x[1])); box.appendChild(c); });
+    box.appendChild(premAnalysis());
     premTopics.forEach(t => box.appendChild(miniStepper(t)));
+    PREM.forEach((x, i) => { const c = el("div","card ststep"), h = el("div","sthead"); h.appendChild(el("span","stn", i + 1)); h.appendChild(el("h3", null, x[0])); c.appendChild(h); c.appendChild(el("p", null, x[1])); box.appendChild(c); });
+    box.appendChild(premLevels());
     const ny = tzNow("America/New_York"), loc = new Date(), off = ny ? (((loc.getHours() * 60 + loc.getMinutes()) - ny.mins) % 1440 + 1440) % 1440 : 0, hm = m => { m = ((m % 1440) + 1440) % 1440; return String(Math.floor(m / 60)).padStart(2, "0") + ":" + String(m % 60).padStart(2, "0"); };
     const t = el("div","card"), wrap = el("div","tablebox"), tb = el("table"), th = el("thead"), hr = el("tr"), bd = el("tbody"); ["Cyklus", "New York", "Náš čas"].forEach(h => hr.appendChild(el("th", null, h))); th.appendChild(hr); tb.appendChild(th);
     CYC90.forEach((m, i) => { const r = el("tr"); r.appendChild(el("td", null, (i + 1) + ".")); r.appendChild(el("td","num", hm(m) + "–" + hm(m + 90))); r.appendChild(el("td","num", hm(m + off) + "–" + hm(m + 90 + off))); if (ny && ny.mins >= m && ny.mins < m + 90) r.style.color = "var(--good)"; bd.appendChild(r); });
     tb.appendChild(bd); wrap.appendChild(tb); t.appendChild(el("h2", null, "Devadesátiminutové cykly na indexech")); t.appendChild(el("p","small muted","Otevírací časy devadesátiminutových svíček od půlnoci newyorského času. Zeleně je cyklus, který právě běží.")); t.appendChild(wrap); box.appendChild(t);
     const w = el("div","card"); w.appendChild(el("h2", null, "Na rovinu")); w.appendChild(el("p", null, "Celý přístup stojí na předpokladu, že cenu řídí algoritmus podle času. Ten předpoklad nejde ověřit a sám autor píše, že si to má každý prověřit na grafech. Ber to jako návod, na co se dívat a co si zapisovat, ne jako pravidla, která vydělávají."));
     w.appendChild(el("p","small muted","Původní materiál je chráněný autorským právem a jeho autor výslovně žádá o svolení k dalšímu použití. Pro placenou verzi aplikace je potřeba souhlas autora, případně tuhle část nahradit vlastním obsahem.")); box.appendChild(w);
+  }
+  // ---------- Premium: analysis of the day from the levels the person types in ----------
+  const PD_F = [["px","Aktuální cena"],["o18","Open 18:00"],["o00","Open 00:00"],["o930","Open 9:30"],["o10","Open 10:00"],["pdh","High předchozího dne"],["pdl","Low předchozího dne"],["ah","High Asie"],["al","Low Asie"],["lh","High Londýna"],["ll","Low Londýna"]];
+  function premDay(){ let v = {}; try { v = JSON.parse(localStorage.getItem("tape-prem-day") || "{}") || {}; } catch(e){} if (v.day !== dayKey()) v = {day: dayKey(), bias: "", f: {}}; v.f = v.f || {}; return v; }
+  function premAnalysis(){
+    const c = el("div","card"), d = premDay(), g = el("div","fgrid"), out = el("div","list"), save = () => { try { localStorage.setItem("tape-prem-day", JSON.stringify(d)); } catch(e){} };
+    c.appendChild(el("h2", null, "Analýza dne")); c.appendChild(el("p","small muted","Zadej dnešní úrovně z grafu, v newyorském čase. Bot z nich podle časových pravidel sestaví cíle a scénáře. Stačí cena a pár úrovní, zbytek můžeš doplnit během dne."));
+    const br = el("div","chips"); [["long","Čekám růst"],["short","Čekám pokles"],["","Nevím"]].forEach(o => { const b = el("button","chip", o[1]); b.type = "button"; b.setAttribute("aria-pressed", String(d.bias === o[0])); b.addEventListener("click", () => { d.bias = o[0]; save(); Array.prototype.forEach.call(br.children, x => x.setAttribute("aria-pressed", String(x === b))); draw(); }); br.appendChild(b); });
+    c.appendChild(el("span","kick","Směr na vyšším timeframu")); c.appendChild(br);
+    PD_F.forEach(f => { const i = inp(null, nv(d.f[f[0]]), "", "decimal"); i.addEventListener("input", () => { const v = num(i.value); if (isFinite(v)) d.f[f[0]] = v; else delete d.f[f[0]]; save(); draw(); }); g.appendChild(lab(f[1], i, f[0] === "px" ? "wide" : null)); });
+    c.appendChild(g); c.appendChild(out);
+    const fm = v => fnum(Math.round(v * 100) / 100), blk = (t, lines, cls) => { if (!lines.length) return; const b = el("div","box"); b.appendChild(el("b", null, t)); const u = el("ul","stl " + (cls || "")); lines.forEach(x => u.appendChild(el("li", null, x))); b.appendChild(u); out.appendChild(b); };
+    function draw(){
+      clear(out); const f = d.f, px = f.px; if (!isFinite(px)){ out.appendChild(el("p","small muted","Začni aktuální cenou.")); return; }
+      const opens = [["o18","open 18:00"],["o00","půlnoční open"],["o930","open 9:30"],["o10","open 10:00"]].filter(o => isFinite(f[o[0]])), liq = [["pdh","high předchozího dne",1],["pdl","low předchozího dne",-1],["ah","high Asie",1],["al","low Asie",-1],["lh","high Londýna",1],["ll","low Londýna",-1]].filter(o => isFinite(f[o[0]]));
+      const above = liq.filter(o => f[o[0]] > px).sort((a, b) => f[a[0]] - f[b[0]]), below = liq.filter(o => f[o[0]] < px).sort((a, b) => f[b[0]] - f[a[0]]), nm = o => o[1] + " " + fm(f[o[0]]) + " (" + fm(Math.abs(f[o[0]] - px)) + " b.)";
+      blk("Kde je cena", opens.map(o => px > f[o[0]] ? "Nad " + o[1] + " " + fm(f[o[0]]) + ": premium, výhodnější pro prodej." : px < f[o[0]] ? "Pod " + o[1] + " " + fm(f[o[0]]) + ": discount, výhodnější pro nákup." : "Přesně na " + o[1] + "."));
+      blk("Draws on liquidity nad cenou", above.map(nm), "ok"); blk("Draws on liquidity pod cenou", below.map(nm), "no");
+      const taken = liq.filter(o => (o[2] > 0 && px > f[o[0]] && o[0] !== "pdh") || (o[2] < 0 && px < f[o[0]] && o[0] !== "pdl")).map(o => o[1]);
+      const sc = [], upT = above[0], dnT = below[0], ref = opens.length ? opens.slice().sort((a, b) => Math.abs(f[a[0]] - px) - Math.abs(f[b[0]] - px))[0] : null;
+      const longS = () => { if (dnT && upT) sc.push("Když cena vybere " + dnT[1] + " (" + fm(f[dnT[0]]) + ")" + (ref ? " a vrátí se nad " + ref[1] + " (" + fm(f[ref[0]]) + ")" : " a vrátí se zpět") + ", pak hledej nákup po MSS s cílem " + upT[1] + " (" + fm(f[upT[0]]) + ")" + (above[1] ? " a potom " + above[1][1] + " (" + fm(f[above[1][0]]) + ")." : "."));
+        else if (upT) sc.push("Pod cenou nemáš zadanou žádnou likviditu. Když přijde výpad pod nejbližší otevírací cenu a návrat nad ni, pak je cíl " + upT[1] + " (" + fm(f[upT[0]]) + ").");
+        if (dnT) sc.push("Když cena pod " + dnT[1] + " zavře a zůstane tam, pak nákupní scénář neplatí. Počkej na další cyklus."); };
+      const shortS = () => { if (upT && dnT) sc.push("Když cena vybere " + upT[1] + " (" + fm(f[upT[0]]) + ")" + (ref ? " a vrátí se pod " + ref[1] + " (" + fm(f[ref[0]]) + ")" : " a vrátí se zpět") + ", pak hledej prodej po MSS s cílem " + dnT[1] + " (" + fm(f[dnT[0]]) + ")" + (below[1] ? " a potom " + below[1][1] + " (" + fm(f[below[1][0]]) + ")." : "."));
+        else if (dnT) sc.push("Nad cenou nemáš zadanou žádnou likviditu. Když přijde výpad nad nejbližší otevírací cenu a návrat pod ni, pak je cíl " + dnT[1] + " (" + fm(f[dnT[0]]) + ").");
+        if (upT) sc.push("Když cena nad " + upT[1] + " zavře a zůstane tam, pak prodejní scénář neplatí. Počkej na další cyklus."); };
+      if (d.bias === "long") longS(); else if (d.bias === "short") shortS(); else { longS(); shortS(); sc.push("Bez směru na vyšším timeframu ber oba scénáře jen jako sledování, ne jako plán obchodu."); }
+      if (!sc.length) sc.push("Doplň aspoň jedno high a jedno low, ať je z čeho stavět scénář.");
+      blk("Když, pak", sc);
+      const ny = tzNow("America/New_York"), tl = []; if (ny){ const m = ny.mins, cyc = CYC90.filter(x => x <= m).pop(), loc = new Date(), off = (((loc.getHours() * 60 + loc.getMinutes()) - m) % 1440 + 1440) % 1440, hm = x => { x = ((x % 1440) + 1440) % 1440; return String(Math.floor(x / 60)).padStart(2, "0") + ":" + String(x % 60).padStart(2, "0"); };
+        if (cyc != null && m < 1080) tl.push("Běží cyklus " + hm(cyc) + "–" + hm(cyc + 90) + " newyorského času (u nás " + hm(cyc + off) + "–" + hm(cyc + 90 + off) + "). Do jeho konce zbývá " + (cyc + 90 - m) + " min.");
+        [[570,"9:30, otevření burzy"],[600,"10:00"],[840,"14:00"]].forEach(k => { if (m < k[0]) tl.push("Manipulaci čekej kolem " + k[1] + " (u nás " + hm(k[0] + off) + ")."); });
+        if (m >= 690 && m < 780) tl.push("Právě je oběd. Cyklus 11:30–13:00 se neobchoduje, jeho high a low si zapiš jako cíle na odpoledne."); if (m >= 960) tl.push("Hlavní seance skončila. Zapiš si dnešní high a low na zítřek."); }
+      blk("Čas", tl);
+      const cf = []; if (d.bias){ const L = d.bias === "long"; opens.forEach(o => { const ok = L ? px < f[o[0]] : px > f[o[0]]; cf.push((ok ? "Ano: cena je " : "Ne: cena není ") + (L ? "pod" : "nad") + " " + o[1] + "."); });
+        const need = L ? "pod cenou" : "nad cenou", has = taken.filter(x => L ? /low/.test(x) : /high/.test(x)); cf.push((has.length ? "Ano: " : "Zatím ne: ") + "likvidita proti směru už byla vybraná" + (has.length ? " (" + has.join(", ") + ")." : ". Čekej na výpad " + need + ".")); const tgt = L ? upT : dnT; cf.push((tgt ? "Ano: " : "Ne: ") + "ve směru obchodu je jasný cíl" + (tgt ? " (" + tgt[1] + ")." : ".")); }
+      blk("Co přidává váhu", cf);
+      out.appendChild(el("p","small muted","Počítá se jen z čísel, která jsi zadal, a z pravidel popsaných výše. Není to signál ani doporučení k obchodu a nic z toho nemusí nastat."));
+    }
+    draw(); return c;
+  }
+  function premLevels(){
+    const c = el("div","card"), u = el("ul","stl ok"); c.appendChild(el("h2", null, "Úrovně, které přidávají váhu")); c.appendChild(el("p","small muted","Čím víc se jich potká na jednom místě a ve správný čas, tím silnější důvod ke vstupu."));
+    ["Otevírací ceny: 18:00, 00:00, 8:30 při zprávách, 9:30, 10:00 a 14:00 newyorského času.", "High a low předchozího dne.", "High a low Asie a Londýna.", "High a low předchozího 90minutového cyklu, odpoledne i cyklu z oběda.", "Fair value gap na vyšším timeframu, do kterého se cena vrací.", "Polovina denního rozpětí: nákup pod ní, prodej nad ní.", "Mezera mezi zavřením v 17:00 a otevřením v 18:00 a víkendová mezera."].forEach(x => u.appendChild(el("li", null, x))); c.appendChild(u); return c;
   }
   let premTopics = [];
   function miniStepper(t){
