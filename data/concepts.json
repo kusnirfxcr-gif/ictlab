@@ -62,7 +62,7 @@
   "en": "killzones",
   "fig": "cas",
   "week": 7,
-  "caption": "Den v newyorském čase. Okna Silver Bullet jsou žlutě, okno modelu Knot modře.",
+  "caption": "Den v newyorském čase. Okna Silver Bullet jsou žlutě, okno modelu Tape modře.",
   "explain": [
    "ICT hledá obchody jen v určitých hodinách newyorského času, hlavně po otevření burzy v 9:30. Silver Bullet jsou tři hodinová okna: 3:00 až 4:00, 10:00 až 11:00 a 14:00 až 15:00.",
    "Čas je jen filtr. Testy, které boti našli, neukázaly, že by samotná hodina dávala výhodu."

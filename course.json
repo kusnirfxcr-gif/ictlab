@@ -2,154 +2,706 @@
  "title": "Dictator's Room",
  "intro": "Dvanáct týdnů od první svíčky po vlastní obchodní plán. Počítej se třemi až čtyřmi hodinami týdně: přečíst lekce, splnit úkol na grafu a odpovědět si na kontrolní otázku. Nespěchej, další týden otevři, až když ten současný dokážeš vysvětlit vlastními slovy.",
  "phases": [
-  {"name": "Základy: jak číst graf", "weeks": [1, 2, 3, 4]},
-  {"name": "Nástroje ICT", "weeks": [5, 6, 7, 8]},
-  {"name": "Model a praxe", "weeks": [9, 10, 11, 12]}
+  {
+   "name": "Základy: jak číst graf",
+   "weeks": [
+    1,
+    2,
+    3,
+    4
+   ]
+  },
+  {
+   "name": "Nástroje ICT",
+   "weeks": [
+    5,
+    6,
+    7,
+    8
+   ]
+  },
+  {
+   "name": "Model a praxe",
+   "weeks": [
+    9,
+    10,
+    11,
+    12
+   ]
+  }
  ],
  "weeks": [
   {
-   "n": 1, "title": "Trh, svíčka a čas",
+   "n": 1,
+   "title": "Trh, svíčka a čas",
    "goal": "Rozumíš tomu, co graf ukazuje a kdy se na trhu něco děje.",
    "lessons": [
-    {"id": "1a", "title": "Co se vlastně obchoduje", "text": "NQ a ES jsou futures, tedy smlouvy na americké indexy Nasdaq 100 a S&P 500. Cena se hýbe, protože se v každém okamžiku potkává někdo, kdo chce koupit, s někým, kdo chce prodat. Nejmenší krok ceny je tick, u obou trhů 0,25 bodu. Pro učení ti stačí graf v TradingView, žádné peníze nepotřebuješ."},
-    {"id": "1b", "title": "Svíčka: čtyři ceny v jednom obrázku", "text": "Každá svíčka ukazuje, kde cena za dané období otevřela (open), kam nejvýš a nejníž došla (high, low) a kde zavřela (close). Tělo je vzdálenost mezi open a close, knoty jsou místa, kam cena zašla a vrátila se. Dlouhý knot říká: tady to trh zkusil a byl odmítnut."},
-    {"id": "1c", "title": "Timeframy: stejný trh, jiné přiblížení", "text": "Denní svíčka je složená z 1 440 minutových. Vyšší timeframe (den, 4 hodiny, hodina) ukazuje, kam trh míří. Nižší (15 minut, 5 minut, 1 minuta) ukazuje, jak se tam dostává. Vždy začínej nahoře a postupně přibližuj, nikdy naopak."},
-    {"id": "1d", "title": "Seance: kdy je trh živý", "text": "Den se dělí na asijskou, londýnskou a newyorskou seanci. Indexy se nejvíc hýbou po otevření americké burzy v 9:30 newyorského času, což je většinu roku 15:30 u nás. ICT pracuje výhradně s newyorským časem, tak si ho v TradingView nastav jako časovou zónu grafu."}
+    {
+     "id": "1a",
+     "title": "Co se vlastně obchoduje",
+     "text": "NQ a ES jsou futures, tedy smlouvy na americké indexy Nasdaq 100 a S&P 500. Cena se hýbe, protože se v každém okamžiku potkává někdo, kdo chce koupit, s někým, kdo chce prodat. Nejmenší krok ceny je tick, u obou trhů 0,25 bodu. Pro učení ti stačí graf v TradingView, žádné peníze nepotřebuješ.",
+     "key": "NQ a ES jsou smlouvy na americké indexy. Cena se hýbe podle toho, kdo zrovna víc kupuje nebo prodává.",
+     "tf": {
+      "s": "K učení potřebuješ nejdřív vložit peníze na účet.",
+      "a": false,
+      "why": "Na učení stačí graf v TradingView, peníze nejsou potřeba."
+     }
+    },
+    {
+     "id": "1b",
+     "title": "Svíčka: čtyři ceny v jednom obrázku",
+     "text": "Každá svíčka ukazuje, kde cena za dané období otevřela (open), kam nejvýš a nejníž došla (high, low) a kde zavřela (close). Tělo je vzdálenost mezi open a close, knoty jsou místa, kam cena zašla a vrátila se. Dlouhý knot říká: tady to trh zkusil a byl odmítnut.",
+     "key": "Svíčka má čtyři ceny: open, high, low a close. Tělo je mezi open a close, knoty ukazují, kam cena zašla a vrátila se.",
+     "tf": {
+      "s": "Dlouhý horní knot znamená, že cena šla nahoru, ale neudržela se tam.",
+      "a": true,
+      "why": "Knot je místo, kam cena zašla a byla odmítnuta."
+     }
+    },
+    {
+     "id": "1c",
+     "title": "Timeframy: stejný trh, jiné přiblížení",
+     "text": "Denní svíčka je složená z 1 440 minutových. Vyšší timeframe (den, 4 hodiny, hodina) ukazuje, kam trh míří. Nižší (15 minut, 5 minut, 1 minuta) ukazuje, jak se tam dostává. Vždy začínej nahoře a postupně přibližuj, nikdy naopak.",
+     "key": "Vyšší timeframe ukazuje směr, nižší načasování. Vždy postupuj shora dolů.",
+     "tf": {
+      "s": "Analýzu je nejlepší začít na minutovém grafu a teprve pak otevřít denní.",
+      "a": false,
+      "why": "Začíná se nahoře (den, hodina) a postupně se přibližuje."
+     }
+    },
+    {
+     "id": "1d",
+     "title": "Seance: kdy je trh živý",
+     "text": "Den se dělí na asijskou, londýnskou a newyorskou seanci. Indexy se nejvíc hýbou po otevření americké burzy v 9:30 newyorského času, což je většinu roku 15:30 u nás. ICT pracuje výhradně s newyorským časem, tak si ho v TradingView nastav jako časovou zónu grafu.",
+     "key": "Indexy se nejvíc hýbou po 9:30 newyorského času, u nás většinou v 15:30.",
+     "tf": {
+      "s": "ICT pracuje s newyorským časem, proto je dobré nastavit si ho i v grafu.",
+      "a": true,
+      "why": "Všechny časy v kurzu jsou newyorské."
+     }
+    }
    ],
    "task": "Otevři graf NQ1! na denním, hodinovém a pětiminutovém timeframu. Na pěti různých dnech si barevně vyznač asijskou, londýnskou a newyorskou seanci a zapiš si, ve které se cena pohnula nejvíc.",
-   "check": {"q": "Svíčka má dlouhý horní knot a malé tělo dole. Co se během ní stalo?", "a": "Cena vyšla vysoko, ale kupci ji tam neudrželi a prodejci ji stlačili zpět skoro k otevírací ceně. Nahoře byl trh odmítnut."}
+   "check": {
+    "q": "Svíčka má dlouhý horní knot a malé tělo dole. Co se během ní stalo?",
+    "a": "Cena vyšla vysoko, ale kupci ji tam neudrželi a prodejci ji stlačili zpět skoro k otevírací ceně. Nahoře byl trh odmítnut."
+   }
   },
   {
-   "n": 2, "title": "Struktura trhu I: swingy a trend",
+   "n": 2,
+   "title": "Struktura trhu I: swingy a trend",
    "goal": "Poznáš na grafu trend nahoru, trend dolů a pohyb do strany.",
    "lessons": [
-    {"id": "2a", "title": "Swing high a swing low", "text": "Swing high je svíčka, která má vyšší high než svíčky vlevo i vpravo od ní. Swing low je totéž obráceně s low. Jsou to body, kde se trh otočil. Všechno ostatní ve struktuře trhu se staví z těchto bodů."},
-    {"id": "2b", "title": "Trend nahoru a dolů", "text": "Trend nahoru znamená, že každý nový vrchol je výš než předchozí (higher high) a každé nové dno je taky výš (higher low). Trend dolů je zrcadlo: nižší vrcholy a nižší dna. Dokud tahle řada platí, trend trvá."},
-    {"id": "2c", "title": "Range: trh jde do strany", "text": "Když cena nedělá ani vyšší vrcholy, ani nižší dna, pohybuje se v pásmu mezi horní a dolní hranicí. Většinu času trh tráví právě takhle. Pro začátečníka je to nejtěžší prostředí, proto se ho nauč hlavně poznat a nechat být."},
-    {"id": "2d", "title": "Impuls a korekce", "text": "Trend neběží rovně. Střídá se v něm silný pohyb ve směru trendu (impuls) s pomalejším návratem proti němu (korekce). Obchodníci nechtějí naskakovat na konci impulsu, čekají na korekci a vstupují za lepší cenu."}
+    {
+     "id": "2a",
+     "title": "Swing high a swing low",
+     "text": "Swing high je svíčka, která má vyšší high než svíčky vlevo i vpravo od ní. Swing low je totéž obráceně s low. Jsou to body, kde se trh otočil. Všechno ostatní ve struktuře trhu se staví z těchto bodů.",
+     "key": "Swing high má vyšší high než sousední svíčky, swing low má nižší low. Jsou to body, kde se trh otočil.",
+     "tf": {
+      "s": "Swing low je svíčka, která má nižší low než svíčky vlevo i vpravo od ní.",
+      "a": true,
+      "why": "Přesně tak, je to zrcadlo swing high."
+     }
+    },
+    {
+     "id": "2b",
+     "title": "Trend nahoru a dolů",
+     "text": "Trend nahoru znamená, že každý nový vrchol je výš než předchozí (higher high) a každé nové dno je taky výš (higher low). Trend dolů je zrcadlo: nižší vrcholy a nižší dna. Dokud tahle řada platí, trend trvá.",
+     "key": "Trend nahoru znamená vyšší vrcholy a vyšší dna. Trend dolů znamená nižší vrcholy a nižší dna.",
+     "tf": {
+      "s": "V trendu nahoru je každé nové dno níž než to předchozí.",
+      "a": false,
+      "why": "V trendu nahoru jsou dna čím dál výš (higher low)."
+     }
+    },
+    {
+     "id": "2c",
+     "title": "Range: trh jde do strany",
+     "text": "Když cena nedělá ani vyšší vrcholy, ani nižší dna, pohybuje se v pásmu mezi horní a dolní hranicí. Většinu času trh tráví právě takhle. Pro začátečníka je to nejtěžší prostředí, proto se ho nauč hlavně poznat a nechat být.",
+     "key": "Range je pohyb do strany mezi dvěma hranicemi. Nauč se ho poznat a nechat být.",
+     "tf": {
+      "s": "Range je pro začátečníka nejlehčí prostředí na obchodování.",
+      "a": false,
+      "why": "Je nejtěžší, proto je lepší ho jen poznat a neobchodovat."
+     }
+    },
+    {
+     "id": "2d",
+     "title": "Impuls a korekce",
+     "text": "Trend neběží rovně. Střídá se v něm silný pohyb ve směru trendu (impuls) s pomalejším návratem proti němu (korekce). Obchodníci nechtějí naskakovat na konci impulsu, čekají na korekci a vstupují za lepší cenu.",
+     "key": "Trend střídá impuls a korekci. Vstupuje se v korekci, ne na konci impulsu.",
+     "tf": {
+      "s": "Nejlepší cena pro vstup bývá na konci silného impulsu.",
+      "a": false,
+      "why": "Čeká se na korekci, kde je cena lepší."
+     }
+    }
    ],
    "task": "Na hodinovém grafu NQ si za poslední dva týdny označ všechny swing highs a swing lows. Ke každému úseku napiš, jestli je to trend nahoru, trend dolů, nebo range.",
-   "check": {"q": "Trh udělal vyšší vrchol, ale následné dno je níž než to předchozí. Je to pořád trend nahoru?", "a": "Už ne jistě. Řada vyšších den se přerušila, takže trend je minimálně oslabený a může se měnit. O tom je příští týden."}
+   "check": {
+    "q": "Trh udělal vyšší vrchol, ale následné dno je níž než to předchozí. Je to pořád trend nahoru?",
+    "a": "Už ne jistě. Řada vyšších den se přerušila, takže trend je minimálně oslabený a může se měnit. O tom je příští týden."
+   }
   },
   {
-   "n": 3, "title": "Struktura trhu II: zlom a změna směru",
+   "n": 3,
+   "title": "Struktura trhu II: zlom a změna směru",
    "goal": "Rozlišíš pokračování trendu od jeho obratu a umíš číst strukturu na více timeframech.",
    "lessons": [
-    {"id": "3a", "title": "BOS: struktura pokračuje", "text": "Break of structure (BOS) je průraz posledního swingu ve směru trendu. V trendu nahoru cena zavře nad posledním vrcholem. Je to potvrzení, že trend žije. Počítá se zavření těla svíčky za úrovní, samotný knot nestačí."},
-    {"id": "3b", "title": "MSS: struktura se mění", "text": "Market structure shift (MSS, někdy CHoCH) je první průraz proti trendu. V trendu nahoru cena zavře pod posledním vyšším dnem. Neznamená to jistý obrat, znamená to první varování, že se síly přesouvají."},
-    {"id": "3c", "title": "Silný a slabý zlom", "text": "Zlom, který proběhne rychle a velkými svíčkami, má větší váhu než pomalé prolezení úrovně. Tomu rychlému pohybu se říká displacement a potkáš ho v pátém týdnu. Zatím si jen všímej, jak zlom vypadá."},
-    {"id": "3d", "title": "Struktura na více timeframech", "text": "Hodinový graf může být v trendu nahoru, zatímco pětiminutový zrovna klesá. Není to rozpor, pětiminutový pokles je jen korekce hodinového trendu. Směr určuje vyšší timeframe, nižší slouží k načasování."}
+    {
+     "id": "3a",
+     "title": "BOS: struktura pokračuje",
+     "text": "Break of structure (BOS) je průraz posledního swingu ve směru trendu. V trendu nahoru cena zavře nad posledním vrcholem. Je to potvrzení, že trend žije. Počítá se zavření těla svíčky za úrovní, samotný knot nestačí.",
+     "key": "BOS je zavření těla svíčky za posledním swingem ve směru trendu. Trend pokračuje.",
+     "tf": {
+      "s": "K BOS stačí, když úroveň prorazí jen knot svíčky.",
+      "a": false,
+      "why": "Počítá se zavření těla za úrovní, knot nestačí."
+     }
+    },
+    {
+     "id": "3b",
+     "title": "MSS: struktura se mění",
+     "text": "Market structure shift (MSS, někdy CHoCH) je první průraz proti trendu. V trendu nahoru cena zavře pod posledním vyšším dnem. Neznamená to jistý obrat, znamená to první varování, že se síly přesouvají.",
+     "key": "MSS je první zavření proti trendu. Je to varování, ne jistý obrat.",
+     "tf": {
+      "s": "MSS znamená, že se trend určitě otočil.",
+      "a": false,
+      "why": "Je to jen první varování, že se síly přesouvají."
+     }
+    },
+    {
+     "id": "3c",
+     "title": "Silný a slabý zlom",
+     "text": "Zlom, který proběhne rychle a velkými svíčkami, má větší váhu než pomalé prolezení úrovně. Tomu rychlému pohybu se říká displacement a potkáš ho v pátém týdnu. Zatím si jen všímej, jak zlom vypadá.",
+     "key": "Rychlý zlom velkými svíčkami má větší váhu než pomalé prolezení úrovně.",
+     "tf": {
+      "s": "Zlom velkými rychlými svíčkami je silnější signál než pomalé prolezení úrovně.",
+      "a": true,
+      "why": "Tomu rychlému pohybu se říká displacement."
+     }
+    },
+    {
+     "id": "3d",
+     "title": "Struktura na více timeframech",
+     "text": "Hodinový graf může být v trendu nahoru, zatímco pětiminutový zrovna klesá. Není to rozpor, pětiminutový pokles je jen korekce hodinového trendu. Směr určuje vyšší timeframe, nižší slouží k načasování.",
+     "key": "Směr určuje vyšší timeframe. Pohyb proti němu na nižším grafu je jen korekce.",
+     "tf": {
+      "s": "Když hodinový graf roste a pětiminutový klesá, je to rozpor a nedá se z toho nic vyčíst.",
+      "a": false,
+      "why": "Pětiminutový pokles je jen korekce hodinového trendu."
+     }
+    }
    ],
    "task": "Najdi na 15minutovém grafu deset míst, kde proběhl BOS, a pět míst, kde proběhl MSS. U každého MSS se podívej, jestli po něm trend opravdu změnil směr, a výsledek si zapiš.",
-   "check": {"q": "Jaký je rozdíl mezi BOS a MSS?", "a": "BOS je průraz ve směru stávajícího trendu a potvrzuje ho. MSS je první průraz proti trendu a upozorňuje na možnou změnu směru."}
+   "check": {
+    "q": "Jaký je rozdíl mezi BOS a MSS?",
+    "a": "BOS je průraz ve směru stávajícího trendu a potvrzuje ho. MSS je první průraz proti trendu a upozorňuje na možnou změnu směru."
+   }
   },
   {
-   "n": 4, "title": "Likvidita",
+   "n": 4,
+   "title": "Likvidita",
    "goal": "Víš, kde na grafu leží stop-lossy ostatních a proč k nim cena chodí.",
    "lessons": [
-    {"id": "4a", "title": "Co je likvidita", "text": "Kdo je v longu, má stop-loss pod nějakým dnem. Kdo je v shortu, má ho nad vrcholem. Na těchto místech se proto hromadí čekající příkazy. ICT jim říká likvidita: nad vrcholy je buy-side, pod dny sell-side."},
-    {"id": "4b", "title": "Kde ji hledat", "text": "Nejčitelnější úrovně jsou high a low předchozího dne, high a low noční seance a místa, kde má trh dva nebo víc vrcholů či den skoro ve stejné ceně (equal highs, equal lows). Čím je úroveň viditelnější, tím víc stopů u ní leží."},
-    {"id": "4c", "title": "Sweep versus průraz", "text": "Sweep je krátké proražení úrovně, po kterém se cena rychle vrátí zpět. Stopy se vybraly a trh se otočil. Skutečný průraz naopak za úrovní zůstane a pokračuje. Rozdíl poznáš až podle toho, co cena udělá potom, nikdy ne předem."},
-    {"id": "4d", "title": "Draw on liquidity", "text": "ICT se u každého grafu ptá: ke které likviditě cena nejspíš půjde příště? Této cílové úrovni říká draw on liquidity. Slouží jako směr i jako cíl obchodu."}
+    {
+     "id": "4a",
+     "title": "Co je likvidita",
+     "text": "Kdo je v longu, má stop-loss pod nějakým dnem. Kdo je v shortu, má ho nad vrcholem. Na těchto místech se proto hromadí čekající příkazy. ICT jim říká likvidita: nad vrcholy je buy-side, pod dny sell-side.",
+     "key": "Likvidita jsou nahromaděné stop-lossy. Nad vrcholy je buy-side, pode dny sell-side.",
+     "tf": {
+      "s": "Pode dny leží stop-lossy těch, kdo jsou v longu.",
+      "a": true,
+      "why": "Říká se tomu sell-side likvidita."
+     }
+    },
+    {
+     "id": "4b",
+     "title": "Kde ji hledat",
+     "text": "Nejčitelnější úrovně jsou high a low předchozího dne, high a low noční seance a místa, kde má trh dva nebo víc vrcholů či den skoro ve stejné ceně (equal highs, equal lows). Čím je úroveň viditelnější, tím víc stopů u ní leží.",
+     "key": "Nejvíc stopů leží u viditelných úrovní: high a low včerejška, noční seance a stejně vysoké vrcholy nebo dna.",
+     "tf": {
+      "s": "Čím je úroveň na grafu viditelnější, tím méně stopů u ní leží.",
+      "a": false,
+      "why": "Je to naopak, viditelná úroveň přitahuje víc stopů."
+     }
+    },
+    {
+     "id": "4c",
+     "title": "Sweep versus průraz",
+     "text": "Sweep je krátké proražení úrovně, po kterém se cena rychle vrátí zpět. Stopy se vybraly a trh se otočil. Skutečný průraz naopak za úrovní zůstane a pokračuje. Rozdíl poznáš až podle toho, co cena udělá potom, nikdy ne předem.",
+     "key": "Sweep úroveň krátce prorazí a vrátí se. Skutečný průraz za ní zůstane. Poznáš to až potom.",
+     "tf": {
+      "s": "Jestli jde o sweep, nebo o průraz, se dá poznat předem.",
+      "a": false,
+      "why": "Pozná se to až podle toho, co cena udělá po proražení."
+     }
+    },
+    {
+     "id": "4d",
+     "title": "Draw on liquidity",
+     "text": "ICT se u každého grafu ptá: ke které likviditě cena nejspíš půjde příště? Této cílové úrovni říká draw on liquidity. Slouží jako směr i jako cíl obchodu.",
+     "key": "Draw on liquidity je úroveň, ke které cena nejspíš míří. Dává směr i cíl.",
+     "tf": {
+      "s": "Draw on liquidity slouží jako směr i jako cíl obchodu.",
+      "a": true,
+      "why": "Proto se na ni ICT ptá u každého grafu."
+     }
+    }
    ],
    "task": "Každý den po dobu jednoho týdne si před 15:30 označ na grafu NQ high a low předchozího dne a noční seance. Večer se podívej, které úrovně cena vybrala a co udělala potom: sweep, nebo průraz?",
-   "check": {"q": "Cena vyskočí nad včerejší high, během dvou minut se vrátí pod něj a klesá. Jak se tomu říká a co se stalo se stopy shortařů?", "a": "Je to sweep buy-side likvidity. Stop-lossy shortařů nad vrcholem se spustily jako nákupy a proti nim se dalo ve velkém prodat."}
+   "check": {
+    "q": "Cena vyskočí nad včerejší high, během dvou minut se vrátí pod něj a klesá. Jak se tomu říká a co se stalo se stopy shortařů?",
+    "a": "Je to sweep buy-side likvidity. Stop-lossy shortařů nad vrcholem se spustily jako nákupy a proti nim se dalo ve velkém prodat."
+   }
   },
   {
-   "n": 5, "title": "Displacement a fair value gap",
+   "n": 5,
+   "title": "Displacement a fair value gap",
    "goal": "Poznáš silný pohyb a mezeru, kterou po sobě nechává.",
    "lessons": [
-    {"id": "5a", "title": "Displacement", "text": "Displacement je rychlý, jednosměrný pohyb velkými svíčkami s malými knoty. Ukazuje, že jedna strana trh na chvíli úplně ovládla. V ICT je to důkaz, že za pohybem stojí skutečný zájem, a ne jen šum."},
-    {"id": "5b", "title": "Fair value gap (FVG)", "text": "FVG je mezera ve třech po sobě jdoucích svíčkách: knot první a knot třetí svíčky se nepřekrývají. V růstu leží mezi high první a low třetí svíčky. V tom pásmu se obchodovalo jen jedním směrem a trh se do něj často vrací."},
-    {"id": "5c", "title": "Jak se FVG obchoduje", "text": "Po displacementu se čeká na návrat ceny do mezery a vstupuje se ve směru původního pohybu. Střed mezery se jmenuje consequent encroachment (CE). Když cena mezerou projde celou a zavře za ní, FVG selhal."},
-    {"id": "5d", "title": "Inverzní FVG", "text": "Mezera, kterou cena prorazila zavřením těla, mění roli. Z podpory se stává odpor a naopak. Říká se jí inversion FVG a často slouží jako vstup po změně směru."}
+    {
+     "id": "5a",
+     "title": "Displacement",
+     "text": "Displacement je rychlý, jednosměrný pohyb velkými svíčkami s malými knoty. Ukazuje, že jedna strana trh na chvíli úplně ovládla. V ICT je to důkaz, že za pohybem stojí skutečný zájem, a ne jen šum.",
+     "key": "Displacement je rychlý pohyb jedním směrem velkými svíčkami s malými knoty.",
+     "tf": {
+      "s": "Displacement poznáš podle malých svíček s dlouhými knoty.",
+      "a": false,
+      "why": "Jsou to velké svíčky s malými knoty."
+     }
+    },
+    {
+     "id": "5b",
+     "title": "Fair value gap (FVG)",
+     "text": "FVG je mezera ve třech po sobě jdoucích svíčkách: knot první a knot třetí svíčky se nepřekrývají. V růstu leží mezi high první a low třetí svíčky. V tom pásmu se obchodovalo jen jedním směrem a trh se do něj často vrací.",
+     "key": "FVG je mezera mezi knotem první a třetí svíčky. Cena se do ní často vrací.",
+     "tf": {
+      "s": "FVG tvoří tři svíčky po sobě, kde se knot první a třetí nepřekrývají.",
+      "a": true,
+      "why": "V růstu leží mezi high první a low třetí svíčky."
+     }
+    },
+    {
+     "id": "5c",
+     "title": "Jak se FVG obchoduje",
+     "text": "Po displacementu se čeká na návrat ceny do mezery a vstupuje se ve směru původního pohybu. Střed mezery se jmenuje consequent encroachment (CE). Když cena mezerou projde celou a zavře za ní, FVG selhal.",
+     "key": "Čeká se na návrat do mezery a vstupuje se ve směru původního pohybu. Střed mezery se jmenuje CE.",
+     "tf": {
+      "s": "Když cena projde celou mezerou a zavře za ní, FVG pořád platí.",
+      "a": false,
+      "why": "V tu chvíli FVG selhal."
+     }
+    },
+    {
+     "id": "5d",
+     "title": "Inverzní FVG",
+     "text": "Mezera, kterou cena prorazila zavřením těla, mění roli. Z podpory se stává odpor a naopak. Říká se jí inversion FVG a často slouží jako vstup po změně směru.",
+     "key": "Proražená mezera mění roli: z podpory je odpor a naopak. To je inverzní FVG.",
+     "tf": {
+      "s": "Mezera proražená zavřením těla může dál fungovat z opačné strany.",
+      "a": true,
+      "why": "Často slouží jako vstup po změně směru."
+     }
+    }
    ],
    "task": "Na pětiminutovém grafu najdi dvacet FVG, které vznikly po displacementu. U každého zapiš, jestli se cena do mezery vrátila a jestli z ní pak pokračovala původním směrem. Spočítej si, kolikrát to vyšlo.",
-   "check": {"q": "Tři svíčky jdou nahoru. První má high 100, třetí má low 103. Kde je FVG a kde jeho střed?", "a": "FVG je pásmo mezi 100 a 103. Jeho střed (CE) je 101,5."}
+   "check": {
+    "q": "Tři svíčky jdou nahoru. První má high 100, třetí má low 103. Kde je FVG a kde jeho střed?",
+    "a": "FVG je pásmo mezi 100 a 103. Jeho střed (CE) je 101,5."
+   }
   },
   {
-   "n": 6, "title": "Order blocky, premium a discount",
+   "n": 6,
+   "title": "Order blocky, premium a discount",
    "goal": "Umíš určit, jestli je cena drahá nebo levná, a znáš další místa pro vstup.",
    "lessons": [
-    {"id": "6a", "title": "Order block", "text": "Bullish order block je poslední klesající svíčka před silným růstem, bearish je poslední rostoucí před silným poklesem. ICT je čte jako místa, kde se před pohybem nakupovalo nebo prodávalo. Order block má váhu jen tehdy, když po něm následoval displacement."},
-    {"id": "6b", "title": "Breaker", "text": "Když order block selže a cena ho prorazí, stává se z něj breaker. Při návratu funguje z opačné strany, podobně jako inverzní FVG."},
-    {"id": "6c", "title": "Premium a discount", "text": "Vezmi poslední výrazný pohyb od dna k vrcholu a rozděl ho v půlce. Horní polovina je premium (draho), dolní discount (levně). Nakupovat se má v discountu, prodávat v premium. Půlce se říká equilibrium."},
-    {"id": "6d", "title": "OTE: optimální vstup", "text": "Optimal trade entry je pásmo 62 až 79 % návratu podle Fibonacciho. Leží hluboko v discountu nebo premium. Když se v něm potká FVG nebo order block, mluví se o konfluenci, tedy shodě více důvodů na jednom místě."}
+    {
+     "id": "6a",
+     "title": "Order block",
+     "text": "Bullish order block je poslední klesající svíčka před silným růstem, bearish je poslední rostoucí před silným poklesem. ICT je čte jako místa, kde se před pohybem nakupovalo nebo prodávalo. Order block má váhu jen tehdy, když po něm následoval displacement.",
+     "key": "Order block je poslední opačná svíčka před silným pohybem. Váhu má jen s displacementem.",
+     "tf": {
+      "s": "Order block má váhu i bez toho, že by po něm přišel displacement.",
+      "a": false,
+      "why": "Bez displacementu váhu nemá."
+     }
+    },
+    {
+     "id": "6b",
+     "title": "Breaker",
+     "text": "Když order block selže a cena ho prorazí, stává se z něj breaker. Při návratu funguje z opačné strany, podobně jako inverzní FVG.",
+     "key": "Proražený order block se stává breakerem a funguje z opačné strany.",
+     "tf": {
+      "s": "Breaker vzniká z order blocku, který selhal.",
+      "a": true,
+      "why": "Při návratu ceny pak funguje obráceně."
+     }
+    },
+    {
+     "id": "6c",
+     "title": "Premium a discount",
+     "text": "Vezmi poslední výrazný pohyb od dna k vrcholu a rozděl ho v půlce. Horní polovina je premium (draho), dolní discount (levně). Nakupovat se má v discountu, prodávat v premium. Půlce se říká equilibrium.",
+     "key": "Horní polovina pohybu je premium (draho), dolní discount (levně). Kupuje se levně, prodává draho.",
+     "tf": {
+      "s": "Nakupovat se má v premium.",
+      "a": false,
+      "why": "Nakupuje se v discountu, v premium se prodává."
+     }
+    },
+    {
+     "id": "6d",
+     "title": "OTE: optimální vstup",
+     "text": "Optimal trade entry je pásmo 62 až 79 % návratu podle Fibonacciho. Leží hluboko v discountu nebo premium. Když se v něm potká FVG nebo order block, mluví se o konfluenci, tedy shodě více důvodů na jednom místě.",
+     "key": "OTE je návrat o 62 až 79 %. Když se tam potká víc důvodů, je to konfluence.",
+     "tf": {
+      "s": "Konfluence znamená, že se na jednom místě sejde víc důvodů pro vstup.",
+      "a": true,
+      "why": "Například FVG nebo order block uvnitř pásma OTE."
+     }
+    }
    ],
    "task": "Na deseti výrazných pohybech na 15minutovém grafu natáhni Fibonacciho nástroj, označ equilibrium a OTE a zapiš, jaké FVG nebo order blocky v OTE leží. Sleduj, odkud cena skutečně pokračovala.",
-   "check": {"q": "Trh vyrostl z 200 na 300 a vrací se. Na jaké ceně je equilibrium a je cena 230 v premium, nebo v discountu?", "a": "Equilibrium je 250. Cena 230 leží pod ním, tedy v discountu."}
+   "check": {
+    "q": "Trh vyrostl z 200 na 300 a vrací se. Na jaké ceně je equilibrium a je cena 230 v premium, nebo v discountu?",
+    "a": "Equilibrium je 250. Cena 230 leží pod ním, tedy v discountu."
+   }
   },
   {
-   "n": 7, "title": "Čas",
+   "n": 7,
+   "title": "Čas",
    "goal": "Víš, ve kterých hodinách ICT hledá obchody a proč mimo ně ne.",
    "lessons": [
-    {"id": "7a", "title": "Killzones", "text": "Killzones jsou časová okna, kdy je na trhu nejvíc aktivity, hlavně kolem otevření Londýna a New Yorku. Pro indexy je nejdůležitější newyorské dopoledne. Stejný setup mimo tato okna má podle ICT výrazně menší váhu."},
-    {"id": "7b", "title": "Otevírací ceny", "text": "ICT sleduje hlavně cenu o půlnoci newyorského času (midnight open) a cenu v 8:30, kdy vycházejí americká ekonomická data. Slouží jako dělicí čára: nad nimi je trh pro daný den drahý, pod nimi levný."},
-    {"id": "7c", "title": "Power of three", "text": "Den má podle ICT tři fáze. Akumulace: klidný pohyb do strany. Manipulace: falešný výpad jedním směrem, který vybere likviditu (říká se mu Judas swing). Distribuce: skutečný pohyb opačným směrem. Sweep ze čtvrtého týdne je právě ta manipulace."},
-    {"id": "7d", "title": "Silver Bullet", "text": "Silver Bullet je setup vázaný na tři hodinová okna newyorského času: 3:00 až 4:00, 10:00 až 11:00 a 14:00 až 15:00. Hledá se v nich FVG po výběru likvidity. Pozor, samotný čas výhodu nedává, je to jen filtr pro setup, který musí mít i sweep a změnu struktury."}
+    {
+     "id": "7a",
+     "title": "Killzones",
+     "text": "Killzones jsou časová okna, kdy je na trhu nejvíc aktivity, hlavně kolem otevření Londýna a New Yorku. Pro indexy je nejdůležitější newyorské dopoledne. Stejný setup mimo tato okna má podle ICT výrazně menší váhu.",
+     "key": "Killzones jsou časy s největší aktivitou. Pro indexy je to hlavně newyorské dopoledne.",
+     "tf": {
+      "s": "Stejný setup má podle ICT stejnou váhu v kteroukoli denní dobu.",
+      "a": false,
+      "why": "Mimo killzones má výrazně menší váhu."
+     }
+    },
+    {
+     "id": "7b",
+     "title": "Otevírací ceny",
+     "text": "ICT sleduje hlavně cenu o půlnoci newyorského času (midnight open) a cenu v 8:30, kdy vycházejí americká ekonomická data. Slouží jako dělicí čára: nad nimi je trh pro daný den drahý, pod nimi levný.",
+     "key": "Půlnoční cena a cena v 8:30 newyorského času dělí den: nad nimi je draho, pod nimi levně.",
+     "tf": {
+      "s": "Když je cena pod půlnoční otevírací cenou, bere se ten den jako levná.",
+      "a": true,
+      "why": "Otevírací cena slouží jako dělicí čára."
+     }
+    },
+    {
+     "id": "7c",
+     "title": "Power of three",
+     "text": "Den má podle ICT tři fáze. Akumulace: klidný pohyb do strany. Manipulace: falešný výpad jedním směrem, který vybere likviditu (říká se mu Judas swing). Distribuce: skutečný pohyb opačným směrem. Sweep ze čtvrtého týdne je právě ta manipulace.",
+     "key": "Den má tři fáze: akumulace, manipulace (falešný výpad) a distribuce (skutečný pohyb).",
+     "tf": {
+      "s": "Judas swing je falešný výpad, který vybere likviditu před skutečným pohybem.",
+      "a": true,
+      "why": "Je to fáze manipulace."
+     }
+    },
+    {
+     "id": "7d",
+     "title": "Silver Bullet",
+     "text": "Silver Bullet je setup vázaný na tři hodinová okna newyorského času: 3:00 až 4:00, 10:00 až 11:00 a 14:00 až 15:00. Hledá se v nich FVG po výběru likvidity. Pozor, samotný čas výhodu nedává, je to jen filtr pro setup, který musí mít i sweep a změnu struktury.",
+     "key": "Silver Bullet jsou tři hodinová okna. Čas je jen filtr, setup potřebuje i sweep a změnu struktury.",
+     "tf": {
+      "s": "Samotný čas okna Silver Bullet stačí jako důvod ke vstupu.",
+      "a": false,
+      "why": "Čas je jen filtr. Potřebuješ i sweep, změnu struktury a FVG."
+     }
+    }
    ],
    "task": "Deset obchodních dní si na minutovém grafu vyznač okno 9:30 až 11:00 NY, půlnoční otevírací cenu a cenu v 8:30. Zapiš, jestli v okně proběhl falešný výpad a kterým směrem šel hlavní pohyb dne.",
-   "check": {"q": "Co je Judas swing?", "a": "Falešný pohyb na začátku seance proti skutečnému směru dne. Vybere likviditu na jedné straně a pak se trh otočí."}
+   "check": {
+    "q": "Co je Judas swing?",
+    "a": "Falešný pohyb na začátku seance proti skutečnému směru dne. Vybere likviditu na jedné straně a pak se trh otočí."
+   }
   },
   {
-   "n": 8, "title": "Denní bias",
+   "n": 8,
+   "title": "Denní bias",
    "goal": "Před seancí umíš říct, kterým směrem dnes chceš obchodovat, a proč.",
    "lessons": [
-    {"id": "8a", "title": "Co je bias", "text": "Bias je tvůj předpoklad, jestli dnes cena půjde spíš nahoru, nebo dolů. Není to předpověď, je to pracovní hypotéza, podle které vybíráš jen obchody jedním směrem. Když se nepotvrdí, neobchoduješ."},
-    {"id": "8b", "title": "Postup shora dolů", "text": "Začni na denním grafu: kde je nejbližší nevybraná likvidita a nevyplněný FVG? To je cíl. Na hodinovém grafu zkontroluj, jestli struktura míří stejným směrem. Teprve potom jdi na 15 a 5 minut hledat vstup."},
-    {"id": "8c", "title": "Kdy bias nemít", "text": "Když denní a hodinový graf ukazují každý jinam, když je trh uprostřed range, nebo když ten den vycházejí velké zprávy (rozhodnutí o sazbách, inflace, zaměstnanost), je poctivá odpověď: dnes nevím. Den bez obchodu není ztráta."},
-    {"id": "8d", "title": "Zápis před seancí", "text": "Každý den před 15:30 si napiš tři věty: kam cena podle mě míří, co by to potvrdilo a co by mi ukázalo, že se pletu. Večer zápis porovnej s tím, co se stalo. Tohle je nejdůležitější návyk celého kurzu."}
+    {
+     "id": "8a",
+     "title": "Co je bias",
+     "text": "Bias je tvůj předpoklad, jestli dnes cena půjde spíš nahoru, nebo dolů. Není to předpověď, je to pracovní hypotéza, podle které vybíráš jen obchody jedním směrem. Když se nepotvrdí, neobchoduješ.",
+     "key": "Bias je pracovní hypotéza o směru dne. Bereš jen obchody tím směrem.",
+     "tf": {
+      "s": "Bias je jistá předpověď, kam cena dnes půjde.",
+      "a": false,
+      "why": "Je to hypotéza. Když se nepotvrdí, neobchoduje se."
+     }
+    },
+    {
+     "id": "8b",
+     "title": "Postup shora dolů",
+     "text": "Začni na denním grafu: kde je nejbližší nevybraná likvidita a nevyplněný FVG? To je cíl. Na hodinovém grafu zkontroluj, jestli struktura míří stejným směrem. Teprve potom jdi na 15 a 5 minut hledat vstup.",
+     "key": "Denní graf ukáže cíl, hodinový potvrdí směr, 15 a 5 minut slouží ke vstupu.",
+     "tf": {
+      "s": "Vstup se hledá na denním grafu.",
+      "a": false,
+      "why": "Na denním grafu se hledá cíl, vstup až na 15 a 5 minutách."
+     }
+    },
+    {
+     "id": "8c",
+     "title": "Kdy bias nemít",
+     "text": "Když denní a hodinový graf ukazují každý jinam, když je trh uprostřed range, nebo když ten den vycházejí velké zprávy (rozhodnutí o sazbách, inflace, zaměstnanost), je poctivá odpověď: dnes nevím. Den bez obchodu není ztráta.",
+     "key": "Když si grafy protiřečí, trh je v range nebo vycházejí velké zprávy, je správné neobchodovat.",
+     "tf": {
+      "s": "Den bez obchodu je ztráta.",
+      "a": false,
+      "why": "Není. Někdy je „dnes nevím“ to nejlepší rozhodnutí."
+     }
+    },
+    {
+     "id": "8d",
+     "title": "Zápis před seancí",
+     "text": "Každý den před 15:30 si napiš tři věty: kam cena podle mě míří, co by to potvrdilo a co by mi ukázalo, že se pletu. Večer zápis porovnej s tím, co se stalo. Tohle je nejdůležitější návyk celého kurzu.",
+     "key": "Před seancí napiš tři věty: kam cena míří, co to potvrdí a co ukáže, že se pleteš.",
+     "tf": {
+      "s": "Zápis před seancí je podle kurzu nejdůležitější návyk.",
+      "a": true,
+      "why": "Večer ho porovnej s tím, co se opravdu stalo."
+     }
+    }
    ],
    "task": "Deset obchodních dní po sobě napiš před seancí svůj bias podle postupu shora dolů. Večer si zapiš výsledek. Na konci spočítej, kolikrát jsi měla směr správně a kdy jsi správně zůstala stranou.",
-   "check": {"q": "Denní graf je v trendu nahoru, hodinový právě udělal MSS dolů. Co s tím?", "a": "Je to buď jen korekce denního trendu, nebo začátek obratu. Dokud hodinový graf znovu neukáže sílu nahoru, je bias nejasný a správně je počkat."}
+   "check": {
+    "q": "Denní graf je v trendu nahoru, hodinový právě udělal MSS dolů. Co s tím?",
+    "a": "Je to buď jen korekce denního trendu, nebo začátek obratu. Dokud hodinový graf znovu neukáže sílu nahoru, je bias nejasný a správně je počkat."
+   }
   },
   {
-   "n": 9, "title": "Model krok za krokem",
-   "goal": "Umíš na grafu najít kompletní setup, který testuje Knot.",
+   "n": 9,
+   "title": "Model krok za krokem",
+   "goal": "Umíš na grafu najít kompletní setup, který testuje Tape.",
    "lessons": [
-    {"id": "9a", "title": "Pět kroků", "text": "Model z Knotu skládá vše, co už znáš. Čas: okno 9:30 až 11:00 NY. Likvidita: high a low předchozího dne a noční seance. Sweep: cena jednu úroveň vybere. Potvrzení: MSS s displacementem, který nechá FVG. Vstup: limitní příkaz ve středu FVG."},
-    {"id": "9b", "title": "Stop a cíl", "text": "Stop-loss patří těsně za extrém sweepu. Kdyby se cena vrátila až tam, myšlenka obchodu neplatí. Polovina pozice se zavírá, když zisk dosáhne velikosti rizika, zbytek míří na dvojnásobek. Podrobná pravidla najdeš v sekci Model."},
-    {"id": "9c", "title": "Kdy setup neplatí", "text": "Chybí sweep. MSS proběhl pomalu a bez FVG. Od sweepu uběhlo moc času. Stop vychází příliš daleko. Okno skončilo. Každý z těchto bodů znamená žádný obchod. Většinu dní model žádný setup nedá, a to je v pořádku."},
-    {"id": "9d", "title": "Poctivá poznámka", "text": "Tenhle model je hypotéza. Dokud neprojde testem na historických datech, nikdo neví, jestli vydělává. Tvým úkolem zatím není mu věřit, ale umět ho na grafu přesně poznat."}
+    {
+     "id": "9a",
+     "title": "Pět kroků",
+     "text": "Model z Tape skládá vše, co už znáš. Čas: okno 9:30 až 11:00 NY. Likvidita: high a low předchozího dne a noční seance. Sweep: cena jednu úroveň vybere. Potvrzení: MSS s displacementem, který nechá FVG. Vstup: limitní příkaz ve středu FVG.",
+     "key": "Model má pět kroků: čas, likvidita, sweep, MSS s displacementem a FVG, vstup ve středu mezery.",
+     "tf": {
+      "s": "Vstup podle modelu je limitní příkaz ve středu FVG.",
+      "a": true,
+      "why": "Je to pátý a poslední krok."
+     }
+    },
+    {
+     "id": "9b",
+     "title": "Stop a cíl",
+     "text": "Stop-loss patří těsně za extrém sweepu. Kdyby se cena vrátila až tam, myšlenka obchodu neplatí. Polovina pozice se zavírá, když zisk dosáhne velikosti rizika, zbytek míří na dvojnásobek. Podrobná pravidla najdeš v sekci Model.",
+     "key": "Stop je těsně za sweepem. Půlka pozice se zavírá na 1R, zbytek míří na 2R.",
+     "tf": {
+      "s": "Stop-loss patří těsně za extrém sweepu.",
+      "a": true,
+      "why": "Kdyby se cena vrátila až tam, myšlenka obchodu neplatí."
+     }
+    },
+    {
+     "id": "9c",
+     "title": "Kdy setup neplatí",
+     "text": "Chybí sweep. MSS proběhl pomalu a bez FVG. Od sweepu uběhlo moc času. Stop vychází příliš daleko. Okno skončilo. Každý z těchto bodů znamená žádný obchod. Většinu dní model žádný setup nedá, a to je v pořádku.",
+     "key": "Když chybí jediný krok, obchod se nebere. Většinu dní setup vůbec nepřijde.",
+     "tf": {
+      "s": "Když chybí sweep, ale všechno ostatní sedí, obchod se dá vzít.",
+      "a": false,
+      "why": "Každý chybějící bod znamená žádný obchod."
+     }
+    },
+    {
+     "id": "9d",
+     "title": "Poctivá poznámka",
+     "text": "Tenhle model je hypotéza. Dokud neprojde testem na historických datech, nikdo neví, jestli vydělává. Tvým úkolem zatím není mu věřit, ale umět ho na grafu přesně poznat.",
+     "key": "Model je zatím jen hypotéza. Cílem je umět ho na grafu přesně poznat.",
+     "tf": {
+      "s": "Model už prošel testem a ví se, že vydělává.",
+      "a": false,
+      "why": "Zatím je to neověřená hypotéza."
+     }
+    }
    ],
    "task": "Projdi na minutovém grafu posledních dvacet obchodních dní a najdi všechny dny, kdy v okně vznikl kompletní setup. Každý si vyfoť a popiš všech pět kroků. Stejně tak si vyfoť tři dny, kdy setup vypadal lákavě, ale jeden krok chyběl.",
-   "check": {"q": "Cena vybrala včerejší low a prudce roste. FVG vznikl, ale žádná svíčka ještě nezavřela nad posledním swing high. Můžeš vstoupit?", "a": "Ne. Chybí potvrzení změnou struktury (MSS). Bez něj to může být jen krátký odraz v pokračujícím poklesu."}
+   "check": {
+    "q": "Cena vybrala včerejší low a prudce roste. FVG vznikl, ale žádná svíčka ještě nezavřela nad posledním swing high. Můžeš vstoupit?",
+    "a": "Ne. Chybí potvrzení změnou struktury (MSS). Bez něj to může být jen krátký odraz v pokračujícím poklesu."
+   }
   },
   {
-   "n": 10, "title": "Řízení rizika",
+   "n": 10,
+   "title": "Řízení rizika",
    "goal": "Víš, kolik smíš na jednom obchodu ztratit a proč je to důležitější než vstup.",
    "lessons": [
-    {"id": "10a", "title": "Jednotka R", "text": "R je částka, kterou riskuješ na jeden obchod, tedy vzdálenost vstupu od stopu krát velikost pozice. Všechno ostatní se měří v R: ztráta je minus 1R, zisk na dvojnásobku rizika plus 2R. Díky tomu můžeš porovnávat obchody bez ohledu na peníze."},
-    {"id": "10b", "title": "Winrate a RR patří k sobě", "text": "Při poměru zisku k riziku 1:1 potřebuješ vyhrát víc než 50 % obchodů, při 2:1 stačí víc než 33 %, při 3:1 víc než 25 %. Vysoký winrate s malým RR může prodělávat a nízký winrate s velkým RR vydělávat. Rozhoduje jejich kombinace."},
-    {"id": "10c", "title": "Velikost pozice", "text": "Běžné pravidlo je neriskovat na obchod víc než 1 % účtu, začátečník klidně polovinu. Série pěti až osmi ztrát po sobě přijde i u dobrého modelu a účet ji musí přežít. Velikost pozice se počítá od stopu, nikdy obráceně."},
-    {"id": "10d", "title": "Denní stopka", "text": "Stanov si předem, po kolika ztrátách v jednom dni končíš. Model v Knotu bere nejvýš jeden obchod denně právě proto, aby po ztrátě nepřišel pokus vyhrát ji zpátky."}
+    {
+     "id": "10a",
+     "title": "Jednotka R",
+     "text": "R je částka, kterou riskuješ na jeden obchod, tedy vzdálenost vstupu od stopu krát velikost pozice. Všechno ostatní se měří v R: ztráta je minus 1R, zisk na dvojnásobku rizika plus 2R. Díky tomu můžeš porovnávat obchody bez ohledu na peníze.",
+     "key": "R je částka, kterou riskuješ na jeden obchod. Výsledky se měří v R, ne v penězích.",
+     "tf": {
+      "s": "Ztráta na stop-lossu je minus 1R.",
+      "a": true,
+      "why": "Zisk na dvojnásobku rizika je plus 2R."
+     }
+    },
+    {
+     "id": "10b",
+     "title": "Winrate a RR patří k sobě",
+     "text": "Při poměru zisku k riziku 1:1 potřebuješ vyhrát víc než 50 % obchodů, při 2:1 stačí víc než 33 %, při 3:1 víc než 25 %. Vysoký winrate s malým RR může prodělávat a nízký winrate s velkým RR vydělávat. Rozhoduje jejich kombinace.",
+     "key": "Rozhoduje kombinace winrate a poměru zisku k riziku, ne jedno z těch čísel.",
+     "tf": {
+      "s": "Při poměru zisku k riziku 2:1 stačí vyhrát víc než třetinu obchodů.",
+      "a": true,
+      "why": "Přesně víc než 33 %."
+     }
+    },
+    {
+     "id": "10c",
+     "title": "Velikost pozice",
+     "text": "Běžné pravidlo je neriskovat na obchod víc než 1 % účtu, začátečník klidně polovinu. Série pěti až osmi ztrát po sobě přijde i u dobrého modelu a účet ji musí přežít. Velikost pozice se počítá od stopu, nikdy obráceně.",
+     "key": "Riskuj nejvýš 1 % účtu na obchod. Velikost pozice se počítá od stopu.",
+     "tf": {
+      "s": "Série pěti ztrát po sobě znamená, že je model špatný.",
+      "a": false,
+      "why": "Taková série přijde i u dobrého modelu a účet ji musí přežít."
+     }
+    },
+    {
+     "id": "10d",
+     "title": "Denní stopka",
+     "text": "Stanov si předem, po kolika ztrátách v jednom dni končíš. Model v Tape bere nejvýš jeden obchod denně právě proto, aby po ztrátě nepřišel pokus vyhrát ji zpátky.",
+     "key": "Předem si urči, po kolika ztrátách ten den končíš.",
+     "tf": {
+      "s": "Po ztrátě je dobré hned vzít další obchod a vyhrát ji zpátky.",
+      "a": false,
+      "why": "Přesně tomu má denní stopka zabránit."
+     }
+    }
    ],
    "task": "Vezmi setupy z devátého týdne a u každého spočítej riziko v bodech a výsledek v R. Sečti je. Pak spočítej, jak by vypadal účet 10 000 dolarů při riziku 1 % a při riziku 5 % na obchod po nejhorší sérii ztrát, kterou jsi našla.",
-   "check": {"q": "Model má winrate 40 % a průměrný zisk 2R při ztrátě 1R. Vydělává?", "a": "Ano. Ze 100 obchodů je 40 výher po 2R (plus 80R) a 60 ztrát po 1R (minus 60R). Výsledek je plus 20R před poplatky."}
+   "check": {
+    "q": "Model má winrate 40 % a průměrný zisk 2R při ztrátě 1R. Vydělává?",
+    "a": "Ano. Ze 100 obchodů je 40 výher po 2R (plus 80R) a 60 ztrát po 1R (minus 60R). Výsledek je plus 20R před poplatky."
+   }
   },
   {
-   "n": 11, "title": "Backtest a deník",
+   "n": 11,
+   "title": "Backtest a deník",
    "goal": "Umíš si model sama ověřit na historii a vést o tom záznamy.",
    "lessons": [
-    {"id": "11a", "title": "Ruční backtest", "text": "V TradingView použij funkci Replay: graf se vrátí do minulosti a svíčky přibývají po jedné. Rozhoduj se, jako by to bylo naživo, a výsledek si zapiš dřív, než posuneš graf dál. Jen tak se vyhneš tomu, že budeš vidět setupy až zpětně."},
-    {"id": "11b", "title": "Co zapisovat", "text": "Datum, směr, která likvidita byla vybraná, vstup, stop, výsledek v R, snímek grafu a jedna věta, co bys příště udělala jinak. Tabulka stačí. Bez deníku nepoznáš, jestli chybuje model, nebo ty."},
-    {"id": "11c", "title": "Kolik obchodů je dost", "text": "Deset obchodů neříká nic, třicet je první náznak, stovka už něco znamená. Výsledky ber z různých měsíců, trh se chová jinak v klidném a jinak v divokém období."},
-    {"id": "11d", "title": "Past přeučení", "text": "Když budeš pravidla upravovat tak dlouho, až na minulých datech vyjdou skvěle, na nových datech nejspíš selžou. Proto se pravidla ladí na jedné části historie a ověřují na jiné, kterou jsi při ladění neviděla. Stejně pracuje backtester v Knot."}
+    {
+     "id": "11a",
+     "title": "Ruční backtest",
+     "text": "V TradingView použij funkci Replay: graf se vrátí do minulosti a svíčky přibývají po jedné. Rozhoduj se, jako by to bylo naživo, a výsledek si zapiš dřív, než posuneš graf dál. Jen tak se vyhneš tomu, že budeš vidět setupy až zpětně.",
+     "key": "V Replay se rozhoduj jako naživo a výsledek zapiš dřív, než posuneš graf.",
+     "tf": {
+      "s": "Při backtestu je v pořádku podívat se dopředu, jak to dopadlo, a pak se rozhodnout.",
+      "a": false,
+      "why": "Pak vidíš setupy jen zpětně a výsledky nic neříkají."
+     }
+    },
+    {
+     "id": "11b",
+     "title": "Co zapisovat",
+     "text": "Datum, směr, která likvidita byla vybraná, vstup, stop, výsledek v R, snímek grafu a jedna věta, co bys příště udělala jinak. Tabulka stačí. Bez deníku nepoznáš, jestli chybuje model, nebo ty.",
+     "key": "Zapisuj datum, směr, vybranou likviditu, vstup, stop, výsledek v R, snímek a jednu větu poučení.",
+     "tf": {
+      "s": "Bez deníku nepoznáš, jestli chybuje model, nebo ty.",
+      "a": true,
+      "why": "Proto stačí i obyčejná tabulka, hlavně ji vést."
+     }
+    },
+    {
+     "id": "11c",
+     "title": "Kolik obchodů je dost",
+     "text": "Deset obchodů neříká nic, třicet je první náznak, stovka už něco znamená. Výsledky ber z různých měsíců, trh se chová jinak v klidném a jinak v divokém období.",
+     "key": "Deset obchodů nic neříká, třicet je první náznak, stovka už něco znamená.",
+     "tf": {
+      "s": "Deset obchodů stačí na to, aby se dalo říct, že model funguje.",
+      "a": false,
+      "why": "Deset je málo, první náznak dává až kolem třiceti."
+     }
+    },
+    {
+     "id": "11d",
+     "title": "Past přeučení",
+     "text": "Když budeš pravidla upravovat tak dlouho, až na minulých datech vyjdou skvěle, na nových datech nejspíš selžou. Proto se pravidla ladí na jedné části historie a ověřují na jiné, kterou jsi při ladění neviděla. Stejně pracuje backtester v Tape.",
+     "key": "Pravidla se ladí na jedné části historie a ověřují na jiné.",
+     "tf": {
+      "s": "Čím déle pravidla upravuješ, aby minulost vyšla skvěle, tím líp budou fungovat na nových datech.",
+      "a": false,
+      "why": "To je přeučení. Na nových datech pak nejspíš selžou."
+     }
+    }
    ],
    "task": "Udělej v režimu Replay ruční backtest modelu na třiceti obchodních dnech, které jsi ještě neprocházela. Veď deník podle lekce 11b a na konci spočítej winrate, průměrné R a nejdelší sérii ztrát.",
-   "check": {"q": "Proč nestačí otestovat model na stejných datech, na kterých jsi ladila jeho pravidla?", "a": "Protože pravidla jsou těm datům přizpůsobená a výsledek je nadhodnocený. Jestli model opravdu funguje, ukážou až data, která při ladění neviděl."}
+   "check": {
+    "q": "Proč nestačí otestovat model na stejných datech, na kterých jsi ladila jeho pravidla?",
+    "a": "Protože pravidla jsou těm datům přizpůsobená a výsledek je nadhodnocený. Jestli model opravdu funguje, ukážou až data, která při ladění neviděl."
+   }
   },
   {
-   "n": 12, "title": "Demo účet a vlastní plán",
+   "n": 12,
+   "title": "Demo účet a vlastní plán",
    "goal": "Máš sepsaný obchodní plán a zkoušíš ho bez rizika.",
    "lessons": [
-    {"id": "12a", "title": "Obchodní plán na jednu stránku", "text": "Sepiš si: jaký trh a kdy obchoduješ, přesná pravidla vstupu, stopu a výstupu, kolik riskuješ, kdy končíš a kdy neobchoduješ vůbec. Co v plánu není, to neděláš."},
-    {"id": "12b", "title": "Kontrolní seznam před vstupem", "text": "Jsem v okně? Proběhl sweep? Je tu MSS s displacementem? Mám FVG? Vychází stop v limitu? Stačí jedno ne a obchod neber. Seznam si dej vedle monitoru."},
-    {"id": "12c", "title": "Hlava", "text": "Největší chyby nejsou technické: strach ze zmeškaného obchodu, snaha vyhrát ztrátu zpátky, posouvání stopu. Pomáhá pevný plán, malé riziko a pravidlo, že po porušení plánu ten den končíš."},
-    {"id": "12d", "title": "Co dál", "text": "Obchoduj nejdřív na demo účtu, kde o nic nejde, aspoň dva měsíce nebo padesát obchodů. Na skutečné peníze má smysl pomýšlet až tehdy, když backtest i demo ukazují totéž. Většina začínajících obchodníků prodělává, takže trpělivost je tu výhoda."}
+    {
+     "id": "12a",
+     "title": "Obchodní plán na jednu stránku",
+     "text": "Sepiš si: jaký trh a kdy obchoduješ, přesná pravidla vstupu, stopu a výstupu, kolik riskuješ, kdy končíš a kdy neobchoduješ vůbec. Co v plánu není, to neděláš.",
+     "key": "Plán na jednu stránku: trh, čas, vstup, stop, výstup, riziko a kdy končíš.",
+     "tf": {
+      "s": "Co v plánu není, to neděláš.",
+      "a": true,
+      "why": "Plán je od toho, aby rozhodoval za tebe."
+     }
+    },
+    {
+     "id": "12b",
+     "title": "Kontrolní seznam před vstupem",
+     "text": "Jsem v okně? Proběhl sweep? Je tu MSS s displacementem? Mám FVG? Vychází stop v limitu? Stačí jedno ne a obchod neber. Seznam si dej vedle monitoru.",
+     "key": "Před vstupem projdi seznam. Jedno ne znamená žádný obchod.",
+     "tf": {
+      "s": "Když v seznamu před vstupem vyjde jedno ne, obchod se nebere.",
+      "a": true,
+      "why": "Seznam si dej vedle monitoru."
+     }
+    },
+    {
+     "id": "12c",
+     "title": "Hlava",
+     "text": "Největší chyby nejsou technické: strach ze zmeškaného obchodu, snaha vyhrát ztrátu zpátky, posouvání stopu. Pomáhá pevný plán, malé riziko a pravidlo, že po porušení plánu ten den končíš.",
+     "key": "Největší chyby jsou v hlavě: strach ze zmeškání, honba za ztrátou a posouvání stopu.",
+     "tf": {
+      "s": "Největší chyby začátečníků bývají technické.",
+      "a": false,
+      "why": "Bývají v hlavě: strach, snaha vyhrát ztrátu zpátky, posouvání stopu."
+     }
+    },
+    {
+     "id": "12d",
+     "title": "Co dál",
+     "text": "Obchoduj nejdřív na demo účtu, kde o nic nejde, aspoň dva měsíce nebo padesát obchodů. Na skutečné peníze má smysl pomýšlet až tehdy, když backtest i demo ukazují totéž. Většina začínajících obchodníků prodělává, takže trpělivost je tu výhoda.",
+     "key": "Nejdřív demo účet, aspoň dva měsíce nebo padesát obchodů. Trpělivost je výhoda.",
+     "tf": {
+      "s": "Na skutečné peníze má smysl jít hned po dokončení kurzu.",
+      "a": false,
+      "why": "Nejdřív demo a shoda s backtestem."
+     }
+    }
    ],
    "task": "Napiš si obchodní plán a kontrolní seznam. Otevři demo účet (paper trading v TradingView) a čtyři týdny podle plánu obchoduj. Každý pátek si projdi deník a zapiš jednu věc, kterou příští týden zlepšíš.",
-   "check": {"q": "Máš za sebou dvě ztráty a vidíš setup, který splňuje čtyři z pěti bodů seznamu. Co uděláš?", "a": "Nic. Setup není kompletní a chuť vyhrát ztráty zpátky je přesně ten důvod, proč seznam existuje."}
+   "check": {
+    "q": "Máš za sebou dvě ztráty a vidíš setup, který splňuje čtyři z pěti bodů seznamu. Co uděláš?",
+    "a": "Nic. Setup není kompletní a chuť vyhrát ztráty zpátky je přesně ten důvod, proč seznam existuje."
+   }
   }
  ]
 }
