@@ -3954,6 +3954,7 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
     row.appendChild(el("h2", null, "Čas v doručování ceny")); row.appendChild(lock); head.appendChild(row);
     head.appendChild(el("p", null, "Stručný výklad toho, jak s časem pracuje obchodník Zeussy (The Ones That Know) ve svém materiálu TIME z března 2023. Je to shrnutí hlavních myšlenek vlastními slovy, ne kopie materiálu.")); box.appendChild(head);
     PREM.forEach((x, i) => { const c = el("div","card ststep"), h = el("div","sthead"); h.appendChild(el("span","stn", i + 1)); h.appendChild(el("h3", null, x[0])); c.appendChild(h); c.appendChild(el("p", null, x[1])); box.appendChild(c); });
+    premTopics.forEach(t => box.appendChild(miniStepper(t)));
     const ny = tzNow("America/New_York"), loc = new Date(), off = ny ? (((loc.getHours() * 60 + loc.getMinutes()) - ny.mins) % 1440 + 1440) % 1440 : 0, hm = m => { m = ((m % 1440) + 1440) % 1440; return String(Math.floor(m / 60)).padStart(2, "0") + ":" + String(m % 60).padStart(2, "0"); };
     const t = el("div","card"), wrap = el("div","tablebox"), tb = el("table"), th = el("thead"), hr = el("tr"), bd = el("tbody"); ["Cyklus", "New York", "Náš čas"].forEach(h => hr.appendChild(el("th", null, h))); th.appendChild(hr); tb.appendChild(th);
     CYC90.forEach((m, i) => { const r = el("tr"); r.appendChild(el("td", null, (i + 1) + ".")); r.appendChild(el("td","num", hm(m) + "–" + hm(m + 90))); r.appendChild(el("td","num", hm(m + off) + "–" + hm(m + 90 + off))); if (ny && ny.mins >= m && ny.mins < m + 90) r.style.color = "var(--good)"; bd.appendChild(r); });
@@ -3961,7 +3962,19 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
     const w = el("div","card"); w.appendChild(el("h2", null, "Na rovinu")); w.appendChild(el("p", null, "Celý přístup stojí na předpokladu, že cenu řídí algoritmus podle času. Ten předpoklad nejde ověřit a sám autor píše, že si to má každý prověřit na grafech. Ber to jako návod, na co se dívat a co si zapisovat, ne jako pravidla, která vydělávají."));
     w.appendChild(el("p","small muted","Původní materiál je chráněný autorským právem a jeho autor výslovně žádá o svolení k dalšímu použití. Pro placenou verzi aplikace je potřeba souhlas autora, případně tuhle část nahradit vlastním obsahem.")); box.appendChild(w);
   }
+  let premTopics = [];
+  function miniStepper(t){
+    const c = el("div","card"), fig = el("figure","fig pa-fig"), svg = el("div","pa-svg"), kick = el("span","pa-kicker"), txt = el("p"), ctl = el("div","pa-ctl"), back = el("button", null, "Zpět"), next = el("button","primary","Další"); let step = 0;
+    back.type = next.type = "button"; fig.appendChild(svg);
+    const draw = anim => { const st = t.steps[step], prev = step > 0 ? t.steps[step - 1] : null, show = Math.max(1, Number(st.show) || 1), ps = prev ? Math.max(1, Number(prev.show) || 1) : 0;
+      svg.innerHTML = safeChart({candles: t.candles.slice(0, show), n: t.candles.length, lo: t.lo, hi: t.hi, h: t.h || 250, last: true, marks: paMarks(t, step, anim ? step : -1), newFrom: anim ? Math.min(ps, show) : show, focus: st.focus || null, prevFocus: anim ? (prev ? prev.focus || null : null) : (st.focus || null)});
+      kick.textContent = "Krok " + (step + 1) + " z " + t.steps.length; txt.textContent = st.text; back.disabled = step === 0; next.textContent = step === t.steps.length - 1 ? "Od začátku" : "Další"; };
+    back.addEventListener("click", () => { if (step > 0){ step--; draw(false); } }); next.addEventListener("click", () => { if (step === t.steps.length - 1){ step = 0; draw(false); } else { step++; draw(true); } });
+    ctl.appendChild(back); ctl.appendChild(next); c.appendChild(el("h2", null, t.title)); c.appendChild(el("p","small muted", t.intro)); c.appendChild(fig); c.appendChild(kick); c.appendChild(txt); c.appendChild(ctl); c.appendChild(el("p","small muted","Zapamatuj si: " + t.remember));
+    fontGate.then(() => draw(false)); return c;
+  }
   renderPremium();
+  fetch("data/premium.json", {cache: "no-store"}).then(r => r.json()).then(v => { if (Array.isArray(v)) premTopics = v; renderPremium(); }).catch(() => {});
 
   // ---------- moving to a new address without losing data ----------
   // data/site.json: {"move": "https://new-address", "from": ["https://old-address"]}. The old site hands the data to the new one in a window the person opens.

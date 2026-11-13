@@ -1,7 +1,7 @@
 // Offline cache for Tape. Network first, cache as fallback, so new versions always win when online.
-const C = "tape-v8";
+const C = "tape-v9";
 const CORE = ["./", "index.html", "manifest.json", "icon.svg", "course.json", "strategy.txt",
-  "data/core.json", "data/insights.json", "data/concepts.json", "data/lessons.json", "data/glossary.json", "data/ideas.json", "data/priceaction.json", "data/practice.json", "data/news.json", "data/study.json", "data/site.json"];
+  "data/core.json", "data/insights.json", "data/concepts.json", "data/lessons.json", "data/glossary.json", "data/ideas.json", "data/priceaction.json", "data/practice.json", "data/news.json", "data/study.json", "data/site.json", "data/premium.json"];
 self.addEventListener("install", e => { self.skipWaiting(); e.waitUntil(caches.open(C).then(c => c.addAll(CORE)).catch(() => {})); });
 self.addEventListener("activate", e => e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== C).map(k => caches.delete(k)))).then(() => self.clients.claim())));
 self.addEventListener("fetch", e => {
