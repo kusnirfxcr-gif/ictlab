@@ -651,6 +651,13 @@ body[data-view="kouc"] .orb,body.modal .orb{display:none}
   button:not(.fab):not(:disabled):hover,.abtn:hover,.chip:hover,.nav1 a:hover,a.go:hover,.tb-acc:not(.in):hover,nav a:hover{--gl:1;background-image:radial-gradient(circle 90px at var(--mx) var(--my),rgba(255,255,255,calc(.2*var(--gl))),transparent 70%)}
   button.primary:not(:disabled):hover,.abtn.primary:hover{background-image:radial-gradient(circle 90px at var(--mx) var(--my),rgba(138,180,255,calc(.55*var(--gl))),transparent 70%)}
 }
+.copop{position:fixed;right:22px;bottom:92px;z-index:24;width:min(420px,calc(100vw - 24px));max-height:min(660px,calc(100vh - 120px));overflow:auto;border-radius:22px;border:1px solid var(--line);background:rgba(14,14,18,.96);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);box-shadow:0 24px 70px rgba(0,0,0,.7);padding:12px;animation:rise .3s cubic-bezier(.2,.8,.2,1) both}
+.copop>.row{padding:2px 6px 8px}
+.copop .card{border:0;background:transparent;box-shadow:none;padding:6px}
+.copop .card>.row h2{font-size:15px;color:var(--muted);font-weight:600}
+.copop #co-quick{flex-wrap:wrap}
+.copop .chat{max-height:38vh;overflow:auto}
+@media (max-width:859px){.copop{left:8px;right:8px;width:auto;bottom:calc(72px + env(safe-area-inset-bottom));max-height:calc(100vh - 150px)} body.copen .fab,body.copen .orb{display:none} .copop #co-quick{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-bottom:2px} .copop #co-quick .chip{flex:none;white-space:nowrap}}
 </style>
 </head>
 <body>
@@ -735,7 +742,7 @@ body[data-view="kouc"] .orb,body.modal .orb{display:none}
     <div class="card"><h2>Skóre disciplíny</h2><div class="dscore"></div></div>
     <div class="card"><div class="row"><h2>Rozbor deníku</h2><div class="chips" id="co-per"><button class="chip" type="button" data-p="all">Vše</button><button class="chip" type="button" data-p="30">30 dní</button><button class="chip" type="button" data-p="7">7 dní</button></div></div>
       <p class="small muted">Počítá se přímo z tvých obchodů, bez AI a zdarma. U nálezů, které jdou hlídat, nabídne pravidlo do seznamu před vstupem.</p><div class="list" id="co-find"></div></div>
-    <div class="card"><div class="row"><h2>Zeptej se kouče</h2><button type="button" class="ck-del" id="co-clear" hidden>Smazat rozhovor</button></div>
+    <div class="card" id="co-card"><div class="row"><h2>Zeptej se kouče</h2><button type="button" class="ck-del" id="co-clear" hidden>Smazat rozhovor</button></div>
       <div class="chips" id="co-quick"></div>
       <div class="chat" id="co-log"></div>
       <div class="askrow"><textarea id="co-box" rows="2" placeholder="Třeba: Zhodnoť moje obchody z tohoto týdne"></textarea><button class="primary" id="co-send" type="button">Odeslat</button></div>
@@ -4279,6 +4286,19 @@ body[data-view="kouc"] .orb,body.modal .orb{display:none}
   const _refreshAll9 = refreshAll;
   refreshAll = function(){ _refreshAll9(); try { renderQuick(false); } catch(e){ if (window.console) console.error(e); } };
   DASH.unshift(["rychle","Rychlý zápis"]);
+
+  // ---------- coach in a pop-up window: the chat card moves into a floating panel and back ----------
+  (function coachPop(){
+    const card = $("co-card"), orb = $("orb"); if (!card || !orb) return;
+    const home = document.createComment("coach chat"), pop = el("div","copop"), head = el("div","row"), xb = el("button","ck-del","Zavřít"); card.parentNode.insertBefore(home, card);
+    pop.hidden = true; pop.setAttribute("role","dialog"); pop.setAttribute("aria-label","AI kouč"); xb.type = "button"; head.appendChild(el("b", null, "AI kouč")); head.appendChild(xb); pop.appendChild(head); document.body.appendChild(pop);
+    ["Jaký setup mi vychází nejlíp?", "Ve které hodině mi to jde a kdy ne?", "Dodržuju svůj plán dne?", "Jak se připravit na zítřejší seanci?", "Vysvětli mi FVG na příkladu"].forEach(q => { const b = el("button","chip", q); b.type = "button"; b.addEventListener("click", () => { $("co-box").value = q; $("co-send").click(); }); $("co-quick").appendChild(b); });
+    const close = () => { if (pop.hidden) return; pop.hidden = true; document.body.classList.remove("copen"); home.parentNode.insertBefore(card, home.nextSibling); };
+    const open = () => { pop.appendChild(card); pop.hidden = false; document.body.classList.add("copen"); const lg = $("co-log"); lg.scrollTop = lg.scrollHeight; try { $("co-box").focus({preventScroll: true}); } catch(e){} };
+    orb.addEventListener("click", ev => { ev.preventDefault(); if (pop.hidden) open(); else close(); });
+    xb.addEventListener("click", close); window.addEventListener("hashchange", () => { if (document.body.dataset.view === "kouc") close(); });
+    document.addEventListener("keydown", ev => { if (ev.key === "Escape" && !pop.hidden && !document.querySelector(".ob")) close(); });
+  })();
 
   // ---------- moving to a new address without losing data ----------
   // data/site.json: {"move": "https://new-address", "from": ["https://old-address"]}. The old site hands the data to the new one in a window the person opens.
