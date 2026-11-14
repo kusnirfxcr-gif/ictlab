@@ -1846,5 +1846,17 @@
   "status": "new",
   "what": "Analýza dne, indikátor a pokročilé modely jen pro platící účty, se skutečným zamčením na serveru.",
   "why": "Heslo na veřejné stránce obsah neochrání."
+ },
+ {
+  "id": "premium-londyn-a-podcykly",
+  "ts": "2026-11-14T05:55:00Z",
+  "date": "2026-11-14",
+  "title": "Premium: londýnské cykly a třicetiminutové podcykly",
+  "area": "model",
+  "value": 2,
+  "effort": 2,
+  "status": "new",
+  "what": "Doplnit do Premium a do indikátoru cykly od 2:30 newyorského času a volitelné dělení každého cyklu na tři třicetiminutové části. Pro Londýn dát jako hlavní reference high a low Asie.",
+  "why": "Veřejné skripty postavené na Zeussyho vláknech začínají cykly ve 2:30 a pro Londýn doporučují high a low Asie. Aplikace teď počítá cykly až od 7:00."
  }
 ]

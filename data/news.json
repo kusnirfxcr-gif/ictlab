@@ -1,13 +1,6 @@
 {
- "updated": "2026-11-13T07:44:01Z",
+ "updated": "2026-11-14T05:55:00Z",
  "events": [
-  {
-   "date": "2026-11-13",
-   "time": "14:30",
-   "title": "PPI (ceny výrobců), říjen",
-   "impact": 2,
-   "note": "Inflace na straně firem. Datum podle jednoho zdroje, ověř si ho."
-  },
   {
    "date": "2026-11-17",
    "time": "14:30",
@@ -16,11 +9,11 @@
    "note": "Útraty spotřebitelů. Kolem zveřejnění bývá na NQ a ES prudký pohyb."
   },
   {
-   "date": "2026-11-17",
+   "date": "2026-11-18",
    "time": "22:20",
    "title": "Výsledky Nvidia",
    "impact": 3,
-   "note": "Po zavření trhu. Hýbe hlavně NQ."
+   "note": "Po zavření trhu. Hýbe hlavně NQ. Datum je očekávané, firma ho zatím nepotvrdila."
   },
   {
    "date": "2026-11-18",

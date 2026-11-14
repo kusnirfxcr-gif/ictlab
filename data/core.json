@@ -1,8 +1,9 @@
 {
  "state": {
-  "lastRun": "2026-11-13T07:44:01Z",
+  "lastRun": "2026-11-14T05:55:00Z",
   "modelVersion": "1.0",
-  "runCount": 4
+  "runCount": 5,
+  "lastReport": "Skaut přidal dva poznatky (Zeussy: nejdřív čas, potom cena; jeden vyšší vrchol není trend). Učitel napsal lekci 5 o trendu. Vizionář přidal nápad na londýnské cykly v Premium. Zpravodaj odstranil proběhlé PPI a posunul výsledky Nvidia na 18. 11. jako nepotvrzené datum. Gems a Architekt beze změny."
  },
  "model": {
   "version": "1.0",

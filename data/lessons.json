@@ -1,5 +1,61 @@
 [
  {
+  "id": "20261114-L05",
+  "ts": "2026-11-14T05:55:00Z",
+  "date": "2026-11-14",
+  "n": 5,
+  "week": 2,
+  "title": "Trend nahoru a trend dolů",
+  "body": [
+   "Minule jsme si vyznačili swing high a swing low. Teď z nich přečteme směr. Stačí porovnat každý nový vrchol s tím předchozím a každé nové dno s tím předchozím.",
+   "Trend nahoru: každý další vrchol je výš než ten předchozí (higher high, HH) a každé další dno je taky výš (higher low, HL). Kupující jsou ochotni platit čím dál víc a při poklesu se vracejí dřív.",
+   "Trend dolů je zrcadlo: každý další vrchol je níž (lower high, LH) a každé další dno je níž (lower low, LL).",
+   "Platí obojí zároveň. Když jsou vrcholy výš, ale dno spadne pod to předchozí, trend nahoru dostal první trhlinu. Když se vrcholy i dna střídají bez řádu, trh jde do strany a směr nemá.",
+   "Směr čti na vyšším timeframu, než na kterém chceš vstupovat. Na minutovém grafu se struktura mění každých pár minut a většinou nic neznamená."
+  ],
+  "example": "NQ na patnáctiminutovém grafu: dno 21 000, vrchol 21 060, dno 21 030, vrchol 21 090. Druhé dno je výš než první (HL) a druhý vrchol je výš než první (HH). To je trend nahoru. Kdyby další dno spadlo na 21 010, pod 21 030, trend dostal trhlinu.",
+  "remember": "Trend nahoru jsou vyšší vrcholy a vyšší dna, trend dolů nižší vrcholy a nižší dna. Musí platit obojí.",
+  "terms": [
+   "trend",
+   "higher-high",
+   "higher-low",
+   "lower-high",
+   "lower-low"
+  ],
+  "quiz": [
+   {
+    "q": "Co je higher low?",
+    "options": [
+     "Dno, které je výš než předchozí dno",
+     "Vrchol, který je níž než předchozí vrchol",
+     "Nejnižší cena dne"
+    ],
+    "correct": 0,
+    "why": "Higher low je nové dno nad tím předchozím. Patří k trendu nahoru."
+   },
+   {
+    "q": "Vrcholy jsou čím dál výš, ale poslední dno spadlo pod předchozí. Co to znamená?",
+    "options": [
+     "Trend nahoru je silnější",
+     "Trend nahoru dostal první trhlinu",
+     "Začal jistý trend dolů"
+    ],
+    "correct": 1,
+    "why": "Trend nahoru potřebuje vyšší vrcholy i vyšší dna. Nižší dno je varování, ne hotový obrat."
+   },
+   {
+    "q": "Na jakém grafu je lepší číst směr?",
+    "options": [
+     "Na minutovém, je nejpřesnější",
+     "Na vyšším timeframu, než na kterém vstupuješ",
+     "Na tom, kde to vypadá nejlíp"
+    ],
+    "correct": 1,
+    "why": "Vyšší timeframe ukazuje směr, nižší jen načasování."
+   }
+  ]
+ },
+ {
   "id": "20261113-L04",
   "ts": "2026-11-13T07:44:01Z",
   "date": "2026-11-13",

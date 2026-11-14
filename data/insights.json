@@ -1,5 +1,31 @@
 [
  {
+  "id": "20261114-01",
+  "ts": "2026-11-14T05:55:00Z",
+  "date": "2026-11-14",
+  "bot": "skaut",
+  "concept": "cas",
+  "title": "Zeussy: nejdřív čas, potom cena",
+  "source": "Forex.in.rs, shrnutí rozhovoru se Zeussym",
+  "url": "https://www.forex.in.rs/smart-money-timing",
+  "simple": "Zeussy dělí Londýn a New York na pevné devadesátiminutové úseky. Každý má svou roli: nabírání, falešný výpad, skutečný pohyb. Podle toho, který úsek právě běží, ví, co od trhu čekat. Když v jeho postupu chybí jediný krok, obchod nebere.",
+  "takeaway": "Čas určuje, jaké chování čekat, a setup se bere jen tehdy, když sedí celý postup.",
+  "effect": "Model beze změny. Potvrzuje pravidlo, že chybějící krok znamená žádný obchod."
+ },
+ {
+  "id": "20261114-02",
+  "ts": "2026-11-14T05:55:00Z",
+  "date": "2026-11-14",
+  "bot": "skaut",
+  "concept": "struktura",
+  "title": "Jeden vyšší vrchol ještě není trend",
+  "source": "CrossTrade, Market Structure",
+  "url": "https://crosstrade.io/learn/price-action/market-structure",
+  "simple": "Trend nahoru potřebuje obojí: vyšší vrcholy i vyšší dna. Když roste jen jedno z toho, je to přechod nebo pohyb do strany. A minutový graf je na čtení struktury většinou jen šum.",
+  "takeaway": "Směr urči podle vrcholů i den zároveň a na vyšším timeframu, než na kterém vstupuješ.",
+  "effect": "Model beze změny. Použito v dnešní lekci o trendu."
+ },
+ {
   "id": "20261113-01",
   "ts": "2026-11-13T07:44:01Z",
   "date": "2026-11-13",
