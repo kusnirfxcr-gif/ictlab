@@ -15,7 +15,7 @@
   ],
   "example": "NQ na patnáctiminutovém grafu: dno 21 000, vrchol 21 060, dno 21 030, vrchol 21 090. Druhé dno je výš než první (HL) a druhý vrchol je výš než první (HH). To je trend nahoru. Kdyby další dno spadlo na 21 010, pod 21 030, trend dostal trhlinu.",
   "remember": "Trend nahoru jsou vyšší vrcholy a vyšší dna, trend dolů nižší vrcholy a nižší dna. Musí platit obojí.",
-  "terms": [
+  
    "trend",
    "higher-high",
    "higher-low",
@@ -71,7 +71,7 @@
   ],
   "example": "Na pětiminutovém grafu NQ mají tři svíčky po sobě high 21 040, 21 065 a 21 050. Prostřední svíčka má high nejvýš a obě sousední níž, takže 21 065 je swing high. O něco později mají tři svíčky low 20 990, 20 972 a 20 985. Prostřední low 20 972 je swing low. Mezi 20 972 a 21 065 je 93 bodů a právě tyhle dvě ceny si na graf vyznačíš.",
   "remember": "Swing high je svíčka s nižším high po obou stranách, swing low svíčka s vyšším low po obou stranách. Platí až po zavření svíčky napravo.",
-  "terms": [
+  
    "swing",
    "struktura-trhu",
    "likvidita"
@@ -125,7 +125,7 @@
   ],
   "example": "NQ se přes noc (18:00–9:30) pohybuje mezi 20 960 a 21 080. Overnight low je 20 960, overnight high 21 080 a noční rozpětí je 120 bodů. V 9:30 newyorského času, u nás v 15:30, otevře cash seance a během první půlhodiny cena udělá dalších 90 bodů. Za třicet minut se trh pohnul skoro stejně jako za celou noc.",
   "remember": "Hlavní pohyb na NQ a ES začíná v 9:30 newyorského času (u nás většinou 15:30). Co bylo předtím od 18:00, je overnight.",
-  "terms": [
+  
    "seance",
    "newyorsky-cas",
    "cash-open",
@@ -179,7 +179,7 @@
   ],
   "example": "Minutová svíčka na NQ: open 21 000, high 21 006, low 20 998, close 21 004. Tělo má 4 body, horní knot 2 body, dolní knot 2 body a svíčka je rostoucí.",
   "remember": "Svíčka = open, high, low, close za jeden úsek času. Timeframe je délka toho úseku.",
-  "terms": [
+  
    "svicka",
    "ohlc",
    "timeframe"
@@ -232,7 +232,7 @@
   ],
   "example": "Cena NQ jde z 21 000,00 na 21 010,00. To je 10 bodů, tedy 40 ticků. Na jednom kontraktu NQ je to 200 dolarů, na jednom MNQ 20 dolarů.",
   "remember": "Tick je nejmenší krok ceny, bod jsou čtyři ticky. Hodnota bodu: NQ 20 USD, ES 50 USD, MNQ 2 USD, MES 5 USD.",
-  "terms": [
+  
    "futures",
    "nq",
    "es",
