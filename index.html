@@ -1001,6 +1001,13 @@ body.sakura.modal .sk-pal,body.sakura.copen .sk-pal{display:none}
 #co-week .rrow span{flex:none;color:var(--muted);min-width:118px}
 #co-week .rrow b{font-weight:600;text-align:right}
 body.sakura .lkey.trap::before{background:linear-gradient(180deg,#ffb347,#ff7a59)}
+.advg{margin:10px 2px 0;display:block}
+.consm{display:flex;flex-direction:column;gap:7px;padding-top:6px;border-top:1px solid var(--line)}
+.bar.lim{position:relative}
+.bar.lim::after{content:"";position:absolute;left:var(--lim);top:-3px;bottom:-3px;width:2px;background:var(--ink);border-radius:2px}
+.bar i.over{background:linear-gradient(90deg,var(--amber),var(--bad));box-shadow:0 0 14px rgba(255,107,107,.5)}
+#j-costs .rrow{align-items:center;gap:10px}
+#j-costs .rrow span{flex:1;min-width:0;color:var(--muted);font-size:14px}
 </style>
 </head>
 <body>
@@ -4034,7 +4041,7 @@ body.sakura .lkey.trap::before{background:linear-gradient(180deg,#ffb347,#ff7a59
       const nm = inp(null, a.name, "Název účtu"); nm.maxLength = 30; nm.addEventListener("change", () => { a.name = nm.value.trim() || "Účet " + (ix + 1); cfgStore(); softRefresh(); });
       const ty = sel([["live","Osobní"],["prop","Prop firma"],["demo","Demo"]], a.type || "live"); ty.addEventListener("change", () => { a.type = ty.value; cfgStore(); });
       const dt = sel([["static","Pevný od počátečního zůstatku"],["trailing","Trailing od nejvyššího zůstatku"]], a.ddType || "static"); dt.addEventListener("change", () => { a.ddType = dt.value; cfgStore(); softRefresh(); });
-      g.appendChild(lab("Název", nm)); g.appendChild(lab("Typ", ty)); fld("Počáteční zůstatek ($)", "start", "50000"); fld("Denní limit ztráty ($)", "dailyLoss", "1000"); fld("Maximální drawdown ($)", "maxDD", "2000"); g.appendChild(lab("Typ drawdownu", dt)); fld("Cíl zisku ($)", "target", "3000");
+      g.appendChild(lab("Název", nm)); g.appendChild(lab("Typ", ty)); fld("Počáteční zůstatek ($)", "start", "50000"); fld("Denní limit ztráty ($)", "dailyLoss", "1000"); fld("Maximální drawdown ($)", "maxDD", "2000"); g.appendChild(lab("Typ drawdownu", dt)); fld("Cíl zisku ($)", "target", "3000"); fld("Konzistence: nejlepší den nejvýš (% zisku)", "cons", "40");
       b.appendChild(g); const n = jr.trades.filter(t => tAcct(t) === a.id).length, foot = el("div","row"); foot.appendChild(el("span","small muted", pl(n, "obchod", "obchody", "obchodů")));
       if (cfg.accounts.length > 1 && !n){ const rm = el("button","danger","Odebrat účet"); rm.type = "button"; rm.addEventListener("click", () => { cfg.accounts.splice(ix, 1); if (cfg.acct === a.id) cfg.acct = "all"; cfgStore(); refreshAll(); }); foot.appendChild(rm); }
       b.appendChild(foot); c.appendChild(b); });
@@ -4894,7 +4901,8 @@ body.sakura .lkey.trap::before{background:linear-gradient(180deg,#ffb347,#ff7a59
       Array.prototype.forEach.call($("st-tabs").children, b => b.setAttribute("aria-pressed", String(b.dataset.t === stTab)));
       const okN = m.lessons.filter(x => lp.sq["a-" + x.id]).length, bar = el("div","bar"), bi = el("i"); bi.style.width = Math.round(100 * okN / m.lessons.length) + "%"; bar.appendChild(bi);
       head.appendChild(el("span","kick","Úroveň: pokročilá")); head.appendChild(el("h2", null, m.title)); head.appendChild(el("p", null, m.intro)); head.appendChild(el("span","small muted","Ověřeno kvízem: " + okN + " z " + m.lessons.length)); head.appendChild(bar); box.appendChild(head);
-      m.lessons.forEach((x, i) => { const d = el("details","week" + (lp.sq["a-" + x.id] ? " done" : "")), sm = el("summary"), body = el("div","weekbody"), steps = el("ol","lsteps"), use = el("ul","stl ok"), trap = el("div","lkey trap"), cnt = el("span","cnt", lp.sq["a-" + x.id] ? "hotovo" : "lekce " + (i + 1));
+      let advG = null;
+      m.lessons.forEach((x, i) => { if (x.group && x.group !== advG){ advG = x.group; box.appendChild(el("span","kick advg", advG)); } const d = el("details","week" + (lp.sq["a-" + x.id] ? " done" : "")), sm = el("summary"), body = el("div","weekbody"), steps = el("ol","lsteps"), use = el("ul","stl ok"), trap = el("div","lkey trap"), cnt = el("span","cnt", lp.sq["a-" + x.id] ? "hotovo" : "lekce " + (i + 1));
         sm.appendChild(el("h3", null, x.title)); sm.appendChild(cnt); d.appendChild(sm); if (stAdvOpen === x.id) d.open = true; d.addEventListener("toggle", () => { if (d.open) stAdvOpen = x.id; });
         x.text.forEach(t => steps.appendChild(el("li", null, t))); body.appendChild(steps); body.appendChild(el("b","lgh","Jak s tím pracovat")); x.use.forEach(t => use.appendChild(el("li", null, t))); body.appendChild(use);
         trap.appendChild(el("b", null, "Pozor")); trap.appendChild(el("span", null, x.trap)); body.appendChild(trap);
@@ -4925,6 +4933,27 @@ body.sakura .lkey.trap::before{background:linear-gradient(180deg,#ffb347,#ff7a59
   // ---------- account: wipe the copy of the data stored with the account ----------
   { const _accRenderDel = accRender; accRender = function(){ _accRenderDel(); if (!auth || accMode === "newpass" || accConflict) return; const d = el("details","ans"), b = el("button","danger","Smazat data uložená v účtu"); b.type = "button"; d.appendChild(el("summary", null, "Smazání dat z účtu")); d.appendChild(el("p","small muted","Smaže kopii deníku, postupu a nastavení uloženou u účtu a odhlásí tě. Data v tomhle zařízení zůstanou. Účet samotný (e-mail a heslo) umíme zrušit zatím jen na požádání."));
       twoStep(b, "Opravdu smazat", async () => { try { await sbData("POST", "?on_conflict=user_id", {user_id: auth.id, data: {}, updated_at: new Date().toISOString()}); try { await sbAuth("logout", null, await accToken()); } catch(e){} authSave(null); try { localStorage.removeItem(SYNC_KEY); } catch(e){} accMsg = "Data v účtu jsou smazaná a jsi odhlášen."; } catch(e){ accMsg = "Smazání se nepovedlo. Zkus to znovu."; } accRender(); }); d.appendChild(b); accBox.appendChild(d); }; accRender(); }
+
+  // ---------- prop accounts: consistency rule meter and a ledger of fees, resets and payouts ----------
+  { const _propGuardC = propGuard; propGuard = function(){ _propGuardC(); const box = $("pg"), a = cfg.accounts.find(x => x.id === (cfg.acct === "all" ? (cfg.accounts.find(y => num(y.start) > 0) || {}).id : cfg.acct)), lim = a ? num(a.cons) : 0; if (!a || !(lim > 0) || $("pg-card").hidden) return;
+      const days = {}; jr.trades.filter(t => !t.missed && tAcct(t) === a.id && tNet(t) != null).forEach(t => { const k = tDay(t); days[k] = (days[k] || 0) + tNet(t); });
+      const vals = Object.keys(days).map(k => days[k]), total = vals.reduce((x, y) => x + y, 0), best = vals.length ? Math.max.apply(null, vals) : 0, w = el("div","consm"), bar = el("div","bar"), bi = el("i"), money = v => "$" + Math.round(v).toLocaleString("cs-CZ");
+      w.appendChild(el("b","lgh","Pravidlo konzistence"));
+      if (!(total > 0) || !(best > 0)){ w.appendChild(el("span","small muted","Zatím není z čeho počítat. Pravidlo se hlídá, až bude účet v zisku.")); box.appendChild(w); return; }
+      const pct = 100 * best / total, ok = pct <= lim, need = best / (lim / 100) - total; bi.style.width = Math.min(100, pct) + "%"; if (!ok) bi.classList.add("over"); bar.appendChild(bi); bar.style.setProperty("--lim", Math.min(100, lim) + "%"); bar.classList.add("lim");
+      w.appendChild(el("span", ok ? "small pos" : "small neg", "Nejlepší den " + money(best) + " je " + Math.round(pct) + " % celkového zisku " + money(total) + ". Limit je " + Math.round(lim) + " %.")); w.appendChild(bar);
+      w.appendChild(el("span","small muted", ok ? "Pravidlo je splněné. Další den nesmí vydělat víc než " + money(Math.max(best, lim * total / (100 - lim))) + ", jinak se poměr zhorší." : "Aby pravidlo vyšlo, potřebuješ v dalších dnech vydělat ještě aspoň " + money(need) + " bez dne většího, než je ten nejlepší.")); box.appendChild(w); }; }
+  jr.costs = jr.costs || [];
+  function renderCosts(){ let c = $("j-costs"); if (!c){ c = el("div","card"); c.id = "j-costs"; const anchor = $("j-mc").closest(".card"); anchor.parentNode.insertBefore(c, anchor.nextSibling); } { const typed = c.querySelector("input[inputmode=decimal]"); if (c.firstChild && (softLock || (typed && typed.value))) return; } clear(c); jr.costs = jr.costs || [];
+    c.appendChild(el("h2", null, "Náklady a výplaty prop účtů")); c.appendChild(el("p","small muted","Zapiš poplatky za výzvy, resety a výplaty. Uvidíš, kolik tě prop firmy opravdu stály a kolik vrátily. S výsledky obchodů se to nemíchá."));
+    const K = {fee: "Poplatek za výzvu", reset: "Reset", sub: "Měsíční platba", payout: "Výplata", other: "Jiný náklad"}, f = el("div","fgrid"), dt = inp("date", dayKey(), ""), ac = sel(cfg.accounts.map(a => [a.id, a.name]), cfg.acct === "all" ? cfg.accounts[0].id : cfg.acct), kd = sel(Object.keys(K).map(k => [k, K[k]]), "fee"), am = inp(null, "", "150", "decimal"), add = el("button","primary","Přidat"), money = v => (v < 0 ? "−$" : "$") + Math.abs(Math.round(v)).toLocaleString("cs-CZ");
+    add.type = "button"; f.appendChild(lab("Datum", dt)); f.appendChild(lab("Účet", ac)); f.appendChild(lab("Druh", kd)); f.appendChild(lab("Částka ($)", am)); c.appendChild(f); c.appendChild(add);
+    add.addEventListener("click", () => { const v = num(am.value); if (!(v > 0)){ toast("Napiš částku v dolarech."); am.focus(); return; } jr.costs.push({id: "c" + Date.now().toString(36), date: dt.value || dayKey(), acct: ac.value, kind: kd.value, amount: v}); am.value = ""; jStore(); });
+    if (!jr.costs.length) return; const sum = el("div","tiles"), paid = jr.costs.filter(x => x.kind !== "payout").reduce((s, x) => s + x.amount, 0), got = jr.costs.filter(x => x.kind === "payout").reduce((s, x) => s + x.amount, 0), net = got - paid;
+    sum.appendChild(tile("Zaplaceno", money(paid))); sum.appendChild(tile("Vyplaceno", money(got), got > 0 ? "pos" : null)); sum.appendChild(tile("Čistý výsledek", money(net), net >= 0 ? "pos" : "neg")); sum.appendChild(tile("Návratnost", paid > 0 ? Math.round(100 * net / paid) + " %" : "–", net >= 0 ? "pos" : "neg")); c.appendChild(sum);
+    const list = el("div","list"); jr.costs.slice().sort((x, y) => String(y.date).localeCompare(String(x.date))).forEach(x => { const r = el("div","rrow"), a = cfg.accounts.find(q => q.id === x.acct), rm = el("button","ck-del","Smazat"); rm.type = "button"; r.appendChild(el("span", null, x.date.split("-").reverse().join(". ") + " · " + (a ? a.name : "Účet") + " · " + (K[x.kind] || x.kind))); r.appendChild(el("b", x.kind === "payout" ? "pos" : "neg", (x.kind === "payout" ? "+" : "−") + "$" + Math.round(x.amount).toLocaleString("cs-CZ")));
+      rm.addEventListener("click", () => { jr.costs = jr.costs.filter(q => q.id !== x.id); jStore(); }); r.appendChild(rm); list.appendChild(r); }); c.appendChild(list); }
+  { const _refreshAllCost = refreshAll; refreshAll = function(){ _refreshAllCost(); try { if (document.body.dataset.view === "denik") renderCosts(); } catch(e){ if (window.console) console.error(e); } }; }
 
   // ---------- moving to a new address without losing data ----------
   // data/site.json: {"move": "https://new-address", "from": ["https://old-address"]}. The old site hands the data to the new one in a window the person opens.

@@ -470,8 +470,167 @@
  },
  "adv": {
   "title": "Pokročilé lekce",
-  "intro": "Deset témat, která navazují na dvanáctitýdenní kurz. Každé rozšiřuje něco, co už znáš: sweep, MSS, FVG, order block a čas. Projdi je až ve chvíli, kdy základní model poznáš na grafu bez přemýšlení. U každého je i upozornění, kde se s tím lidé nejčastěji spálí.",
+  "intro": "Sedmnáct témat, která navazují na dvanáctitýdenní kurz. Jsou rozdělená do bloků: detaily fair value gapu, otevření dne a zprávy, profily dne a týdne, další modely a nakonec lekce o tom, jak si kterýkoli koncept poctivě ověřit. Projdi je až ve chvíli, kdy základní model poznáš na grafu bez přemýšlení.",
   "lessons": [
+   {
+    "id": "fvg-ce",
+    "group": "Detaily FVG",
+    "title": "Střed mezery a jak se k ní cena chová",
+    "text": [
+     "Střed fair value gapu se jmenuje consequent encroachment (CE). ICT ho bere jako nejdůležitější úroveň mezery, důležitější než její hrany.",
+     "Když cena do mezery jen nahlédne, otočí se před středem nebo na něm a pokračuje původním směrem, mezera je respektovaná. To je známka síly.",
+     "Když svíčka zavře tělem za středem nebo za celou mezerou, mezera respektovaná není. Původní pohyb slábne a mezera se může obrátit v inverzní FVG.",
+     "Zvláštní případ je breakaway gap: mezera, do které se cena vůbec nevrátí. Vzniká u nejsilnějších pohybů, takže čekání na návrat tam znamená zmeškaný obchod, ne chybu."
+    ],
+    "use": [
+     "U každé mezery si vyznač i střed.",
+     "Sleduj zavření těla svíčky, ne knot.",
+     "Zapiš si do deníku, jestli vstupní mezera byla respektovaná až po střed, nebo hlouběji."
+    ],
+    "trap": "Pravidlo o středu neplatí na ticky přesně. Na minutovém grafu NQ cena střed běžně přestřelí o pár bodů a mezera přesto drží.",
+    "quiz": {
+     "q": "Co ukazuje, že mezera přestává platit?",
+     "opts": [
+      "Zavření těla svíčky za středem nebo za celou mezerou",
+      "Knot, který se dotkne horní hrany",
+      "To, že je starší než hodinu"
+     ],
+     "ok": "Zavření těla svíčky za středem nebo za celou mezerou",
+     "why": "Rozhoduje zavření těla. Knot do mezery je normální návrat."
+    }
+   },
+   {
+    "id": "fvg-first",
+    "group": "Detaily FVG",
+    "title": "První FVG po otevření a volume imbalance",
+    "text": [
+     "First presented FVG je první fair value gap, který vznikne po začátku sledovaného okna, nejčastěji po otevření burzy v 9:30 newyorského času. V novějších ICT lekcích slouží jako hlavní referenční mezera dopoledne.",
+     "Pracuje se s ním jako s každým FVG: hrany, střed a reakce při návratu. Rozdíl je v tom, že ho máš určený časem, takže se nemusíš rozhodovat, která z mnoha mezer je ta důležitá.",
+     "Volume imbalance je menší příbuzný FVG. Vznikne mezi těly dvou sousedních svíček, která na sebe nenavazují, i když se jejich knoty překrývají. Bere se jako slabší nerovnováha, ke které se cena také ráda vrací."
+    ],
+    "use": [
+     "Po 9:30 si vyznač první mezeru na minutovém nebo pětiminutovém grafu.",
+     "Drž se jednoho timeframu, jinak budeš mít každý den jinou „první“ mezeru.",
+     "Volume imbalance používej jen jako doplněk k FVG nebo order blocku."
+    ],
+    "trap": "Zdroje se neshodují, od kdy a na jakém timeframu se první mezera počítá. Vyber si jedno pravidlo a to pak testuj.",
+    "quiz": {
+     "q": "Čím se first presented FVG liší od běžného FVG?",
+     "opts": [
+      "Je určený časem: první mezera po začátku okna",
+      "Musí být větší než 10 bodů",
+      "Vzniká jen na denním grafu"
+     ],
+     "ok": "Je určený časem: první mezera po začátku okna",
+     "why": "Je to obyčejný FVG, jen vybraný podle času vzniku."
+    }
+   },
+   {
+    "id": "org",
+    "group": "Otevření a zprávy",
+    "title": "Opening range gap a první půlhodina",
+    "text": [
+     "Opening range gap je rozdíl mezi zavírací cenou běžné seance předchozího dne (16:15 newyorského času) a otevírací cenou v 9:30. Když trh otevře výš nebo níž, vznikne mezera, ve které se během hlavní seance neobchodovalo.",
+     "ICT s ní pracuje jako s obdélníkem: hrany, střed a čtvrtiny. Učí, že se cena během dopoledne často vrací aspoň ke středu mezery.",
+     "Opening range je rozpětí první půlhodiny, tedy 9:30 až 10:00. Jeho high a low jsou první likvidita nového dne a zároveň hranice, vůči kterým se čte zbytek dopoledne."
+    ],
+    "use": [
+     "Před 9:30 si vyznač včerejší zavírací cenu a po otevření dokresli mezeru.",
+     "V 10:00 si vyznač high a low první půlhodiny.",
+     "Sleduj, která strana první půlhodiny se vybere dřív a co cena udělá potom."
+    ],
+    "trap": "Časy a délka opening range se mezi zdroji liší. Tvrzení o vyplňování mezer nemá pro NQ a ES žádný veřejný nezávislý test, takže si ho ověř ve vlastních datech.",
+    "quiz": {
+     "q": "Mezi čím se měří opening range gap?",
+     "opts": [
+      "Mezi včerejším zavřením běžné seance a dnešním otevřením v 9:30",
+      "Mezi high a low noční seance",
+      "Mezi půlnoční cenou a cenou v 8:30"
+     ],
+     "ok": "Mezi včerejším zavřením běžné seance a dnešním otevřením v 9:30",
+     "why": "Je to mezera přes dobu, kdy hlavní seance neběží."
+    }
+   },
+   {
+    "id": "zpravy",
+    "group": "Otevření a zprávy",
+    "title": "Dny s velkými zprávami: NFP, CPI a FOMC",
+    "text": [
+     "Tři události hýbou indexy nejvíc. Zpráva o zaměstnanosti (NFP) vychází většinou první pátek v měsíci v 8:30 newyorského času. Inflace CPI vychází jednou měsíčně také v 8:30. Rozhodnutí Fedu (FOMC) přichází osmkrát ročně ve 14:00 a tisková konference začíná ve 14:30.",
+     "V minutách kolem zveřejnění se rozšiřuje spread, cena skáče oběma směry a stop-loss se může vyplnit daleko od zadané ceny. První pohyb po zprávě se často celý vrátí.",
+     "Den před velkou zprávou a dopoledne před FOMC bývá trh v úzkém rozpětí, protože velcí hráči čekají."
+    ],
+    "use": [
+     "Ráno se podívej do kalendáře v aplikaci a zapiš si časy do plánu dne.",
+     "Deset až patnáct minut před zprávou a po ní nevstupuj a nemáš-li plán, nedrž pozici.",
+     "Po zprávě čekej na stejný postup jako jindy: výběr likvidity, změnu struktury a mezeru.",
+     "V den FOMC obchoduj jen dopoledne, nebo vůbec."
+    ],
+    "trap": "Žádná zpráva není „jistý“ pohyb jedním směrem. Dobré číslo může trh poslat dolů a naopak. Nejlevnější rozhodnutí v takový den bývá neobchodovat.",
+    "quiz": {
+     "q": "Co je rozumné udělat pár minut před zprávou CPI?",
+     "opts": [
+      "Nevstupovat a počkat, až se trh uklidní",
+      "Vstoupit předem, aby ti pohyb neutekl",
+      "Zvětšit pozici, protože pohyb bude velký"
+     ],
+     "ok": "Nevstupovat a počkat, až se trh uklidní",
+     "why": "Kolem zprávy cena skáče oběma směry a stop se nemusí vyplnit tam, kde ho máš."
+    }
+   },
+   {
+    "id": "profil-dne",
+    "group": "Profily dne a týdne",
+    "title": "Profily dne a den, kdy se neobchoduje",
+    "text": [
+     "Profil dne je hrubý tvar, jaký den nakonec má. ICT jich popisuje několik a učí odhadovat, který se právě tvoří.",
+     "Londýnský obrat: low nebo high dne vznikne už v londýnské seanci a New York v tom směru pokračuje. Newyorský obrat: Londýn jde jedním směrem, New York po otevření vybere jeho extrém a den se otočí.",
+     "Trendový den: cena jde od rána jedním směrem jen s mělkými návraty. Tady se vstupuje v korekcích, ne proti pohybu.",
+     "Seek and destroy: cena střídavě vybírá high i low v úzkém rozpětí a nikam se neposouvá. Typické před velkou zprávou. Je to den, kdy model nefunguje a správné je skončit."
+    ],
+    "use": [
+     "V 9:30 si řekni, co už udělala Asie a Londýn: kde je high a low dne a která strana je vybraná.",
+     "Když se do 10:30 vybraly obě strany a cena je uprostřed, ber to jako den bez obchodu.",
+     "Večer si do deníku zapiš, jaký profil den nakonec měl. Po měsíci uvidíš, které poznáš včas."
+    ],
+    "trap": "Profil je jistý až večer. Naživo je to odhad a k žádnému z profilů neexistuje veřejná statistika, jak často nastává.",
+    "quiz": {
+     "q": "Cena během dopoledne vybrala high i low a vrací se doprostřed. Co s tím?",
+     "opts": [
+      "Brát to jako den bez obchodu",
+      "Vstoupit ve směru posledního výběru",
+      "Zdvojnásobit riziko, pohyb musí přijít"
+     ],
+     "ok": "Brát to jako den bez obchodu",
+     "why": "Střídavé vybírání obou stran je znak dne, kdy model nemá směr."
+    }
+   },
+   {
+    "id": "profil-tydne",
+    "group": "Profily dne a týdne",
+    "title": "Týdenní profily: který den dělá high a low týdne",
+    "text": [
+     "Stejně jako den má i týden svůj tvar. ICT sleduje, který den vznikne high nebo low týdne, protože od něj se odvíjí směr zbylých dnů.",
+     "Nejčastěji popisované varianty: low nebo high týdne vznikne v úterý a zbytek týdne pokračuje opačným směrem. Nebo trh do středy hledá směr a obrat přijde uprostřed týdne. Nebo je začátek týdne konsolidace a pohyb přijde až ve čtvrtek.",
+     "Pátek bývá ve znamení návratu části týdenního pohybu, hlavně odpoledne. Pondělí má často nejmenší rozpětí a málo vypovídá."
+    ],
+    "use": [
+     "V neděli večer si na denním grafu vyznač high a low minulého týdne a nejbližší cíle.",
+     "Ve středu se zeptej: je už high nebo low týdne hotové?",
+     "Značkuj si obchody dnem v týdnu, statistika podle dne je v deníku."
+    ],
+    "trap": "K týdenním profilům neexistují veřejná čísla o tom, jak často platí. Je to rámec pro přemýšlení, ne pravidlo pro vstup.",
+    "quiz": {
+     "q": "K čemu je týdenní profil dobrý?",
+     "opts": [
+      "Pomáhá odhadnout směr zbytku týdne",
+      "Říká přesný čas vstupu",
+      "Nahrazuje stop-loss"
+     ],
+     "ok": "Pomáhá odhadnout směr zbytku týdne",
+     "why": "Je to pohled na vyšší timeframe, vstup se hledá jinak."
+    }
+   },
    {
     "id": "smt",
     "title": "SMT divergence: když NQ a ES nejdou spolu",
@@ -495,7 +654,8 @@
      ],
      "ok": "Pokles nemusí pokračovat, sweep na ES mohl být past",
      "why": "Jeden trh nepotvrdil nové low druhého. Je to varování, ne jistota."
-    }
+    },
+    "group": "Modely a nástroje"
    },
    {
     "id": "cisd",
@@ -520,7 +680,8 @@
      ],
      "ok": "Zavření těla nad open řady klesajících svíček",
      "why": "CISD se počítá od otevírací ceny pohybu, ne od swingu, a potřebuje zavření těla."
-    }
+    },
+    "group": "Modely a nástroje"
    },
    {
     "id": "ifvg",
@@ -545,7 +706,8 @@
      ],
      "ok": "Když za ním cena zavře tělem svíčky",
      "why": "Rozhoduje zavření těla za mezerou, knot nestačí."
-    }
+    },
+    "group": "Modely a nástroje"
    },
    {
     "id": "unicorn",
@@ -570,7 +732,8 @@
      ],
      "ok": "Překryv breakeru a FVG",
      "why": "Unicorn je právě ten průnik breakeru a fair value gapu."
-    }
+    },
+    "group": "Modely a nástroje"
    },
    {
     "id": "bpr",
@@ -595,7 +758,8 @@
      ],
      "ok": "Z překryvu bullish a bearish FVG",
      "why": "BPR je průnik dvou mezer opačného směru."
-    }
+    },
+    "group": "Modely a nástroje"
    },
    {
     "id": "gaps",
@@ -620,7 +784,8 @@
      ],
      "ok": "Mezera mezi pátečním zavřením a nedělním otevřením",
      "why": "NWOG je cenový rozdíl přes víkendovou pauzu trhu."
-    }
+    },
+    "group": "Modely a nástroje"
    },
    {
     "id": "makra",
@@ -645,7 +810,8 @@
      ],
      "ok": "Krátké časové okno, ve kterém se čeká pohyb k likviditě",
      "why": "Makro je čas, ne setup. Killzone trvá hodiny, makro desítky minut."
-    }
+    },
+    "group": "Modely a nástroje"
    },
    {
     "id": "ipda",
@@ -670,7 +836,8 @@
      ],
      "ok": "K určení cílů a směru na denním grafu",
      "why": "Jsou to referenční high a low pro bias, ne vstupní signál."
-    }
+    },
+    "group": "Modely a nástroje"
    },
    {
     "id": "irl",
@@ -695,7 +862,8 @@
      ],
      "ok": "U vnější likvidity nad high rozpětí",
      "why": "Pohyb jde z vnitřní likvidity k vnější."
-    }
+    },
+    "group": "Modely a nástroje"
    },
    {
     "id": "mmxm",
@@ -720,6 +888,35 @@
      ],
      "ok": "Na pravé straně po potvrzeném obratu",
      "why": "Levá strana je pokles k likviditě. Nakupuje se až po obratu, na cestě zpět."
+    },
+    "group": "Modely a nástroje"
+   },
+   {
+    "id": "testovani",
+    "group": "Poctivé testování",
+    "title": "Jak poznat, jestli koncept opravdu funguje",
+    "text": [
+     "Na grafu vypadá každý koncept skvěle, protože si zpětně vybíráš příklady, které vyšly. Poctivý test se ptá jinak: funguje to líp než náhoda?",
+     "Příklad z veřejných testů: cena se k fair value gapu vrátí zhruba v 83 % případů. Zní to dobře, jenže k náhodně zvolené úrovni ve stejné vzdálenosti se vrátí taky v 83 %. Samotný návrat tedy nic nedokazuje.",
+     "Podobně dopadly order blocky proti kontrolním úrovním a test Silver Bullet na šestnácti letech dat NQ a ES: samotný čas výhodu nedal. Jediný prvek, který v testech opakovaně pomáhal, byl požadavek na výběr likvidity před vstupem.",
+     "Většina těchto testů pochází z blogů a skriptů, ne z recenzovaných studií, takže ani je neber jako konečnou pravdu. Platí to oběma směry."
+    ],
+    "use": [
+     "Než něčemu uvěříš, napiš pravidla tak, aby je mohl otestovat někdo jiný.",
+     "Porovnávej s kontrolou: stejný vstup bez toho konceptu, nebo náhodná úroveň.",
+     "Počítej v R a po poplatcích, aspoň na stovce obchodů.",
+     "Pravidla nalaď na jedné části dat a ověř na jiné."
+    ],
+    "trap": "Vysoká úspěšnost na pár desítkách vybraných příkladů nic neznamená. Totéž platí pro cizí snímky ziskových obchodů.",
+    "quiz": {
+     "q": "Cena se k FVG vrátí v 83 % případů. Co je potřeba vědět, než tomu přisoudíš váhu?",
+     "opts": [
+      "Jak často se vrátí k náhodné úrovni ve stejné vzdálenosti",
+      "Kolik bodů měl FVG",
+      "Kdo ten test zveřejnil"
+     ],
+     "ok": "Jak často se vrátí k náhodné úrovni ve stejné vzdálenosti",
+     "why": "Bez srovnání s kontrolou číslo nic neříká. V testu vyšla náhodná úroveň stejně."
     }
    }
   ],
@@ -739,6 +936,14 @@
    [
     "LuxAlgo Library: Unicorn",
     "https://www.luxalgo.com/library/concept/unicorn/"
+   ],
+   [
+    "LuxAlgo Library: FVG Behavior Rules",
+    "https://www.luxalgo.com/library/concept/fvg-behavior-rules/"
+   ],
+   [
+    "LuxAlgo Library: Opening Gap",
+    "https://www.luxalgo.com/library/concept/opening-gap/"
    ]
   ]
  }

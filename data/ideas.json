@@ -1870,5 +1870,41 @@
   "status": "new",
   "what": "Do analýzy dne a do tréninku cyklů přidat otázku: udrželo se staré high nebo low předchozího cyklu po proražení jako podpora nebo odpor? Podle odpovědi označit cyklus jako pokračování, nebo manipulaci.",
   "why": "Zeussy ve veřejném vlákně popisuje, že právě reakce na high a low předchozího cyklu ukazuje, jestli pohyb pokračuje, nebo šlo jen o výběr likvidity."
+ },
+ {
+  "id": "r-87918293",
+  "ts": "2026-11-15T12:00:00Z",
+  "date": "2026-11-15",
+  "title": "Rozpoznávací dril na skutečných grafech",
+  "area": "vyuka",
+  "value": 3,
+  "effort": 3,
+  "status": "new",
+  "what": "Krátká cvičení na výřezech z reálných dat NQ: co je na obrázku, s možností „nic z toho“, promíchané podobné pojmy, fronta chyb na zopakování.",
+  "why": "Podle rešerše je to formát s nejlepšími doloženými výsledky u učení rozpoznávání vzorů. Potřebuje reálná minutová data."
+ },
+ {
+  "id": "r-52054764",
+  "ts": "2026-11-15T12:00:00Z",
+  "date": "2026-11-15",
+  "title": "Import souborů od brokerů",
+  "area": "denik",
+  "value": 3,
+  "effort": 3,
+  "status": "new",
+  "what": "Načtení exportů z Tradovate, TopstepX, NinjaTrader, Rithmic a Sierra Chart přímo v prohlížeči.",
+  "why": "Ruční zápis je hlavní důvod, proč lidé deník přestanou vést. Potřebuje vzorové soubory, sloupce nejsou ověřené."
+ },
+ {
+  "id": "r-73572272",
+  "ts": "2026-11-15T12:00:00Z",
+  "date": "2026-11-15",
+  "title": "Série dní s rezervou",
+  "area": "vyuka",
+  "value": 3,
+  "effort": 3,
+  "status": "new",
+  "what": "Série, která počítá jen pracovní dny a odpustí jeden vynechaný den v týdnu.",
+  "why": "Ztráta dlouhé série lidi od učení odrazuje víc, než je série motivuje."
  }
 ]
