@@ -1,9 +1,9 @@
 {
  "state": {
-  "lastRun": "2026-11-14T05:55:00Z",
+  "lastRun": "2026-11-15T05:55:00Z",
   "modelVersion": "1.0",
-  "runCount": 5,
-  "lastReport": "Skaut přidal dva poznatky (Zeussy: nejdřív čas, potom cena; jeden vyšší vrchol není trend). Učitel napsal lekci 5 o trendu. Vizionář přidal nápad na londýnské cykly v Premium. Zpravodaj odstranil proběhlé PPI a posunul výsledky Nvidia na 18. 11. jako nepotvrzené datum. Gems a Architekt beze změny."
+  "runCount": 6,
+  "lastReport": "Skaut přidal dva poznatky (Zeussy: reakce na high a low předchozího cyklu; range poznáš podle dvou odmítnutí na každé straně). Učitel napsal lekci 6 o range. Vizionář přidal nápad na hodnocení síly směru podle předchozího cyklu v Premium. Zpravodaj: žádná proběhlá událost k odstranění, nové neověřoval. Gems a Architekt beze změny."
  },
  "model": {
   "version": "1.0",

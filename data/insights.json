@@ -1,5 +1,31 @@
 [
  {
+  "id": "20261115-01",
+  "ts": "2026-11-15T05:55:00Z",
+  "date": "2026-11-15",
+  "bot": "skaut",
+  "concept": "cas",
+  "title": "Zeussy: jak z předchozího cyklu poznat, kdo má navrch",
+  "source": "Thread Reader, vlákno Zeussyho Time Cycles & Market Swings",
+  "url": "https://threadreaderapp.com/thread/1841464680172126242",
+  "simple": "Zeussy sleduje, co cena udělá u high a low předchozího devadesátiminutového cyklu. Když prorazí nad staré high a při návratu se o něj opře, kupující mají navrch a pohyb pokračuje. Když se nad ním neudrží, byl to jen výběr likvidity a čeká se pohyb k opačné straně.",
+  "takeaway": "Staré high cyklu, které po proražení drží jako podpora, znamená pokračování. Když nedrží, jde o manipulaci.",
+  "effect": "Model beze změny. Zapsáno jako nápad pro analýzu dne v Premium."
+ },
+ {
+  "id": "20261115-02",
+  "ts": "2026-11-15T05:55:00Z",
+  "date": "2026-11-15",
+  "bot": "skaut",
+  "concept": "struktura",
+  "title": "Range poznáš podle dvou odmítnutí na každé straně",
+  "source": "LuxAlgo Library, Trading Range",
+  "url": "https://www.luxalgo.com/library/concept/trading-range/",
+  "simple": "O range jde ve chvíli, kdy se cena aspoň dvakrát zastaví ve stejném pásmu nahoře a dvakrát ve stejném pásmu dole. Hranice jsou pásma, ne přesné čáry. Za oběma okraji se hromadí stopy, takže výpad ven, který se neudrží, bývá výběr likvidity.",
+  "takeaway": "Dvě odmítnutí nahoře a dvě dole dělají range. Jeho okraje jsou likvidita na obou stranách.",
+  "effect": "Model beze změny. Použito v dnešní lekci o range."
+ },
+ {
   "id": "20261114-01",
   "ts": "2026-11-14T05:55:00Z",
   "date": "2026-11-14",

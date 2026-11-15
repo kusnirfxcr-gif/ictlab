@@ -1,5 +1,59 @@
 [
  {
+  "id": "20261115-L06",
+  "ts": "2026-11-15T05:55:00Z",
+  "date": "2026-11-15",
+  "n": 6,
+  "week": 2,
+  "title": "Range: když trh jde do strany",
+  "body": [
+   "Trh není pořád v trendu. Velkou část dne cena jen přechází nahoru a dolů mezi dvěma hranicemi a nikam se neposouvá. Tomu se říká range nebo konsolidace.",
+   "Poznáš ho takhle: cena se aspoň dvakrát zastaví ve stejném pásmu nahoře a aspoň dvakrát ve stejném pásmu dole. Vrcholy nejsou čím dál výš a dna nejsou čím dál níž. Svíčky se překrývají.",
+   "Hranice ber jako pásmo, ne jako přesnou čáru. Cena se málokdy otočí na stejném ticku.",
+   "Uvnitř range je pro začátečníka nejtěžší prostředí. Průrazy často selžou, cena se vrací do středu a stop-lossy padají na obou stranách. Střed range je nejhorší místo pro vstup.",
+   "K čemu je tedy range dobrý? Nad jeho horní hranou a pod dolní hranou se hromadí stop-lossy, tedy likvidita. Až trh z range vyrazí, často nejdřív vybere jednu stranu a pak jde na druhou. O tom bude týden o likviditě."
+  ],
+  "example": "NQ se hodinu pohybuje mezi 21 040 a 21 080. Třikrát se otočil kolem 21 080 a dvakrát kolem 21 040. To je range široký 40 bodů. Vstup na 21 060 uprostřed nemá kam jít ani kde logicky umístit stop. Správné rozhodnutí je vyznačit obě hrany a čekat.",
+  "remember": "Range jsou aspoň dvě odmítnutí nahoře a dvě dole bez nových vrcholů a den. Uvnitř se neobchoduje, jeho hrany jsou budoucí likvidita.",
+  "terms": [
+   "range",
+   "konsolidace",
+   "likvidita"
+  ],
+  "quiz": [
+   {
+    "q": "Jak poznáš range?",
+    "options": [
+     "Cena dělá vyšší vrcholy a vyšší dna",
+     "Cena se opakovaně otáčí ve stejném pásmu nahoře i dole",
+     "Jedna velká svíčka prorazí high dne"
+    ],
+    "correct": 1,
+    "why": "Range jsou opakovaná odmítnutí na obou stranách bez posunu vrcholů a den."
+   },
+   {
+    "q": "Kde je v range nejhorší místo pro vstup?",
+    "options": [
+     "Uprostřed",
+     "U horní hrany",
+     "U dolní hrany"
+    ],
+    "correct": 0,
+    "why": "Uprostřed nemá obchod kam jít a stop nemá logické místo."
+   },
+   {
+    "q": "Co leží nad horní hranou range?",
+    "options": [
+     "Nic důležitého",
+     "Stop-lossy, tedy likvidita",
+     "Jistý odpor, který nejde prorazit"
+    ],
+    "correct": 1,
+    "why": "Za hranami se hromadí stopy. Trh si pro ně často dojde, než vyrazí opačným směrem."
+   }
+  ]
+ },
+ {
   "id": "20261114-L05",
   "ts": "2026-11-14T05:55:00Z",
   "date": "2026-11-14",
