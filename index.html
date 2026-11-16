@@ -1012,6 +1012,40 @@ body.sakura .lkey.trap::before{background:linear-gradient(180deg,#ffb347,#ff7a59
 .bar i.over{background:linear-gradient(90deg,var(--amber),var(--bad));box-shadow:0 0 14px rgba(255,107,107,.5)}
 #j-costs .rrow{align-items:center;gap:10px}
 #j-costs .rrow span{flex:1;min-width:0;color:var(--muted);font-size:14px}
+/* learning: its own look and a resume card */
+body[data-group="uceni"]:not(.sakura){--accent:#b7a1ff;--accent-soft:rgba(183,161,255,.14)}
+body[data-group="uceni"]:not(.sakura) .app>.wrap{background:radial-gradient(900px 340px at 50% -60px,rgba(150,120,255,.16),transparent 70%)}
+body[data-group="uceni"] .subnav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;padding:4px;border-radius:16px;border:1px solid var(--line);background:var(--surface)}
+body[data-group="uceni"] .subnav a{border:0;background:none;text-align:center;padding:9px 6px;border-radius:12px;font-size:13.5px;line-height:1.2}
+body[data-group="uceni"]:not(.sakura) .subnav a[aria-current="page"]{background:linear-gradient(135deg,#8f7bff,#5aa2ff);color:#fff}
+body[data-group="uceni"] .subnav .sk-btn{grid-column:1/-1;justify-self:stretch;justify-content:center}
+@media (min-width:700px){body[data-group="uceni"] .subnav{grid-template-columns:repeat(3,minmax(0,1fr)) auto} body[data-group="uceni"] .subnav .sk-btn{grid-column:auto}}
+#lr{position:relative;display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:14px;padding:16px 18px;border-radius:20px;cursor:pointer;color:#fff;overflow:hidden;
+  background:linear-gradient(135deg,#5b46d6 0%,#3f6fe0 60%,#2aa7c9 100%);box-shadow:0 14px 34px rgba(80,70,220,.35);animation:rise .5s cubic-bezier(.2,.8,.2,1) both;transition:transform .2s,box-shadow .2s}
+#lr[hidden]{display:none}
+#lr:hover{transform:translateY(-2px);box-shadow:0 18px 40px rgba(80,70,220,.45)}
+#lr:active{transform:scale(.985)}
+#lr::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 35%,rgba(255,255,255,.16) 50%,transparent 65%);transform:translateX(-100%);animation:lrsh 4.5s ease-in-out infinite;pointer-events:none}
+@keyframes lrsh{0%,60%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+#lr .lr-ring{position:relative;width:54px;height:54px;flex:none}
+#lr .lr-ring svg{width:54px;height:54px;transform:rotate(-90deg)}
+#lr .lr-ring circle{fill:none;stroke-width:5}
+#lr .lr-ring .bg{stroke:rgba(255,255,255,.22)}
+#lr .lr-ring .fg{stroke:#fff;stroke-linecap:round;transition:stroke-dashoffset .9s cubic-bezier(.2,.8,.2,1)}
+#lr .lr-ring b{position:absolute;inset:0;display:grid;place-items:center;font-size:12.5px;font-weight:800}
+#lr .lr-tx{display:flex;flex-direction:column;gap:3px;min-width:0}
+#lr .lr-k{font-size:11px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;opacity:.85}
+#lr .lr-t{font-size:17px;font-weight:800;line-height:1.25;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+#lr .lr-s{font-size:13px;opacity:.88}
+#lr .lr-go{flex:none;display:flex;align-items:center;gap:6px;padding:10px 14px;border-radius:999px;background:#fff;color:#2a2470;font-weight:800;font-size:14px;border:0;cursor:pointer}
+#lr .lr-go svg{width:14px;height:14px;fill:currentColor}
+@media (max-width:520px){#lr{gap:11px;padding:14px} #lr .lr-go span{display:none} #lr .lr-go{padding:12px} #lr .lr-t{font-size:16px}}
+body.sakura #lr{background:linear-gradient(135deg,#ff6fb1 0%,#c58cff 70%,#8fb8ff 100%);box-shadow:0 14px 34px rgba(226,69,154,.3)}
+body.sakura #lr .lr-go{color:#a12c78}
+#c-now,#pa-card,#l-body,#st-body{scroll-margin-top:118px}
+.lr-flash{animation:lrfl 1.4s ease-out 1}
+@keyframes lrfl{0%{box-shadow:0 0 0 0 rgba(150,130,255,.75)}100%{box-shadow:0 0 0 22px rgba(150,130,255,0)}}
+@media (prefers-reduced-motion:reduce){#lr,#lr::after,.lr-flash{animation:none}}
 </style>
 </head>
 <body>
@@ -1053,6 +1087,7 @@ body.sakura .lkey.trap::before{background:linear-gradient(180deg,#ffb347,#ff7a59
 <div class="wrap">
   <div id="banner" role="status"></div>
   <div class="subnav" id="subnav" hidden></div>
+  <div id="lr" hidden></div>
 
   <section class="view" id="v-prehled">
     <div class="card herocard">
@@ -3985,7 +4020,7 @@ body.sakura .lkey.trap::before{background:linear-gradient(180deg,#ffb347,#ff7a59
   ["calc-acct","calc-pct","calc-stop"].forEach(id => { const k = id.slice(5); if (cfg.calc[k] != null) $(id).value = cfg.calc[k]; $(id).addEventListener("input", () => { cfg.calc[k] = $(id).value; cfgStore(); renderCalc(); }); });
 
   // ---------- backup, restore, wipe ----------
-  const LS_KEYS = ["tape-posts","knot-journal","knot-checklist","ictlab-laura","ictlab-course-done","knot-activity","knot-profile","knot-minutes","tape-settings","tape-coach-chat"];
+  const LS_KEYS = ["tape-posts","knot-journal","knot-checklist","ictlab-laura","ictlab-course-done","knot-activity","knot-profile","knot-minutes","tape-settings","tape-learn-last","tape-coach-chat"];
   function download(blob, name){ const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); a.remove(); }
   async function exportAll(){
     const ls = {}; LS_KEYS.forEach(k => { let v = null; try { v = localStorage.getItem(k); } catch(e){} if (v != null) ls[k] = v; });
@@ -4961,6 +4996,57 @@ body.sakura .lkey.trap::before{background:linear-gradient(180deg,#ffb347,#ff7a59
     const list = el("div","list"); jr.costs.slice().sort((x, y) => String(y.date).localeCompare(String(x.date))).forEach(x => { const r = el("div","rrow"), a = cfg.accounts.find(q => q.id === x.acct), rm = el("button","ck-del","Smazat"); rm.type = "button"; r.appendChild(el("span", null, x.date.split("-").reverse().join(". ") + " · " + (a ? a.name : "Účet") + " · " + (K[x.kind] || x.kind))); r.appendChild(el("b", x.kind === "payout" ? "pos" : "neg", (x.kind === "payout" ? "+" : "−") + "$" + Math.round(x.amount).toLocaleString("cs-CZ")));
       rm.addEventListener("click", () => { jr.costs = jr.costs.filter(q => q.id !== x.id); jStore(); }); r.appendChild(rm); list.appendChild(r); }); c.appendChild(list); }
   { const _refreshAllCost = refreshAll; refreshAll = function(){ _refreshAllCost(); try { if (document.body.dataset.view === "denik") renderCosts(); } catch(e){ if (window.console) console.error(e); } }; }
+
+  // ---------- learning: continue where you stopped ----------
+  { const LRK = "tape-learn-last", box = $("lr"); let lr = null; try { lr = JSON.parse(localStorage.getItem(LRK) || "null"); } catch(e){}
+    const allL = () => { const a = []; if (course) course.weeks.forEach(w => w.lessons.forEach(l => a.push({w: w, l: l}))); return a; };
+    const curCourse = () => { const a = allL(); let x = a.find(q => q.l.id === lnCur) || a.find(q => !done[q.l.id]); return x || null; };
+    const save = o => { lr = Object.assign({ts: Date.now()}, o); try { localStorage.setItem(LRK, JSON.stringify(lr)); } catch(e){} lrRender(); };
+    const ago = ts => { if (!ts) return ""; const d = Math.floor((new Date().setHours(0,0,0,0) - new Date(ts).setHours(0,0,0,0)) / 864e5); return d <= 0 ? "dnes" : d === 1 ? "včera" : "před " + d + " dny"; };
+    function target(){
+      const a = allL(), nd = a.filter(x => done[x.l.id]).length;
+      if (lr && lr.kind === "pa"){ const t = pa.find(x => x.id === lr.id); if (t){ const n = (t.steps || []).length || 1, st = Math.min(lr.step || 0, n - 1); return {kind: "pa", id: t.id, step: st, sec: "Obrázky a lekce", title: t.title, sub: "Krok " + (st + 1) + " z " + n, pct: (st + 1) / n}; } }
+      if (lr && lr.kind === "lesson"){ const l = lessons.find(x => x.id === lr.id); if (l) return {kind: "lesson", id: l.id, sec: "Lekce dne", title: l.title, sub: "Lekce " + (l.n || "") + " z denních lekcí", pct: lessons.length ? (lessons.length - lessons.indexOf(l)) / lessons.length : 0}; }
+      if (lr && lr.kind === "study"){ const b = Array.prototype.find.call($("st-tabs").children, x => x.dataset.t === lr.id); if (b) return {kind: "study", id: lr.id, sec: "Studium ICT", title: b.textContent, sub: "Otevřená kapitola", pct: 0}; }
+      let x = lr && lr.kind === "course" ? a.find(q => q.l.id === lr.id) : null; if (x && done[x.l.id]) x = a.slice(a.indexOf(x) + 1).find(q => !done[q.l.id]) || x; if (!x) x = a.find(q => !done[q.l.id]) || null;
+      if (!x) return a.length ? {kind: "room", sec: "Kurz 12 týdnů", title: "Kurz máš hotový", sub: "Všech " + a.length + " lekcí", pct: 1} : null;
+      return {kind: "course", id: x.l.id, week: x.w.n, sec: "Kurz 12 týdnů", title: x.l.title, sub: "Týden " + x.w.n + " · lekce " + (a.indexOf(x) + 1) + " z " + a.length, pct: a.length ? nd / a.length : 0};
+    }
+    const jump = (hash, fn, id) => { const run = () => { try { fn(); } catch(e){} setTimeout(() => { const n = $(id); if (!n) return; try { n.scrollIntoView({behavior: "smooth", block: "start"}); } catch(e){ n.scrollIntoView(); } n.classList.remove("lr-flash"); void n.offsetWidth; n.classList.add("lr-flash"); }, 140); };
+      if (location.hash !== "#" + hash){ location.hash = "#" + hash; setTimeout(run, 80); } else run(); };
+    function openTarget(t){
+      if (t.kind === "course") jump("room", () => { lnCur = t.id; openWeek = t.week; renderCourse(); }, "c-now");
+      else if (t.kind === "room") jump("room", () => {}, "c-now");
+      else if (t.kind === "pa") jump("laura", () => { paCur = t.id; paStep = t.step; paBuild(); }, "pa-card");
+      else if (t.kind === "lesson") jump("laura", () => { curLesson = t.id; renderLesson(); }, "l-body");
+      else if (t.kind === "study") jump("studium", () => { stTab = t.id; renderStudy(); }, "st-body");
+    }
+    function lrRender(){
+      const on = document.body.dataset.group === "uceni", t = on ? target() : null; if (!t){ box.hidden = true; return; }
+      const sig = JSON.stringify(t) + (lr ? ago(lr.ts) : "-"); if (box.dataset.sig === sig && !box.hidden) return; box.dataset.sig = sig; clear(box); box.hidden = false;
+      const C = 2 * Math.PI * 22, ring = el("div","lr-ring"), pct = Math.max(0, Math.min(1, t.pct || 0));
+      ring.insertAdjacentHTML("afterbegin", '<svg viewBox="0 0 54 54" aria-hidden="true"><circle class="bg" cx="27" cy="27" r="22"/><circle class="fg" cx="27" cy="27" r="22" stroke-dasharray="' + C.toFixed(1) + '" stroke-dashoffset="' + C.toFixed(1) + '"/></svg>');
+      ring.appendChild(el("b", null, Math.round(pct * 100) + " %")); setTimeout(() => { const f = ring.querySelector(".fg"); if (f) f.style.strokeDashoffset = (C * (1 - pct)).toFixed(1); }, 60);
+      const tx = el("div","lr-tx"), when = lr && lr.ts ? " · naposledy " + ago(lr.ts) : "";
+      tx.appendChild(el("span","lr-k", lr ? "Tady jsi skončil" : "Začni tady")); tx.appendChild(el("span","lr-t", t.title)); tx.appendChild(el("span","lr-s", t.sec + " · " + t.sub + when));
+      const go = el("button","lr-go"); go.type = "button"; go.appendChild(el("span", null, lr ? "Pokračovat" : "Začít")); go.insertAdjacentHTML("beforeend", '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4l13 8-13 8z"/></svg>');
+      box.appendChild(ring); box.appendChild(tx); box.appendChild(go); box.setAttribute("role","button"); box.tabIndex = 0; box.setAttribute("aria-label", (lr ? "Pokračovat: " : "Začít: ") + t.title);
+      box.onclick = () => openTarget(t); box.onkeydown = ev => { if (ev.key === "Enter" || ev.key === " "){ ev.preventDefault(); openTarget(t); } };
+    }
+    const note = ev => { const n = ev.target && ev.target.closest ? ev.target : null; if (!n || n.closest("#lr")) return;
+      const k = n.closest("#c-now") || n.closest("#v-room details") ? "course" : n.closest("#pa-card") ? "pa" : n.closest("#l-body") || n.closest("#l-pick") ? "lesson" : n.closest("#st-tabs") || n.closest("#st-body") ? "study" : ""; if (!k) return;
+      setTimeout(() => { try {
+        if (k === "course"){ const x = curCourse(); if (x) save({kind: "course", id: x.l.id}); }
+        else if (k === "pa"){ if (paCur) save({kind: "pa", id: paCur, step: paStep}); }
+        else if (k === "lesson"){ if (curLesson) save({kind: "lesson", id: curLesson}); }
+        else save({kind: "study", id: stTab});
+      } catch(e){} }, 60); };
+    document.addEventListener("click", note, true); document.addEventListener("change", note, true); document.addEventListener("touchend", ev => { if (ev.target.closest && ev.target.closest("#c-now")) note(ev); }, {passive: true, capture: true});
+    const _routeLr = route; route = function(){ _routeLr(); try { lrRender(); } catch(e){} };
+    const _refLr = refreshAll; refreshAll = function(){ const r = _refLr.apply(this, arguments); try { lrRender(); } catch(e){} return r; };
+    const _rcLr = renderCourse; renderCourse = function(){ const r = _rcLr.apply(this, arguments); try { lrRender(); } catch(e){} return r; };
+    setTimeout(lrRender, 600); setTimeout(lrRender, 2000);
+  }
 
   // ---------- moving to a new address without losing data ----------
   // data/site.json: {"move": "https://new-address", "from": ["https://old-address"]}. The old site hands the data to the new one in a window the person opens.
