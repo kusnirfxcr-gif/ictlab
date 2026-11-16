@@ -1071,6 +1071,26 @@ body.sakura #lr .lr-go{color:#a12c78}
 .cmsg small{opacity:.7}
 .cmsg .row{gap:8px;justify-content:flex-end}
 @keyframes fade{from{opacity:0}to{opacity:1}}
+/* guided tour */
+.gtour{position:fixed;inset:0;z-index:90}
+.gtour-hole{position:fixed;border-radius:16px;box-shadow:0 0 0 200vmax rgba(4,4,8,.78);outline:2px solid rgba(183,161,255,.95);outline-offset:3px;transition:left .45s cubic-bezier(.2,.8,.2,1),top .45s cubic-bezier(.2,.8,.2,1),width .45s cubic-bezier(.2,.8,.2,1),height .45s cubic-bezier(.2,.8,.2,1),opacity .3s;pointer-events:none}
+.gtour-hole::after{content:"";position:absolute;inset:-9px;border-radius:22px;border:2px solid rgba(183,161,255,.6);animation:tourp 1.6s ease-out infinite}
+@keyframes tourp{0%{opacity:.9;transform:scale(.98)}100%{opacity:0;transform:scale(1.08)}}
+.gtour-card{position:fixed;left:50%;width:min(360px,calc(100vw - 28px));transform:translateX(-50%);display:flex;flex-direction:column;gap:10px;padding:18px;border-radius:20px;background:#17171d;border:1px solid rgba(183,161,255,.45);color:#f3f3f6;box-shadow:0 24px 60px rgba(0,0,0,.65);transition:top .45s cubic-bezier(.2,.8,.2,1),opacity .25s}
+.gtour-card .k{font-size:11px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:#b7a1ff}
+.gtour-card h3{margin:0;font-size:18px;line-height:1.3;color:#fff}
+.gtour-card p{margin:0;font-size:14.5px;line-height:1.5;color:#c9c9d4}
+.gtour-card .tr{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:4px}
+.gtour-card .dots{display:flex;gap:5px}
+.gtour-card .dots i{width:6px;height:6px;border-radius:50%;background:#3a3a46;transition:all .3s}
+.gtour-card .dots i.on{background:#b7a1ff;width:18px;border-radius:3px}
+.gtour-card .tb{display:flex;gap:8px}
+.gtour-card button{padding:9px 14px;border-radius:999px;border:1px solid #33333f;background:#22222b;color:#f3f3f6;font:inherit;font-weight:700;font-size:14px;cursor:pointer}
+.gtour-card button.primary{background:linear-gradient(135deg,#8f7bff,#5aa2ff);border-color:transparent;color:#fff}
+.gtour-card button.skip{background:none;border:0;color:#9a9aa8;padding:9px 4px;font-weight:600}
+.gtour-card.sw{opacity:0}
+@media (max-width:440px){.gtour-card .dots{display:none}}
+@media (prefers-reduced-motion:reduce){.gtour-hole,.gtour-card{transition:none}.gtour-hole::after{animation:none}}
 </style>
 </head>
 <body>
@@ -1243,6 +1263,7 @@ body.sakura #lr .lr-go{color:#a12c78}
   <section class="view" id="v-nastaveni"><div class="list" id="set"></div></section>
 
   <section class="view" id="v-napoveda">
+    <div class="card"><div class="row"><div><h2>Průvodce aplikací</h2><p class="muted" style="margin:4px 0 0">Minutová prohlídka: kde je přehled, deník, učení, kouč a účet.</p></div><button type="button" class="primary" id="tour-start">Spustit průvodce</button></div></div>
     <div class="card"><h2>První kroky</h2>
       <ol class="steps">
         <li><div><b>Vyber režim.</b> V Nastavení zvol Obchodník nebo Student. Podle toho se poskládá přehled.</div></li>
@@ -5143,6 +5164,44 @@ body.sakura #lr .lr-go{color:#a12c78}
     document.addEventListener("visibilitychange", () => { if (document.hidden) pushProgress(true); else { checkMsgs(); } });
     let uid = null; const tick = () => { const id = auth && auth.id || null; if (id !== uid){ uid = id; lastSig = ""; checkAdmin(); if (id) setTimeout(checkMsgs, 1500); } pushProgress(false); };
     setTimeout(tick, 2500); setInterval(tick, 20000); setInterval(checkMsgs, 180000);
+  }
+
+  // ---------- guided tour ----------
+  { const TK = "tape-tour"; let tv = null;
+    const vis = n => n && n.getClientRects().length && getComputedStyle(n).visibility !== "hidden";
+    const pick = sels => { for (const q of sels){ const a = document.querySelectorAll(q); for (const n of a) if (vis(n)) return n; } return null; };
+    const nav = g => ['nav.nav1 a[data-g="' + g + '"]', '.bottombar a[data-g="' + g + '"]'];
+    const STEPS = [
+      {t: "Vítej v Tape", p: "Ukážu ti za minutu, kde co je. Kdykoli to můžeš přeskočit a pustit znovu z Nápovědy."},
+      {h: "prehled", s: nav("prehled"), t: "Přehled", p: "Úvodní stránka. Vidíš tu sérii dní, dnešní cíl a poslední obchody."},
+      {h: "prehled", s: ["#d-log", "#tb-quick"], t: "Zápis obchodu", p: "Rychlý zápis je na pár ťuknutí hned po obchodu. Podrobný zápis má všechno: setup, emoce, screenshot i poznámky."},
+      {h: "denik", s: nav("denik"), t: "Deník", p: "Plán dne, všechny obchody a statistiky. Tady zjistíš, co ti funguje a kde chybuješ."},
+      {h: "laura", s: nav("uceni"), t: "Učení", p: "Škola price action od nuly. Má vlastní barvy, takže hned poznáš, že jsi v ní."},
+      {h: "laura", s: ["#lr"], t: "Tady jsi skončil", p: "Karta nahoře si pamatuje, kde ses učil naposledy. Jedno ťuknutí a jsi zpátky na stejném místě."},
+      {h: "laura", s: ["#subnav"], t: "Tři části učení", p: "Obrázky a lekce jsou krátká témata a kartičky. Kurz 12 týdnů je hlavní cesta lekci po lekci. Studium ICT jde do hloubky."},
+      {h: "prehled", s: ["#orb"], t: "AI kouč", p: "Kulaté tlačítko otevře okno s koučem. Zeptej se na pojem, lekci nebo na svoje obchody."},
+      {h: "prehled", s: ["#tb-acc"], t: "Účet", p: "Přihlášení a synchronizace. S účtem máš deník i postup na všech zařízeních."},
+      {h: "prehled", s: nav("vice"), t: "Více", p: "Nástroje, backtest, nastavení a nápověda. Průvodce tu najdeš znovu pod Nápovědou."}
+    ];
+    function tourStart(){ if (tv) return; let i = 0; const ov = el("div","gtour"), hole = el("div","gtour-hole"), card = el("div","gtour-card"); ov.appendChild(hole); ov.appendChild(card); document.body.appendChild(ov); tv = ov;
+      let cur = null; const place = () => { const st = STEPS[i], n = cur, vw = innerWidth, vh = innerHeight;
+        if (!n){ hole.style.opacity = "0"; hole.style.left = vw / 2 + "px"; hole.style.top = vh / 2 + "px"; hole.style.width = hole.style.height = "0px"; card.style.top = Math.max(20, vh / 2 - card.offsetHeight / 2) + "px"; return; }
+        const r = n.getBoundingClientRect(), pad = 6; hole.style.opacity = "1"; hole.style.left = r.left - pad + "px"; hole.style.top = r.top - pad + "px"; hole.style.width = r.width + pad * 2 + "px"; hole.style.height = r.height + pad * 2 + "px";
+        const ch = card.offsetHeight, below = r.bottom + 18, above = r.top - 18 - ch; card.style.top = (below + ch < vh - 10 ? below : above > 10 ? above : Math.max(10, vh - ch - 10)) + "px"; };
+      const end = () => { try { localStorage.setItem(TK, "1"); } catch(e){} removeEventListener("resize", place); removeEventListener("scroll", place, true); ov.remove(); tv = null; if (location.hash !== "#prehled") location.hash = "#prehled"; };
+      const show = () => { const st = STEPS[i]; card.classList.add("sw"); if (st.h && location.hash !== "#" + st.h) location.hash = "#" + st.h;
+        setTimeout(() => { cur = st.s ? pick(st.s) : null; if (st.s && !cur){ if (i < STEPS.length - 1){ i++; show(); } else end(); return; }
+          if (cur && getComputedStyle(cur).position !== "fixed" && !cur.closest("nav, header, .orb")){ try { cur.scrollIntoView({block: "center"}); } catch(e){} }
+          clear(card); card.appendChild(el("span","k", "Průvodce · " + (i + 1) + " z " + STEPS.length)); card.appendChild(el("h3", null, st.t)); card.appendChild(el("p", null, st.p));
+          const tr = el("div","tr"), dots = el("div","dots"), tb = el("div","tb"); STEPS.forEach((x, k) => dots.appendChild(el("i", k === i ? "on" : null)));
+          const skip = el("button","skip","Přeskočit"), back = el("button", null, "Zpět"), next = el("button","primary", i === STEPS.length - 1 ? "Hotovo" : i === 0 ? "Jdeme na to" : "Další"); skip.type = back.type = next.type = "button";
+          skip.addEventListener("click", end); back.addEventListener("click", () => { if (i > 0){ i--; show(); } }); next.addEventListener("click", () => { if (i === STEPS.length - 1) end(); else { i++; show(); } });
+          if (i > 0 && i < STEPS.length - 1) tb.appendChild(back); tb.appendChild(next); tr.appendChild(i === STEPS.length - 1 ? dots : skip); if (i !== STEPS.length - 1){ const mid = el("div"); mid.appendChild(dots); tr.appendChild(mid); } tr.appendChild(tb); card.appendChild(tr);
+          setTimeout(() => { place(); card.classList.remove("sw"); next.focus({preventScroll: true}); }, 60); setTimeout(place, 500); }, st.h ? 260 : 30); };
+      addEventListener("resize", place); addEventListener("scroll", place, true); ov.addEventListener("keydown", ev => { if (ev.key === "Escape"){ ev.stopPropagation(); end(); } }); show(); }
+    $("tour-start").addEventListener("click", tourStart);
+    let tries = 0, calm = 0; const auto = setInterval(() => { let seen = "1"; try { seen = localStorage.getItem(TK); } catch(e){} if (seen || ++tries > 300){ clearInterval(auto); return; }
+      if (!profile || document.querySelector(".ob, .cmsg, .copop:not([hidden])") || document.body.classList.contains("modal")){ calm = 0; return; } if (++calm < 3) return; clearInterval(auto); tourStart(); }, 1200);
   }
 
   // ---------- moving to a new address without losing data ----------
