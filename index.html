@@ -1088,7 +1088,8 @@ body.sakura #lr .lr-go{color:#a12c78}
 .gtour-card button{padding:9px 14px;border-radius:999px;border:1px solid #33333f;background:#22222b;color:#f3f3f6;font:inherit;font-weight:700;font-size:14px;cursor:pointer}
 .gtour-card button.primary{background:linear-gradient(135deg,#8f7bff,#5aa2ff);border-color:transparent;color:#fff}
 .gtour-card button.skip{background:none;border:0;color:#9a9aa8;padding:9px 4px;font-weight:600}
-.gtour-card.sw{opacity:0}
+.gtour-card .k,.gtour-card h3,.gtour-card p{transition:opacity .22s}
+.gtour-card.sw .k,.gtour-card.sw h3,.gtour-card.sw p{opacity:0}
 @media (max-width:440px){.gtour-card .dots{display:none}}
 @media (prefers-reduced-motion:reduce){.gtour-hole,.gtour-card{transition:none}.gtour-hole::after{animation:none}}
 </style>
@@ -5189,15 +5190,15 @@ body.sakura #lr .lr-go{color:#a12c78}
         const r = n.getBoundingClientRect(), pad = 6; hole.style.opacity = "1"; hole.style.left = r.left - pad + "px"; hole.style.top = r.top - pad + "px"; hole.style.width = r.width + pad * 2 + "px"; hole.style.height = r.height + pad * 2 + "px";
         const ch = card.offsetHeight, below = r.bottom + 18, above = r.top - 18 - ch; card.style.top = (below + ch < vh - 10 ? below : above > 10 ? above : Math.max(10, vh - ch - 10)) + "px"; };
       const end = () => { try { localStorage.setItem(TK, "1"); } catch(e){} removeEventListener("resize", place); removeEventListener("scroll", place, true); ov.remove(); tv = null; if (location.hash !== "#prehled") location.hash = "#prehled"; };
-      const show = () => { const st = STEPS[i]; card.classList.add("sw"); if (st.h && location.hash !== "#" + st.h) location.hash = "#" + st.h;
+      const kEl = el("span","k"), hEl = el("h3"), pEl = el("p"), tr = el("div","tr"), dots = el("div","dots"), tb = el("div","tb"), skip = el("button","skip","Přeskočit"), back = el("button", null, "Zpět"), next = el("button","primary","Další"); skip.type = back.type = next.type = "button";
+      STEPS.forEach(() => dots.appendChild(el("i"))); tb.appendChild(back); tb.appendChild(next); tr.appendChild(skip); tr.appendChild(dots); tr.appendChild(tb); card.appendChild(kEl); card.appendChild(hEl); card.appendChild(pEl); card.appendChild(tr);
+      skip.addEventListener("click", end); back.addEventListener("click", () => { if (i > 0){ i--; show(); } }); next.addEventListener("click", () => { if (i === STEPS.length - 1) end(); else { i++; show(); } });
+      let first = true; const show = () => { const st = STEPS[i]; card.classList.add("sw"); if (st.h && location.hash !== "#" + st.h) location.hash = "#" + st.h;
         setTimeout(() => { cur = st.s ? pick(st.s) : null; if (st.s && !cur){ if (i < STEPS.length - 1){ i++; show(); } else end(); return; }
           if (cur && getComputedStyle(cur).position !== "fixed" && !cur.closest("nav, header, .orb")){ try { cur.scrollIntoView({block: "center"}); } catch(e){} }
-          clear(card); card.appendChild(el("span","k", "Průvodce · " + (i + 1) + " z " + STEPS.length)); card.appendChild(el("h3", null, st.t)); card.appendChild(el("p", null, st.p));
-          const tr = el("div","tr"), dots = el("div","dots"), tb = el("div","tb"); STEPS.forEach((x, k) => dots.appendChild(el("i", k === i ? "on" : null)));
-          const skip = el("button","skip","Přeskočit"), back = el("button", null, "Zpět"), next = el("button","primary", i === STEPS.length - 1 ? "Hotovo" : i === 0 ? "Jdeme na to" : "Další"); skip.type = back.type = next.type = "button";
-          skip.addEventListener("click", end); back.addEventListener("click", () => { if (i > 0){ i--; show(); } }); next.addEventListener("click", () => { if (i === STEPS.length - 1) end(); else { i++; show(); } });
-          if (i > 0 && i < STEPS.length - 1) tb.appendChild(back); tb.appendChild(next); tr.appendChild(i === STEPS.length - 1 ? dots : skip); if (i !== STEPS.length - 1){ const mid = el("div"); mid.appendChild(dots); tr.appendChild(mid); } tr.appendChild(tb); card.appendChild(tr);
-          setTimeout(() => { place(); card.classList.remove("sw"); next.focus({preventScroll: true}); }, 60); setTimeout(place, 500); }, st.h ? 260 : 30); };
+          kEl.textContent = "Průvodce · " + (i + 1) + " z " + STEPS.length; hEl.textContent = st.t; pEl.textContent = st.p; Array.prototype.forEach.call(dots.children, (d, k) => d.classList.toggle("on", k === i));
+          next.textContent = i === STEPS.length - 1 ? "Hotovo" : i === 0 ? "Jdeme na to" : "Další"; back.style.display = i > 0 ? "" : "none"; skip.style.visibility = i === STEPS.length - 1 ? "hidden" : "";
+          setTimeout(() => { place(); card.classList.remove("sw"); if (first){ first = false; next.focus({preventScroll: true}); } }, 60); setTimeout(place, 500); }, st.h ? 260 : 30); };
       addEventListener("resize", place); addEventListener("scroll", place, true); ov.addEventListener("keydown", ev => { if (ev.key === "Escape"){ ev.stopPropagation(); end(); } }); show(); }
     $("tour-start").addEventListener("click", tourStart);
     let tries = 0, calm = 0; const auto = setInterval(() => { let seen = "1"; try { seen = localStorage.getItem(TK); } catch(e){} if (seen || ++tries > 300){ clearInterval(auto); return; }
