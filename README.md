@@ -83,3 +83,7 @@ Kromě šesti botů se každý den dělá i studium Zeussyho přístupu: veřejn
 ## Účet a synchronizace
 
 Přihlášení a ukládání dat k účtu běží přes Supabase (adresa projektu a veřejný klíč jsou v `index.html` v objektu `SB`; tajný klíč do repozitáře nepatří). Každý člověk má jeden řádek v tabulce `public.tape_data` (`user_id`, `data` jsonb, `updated_at`) chráněný pravidly RLS. Do účtu jdou klíče z `SYNC_KEYS`; obrázky (IndexedDB), `tape-key` a `tape-coach-chat` zůstávají v zařízení. Stav přihlášení je v `tape-auth`, stav synchronizace v `tape-sync`.
+
+### Postup lidí a zprávy
+
+Správce vidí v části Více › Lidé a postup souhrn učení přihlášených lidí (ne deník) a může jim poslat zprávu do aplikace. Potřebuje tři tabulky v Supabase: `tape_progress` (souhrn učení, čte ho vlastník a správce), `tape_admins` (kdo je správce) a `tape_msgs` (zprávy, píše je správce, čte příjemce). Správce se přidává ručně v SQL editoru. Automatické e-maily statická stránka posílat neumí, tlačítko „Napsat e-mail" jen otevře poštovní aplikaci správce s předvyplněným textem.

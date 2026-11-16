@@ -1046,6 +1046,31 @@ body.sakura #lr .lr-go{color:#a12c78}
 .lr-flash{animation:lrfl 1.4s ease-out 1}
 @keyframes lrfl{0%{box-shadow:0 0 0 0 rgba(150,130,255,.75)}100%{box-shadow:0 0 0 22px rgba(150,130,255,0)}}
 @media (prefers-reduced-motion:reduce){#lr,#lr::after,.lr-flash{animation:none}}
+/* people and progress (admin) + coach message */
+.ppc{display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px;align-items:start}
+.ppc .lr-ring{position:relative;width:60px;height:60px}
+.ppc .lr-ring svg{width:60px;height:60px;transform:rotate(-90deg)}
+.ppc .lr-ring circle{fill:none;stroke-width:5}
+.ppc .lr-ring .bg{stroke:var(--line)} .ppc .lr-ring .fg{stroke:var(--accent);stroke-linecap:round;transition:stroke-dashoffset .9s cubic-bezier(.2,.8,.2,1)}
+.ppc .lr-ring b{position:absolute;inset:0;display:grid;place-items:center;font-size:13px;font-weight:800}
+.ppc .pp-b{display:flex;flex-direction:column;gap:9px;min-width:0}
+.ppc .pp-n{font-weight:800;font-size:16px;overflow-wrap:anywhere}
+.pp-st{display:flex;flex-wrap:wrap;gap:6px}
+.pp-st span{padding:4px 9px;border-radius:999px;border:1px solid var(--line);background:var(--surface2);font-size:12.5px;font-weight:600}
+.pp-st span.warn{border-color:var(--amber);color:var(--amber)} .pp-st span.ok{border-color:var(--good);color:var(--good)}
+.pp-days{display:flex;gap:5px;align-items:center}
+.pp-days i{width:22px;height:22px;border-radius:7px;background:var(--surface2);border:1px solid var(--line);display:grid;place-items:center;font-style:normal;font-size:10px;color:var(--muted)}
+.pp-days i.on{background:var(--good);border-color:var(--good);color:#06281a;font-weight:800}
+.pp-w{display:flex;flex-direction:column;gap:8px;grid-column:1/-1;padding-top:10px;border-top:1px solid var(--line)}
+.pp-w textarea{min-height:64px;resize:vertical}
+.pp-w .chips{gap:6px} .pp-sent{font-size:12.5px;color:var(--muted)}
+.cmsg{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:20px;background:rgba(5,5,8,.62);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);animation:fade .25s both}
+.cmsg>div{max-width:420px;width:100%;display:flex;flex-direction:column;gap:12px;padding:22px;border-radius:22px;background:linear-gradient(160deg,#2a2166,#17223f);border:1px solid rgba(160,150,255,.4);color:#fff;box-shadow:0 30px 70px rgba(0,0,0,.6);animation:rise .45s cubic-bezier(.2,.8,.2,1) both}
+.cmsg .k{font-size:11px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;opacity:.8}
+.cmsg p{margin:0;font-size:17px;line-height:1.5;font-weight:600;white-space:pre-wrap;overflow-wrap:anywhere}
+.cmsg small{opacity:.7}
+.cmsg .row{gap:8px;justify-content:flex-end}
+@keyframes fade{from{opacity:0}to{opacity:1}}
 </style>
 </head>
 <body>
@@ -1146,6 +1171,7 @@ body.sakura #lr .lr-go{color:#a12c78}
 
   <section class="view" id="v-vice">
     <div class="card"><h2>Více</h2><div class="vgrid">
+      <a class="go" href="#lide" id="pp-link" hidden><div><b>Lidé a postup</b><span>Jak jsou na tom v učení a zprávy pro ně</span></div><i>›</i></a>
       <a class="go" href="#premium"><div><b>Premium</b><span>Čas v doručování ceny, na heslo</span></div><i>›</i></a>
       <a class="go" href="#komunita"><div><b>Komunita</b><span>Sdílej analýzu a obchod odkazem</span></div><i>›</i></a>
       <a class="go" href="#nastroje"><div><b>Nástroje</b><span>Kalkulačka pozice a hodiny seancí</span></div><i>›</i></a>
@@ -1281,11 +1307,19 @@ body.sakura #lr .lr-go{color:#a12c78}
     </div>
   </section>
 
+  <section class="view" id="v-lide">
+    <div class="card"><div class="row"><h2>Lidé a postup</h2><button type="button" id="pp-reload">Obnovit</button></div>
+      <p class="muted">Postup v učení u přihlášených lidí. Vidíš jen učení, ne jejich deník ani obchody. Zprávu, kterou tu napíšeš, uvidí člověk při dalším otevření aplikace.</p>
+      <p class="small" id="pp-msg"></p></div>
+    <div class="list" id="pp-list"></div>
+  </section>
+
   <section class="view" id="v-soukromi">
     <div class="card"><h2>Soukromí a data</h2><p class="muted">Bez účtu zůstává všechno jen v tvém prohlížeči. Tady je přesně, kde tvoje data jsou.</p>
       <ul class="stl">
         <li><b>V tvém prohlížeči:</b> deník, plány, seznam před vstupem, postup v učení, nastavení a obrázky k obchodům. Bez přihlášení se nikam neodesílají.</li>
         <li><b>Účet:</b> když se přihlásíš, uloží se tvůj e-mail, deník, plány, postup v učení a nastavení u služby Supabase, aby se načetly i na jiném zařízení. Obrázky k obchodům a klíč ke kouči se neposílají.</li>
+        <li><b>Postup v učení vidí správce:</b> u přihlášeného účtu vidí správce aplikace tvůj e-mail a souhrn učení (hotové lekce, sérii dní, čas a poslední lekci). Deník a obchody nevidí. Může ti do aplikace poslat zprávu.</li>
         <li><b>Hosting:</b> stránka je statická a běží na GitHub Pages. Poskytovatel hostingu vidí běžné údaje o připojení, například IP adresu.</li>
         <li><b>Písma:</b> načítají se z Google Fonts, takže prohlížeč pošle požadavek Googlu.</li>
         <li><b>AI kouč:</b> jen když si sám nastavíš API klíč. Pak se otázka a údaje z deníku posílají společnosti Anthropic.</li>
@@ -1637,10 +1671,10 @@ body.sakura #lr .lr-go{color:#a12c78}
   });
 
   // Views
-  const VIEWS = ["prehled","denik","kouc","laura","room","studium","vice","nastroje","poznatky","model","strategie","backtest","napady","komunita","premium","nastaveni","napoveda","novinky","soukromi","uvod"];
+  const VIEWS = ["prehled","denik","kouc","laura","room","studium","vice","nastroje","poznatky","model","strategie","backtest","napady","komunita","premium","nastaveni","napoveda","novinky","soukromi","uvod","lide"];
   const GROUP = {prehled: "prehled", denik: "denik", kouc: "kouc", laura: "uceni", room: "uceni", studium: "uceni"};
   const SUBNAV = {uceni: [["laura","Obrázky a lekce"],["room","Kurz 12 týdnů"],["studium","Studium ICT"]]};
-  const VTITLE = {premium: "Premium", komunita: "Komunita", nastroje: "Nástroje", poznatky: "Poznatky botů", model: "Model", strategie: "Pine Script", backtest: "Backtest", napady: "Nápady", nastaveni: "Nastavení", napoveda: "Nápověda", novinky: "Co je nového", soukromi: "Soukromí a data", uvod: "O aplikaci"};
+  const VTITLE = {lide: "Lidé a postup", premium: "Premium", komunita: "Komunita", nastroje: "Nástroje", poznatky: "Poznatky botů", model: "Model", strategie: "Pine Script", backtest: "Backtest", napady: "Nápady", nastaveni: "Nastavení", napoveda: "Nápověda", novinky: "Co je nového", soukromi: "Soukromí a data", uvod: "O aplikaci"};
   function route(){
     const h = (location.hash || "").replace("#",""), v = VIEWS.includes(h) ? h : "prehled", g = GROUP[v] || "vice";
     document.body.dataset.view = v; document.body.dataset.group = g;
@@ -5046,6 +5080,69 @@ body.sakura #lr .lr-go{color:#a12c78}
     const _refLr = refreshAll; refreshAll = function(){ const r = _refLr.apply(this, arguments); try { lrRender(); } catch(e){} return r; };
     const _rcLr = renderCourse; renderCourse = function(){ const r = _rcLr.apply(this, arguments); try { lrRender(); } catch(e){} return r; };
     setTimeout(lrRender, 600); setTimeout(lrRender, 2000);
+  }
+
+  // ---------- people: learning progress for the admin, messages for learners ----------
+  { let isAdmin = false, lastSig = "", lastPush = 0, shown = {};
+    const rest = async (path, method, body, prefer) => { const t = await accToken(); if (!t) throw new Error("auth");
+      const r = await fetch(SB.url + "/rest/v1/" + path, {method: method || "GET", headers: {"apikey": SB.key, "Authorization": "Bearer " + t, "Content-Type": "application/json", "Prefer": prefer || "return=representation"}, body: body ? JSON.stringify(body) : undefined});
+      if (!r.ok){ const e = new Error("rest"); e.status = r.status; throw e; } const tx = await r.text(); return tx ? JSON.parse(tx) : null; };
+    function progSnap(){
+      const all = []; if (course) course.weeks.forEach(w => w.lessons.forEach(l => all.push({w: w.n, l: l}))); const nd = all.filter(x => done[x.l.id]).length, nx = all.find(x => !done[x.l.id]);
+      const days = []; for (let i = 6; i >= 0; i--){ const d = new Date(); d.setDate(d.getDate() - i); const k = dayKey(d); days.push({k: k, on: act[k] ? 1 : 0, m: Math.round((mins[k] || 0) / 60)}); }
+      let last = null; try { last = JSON.parse(localStorage.getItem("tape-learn-last") || "null"); } catch(e){}
+      const lastDay = Object.keys(act).sort().pop() || "";
+      return {name: (profile && profile.name) || "", total: all.length, done: nd, week: nx ? nx.w : 12, next: nx ? nx.l.title : "", streak: streakDays(), days: days, min7: days.reduce((a, d) => a + d.m, 0), lastDay: lastDay,
+        topics: Object.keys(lp.seen || {}).length, topicsAll: pa.length, quiz: Object.keys(lp.sq || {}).length, lastAt: last && last.ts || 0, room: (() => { try { return localStorage.getItem("tape-laura-on") === "1"; } catch(e){ return false; } })()};
+    }
+    async function pushProgress(force){
+      if (!auth || !course) return; const p = progSnap(), sig = JSON.stringify(p); if (!force && (sig === lastSig || Date.now() - lastPush < 60000)) return;
+      try { await rest("tape_progress?on_conflict=user_id", "POST", {user_id: auth.id, email: auth.email || "", data: p, updated_at: new Date().toISOString()}, "resolution=merge-duplicates,return=minimal"); lastSig = sig; lastPush = Date.now(); } catch(e){}
+    }
+    async function checkAdmin(){ if (!auth){ isAdmin = false; $("pp-link").hidden = true; return; }
+      try { const r = await rest("tape_admins?select=user_id&user_id=eq." + encodeURIComponent(auth.id)); isAdmin = !!(r && r.length); } catch(e){ isAdmin = false; } $("pp-link").hidden = !isAdmin; if (document.body.dataset.view === "lide") renderPeople(); }
+    const agoD = iso => { if (!iso) return "nikdy"; const d = Math.floor((new Date().setHours(0,0,0,0) - new Date(iso).setHours(0,0,0,0)) / 864e5); return d <= 0 ? "dnes" : d === 1 ? "včera" : "před " + d + " dny"; };
+    const TPL = ["Dneska ještě žádná lekce. Pojď na to, stačí deset minut.", "Jedeš skvěle, drž sérii a dej dnes další lekci.", "Chybíš tu už pár dní. Vrať se, lekce na tebe čeká tam, kde jsi ji nechala.", "Dnes zkus dokončit celý týden a splnit úkol týdne."];
+    async function renderPeople(){
+      const list = $("pp-list"), msg = $("pp-msg"); clear(list); msg.textContent = "";
+      if (!auth){ msg.textContent = "Nejdřív se přihlas."; return; } if (!isAdmin){ msg.textContent = "Tahle část je jen pro správce."; return; }
+      msg.textContent = "Načítám…"; let rows = [], sent = [];
+      try { rows = await rest("tape_progress?select=user_id,email,data,updated_at&order=updated_at.desc") || []; sent = await rest("tape_msgs?select=to_user,body,created_at,read_at&order=created_at.desc&limit=200") || []; }
+      catch(e){ msg.textContent = e.status === 404 ? "Tabulky pro postup ještě nejsou v Supabase vytvořené." : "Nepovedlo se načíst. Zkus Obnovit."; return; }
+      msg.textContent = rows.length ? rows.length + " " + (rows.length === 1 ? "člověk" : rows.length < 5 ? "lidé" : "lidí") + ". Postup se pošle pokaždé, když má člověk aplikaci otevřenou." : "Zatím tu nikdo není. Postup se objeví, až si přihlášený člověk aplikaci otevře.";
+      rows.forEach(r => { const d = r.data || {}, c = el("div","card ppc"), pct = d.total ? d.done / d.total : 0, C = 2 * Math.PI * 25, ring = el("div","lr-ring"), b = el("div","pp-b");
+        ring.insertAdjacentHTML("afterbegin", '<svg viewBox="0 0 60 60" aria-hidden="true"><circle class="bg" cx="30" cy="30" r="25"/><circle class="fg" cx="30" cy="30" r="25" stroke-dasharray="' + C.toFixed(1) + '" stroke-dashoffset="' + (C * (1 - pct)).toFixed(1) + '"/></svg>'); ring.appendChild(el("b", null, Math.round(pct * 100) + " %"));
+        b.appendChild(el("span","pp-n", (d.name ? d.name + " · " : "") + (r.email || "bez e-mailu") + (r.user_id === auth.id ? " (ty)" : "")));
+        const idle = d.lastDay ? Math.floor((new Date().setHours(0,0,0,0) - new Date(d.lastDay + "T00:00:00").getTime()) / 864e5) : 99, st = el("div","pp-st");
+        const chip = (t, cls) => st.appendChild(el("span", cls || null, t));
+        chip("Kurz " + (d.done || 0) + " z " + (d.total || 48)); chip("Týden " + (d.week || 1)); chip("Série " + (d.streak || 0) + " d", d.streak >= 3 ? "ok" : null); chip((d.min7 || 0) + " min za 7 dní"); chip("Témata " + (d.topics || 0) + " z " + (d.topicsAll || 0));
+        chip("Učení naposledy " + (d.lastDay ? agoD(d.lastDay + "T12:00:00") : "nikdy"), idle >= 2 ? "warn" : "ok"); b.appendChild(st);
+        if (d.next) b.appendChild(el("span","small muted","Další lekce: " + d.next));
+        const dd = el("div","pp-days"); (d.days || []).forEach(x => { const i = el("i", x.on ? "on" : null, String(Number(x.k.slice(8)))); i.title = x.k + " · " + x.m + " min"; dd.appendChild(i); }); b.appendChild(dd);
+        c.appendChild(ring); c.appendChild(b);
+        if (r.user_id !== auth.id){ const w = el("div","pp-w"), ta = el("textarea"), chips = el("div","chips"), row = el("div","row"), send = el("button","primary","Poslat do aplikace"), mail = el("a","abtn","Napsat e-mail"), info = el("span","pp-sent");
+          ta.placeholder = "Zpráva, kterou uvidí při dalším otevření aplikace"; ta.maxLength = 400; send.type = "button";
+          TPL.forEach(t => { const ch = el("button","chip", t.split(".")[0]); ch.type = "button"; ch.addEventListener("click", () => { ta.value = t; ta.dispatchEvent(new Event("input")); }); chips.appendChild(ch); });
+          const upMail = () => { mail.href = "mailto:" + (r.email || "") + "?subject=" + encodeURIComponent("Tape: pojď se učit") + "&body=" + encodeURIComponent((ta.value || TPL[0]) + "\n\n" + location.origin + location.pathname + "#room"); }; ta.addEventListener("input", upMail); upMail();
+          const mine = sent.filter(m => m.to_user === r.user_id); info.textContent = mine.length ? "Poslední zpráva " + agoD(mine[0].created_at) + (mine[0].read_at ? ", přečtená" : ", zatím nepřečtená") + ": „" + mine[0].body.slice(0, 80) + "“" : "Zatím žádná zpráva.";
+          send.addEventListener("click", async () => { const t = ta.value.trim(); if (!t){ ta.focus(); return; } send.disabled = true;
+            try { await rest("tape_msgs", "POST", {to_user: r.user_id, from_user: auth.id, body: t}, "return=minimal"); ta.value = ""; upMail(); info.textContent = "Odesláno. Uvidí ji při dalším otevření aplikace."; toast("Zpráva odeslána"); } catch(e){ info.textContent = "Nepovedlo se odeslat. Zkus to znovu."; } send.disabled = false; });
+          if (!r.email) mail.hidden = true; row.appendChild(send); row.appendChild(mail); w.appendChild(ta); w.appendChild(chips); w.appendChild(row); w.appendChild(info); c.appendChild(w); }
+        list.appendChild(c); });
+    }
+    async function checkMsgs(){ if (!auth || document.querySelector(".cmsg") || document.querySelector(".ob")) return; let rows = [];
+      try { rows = await rest("tape_msgs?select=id,body,created_at&to_user=eq." + encodeURIComponent(auth.id) + "&read_at=is.null&order=created_at.asc&limit=5") || []; } catch(e){ return; }
+      rows = rows.filter(m => !shown[m.id]); if (!rows.length) return; const m = rows[0]; shown[m.id] = 1;
+      const ov = el("div","cmsg"), bx = el("div"), row = el("div","row"), go = el("button","primary","Jdu na to"), later = el("button", null, "Později"); go.type = later.type = "button";
+      bx.appendChild(el("span","k","Zpráva pro tebe")); bx.appendChild(el("p", null, m.body)); bx.appendChild(el("small", null, "Posláno " + agoD(m.created_at)));
+      const close = async toLearn => { ov.remove(); try { await rest("tape_msgs?id=eq." + encodeURIComponent(m.id), "PATCH", {read_at: new Date().toISOString()}, "return=minimal"); } catch(e){} if (toLearn) location.hash = "#room"; else setTimeout(checkMsgs, 400); };
+      go.addEventListener("click", () => close(true)); later.addEventListener("click", () => close(false)); row.appendChild(later); row.appendChild(go); bx.appendChild(row); ov.appendChild(bx); document.body.appendChild(ov); try { confetti(bx, 18); } catch(e){}
+    }
+    $("pp-reload").addEventListener("click", renderPeople);
+    window.addEventListener("hashchange", () => { if (document.body.dataset.view === "lide") renderPeople(); });
+    document.addEventListener("visibilitychange", () => { if (document.hidden) pushProgress(true); else { checkMsgs(); } });
+    let uid = null; const tick = () => { const id = auth && auth.id || null; if (id !== uid){ uid = id; lastSig = ""; checkAdmin(); if (id) setTimeout(checkMsgs, 1500); } pushProgress(false); };
+    setTimeout(tick, 2500); setInterval(tick, 20000); setInterval(checkMsgs, 180000);
   }
 
   // ---------- moving to a new address without losing data ----------
