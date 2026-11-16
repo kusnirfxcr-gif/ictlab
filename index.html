@@ -721,6 +721,10 @@ ol.lsteps li::before{content:counter(ls);display:grid;place-items:center;width:2
 .ltf .lq{font-size:16px;font-weight:600;line-height:1.45}
 .lrow{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .lrow button{padding:11px 10px;font-weight:700}
+.lrow.l3{grid-template-columns:1fr}
+.lrow.l3 button{display:flex;align-items:center;gap:11px;text-align:left;font-weight:600;line-height:1.35;padding:11px 12px}
+.lrow.l3 button i{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-size:12px;font-weight:800;border:1px solid currentColor;opacity:.75}
+.lrow.l3 button.ok i,.lrow.l3 button.ko i{opacity:1}
 .lrow button.ok{background:rgba(61,220,151,.18);border-color:var(--good);color:var(--good);opacity:1}
 .lrow button.ko{background:rgba(255,107,107,.16);border-color:var(--bad);color:var(--bad);opacity:1}
 .ltf p{margin:0;min-height:2.9em}
@@ -4798,7 +4802,10 @@ body.sakura .lkey.trap::before{background:linear-gradient(180deg,#ffb347,#ff7a59
     const fg = LFIG[l.id]; if (fg && FIGS[fg[0]] && FIGS[fg[0]][fg[1]]) try { box.appendChild(figEl(FIGS[fg[0]][fg[1]][0](), FIGS[fg[0]][fg[1]][1])); } catch(e){}
     if (l.key){ const k = el("div","lkey"); k.appendChild(el("b", null, "Zapamatuj si")); k.appendChild(el("span", null, l.key)); box.appendChild(k); }
     const terms = lnTerms(w, l); if (terms.length){ const d = el("div","lgl"); d.appendChild(el("b","lgh","Slovíčka v lekci")); terms.forEach(g => { const r = el("div"); r.appendChild(el("b", null, g.term + (g.en && String(g.en).toLowerCase() !== String(g.term).toLowerCase() ? " (" + g.en + ")" : ""))); r.appendChild(el("span", null, " " + g.def)); d.appendChild(r); }); box.appendChild(d); }
-    if (l.tf){ const q = el("div","ltf"), row = el("div","lrow"), fb = el("p","small"), yes = btn(null,"Pravda"), no = btn(null,"Nepravda"); q.appendChild(el("b","lgh","Rychlá kontrola")); q.appendChild(el("span","lq", l.tf.s));
+    if (l.q){ const q = el("div","ltf"), row = el("div","lrow l3"), fb = el("p","small"); q.appendChild(el("b","lgh","Rychlá kontrola")); q.appendChild(el("span","lq", l.q.q));
+      const bs = l.q.o.map((t, i) => { const b = btn(null, ""); b.appendChild(el("i", null, "ABC"[i])); b.appendChild(el("span", null, t)); b.addEventListener("click", () => { const ok = i === l.q.ok; bs.forEach(x => x.disabled = true); b.classList.add(ok ? "ok" : "ko"); bs[l.q.ok].classList.add("ok"); fb.className = "small " + (ok ? "pos" : "neg"); fb.textContent = (ok ? "Správně. " : "Ne tak úplně. ") + l.q.why; if (ok) lnBurst(b); palSay(palPick(ok ? "yay" : "oops"), ok ? "yay" : "oops"); }); row.appendChild(b); return b; });
+      q.appendChild(row); q.appendChild(fb); box.appendChild(q); }
+    else if (l.tf){ const q = el("div","ltf"), row = el("div","lrow"), fb = el("p","small"), yes = btn(null,"Pravda"), no = btn(null,"Nepravda"); q.appendChild(el("b","lgh","Rychlá kontrola")); q.appendChild(el("span","lq", l.tf.s));
       const ans = v => { const ok = v === !!l.tf.a; yes.disabled = no.disabled = true; (v ? yes : no).classList.add(ok ? "ok" : "ko"); (l.tf.a ? yes : no).classList.add("ok"); fb.className = "small " + (ok ? "pos" : "neg"); fb.textContent = (ok ? "Správně. " : "Ne tak úplně. ") + l.tf.why; if (ok) lnBurst(v ? yes : no); palSay(palPick(ok ? "yay" : "oops"), ok ? "yay" : "oops"); };
       yes.addEventListener("click", () => ans(true)); no.addEventListener("click", () => ans(false)); row.appendChild(yes); row.appendChild(no); q.appendChild(row); q.appendChild(fb); box.appendChild(q); }
     if (cur.i === w.lessons.length - 1){ const t = el("div","box"); t.appendChild(el("b", null, "Úkol týdne")); t.appendChild(el("span", null, w.task)); box.appendChild(t); }
