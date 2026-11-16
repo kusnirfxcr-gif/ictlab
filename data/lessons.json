@@ -1,5 +1,60 @@
 [
  {
+  "id": "20261116-L07",
+  "ts": "2026-11-16T05:55:00Z",
+  "date": "2026-11-16",
+  "n": 7,
+  "week": 2,
+  "title": "Impuls a korekce: dva kroky vpřed, jeden zpět",
+  "body": [
+   "Trend nikdy neběží rovně. Střídají se v něm dva druhy pohybu: impuls a korekce.",
+   "Impuls je rychlý pohyb ve směru trendu. Svíčky jsou velké, mají plná těla a jdou jedna za druhou stejným směrem. Cena urazí hodně bodů za krátkou dobu.",
+   "Korekce je pomalejší návrat proti trendu. Svíčky jsou menší, překrývají se a střídají barvy. Cena vrátí jen část toho, co impuls udělal.",
+   "V rostoucím trendu tedy vidíš: impuls nahoru, korekce dolů, další impuls nahoru. Dno korekce je vyšší dno, o kterém byla lekce o trendu.",
+   "Proč na tom záleží: kdo nakoupí na konci impulsu, kupuje draho a stop-loss musí dát daleko. Kdo počká na korekci, kupuje levněji a stop má blíž. Stejný obchod, menší riziko.",
+   "Pozor na jedno. Když je návrat stejně rychlý a velký jako impuls před ním, není to korekce. Může to být začátek otočení a je lepší počkat."
+  ],
+  "example": "NQ vyrazí z 21 000 na 21 060 během čtyř velkých zelených svíček. To je impuls, 60 bodů. Pak se osm malých svíček pomalu vrací na 21 035. To je korekce, vrátila 25 bodů. Nákup na 21 060 by znamenal koupit na vrcholu. Nákup kolem 21 035 se stopem pod 21 000 má lepší cenu i jasné místo pro stop.",
+  "remember": "Impuls je rychlý a jde s trendem, korekce je pomalá a jde proti němu. Vstupuje se v korekci, ne na konci impulsu.",
+  "terms": [
+   "impuls",
+   "trend",
+   "hh-hl"
+  ],
+  "quiz": [
+   {
+    "q": "Podle čeho poznáš impuls?",
+    "options": [
+     "Malé svíčky, které se překrývají",
+     "Velké svíčky s plnými těly jdoucí jedním směrem",
+     "Cena stojí na místě"
+    ],
+    "correct": 1,
+    "why": "Impuls je rychlý pohyb: velká těla a málo překryvu."
+   },
+   {
+    "q": "Kdy je v rostoucím trendu lepší cena pro nákup?",
+    "options": [
+     "Na konci impulsu",
+     "V korekci",
+     "Kdykoli, na ceně nezáleží"
+    ],
+    "correct": 1,
+    "why": "V korekci kupuješ levněji a stop-loss můžeš dát blíž."
+   },
+   {
+    "q": "Návrat proti trendu je stejně rychlý a velký jako impuls před ním. Co to znamená?",
+    "options": [
+     "Běžná korekce, nakupuj",
+     "Může jít o otočení, počkej",
+     "Trend zrychluje"
+    ],
+    "correct": 1,
+    "why": "Korekce bývá pomalejší a menší. Když není, trend možná končí."
+   }
+  ]
+ },
+ {
   "id": "20261115-L06",
   "ts": "2026-11-15T05:55:00Z",
   "date": "2026-11-15",

@@ -1,5 +1,17 @@
 [
  {
+  "id": "premium-cas-vzniku-zony",
+  "ts": "2026-11-16T05:55:00Z",
+  "date": "2026-11-16",
+  "title": "Premium: čas vzniku u každé zóny",
+  "area": "produkt",
+  "value": 2,
+  "effort": 2,
+  "status": "new",
+  "what": "U FVG a order blocku v analýze dne ukázat, ve kterém devadesátiminutovém cyklu vznikl, a zvýraznit, když se k němu cena vrací ve stejném cyklu jiný den. V deníku pak půjde porovnat výsledky obchodů ze zón navštívených ve stejný čas a v jiný čas.",
+  "why": "Zeussy ve vlákně o čase a PD arrays tvrdí, že rozhoduje čas vzniku zóny. Je to neověřené tvrzení, deník ho může na vlastních obchodech potvrdit nebo vyvrátit."
+ },
+ {
   "id": "procvicovani-na-grafu",
   "ts": "2026-11-12T16:10:00Z",
   "date": "2026-11-12",
