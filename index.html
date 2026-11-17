@@ -1150,6 +1150,24 @@ button.dc{cursor:pointer;transition:transform .15s} button.dc:hover{transform:tr
 #rgoal .gwk i{width:30px;height:30px;border-radius:10px;border:1px solid var(--line);background:var(--surface2);display:grid;place-items:center;font-style:normal;font-size:10.5px;font-weight:700;color:var(--muted)}
 #rgoal .gwk i.on{background:var(--good);border-color:var(--good);color:#06281a} #rgoal .gwk i.act{border-color:var(--good);color:var(--good)} #rgoal .gwk i.td{box-shadow:0 0 0 2px var(--accent)} #rgoal .gwk i.we{opacity:.55}
 #rgoal .gwin{padding:10px 12px;border-radius:14px;background:rgba(61,220,151,.12);border:1px solid rgba(61,220,151,.4);font-weight:700;animation:rise .4s both}
+/* performance levels: lite (phones by default) and off */
+body.fx-lite .topbar,body.fx-lite .bottombar,body.fx-lite nav,body.fx-lite .ob,body.fx-lite .cmsg,body.fx-lite .wparty,body.fx-lite .copop,body.fx-lite .card,body.fx-lite details.week{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+body.fx-lite .topbar,body.fx-lite .bottombar{background:#09090b} body.fx-lite nav{background:rgba(19,19,22,.97)}
+body.fx-lite .ob,body.fx-lite .cmsg,body.fx-lite .wparty{background:rgba(5,5,8,.93)}
+body.fx-lite.sakura .card,body.fx-lite.sakura details.week{background:rgba(255,255,255,.93);box-shadow:0 8px 22px rgba(214,90,160,.12)}
+body.fx-lite.sakura .topbar,body.fx-lite.sakura .bottombar{background:#fff3fa!important}
+@media (max-width:699px){body[data-group="uceni"] .subnav .sk-btn{margin:0;width:100%}} body.fx-lite.sakura nav{background:rgba(255,255,255,.96)}
+body.fx-lite .sk-blob{animation:none;will-change:auto} body.fx-lite .sk-blob.b5,body.fx-lite .sk-ribbon,body.fx-lite .sk-bub{display:none}
+body.fx-lite .sk-twk{display:none} body.fx-lite .sk-twk:nth-of-type(4n){display:block}
+body.fx-lite .sk-scene .sk-petals i:nth-child(n+13),body.fx-lite .sk-front i:nth-child(n+4){display:none}
+body.fx-lite .sk-petals b{animation:none} body.fx-lite .sk-petals u,body.fx-lite .sk-petals i.near u{filter:none;opacity:.9;animation-name:ptspin}
+@keyframes ptspin{to{transform:rotate(360deg)}}
+body.fx-lite .sk-head b{animation:none;background-size:100% 100%} body.fx-lite .sk-emb{filter:none}
+body.fx-lite #lr::after,body.fx-lite .gtour-hole::after{animation:none;display:none}
+body.fx-lite .rbw-ring{will-change:auto}
+body.fx-off .sk-scene *,body.fx-off .sk-emb,body.fx-off .sk-head b{animation:none!important} body.fx-off .sk-petals,body.fx-off .sk-bub,body.fx-off .sk-twk,body.fx-off .sk-ribbon,body.fx-off .sk-front,body.fx-off .rbw-ring{display:none!important}
+body.fx-off *,body.fx-off *::before,body.fx-off *::after{animation-duration:.01s!important;animation-iteration-count:1!important;animation-delay:0s!important}
+body.fx-hidden .sk-scene *,body.fx-hidden .sk-front *{animation-play-state:paused!important}
 </style>
 </head>
 <body>
@@ -5413,6 +5431,19 @@ button.dc{cursor:pointer;transition:transform .15s} button.dc:hover{transform:tr
     const _refGoal = refreshAll; refreshAll = function(){ const r = _refGoal.apply(this, arguments); try { goalRender(); } catch(e){} return r; };
     window.addEventListener("hashchange", () => setTimeout(() => { try { goalRender(); } catch(e){} }, 150)); setInterval(() => { try { goalRender(); } catch(e){} }, 4000); setTimeout(() => { try { goalRender(); } catch(e){} }, 900);
     try { const p = $("streak"); if (p) p.title = "Víkendy sérii nepřeruší a jeden všední den v týdnu se odpouští."; } catch(e){}
+  }
+
+  // ---------- performance level (per device, not synced) ----------
+  { const FK = "tape-fx", LV = [["auto","Automaticky"],["full","Plné"],["lite","Úsporné"],["off","Vypnuté"]]; let fx = "auto"; try { fx = localStorage.getItem(FK) || "auto"; } catch(e){}
+    const phone = () => { try { return window.matchMedia("(pointer: coarse)").matches || window.innerWidth < 900; } catch(e){ return true; } };
+    const eff = () => fx === "auto" ? (phone() ? "lite" : "full") : fx;
+    const fxApply = () => { const e = eff(), b = document.body; b.classList.toggle("fx-lite", e === "lite" || e === "off"); b.classList.toggle("fx-off", e === "off"); };
+    fxApply(); document.addEventListener("visibilitychange", () => document.body.classList.toggle("fx-hidden", document.hidden));
+    const box = el("div","card"); const _rsFx = renderSettings; renderSettings = function(){ _rsFx(); try { if (fontBox.parentNode && box.previousElementSibling !== fontBox) fontBox.parentNode.insertBefore(box, fontBox.nextSibling); } catch(e){} };
+    const fxRender = () => { clear(box); box.appendChild(el("h2", null, "Animace a výkon")); box.appendChild(el("p","small muted","Když se aplikace na telefonu seká, nech Úsporné nebo zvol Vypnuté. Na telefonu je Úsporné výchozí: méně padajících lístků, žádné rozmazané pozadí pod kartami. Platí jen pro tohle zařízení."));
+      const ch = el("div","chips"); LV.forEach(o => { const b = el("button","chip" + (fx === o[0] ? " on" : ""), o[1]); b.type = "button"; b.addEventListener("click", () => { fx = o[0]; try { localStorage.setItem(FK, fx); } catch(e){} fxApply(); fxRender(); }); ch.appendChild(b); }); box.appendChild(ch);
+      box.appendChild(el("span","small muted","Teď běží: " + ({full: "plné animace", lite: "úsporný režim", off: "animace vypnuté"})[eff()] + ".")); };
+    fxRender();
   }
 
   // ---------- moving to a new address without losing data ----------
