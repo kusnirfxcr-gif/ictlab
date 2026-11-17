@@ -1092,6 +1092,47 @@ body.sakura #lr .lr-go{color:#a12c78}
 .gtour-card.sw .k,.gtour-card.sw h3,.gtour-card.sw p{opacity:0}
 @media (max-width:440px){.gtour-card .dots{display:none}}
 @media (prefers-reduced-motion:reduce){.gtour-hole,.gtour-card{transition:none}.gtour-hole::after{animation:none}}
+/* training: chart drill, weak spots; richer results calendar */
+.train{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.train h2{grid-column:1/-1;margin:0}
+.train .tt{display:flex;flex-direction:column;gap:5px;align-items:flex-start;text-align:left;padding:14px;border-radius:16px;border:1px solid var(--line);background:var(--surface2);cursor:pointer;color:inherit;font:inherit;transition:transform .18s,border-color .18s}
+.train .tt:hover{transform:translateY(-2px);border-color:var(--accent)}
+.train .tt svg{width:26px;height:26px;stroke:var(--accent);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.train .tt b{font-size:15.5px} .train .tt span{font-size:12.5px;color:var(--muted);line-height:1.35}
+.train .tt .cnt{align-self:flex-start;padding:2px 9px;border-radius:999px;background:var(--amber);color:#201400;font-weight:800;font-size:12px}
+@media (max-width:420px){.train{grid-template-columns:1fr}}
+.drov{max-width:520px;width:100%;gap:12px;display:flex;flex-direction:column}
+.drov .drq{font-size:17px;font-weight:800;line-height:1.3;margin:0}
+.drov svg.drc{width:100%;height:auto;display:block;border-radius:14px;background:var(--surface2);border:1px solid var(--line);touch-action:manipulation;cursor:pointer;-webkit-user-select:none;user-select:none}
+.drc .cu{fill:var(--good);stroke:var(--good)} .drc .cd{fill:var(--bad);stroke:var(--bad)}
+.drc .sel{fill:rgba(183,161,255,.22);stroke:#b7a1ff;stroke-width:1.2}
+.drc .okc{fill:rgba(61,220,151,.2);stroke:var(--good);stroke-width:1.4;animation:drpop .5s cubic-bezier(.2,.8,.2,1) both}
+.drc .noc{fill:rgba(255,107,107,.2);stroke:var(--bad);stroke-width:1.4}
+.drc .gap{fill:rgba(183,161,255,.28);stroke:#b7a1ff;stroke-dasharray:3 3}
+.drc .lvl{stroke:var(--amber);stroke-width:1.2;stroke-dasharray:5 4}
+.drc text{font-size:9px;fill:var(--muted);font-weight:700}
+@keyframes drpop{from{opacity:0;transform:scaleY(.6)}to{opacity:1;transform:none}} .drc .okc{transform-origin:center;transform-box:fill-box}
+.drov .drbar{display:flex;gap:4px} .drov .drbar i{flex:1;height:5px;border-radius:3px;background:var(--line)} .drov .drbar i.ok{background:var(--good)} .drov .drbar i.no{background:var(--bad)} .drov .drbar i.cur{background:var(--accent)}
+.drov .drfb{min-height:44px;margin:0;font-size:14px;line-height:1.45}
+.drov .drctl{display:flex;gap:8px;align-items:center} .drov .drctl .primary{flex:1}
+.drov .drctl .arr{width:46px;padding:10px 0;font-size:18px}
+.drov .dropts{display:flex;flex-direction:column;gap:8px}
+.drov .dropts button{text-align:left;padding:12px 14px;line-height:1.35;font-weight:600}
+.drov .dropts button.ok{border-color:var(--good);background:rgba(61,220,151,.14)} .drov .dropts button.no{border-color:var(--bad);background:rgba(255,107,107,.14)}
+.drov .big{font-size:40px;font-weight:800;letter-spacing:-.02em;text-align:center;margin:6px 0 0}
+.cal.c8{grid-template-columns:repeat(7,minmax(0,1fr)) minmax(0,.9fr)}
+.cal .dc{cursor:default;text-align:left;font:inherit;font-size:11px;color:var(--muted)}
+button.dc{cursor:pointer;transition:transform .15s} button.dc:hover{transform:translateY(-2px)}
+.cal .dc.sel{box-shadow:0 0 0 2px var(--accent)}
+.cal .dc em{font-style:normal;font-size:9.5px;opacity:.75}
+.cal .wk{border:1px dashed var(--line);border-radius:11px;padding:5px 6px;display:flex;flex-direction:column;justify-content:space-between;font-size:9.5px;color:var(--muted);min-height:50px}
+.cal .wk b{font-size:11px;font-variant-numeric:tabular-nums;white-space:nowrap} .cal .wk b.pos{color:var(--good)} .cal .wk b.neg{color:var(--bad)}
+.calst{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.calst div{padding:8px 9px;border-radius:12px;border:1px solid var(--line);background:var(--surface2);display:flex;flex-direction:column;gap:2px}
+.calst span{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em} .calst b{font-size:14.5px;font-variant-numeric:tabular-nums}
+@media (max-width:480px){.calst{grid-template-columns:repeat(2,minmax(0,1fr))} .cal.c8{gap:3px} .cal .dc,.cal .wk{padding:4px 4px;min-height:46px} .cal .dc b{font-size:10.5px} .cal .wk b{font-size:10px}}
+.calday{display:flex;flex-direction:column;gap:10px;padding-top:12px;border-top:1px solid var(--line);animation:rise .35s cubic-bezier(.2,.8,.2,1) both}
+.calu{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden} .calu button{border:0;border-radius:0;background:none;padding:6px 12px;font-size:12.5px;font-weight:700} .calu button.on{background:var(--accent);color:#14121f}
 </style>
 </head>
 <body>
@@ -4235,7 +4276,7 @@ body.sakura #lr .lr-go{color:#a12c78}
         const tb = s.topic && topicBtn(s.topic); if (tb) c.appendChild(tb);
         if (s.quiz){ const q = el("div","box exam"), body = el("div","exbody"); let done = false; q.appendChild(el("b", null, "Ověř si to")); body.appendChild(el("b","exq", s.quiz.q));
           const opts = shuffled(s.quiz.opts), btns = opts.map(o => { const b = el("button","exo", o); b.type = "button";
-            b.addEventListener("click", () => { if (done) return; done = true; const ok = o === s.quiz.ok; btns.forEach((x, j) => { x.disabled = true; if (opts[j] === s.quiz.ok) x.classList.add("ok"); }); if (!ok) b.classList.add("no");
+            b.addEventListener("click", () => { if (done) return; done = true; const ok = o === s.quiz.ok; weakNote("s-" + s.n, s.quiz.q, s.quiz.opts, s.quiz.ok, s.quiz.why, s.title, ok); btns.forEach((x, j) => { x.disabled = true; if (opts[j] === s.quiz.ok) x.classList.add("ok"); }); if (!ok) b.classList.add("no");
               body.appendChild(el("span","small", (ok ? "Správně. " : "Tohle ne. ") + s.quiz.why)); if (ok && !lp.sq[s.n]){ lp.sq[s.n] = 1; persistLaura(); h.firstChild.classList.add("ok"); } });
             body.appendChild(b); return b; });
           q.appendChild(body); c.appendChild(q); }
@@ -4463,7 +4504,7 @@ body.sakura #lr .lr-go{color:#a12c78}
     const q = el("div","box exam"), head = el("div","row"), body = el("div","exbody"); let done = false;
     head.appendChild(el("b", null, "Kontrolní otázka")); if (lp.seen[t.id]) head.appendChild(el("span","pill good","Téma splněno")); q.appendChild(head); body.appendChild(el("b","exq", t.check.q));
     const opts = shuffled(t.check.opts), btns = opts.map(o => { const b = el("button","exo", o); b.type = "button";
-      b.addEventListener("click", () => { if (done) return; done = true; const ok = o === t.check.ok; btns.forEach((x, j) => { x.disabled = true; if (opts[j] === t.check.ok) x.classList.add("ok"); }); if (!ok) b.classList.add("no");
+      b.addEventListener("click", () => { if (done) return; done = true; const ok = o === t.check.ok; weakNote("t-" + t.id, t.check.q, t.check.opts, t.check.ok, t.check.why, t.title, ok); btns.forEach((x, j) => { x.disabled = true; if (opts[j] === t.check.ok) x.classList.add("ok"); }); if (!ok) b.classList.add("no");
         body.appendChild(el("span","small", (ok ? "Správně. " : "Tohle ne. ") + t.check.why));
         if (ok){ if (!lp.seen[t.id]){ lp.seen[t.id] = true; persistLaura(); paChips(); } const i = pa.findIndex(x => x.id === t.id), nx = pa[i + 1]; if (nx){ const nb = el("button","primary","Další téma: " + nx.title); nb.type = "button"; nb.addEventListener("click", () => { paCur = nx.id; paStep = 0; paBuild(); $("pa-card").scrollIntoView({block: "start"}); }); body.appendChild(nb); } }
         else { const rb = el("button", null, "Zkusit znovu"); rb.type = "button"; rb.addEventListener("click", renderPaExtra); body.appendChild(rb); } });
@@ -4894,7 +4935,7 @@ body.sakura #lr .lr-go{color:#a12c78}
     if (l.key){ const k = el("div","lkey"); k.appendChild(el("b", null, "Zapamatuj si")); k.appendChild(el("span", null, l.key)); box.appendChild(k); }
     const terms = lnTerms(w, l); if (terms.length){ const d = el("div","lgl"); d.appendChild(el("b","lgh","Slovíčka v lekci")); terms.forEach(g => { const r = el("div"); r.appendChild(el("b", null, g.term + (g.en && String(g.en).toLowerCase() !== String(g.term).toLowerCase() ? " (" + g.en + ")" : ""))); r.appendChild(el("span", null, " " + g.def)); d.appendChild(r); }); box.appendChild(d); }
     if (l.q){ const q = el("div","ltf"), row = el("div","lrow l3"), fb = el("p","small"); q.appendChild(el("b","lgh","Rychlá kontrola")); q.appendChild(el("span","lq", l.q.q));
-      const bs = l.q.o.map((t, i) => { const b = btn(null, ""); b.appendChild(el("i", null, "ABC"[i])); b.appendChild(el("span", null, t)); b.addEventListener("click", () => { const ok = i === l.q.ok; bs.forEach(x => x.disabled = true); b.classList.add(ok ? "ok" : "ko"); bs[l.q.ok].classList.add("ok"); fb.className = "small " + (ok ? "pos" : "neg"); fb.textContent = (ok ? "Správně. " : "Ne tak úplně. ") + l.q.why; if (ok) lnBurst(b); palSay(palPick(ok ? "yay" : "oops"), ok ? "yay" : "oops"); }); row.appendChild(b); return b; });
+      const bs = l.q.o.map((t, i) => { const b = btn(null, ""); b.appendChild(el("i", null, "ABC"[i])); b.appendChild(el("span", null, t)); b.addEventListener("click", () => { const ok = i === l.q.ok; weakNote("c-" + l.id, l.q.q, l.q.o, l.q.o[l.q.ok], l.q.why, l.title, ok); bs.forEach(x => x.disabled = true); b.classList.add(ok ? "ok" : "ko"); bs[l.q.ok].classList.add("ok"); fb.className = "small " + (ok ? "pos" : "neg"); fb.textContent = (ok ? "Správně. " : "Ne tak úplně. ") + l.q.why; if (ok) lnBurst(b); palSay(palPick(ok ? "yay" : "oops"), ok ? "yay" : "oops"); }); row.appendChild(b); return b; });
       q.appendChild(row); q.appendChild(fb); box.appendChild(q); }
     else if (l.tf){ const q = el("div","ltf"), row = el("div","lrow"), fb = el("p","small"), yes = btn(null,"Pravda"), no = btn(null,"Nepravda"); q.appendChild(el("b","lgh","Rychlá kontrola")); q.appendChild(el("span","lq", l.tf.s));
       const ans = v => { const ok = v === !!l.tf.a; yes.disabled = no.disabled = true; (v ? yes : no).classList.add(ok ? "ok" : "ko"); (l.tf.a ? yes : no).classList.add("ok"); fb.className = "small " + (ok ? "pos" : "neg"); fb.textContent = (ok ? "Správně. " : "Ne tak úplně. ") + l.tf.why; if (ok) lnBurst(v ? yes : no); palSay(palPick(ok ? "yay" : "oops"), ok ? "yay" : "oops"); };
@@ -5005,7 +5046,7 @@ body.sakura #lr .lr-go{color:#a12c78}
         x.text.forEach(t => steps.appendChild(el("li", null, t))); body.appendChild(steps); body.appendChild(el("b","lgh","Jak s tím pracovat")); x.use.forEach(t => use.appendChild(el("li", null, t))); body.appendChild(use);
         trap.appendChild(el("b", null, "Pozor")); trap.appendChild(el("span", null, x.trap)); body.appendChild(trap);
         const q = el("div","box exam"), qb = el("div","exbody"); let answered = false; q.appendChild(el("b", null, "Ověř si to")); qb.appendChild(el("b","exq", x.quiz.q));
-        const opts = shuffled(x.quiz.opts), btns = opts.map(o => { const b = el("button","exo", o); b.type = "button"; b.addEventListener("click", () => { if (answered) return; answered = true; const ok = o === x.quiz.ok; btns.forEach((y, j) => { y.disabled = true; if (opts[j] === x.quiz.ok) y.classList.add("ok"); }); if (!ok) b.classList.add("no");
+        const opts = shuffled(x.quiz.opts), btns = opts.map(o => { const b = el("button","exo", o); b.type = "button"; b.addEventListener("click", () => { if (answered) return; answered = true; const ok = o === x.quiz.ok; weakNote("a-" + x.id, x.quiz.q, x.quiz.opts, x.quiz.ok, x.quiz.why, x.title, ok); btns.forEach((y, j) => { y.disabled = true; if (opts[j] === x.quiz.ok) y.classList.add("ok"); }); if (!ok) b.classList.add("no");
             qb.appendChild(el("span","small", (ok ? "Správně. " : "Tohle ne. ") + x.quiz.why)); if (ok && !lp.sq["a-" + x.id]){ lp.sq["a-" + x.id] = 1; persistLaura(); d.classList.add("done"); cnt.textContent = "hotovo"; confetti(b, 14); } }); qb.appendChild(b); return b; });
         q.appendChild(qb); body.appendChild(q); d.appendChild(body); box.appendChild(d); });
       box.appendChild(stSources(m.sources)); }; }
@@ -5203,6 +5244,126 @@ body.sakura #lr .lr-go{color:#a12c78}
     $("tour-start").addEventListener("click", tourStart);
     let tries = 0, calm = 0; const auto = setInterval(() => { let seen = "1"; try { seen = localStorage.getItem(TK); } catch(e){} if (seen || ++tries > 300){ clearInterval(auto); return; }
       if (!profile || document.querySelector(".ob, .cmsg, .copop:not([hidden])") || document.body.classList.contains("modal")){ calm = 0; return; } if (++calm < 3) return; clearInterval(auto); tourStart(); }, 1200);
+  }
+
+  // ---------- training: weak spots, chart drill ----------
+  { lp.weak = lp.weak || {}; lp.drill = lp.drill || {n: 0, ok: 0, best: 0};
+    const keep = () => { try { localStorage.setItem(LS_LAURA, JSON.stringify(lp)); } catch(e){} try { if (saveLaura) saveLaura(); } catch(e){} trainRender(); };
+    weakNote = function(id, q, opts, right, why, src, ok){ try { if (ok || !q || !opts || !right) return; const w = lp.weak[id] || {w: 0}; lp.weak[id] = {q: q, o: opts.slice(), a: right, why: why || "", src: src || "", w: (w.w || 0) + 1, r: 0, ts: Date.now()}; keep(); } catch(e){} };
+    const ICO = {dr: '<svg viewBox="0 0 24 24"><path d="M6 4v4M6 14v6M12 3v6M12 15v6M18 6v3M18 15v4"/><rect x="4" y="8" width="4" height="6" rx="1"/><rect x="10" y="9" width="4" height="6" rx="1"/><rect x="16" y="9" width="4" height="6" rx="1"/></svg>', wk: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2"/></svg>'};
+    function trainRender(){ document.querySelectorAll(".train").forEach(c => { clear(c); c.appendChild(el("h2", null, "Trénink"));
+        const mk = (ico, title, sub, fn, cnt) => { const b = el("button","tt"); b.type = "button"; b.insertAdjacentHTML("afterbegin", ico); b.appendChild(el("b", null, title)); if (cnt) b.appendChild(el("i","cnt", cnt)); b.appendChild(el("span", null, sub)); b.addEventListener("click", fn); c.appendChild(b); };
+        const d = lp.drill, nW = Object.keys(lp.weak).length;
+        mk(ICO.dr, "Poznej to na grafu", d.n ? "Úspěšnost " + Math.round(100 * d.ok / d.n) + " % · nejdelší série " + d.best : "Ťukni na swing, FVG, sweep nebo BOS v cvičném grafu.", openDrill);
+        mk(ICO.wk, "Slabá místa", nW ? "Otázky, kde byla chyba. Zmizí po dvou správných odpovědích." : "Zatím žádná. Chybné odpovědi se sem ukládají samy.", openWeak, nW ? String(nW) : ""); }); }
+    function openWeak(){ const o = overlay("drov"), ids = shuffled(Object.keys(lp.weak)).slice(0, 10); let i = 0, good = 0, gone = 0;
+      const head = () => { const r = el("div","row"), x = el("button","ck-del","Zavřít"); x.type = "button"; x.addEventListener("click", o.close); r.appendChild(el("span","kick","Slabá místa")); r.appendChild(x); return r; };
+      const step = () => { clear(o.card); o.card.appendChild(head());
+        if (!ids.length){ o.card.appendChild(el("p","drq","Žádná slabá místa.")); o.card.appendChild(el("p","muted","Když v lekci nebo kvízu odpovíš špatně, otázka se sem sama uloží a můžeš si ji tu zopakovat.")); return; }
+        if (i >= ids.length){ o.card.appendChild(el("p","big", good + " z " + ids.length)); o.card.appendChild(el("p","muted", gone ? "Zvládnuto a odebráno: " + gone + ". Zbývá: " + Object.keys(lp.weak).length + "." : "Otázka zmizí, až ji dvakrát po sobě dáš správně. Zbývá: " + Object.keys(lp.weak).length + ".")); const b = el("button","primary","Hotovo"); b.type = "button"; b.addEventListener("click", o.close); o.card.appendChild(b); try { if (good === ids.length) confetti(o.card, 24); } catch(e){} return; }
+        const id = ids[i], w = lp.weak[id]; if (!w){ i++; return step(); }
+        const bar = el("div","drbar"); ids.forEach((x, k) => bar.appendChild(el("i", k < i ? "ok" : k === i ? "cur" : null))); o.card.appendChild(bar);
+        if (w.src) o.card.appendChild(el("span","small muted", w.src)); o.card.appendChild(el("p","drq", w.q));
+        const box = el("div","dropts"), fb = el("p","drfb small"), nx = el("button","primary", i === ids.length - 1 ? "Výsledek" : "Další"); nx.type = "button"; nx.hidden = true; nx.addEventListener("click", () => { i++; step(); });
+        const opts = shuffled(w.o), bs = opts.map(t => { const b = el("button", null, t); b.type = "button"; b.addEventListener("click", () => { const ok = t === w.a; bs.forEach((y, k) => { y.disabled = true; if (opts[k] === w.a) y.classList.add("ok"); }); if (!ok) b.classList.add("no");
+            if (ok){ good++; w.r = (w.r || 0) + 1; if (w.r >= 2){ delete lp.weak[id]; gone++; } } else { w.r = 0; w.w = (w.w || 0) + 1; }
+            fb.className = "drfb small " + (ok ? "pos" : "neg"); fb.textContent = (ok ? (lp.weak[id] ? "Správně. Ještě jednou a je pryč. " : "Správně, tahle je zvládnutá. ") : "Ještě ne. ") + w.why; nx.hidden = false; keep(); }); box.appendChild(b); return b; });
+        o.card.appendChild(box); o.card.appendChild(fb); o.card.appendChild(nx); };
+      step(); }
+    // chart drill: candles are generated, the detector decides what counts as correct
+    const rnd = () => Math.random(), gs = () => (rnd() + rnd() + rnd() - 1.5) * 1.15;
+    const N = 26;
+    function drGen(kind){ const c = [], k = 9 + Math.floor(rnd() * 10), j = k - 3 - Math.floor(rnd() * 3); let p = 100, H = null;
+      for (let i = 0; i < N; i++){ let o = p, b = gs() * 0.7, up = 0.12 + Math.abs(gs()) * 0.45, dn = 0.12 + Math.abs(gs()) * 0.45;
+        if (kind === "fvg" || kind === "disp"){ if (i === k){ b = 2.9 + rnd() * 1.2; up = 0.12; dn = 0.1; } else if (i === k + 1){ b = 0.2 + rnd() * 0.5; dn = 0.08; } else if (i === k - 1){ b = gs() * 0.4; up = 0.15; } }
+        if (kind === "sweep" || kind === "bos"){ if (i === j){ b = 0.9 + rnd() * 0.5; up = 0.7 + rnd() * 0.4; } else if (i > j && i < k){ b = -0.25 - rnd() * 0.45; up = 0.1 + rnd() * 0.2; } else if (i === k && H != null){ if (kind === "sweep"){ b = -(0.3 + rnd() * 0.5); up = (H - o) + 0.35 + rnd() * 0.3; } else { b = (H - o) + 0.6 + rnd() * 0.5; up = 0.15; dn = 0.1; } } }
+        const cl = o + b, h = Math.max(o, cl) + Math.max(0.05, up), l = Math.min(o, cl) - Math.max(0.05, dn); c.push({o: o, c: cl, h: h, l: l}); p = cl; if (i === j) H = h; }
+      return c; }
+    const flip = c => c.map(x => ({o: -x.o, c: -x.c, h: -x.l, l: -x.h}));
+    const swH = (c, i) => i >= 2 && i <= c.length - 3 && c[i].h > Math.max(c[i-2].h, c[i-1].h, c[i+1].h, c[i+2].h);
+    const lastSH = (c, i) => { for (let q = i - 3; q >= 2; q--) if (swH(c, q)) return q; return -1; };
+    const DET = {
+      swing: (c, i) => swH(c, i) ? {} : null,
+      fvg: (c, i) => i >= 1 && i <= c.length - 2 && c[i+1].l > c[i-1].h + 0.08 ? {gap: [c[i-1].h, c[i+1].l, i - 1, i + 1]} : null,
+      disp: (c, i) => { const b = c.map(x => Math.abs(x.c - x.o)).sort((a, z) => a - z), med = b[Math.floor(b.length / 2)], x = c[i], bd = x.c - x.o; return bd >= Math.max(1.6, 3 * med) && bd / (x.h - x.l) >= 0.7 ? {} : null; },
+      sweep: (c, i) => { const q = lastSH(c, i); if (q < 0) return null; const H = c[q].h; for (let z = q + 1; z < i; z++) if (c[z].h > H) return null; return c[i].h > H + 0.05 && c[i].c < H && c[i].o < H ? {lvl: [H, q, i]} : null; },
+      bos: (c, i) => { const q = lastSH(c, i); if (q < 0) return null; const H = c[q].h; for (let z = q + 1; z < i; z++) if (c[z].c > H) return null; return c[i].c > H + 0.05 ? {lvl: [H, q, i]} : null; }
+    };
+    const TASK = {
+      swing: [["Ťukni na swing high.", "Swing high má vyšší high než dvě svíčky vlevo i dvě vpravo. Je to místo, kde se cena otočila dolů."], ["Ťukni na swing low.", "Swing low má nižší low než dvě svíčky vlevo i dvě vpravo. Je to místo, kde se cena otočila nahoru."]],
+      fvg: [["Najdi bullish FVG. Ťukni na prostřední svíčku ze tří.", "Low třetí svíčky je nad high první. Mezi jejich knoty zůstala mezera, kterou prostřední svíčka přeskočila."], ["Najdi bearish FVG. Ťukni na prostřední svíčku ze tří.", "High třetí svíčky je pod low první. Mezi jejich knoty zůstala mezera."]],
+      disp: [["Ťukni na displacement nahoru.", "Velké tělo, malé knoty a výrazně víc bodů než okolní svíčky. Jedna strana trh na chvíli ovládla."], ["Ťukni na displacement dolů.", "Velké tělo, malé knoty a výrazně víc bodů než okolní svíčky."]],
+      sweep: [["Která svíčka vybrala likviditu nad vrcholem a vrátila se?", "Knot přesáhl poslední swing high, ale svíčka zavřela zpátky pod ním. To je sweep, ne průraz."], ["Která svíčka vybrala likviditu pod dnem a vrátila se?", "Knot šel pod poslední swing low, ale svíčka zavřela zpátky nad ním."]],
+      bos: [["Která svíčka udělala BOS nahoru?", "Jako první zavřela tělem nad posledním swing high. Počítá se zavření, ne knot."], ["Která svíčka udělala BOS dolů?", "Jako první zavřela tělem pod posledním swing low."]]
+    };
+    function drMake(kind){ for (let t = 0; t < 400; t++){ const dn = rnd() < 0.5, c0 = drGen(kind), c = dn ? flip(c0) : c0, ans = {}; let n = 0; for (let i = 0; i < N; i++){ const d = DET[kind](c0, i); if (d){ ans[i] = d; n++; } }
+        if (n >= 1 && n <= (kind === "swing" ? 4 : 1)) return {kind: kind, dn: dn, c: c, ans: ans, q: TASK[kind][dn ? 1 : 0]}; } return null; }
+    function drDraw(svg, r, sel, shown){ const W = 340, Ht = 190, pad = 12, cw = (W - 2 * pad) / N, hi = Math.max.apply(null, r.c.map(x => x.h)), lo = Math.min.apply(null, r.c.map(x => x.l)), y = v => pad + (hi - v) / (hi - lo) * (Ht - 2 * pad), sg = r.dn ? -1 : 1; let h = "";
+      if (shown){ Object.keys(r.ans).forEach(k => { const a = r.ans[k]; if (a.gap){ const y1 = y(sg * a.gap[0]), y2 = y(sg * a.gap[1]); h += '<rect class="gap" x="' + (pad + a.gap[2] * cw).toFixed(1) + '" y="' + Math.min(y1, y2).toFixed(1) + '" width="' + ((a.gap[3] - a.gap[2] + 1) * cw).toFixed(1) + '" height="' + Math.abs(y2 - y1).toFixed(1) + '"/>'; }
+          if (a.lvl){ const yy = y(sg * a.lvl[0]).toFixed(1); h += '<line class="lvl" x1="' + (pad + a.lvl[1] * cw).toFixed(1) + '" x2="' + (pad + (a.lvl[2] + 1) * cw).toFixed(1) + '" y1="' + yy + '" y2="' + yy + '"/>'; }
+          h += '<rect class="okc" x="' + (pad + k * cw).toFixed(1) + '" y="4" width="' + cw.toFixed(1) + '" height="' + (Ht - 8) + '" rx="4"/>'; }); if (sel != null && !r.ans[sel]) h += '<rect class="noc" x="' + (pad + sel * cw).toFixed(1) + '" y="4" width="' + cw.toFixed(1) + '" height="' + (Ht - 8) + '" rx="4"/>'; }
+      else if (sel != null) h += '<rect class="sel" x="' + (pad + sel * cw).toFixed(1) + '" y="4" width="' + cw.toFixed(1) + '" height="' + (Ht - 8) + '" rx="4"/>';
+      r.c.forEach((x, i) => { const cx = pad + i * cw + cw / 2, up = x.c >= x.o, top = y(Math.max(x.o, x.c)), bot = y(Math.min(x.o, x.c)); h += '<line class="' + (up ? "cu" : "cd") + '" x1="' + cx.toFixed(1) + '" x2="' + cx.toFixed(1) + '" y1="' + y(x.h).toFixed(1) + '" y2="' + y(x.l).toFixed(1) + '" stroke-width="1.2"/><rect class="' + (up ? "cu" : "cd") + '" x="' + (cx - cw * 0.33).toFixed(1) + '" y="' + top.toFixed(1) + '" width="' + (cw * 0.66).toFixed(1) + '" height="' + Math.max(1.2, bot - top).toFixed(1) + '" rx="1"/>'; });
+      svg.innerHTML = h; }
+    const KINDS = [["all","Všechno"],["swing","Swingy"],["fvg","FVG"],["disp","Displacement"],["sweep","Sweep"],["bos","BOS"]];
+    function openDrill(){ const o = overlay("drov"), ROUNDS = 8; let mode = "all", i = 0, res = [], run = 0, r = null, sel = null, shown = false;
+      const head = () => { const h = el("div","row"), x = el("button","ck-del","Zavřít"); x.type = "button"; x.addEventListener("click", o.close); h.appendChild(el("span","kick","Poznej to na grafu")); h.appendChild(x); return h; };
+      const start = () => { i = 0; res = []; next(); };
+      const next = () => { const ks = mode === "all" ? ["swing","fvg","disp","sweep","bos"] : [mode]; r = drMake(ks[Math.floor(rnd() * ks.length)]) || drMake("swing"); sel = null; shown = false; view(); };
+      const intro = () => { clear(o.card); o.card.appendChild(head()); o.card.appendChild(el("p","drq","Co chceš trénovat?")); o.card.appendChild(el("p","muted","Osm cvičných grafů. Ťukni na svíčku, šipkami ji případně posuň a potvrď. Grafy jsou vymyšlené pro trénink oka, nejsou to skutečná data z trhu."));
+        const ch = el("div","chips"); KINDS.forEach(k => { const b = el("button","chip" + (k[0] === mode ? " on" : ""), k[1]); b.type = "button"; b.addEventListener("click", () => { mode = k[0]; intro(); }); ch.appendChild(b); }); o.card.appendChild(ch);
+        const go = el("button","primary","Začít"); go.type = "button"; go.addEventListener("click", start); o.card.appendChild(go); };
+      const finish = () => { clear(o.card); o.card.appendChild(head()); const good = res.filter(Boolean).length; o.card.appendChild(el("p","big", good + " z " + ROUNDS)); o.card.appendChild(el("p","muted", good === ROUNDS ? "Bez chyby. Zkus těžší výběr nebo si dej další kolo." : good >= 5 ? "Dobrá práce. Chyby si prohlédni u vysvětlení a dej další kolo." : "Oko se teprve učí. Vrať se k lekci o tomhle pojmu a zkus to znovu."));
+        const row = el("div","drctl"), again = el("button","primary","Další kolo"), ch = el("button", null, "Změnit výběr"); again.type = ch.type = "button"; again.addEventListener("click", start); ch.addEventListener("click", intro); row.appendChild(ch); row.appendChild(again); o.card.appendChild(row); try { if (good === ROUNDS) confetti(o.card, 26); } catch(e){} };
+      const view = () => { clear(o.card); o.card.appendChild(head()); const bar = el("div","drbar"); for (let k = 0; k < ROUNDS; k++) bar.appendChild(el("i", k < res.length ? (res[k] ? "ok" : "no") : k === i ? "cur" : null)); o.card.appendChild(bar);
+        o.card.appendChild(el("p","drq", r.q[0])); const svg = document.createElementNS("http://www.w3.org/2000/svg","svg"); svg.setAttribute("viewBox","0 0 340 190"); svg.setAttribute("class","drc"); svg.setAttribute("role","img"); svg.setAttribute("aria-label","Cvičný svíčkový graf"); o.card.appendChild(svg);
+        const fb = el("p","drfb small muted", "Ťukni na svíčku v grafu."), ctl = el("div","drctl"), L = el("button","arr","‹"), R = el("button","arr","›"), okb = el("button","primary","Potvrdit"); L.type = R.type = okb.type = "button"; L.setAttribute("aria-label","Svíčka vlevo"); R.setAttribute("aria-label","Svíčka vpravo"); okb.disabled = true;
+        const paint = () => { drDraw(svg, r, sel, shown); okb.disabled = !shown && sel == null; };
+        svg.addEventListener("click", ev => { if (shown) return; const b = svg.getBoundingClientRect(), x = (ev.clientX - b.left) / b.width * 340; sel = Math.max(0, Math.min(N - 1, Math.floor((x - 12) / ((340 - 24) / N)))); fb.textContent = "Vybraná svíčka " + (sel + 1) + ". z " + N + ". Potvrď, nebo ji šipkami posuň."; paint(); });
+        L.addEventListener("click", () => { if (shown) return; sel = Math.max(0, (sel == null ? Math.floor(N / 2) : sel) - 1); paint(); }); R.addEventListener("click", () => { if (shown) return; sel = Math.min(N - 1, (sel == null ? Math.floor(N / 2) : sel) + 1); paint(); });
+        okb.addEventListener("click", () => { if (shown){ i++; if (i >= ROUNDS) finish(); else next(); return; } if (sel == null) return; const ok = !!r.ans[sel]; shown = true; res.push(ok); run = ok ? run + 1 : 0; const d = lp.drill; d.n++; if (ok) d.ok++; if (run > d.best) d.best = run; keep();
+          fb.className = "drfb small " + (ok ? "pos" : "neg"); fb.textContent = (ok ? "Správně. " : "Vedle, správná svíčka je označená zeleně. ") + r.q[1]; okb.textContent = i === ROUNDS - 1 ? "Výsledek" : "Další graf"; L.hidden = R.hidden = true; paint(); try { if (ok) confetti(okb, 10); } catch(e){} });
+        ctl.appendChild(L); ctl.appendChild(R); ctl.appendChild(okb); o.card.appendChild(fb); o.card.appendChild(ctl); paint(); };
+      intro(); }
+    const put = (after) => { const n = $(after); if (!n) return; const c = el("div","card train"); n.parentNode.insertBefore(c, n.nextSibling); }; put("c-now"); put("pa-card"); trainRender();
+    window.__drill = {make: drMake, DET: DET};
+  }
+
+  // ---------- results calendar: units, week totals, month stats, day detail ----------
+  { let calU = "r", calSel = null;
+    renderCal = function(){
+      const byDay = {}; jSorted().forEach(t => { const k = tDay(t); (byDay[k] = byDay[k] || []).push(t); });
+      const hasUsd = jSorted().some(t => tNet(t) != null); if (!hasUsd) calU = "r";
+      const val = t => calU === "usd" ? (tNet(t) || 0) : (Number(t.r) || 0), fmt = v => calU === "usd" ? usd(v) : sgn(Math.round(v * 10) / 10) + " R", sum = a => a.reduce((p, t) => p + val(t), 0);
+      const y = calM.getFullYear(), m = calM.getMonth(), first = (new Date(y, m, 1).getDay() + 6) % 7, days = new Date(y, m + 1, 0).getDate();
+      const ds = []; for (let d = 1; d <= days; d++){ const k = dayKey(new Date(y, m, d)), a = byDay[k]; if (a) ds.push({k: k, s: sum(a), n: a.length}); }
+      const tot = ds.reduce((p, d) => p + d.s, 0), cnt = ds.reduce((p, d) => p + d.n, 0), mx = Math.max.apply(null, ds.map(d => Math.abs(d.s)).concat([0.0001]));
+      document.querySelectorAll(".calbox").forEach(box => { clear(box);
+        const head = el("div","row"), nav = el("div","rp-ctl"), ttl = el("h2", null, calM.toLocaleDateString("cs-CZ", {month: "long", year: "numeric"}));
+        if (hasUsd){ const u = el("div","calu"); [["r","R"],["usd","$"]].forEach(o => { const b = el("button", calU === o[0] ? "on" : null, o[1]); b.type = "button"; b.setAttribute("aria-label", o[0] === "r" ? "Ukázat v R" : "Ukázat v dolarech"); b.addEventListener("click", () => { calU = o[0]; renderCal(); }); u.appendChild(b); }); nav.appendChild(u); }
+        [["‹", -1], ["›", 1]].forEach(o => { const b = el("button","calb", o[0]); b.type = "button"; b.setAttribute("aria-label", o[1] < 0 ? "Předchozí měsíc" : "Další měsíc"); b.addEventListener("click", () => { calM.setMonth(calM.getMonth() + o[1]); calSel = null; renderCal(); }); nav.appendChild(b); });
+        head.appendChild(ttl); head.appendChild(nav); box.appendChild(head);
+        if (!cnt) box.appendChild(el("span","small muted","V tomto měsíci žádný obchod."));
+        else { const st = el("div","calst"), w = ds.filter(d => d.s > 0).length, l = ds.filter(d => d.s < 0).length, best = ds.reduce((p, d) => d.s > p.s ? d : p, ds[0]), worst = ds.reduce((p, d) => d.s < p.s ? d : p, ds[0]);
+          const tile = (a, b, cls) => { const t = el("div"); t.appendChild(el("span", null, a)); t.appendChild(el("b", cls || null, b)); st.appendChild(t); };
+          tile("Měsíc", fmt(tot), tot >= 0 ? "pos" : "neg"); tile("Dny", w + " zelených · " + l + " červených"); tile("Nejlepší den", fmt(best.s), best.s >= 0 ? "pos" : "neg"); tile("Nejhorší den", fmt(worst.s), worst.s >= 0 ? "pos" : "neg"); box.appendChild(st); }
+        const g = el("div","cal c8"); ["Po","Út","St","Čt","Pá","So","Ne","Týden"].forEach(d => g.appendChild(el("span","dh", d)));
+        let col = 0, wS = 0, wN = 0; const endWeek = () => { const c = el("div","wk"); c.appendChild(el("span", null, wN ? wN + "×" : "")); if (wN) c.appendChild(el("b", wS >= 0 ? "pos" : "neg", fmt(wS))); g.appendChild(c); wS = 0; wN = 0; col = 0; };
+        for (let i = 0; i < first; i++){ g.appendChild(el("span")); col++; }
+        for (let d = 1; d <= days; d++){ const k = dayKey(new Date(y, m, d)), a = byDay[k], c = el(a ? "button" : "div","dc" + (k === dayKey() ? " today" : "") + (k === calSel ? " sel" : "")); c.appendChild(el("span", null, d));
+          if (a){ const s2 = sum(a), al = (0.08 + 0.3 * Math.abs(s2) / mx).toFixed(2); c.type = "button"; c.classList.add(s2 >= 0 ? "w" : "l"); c.style.background = s2 >= 0 ? "rgba(61,220,151," + al + ")" : "rgba(255,107,107," + al + ")"; c.appendChild(el("b", null, calU === "usd" ? usd(s2) : sgn(Math.round(s2 * 10) / 10))); c.appendChild(el("em", null, a.length + "×")); c.setAttribute("aria-label", d + ". den, " + a.length + " obchodů, " + fmt(s2)); wS += s2; wN += a.length;
+            c.addEventListener("click", () => { calSel = calSel === k ? null : k; renderCal(); }); }
+          g.appendChild(c); col++; if (col === 7) endWeek(); }
+        if (col){ while (col < 7){ g.appendChild(el("span")); col++; } endWeek(); }
+        box.appendChild(g);
+        if (calSel && byDay[calSel]){ const a = byDay[calSel], dd = el("div","calday"), hr = el("div","row"), s3 = sum(a), wins = a.filter(t => (Number(t.r) || 0) > 0).length, dt = new Date(calSel + "T12:00:00");
+          hr.appendChild(el("h3", null, dt.toLocaleDateString("cs-CZ", {weekday: "long", day: "numeric", month: "long"}))); hr.appendChild(el("b", s3 >= 0 ? "pos" : "neg", fmt(s3))); dd.appendChild(hr);
+          dd.appendChild(el("span","small muted", a.length + (a.length === 1 ? " obchod" : a.length < 5 ? " obchody" : " obchodů") + " · úspěšnost " + Math.round(100 * wins / a.length) + " %"));
+          const tc = el("div","tcards"); a.forEach(t => { try { tc.appendChild(tradeCard(t)); } catch(e){} }); dd.appendChild(tc); box.appendChild(dd); }
+        else if (cnt) box.appendChild(el("span","small muted","Ťukni na den a uvidíš jeho obchody."));
+      });
+    };
+    try { renderCal(); } catch(e){}
   }
 
   // ---------- moving to a new address without losing data ----------
