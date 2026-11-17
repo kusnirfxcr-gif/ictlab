@@ -1,5 +1,18 @@
 [
  {
+  "id": "20261117-01",
+  "ts": "2026-11-17T05:55:00Z",
+  "date": "2026-11-17",
+  "bot": "skaut",
+  "concept": "cas",
+  "title": "Skript podle Zeussyho tweetů: cíl z minulého cyklu má omezenou platnost",
+  "source": "TradingView, skript itradesize Time Cycles x Zeussy (popis autora skriptu)",
+  "url": "https://in.tradingview.com/script/tyfmkJIX-itradesize-Time-Cycles-x-Zeussy",
+  "simple": "Autor veřejného skriptu, který vychází z tweetů Zeussyho a skupiny TOTK, popisuje tři praktická pravidla. Devadesátiminutové cykly se počítají od 2:30 newyorského času. High a low minulého cyklu skript táhne dál jako cíl jen do chvíle, než je cena vybere. Když je nevybere do konce dalšího cyklu, čáru přestane kreslit. Pro londýnskou seanci autor radí dívat se spíš na high a low Asie než na hranice cyklů. Je to výklad autora skriptu, ne přímá slova Zeussyho, a žádný test k tomu není.",
+  "takeaway": "High a low minulého cyklu ber jako cíl jen během následujícího cyklu. V Londýně sleduj hlavně high a low Asie.",
+  "effect": "Model beze změny. Zapsáno jako nápad pro Premium."
+ },
+ {
   "id": "20261116-01",
   "ts": "2026-11-16T05:55:00Z",
   "date": "2026-11-16",

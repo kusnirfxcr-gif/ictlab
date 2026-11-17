@@ -1,5 +1,17 @@
 [
  {
+  "id": "premium-platnost-cile-cyklu",
+  "ts": "2026-11-17T05:55:00Z",
+  "date": "2026-11-17",
+  "title": "Premium: cíl z minulého cyklu jen do konce dalšího cyklu",
+  "area": "produkt",
+  "value": 2,
+  "effort": 1,
+  "status": "new",
+  "what": "V analýze dne ukazovat high a low minulého devadesátiminutového cyklu jako cíl jen do konce následujícího cyklu a potom ho označit jako prošlý. Pro londýnskou část přidat high a low Asie jako hlavní cíle.",
+  "why": "Tak to dělá veřejný skript postavený na Zeussyho tweetech. V deníku pak půjde ověřit, jestli cíle vybrané hned v dalším cyklu vycházejí častěji než starší."
+ },
+ {
   "id": "premium-cas-vzniku-zony",
   "ts": "2026-11-16T05:55:00Z",
   "date": "2026-11-16",

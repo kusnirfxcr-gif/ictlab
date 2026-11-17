@@ -1,5 +1,60 @@
 [
  {
+  "id": "20261117-L08",
+  "ts": "2026-11-17T05:55:00Z",
+  "date": "2026-11-17",
+  "n": 8,
+  "week": 3,
+  "title": "BOS: důkaz, že trend pokračuje",
+  "body": [
+   "Z minulých lekcí víš, že rostoucí trend dělá vyšší vrcholy a vyšší dna. BOS je chvíle, kdy vznikne nový vyšší vrchol.",
+   "BOS je zkratka z anglického break of structure, česky prolomení struktury. V trendu nahoru to znamená, že cena prorazila poslední swing high. V trendu dolů prorazila poslední swing low.",
+   "Důležité je, jak ho prorazila. Počítá se jen to, když svíčka za úrovní zavře tělem. Když úroveň přesáhne jen knot a svíčka zavře zpátky pod ní, BOS to není.",
+   "Proč takové pravidlo: knot nad vrcholem často jen vybere stop-lossy a cena se vrátí. Zavření tělem ukazuje, že kupující cenu nad úrovní opravdu udrželi.",
+   "K čemu BOS slouží: potvrzuje, že trend žije. Po BOS obvykle přijde korekce a v ní se hledá vstup ve směru trendu.",
+   "BOS není pokyn k nákupu. Kdo kupuje hned na průrazu, kupuje na konci impulsu, tedy draho. O tom byla minulá lekce."
+  ],
+  "example": "NQ roste a poslední swing high je na 21 080. Pětiminutová svíčka vyjede na 21 090, ale zavře na 21 072. To BOS není, nad úrovní byl jen knot. Další svíčka zavře na 21 095. Teď je to BOS: tělo zavřelo nad 21 080. Trend nahoru je potvrzený a čeká se na korekci.",
+  "remember": "BOS je zavření těla svíčky za posledním swingem ve směru trendu. Samotný knot se nepočítá. BOS potvrzuje trend, není to signál ke vstupu.",
+  "terms": [
+   "bos",
+   "swing",
+   "trend"
+  ],
+  "quiz": [
+   {
+    "q": "Co je BOS v trendu nahoru?",
+    "options": [
+     "Cena zavře tělem nad posledním swing high",
+     "Cena zavře pod posledním dnem",
+     "Cena se zastaví v pásmu"
+    ],
+    "correct": 0,
+    "why": "BOS je průraz posledního swingu ve směru trendu, v růstu tedy posledního vrcholu."
+   },
+   {
+    "q": "Svíčka přesáhne poslední vrchol knotem a zavře pod ním. Je to BOS?",
+    "options": [
+     "Ano, stačí dotyk",
+     "Ne, počítá se jen zavření těla za úrovní",
+     "Ano, když je svíčka zelená"
+    ],
+    "correct": 1,
+    "why": "Knot často jen vybere stop-lossy. Rozhoduje, kde svíčka zavřela."
+   },
+   {
+    "q": "Co uděláš hned po BOS?",
+    "options": [
+     "Koupím na průrazu",
+     "Počkám na korekci a hledám vstup v ní",
+     "Otevřu short proti trendu"
+    ],
+    "correct": 1,
+    "why": "BOS potvrzuje trend. Lepší cena přichází až v korekci."
+   }
+  ]
+ },
+ {
   "id": "20261116-L07",
   "ts": "2026-11-16T05:55:00Z",
   "date": "2026-11-16",
