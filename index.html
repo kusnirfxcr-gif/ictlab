@@ -1133,6 +1133,23 @@ button.dc{cursor:pointer;transition:transform .15s} button.dc:hover{transform:tr
 @media (max-width:480px){.calst{grid-template-columns:repeat(2,minmax(0,1fr))} .cal.c8{gap:3px} .cal .dc,.cal .wk{padding:4px 4px;min-height:46px} .cal .dc b{font-size:10.5px} .cal .wk b{font-size:10px}}
 .calday{display:flex;flex-direction:column;gap:10px;padding-top:12px;border-top:1px solid var(--line);animation:rise .35s cubic-bezier(.2,.8,.2,1) both}
 .calu{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden} .calu button{border:0;border-radius:0;background:none;padding:6px 12px;font-size:12.5px;font-weight:700} .calu button.on{background:var(--accent);color:#14121f}
+/* daily goal in the learning room */
+#rgoal{gap:12px}
+#rgoal .gl{display:flex;flex-direction:column;gap:8px}
+#rgoal .gi{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:11px;align-items:center;padding:11px 12px;border-radius:14px;border:1px solid var(--line);background:var(--surface2);color:inherit;font:inherit;text-align:left;cursor:pointer;transition:transform .18s,border-color .18s}
+#rgoal .gi:hover{transform:translateX(3px);border-color:var(--accent)}
+#rgoal .gi .ck{width:24px;height:24px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;transition:all .3s}
+#rgoal .gi.done{border-color:var(--good)} #rgoal .gi.done .ck{background:var(--good);border-color:var(--good)}
+#rgoal .gi .ck svg{width:13px;height:13px;stroke:#06281a;stroke-width:3.2;fill:none;stroke-linecap:round;stroke-linejoin:round;opacity:0;transform:scale(.4);transition:all .3s cubic-bezier(.2,1.6,.4,1)}
+#rgoal .gi.done .ck svg{opacity:1;transform:none}
+#rgoal .gi b{font-size:14.5px;display:block} #rgoal .gi span{font-size:12.5px;color:var(--muted)}
+#rgoal .gi.done b{text-decoration:line-through;text-decoration-color:var(--muted)}
+#rgoal .gi em{font-style:normal;font-size:12.5px;font-weight:700;color:var(--muted);white-space:nowrap}
+#rgoal .gbar{height:8px;border-radius:5px;background:var(--line);overflow:hidden} #rgoal .gbar i{display:block;height:100%;border-radius:5px;background:linear-gradient(90deg,var(--accent),var(--good));transition:width .7s cubic-bezier(.2,.8,.2,1)}
+#rgoal .gwk{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+#rgoal .gwk i{width:30px;height:30px;border-radius:10px;border:1px solid var(--line);background:var(--surface2);display:grid;place-items:center;font-style:normal;font-size:10.5px;font-weight:700;color:var(--muted)}
+#rgoal .gwk i.on{background:var(--good);border-color:var(--good);color:#06281a} #rgoal .gwk i.act{border-color:var(--good);color:var(--good)} #rgoal .gwk i.td{box-shadow:0 0 0 2px var(--accent)} #rgoal .gwk i.we{opacity:.55}
+#rgoal .gwin{padding:10px 12px;border-radius:14px;background:rgba(61,220,151,.12);border:1px solid rgba(61,220,151,.4);font-weight:700;animation:rise .4s both}
 </style>
 </head>
 <body>
@@ -2748,12 +2765,17 @@ button.dc{cursor:pointer;transition:transform .15s} button.dc:hover{transform:tr
     const k = dayKey();
     if (!act[k]){ act[k] = 1; try { localStorage.setItem("knot-activity", JSON.stringify(act)); } catch(e){} }
   }
-  function streakDays(){
-    let n = 0; const d = new Date();
+  // streak with slack: weekends never break it, one missed weekday per week is forgiven
+  function streakInfo(){
+    let n = 0, guard = 0; const d = new Date(), used = {}, wk = x => { const m = new Date(x); m.setDate(m.getDate() - ((m.getDay() + 6) % 7)); return dayKey(m); }, thisW = wk(d);
+    const keys = Object.keys(act).filter(k => act[k]).sort(), firstK = keys[0] || "";
     if (!act[dayKey(d)]) d.setDate(d.getDate() - 1);
-    while (act[dayKey(d)]){ n++; d.setDate(d.getDate() - 1); }
-    return n;
+    while (firstK && dayKey(d) >= firstK && guard++ < 4000){ const k = dayKey(d), wd = d.getDay();
+      if (act[k]) n++; else if (wd === 0 || wd === 6){} else if (!used[wk(d)]) used[wk(d)] = 1; else break;
+      d.setDate(d.getDate() - 1); }
+    return {n: n, spare: !used[thisW]};
   }
+  function streakDays(){ return streakInfo().n; }
 
   // ---------- settings and journal core ----------
   const J_KEY = "knot-journal", CFG_KEY = "tape-settings", PV = {NQ: 20, MNQ: 2, ES: 50, MES: 5};
@@ -5364,6 +5386,33 @@ button.dc{cursor:pointer;transition:transform .15s} button.dc:hover{transform:tr
       });
     };
     try { renderCal(); } catch(e){}
+  }
+
+  // ---------- daily goal: three small things a day ----------
+  { const c = el("div","card"); c.id = "rgoal"; const anchor = $("c-now"); if (anchor) anchor.parentNode.insertBefore(c, anchor.nextSibling);
+    const nDone = () => Object.keys(done).filter(k => done[k]).length, store = () => { try { localStorage.setItem(LS_LAURA, JSON.stringify(lp)); } catch(e){} try { if (saveLaura) saveLaura(); } catch(e){} };
+    const CK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>'; let sig = "";
+    function goalRender(){ if (!anchor || !course || document.body.dataset.view !== "room") return; const k = dayKey(); lp.goal = lp.goal || {}; lp.drill = lp.drill || {n: 0, ok: 0, best: 0};
+      if (!lp.day || lp.day.k !== k){ lp.day = {k: k, l0: nDone(), d0: lp.drill.n || 0}; store(); }
+      const les = Math.max(0, nDone() - lp.day.l0), dr = Math.max(0, (lp.drill.n || 0) - lp.day.d0), mn = Math.floor((mins[k] || 0) / 60), allDone = nDone() >= course.weeks.reduce((p, w) => p + w.lessons.length, 0);
+      const items = [
+        {t: allDone ? "Zopakuj si jednu lekci" : "Dokonči jednu lekci", s: "Stačí jedna, krátká je za pět minut.", ok: les >= 1 || (allDone && mn >= 5), v: les >= 1 ? "hotovo" : "0 z 1", go: () => { try { anchor.scrollIntoView({behavior: "smooth", block: "start"}); } catch(e){} }},
+        {t: "Jedno kolo Poznej to na grafu", s: "Osm cvičných grafů.", ok: dr >= 8, v: Math.min(dr, 8) + " z 8", go: () => { const b = document.querySelector("#v-room .train .tt"); if (b) b.click(); }},
+        {t: "Uč se aspoň 10 minut", s: "Čas se počítá sám, když máš Učení otevřené.", ok: mn >= 10, v: Math.min(mn, 10) + " z 10 min", go: () => { try { anchor.scrollIntoView({behavior: "smooth", block: "start"}); } catch(e){} }}
+      ], got = items.filter(x => x.ok).length, si = streakInfo(), ns = JSON.stringify([k, items.map(x => [x.ok, x.v]), si, lp.goal[k]]);
+      if (got === 3 && !lp.goal[k]){ lp.goal[k] = 1; store(); }
+      if (c.previousElementSibling !== anchor) anchor.parentNode.insertBefore(c, anchor.nextSibling); if (ns === sig && c.firstChild) return; const first = !sig; sig = ns; clear(c);
+      const head = el("div","row"); head.appendChild(el("h2", null, "Úkol na dnešek")); head.appendChild(el("span","small muted", got + " ze 3")); c.appendChild(head);
+      const bar = el("div","gbar"), bi = el("i"); bi.style.width = Math.round(100 * got / 3) + "%"; bar.appendChild(bi); c.appendChild(bar);
+      const gl = el("div","gl"); items.forEach(x => { const b = el("button","gi" + (x.ok ? " done" : "")), ck = el("span","ck"), tx = el("div"); b.type = "button"; ck.innerHTML = CK; tx.appendChild(el("b", null, x.t)); tx.appendChild(el("span", null, x.s)); b.appendChild(ck); b.appendChild(tx); b.appendChild(el("em", null, x.v)); b.addEventListener("click", x.go); gl.appendChild(b); }); c.appendChild(gl);
+      if (got === 3){ c.appendChild(el("div","gwin","Dnešek je splněný. Zítra další malý krok.")); if (!first && !lp.day.won){ lp.day.won = 1; store(); try { confetti(c, 30); } catch(e){} try { palSay("Dnešní úkol je hotový!", "yay"); } catch(e){} } else if (!lp.day.won){ lp.day.won = 1; store(); } }
+      const wk = el("div","gwk"), mon = new Date(); mon.setDate(mon.getDate() - ((mon.getDay() + 6) % 7)); ["Po","Út","St","Čt","Pá","So","Ne"].forEach((n, ix) => { const d = new Date(mon); d.setDate(mon.getDate() + ix); const kk = dayKey(d), i2 = el("i", (lp.goal[kk] ? "on" : act[kk] ? "act" : "") + (kk === k ? " td" : "") + (ix > 4 ? " we" : ""), n); i2.title = lp.goal[kk] ? "Úkol splněný" : act[kk] ? "Učení proběhlo" : "Zatím nic"; wk.appendChild(i2); }); c.appendChild(wk);
+      c.appendChild(el("span","small muted","Série " + si.n + (si.n === 1 ? " den" : si.n >= 2 && si.n <= 4 ? " dny" : " dní") + ". Víkendy sérii nepřeruší a jeden všední den v týdnu se odpouští. Rezerva na tento týden je " + (si.spare ? "volná." : "už využitá.")));
+    }
+    const _rcGoal = renderCourse; renderCourse = function(){ const r = _rcGoal.apply(this, arguments); try { goalRender(); } catch(e){} return r; };
+    const _refGoal = refreshAll; refreshAll = function(){ const r = _refGoal.apply(this, arguments); try { goalRender(); } catch(e){} return r; };
+    window.addEventListener("hashchange", () => setTimeout(() => { try { goalRender(); } catch(e){} }, 150)); setInterval(() => { try { goalRender(); } catch(e){} }, 4000); setTimeout(() => { try { goalRender(); } catch(e){} }, 900);
+    try { const p = $("streak"); if (p) p.title = "Víkendy sérii nepřeruší a jeden všední den v týdnu se odpouští."; } catch(e){}
   }
 
   // ---------- moving to a new address without losing data ----------
