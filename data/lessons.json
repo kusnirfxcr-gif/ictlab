@@ -1,5 +1,60 @@
 [
  {
+  "id": "20261118-L09",
+  "ts": "2026-11-18T05:55:00Z",
+  "date": "2026-11-18",
+  "n": 9,
+  "week": 3,
+  "title": "MSS: první varování, že se trend láme",
+  "body": [
+   "Minule jsi poznal BOS, tedy zlom ve směru trendu. MSS je jeho opak: zlom proti trendu.",
+   "MSS je zkratka z anglického market structure shift, česky posun struktury trhu. V trendu nahoru nastane, když cena zavře tělem pod posledním vyšším dnem. V trendu dolů, když zavře nad posledním nižším vrcholem.",
+   "Proč je to důležité: rostoucí trend stojí na vyšších dnech. Dokud drží, kupující mají navrch. Když jedno z nich padne, je to první známka, že se síly přesouvají k prodávajícím.",
+   "Stejně jako u BOS se počítá jen zavření těla za úrovní. Knot pod dnem, po kterém se cena vrátí, je sweep, ne MSS.",
+   "MSS je varování, ne jistota. Trh se po něm často ještě vrátí a původní trend pokračuje. Větší váhu má, když přijde rychle a velkými svíčkami, tedy s displacementem, a když mu předcházel sweep likvidity na druhé straně.",
+   "V modelu z Tape je MSS třetí krok: nejdřív sweep, potom MSS s displacementem a teprve po něm se hledá vstup."
+  ],
+  "example": "NQ roste a poslední vyšší dno je na 21 040. Cena vybere vrchol na 21 120 a otočí se. Jedna pětiminutová svíčka sjede na 21 035, ale zavře na 21 046. To MSS není, pod dnem byl jen knot. Další velká červená svíčka zavře na 21 022. Teď je to MSS: tělo zavřelo pod 21 040 a ještě rychle. Trend nahoru dostal první trhlinu.",
+  "remember": "MSS je zavření těla za posledním swingem proti trendu. BOS trend potvrzuje, MSS před jeho koncem varuje. Samotný MSS obrat nezaručuje.",
+  "terms": [
+   "mss",
+   "bos",
+   "struktura-trhu"
+  ],
+  "quiz": [
+   {
+    "q": "Co je MSS v trendu nahoru?",
+    "options": [
+     "Zavření těla nad posledním vrcholem",
+     "Zavření těla pod posledním vyšším dnem",
+     "Knot pod posledním dnem"
+    ],
+    "correct": 1,
+    "why": "MSS je zlom proti trendu. V růstu tedy padne poslední vyšší dno, a to zavřením těla."
+   },
+   {
+    "q": "Čím se liší BOS a MSS?",
+    "options": [
+     "BOS jde ve směru trendu, MSS proti němu",
+     "BOS je na denním grafu, MSS na minutovém",
+     "Ničím, je to totéž"
+    ],
+    "correct": 0,
+    "why": "BOS trend potvrzuje. MSS je první zlom proti němu."
+   },
+   {
+    "q": "Kdy má MSS větší váhu?",
+    "options": [
+     "Když přijde pomalu malými svíčkami",
+     "Když přijde rychle a předcházel mu sweep likvidity",
+     "Když je v noci"
+    ],
+    "correct": 1,
+    "why": "Rychlý zlom po vybrání likvidity ukazuje, že druhá strana opravdu převzala trh."
+   }
+  ]
+ },
+ {
   "id": "20261117-L08",
   "ts": "2026-11-17T05:55:00Z",
   "date": "2026-11-17",

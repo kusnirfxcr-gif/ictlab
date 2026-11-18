@@ -1,9 +1,9 @@
 {
  "state": {
-  "lastRun": "2026-11-17T05:55:00Z",
+  "lastRun": "2026-11-18T05:55:00Z",
   "modelVersion": "1.0",
-  "runCount": 8,
-  "lastReport": "Skaut přidal poznatek o veřejném skriptu podle Zeussyho tweetů (cíl z minulého cyklu platí jen do konce dalšího, v Londýně high a low Asie; neověřené). Učitel napsal lekci 8 o BOS, první lekci 3. týdne. Vizionář přidal nápad na platnost cíle cyklu v Premium. Zpravodaj ověřil kalendář: dnes maloobchodní tržby, ve středu zápis Fedu a očekávané výsledky Nvidia. Gems a Architekt beze změny."
+  "runCount": 9,
+  "lastReport": "Skaut přidal dva poznatky: Zeussy bere SMT jen jako potvrzení, ne jako důvod ke vstupu, a co je SSMT na hranici dvou cyklů (obojí neověřené). Učitel napsal lekci 9 o MSS. Vizionář přidal nápad na pole SSMT v deníku. Zpravodaj opravil chybu: Nvidia hlásila výsledky už v úterý 17. 11., ne 18. 11., událost je odstraněna. Dnes ve 20:00 zápis Fedu. Gems a Architekt beze změny."
  },
  "model": {
   "version": "1.0",

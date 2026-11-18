@@ -1,5 +1,31 @@
 [
  {
+  "id": "20261118-01",
+  "ts": "2026-11-18T05:55:00Z",
+  "date": "2026-11-18",
+  "bot": "skaut",
+  "concept": "smt",
+  "title": "Zeussy: SMT je potvrzení, nikdy jediný důvod ke vstupu",
+  "source": "Forex.in.rs, shrnutí rozhovoru se Zeussym",
+  "url": "https://www.forex.in.rs/smart-money-timing",
+  "simple": "Podle shrnutí rozhovoru Zeussy říká, že většina lidí používá SMT špatně, protože ho bere jako samostatný signál. On ho chce vidět u svých vstupů jako potvrzení na menším pohybu, ale sám o sobě pro něj důvodem k obchodu není. Po obchodu si do deníku zapisuje, který cyklus pohyb přinesl a jestli se SMT na vstupním pohybu ukázalo. Je to popis jeho postupu, ne ověřený výsledek.",
+  "takeaway": "SMT si u obchodu zapisuj jako ano nebo ne. Vstup na něm nestav.",
+  "effect": "Model beze změny. Deník už pole pro SMT má, stačí ho vyplňovat."
+ },
+ {
+  "id": "20261118-02",
+  "ts": "2026-11-18T05:55:00Z",
+  "date": "2026-11-18",
+  "bot": "skaut",
+  "concept": "smt",
+  "title": "SSMT: rozdíl mezi NQ a ES na hranici dvou cyklů",
+  "source": "FX Replay, popis strategie Quarterly Theory SMT",
+  "url": "https://fxreplay.com/de/strategies/quarterly-theory-smt-strategy",
+  "simple": "Sequential SMT, zkráceně SSMT, je SMT divergence, která nevzniká v jednom okamžiku, ale mezi dvěma po sobě jdoucími devadesátiminutovými cykly. Příklad: NQ v druhém cyklu udělá nové high nad high prvního cyklu, ES ne. Podle popisu strategie má takový rozdíl mezi prvním a druhým cyklem naznačit, co udělá třetí. Obchoduje se na pětiminutovém grafu, v New Yorku na ES a NQ. Pojem pochází z quarterly theory tradera Daye, ze které vychází i práce s cykly u Zeussyho. Stránka neuvádí žádný nezávislý test.",
+  "takeaway": "Hranice cyklu je místo, kde má smysl porovnat high a low NQ a ES. Rozdíl ber jako potvrzení, ne jako samostatný signál.",
+  "effect": "Model beze změny. Zapsáno jako nápad pro Premium."
+ },
+ {
   "id": "20261117-01",
   "ts": "2026-11-17T05:55:00Z",
   "date": "2026-11-17",

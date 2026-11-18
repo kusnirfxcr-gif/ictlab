@@ -1,5 +1,17 @@
 [
  {
+  "id": "premium-ssmt-na-hranici-cyklu",
+  "ts": "2026-11-18T05:55:00Z",
+  "date": "2026-11-18",
+  "title": "Premium: SSMT na hranici cyklů jako pole v deníku",
+  "area": "produkt",
+  "value": 2,
+  "effort": 1,
+  "status": "new",
+  "what": "K poli SMT u obchodu přidat volbu, jestli šlo o rozdíl mezi NQ a ES na hranici dvou devadesátiminutových cyklů (SSMT). Statistiky cyklů pak ukážou výsledky obchodů se SSMT a bez něj.",
+  "why": "SSMT je běžná součást práce s cykly a Zeussy bere SMT jen jako potvrzení. Vlastní obchody ukážou, jestli to potvrzení něco přidává. Automatické hledání by potřebovalo data obou trhů, ruční zápis ne."
+ },
+ {
   "id": "premium-platnost-cile-cyklu",
   "ts": "2026-11-17T05:55:00Z",
   "date": "2026-11-17",
