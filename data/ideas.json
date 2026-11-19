@@ -1,5 +1,17 @@
 [
  {
+  "id": "premium-volba-mrizky-cyklu",
+  "ts": "2026-11-19T05:55:00Z",
+  "date": "2026-11-19",
+  "title": "Premium: volba mřížky cyklů a kontrola, že sedí s deníkem",
+  "area": "produkt",
+  "value": 2,
+  "effort": 2,
+  "status": "new",
+  "what": "V Premium nastavit, podle které mřížky se počítají cykly: Zeussy (Londýn 2:30–7:00, newyorské dopoledne 7:00–11:30) nebo quarterly theory (šestihodinové části od 18:00). Statistiky cyklů v deníku by použily stejnou volbu a u obchodu by bylo vidět, do kterého cyklu podle ní patří.",
+  "why": "Obě mřížky mají hranice cyklů jinde. Když indikátor v TradingView používá jednu a deník druhou, statistiky podle cyklů nedávají smysl."
+ },
+ {
   "id": "premium-ssmt-na-hranici-cyklu",
   "ts": "2026-11-18T05:55:00Z",
   "date": "2026-11-18",

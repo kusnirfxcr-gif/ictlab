@@ -1,19 +1,26 @@
 {
- "updated": "2026-11-18T05:55:00Z",
+ "updated": "2026-11-19T05:55:00Z",
  "events": [
-  {
-   "date": "2026-11-18",
-   "time": "20:00",
-   "title": "Zápis ze zasedání Fedu (FOMC minutes)",
-   "impact": 2,
-   "note": "Podrobnosti z říjnového zasedání o sazbách."
-  },
   {
    "date": "2026-11-25",
    "time": "14:30",
    "title": "HDP USA (2. odhad) a inflace PCE",
    "impact": 3,
    "note": "PCE je měřítko inflace, které sleduje Fed."
+  },
+  {
+   "date": "2026-11-26",
+   "time": "",
+   "title": "Den díkůvzdání: americké burzy zavřené",
+   "impact": 2,
+   "note": "Futures mají zkrácené obchodování a malý objem. Den bez obchodu."
+  },
+  {
+   "date": "2026-11-27",
+   "time": "19:00",
+   "title": "Zkrácený den: akciové burzy zavírají v 19:00 našeho času",
+   "impact": 1,
+   "note": "Den po Díkůvzdání bývá objem malý."
   },
   {
    "date": "2026-12-04",

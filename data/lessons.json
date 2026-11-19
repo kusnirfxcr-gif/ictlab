@@ -1,5 +1,60 @@
 [
  {
+  "id": "20261119-L10",
+  "ts": "2026-11-19T05:55:00Z",
+  "date": "2026-11-19",
+  "n": 10,
+  "week": 3,
+  "title": "Silný a slabý zlom: ne každý průraz znamená totéž",
+  "body": [
+   "Už víš, co je BOS a MSS. Oba jsou zavřením těla svíčky za důležitou úrovní. Dnes se podíváš na to, jak ten zlom vypadá.",
+   "Silný zlom proběhne rychle. Jedna až tři velké svíčky s plnými těly a malými knoty projdou úrovní a pokračují dál. Cena se k úrovni hned nevrací.",
+   "Slabý zlom je pomalý. Malé svíčky se k úrovni doplazí, těsně ji překročí, mají dlouhé knoty a střídají barvy. Často se cena brzy vrátí zpátky.",
+   "Proč na tom záleží: silný zlom ukazuje, že jedna strana opravdu chtěla obchodovat a měla sílu. Slabý zlom ukazuje spíš to, že druhá strana na chvíli polevila.",
+   "Tomu rychlému silnému pohybu se říká displacement. Podrobně ho probereš v pátém týdnu. Zatím stačí, když si u každého zlomu položíš dvě otázky: jak velké byly svíčky proti těm okolním a zůstala cena za úrovní?",
+   "Pozor na opačnou chybu. Ani silný zlom není jistota. Je to jen silnější důkaz než slabý."
+  ],
+  "example": "NQ má poslední swing high na 21 150. Varianta A: tři malé svíčky se k němu přiblíží, čtvrtá zavře na 21 152 a hned další padá zpátky pod 21 150. To je slabý zlom. Varianta B: jedna svíčka vyrazí z 21 138 a zavře na 21 171, další pokračuje na 21 185. To je silný zlom, kupující úroveň převálcovali.",
+  "remember": "Silný zlom je rychlý, s velkými těly a cena za úrovní zůstane. Slabý je pomalý, s knoty a cena se vrací. Silnému věř víc, ale jistota to není.",
+  "terms": [
+   "displacement",
+   "bos",
+   "mss"
+  ],
+  "quiz": [
+   {
+    "q": "Jak vypadá silný zlom úrovně?",
+    "options": [
+     "Malé svíčky s dlouhými knoty",
+     "Velké svíčky s plnými těly, cena jde dál",
+     "Cena se úrovně jen dotkne"
+    ],
+    "correct": 1,
+    "why": "Rychlý pohyb s velkými těly ukazuje, že jedna strana měla opravdovou sílu."
+   },
+   {
+    "q": "Cena úroveň těsně překročí a hned se vrátí zpátky. Co to je?",
+    "options": [
+     "Silný zlom",
+     "Slabý zlom",
+     "Displacement"
+    ],
+    "correct": 1,
+    "why": "Pomalé překročení s rychlým návratem je slabý zlom, často jen výběr stop-lossů."
+   },
+   {
+    "q": "Znamená silný zlom jistý pokračující pohyb?",
+    "options": [
+     "Ano, vždy",
+     "Ne, je to jen silnější důkaz",
+     "Ano, pokud je ráno"
+    ],
+    "correct": 1,
+    "why": "V tradingu žádná jistota není. Silný zlom má jen větší váhu než slabý."
+   }
+  ]
+ },
+ {
   "id": "20261118-L09",
   "ts": "2026-11-18T05:55:00Z",
   "date": "2026-11-18",

@@ -1,9 +1,9 @@
 {
  "state": {
-  "lastRun": "2026-11-18T05:55:00Z",
+  "lastRun": "2026-11-19T05:55:00Z",
   "modelVersion": "1.0",
-  "runCount": 9,
-  "lastReport": "Skaut přidal dva poznatky: Zeussy bere SMT jen jako potvrzení, ne jako důvod ke vstupu, a co je SSMT na hranici dvou cyklů (obojí neověřené). Učitel napsal lekci 9 o MSS. Vizionář přidal nápad na pole SSMT v deníku. Zpravodaj opravil chybu: Nvidia hlásila výsledky už v úterý 17. 11., ne 18. 11., událost je odstraněna. Dnes ve 20:00 zápis Fedu. Gems a Architekt beze změny."
+  "runCount": 10,
+  "lastReport": "Skaut přidal poznatek o dvou mřížkách času (Zeussy od 2:30, quarterly theory od 18:00; žádná není ověřená jako lepší). Učitel napsal lekci 10 o silném a slabém zlomu. Vizionář přidal nápad na volbu mřížky cyklů v Premium. Zpravodaj doplnil Den díkůvzdání 26. 11. (burzy zavřené) a zkrácený pátek 27. 11.; HDP a PCE zůstávají ve středu 25. 11. Gems a Architekt beze změny."
  },
  "model": {
   "version": "1.0",

@@ -1,5 +1,18 @@
 [
  {
+  "id": "20261119-01",
+  "ts": "2026-11-19T05:55:00Z",
+  "date": "2026-11-19",
+  "bot": "skaut",
+  "concept": "cas",
+  "title": "Dvě mřížky času: Zeussy počítá od 2:30, quarterly theory od 18:00",
+  "source": "LuxAlgo, heslo Quarterly Theory; Forex.in.rs, shrnutí rozhovoru se Zeussym",
+  "url": "https://www.luxalgo.com/library/concept/quarterly-theory/",
+  "simple": "Klasická quarterly theory dělí den na čtyři šestihodinové části: Asie 18:00–0:00, Londýn 0:00–6:00, New York 6:00–12:00 a odpoledne 12:00–18:00, každou ještě na čtyři devadesátiminutové čtvrtiny. Zeussy podle shrnutí rozhovoru používá jinou mřížku: Londýn 2:30–7:00 a newyorské dopoledne 7:00–11:30, každé po třech devadesátiminutových cyklech (akumulace, manipulace, distribuce). Hranice cyklů se tedy mezi oběma přístupy liší o půl až hodinu a půl. Kdo míchá indikátor jedné mřížky s pravidly druhé, čte jiné cykly, než si myslí. Žádný test neukazuje, že jedna mřížka funguje líp než druhá.",
+  "takeaway": "Vyber si jednu mřížku a drž ji všude: v indikátoru, v deníku i ve statistikách. U Zeussyho končí newyorské dopoledne v 11:30, ne ve 12:00.",
+  "effect": "Model beze změny. Zapsáno jako nápad pro Premium."
+ },
+ {
   "id": "20261118-01",
   "ts": "2026-11-18T05:55:00Z",
   "date": "2026-11-18",
