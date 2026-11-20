@@ -1,5 +1,60 @@
 [
  {
+  "id": "20261120-L11",
+  "ts": "2026-11-20T05:55:00Z",
+  "date": "2026-11-20",
+  "n": 11,
+  "week": 3,
+  "title": "Struktura na více timeframech: velký graf velí, malý časuje",
+  "body": [
+   "Otevřeš hodinový graf a vidíš trend nahoru. Přepneš na pětiminutový a cena klesá. Který má pravdu? Oba. Jen každý ukazuje jinou vzdálenost.",
+   "Pokles na pětiminutovém grafu je často jen korekce uvnitř hodinového trendu. Na hodinovém grafu to vypadá jako jedna nebo dvě menší červené svíčky v růstu.",
+   "Proto platí pořadí: směr určuje vyšší timeframe, nižší slouží k načasování. Vyššímu timeframu se říká HTF, nižšímu LTF.",
+   "V praxi to znamená tři kroky. Na hodinovém grafu zjistíš, kam trh míří. Počkáš, až proti tomu směru přijde korekce. Na pětiminutovém grafu pak hledáš chvíli, kdy korekce končí, tedy zlom zpátky ve směru hodinového trendu.",
+   "Největší chyba začátečníků je opačný postup: vidí na minutovém grafu silný pohyb a naskočí, aniž by věděli, že jdou proti hodinovému trendu.",
+   "Když si grafy odporují tak, že nevíš, co je trend a co korekce, je správná odpověď neobchodovat. To se stává často a není to selhání."
+  ],
+  "example": "Hodinový NQ dělá vyšší vrcholy a vyšší dna, poslední dno je na 21 000. Na pětiminutovém grafu cena klesá z 21 120 na 21 050 a dělá nižší vrcholy. Kdo vidí jen pětiminutový graf, chce prodávat. Kdo zná hodinový, ví, že je to korekce nad 21 000, a čeká, až pětiminutový graf otočí nahoru. Teprve potom hledá nákup.",
+  "remember": "Směr ber z vyššího timeframu, vstup z nižšího. Pohyb proti vyššímu trendu je nejčastěji korekce. Když si nejsi jistý, neobchoduj.",
+  "terms": [
+   "htf",
+   "ltf",
+   "top-down"
+  ],
+  "quiz": [
+   {
+    "q": "Hodinový graf roste, pětiminutový klesá. Co to nejčastěji je?",
+    "options": [
+     "Konec hodinového trendu",
+     "Korekce uvnitř hodinového trendu",
+     "Chyba v datech"
+    ],
+    "correct": 1,
+    "why": "Menší graf ukazuje detail. Pokles na něm bývá jen korekce většího růstu."
+   },
+   {
+    "q": "K čemu slouží nižší timeframe?",
+    "options": [
+     "K určení směru",
+     "K načasování vstupu",
+     "K ničemu"
+    ],
+    "correct": 1,
+    "why": "Směr dává vyšší timeframe. Nižší ukáže, kdy korekce končí."
+   },
+   {
+    "q": "Grafy si odporují a nevíš, co je trend. Co uděláš?",
+    "options": [
+     "Vstoupím podle minutového grafu",
+     "Neobchoduju",
+     "Otevřu long i short"
+    ],
+    "correct": 1,
+    "why": "Bez jasného směru není důvod k obchodu. Den bez obchodu není ztráta."
+   }
+  ]
+ },
+ {
   "id": "20261119-L10",
   "ts": "2026-11-19T05:55:00Z",
   "date": "2026-11-19",

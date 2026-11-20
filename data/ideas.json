@@ -1,5 +1,17 @@
 [
  {
+  "id": "denni-rozpocet-rizika",
+  "ts": "2026-11-20T05:55:00Z",
+  "date": "2026-11-20",
+  "title": "Denní rozpočet rizika rozdělený mezi obchody",
+  "area": "produkt",
+  "value": 2,
+  "effort": 2,
+  "status": "new",
+  "what": "V plánu dne nastavit, kolik R smí den celkem stát, a rozdělit ho mezi plánované obchody nebo setupy. Deník by při zápisu ukazoval, kolik rozpočtu zbývá, a po vyčerpání by další obchod označil jako mimo plán.",
+  "why": "Zeussy podle shrnutí rozhovoru staví obchod od rozpočtu rizika, ne od přesvědčení. Aplikace má limity ztráty, ale ne rozpočet rozdělený předem."
+ },
+ {
   "id": "premium-volba-mrizky-cyklu",
   "ts": "2026-11-19T05:55:00Z",
   "date": "2026-11-19",

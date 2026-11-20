@@ -1,5 +1,18 @@
 [
  {
+  "id": "20261120-01",
+  "ts": "2026-11-20T05:55:00Z",
+  "date": "2026-11-20",
+  "bot": "skaut",
+  "concept": "risk",
+  "title": "Zeussy: obchod začíná rozpočtem rizika, ne přesvědčením",
+  "source": "Forex.in.rs, shrnutí rozhovoru se Zeussym",
+  "url": "https://www.forex.in.rs/smart-money-timing",
+  "simple": "Podle shrnutí rozhovoru Zeussy staví každý obchod od rizika: nejdřív určí, kolik smí ztratit, a velikost pozice přizpůsobí tomu, jak moc se trh právě hýbe. Sílu vlastního názoru do velikosti nepromítá. Riziko dělí mezi víc trhů, typů obchodů a délek držení, aby mu den nezkazila jedna zvláštnost jednoho trhu. Scénáře si připraví předem a při obchodování je už jen plní. Je to popis jeho postupu podle třetí strany, čísla k tomu zdroj neuvádí.",
+  "takeaway": "Velikost pozice počítej z rizika a šířky stopu. Když jsi si jistější, kontrakty nepřidávej.",
+  "effect": "Model beze změny. Kalkulačka rizika v aplikaci už takhle funguje. Zapsán nápad na denní rozpočet rizika."
+ },
+ {
   "id": "20261119-01",
   "ts": "2026-11-19T05:55:00Z",
   "date": "2026-11-19",
