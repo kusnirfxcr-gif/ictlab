@@ -1168,6 +1168,24 @@ body.fx-lite .rbw-ring{will-change:auto}
 body.fx-off .sk-scene *,body.fx-off .sk-emb,body.fx-off .sk-head b{animation:none!important} body.fx-off .sk-petals,body.fx-off .sk-bub,body.fx-off .sk-twk,body.fx-off .sk-ribbon,body.fx-off .sk-front,body.fx-off .rbw-ring{display:none!important}
 body.fx-off *,body.fx-off *::before,body.fx-off *::after{animation-duration:.01s!important;animation-iteration-count:1!important;animation-delay:0s!important}
 body.fx-hidden .sk-scene *,body.fx-hidden .sk-front *{animation-play-state:paused!important}
+
+/* lesson example trade */
+details.lex{border:1px solid var(--line);border-radius:16px;background:var(--surface2);overflow:hidden}
+details.lex summary{list-style:none;cursor:pointer;padding:13px 14px;font-weight:800;display:flex;align-items:center;justify-content:space-between;gap:10px}
+details.lex summary::-webkit-details-marker{display:none}
+details.lex summary::after{content:"›";font-size:20px;transition:transform .25s;color:var(--accent)}
+details.lex[open] summary::after{transform:rotate(90deg)}
+details.lex .lxb{padding:0 14px 14px;display:flex;flex-direction:column;gap:10px;animation:rise .35s both}
+details.lex h4{margin:0;font-size:15.5px}
+details.lex svg{width:100%;height:auto;display:block;border-radius:12px;background:var(--bg);border:1px solid var(--line)}
+.lexc .cu{fill:var(--good);stroke:var(--good)} .lexc .cd{fill:var(--bad);stroke:var(--bad)}
+.lexc .lv{stroke:var(--amber);stroke-width:1.1;stroke-dasharray:5 4} .lexc .st{stroke:var(--bad);stroke-width:1.3;stroke-dasharray:3 3} .lexc .tg{stroke:var(--good);stroke-width:1.3;stroke-dasharray:3 3} .lexc .en{stroke:var(--accent);stroke-width:1.5}
+.lexc .zn{fill:rgba(183,161,255,.22);stroke:#b7a1ff;stroke-width:.8;stroke-dasharray:3 3}
+.lexc text{font-size:8.5px;font-weight:700;fill:var(--muted);paint-order:stroke;stroke:var(--bg);stroke-width:3px;stroke-linejoin:round} .lexc text.tst{fill:var(--bad)} .lexc text.ttg{fill:var(--good)} .lexc text.ten{fill:var(--accent)} .lexc text.tlv{fill:var(--amber)} .lexc text.big{font-size:13px;fill:var(--muted)}
+.lexc .mk{fill:var(--accent)}
+details.lex .lxr{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 10px;font-size:14px;line-height:1.45}
+details.lex .lxr b{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.05em;padding-top:2px;white-space:nowrap}
+@media (max-width:420px){details.lex .lxr{grid-template-columns:1fr} details.lex .lxr b{padding-top:6px}}
 </style>
 </head>
 <body>
@@ -4974,6 +4992,7 @@ body.fx-hidden .sk-scene *,body.fx-hidden .sk-front *{animation-play-state:pause
     const fg = LFIG[l.id]; if (fg && FIGS[fg[0]] && FIGS[fg[0]][fg[1]]) try { box.appendChild(figEl(FIGS[fg[0]][fg[1]][0](), FIGS[fg[0]][fg[1]][1])); } catch(e){}
     if (l.key){ const k = el("div","lkey"); k.appendChild(el("b", null, "Zapamatuj si")); k.appendChild(el("span", null, l.key)); box.appendChild(k); }
     const terms = lnTerms(w, l); if (terms.length){ const d = el("div","lgl"); d.appendChild(el("b","lgh","Slovíčka v lekci")); terms.forEach(g => { const r = el("div"); r.appendChild(el("b", null, g.term + (g.en && String(g.en).toLowerCase() !== String(g.term).toLowerCase() ? " (" + g.en + ")" : ""))); r.appendChild(el("span", null, " " + g.def)); d.appendChild(r); }); box.appendChild(d); }
+    try { const lx = lexBuild(l); if (lx) box.appendChild(lx); } catch(e){}
     if (l.q){ const q = el("div","ltf"), row = el("div","lrow l3"), fb = el("p","small"); q.appendChild(el("b","lgh","Rychlá kontrola")); q.appendChild(el("span","lq", l.q.q));
       const bs = l.q.o.map((t, i) => { const b = btn(null, ""); b.appendChild(el("i", null, "ABC"[i])); b.appendChild(el("span", null, t)); b.addEventListener("click", () => { const ok = i === l.q.ok; weakNote("c-" + l.id, l.q.q, l.q.o, l.q.o[l.q.ok], l.q.why, l.title, ok); bs.forEach(x => x.disabled = true); b.classList.add(ok ? "ok" : "ko"); bs[l.q.ok].classList.add("ok"); fb.className = "small " + (ok ? "pos" : "neg"); fb.textContent = (ok ? "Správně. " : "Ne tak úplně. ") + l.q.why; if (ok) lnBurst(b); palSay(palPick(ok ? "yay" : "oops"), ok ? "yay" : "oops"); }); row.appendChild(b); return b; });
       q.appendChild(row); q.appendChild(fb); box.appendChild(q); }
@@ -5445,6 +5464,50 @@ body.fx-hidden .sk-scene *,body.fx-hidden .sk-front *{animation-play-state:pause
       box.appendChild(el("span","small muted","Teď běží: " + ({full: "plné animace", lite: "úsporný režim", off: "animace vypnuté"})[eff()] + ".")); };
     fxRender();
   }
+
+  // ---------- example trade for every course lesson (schematic chart, not market data) ----------
+  const LEXT = {
+    pull:  {wp: [[7,112],[5,106.5],[8,120]], en: [12,107], st: 104, tg: 113},
+    range: {wp: [[4,108],[4,100.5],[4,107.8],[4,100.8],[4,107.5],[3,104]], lv: [[108,"Horní hrana","Horní hrana",3],[100.5,"Dolní hrana","Dolní hrana",7]], none: 1},
+    none:  {wp: [[3,104],[3,101],[3,105],[3,102],[3,104.5],[3,101.5],[3,104]], none: 1},
+    bos:   {wp: [[6,110],[4,105.5],[4,114.5],[3,110.6],[6,121]], lv: [[110,"Swing high","Swing low",5]], en: [17,111.2], st: 108.4, tg: 120},
+    mss:   {wp: [[5,114],[3,108.5],[4,117.5],[4,106],[3,110],[6,99.5]], lv: [[108.5,"Poslední vyšší dno","Poslední nižší vrchol",7]], en: [19,109.6], st: 118.2, tg: 100.5, sh: 1},
+    sweep: {wp: [[4,107],[3,100.5],[3,105],[3,100.4],[2,104],[2,101.4,97.2],[2,103.6],[6,112]], lv: [[100.4,"Stejná dna, likvidita","Stejné vrcholy, likvidita",6]], en: [17,102.2], st: 96.8, tg: 111},
+    fvg:   {wp: [[5,101],[3,110.5],[4,105.2],[7,116]], zn: [[103.6,105.4,5,12,"FVG"]], en: [12,105.2], st: 100.2, tg: 115},
+    ifvg:  {wp: [[3,101],[3,110],[3,112],[4,102.5],[3,105.6],[6,96.5]], zn: [[105,106.6,3,16,"Proražená zóna"]], en: [16,105.4], st: 108.8, tg: 97.5, sh: 1},
+    ob:    {wp: [[4,104],[2,100.6],[3,111],[4,102.6],[7,115]], zn: [[100.8,102.8,4,13,"Order block"]], en: [13,102.8], st: 99.8, tg: 114},
+    ote:   {wp: [[8,120],[6,107],[8,123]], zn: [[104.2,107.6,8,14,"OTE 62 až 79 %"]], en: [14,107.2], st: 99.2, tg: 120},
+    po3:   {start: 110, wp: [[5,110.6],[5,104.4],[3,111],[9,122]], lv: [[110,"Otevírací cena","Otevírací cena",0]], en: [13,111.2], st: 103.6, tg: 121},
+    model: {wp: [[4,106],[3,100.6],[3,104.5],[2,101.6,97.6],[3,108.2],[3,103.4],[6,113]], lv: [[100.6,"Likvidita pod dny","Likvidita nad vrcholy",6]], zn: [[102.4,104,12,18,"FVG"]], en: [18,103.6], st: 97.2, tg: 112.4}
+  };
+  function lexBuild(l){
+    const x = l.ex, T = x && LEXT[x.tpl]; if (!T) return null;
+    let seed = 7; for (const ch of l.id) seed = (seed * 31 + ch.charCodeAt(0)) >>> 0;
+    const rnd = () => { seed = (seed + 0x6D2B79F5) >>> 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+    const f = v => x.flip ? 220 - v : v, cs = []; let p = T.start || 100;
+    T.wp.forEach(sg => { const s0 = p; for (let j = 1; j <= sg[0]; j++){ const o = p, last = j === sg[0], c = last ? sg[1] : s0 + (sg[1] - s0) * j / sg[0] + (rnd() - 0.5) * 1.1; let h = Math.max(o, c) + rnd() * 0.7, lo = Math.min(o, c) - rnd() * 0.7; if (last && sg[2] != null){ if (sg[2] < sg[1]) lo = Math.min(lo, sg[2]); else h = Math.max(h, sg[2]); } cs.push({o: o, c: c, h: h, l: lo}); p = c; } });
+    const C = cs.map(k => x.flip ? {o: f(k.o), c: f(k.c), h: f(k.l), l: f(k.h)} : k), n = C.length, W = 340, H = 196, pl = 8, pr = 8, cw = (W - pl - pr) / n;
+    const vals = [].concat(C.map(k => k.h), C.map(k => k.l)); if (!T.none){ vals.push(f(T.st), f(T.tg)); }
+    const hi = Math.max.apply(null, vals) + 1.2, lo = Math.min.apply(null, vals) - 1.2, y = v => 8 + (hi - v) / (hi - lo) * (H - 16), X = i => pl + i * cw;
+    let h = ""; const txt = (xx, yy, t, cls, anchor) => '<text x="' + xx.toFixed(1) + '" y="' + yy.toFixed(1) + '" class="' + cls + '" text-anchor="' + (anchor || "start") + '">' + t + '</text>';
+    (T.zn || []).forEach(z => { const a = y(f(z[0])), b = y(f(z[1])); h += '<rect class="zn" x="' + X(z[2]).toFixed(1) + '" y="' + Math.min(a, b).toFixed(1) + '" width="' + ((z[3] - z[2] + 1) * cw).toFixed(1) + '" height="' + Math.abs(a - b).toFixed(1) + '" rx="2"/>' + txt(X(z[2]) + 2, Math.min(a, b) - 3, z[4], "", "start"); });
+    (T.lv || []).forEach(v => { const yy = y(f(v[0])); h += '<line class="lv" x1="' + X(v[3]).toFixed(1) + '" x2="' + (W - pr) + '" y1="' + yy.toFixed(1) + '" y2="' + yy.toFixed(1) + '"/>' + txt(X(v[3]) + 2, yy - 3, x.flip ? v[2] : v[1], "tlv", "start"); });
+    C.forEach((k, i) => { const cx = X(i) + cw / 2, up = k.c >= k.o, top = y(Math.max(k.o, k.c)), bot = y(Math.min(k.o, k.c)); h += '<line class="' + (up ? "cu" : "cd") + '" x1="' + cx.toFixed(1) + '" x2="' + cx.toFixed(1) + '" y1="' + y(k.h).toFixed(1) + '" y2="' + y(k.l).toFixed(1) + '" stroke-width="1.1"/><rect class="' + (up ? "cu" : "cd") + '" x="' + (cx - cw * 0.32).toFixed(1) + '" y="' + top.toFixed(1) + '" width="' + (cw * 0.64).toFixed(1) + '" height="' + Math.max(1.2, bot - top).toFixed(1) + '" rx="1"/>'; });
+    let rr = 0;
+    if (T.none) h += txt(W / 2, 20, "Bez obchodu", "big", "middle");
+    else { const eb = T.en[0], ep = f(T.en[1]), sp = f(T.st), tp = f(T.tg), x1 = X(eb), x2 = W - pr, long = tp > ep; rr = Math.abs(tp - ep) / Math.abs(ep - sp);
+      const ln = (cls, v) => '<line class="' + cls + '" x1="' + x1.toFixed(1) + '" x2="' + x2 + '" y1="' + y(v).toFixed(1) + '" y2="' + y(v).toFixed(1) + '"/>';
+      h += ln("st", sp) + ln("tg", tp) + ln("en", ep) + txt(x2 - 2, y(sp) + (long ? 10 : -4), "Stop", "tst", "end") + txt(x2 - 2, y(tp) + (long ? -4 : 10), "Cíl", "ttg", "end") + txt(x2 - 2, y(ep) - 4, "Vstup", "ten", "end");
+      const mx = x1 + cw / 2, my = y(ep); h += '<path class="mk" d="' + (long ? "M" + (mx - 5) + " " + (my + 13) + "L" + (mx + 5) + " " + (my + 13) + "L" + mx + " " + (my + 4) + "Z" : "M" + (mx - 5) + " " + (my - 13) + "L" + (mx + 5) + " " + (my - 13) + "L" + mx + " " + (my - 4) + "Z") + '"/>'; }
+    const d = document.createElement("details"); d.className = "lex"; const sm = document.createElement("summary"); sm.textContent = T.none ? "Ukázka k lekci: kdy neobchodovat" : "Ukázka obchodu k téhle lekci"; d.appendChild(sm);
+    const b = el("div","lxb"); b.appendChild(el("h4", null, x.t));
+    const svg = document.createElementNS("http://www.w3.org/2000/svg","svg"); svg.setAttribute("viewBox","0 0 " + W + " " + H); svg.setAttribute("class","lexc"); svg.setAttribute("role","img"); svg.setAttribute("aria-label","Schematický graf: " + x.t); svg.innerHTML = h; b.appendChild(svg);
+    const r = el("div","lxr"); [["Co vidím", x.see], [T.none ? "Co udělám" : "Co udělám", x.do], [T.none ? "Proč" : "Kdy se pletu", x.wrong]].forEach(q => { r.appendChild(el("b", null, q[0])); r.appendChild(el("span", null, q[1])); });
+    if (!T.none){ const isShort = !!T.sh !== !!x.flip; r.appendChild(el("b", null, "Poměr")); r.appendChild(el("span", null, "Riziko 1R, cíl " + String(Math.round(rr * 10) / 10).replace(".", ",") + " R (" + (isShort ? "short" : "long") + ").")); }
+    b.appendChild(r); b.appendChild(el("span","small muted","Graf je nakreslený pro ukázku, nejsou to data z trhu. Není to signál ani doporučení."));
+    d.appendChild(b); return d;
+  }
+  window.__lex = lexBuild;
 
   // ---------- moving to a new address without losing data ----------
   // data/site.json: {"move": "https://new-address", "from": ["https://old-address"]}. The old site hands the data to the new one in a window the person opens.

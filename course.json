@@ -55,6 +55,14 @@
       ],
       "ok": 1,
       "why": "NQ je futures na index Nasdaq 100, ES na index S&P 500."
+     },
+     "ex": {
+      "tpl": "pull",
+      "flip": 0,
+      "t": "Jeden kontrakt MNQ v číslech",
+      "see": "Trend nahoru a návrat o kus zpátky.",
+      "do": "Koupím 1 MNQ, stop 25 bodů pod vstupem. Jeden bod je 2 dolary, riskuju tedy 50 dolarů.",
+      "wrong": "Když cena spadne na stop, ztráta je předem daných 50 dolarů a nic víc."
      }
     },
     {
@@ -76,6 +84,14 @@
       ],
       "ok": 0,
       "why": "Knot ukazuje, kam cena došla a odkud se vrátila. Tělo končí na close."
+     },
+     "ex": {
+      "tpl": "sweep",
+      "flip": 0,
+      "t": "Co řekl dlouhý dolní knot",
+      "see": "Svíčka zajela pod dvě stejná dna a zavřela zpátky nad nimi. Zůstal dlouhý knot.",
+      "do": "Knot ukazuje odmítnutí nižších cen. Kupuju až po zavření svíčky, stop dávám pod knot.",
+      "wrong": "Když další svíčka zavře pod knotem, odmítnutí neplatí."
      }
     },
     {
@@ -97,6 +113,14 @@
       ],
       "ok": 2,
       "why": "Vyšší timeframe ukáže směr, nižší až potom načasování."
+     },
+     "ex": {
+      "tpl": "pull",
+      "flip": 0,
+      "t": "Velký graf směr, malý vstup",
+      "see": "Na hodinovém grafu trend nahoru, na pětiminutovém právě korekce.",
+      "do": "Směr beru z hodinového grafu. Na pětiminutovém čekám na konec korekce a kupuju.",
+      "wrong": "Když korekce prorazí poslední dno hodinového grafu, trend už neplatí."
      }
     },
     {
@@ -118,6 +142,14 @@
       ],
       "ok": 2,
       "why": "9:30 newyorského času je u nás většinu roku 15:30."
+     },
+     "ex": {
+      "tpl": "po3",
+      "flip": 0,
+      "t": "Stejný setup, jiný čas",
+      "see": "Před otevřením New Yorku se cena skoro nehýbe, po 15:30 našeho času přijde pohyb.",
+      "do": "Obchod hledám jen v živé části dne. V klidných hodinách stejný obrázek neberu.",
+      "wrong": "Když je den bez pohybu i po otevření, nechám ho být."
      }
     }
    ],
@@ -151,6 +183,14 @@
       ],
       "ok": 1,
       "why": "Swing high je místní vrchol: sousední svíčky mají high níž."
+     },
+     "ex": {
+      "tpl": "pull",
+      "flip": 0,
+      "t": "Stop patří za swing",
+      "see": "Trh udělal swing low a od něj roste.",
+      "do": "Kupuju nad swingem a stop dávám těsně pod něj. Swing je místo, kde se cena otočila.",
+      "wrong": "Když cena swing low prorazí, moje čtení bylo špatně a stop mě vyvede."
      }
     },
     {
@@ -172,6 +212,14 @@
       ],
       "ok": 0,
       "why": "Rostoucí trend dělá higher high i higher low."
+     },
+     "ex": {
+      "tpl": "pull",
+      "flip": 0,
+      "t": "Nákup v trendu nahoru",
+      "see": "Vyšší vrcholy a vyšší dna. Cena se vrací k poslednímu vyššímu dnu.",
+      "do": "Kupuju v návratu, stop pod poslední vyšší dno, cíl nad poslední vrchol.",
+      "wrong": "Když padne poslední vyšší dno, trend nahoru skončil."
      }
     },
     {
@@ -193,6 +241,14 @@
       ],
       "ok": 2,
       "why": "Range je nejtěžší prostředí. Stačí ho rozpoznat a čekat."
+     },
+     "ex": {
+      "tpl": "range",
+      "flip": 0,
+      "t": "Range: obchod, který nevezmu",
+      "see": "Cena se čtyřikrát odrazila mezi dvěma hranami. Žádné vyšší vrcholy ani nižší dna.",
+      "do": "Nedělám nic. Uprostřed pásma není výhoda a hrany se často falešně prorážejí.",
+      "wrong": "Začnu se zajímat, až cena z pásma jasně vyjde a udrží se venku."
      }
     },
     {
@@ -214,6 +270,14 @@
       ],
       "ok": 1,
       "why": "V korekci je cena výhodnější a stop může být blíž."
+     },
+     "ex": {
+      "tpl": "pull",
+      "flip": 0,
+      "t": "Vstup v korekci, ne na vrcholu",
+      "see": "Rychlý impuls nahoru a po něm pomalá korekce malými svíčkami.",
+      "do": "Nekupuju na konci impulsu. Čekám na korekci, tam je lepší cena a bližší stop.",
+      "wrong": "Když je návrat stejně rychlý jako impuls, není to korekce a nevstupuju."
      }
     }
    ],
@@ -247,6 +311,14 @@
       ],
       "ok": 1,
       "why": "Počítá se zavření těla za úrovní. Samotný knot nestačí."
+     },
+     "ex": {
+      "tpl": "bos",
+      "flip": 0,
+      "t": "Po BOS čekám na návrat",
+      "see": "Svíčka zavřela tělem nad posledním swing high. Trend nahoru je potvrzený.",
+      "do": "Nekupuju průraz. Čekám, až se cena vrátí k proražené úrovni, a kupuju tam.",
+      "wrong": "Když cena zavře zpátky hluboko pod úrovní, BOS selhal."
      }
     },
     {
@@ -268,6 +340,14 @@
       ],
       "ok": 2,
       "why": "MSS je první zavření proti trendu. Je to varování, ne jistota."
+     },
+     "ex": {
+      "tpl": "mss",
+      "flip": 0,
+      "t": "MSS jako první varování",
+      "see": "Trh rostl, vybral vrchol a pak zavřel pod posledním vyšším dnem.",
+      "do": "Po MSS čekám na návrat nahoru a prodávám. Stop dávám nad vrchol.",
+      "wrong": "Když cena udělá nový vrchol, MSS byl falešný."
      }
     },
     {
@@ -289,6 +369,14 @@
       ],
       "ok": 0,
       "why": "Rychlý zlom ukazuje skutečný zájem. Říká se mu displacement."
+     },
+     "ex": {
+      "tpl": "bos",
+      "flip": 0,
+      "t": "Silný zlom beru, slabý ne",
+      "see": "Úroveň prorazily velké svíčky s plnými těly a cena šla dál.",
+      "do": "Silnému zlomu věřím víc. Vstupuju při návratu k úrovni.",
+      "wrong": "Kdyby se cena přes úroveň jen přeplazila malými svíčkami, obchod vynechám."
      }
     },
     {
@@ -310,6 +398,14 @@
       ],
       "ok": 1,
       "why": "Směr určuje vyšší timeframe. Pohyb proti němu je na nižším grafu jen korekce."
+     },
+     "ex": {
+      "tpl": "pull",
+      "flip": 0,
+      "t": "Korekce malého grafu ve velkém trendu",
+      "see": "Hodinový graf roste. Pětiminutový klesá, ale drží se nad hodinovým dnem.",
+      "do": "Čekám, až pětiminutový graf otočí nahoru, a kupuju ve směru hodinového.",
+      "wrong": "Když padne hodinové dno, nejde o korekci a obchod ruším."
      }
     }
    ],
@@ -343,6 +439,14 @@
       ],
       "ok": 2,
       "why": "Nad vrcholy mají stop-lossy ti, kdo jsou v shortu. Jejich stopy jsou nákupní příkazy."
+     },
+     "ex": {
+      "tpl": "sweep",
+      "flip": 0,
+      "t": "Likvidita pod stejnými dny",
+      "see": "Dvě stejná dna vedle sebe. Pod nimi leží stop-lossy kupujících.",
+      "do": "Nekupuju na dně. Čekám, až cena stopy vybere a vrátí se nad úroveň.",
+      "wrong": "Když cena pod dny zůstane, byl to průraz a ne výběr likvidity."
      }
     },
     {
@@ -364,6 +468,14 @@
       ],
       "ok": 0,
       "why": "Čím je úroveň viditelnější, tím víc stopů u ní leží."
+     },
+     "ex": {
+      "tpl": "sweep",
+      "flip": 1,
+      "t": "Likvidita nad včerejším high",
+      "see": "Cena se blíží k viditelnému vrcholu, nad kterým jsou stopy prodávajících.",
+      "do": "Čekám, jestli cena vrchol jen propíchne a vrátí se. Pak prodávám se stopem nad knotem.",
+      "wrong": "Když cena nad vrcholem zavře a drží se, short neberu."
      }
     },
     {
@@ -385,6 +497,14 @@
       ],
       "ok": 2,
       "why": "Sweep se rychle vrátí zpět, průraz za úrovní zůstane. Předem to nevíš."
+     },
+     "ex": {
+      "tpl": "sweep",
+      "flip": 0,
+      "t": "Sweep poznám až podle návratu",
+      "see": "Svíčka zajela pod úroveň a zavřela zpátky nad ní.",
+      "do": "Vstupuju až po návratu, ne při propíchnutí. Stop pod knot.",
+      "wrong": "Kdyby svíčka zavřela pod úrovní a další pokračovala, je to průraz."
      }
     },
     {
@@ -406,6 +526,14 @@
       ],
       "ok": 1,
       "why": "Je to úroveň, ke které cena nejspíš míří. Dává směr i cíl."
+     },
+     "ex": {
+      "tpl": "pull",
+      "flip": 0,
+      "t": "Cíl je další likvidita",
+      "see": "Trend nahoru a nad cenou starý vrchol, kde leží stopy.",
+      "do": "Směr i cíl mi dává ten vrchol. Kupuju v korekci a zisk beru těsně pod ním.",
+      "wrong": "Když cena začne dělat nižší dna, k vrcholu už nemíří."
      }
     }
    ],
@@ -439,6 +567,14 @@
       ],
       "ok": 1,
       "why": "Displacement je rychlý jednosměrný pohyb, kdy jedna strana trh ovládla."
+     },
+     "ex": {
+      "tpl": "fvg",
+      "flip": 0,
+      "t": "Displacement ukazuje, kdo má navrch",
+      "see": "Několik velkých svíček nahoru s malými knoty, jedna strana trh ovládla.",
+      "do": "Nenaskakuju do pohybu. Čekám na návrat do mezery, kterou pohyb nechal.",
+      "wrong": "Když se cena vrátí celým pohybem zpátky, síla byla jen zdánlivá."
      }
     },
     {
@@ -460,6 +596,14 @@
       ],
       "ok": 0,
       "why": "Knoty první a třetí svíčky se nepřekrývají. Mezera je mezi nimi."
+     },
+     "ex": {
+      "tpl": "fvg",
+      "flip": 0,
+      "t": "Vstup v návratu do FVG",
+      "see": "Tři svíčky nahoru nechaly mezeru: knoty první a třetí se nepřekrývají.",
+      "do": "Limitní nákup dávám do mezery, stop pod začátek pohybu.",
+      "wrong": "Když cena projde celou mezerou a zavře pod ní, FVG nedržel."
      }
     },
     {
@@ -481,6 +625,14 @@
       ],
       "ok": 2,
       "why": "Návrat do mezery se čeká. Zavření za ní znamená, že mezera nedržela."
+     },
+     "ex": {
+      "tpl": "fvg",
+      "flip": 0,
+      "t": "Kdy FVG ještě platí",
+      "see": "Cena se vrací do mezery. To se čeká, mezera se tím neruší.",
+      "do": "Kupuju ve středu mezery. Stop mám pod ní, protože zavření pod mezerou znamená selhání.",
+      "wrong": "Zavření těla pod spodním okrajem mezery je konec obchodu."
      }
     },
     {
@@ -502,6 +654,14 @@
       ],
       "ok": 1,
       "why": "Proražená mezera se obrací. Říká se jí inverzní FVG."
+     },
+     "ex": {
+      "tpl": "ifvg",
+      "flip": 0,
+      "t": "Proražená mezera mění roli",
+      "see": "Mezera, která měla držet cenu nahoře, byla proražena zavřením těla dolů.",
+      "do": "Z podpory je odpor. Při návratu k ní zdola prodávám, stop dávám nad ni.",
+      "wrong": "Když cena zavře zpátky nad mezerou, inverze neplatí."
      }
     }
    ],
@@ -535,6 +695,14 @@
       ],
       "ok": 1,
       "why": "Bez silného pohybu po něm je to obyčejná svíčka."
+     },
+     "ex": {
+      "tpl": "ob",
+      "flip": 0,
+      "t": "Order block před silným pohybem",
+      "see": "Poslední klesající svíčka před velkým pohybem nahoru.",
+      "do": "Při návratu do té svíčky kupuju. Stop dávám pod její low.",
+      "wrong": "Když po bloku žádný silný pohyb nepřišel, je to obyčejná svíčka a neberu ji."
      }
     },
     {
@@ -556,6 +724,14 @@
       ],
       "ok": 0,
       "why": "Proražený order block funguje při návratu z opačné strany."
+     },
+     "ex": {
+      "tpl": "ifvg",
+      "flip": 0,
+      "t": "Breaker: proražený blok",
+      "see": "Blok, který měl cenu držet, cena prorazila na druhou stranu.",
+      "do": "Při návratu k němu z opačné strany prodávám. Stop za blok.",
+      "wrong": "Když cena blok získá zpátky zavřením, obchod ruším."
      }
     },
     {
@@ -577,6 +753,14 @@
       ],
       "ok": 2,
       "why": "Dolní polovina pohybu je levná. Kupuje se levně, prodává draho."
+     },
+     "ex": {
+      "tpl": "ote",
+      "flip": 0,
+      "t": "Nakupuju v dolní polovině",
+      "see": "Impuls nahoru a návrat pod jeho polovinu, do levné části.",
+      "do": "Kupuju až pod polovinou pohybu. Nad polovinou je draho a nákup vynechám.",
+      "wrong": "Když cena spadne pod začátek impulsu, pohyb je zrušený."
      }
     },
     {
@@ -598,6 +782,14 @@
       ],
       "ok": 1,
       "why": "Třeba FVG a order block v pásmu OTE. Shoda více důvodů zvyšuje váhu místa."
+     },
+     "ex": {
+      "tpl": "ote",
+      "flip": 0,
+      "t": "OTE: návrat o 62 až 79 %",
+      "see": "Cena se vrátila hluboko do impulsu, do pásma OTE.",
+      "do": "Kupuju v pásmu, stop pod začátek impulsu, cíl na vrchol impulsu.",
+      "wrong": "Zavření pod začátkem impulsu znamená, že setup neplatí."
      }
     }
    ],
@@ -631,6 +823,14 @@
       ],
       "ok": 1,
       "why": "NQ a ES se nejvíc hýbou kolem otevření New Yorku."
+     },
+     "ex": {
+      "tpl": "po3",
+      "flip": 0,
+      "t": "Stejný vstup jen v killzone",
+      "see": "Výběr dna a obrat přišly krátce po otevření New Yorku.",
+      "do": "Beru ho, protože je v čase, kdy má trh objem. Mimo killzone bych ho vynechal.",
+      "wrong": "Když se trh po otevření nehýbe, nečekám na zázrak."
      }
     },
     {
@@ -652,6 +852,14 @@
       ],
       "ok": 0,
       "why": "Otevírací ceny dělí den: nad nimi je draho, pod nimi levně."
+     },
+     "ex": {
+      "tpl": "po3",
+      "flip": 0,
+      "t": "Long pod otevírací cenou",
+      "see": "Trend je nahoru a cena je pod půlnoční otevírací cenou, tedy levně.",
+      "do": "Kupuju pod otevírací cenou nebo při jejím opětovném získání. Stop pod dno výpadu.",
+      "wrong": "Když cena zůstane pod otevírací cenou celé dopoledne, bias neplatil."
      }
     },
     {
@@ -673,6 +881,14 @@
       ],
       "ok": 2,
       "why": "Manipulace vybere likviditu jedním směrem. Skutečný pohyb pak jde opačně."
+     },
+     "ex": {
+      "tpl": "po3",
+      "flip": 0,
+      "t": "Power of three: falešný výpad",
+      "see": "Po otevření cena nejdřív spadla a vybrala stopy. To byla manipulace.",
+      "do": "Kupuju, až se cena vrátí nad otevírací cenu. Skutečný pohyb jde opačně než výpad.",
+      "wrong": "Když výpad pokračuje dál dolů, nebyla to manipulace, ale směr dne."
      }
     },
     {
@@ -694,6 +910,14 @@
       ],
       "ok": 1,
       "why": "Čas je jen filtr. Testy ukazují, že sám výhodu nedává."
+     },
+     "ex": {
+      "tpl": "model",
+      "flip": 0,
+      "t": "Silver Bullet v okně 10 až 11",
+      "see": "V okně přišel výběr dna, změna struktury a mezera.",
+      "do": "Vstup ve středu mezery, stop pod výběr, cíl na nejbližší likviditu.",
+      "wrong": "Samotné okno nestačí. Bez sweepu a změny struktury obchod neberu."
      }
     }
    ],
@@ -727,6 +951,14 @@
       ],
       "ok": 0,
       "why": "Bias je hypotéza. Když neplatí, není důvod k obchodu."
+     },
+     "ex": {
+      "tpl": "pull",
+      "flip": 0,
+      "t": "Bias je hypotéza, ne jistota",
+      "see": "Denní graf míří nahoru, cíl je starý vrchol.",
+      "do": "Hledám jen nákupy. Shorty ten den vynechám, i kdyby vypadaly lákavě.",
+      "wrong": "Když trh dělá nižší dna, bias se nepotvrdil a neobchoduju."
      }
     },
     {
@@ -748,6 +980,14 @@
       ],
       "ok": 2,
       "why": "Den ukáže cíl, hodina potvrdí směr, nižší grafy slouží ke vstupu."
+     },
+     "ex": {
+      "tpl": "bos",
+      "flip": 0,
+      "t": "Shora dolů: den, hodina, pět minut",
+      "see": "Den ukazuje cíl nahoře, hodina potvrzuje růst, pět minut dává vstup.",
+      "do": "Kupuju teprve tehdy, když všechny tři grafy říkají totéž.",
+      "wrong": "Když hodinový graf jde proti dennímu, čekám."
      }
     },
     {
@@ -769,6 +1009,14 @@
       ],
       "ok": 0,
       "why": "Den bez obchodu není ztráta."
+     },
+     "ex": {
+      "tpl": "none",
+      "flip": 0,
+      "t": "Den, kdy nevím",
+      "see": "Grafy si odporují a odpoledne vychází důležitá zpráva.",
+      "do": "Neobchoduju. Zapíšu si proč a jdu od grafu.",
+      "wrong": "Den bez obchodu není ztráta. Ztráta je obchod bez důvodu."
      }
     },
     {
@@ -790,6 +1038,14 @@
       ],
       "ok": 1,
       "why": "Tři věty, které večer porovnáš s tím, co se stalo."
+     },
+     "ex": {
+      "tpl": "po3",
+      "flip": 0,
+      "t": "Tři věty před seancí",
+      "see": "Mám napsáno: kam cena míří, co to potvrdí, co ukáže, že se pletu.",
+      "do": "Vstupuju až tehdy, když se stane to, co potvrzuje. Tady návrat nad otevírací cenu.",
+      "wrong": "Stane-li se to, co jsem si napsal jako omyl, obchod neberu."
      }
     }
    ],
@@ -823,6 +1079,14 @@
       ],
       "ok": 1,
       "why": "Vstup je až pátý krok: limitní příkaz ve středu mezery po MSS."
+     },
+     "ex": {
+      "tpl": "model",
+      "flip": 0,
+      "t": "Všech pět kroků modelu",
+      "see": "Likvidita, sweep, MSS s displacementem, FVG, vstup.",
+      "do": "Limitní příkaz do středu mezery. Dřív nevstupuju.",
+      "wrong": "Chybí-li jediný krok, setup neplatí."
      }
     },
     {
@@ -844,6 +1108,14 @@
       ],
       "ok": 0,
       "why": "Kdyby se cena vrátila až za sweep, myšlenka obchodu neplatí."
+     },
+     "ex": {
+      "tpl": "model",
+      "flip": 0,
+      "t": "Stop za sweep, cíl na likviditu",
+      "see": "Vstup v mezeře po sweepu a změně struktury.",
+      "do": "Stop dávám těsně pod extrém sweepu, cíl na nejbližší vrchol.",
+      "wrong": "Kdyby se cena vrátila pod sweep, celá myšlenka padá."
      }
     },
     {
@@ -865,6 +1137,14 @@
       ],
       "ok": 2,
       "why": "Když chybí jediný krok, setup neplatí."
+     },
+     "ex": {
+      "tpl": "none",
+      "flip": 0,
+      "t": "Chybí krok: obchod není",
+      "see": "Sweep proběhl, ale obrat byl pomalý a nenechal žádnou mezeru.",
+      "do": "Nevstupuju. Nehledám náhradní důvod.",
+      "wrong": "Vynechaný obchod stojí nula. Vynucený obchod stojí peníze."
      }
     },
     {
@@ -886,6 +1166,14 @@
       ],
       "ok": 1,
       "why": "První backtest výhodu neprokázal. Cílem je umět model přesně poznat."
+     },
+     "ex": {
+      "tpl": "model",
+      "flip": 0,
+      "t": "Model je hypotéza",
+      "see": "Setup vypadá přesně podle pravidel.",
+      "do": "Vezmu ho na demu a zapíšu. Jeden hezký obchod nic nedokazuje.",
+      "wrong": "První backtest modelu výhodu neprokázal. Proto se počítá až stovka obchodů."
      }
     }
    ],
@@ -919,6 +1207,14 @@
       ],
       "ok": 1,
       "why": "R je tvoje riziko na obchod. Dvojnásobek rizika je +2R."
+     },
+     "ex": {
+      "tpl": "pull",
+      "flip": 0,
+      "t": "Obchod počítaný v R",
+      "see": "Vstup, stop 10 bodů, cíl 20 bodů.",
+      "do": "Riskuju 1R, cíl je 2R. Výsledek zapíšu v R, ne v dolarech.",
+      "wrong": "Stop je −1R. Víc ztratit nesmím."
      }
     },
     {
@@ -940,6 +1236,14 @@
       ],
       "ok": 0,
       "why": "Při 2:1 jedna výhra zaplatí dvě ztráty. Náklady tu hranici ještě o něco zvyšují."
+     },
+     "ex": {
+      "tpl": "pull",
+      "flip": 0,
+      "t": "Proč nestačí vysoký winrate",
+      "see": "Cíl je dvakrát dál než stop.",
+      "do": "Při poměru 2:1 mi stačí vyhrát víc než třetinu obchodů.",
+      "wrong": "Kdybych bral zisk dřív, potřebuju vyhrávat mnohem častěji."
      }
     },
     {
@@ -961,6 +1265,14 @@
       ],
       "ok": 2,
       "why": "Nejdřív stop, potom počet kontraktů tak, aby ztráta nepřesáhla tvé riziko."
+     },
+     "ex": {
+      "tpl": "pull",
+      "flip": 0,
+      "t": "Počet kontraktů ze stopu",
+      "see": "Stop vychází 25 bodů od vstupu a chci riskovat 100 dolarů.",
+      "do": "Na MNQ je 25 bodů 50 dolarů na kontrakt, beru tedy 2 kontrakty.",
+      "wrong": "Když je stop tak daleko, že nevyjde ani 1 kontrakt, obchod neberu."
      }
     },
     {
@@ -982,6 +1294,14 @@
       ],
       "ok": 0,
       "why": "Po ztrátě přicházejí nejhorší rozhodnutí. Stopka je zastaví předem."
+     },
+     "ex": {
+      "tpl": "none",
+      "flip": 0,
+      "t": "Po dvou ztrátách konec",
+      "see": "Dnes už dva obchody skončily na stopu.",
+      "do": "Zavírám platformu. Další setup dnes neberu, i kdyby byl hezký.",
+      "wrong": "Po ztrátě chci peníze zpátky. Stopka to rozhodne za mě."
      }
     }
    ],
@@ -1015,6 +1335,14 @@
       ],
       "ok": 1,
       "why": "Jinak začneš vidět setupy až zpětně a výsledky budou hezčí než pravda."
+     },
+     "ex": {
+      "tpl": "model",
+      "flip": 0,
+      "t": "Obchod v Replay",
+      "see": "Posouvám graf svíčku po svíčce a setup vzniká přede mnou.",
+      "do": "Výsledek zapíšu dřív, než posunu graf dál.",
+      "wrong": "Kdybych viděl budoucnost, začal bych si setupy vybírat zpětně."
      }
     },
     {
@@ -1036,6 +1364,14 @@
       ],
       "ok": 0,
       "why": "Bez zápisů nerozlišíš špatná pravidla od špatného provedení."
+     },
+     "ex": {
+      "tpl": "model",
+      "flip": 0,
+      "t": "Zápis jednoho obchodu",
+      "see": "Setup podle modelu, vstup, stop, cíl.",
+      "do": "Zapíšu čas, všech pět kroků, výsledek v R a jednu větu, co jsem cítil.",
+      "wrong": "Bez zápisu nepoznám, jestli chyboval model, nebo já."
      }
     },
     {
@@ -1057,6 +1393,14 @@
       ],
       "ok": 2,
       "why": "Deset není nic, třicet je náznak. Trh se navíc v různých obdobích chová jinak."
+     },
+     "ex": {
+      "tpl": "pull",
+      "flip": 0,
+      "t": "Jeden obchod nic neříká",
+      "see": "Tenhle obchod vyšel.",
+      "do": "Je to jeden ze sta. Počítám dál a hodnotím až celek.",
+      "wrong": "Deset výher po sobě může být náhoda stejně jako deset ztrát."
      }
     },
     {
@@ -1078,6 +1422,14 @@
       ],
       "ok": 1,
       "why": "Pravidla ušitá na minulost na nových datech obvykle selžou."
+     },
+     "ex": {
+      "tpl": "fvg",
+      "flip": 0,
+      "t": "Past přeučení",
+      "see": "Na téhle části grafu pravidlo funguje krásně.",
+      "do": "Ověřím ho na jiné části historie, kterou jsem při ladění neviděl.",
+      "wrong": "Když na nových datech nefunguje, bylo ušité na minulost."
      }
     }
    ],
@@ -1111,6 +1463,14 @@
       ],
       "ok": 0,
       "why": "Co v plánu není, to neděláš. Plán se mění mimo obchodování."
+     },
+     "ex": {
+      "tpl": "model",
+      "flip": 0,
+      "t": "Obchod, který je v plánu",
+      "see": "Setup odpovídá tomu, co mám napsáno na jedné stránce.",
+      "do": "Beru ho přesně podle plánu: vstup, stop, cíl, velikost.",
+      "wrong": "Co v plánu není, nedělám. Plán měním mimo obchodování."
      }
     },
     {
@@ -1132,6 +1492,14 @@
       ],
       "ok": 1,
       "why": "Seznam má smysl jen tehdy, když jedno ne obchod zastaví."
+     },
+     "ex": {
+      "tpl": "model",
+      "flip": 0,
+      "t": "Kontrolní seznam před vstupem",
+      "see": "Procházím seznam: čas, likvidita, sweep, MSS, FVG, riziko.",
+      "do": "Všechno ano, vstupuju. Jedno ne, obchod není.",
+      "wrong": "Seznam má smysl jen tehdy, když jedno ne obchod zastaví."
      }
     },
     {
@@ -1153,6 +1521,14 @@
       ],
       "ok": 2,
       "why": "Největší chyby jsou v hlavě: strach ze zmeškání, honba za ztrátou, posouvání stopu."
+     },
+     "ex": {
+      "tpl": "pull",
+      "flip": 1,
+      "t": "Stop se neposouvá",
+      "see": "Jsem v shortu a cena jde proti mně ke stopu.",
+      "do": "Nechám stop, kde je. Ztrátu přijmu jako cenu obchodu.",
+      "wrong": "Posunutý stop dělá z malé ztráty velkou."
      }
     },
     {
@@ -1174,6 +1550,14 @@
       ],
       "ok": 1,
       "why": "Nejdřív aspoň dva měsíce nebo padesát obchodů na demu. Většina začátečníků prodělává."
+     },
+     "ex": {
+      "tpl": "model",
+      "flip": 0,
+      "t": "Než půjdou skutečné peníze",
+      "see": "Setup podle pravidel, na demo účtu.",
+      "do": "Beru ho na demu. Na skutečné peníze přejdu, až backtest i demo ukážou totéž.",
+      "wrong": "Většina začátečníků prodělává. Proto nejdřív padesát obchodů na demu."
      }
     }
    ],
