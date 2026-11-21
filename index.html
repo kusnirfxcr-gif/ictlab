@@ -2049,15 +2049,24 @@ details.lex .lxr b{color:var(--muted);font-size:12px;text-transform:uppercase;le
     return svgWrap(H, grid + zones + lp + cnd + lines + top + hits, "--st:" + st + "ms");
   }
   function figOhlc(){
-    let s = "";
-    [[96, "up", ["High","Close","Open","Low"]], [250, "dn", ["High","Open","Close","Low"]]].forEach(c => {
-      const x = c[0];
-      s += '<line x1="' + x + '" y1="28" x2="' + x + '" y2="188" class="' + c[1] + '" stroke-width="2.5"/>' + R(x - 22, 68, 44, 80, c[1]);
-      [28, 68, 148, 188].forEach((y, i) => { const edge = (i === 0 || i === 3) ? x + 3 : x + 24; s += L(edge, y, x + 44, y, "muted") + T(x + 48, y + 4, c[2][i], null, "start"); });
+    const H = 236, yH = 36, yT = 72, yB = 150, yL = 188, bw = 36; let s = "";
+    [[96, "up", ["High","Close","Open","Low"], "good", "Rostoucí: close nad open"], [266, "dn", ["High","Open","Close","Low"], "bad", "Klesající: close pod open"]].forEach((c, k) => {
+      const x = c[0], up = c[1] === "up", d0 = 500 + k * 350;
+      s += '<g class="cd" style="--i:' + (k * 4) + '"><line x1="' + x + '" y1="' + yH + '" x2="' + x + '" y2="' + yL + '" class="wk ' + c[1] + '" style="stroke-width:2.2"/>' +
+        '<rect x="' + (x - bw / 2) + '" y="' + yT + '" width="' + bw + '" height="' + (yB - yT) + '" rx="6" class="bd ' + c[1] + '"/>' +
+        '<rect x="' + (x - bw / 2 + 5) + '" y="' + (yT + 4) + '" width="8" height="' + (yB - yT - 8) + '" rx="3" class="bd bh"/></g>';
+      const ya = up ? yB - 14 : yT + 14, yb = up ? yT + 16 : yB - 16, hd = up ? 9 : -9;
+      s += '<g class="mk" style="--d:' + (d0 + 150) + '"><path d="M' + (x + 5) + " " + ya + " L" + (x + 5) + " " + yb + '" pathLength="1" class="ar" style="stroke:#fff;stroke-opacity:.85"/><polygon points="' + (x + 5) + "," + (yb - hd) + " " + (x + 0.5) + "," + yb + " " + (x + 9.5) + "," + yb + '" style="fill:#fff;fill-opacity:.85"/></g>';
+      [yH, yT, yB, yL].forEach((y, i) => {
+        const edge = (i === 0 || i === 3) ? x : x + bw / 2, tc = (i === 0 || i === 3) ? null : c[3];
+        s += '<g class="mk" style="--d:' + (d0 + i * 110) + '">' + L(edge + 3, y, x + 38, y, tc || "muted", true) + '<circle cx="' + edge + '" cy="' + y + '" r="2.6" class="f-' + (tc || "muted") + '"/>' + tag(x + 40, y, c[2][i], tc, "start", H, FW - 2) + "</g>";
+      });
+      s += '<g class="mk" style="--d:' + (d0 + 600) + '">' + tag(x + 4, 216, c[4], c[3], "middle", H, FW - 2) + "</g>";
     });
-    s += T(66, 52, "knot", "muted", "end") + T(66, 112, "tělo", "muted", "end") + T(66, 172, "knot", "muted", "end");
-    s += T(110, 210, "rostoucí: close nad open", "good") + T(262, 210, "klesající: close pod open", "bad");
-    return svgWrap(218, s);
+    [[yH, yT, "knot"], [yT, yB, "tělo"], [yB, yL, "knot"]].forEach((q, i) => {
+      s += '<g class="mk" style="--d:' + (1300 + i * 110) + '">' + L(62, q[0] + 3, 62, q[1] - 3, "muted") + L(59, q[0] + 3, 65, q[0] + 3, "muted") + L(59, q[1] - 3, 65, q[1] - 3, "muted") + T(55, (q[0] + q[1]) / 2 + 4, q[2], "muted", "end", "tl") + "</g>";
+    });
+    return svgWrap(H, s);
   }
   // timeline blocks, lane titles and flags shared by the two time figures
   const tBlk = (x1, x2, y, c, i, cls) => '<rect x="' + x1.toFixed(1) + '" y="' + y + '" width="' + (x2 - x1).toFixed(1) + '" height="16" rx="6" class="tb gr ' + (cls || "f-" + c) + '" style="--i:' + i + '"/>';
