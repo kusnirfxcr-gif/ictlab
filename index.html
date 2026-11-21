@@ -2077,7 +2077,7 @@ details.lex .lxr b{color:var(--muted);font-size:12px;text-transform:uppercase;le
     const p = h => 16 + h * 13.6, H = 196, B = 152, lv = [[0,.1],[2,.2],[4,.26],[6,.16],[8,.44],[9.5,.5],[11,.34],[13,.28],[14.5,.46],[15.5,.92],[16.4,1],[17.5,.78],[18.6,.46],[19.6,.44],[20.6,.62],[21.7,.72],[22.3,.44],[23.2,.2],[24,.1]].map(q => [p(q[0]), B - q[1] * 66]);
     let d = "M" + lv[0][0].toFixed(1) + " " + lv[0][1].toFixed(1), s = "";
     for (let i = 0; i < lv.length - 1; i++){ const a = lv[Math.max(i - 1, 0)], b = lv[i], c = lv[i + 1], e = lv[Math.min(i + 2, lv.length - 1)]; d += " C" + (b[0] + (c[0] - a[0]) / 6).toFixed(1) + " " + (b[1] + (c[1] - a[1]) / 6).toFixed(1) + " " + (c[0] - (e[0] - b[0]) / 6).toFixed(1) + " " + (c[1] - (e[1] - b[1]) / 6).toFixed(1) + " " + c[0].toFixed(1) + " " + c[1].toFixed(1); }
-    [[2, 6, "Asie", "accent"], [8, 11, "Londýn", "amber"], [15.5, 22, "New York", "good"]].forEach((b, i) => { s += tBlk(p(b[0]), p(b[1]), 48, b[3], i) + T((p(b[0]) + p(b[1])) / 2, 42, b[2], b[3], "middle", "tl") + '<rect x="' + p(b[0]).toFixed(1) + '" y="66" width="' + (p(b[1]) - p(b[0])).toFixed(1) + '" height="' + (B - 66) + '" class="tz f-' + b[3] + '"/>'; });
+    [[0, 8.5, "Asie", "accent"], [8.5, 13, "Londýn", "amber"], [13, 18, "NY AM", "good"], [18, 19, "", "muted"], [19, 22, "NY PM", "good"]].forEach((b, i) => { s += tBlk(p(b[0]), p(b[1]), 48, b[3], i) + T((p(b[0]) + p(b[1])) / 2, 42, b[2], b[3], "middle", "tl") + '<rect x="' + p(b[0]).toFixed(1) + '" y="66" width="' + (p(b[1]) - p(b[0])).toFixed(1) + '" height="' + (B - 66) + '" class="tz f-' + b[3] + '"/>'; });
     s += '<path d="' + d + " L" + p(24).toFixed(1) + " " + B + " L" + p(0).toFixed(1) + " " + B + 'Z" class="area f-accent"/><path d="' + d + '" pathLength="1" class="dr rb"/>';
     s += L(p(0), B, p(24), B, "muted"); ["18:00","21:00","0:00","3:00","6:00","9:00","12:00","15:00","18:00"].forEach((t, i) => { s += L(p(i * 3), B - 3, p(i * 3), B + 3, "muted") + T(p(i * 3), B + 16, t, null, "middle", "axt"); });
     s += tFlag(p(15.5), 14, B, "9:30 v New Yorku = 15:30 u nás", "good", "middle", H, 1300) + '<g class="mk" style="--d:1700"><circle cx="' + lv[10][0].toFixed(1) + '" cy="' + lv[10][1].toFixed(1) + '" r="7" class="pulse f-bad" opacity=".35"/><circle cx="' + lv[10][0].toFixed(1) + '" cy="' + lv[10][1].toFixed(1) + '" r="3.4" class="f-bad"/>' + tag(lv[10][0] + 10, lv[10][1] - 2, "nejvíc pohybu", "bad", "start", H, FW - 2) + "</g>";
@@ -3864,7 +3864,7 @@ details.lex .lxr b{color:var(--muted);font-size:12px;text-transform:uppercase;le
   function premOn(){ try { return localStorage.getItem("tape-premium") === "1"; } catch(e){ return false; } }
   function tradeCycle(t){
     try { const p = {}; new Intl.DateTimeFormat("en-US", {timeZone: "America/New_York", hour: "2-digit", minute: "2-digit", hourCycle: "h23"}).formatToParts(new Date(t.ts)).forEach(x => { p[x.type] = x.value; });
-      const m = (Number(p.hour) % 24) * 60 + Number(p.minute); if (!isFinite(m)) return null; return m >= 420 && m < 960 ? CYCN[Math.floor((m - 420) / 90)] : m >= 120 && m < 300 ? "Londýn" : m >= 1200 ? "Asie" : "Mimo cykly"; } catch(e){ return null; }
+      const m = (Number(p.hour) % 24) * 60 + Number(p.minute); if (!isFinite(m)) return null; return m >= 420 && m < 960 ? CYCN[Math.floor((m - 420) / 90)] : m >= 150 && m < 420 ? "Londýn" : (m >= 1080 || m < 150) ? "Asie" : "Mimo cykly"; } catch(e){ return null; }
   }
   const symsOf = tr => Object.keys(tr.reduce((o, t) => { o[t.sym || ""] = 1; return o; }, {})).length;
   function renderStats(){
@@ -4141,20 +4141,20 @@ details.lex .lxr b{color:var(--muted);font-size:12px;text-transform:uppercase;le
   }
 
   // ---------- session clock ----------
-  const SESS = [["Asie", 1200, 1440, "muted"], ["Londýn", 120, 300, "accent"], ["New York dopoledne", 510, 660, "good"], ["New York odpoledne", 810, 960, "amber"]];
+  const SESS = [["Asie", 1080, 150, "muted"], ["Londýn", 150, 420, "accent"], ["NY AM", 420, 720, "good"], ["Lunch", 720, 780, "muted"], ["NY PM", 780, 960, "amber"]], sessLen = x => ((x[2] - x[1]) % 1440 + 1440) % 1440, sessIn = (x, m) => x[1] < x[2] ? m >= x[1] && m < x[2] : m >= x[1] || m < x[2];
   function renderClock(){
     const boxes = document.querySelectorAll(".clkbox"); if (!boxes.length) return;
     const ny = tzNow("America/New_York"), loc = new Date(), lm = loc.getHours() * 60 + loc.getMinutes(), off = ny ? ((lm - ny.mins) % 1440 + 1440) % 1440 : 0;
     const hm = m => { m = ((m % 1440) + 1440) % 1440; return String(Math.floor(m / 60)).padStart(2, "0") + ":" + String(m % 60).padStart(2, "0"); }, dur = m => m >= 60 ? Math.floor(m / 60) + " h " + (m % 60) + " min" : m + " min";
     let line = "Čas New Yorku se nepodařilo zjistit", sub = "";
-    if (ny){ const closed = ny.dow === 6 || (ny.dow === 5 && ny.mins >= 1020) || (ny.dow === 0 && ny.mins < 1080), cur = SESS.find(s => ny.mins >= s[1] && ny.mins < s[2]);
+    if (ny){ const closed = ny.dow === 6 || (ny.dow === 5 && ny.mins >= 1020) || (ny.dow === 0 && ny.mins < 1080), cur = SESS.find(s => sessIn(s, ny.mins));
       if (closed){ line = "Trh je zavřený"; sub = "Futures otevírají v neděli v 18:00 newyorského času, to je " + hm(1080 + off) + " našeho."; }
-      else if (cur){ line = cur[0]; sub = "Končí v " + hm(cur[2] + off) + ", za " + dur(cur[2] - ny.mins) + "."; }
+      else if (cur){ line = cur[0]; sub = "Končí v " + hm(cur[2] + off) + ", za " + dur(((cur[2] - ny.mins) % 1440 + 1440) % 1440) + "."; }
       else { const nx = SESS.map(s => [s, ((s[1] - ny.mins) % 1440 + 1440) % 1440]).sort((a, b) => a[1] - b[1])[0]; line = "Mezi seancemi"; sub = "Další je " + nx[0][0] + " v " + hm(nx[0][1] + off) + ", za " + dur(nx[1]) + "."; } }
     const ev = soonEvent();
     boxes.forEach(box => { clear(box); const h = el("div","row"), bar = el("div","clkbar"), lg = el("div","clklg"), now = el("u");
       h.appendChild(el("b","clkl", line)); h.appendChild(el("span","small muted", ny ? "New York " + hm(ny.mins) : "")); box.appendChild(h); if (sub) box.appendChild(el("span","small muted", sub));
-      SESS.forEach(s => { const a = ((s[1] + off) % 1440) / 14.4, w = (s[2] - s[1]) / 14.4, put = (l, ww) => { const sg = el("i","c-" + s[3]); sg.style.left = l + "%"; sg.style.width = ww + "%"; bar.appendChild(sg); };
+      SESS.forEach(s => { const a = ((s[1] + off) % 1440) / 14.4, w = sessLen(s) / 14.4, put = (l, ww) => { const sg = el("i","c-" + s[3]); sg.style.left = l + "%"; sg.style.width = ww + "%"; bar.appendChild(sg); };
         put(a, Math.min(w, 100 - a)); if (a + w > 100) put(0, a + w - 100); lg.appendChild(el("span","c-" + s[3], s[0] + " " + hm(s[1] + off) + "–" + hm(s[2] + off))); });
       now.style.left = (lm / 14.4) + "%"; bar.appendChild(now); box.appendChild(bar); box.appendChild(lg);
       if (ev) box.appendChild(el("p","small neg", ev)); });
@@ -4968,7 +4968,7 @@ details.lex .lxr b{color:var(--muted);font-size:12px;text-transform:uppercase;le
   })();
 
   // ---------- room: lesson player. The next lesson sits right at the top: short steps, a picture, one takeaway, one quick check ----------
-  FIGS[1].push([figSess, "Den v newyorském čase. Barevné pruhy jsou tři seance. Křivka ukazuje, kdy se indexy hýbou nejvíc: trochu po otevření Londýna a hlavně po 9:30 v New Yorku. Křivka je jen orientační."]);
+  FIGS[1].push([figSess, "Den v newyorském čase. Barevné pruhy jsou seance: Asie 18:00–2:30, Londýn 2:30–7:00, NY AM 7:00–12:00, šedý proužek je oběd 12:00–13:00 a NY PM 13:00–16:00. Křivka ukazuje, kdy se indexy hýbou nejvíc: trochu po otevření Londýna a hlavně po 9:30 v New Yorku. Křivka je jen orientační."]);
   const LFIG = {"1b":[1,0],"1c":[1,1],"1d":[1,2],"2a":[2,0],"2b":[2,0],"3a":[3,0],"3b":[3,0],"4a":[4,0],"4c":[4,0],"5a":[5,0],"5b":[5,0],"5c":[5,0],"6a":[6,1],"6c":[6,0],"7a":[7,0],"7b":[7,0],"7d":[7,0],"8a":[8,0],"8b":[8,0],"9a":[9,0],"9b":[9,0],"10a":[10,0],"10c":[10,0]};
   let lnCur = null, lnGl = -1;
   { const room = $("v-room"), now = el("div","card lnow"), kc = $("k-list").closest(".card"); now.id = "c-now"; room.insertBefore(now, room.firstChild); room.appendChild(kc); }

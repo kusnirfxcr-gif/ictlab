@@ -500,7 +500,7 @@
   "title": "Seance: kdy se trh hýbe",
   "body": [
    "Futures NQ a ES se obchodují skoro nepřetržitě. Burza otevírá v neděli v 18:00 newyorského času a zavírá v pátek v 17:00. Každý den je mezi 17:00 a 18:00 hodinová přestávka. V 18:00 tak začíná nový obchodní den.",
-   "Trh ale není celý den stejně živý. Den se dělí na seance (sessions) podle toho, která část světa je zrovna v práci: nejdřív Asie, potom Londýn a nakonec New York. Hranice mezi nimi nejsou úřední, různí obchodníci je kreslí trochu jinak.",
+   "Trh ale není celý den stejně živý. Den se dělí na seance (sessions) podle toho, která část světa je zrovna v práci: nejdřív Asie, potom Londýn a nakonec New York. Hranice mezi nimi nejsou úřední, různí obchodníci je kreslí trochu jinak. Tape používá tohle dělení v newyorském čase: Asie 18:00–2:30, Londýn 2:30–7:00, NY AM 7:00–12:00, oběd 12:00–13:00 a NY PM 13:00–16:00.",
    "Pro NQ a ES je nejdůležitější 9:30 newyorského času. Tehdy otevírá americká akciová burza, říká se tomu cash open, a zavírá v 16:00. Po 9:30 bývá na grafu nejvíc pohybu i objemu. V Česku je to většinou 15:30, protože New York je o šest hodin pozadu. Pár týdnů v roce, kdy se jinde mění čas dřív, je rozdíl jen pět hodin.",
    "Všemu, co se stane od 18:00 do 9:30, se říká overnight, tedy noční obchodování. Nejvyšší a nejnižší cena z té doby tvoří overnight high a overnight low. Model v Tape si tyhle dvě úrovně ráno označí a obchod hledá jen mezi 9:30 a 11:00.",
    "Všechny časy v ICT materiálech jsou v newyorském čase. Proto si v grafu nastav časové pásmo New York a nemusíš nic přepočítávat."

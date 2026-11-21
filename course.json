@@ -126,7 +126,7 @@
     {
      "id": "1d",
      "title": "Seance: kdy je trh živý",
-     "text": "Den se dělí na asijskou, londýnskou a newyorskou seanci. Indexy se nejvíc hýbou po otevření americké burzy v 9:30 newyorského času, což je většinu roku 15:30 u nás. ICT pracuje výhradně s newyorským časem, tak si ho v TradingView nastav jako časovou zónu grafu.",
+     "text": "Den se dělí na seance. Tape je bere v newyorském čase takto: Asie 18:00–2:30, Londýn 2:30–7:00, NY AM 7:00–12:00, oběd 12:00–13:00 a NY PM 13:00–16:00. Indexy se nejvíc hýbou po otevření americké burzy v 9:30 newyorského času, což je většinu roku 15:30 u nás. ICT pracuje výhradně s newyorským časem, tak si ho v TradingView nastav jako časovou zónu grafu.",
      "key": "Indexy se nejvíc hýbou po 9:30 newyorského času, u nás většinou v 15:30.",
      "tf": {
       "s": "ICT pracuje s newyorským časem, proto je dobré nastavit si ho i v grafu.",

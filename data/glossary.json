@@ -5,7 +5,7 @@
   "en": "AM session",
   "cat": "cas",
   "week": 7,
-  "def": "Newyorské dopoledne, zhruba 9:30 až 12:00. Nejaktivnější část dne pro indexy."
+  "def": "Newyorské dopoledne. V Tape trvá od 7:00 do 12:00 newyorského času. Nejaktivnější část dne pro indexy, hlavně po otevření burzy v 9:30."
  },
  {
   "id": "top-down",
@@ -21,7 +21,7 @@
   "en": "Asian range",
   "cat": "likvidita",
   "week": 7,
-  "def": "Rozpětí asijské seance. Jeho high a low slouží v Londýně a New Yorku jako likvidita."
+  "def": "Rozpětí asijské seance, v Tape od 18:00 do 2:30 newyorského času. Jeho high a low slouží v Londýně a New Yorku jako likvidita."
  },
  {
   "id": "backtest",
@@ -677,7 +677,7 @@
   "en": "NY lunch",
   "cat": "cas",
   "week": 7,
-  "def": "Zhruba 12:00 až 13:30 newyorského času. Trh bývá pomalý a ICT v té době neobchoduje."
+  "def": "V Tape od 12:00 do 13:00 newyorského času. Trh bývá pomalý a ICT v té době neobchoduje."
  },
  {
   "id": "newyorsky-cas",
@@ -837,7 +837,7 @@
   "en": "PM session",
   "cat": "cas",
   "week": 7,
-  "def": "Newyorské odpoledne, zhruba 13:30 až 16:00."
+  "def": "Newyorské odpoledne. V Tape trvá od 13:00 do 16:00 newyorského času."
  },
  {
   "id": "poi",
@@ -1004,7 +1004,7 @@
   "term": "Seance",
   "en": "session",
   "week": 1,
-  "def": "Část dne, kdy obchoduje určitá část světa: Asie, Londýn, New York. Nejvíc pohybu na NQ a ES bývá po 9:30 newyorského času.",
+  "def": "Část dne, kdy obchoduje určitá část světa. Tape používá tohle dělení v newyorském čase: Asie 18:00–2:30, Londýn 2:30–7:00, NY AM 7:00–12:00, oběd 12:00–13:00, NY PM 13:00–16:00. Hranice nejsou úřední, různí obchodníci je kreslí jinak.",
   "cat": "cas"
  },
  {
