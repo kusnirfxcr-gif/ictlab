@@ -1,9 +1,9 @@
 {
  "state": {
-  "lastRun": "2026-11-20T05:55:00Z",
+  "lastRun": "2026-11-21T05:55:00Z",
   "modelVersion": "1.0",
-  "runCount": 11,
-  "lastReport": "Skaut přidal poznatek o Zeussyho práci s rizikem (velikost pozice z rizika a volatility, ne z přesvědčení; popis třetí strany bez čísel). Učitel napsal lekci 11 o struktuře na více timeframech a tím dokončil 3. týden. Vizionář přidal nápad na denní rozpočet rizika. Zpravodaj nechal kalendář beze změny, dnešní hledání k příštímu týdnu nic nového nepřineslo. Gems a Architekt beze změny."
+  "runCount": 12,
+  "lastReport": "Skaut přidal poznatek o Zeussyho mapě před seancí (předchozí cyklus, likvidita, dnešní cykly; popis třetí strany bez výsledků). Učitel napsal lekci 12 o likviditě, první lekci 4. týdne. Vizionář přidal nápad na šablonu mapy v plánu dne. Zpravodaj kalendář neměnil, hledání pro příští týden vrátilo jen starší ročníky. Gems a Architekt beze změny."
  },
  "model": {
   "version": "1.0",

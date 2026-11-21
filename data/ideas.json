@@ -1,5 +1,17 @@
 [
  {
+  "id": "sablona-mapy-pred-seanci",
+  "ts": "2026-11-21T05:55:00Z",
+  "date": "2026-11-21",
+  "title": "Šablona mapy před seancí v plánu dne",
+  "area": "produkt",
+  "value": 2,
+  "effort": 1,
+  "status": "new",
+  "what": "Do plánu dne přidat tři pole: high a low předchozího cyklu, místa s likviditou nad a pod cenou a který cyklus chci obchodovat. Po obchodu by deník porovnal, jestli vstup přišel ve vybraném cyklu a po výběru vyznačeného extrému.",
+  "why": "Zeussy podle shrnutí rozhovoru začíná seanci právě touhle mapou. Bez zapsané mapy se zpětně nedá poznat, jestli obchod odpovídal plánu."
+ },
+ {
   "id": "denni-rozpocet-rizika",
   "ts": "2026-11-20T05:55:00Z",
   "date": "2026-11-20",

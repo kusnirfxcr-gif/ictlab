@@ -1,5 +1,60 @@
 [
  {
+  "id": "20261121-L12",
+  "ts": "2026-11-21T05:55:00Z",
+  "date": "2026-11-21",
+  "n": 12,
+  "week": 4,
+  "title": "Co je likvidita: kde čekají cizí příkazy",
+  "body": [
+   "Začíná čtvrtý týden a s ním nejdůležitější slovo celého ICT: likvidita.",
+   "Každý, kdo je v obchodu, má někde stop-loss. Kdo koupil, má ho pod nějakým dnem. Kdo prodal, má ho nad nějakým vrcholem.",
+   "Stop-loss kupujícího je příkaz k prodeji. Stop-loss prodávajícího je příkaz k nákupu. Na místech, kde má stop hodně lidí, proto čeká hromada příkazů.",
+   "Téhle hromadě se říká likvidita. Nad vrcholy leží buy-side likvidita, tedy nákupní příkazy. Pod dny leží sell-side likvidita, tedy prodejní příkazy.",
+   "Proč to velké hráče zajímá: kdo chce koupit hodně kontraktů, potřebuje, aby mu je někdo prodal. Pod dnem najde spoustu prodejních příkazů najednou. Cena proto často zamíří právě tam, kde je příkazů nejvíc.",
+   "Pro tebe z toho plynou dvě věci. Likvidita ukazuje, kam cena nejspíš půjde. A tvůj vlastní stop na zjevném místě je součástí té hromady."
+  ],
+  "example": "NQ udělal během dopoledne tři dna těsně u sebe kolem 21 000. Kupující mají stopy těsně pod nimi, třeba na 20 995. To je sell-side likvidita. Cena sjede na 20 992, stopy se spustí jako prodeje, velký hráč proti nim nakoupí a cena se otočí nahoru. Kdo měl stop přesně pod dny, je venku těsně před pohybem, na který čekal.",
+  "remember": "Likvidita jsou čekající příkazy, hlavně cizí stop-lossy. Nad vrcholy je buy-side, pod dny sell-side. Cena k nim často míří.",
+  "terms": [
+   "likvidita",
+   "bsl",
+   "ssl"
+  ],
+  "quiz": [
+   {
+    "q": "Kde leží sell-side likvidita?",
+    "options": [
+     "Nad vrcholy",
+     "Pod dny",
+     "Uprostřed pásma"
+    ],
+    "correct": 1,
+    "why": "Pod dny mají stop-lossy kupující. Jejich stopy jsou prodejní příkazy."
+   },
+   {
+    "q": "Čím je stop-loss člověka, který je v shortu?",
+    "options": [
+     "Příkazem k nákupu",
+     "Příkazem k prodeji",
+     "Ničím, dokud se nespustí"
+    ],
+    "correct": 0,
+    "why": "Short se zavírá nákupem, takže jeho stop je čekající nákupní příkaz nad vrcholem."
+   },
+   {
+    "q": "Proč cena často míří k likviditě?",
+    "options": [
+     "Protože to tak vychází z indikátorů",
+     "Protože velký hráč tam najde dost protistrany pro svůj obchod",
+     "Protože se tam mění den"
+    ],
+    "correct": 1,
+    "why": "Kdo potřebuje koupit hodně, hledá místo, kde hodně lidí najednou prodává."
+   }
+  ]
+ },
+ {
   "id": "20261120-L11",
   "ts": "2026-11-20T05:55:00Z",
   "date": "2026-11-20",
