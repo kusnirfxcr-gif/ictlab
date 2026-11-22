@@ -1348,6 +1348,88 @@ body.fx-lite .pa-ctl,body.fx-lite .lnav,body.fx-off .pa-ctl,body.fx-off .lnav{-w
 #subnav a[href="#moros"]{color:#e8c26a;font-weight:800}#subnav a[href="#moros"][aria-current]{background:linear-gradient(180deg,#f6dc9a,#d3a64a)!important;color:#1a1307!important;border-color:transparent!important}
 @media (max-width:640px){.mo-two,.mo-trophies,.mo-rules{grid-template-columns:1fr}.mo-calc{grid-template-columns:1fr 1fr}.mo-stat b{font-size:16px}}
 @media (prefers-reduced-motion:reduce){.mo-hero::after,.mo-ln,.mo-px,.mo-lt,.mo-box,.mo-dot,.mo-dot2,.mo-steps li{animation:none!important;opacity:1!important;stroke-dashoffset:0!important;transform:none!important}}
+
+/* ---------- click glow ---------- */
+.cg-glow{position:absolute;inset:-7px;border-radius:inherit;z-index:-1;pointer-events:none;background:radial-gradient(closest-side,rgba(216,180,254,.95),rgba(168,85,247,.55) 45%,rgba(124,58,237,0) 100%) no-repeat;background-size:55% 170%;background-position:-70% 50%;filter:blur(7px);animation:cgsweep .9s cubic-bezier(.35,.1,.2,1) forwards}
+.cg-glow.pink{background-image:radial-gradient(closest-side,rgba(255,214,234,.95),rgba(255,95,162,.6) 45%,rgba(255,95,162,0) 100%)}
+@keyframes cgsweep{0%{background-position:-70% 50%;opacity:0}14%{opacity:1}80%{opacity:.9}100%{background-position:170% 50%;opacity:0}}
+.cg-heart{position:fixed;z-index:96;pointer-events:none;width:16px;height:15px;margin:-7px 0 0 -8px;color:#ff5fa2;animation:cgheart 1s cubic-bezier(.2,.7,.3,1) forwards}
+.cg-heart svg{display:block;width:100%;height:100%;fill:currentColor;filter:drop-shadow(0 0 6px rgba(255,95,162,.7))}
+.cg-heart:nth-child(odd){color:#ff9fcb}
+@keyframes cgheart{0%{transform:translate(0,0) scale(.2) rotate(0);opacity:0}20%{opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(var(--s)) rotate(var(--rt));opacity:0}}
+.rbw-ring{display:none!important}
+/* AI assistant and premium: purple instead of rainbow */
+.orb::before{background:conic-gradient(from 0deg,#5b21b6,#a855f7,#f0abfc,#c084fc,#7c3aed,#5b21b6)!important;filter:none!important;animation:orbspin 4s linear infinite}
+.orb{box-shadow:0 12px 34px rgba(0,0,0,.55),0 0 26px rgba(168,85,247,.35);animation:orbpulse 3.2s ease-in-out infinite}
+@keyframes orbpulse{0%,100%{box-shadow:0 12px 34px rgba(0,0,0,.55),0 0 18px rgba(168,85,247,.25)}50%{box-shadow:0 12px 34px rgba(0,0,0,.55),0 0 34px rgba(192,132,252,.55)}}
+.orb:hover::before{filter:blur(3px) saturate(1.2)!important}
+body.sakura .orb::before{background:conic-gradient(from 0deg,#ff5fa2,#ffc2dd,#ff8fc5,#ffd6e8,#ff5fa2)!important}
+body.sakura .orb{animation-name:orbpink}
+@keyframes orbpink{0%,100%{box-shadow:0 12px 34px rgba(0,0,0,.3),0 0 18px rgba(255,95,162,.3)}50%{box-shadow:0 12px 34px rgba(0,0,0,.3),0 0 34px rgba(255,143,197,.6)}}
+.copop::before{background:conic-gradient(from var(--ra),#5b21b6,#a855f7,#f0abfc,#7c3aed,#5b21b6)!important}
+body.sakura .copop::before{background:conic-gradient(from var(--ra),#ff5fa2,#ffc2dd,#ff8fc5,#ff5fa2)!important}
+.prem-btn::before{background:linear-gradient(90deg,#5b21b6,#a855f7,#f0abfc,#a855f7,#5b21b6,#a855f7,#f0abfc,#a855f7,#5b21b6)!important;background-size:200% 100%!important}
+.prem-btn:hover{box-shadow:0 0 28px rgba(168,85,247,.45)}
+@media (prefers-reduced-motion:reduce){.orb{animation:none}}
+/* ---------- news folders ---------- */
+.fold{flex:none;display:inline-grid;place-items:center;width:26px;height:22px}
+.fold svg{width:100%;height:100%}.fold .fb{opacity:.55}
+.fold.red{color:#ff4d4d}.fold.orange{color:#ff9a3c}.fold.yellow{color:#f5d142}
+.fold path{fill:currentColor}.fold .ff{filter:drop-shadow(0 1px 0 rgba(0,0,0,.25))}
+.nw-folds{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 10px}
+.chip.nwf{display:inline-flex;align-items:center;gap:6px}.chip.nwf svg{width:18px;height:15px}.chip.nwf svg path{fill:currentColor}.chip.nwf svg .fb{opacity:.55}
+.chip.nwf em{font-style:normal;font-size:11px;opacity:.7;background:rgba(255,255,255,.08);border-radius:99px;padding:1px 7px}
+.chip.nwf.red svg{color:#ff4d4d}.chip.nwf.orange svg{color:#ff9a3c}.chip.nwf.yellow svg{color:#f5d142}
+.chip.nwf.red[aria-pressed="true"]{background:rgba(255,77,77,.16);border-color:rgba(255,77,77,.5);color:#ffb3b3}
+.chip.nwf.orange[aria-pressed="true"]{background:rgba(255,154,60,.16);border-color:rgba(255,154,60,.5);color:#ffd0a6}
+.chip.nwf.yellow[aria-pressed="true"]{background:rgba(245,209,66,.14);border-color:rgba(245,209,66,.5);color:#fbe9a4}
+.nrow{border-left:3px solid transparent;padding-left:10px;border-radius:4px}
+.nrow.f3{border-left-color:#ff4d4d;background:linear-gradient(90deg,rgba(255,77,77,.08),transparent 60%)}
+.nrow.f2{border-left-color:#ff9a3c;background:linear-gradient(90deg,rgba(255,154,60,.06),transparent 60%)}
+.nrow.f1{border-left-color:#f5d142}
+.rrow{display:flex;gap:8px;align-items:flex-start}.rrow .fold{width:20px;height:17px;margin-top:1px}
+/* ---------- daily plan ---------- */
+.plan2{padding:0!important;overflow:hidden;border-color:rgba(168,85,247,.25)!important}
+.pl-head{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:20px 20px 16px;background:radial-gradient(120% 140% at 100% 0%,rgba(168,85,247,.20),transparent 60%),radial-gradient(90% 120% at 0% 0%,rgba(61,220,151,.10),transparent 55%);border-bottom:1px solid var(--line)}
+.pl-ht h2{margin:4px 0 6px;font-size:26px}
+.pl-state{display:inline-block;font-size:12px;font-weight:700;padding:3px 10px;border-radius:99px;margin-right:8px;background:rgba(255,255,255,.07);color:var(--muted)}
+.pl-state.ok{background:rgba(61,220,151,.15);color:#3ddc97}.pl-state.mid{background:rgba(168,85,247,.16);color:#d8b4fe}
+.pl-ring{position:relative;flex:none;width:72px;height:72px}.pl-ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.pl-ring circle{fill:none;stroke-width:6}.pl-ring .bg{stroke:rgba(255,255,255,.08)}.pl-ring .fg{stroke:url(#plG);stroke:#a855f7;stroke-linecap:round;stroke-dasharray:169.6;stroke-dashoffset:169.6;transition:stroke-dashoffset .8s cubic-bezier(.3,.1,.2,1),stroke .3s;filter:drop-shadow(0 0 6px rgba(168,85,247,.6))}
+.pl-ring.full .fg{stroke:#3ddc97;filter:drop-shadow(0 0 6px rgba(61,220,151,.6))}
+.pl-ring b{position:absolute;inset:0;display:grid;place-items:center;font-size:15px}
+.pl-steps{position:relative;padding:8px 16px 18px}
+.pl-steps::before{content:"";position:absolute;left:33px;top:30px;bottom:40px;width:2px;background:linear-gradient(180deg,rgba(168,85,247,.6),rgba(61,220,151,.4) 60%,rgba(255,255,255,.06))}
+.pl-sec{position:relative;padding:12px 0 12px 50px;display:flex;flex-direction:column;gap:8px}
+.pl-sec header{display:flex;align-items:center;gap:12px;margin-left:-50px}
+.pl-sec header i{flex:none;width:36px;height:36px;border-radius:12px;display:grid;place-items:center;font-style:normal;font-weight:800;background:#17131f;border:1px solid rgba(168,85,247,.45);color:#d8b4fe;box-shadow:0 0 0 5px var(--surface,#111)}
+.pl-sec.done header i{background:linear-gradient(180deg,#3ddc97,#22a873);color:#06140d;border-color:transparent}
+.pl-sec header div{flex:1;display:flex;flex-direction:column}.pl-sec header b{font-size:16px}.pl-sec header span{font-size:12.5px;color:var(--muted)}
+.pl-ok{font-style:normal;font-size:12px;font-weight:700;color:#3ddc97}
+.pl-sub{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-top:2px}
+.pl-hint{margin:0;font-size:13.5px;padding:8px 12px;border-radius:12px;background:rgba(168,85,247,.10);border:1px solid rgba(168,85,247,.3);color:#e9d5ff}
+.pl-hint.warn{background:rgba(242,181,96,.1);border-color:rgba(242,181,96,.35);color:#f8d59a}
+.pl-hint button{margin-left:8px;padding:4px 10px;font-size:12.5px}
+.pl-bias .chip[data-v="long"][aria-pressed="true"]{background:rgba(61,220,151,.18);border-color:#3ddc97;color:#3ddc97}
+.pl-bias .chip[data-v="short"][aria-pressed="true"]{background:rgba(255,107,107,.18);border-color:#ff6b6b;color:#ff8f8f}
+.pl-ladder{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:6px}
+.pl-ladder div{border-radius:10px;padding:6px 9px;background:rgba(255,255,255,.03);border:1px solid var(--line);display:flex;flex-direction:column}
+.pl-ladder span{font-size:11px;color:var(--muted);font-weight:700}.pl-ladder b{font-size:14px;font-variant-numeric:tabular-nums}
+.pl-ladder .e{border-color:rgba(232,194,106,.45);background:rgba(232,194,106,.08)}.pl-ladder .e span{color:#e8c26a}
+.pl-ladder .d span{color:#3ddc97}.pl-ladder .m span{color:#ff8f8f}
+.pl-a textarea{border-left:3px solid #3ddc97}.pl-b textarea{border-left:3px solid #f2b560}
+.pl-sleep .chip{min-width:44px;justify-content:center}
+#pl-news .nrow{margin:0}#pl-news .pl-none{font-size:13.5px;color:var(--muted)}
+.pl-eve{background:linear-gradient(180deg,transparent,rgba(99,102,241,.06));border-radius:16px}
+@media (min-width:860px){.pl-steps{padding:10px 22px 22px}.pl-steps::before{left:39px}}
+
+.rr-pl2{display:flex;flex-direction:column;gap:6px;margin-top:6px}.rr-pl2 p{margin:0}
+.rr-plbar{height:6px;border-radius:9px;background:rgba(255,255,255,.07);overflow:hidden}.rr-plbar i{display:block;height:100%;background:linear-gradient(90deg,#7c3aed,#c084fc);border-radius:inherit}
+.tb-ck{display:inline-flex;align-items:center;gap:7px;height:36px;padding:0 14px;border-radius:999px;font-weight:700;font-size:13.5px;border:1px solid rgba(168,85,247,.45);background:rgba(168,85,247,.12);color:#e9d5ff}
+.tb-ck svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+@media (max-width:859px){.tb-ck{padding:0;width:36px;justify-content:center}.tb-ck span{display:none}}
+.pl-ckb{margin-top:10px;display:block;border-color:rgba(168,85,247,.45);background:rgba(168,85,247,.12);color:#e9d5ff;font-weight:700}
+.ckbox{max-width:560px}.ck-sheet{border:0;padding:0;background:none}
 </style>
 </head>
 <body>
@@ -1563,6 +1645,7 @@ body.fx-lite .pa-ctl,body.fx-lite .lnav,body.fx-off .pa-ctl,body.fx-off .lnav{-w
   <section class="view" id="v-novinky">
     <div class="card"><h2>Co je nového</h2><span class="kick">22. 11. 2026</span>
       <ul class="stl ok">
+        <li>Plán dne v sedmi krocích s ukazatelem připravenosti, zprávy rozdělené na red, orange a yellow folder, checklist před vstupem z horní lišty a fialový glow při kliknutí (v Lauřině room růžový se srdíčky).</li>
         <li>MOROS v Učení: síň slávy osobního modelu, pět animovaných lekcí, kontrola před vstupem, MOR kalkulačka a nejlepší MOROS obchody z deníku.</li>
         <li>Karta obchodu umí skutečný graf: nahraj export cen z TradingView nebo Dukascopy a karta ukáže svíčky nebo čáru s tvým vstupem, výstupem a stopem.</li>
         <li>Obrázky k obchodům se po přihlášení ukládají do účtu, takže je uvidíš i na telefonu.</li>
@@ -1770,19 +1853,52 @@ body.fx-lite .pa-ctl,body.fx-lite .lnav,body.fx-off .pa-ctl,body.fx-off .lnav{-w
     <div class="jbar" id="j-bar" hidden></div>
 
     <div class="jtab" data-tab="dnes">
-      <div class="card">
-        <div class="row"><h2>Plán dne</h2><span class="small muted" id="p-score"></span></div>
-        <span class="kick">Ráno: kam čekám, že trh půjde</span>
-        <div class="chips" id="p-bias"></div>
-        <label for="p-levels">Klíčové úrovně<input id="p-levels" maxlength="200" placeholder="PDH 21 480, PDL 21 310, London high…"></label>
-        <label for="p-note">Co chci vidět, než vstoupím<input id="p-note" maxlength="400" placeholder="Sweep PDL v okně 9:30–11:00, pak MSS a FVG"></label>
-        <span class="kick">Večer: kam trh opravdu šel</span>
-        <div class="chips" id="p-actual"></div>
-        <label for="p-skip">Dnes neobchoduji, protože<input id="p-skip" maxlength="200" placeholder="Vyplň jen v den, kdy obchod vědomě vynecháš"></label>
-        <button type="button" id="p-share">Sdílet plán v Komunitě</button>
-        <span class="kick">Denní limity</span>
-        <div class="lim"><label for="lim-n">Nejvíc obchodů za den<input id="lim-n" inputmode="numeric" placeholder="například 2"></label><label for="lim-loss">Nejvyšší ztráta za den (R)<input id="lim-loss" inputmode="decimal" placeholder="například 2"></label></div>
-        <p class="small neg" id="lim-msg" hidden></p>
+      <div class="card plan2" id="plan-card">
+        <div class="pl-head">
+          <div class="pl-ht"><span class="kick" id="pl-date"></span><h2>Plán dne</h2><span class="pl-state" id="pl-state"></span><span class="small muted" id="p-score"></span></div>
+          <div class="pl-ring" id="pl-ring"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="27" class="bg"/><circle cx="32" cy="32" r="27" class="fg" id="pl-arc"/></svg><b id="pl-pct">0 %</b></div>
+        </div>
+        <div class="pl-steps">
+          <section class="pl-sec"><header><i>1</i><div><b>Bias a orderflow</b><span>Ráno: kam čekám, že trh půjde</span></div><em class="pl-ok" data-k="bias"></em></header>
+            <span class="pl-sub">Včerejší den na 1D zavřel</span>
+            <div class="chips" id="pl-yc"></div>
+            <p class="pl-hint" id="pl-yc-hint" hidden></p>
+            <span class="pl-sub">Můj bias na dnešek</span>
+            <div class="chips pl-bias" id="p-bias"></div>
+            <label for="pl-draw">Draw on liquidity: kam cena míří<input id="pl-draw" maxlength="160" placeholder="PDH, equal highs z úterý, weekly high…"></label>
+          </section>
+          <section class="pl-sec"><header><i>2</i><div><b>Mapa úrovní</b><span>MOR, HTF POI a likvidita</span></div><em class="pl-ok" data-k="map"></em></header>
+            <div class="lim"><label for="pl-morh">MOR high<input id="pl-morh" inputmode="decimal" placeholder="00:00–00:30"></label><label for="pl-morl">MOR low<input id="pl-morl" inputmode="decimal" placeholder="00:00–00:30"></label></div>
+            <div class="pl-ladder" id="pl-ladder"></div>
+            <label for="pl-poi">HTF POI<input id="pl-poi" maxlength="200" placeholder="4H FVG 21 350–21 380, 1H OB…"></label>
+            <label for="p-levels">Další klíčové úrovně<input id="p-levels" maxlength="200" placeholder="PDH 21 480, PDL 21 310, London high…"></label>
+          </section>
+          <section class="pl-sec"><header><i>3</i><div><b>Scénáře</b><span>Co udělám, když…</span></div><em class="pl-ok" data-k="plan"></em></header>
+            <label for="pl-a" class="pl-a">Plán A: ve směru biasu<textarea id="pl-a" rows="2" maxlength="300" placeholder="Návrat k C.E. MOR, SMT a 30s CISD, short do −1"></textarea></label>
+            <label for="pl-b" class="pl-b">Plán B: když se trh otočí<textarea id="pl-b" rows="2" maxlength="300" placeholder="Close nad midnight open a displacement: čekám na reversal z HTF POI"></textarea></label>
+            <label for="p-note">Co chci vidět, než vstoupím<input id="p-note" maxlength="400" placeholder="Dotek MOR levelu, rejection, SMT s MES a 30s CISD"></label>
+          </section>
+          <section class="pl-sec"><header><i>4</i><div><b>Zprávy dnes</b><span>Red, orange a yellow folder</span></div></header>
+            <div id="pl-news"></div>
+          </section>
+          <section class="pl-sec"><header><i>5</i><div><b>Hlava a forma</b><span>Obchoduje člověk, ne graf</span></div><em class="pl-ok" data-k="head"></em></header>
+            <span class="pl-sub">Spánek</span><div class="chips pl-sleep" id="pl-sleep"></div>
+            <span class="pl-sub">Jak se cítím</span><div class="chips" id="pl-mood"></div>
+            <p class="pl-hint warn" id="pl-head-hint" hidden></p>
+          </section>
+          <section class="pl-sec"><header><i>6</i><div><b>Seance a limity</b><span>Kdy obchoduju a kdy končím</span></div><em class="pl-ok" data-k="ses"></em></header>
+            <div class="chips" id="pl-ses"></div>
+            <div class="lim"><label for="lim-n">Nejvíc obchodů za den<input id="lim-n" inputmode="numeric" placeholder="například 2"></label><label for="lim-loss">Nejvyšší ztráta za den (R)<input id="lim-loss" inputmode="decimal" placeholder="například 2"></label></div>
+            <p class="small neg" id="lim-msg" hidden></p>
+          </section>
+          <section class="pl-sec pl-eve"><header><i>7</i><div><b>Večer</b><span>Kam trh opravdu šel</span></div><em class="pl-ok" data-k="eve"></em></header>
+            <div class="chips" id="p-actual"></div>
+            <span class="pl-sub">Dodržel jsem plán?</span><div class="chips" id="pl-kept"></div>
+            <label for="pl-lesson">Jedna věc na zítřek<input id="pl-lesson" maxlength="200" placeholder="Počkat na close 30s svíčky, ne skákat dovnitř"></label>
+            <label for="p-skip">Dnes neobchoduji, protože<input id="p-skip" maxlength="200" placeholder="Vyplň jen v den, kdy obchod vědomě vynecháš"></label>
+            <button type="button" id="p-share">Sdílet plán v Komunitě</button>
+          </section>
+        </div>
       </div>
       <div class="card">
         <div class="row"><h2>Před vstupem</h2><span class="pill" id="ck-verdict"></span></div>
@@ -3690,16 +3806,22 @@ body.fx-lite .pa-ctl,body.fx-lite .lnav,body.fx-off .pa-ctl,body.fx-off .lnav{-w
   }
   // ---------- news calendar (data/news.json, refreshed by the bots) ----------
   let news = null, newsTried = false;
-  const impEl = n => { const s = el("span","imp"); for (let i = 1; i <= 3; i++) s.appendChild(el("i", i <= n ? (n >= 3 ? "hi" : "on") : "")); s.title = ["", "malý dopad", "střední dopad", "velký dopad"][n] || ""; return s; };
+  const FOLD = {3: ["red", "Red folder", "velký dopad"], 2: ["orange", "Orange folder", "střední dopad"], 1: ["yellow", "Yellow folder", "malý dopad"]};
+  const folderSvg = n => '<svg viewBox="0 0 24 20" aria-hidden="true"><path class="fb" d="M1.5 4.2c0-1.2 1-2.2 2.2-2.2h5.1c.6 0 1.1.2 1.5.6l1.4 1.4h8.6c1.2 0 2.2 1 2.2 2.2v10.1c0 1.2-1 2.2-2.2 2.2H3.7c-1.2 0-2.2-1-2.2-2.2z"/><path class="ff" d="M1.5 7.6h21v8.5c0 1.2-1 2.2-2.2 2.2H3.7c-1.2 0-2.2-1-2.2-2.2z"/></svg>';
+  const impEl = n => { n = Math.max(1, Math.min(3, n || 1)); const s = el("span","fold " + FOLD[n][0]); s.innerHTML = folderSvg(n); s.title = FOLD[n][1] + ": " + FOLD[n][2]; return s; };
+  let nwF = 0;
   function renderNews(){
     const box = $("nw"), rail = $("rr-news"); clear(box); clear(rail);
     if (!news){ box.appendChild(el("p","small muted", newsTried ? "Kalendář se nepodařilo načíst." : "Načítám…")); return; }
     const mk = (profile && profile.syms) || [], tech = !mk.length || mk.indexOf("NQ") >= 0 || mk.indexOf("MNQ") >= 0;
     const today = dayKey(), ev = (news.events || []).filter(e => e.date >= today && (Array.isArray(e.markets) ? !mk.length || e.markets.some(x => mk.indexOf(x) >= 0) : tech || !/^Výsledky /.test(e.title || ""))).sort((a, b) => (a.date + (a.time || "")).localeCompare(b.date + (b.time || ""))).slice(0, 10);
     let last = "";
-    ev.forEach(e => {
+    const fb = el("div","nw-folds"), cnt = k => ev.filter(e => (Number(e.impact) || 1) === k).length;
+    [[0, "Vše", ev.length]].concat([3, 2, 1].map(k => [k, FOLD[k][1], cnt(k)])).forEach(x => { const b = el("button","chip nwf" + (x[0] ? " " + FOLD[x[0]][0] : "")); b.type = "button"; if (x[0]) b.innerHTML = folderSvg(x[0]); b.appendChild(el("span", null, x[1])); b.appendChild(el("em", null, String(x[2]))); b.setAttribute("aria-pressed", String(nwF === x[0])); b.addEventListener("click", () => { nwF = x[0]; renderNews(); }); fb.appendChild(b); });
+    if (ev.length) box.appendChild(fb);
+    ev.filter(e => !nwF || (Number(e.impact) || 1) === nwF).forEach(e => {
       if (e.date !== last){ last = e.date; const d = new Date(e.date + "T12:00:00"); box.appendChild(el("span","kick", e.date === today ? "Dnes" : d.toLocaleDateString("cs-CZ", {weekday: "long", day: "numeric", month: "numeric"}))); }
-      const r = el("div","nrow"), m = el("div"); r.appendChild(el("b","ntime", e.time || "")); m.appendChild(el("b", null, e.title)); if (e.note) m.appendChild(el("span", null, e.note)); r.appendChild(m); r.appendChild(impEl(Number(e.impact) || 1)); box.appendChild(r);
+      const r = el("div","nrow"), m = el("div"); r.appendChild(el("b","ntime", e.time || "")); m.appendChild(el("b", null, e.title)); if (e.note) m.appendChild(el("span", null, e.note)); r.appendChild(m); r.appendChild(impEl(Number(e.impact) || 1)); r.classList.add("f" + Math.max(1, Math.min(3, Number(e.impact) || 1))); box.appendChild(r);
     });
     if (!ev.length) box.appendChild(el("p","small muted","V nejbližších dnech není v kalendáři nic zapsaného."));
     const posts = (news.posts || []).slice().sort((a, b) => String(b.date).localeCompare(String(a.date))).slice(0, 6);
@@ -3711,7 +3833,7 @@ body.fx-lite .pa-ctl,body.fx-lite .lnav,body.fx-off .pa-ctl,body.fx-off .lnav{-w
     $("nw-upd").textContent = news.updated ? "Aktualizováno " + fmtDateTime(news.updated) : "";
     const td = ev.filter(e => e.date === today), nx = td.length ? td : ev.slice(0, 1);
     if (!nx.length) rail.appendChild(el("p","small muted","Nic důležitého."));
-    nx.forEach(e => { const r = el("div","rrow"); r.appendChild(el("span", null, (td.length ? "" : new Date(e.date + "T12:00:00").toLocaleDateString("cs-CZ", {day: "numeric", month: "numeric"}) + " ") + (e.time || ""))); r.appendChild(el("b", null, e.title)); rail.appendChild(r); });
+    nx.forEach(e => { const r = el("div","rrow f" + Math.max(1, Math.min(3, Number(e.impact) || 1))); r.appendChild(impEl(Number(e.impact) || 1)); r.appendChild(el("span", null, (td.length ? "" : new Date(e.date + "T12:00:00").toLocaleDateString("cs-CZ", {day: "numeric", month: "numeric"}) + " ") + (e.time || ""))); r.appendChild(el("b", null, e.title)); rail.appendChild(r); });
   }
   fetch("data/news.json", {cache: "no-store"}).then(r => { if (!r.ok) throw 0; return r.json(); }).then(v => { news = v; }).catch(() => {}).then(() => { newsTried = true; renderNews(); });
 
@@ -5281,28 +5403,22 @@ body.fx-lite .pa-ctl,body.fx-lite .lnav,body.fx-off .pa-ctl,body.fx-off .lnav{-w
   const _refreshAll10 = refreshAll; refreshAll = function(){ _refreshAll10(); try { if (course && glossary.length !== lnGl) renderNow(); } catch(e){ if (window.console) console.error(e); } };
   if (course) renderNow();
 
-  // ---------- a quick rainbow that runs around whatever was clicked ----------
+  // ---------- click glow: a soft purple light passes behind the clicked button; in Laura's room it is pink with little hearts ----------
+  const cgHeart = '<svg viewBox="0 0 24 22" aria-hidden="true"><path d="M12 21.2 10.6 20C5.4 15.4 2 12.3 2 8.4 2 5.3 4.4 3 7.4 3c1.7 0 3.4.8 4.6 2.1C13.2 3.8 14.9 3 16.6 3 19.6 3 22 5.3 22 8.4c0 3.9-3.4 7-8.6 11.6z"/></svg>';
+  function cgHearts(x, y){ for (let i = 0; i < 6; i++){ const h = el("span","cg-heart"); h.innerHTML = cgHeart; const a = (-90 + (Math.random() * 110 - 55)) * Math.PI / 180, d = 34 + Math.random() * 38;
+    h.style.left = x + "px"; h.style.top = y + "px"; h.style.setProperty("--dx", (Math.cos(a) * d).toFixed(1) + "px"); h.style.setProperty("--dy", (Math.sin(a) * d - 10).toFixed(1) + "px"); h.style.setProperty("--s", (.6 + Math.random() * .6).toFixed(2)); h.style.setProperty("--rt", (Math.random() * 50 - 25).toFixed(0) + "deg"); h.style.animationDelay = (i * 25) + "ms";
+    document.body.appendChild(h); setTimeout(() => h.remove(), 1100); } }
   document.addEventListener("click", ev => {
     const t = ev.target && ev.target.closest ? ev.target.closest("button,.abtn,.chip,a.go,.tb-acc,.orb,.prem-btn,.subnav a,.nav1 a,.bottombar a") : null; if (!t || t.disabled) return;
     try { if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return; } catch(e){}
-    let r = t.getBoundingClientRect(); if (r.width < 8 || r.height < 8) return;
-    // the ring floats above the page and follows the button every frame; if the button was redrawn, it finds its twin
-    const SEL = "button,.abtn,.chip,a.go,.tb-acc,.orb,.prem-btn,.subnav a,.nav1 a,.bottombar a", ring = el("div","rbw-ring"), tag = t.tagName, h0 = location.hash, txt = (t.textContent || "").trim().slice(0, 60), t0 = performance.now(), px = ev.clientX, py = ev.clientY;
-    let node = t, sx = window.scrollX, sy = window.scrollY, tries = 0;
-    const live = n => n && n.isConnected && n.getBoundingClientRect().width > 7, round = n => { const rad = parseFloat(getComputedStyle(n).borderTopLeftRadius) || 0; ring.style.borderRadius = Math.min(rad + 3, (n.getBoundingClientRect().height + 6) / 2) + "px"; };
-    const seen = q => q.width > 7 && q.bottom > 0 && q.top < window.innerHeight && q.right > 0 && q.left < window.innerWidth;
-    const place = () => {
-      if (!live(node) && location.hash !== h0){ ring.remove(); return; }
-      if (!live(node)){ tries++; let best = null, bd = 1e9; const all = document.getElementsByTagName(tag);
-        for (let i = 0; i < all.length; i++){ const c = all[i]; if ((c.textContent || "").trim().slice(0, 60) !== txt) continue; const q = c.getBoundingClientRect(); if (!seen(q)) continue; const d = Math.abs(q.left - r.left) + Math.abs(q.top - (r.top + sy - window.scrollY)); if (d < bd){ bd = d; best = c; } }
-        if (!best && (px || py)){ const under = document.elementFromPoint(px, py), c = under && under.closest ? under.closest(SEL) : null; if (c && !c.disabled && seen(c.getBoundingClientRect())) best = c; }
-        if (best && bd > 90) best = null;
-        if (best){ node = best; round(node); } else if (tries >= 3){ ring.remove(); return; } else { ring.style.visibility = "hidden"; requestAnimationFrame(place); return; } }
-      ring.style.visibility = "";
-      const q = node.getBoundingClientRect(); r = q; sx = window.scrollX; sy = window.scrollY; const ox = 0, oy = 0;
-      ring.style.transform = "translate3d(" + (r.left - 3 + ox).toFixed(1) + "px," + (r.top - 3 + oy).toFixed(1) + "px,0)"; ring.style.width = (r.width + 6).toFixed(1) + "px"; ring.style.height = (r.height + 6).toFixed(1) + "px";
-      if (performance.now() - t0 < 840) requestAnimationFrame(place); else ring.remove(); };
-    round(t); document.body.appendChild(ring); place();
+    const r = t.getBoundingClientRect(); if (r.width < 8 || r.height < 8) return;
+    const pink = document.body.classList.contains("sakura"), c1 = pink ? "255,95,162" : "168,85,247", c2 = pink ? "255,170,210" : "196,148,255";
+    if (!t.matches(".orb,.prem-btn") && !t.querySelector(":scope > .cg-glow")){
+      const cs = getComputedStyle(t), g = el("span","cg-glow" + (pink ? " pink" : "")), back = []; g.setAttribute("aria-hidden","true");
+      if (cs.position === "static"){ t.style.position = "relative"; back.push("position"); } if (cs.isolation !== "isolate"){ t.style.isolation = "isolate"; back.push("isolation"); }
+      t.appendChild(g); setTimeout(() => { g.remove(); back.forEach(p => { t.style[p] = ""; }); }, 950); }
+    try { t.animate([{boxShadow: "0 0 0 0 rgba(" + c1 + ",0)"}, {boxShadow: "0 0 26px 3px rgba(" + c1 + ",.55), 0 0 60px 10px rgba(" + c2 + ",.18)", offset: .35}, {boxShadow: "0 0 0 0 rgba(" + c1 + ",0)"}], {duration: 850, easing: "cubic-bezier(.3,.1,.2,1)"}); } catch(e){}
+    if (pink) cgHearts(ev.clientX || r.left + r.width / 2, ev.clientY || r.top + r.height / 2);
   }, true);
   // home trade cards draw their line only when the set of trades changes
   { let sig = null; const _rht = renderHomeTrades; renderHomeTrades = function(){ _rht(); const box = $("d-trades"); if (!box) return; const s = Array.prototype.map.call(box.children, (c, i) => i).length + ":" + jr.trades.length + ":" + (jr.trades.length ? jr.trades[jr.trades.length - 1].id : ""); box.classList.toggle("fresh", s !== sig); sig = s; }; }
@@ -6425,6 +6541,54 @@ body.fx-lite .pa-ctl,body.fx-lite .lnav,body.fx-off .pa-ctl,body.fx-off .lnav{-w
   }
   function moShow(){ if (document.body.dataset.view !== "moros") return; if (!moBuilt) moBuild(); else { moUI.chk._paint(); moUI.fame._paint(); moChips(); } }
   window.addEventListener("hashchange", moShow); moShow();
+
+
+  // ---------- daily plan: seven sections, progress ring, MOROS bias hint, MOR ladder, news of the day ----------
+  const PL_YC = [["above","Nad včerejším openem"],["below","Pod včerejším openem"]], PL_SLEEP = [["1","1"],["2","2"],["3","3"],["4","4"],["5","5"]];
+  const PL_MOOD = [["klid","Klidný"],["fokus","Soustředěný"],["nerv","Nervózní"],["unav","Unavený"],["vratit","Chci to vrátit"]], PL_SES = [["lon","London 2:00–5:00"],["am","NY AM 9:30–11:00"],["pm","NY PM 13:30–16:00"]], PL_KEPT = [["yes","Ano"],["part","Částečně"],["no","Ne"]];
+  const PL_TXT = [["pl-draw","draw",160],["pl-morh","morH",20],["pl-morl","morL",20],["pl-poi","poi",200],["pl-a","planA",300],["pl-b","planB",300],["pl-lesson","lesson",200]];
+  function plChips(id, opts, key, multi){ const box = $(id); if (!box) return;
+    if (!box.children.length) opts.forEach(o => { const b = el("button","chip", o[1]); b.type = "button"; b.dataset.v = o[0]; b.addEventListener("click", () => { const p = planToday();
+      if (multi){ const a = Array.isArray(p[key]) ? p[key] : []; const i = a.indexOf(o[0]); if (i >= 0) a.splice(i, 1); else a.push(o[0]); p[key] = a; } else p[key] = p[key] === o[0] ? null : o[0];
+      touchDay(); jStore(); }); box.appendChild(b); });
+    const p = planToday(); Array.prototype.forEach.call(box.children, b => b.setAttribute("aria-pressed", String(multi ? Array.isArray(p[key]) && p[key].indexOf(b.dataset.v) >= 0 : p[key] === b.dataset.v))); }
+  PL_TXT.forEach(f => { const i = $(f[0]); if (!i) return; i.addEventListener("change", () => { planToday()[f[1]] = i.value.trim().slice(0, f[2]); touchDay(); jStore(); }); if (f[1] === "morH" || f[1] === "morL") i.addEventListener("input", plLadder); });
+  function plLadder(){ const box = $("pl-ladder"); if (!box) return; clear(box); const H = pnum($("pl-morh").value), L = pnum($("pl-morl").value); if (!isFinite(H) || !isFinite(L) || H <= L){ box.hidden = true; return; } box.hidden = false; const r = H - L, f = v => v.toLocaleString("cs-CZ", {maximumFractionDigits: 2});
+    [["+2", H + 2 * r, "d"], ["+1", H + r, "d"], ["High", H, "e"], ["C.E.", L + r / 2, "e"], ["Low", L, "e"], ["−1", L - r, "m"], ["−2", L - 2 * r, "m"]].forEach(x => { const d = el("div", x[2]); d.appendChild(el("span", null, x[0])); d.appendChild(el("b", null, f(x[1]))); box.appendChild(d); }); }
+  function plProgress(p){ const has = v => v != null && String(v).trim() !== "" && v !== "none";
+    const sec = {bias: has(p.bias) && has(p.yc), map: (has(p.morH) && has(p.morL)) || has(p.levels) || has(p.poi), plan: has(p.planA) && has(p.note), head: has(p.sleep) && has(p.mood), ses: Array.isArray(p.ses) && p.ses.length > 0, eve: has(p.actual) && has(p.kept)};
+    const items = [has(p.bias), has(p.yc), has(p.draw), sec.map, has(p.planA), has(p.note), sec.head, sec.ses]; return {sec: sec, pct: Math.round(items.filter(Boolean).length / items.length * 100)}; }
+  function plPaint(){ if (!$("plan-card")) return; const p = planToday();
+    $("pl-date").textContent = new Date().toLocaleDateString("cs-CZ", {weekday: "long", day: "numeric", month: "long"});
+    plChips("pl-yc", PL_YC, "yc"); plChips("pl-sleep", PL_SLEEP, "sleep"); plChips("pl-mood", PL_MOOD, "mood"); plChips("pl-ses", PL_SES, "ses", true); plChips("pl-kept", PL_KEPT, "kept");
+    PL_TXT.forEach(f => { const i = $(f[0]); if (i && document.activeElement !== i) i.value = p[f[1]] || ""; }); plLadder();
+    const h = $("pl-yc-hint"); clear(h); h.hidden = !p.yc;
+    if (p.yc){ const want = p.yc === "below" ? "short" : "long"; h.appendChild(document.createTextNode(p.yc === "below" ? "Podle MOROS: bearish den, hledej shorty." : "Podle MOROS: bullish den, hledej longy."));
+      if (p.bias !== want){ const b = el("button", null, want === "short" ? "Nastavit Short" : "Nastavit Long"); b.type = "button"; b.addEventListener("click", () => { planToday().bias = want; touchDay(); jStore(); }); h.appendChild(b); } }
+    const hh = $("pl-head-hint"), tired = (p.sleep && Number(p.sleep) <= 2) || ["nerv","unav","vratit"].indexOf(p.mood) >= 0; hh.hidden = !tired;
+    hh.textContent = p.mood === "vratit" ? "Chuť vrátit ztrátu je nejdražší emoce. Dnes jen A+ setup, nebo jen sledovat." : "Dnes menší riziko, nebo jen sledovat. Plán platí, i když nevstoupíš.";
+    const nb = $("pl-news"); clear(nb); const today = dayKey(), ev = ((news && news.events) || []).filter(e => e.date === today).sort((a, b) => String(a.time).localeCompare(String(b.time)));
+    if (!ev.length) nb.appendChild(el("p","pl-none", news ? "Dnes v kalendáři nic není." : "Načítám kalendář…"));
+    ev.forEach(e => { const r = el("div","nrow f" + Math.max(1, Math.min(3, Number(e.impact) || 1))), m = el("div"); r.appendChild(el("b","ntime", e.time || "")); m.appendChild(el("b", null, e.title)); r.appendChild(m); r.appendChild(impEl(Number(e.impact) || 1)); nb.appendChild(r); });
+    const red = ev.filter(e => Number(e.impact) >= 3); if (red.length){ nb.appendChild(el("p","pl-hint warn", "Red folder dnes: " + red.map(e => (e.time ? e.time + " " : "") + e.title).join(", ") + ". Kolem zprávy neotvírej nový obchod.")); }
+    const pr = plProgress(p), arc = $("pl-arc"); arc.style.strokeDashoffset = (169.6 * (1 - pr.pct / 100)).toFixed(1); $("pl-pct").textContent = pr.pct + " %"; $("pl-ring").classList.toggle("full", pr.pct >= 100);
+    const st = $("pl-state"); st.className = "pl-state " + (pr.pct >= 100 ? "ok" : pr.pct > 0 ? "mid" : ""); st.textContent = pr.pct >= 100 ? "Připraveno" : pr.pct > 0 ? "Rozpracováno" : "Ještě nenapsáno";
+    document.querySelectorAll("#plan-card .pl-ok").forEach(e => { const ok = !!pr.sec[e.dataset.k]; e.textContent = ok ? "✓" : ""; e.closest(".pl-sec").classList.toggle("done", ok); });
+    const P = $("rr-plan"); if (P && !P.querySelector(".rr-pl2")){ const w = el("div","rr-pl2"); const bar = el("div","rr-plbar"), i = el("i"); i.style.width = pr.pct + "%"; bar.appendChild(i); w.appendChild(bar); w.appendChild(el("span","small muted", "Plán hotový z " + pr.pct + " %"));
+      if (p.planA) w.appendChild(el("p","small", "A: " + p.planA)); if (p.draw) w.appendChild(el("p","small muted", "Draw: " + p.draw)); P.appendChild(w); }
+  }
+  { const _rpP = renderPlan; renderPlan = function(){ _rpP(); try { plPaint(); } catch(e){ if (window.console) console.error(e); } };
+    const _raP = refreshAll; refreshAll = function(){ _raP(); try { plPaint(); } catch(e){} }; }
+  try { plPaint(); } catch(e){}
+
+  // ---------- checklist sheet: MOROS conditions, openable from anywhere ----------
+  function openChecklist(){ const o = overlay("ckbox"), head = el("div","row"), x = el("button","ck-del","Zavřít"); x.type = "button"; x.addEventListener("click", o.close);
+    head.appendChild(el("h2", null, "Checklist před vstupem")); head.appendChild(x); o.card.appendChild(head);
+    const c = moCheck(); c.classList.remove("card"); c.classList.add("ck-sheet"); const k = c.querySelector(".mo-kick"), h2 = c.querySelector("h2"); if (k) k.remove(); if (h2) h2.remove(); o.card.appendChild(c);
+    const row = el("div","rp-ctl"), w = el("button","primary","Zapsat obchod"), m = el("a", null, "Celý model MOROS"); w.type = "button"; m.href = "#moros"; m.className = "abtn";
+    w.addEventListener("click", () => { o.close(); openTradeForm(null, {setup: cfg.setups.find(s => /^MOROS/.test(s)) || undefined}); }); m.addEventListener("click", o.close); row.appendChild(w); row.appendChild(m); o.card.appendChild(row); }
+  { const tb = $("tb-new"); if (tb){ const b = el("button","tb-ck"); b.type = "button"; b.title = "Checklist před vstupem"; b.setAttribute("aria-label","Checklist před vstupem"); b.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3.5" width="16" height="17" rx="3.5"/><path d="m8 9.2 1.6 1.6L12.8 7.6M8 15.2l1.6 1.6 3.2-3.2M15 10h1.5M15 16h1.5"/></svg><span>Checklist</span>'; b.addEventListener("click", openChecklist); tb.parentNode.insertBefore(b, tb.parentNode.firstChild === tb ? tb : tb.parentNode.querySelector("#tb-quick") || tb); } }
+  { const hd = document.querySelector("#plan-card .pl-ht"); if (hd){ const b = el("button","pl-ckb","✓ Checklist před vstupem"); b.type = "button"; b.addEventListener("click", openChecklist); hd.appendChild(b); } }
 
   // ---------- moving to a new address without losing data ----------
   // data/site.json: {"move": "https://new-address", "from": ["https://old-address"]}. The old site hands the data to the new one in a window the person opens.
