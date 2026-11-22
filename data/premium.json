@@ -314,6 +314,22 @@
     "text": "Setup. Vstup při návratu k otevírací ceně na 100,4. Stop pod dnem výpadu na 95,3.",
     "add": [
      {
+      "t": "box",
+      "x1": 8,
+      "x2": 13.4,
+      "y1": 95.3,
+      "y2": 100.4,
+      "c": "bad"
+     },
+     {
+      "t": "box",
+      "x1": 8,
+      "x2": 13.4,
+      "y1": 100.4,
+      "y2": 111,
+      "c": "good"
+     },
+     {
       "t": "line",
       "y": 100.4,
       "x1": 8,

@@ -2033,6 +2033,22 @@
     "text": "5. Vstup. Cena se vrátí do středu mezery. Tam je prodejní příkaz, stop-loss leží nad knotem sweepu. Vzdálenost mezi nimi je riziko, 1R.",
     "add": [
      {
+      "t": "box",
+      "x1": 10,
+      "x2": 13.4,
+      "y1": 110,
+      "y2": 119.5,
+      "c": "bad"
+     },
+     {
+      "t": "box",
+      "x1": 10,
+      "x2": 13.4,
+      "y1": 100.5,
+      "y2": 110,
+      "c": "good"
+     },
+     {
       "t": "line",
       "y": 110,
       "x1": 10,
@@ -2823,6 +2839,22 @@
     "text": "8. Stop. Stop-loss patří pod knot sweepu, na 102,2. Vzdálenost od vstupu je riziko, tady 6 bodů. Tomu se říká 1R.",
     "add": [
      {
+      "t": "box",
+      "x1": 9,
+      "x2": 14.4,
+      "y1": 102.2,
+      "y2": 108.2,
+      "c": "bad"
+     },
+     {
+      "t": "box",
+      "x1": 9,
+      "x2": 14.4,
+      "y1": 108.2,
+      "y2": 121,
+      "c": "good"
+     },
+     {
       "t": "line",
       "y": 102.2,
       "x1": 5,
@@ -3119,6 +3151,22 @@
     "show": 11,
     "text": "8. Stop. Stop-loss patří nad knot sweepu, na 121,8. Vzdálenost od vstupu je riziko, tady 6 bodů. Tomu se říká 1R.",
     "add": [
+     {
+      "t": "box",
+      "x1": 9,
+      "x2": 14.4,
+      "y1": 115.8,
+      "y2": 121.8,
+      "c": "bad"
+     },
+     {
+      "t": "box",
+      "x1": 9,
+      "x2": 14.4,
+      "y1": 103,
+      "y2": 115.8,
+      "c": "good"
+     },
      {
       "t": "line",
       "y": 121.8,
