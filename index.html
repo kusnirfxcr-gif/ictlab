@@ -1333,7 +1333,9 @@ body.fx-lite .pa-ctl,body.fx-lite .lnav,body.fx-off .pa-ctl,body.fx-off .lnav{-w
 .mo-ck{display:flex;flex-direction:column;gap:6px}
 .mo-ckb{display:flex;gap:12px;align-items:center;text-align:left;border-radius:14px;padding:10px 12px}
 .mo-ckb i{flex:0 0 22px;height:22px;border-radius:7px;border:2px solid rgba(232,194,106,.5);transition:.2s;position:relative}
-.mo-ckb.on i{background:linear-gradient(180deg,#f6dc9a,#d3a64a);border-color:transparent}.mo-ckb.on i::after{content:"";position:absolute;left:6px;top:2px;width:6px;height:11px;border:solid #1a1307;border-width:0 2.5px 2.5px 0;transform:rotate(45deg)}
+.mo-ckb i{display:grid;place-items:center;box-sizing:border-box}.mo-ckb i svg{width:14px;height:14px;fill:none;stroke:#1a1307;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:16;stroke-dashoffset:16;transition:stroke-dashoffset .25s ease}
+.mo-ckb.on i{background:linear-gradient(180deg,#f6dc9a,#d3a64a);border-color:transparent}.mo-ckb.on i svg{stroke-dashoffset:0}
+.mo-ckb{align-items:center}.mo-ckb span{line-height:1.35}
 .mo-ckb.on span{color:var(--gold2)}
 .mo-verdict{margin:12px 0 10px;padding:12px 14px;border-radius:14px;font-weight:700;border:1px solid var(--line,#26262c)}
 .mo-verdict.go{border-color:#3ddc97;color:#3ddc97;background:rgba(61,220,151,.08)}.mo-verdict.stop{border-color:#ff6b6b;color:#ff6b6b;background:rgba(255,107,107,.08)}.mo-verdict.warn{border-color:#f2b560;color:#f2b560}.mo-verdict.wait{color:var(--muted,#a1a1aa)}
@@ -1549,6 +1551,24 @@ body.sakura #streak.streak3:not(.off){background:#fff0f7;border-color:rgba(255,9
 body.sakura .orb::before{background:conic-gradient(from var(--ra),rgba(255,95,162,0) 0deg,rgba(255,95,162,.85) 70deg,rgba(255,190,220,.95) 130deg,rgba(255,95,162,0) 200deg,rgba(255,140,190,.55) 280deg,rgba(255,95,162,0) 360deg)!important}
 body.sakura .orb::after{background:radial-gradient(circle at 35% 28%,#ffffff,#ffe6f2 72%)!important}
 @media (prefers-reduced-motion:reduce){.orb::before{animation:none!important}}
+
+/* recent trades: tickets */
+.tklist{display:flex;flex-direction:column;gap:6px}
+.tk{display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;text-align:left;padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:rgba(255,255,255,.02);color:var(--ink);font:inherit;min-height:0;transition:background .15s,border-color .15s}
+.tk:hover{background:rgba(255,255,255,.045);border-color:rgba(255,255,255,.14)}
+.tk-l{display:flex;align-items:center;gap:12px;min-width:0}.tk-t{min-width:0}
+.tk-n{display:flex;align-items:center;gap:8px}.tk-n b{font-size:15px;font-weight:700;letter-spacing:-.01em}
+.tk-d{font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border-radius:6px}
+.tk-d.s{background:rgba(255,107,107,.13);color:#ff8a8a}.tk-d.l{background:rgba(61,220,151,.13);color:#3ddc97}
+.tk-m{display:flex;flex-wrap:wrap;gap:0;margin-top:3px;font-size:12.5px;color:var(--muted)}
+.tk-m span{white-space:nowrap}.tk-m span+span::before{content:"·";margin:0 7px;opacity:.6}
+.tk-m .tk-tag{color:#f2b560}
+.tk-r{text-align:right;flex:none;display:flex;flex-direction:column;align-items:flex-end}
+.tk-r b{font-size:20px;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.15}.tk-r b small{font-size:12px;font-weight:700;opacity:.8}
+.tk-r span{font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.tk .sym,.tk [class*="symb"]{flex:none}
+body.sakura .tk{background:rgba(255,255,255,.6)}
+@media (max-width:520px){.tk-m span:nth-child(n+3){display:none}.tk-m .tk-tag{display:none}}
 .cg-star{position:fixed;z-index:96;pointer-events:none;width:12px;height:12px;margin:-6px 0 0 -6px;animation:cgstar .85s cubic-bezier(.2,.7,.3,1) forwards}.cg-star svg{display:block;width:100%;height:100%;fill:currentColor;filter:drop-shadow(0 0 5px currentColor)}
 @keyframes cgstar{0%{transform:translate(0,0) scale(.2) rotate(0);opacity:0}25%{opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(1) rotate(160deg);opacity:0}}
 body.sakura .chip[aria-pressed="true"],body.sakura button.primary{box-shadow:0 6px 18px rgba(255,95,162,.28)}
@@ -6734,7 +6754,7 @@ body.sakura .copop::before{background:conic-gradient(from var(--ra),#ff5fa2,#ffc
   function moCheck(){
     const w = el("div","card mo-card"), day = el("div","mo-day"), list = el("div","mo-ck"), verdict = el("div","mo-verdict"), rs = el("button", null, "Vynulovat"); rs.type = "button";
     w.appendChild(el("span","mo-kick","Před vstupem")); w.appendChild(el("h2", null, "Kontrola MOROS")); w.appendChild(day);
-    MO_CK.forEach(c => { const b = el("button","mo-ckb"); b.type = "button"; b.appendChild(el("i")); b.appendChild(el("span", null, c[1])); b.addEventListener("click", () => { moCk[c[0]] = !moCk[c[0]]; paint(); }); b.dataset.k = c[0]; list.appendChild(b); });
+    MO_CK.forEach(c => { const b = el("button","mo-ckb"); b.type = "button"; const ic = el("i"); ic.innerHTML = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.6 8.4 6.6 11.3 12.4 4.9"/></svg>'; b.appendChild(ic); b.appendChild(el("span", null, c[1])); b.addEventListener("click", () => { moCk[c[0]] = !moCk[c[0]]; paint(); }); b.dataset.k = c[0]; list.appendChild(b); });
     w.appendChild(list); w.appendChild(verdict); w.appendChild(rs); rs.addEventListener("click", () => { MO_CK.forEach(c => { moCk[c[0]] = false; }); paint(); });
     const paint = () => { const d = moToday(); clear(day);
       [["Čas NY", d.ny + (d.ses ? " · " + d.ses : " · mimo seanci")], ["Dnes", d.w + " výher · " + d.l + " ztrát"], d.fomc ? ["FOMC", "dnes v " + (d.fomc.time || "?") + " (náš čas): až po něm"] : null].filter(Boolean).forEach(x => { const s = el("div"); s.appendChild(el("span", null, x[0])); s.appendChild(el("b", null, x[1])); day.appendChild(s); });
@@ -6952,6 +6972,22 @@ body.sakura .copop::before{background:conic-gradient(from var(--ra),#ff5fa2,#ffc
       const sig = sd + lvl; if (p.dataset.sig !== sig || !p.querySelector("canvas")){ p.dataset.sig = sig; p.innerHTML = '<canvas aria-hidden="true"></canvas><b>' + sd + "</b><span>" + word + "</span>"; stFire(p, lvl); }
       p.className = "streak3 " + lvl + (p.classList.contains("bump") ? " bump" : ""); p.setAttribute("aria-label", "Série " + sd + " " + word); }; try { renderRails(); } catch(e){} }
 
+
+  // ---------- home: recent trades as clean tickets ----------
+  function tkSession(ts){ const ms = Date.parse(ts); if (!isFinite(ms)) return ""; const w = new Date(ms + tvZoneOff(ms, "America/New_York") * 6e4), m = w.getUTCHours() * 60 + w.getUTCMinutes();
+    return m >= 1080 || m < 120 ? "Asie" : m < 300 ? "London" : m < 570 ? "Pre-market" : m < 720 ? "NY AM" : m < 810 ? "Lunch" : m < 960 ? "NY PM" : "After"; }
+  function tkRow(t){ const r = Number(t.r) || 0, net = tNet(t), b = el("button","tk"), d = new Date(t.ts); b.type = "button";
+    const who = el("div","tk-l"), nm = el("div","tk-n"), meta = el("div","tk-m"), res = el("div","tk-r");
+    nm.appendChild(el("b", null, t.sym || "")); nm.appendChild(el("span","tk-d " + (t.dir === "short" ? "s" : "l"), t.dir === "short" ? "Short" : "Long"));
+    const hold = t.tsx ? Math.round((Date.parse(t.tsx) - Date.parse(t.ts)) / 6e4) : null;
+    [d.toLocaleDateString("cs-CZ", {day: "numeric", month: "numeric"}) + " " + d.toLocaleTimeString("cs-CZ", {hour: "2-digit", minute: "2-digit"}), tkSession(t.ts), t.setup || "", hold != null && hold >= 0 ? (hold < 60 ? hold + " min" : Math.floor(hold / 60) + " h " + (hold % 60) + " min") : ""].filter(Boolean).forEach(x => meta.appendChild(el("span", null, x)));
+    (t.tags || []).slice(0, 2).forEach(x => meta.appendChild(el("span","tk-tag", x)));
+    who.appendChild(symBadge(t.sym)); const tx = el("div","tk-t"); tx.appendChild(nm); tx.appendChild(meta); who.appendChild(tx);
+    const rv = el("b", r > 0 ? "pos" : r < 0 ? "neg" : "", (r > 0 ? "+" : r < 0 ? "−" : "") + Math.abs(r).toLocaleString("cs-CZ", {maximumFractionDigits: 2})); rv.appendChild(el("small", null, " R")); res.appendChild(rv);
+    if (net != null) res.appendChild(el("span", null, usd(net)));
+    b.appendChild(who); b.appendChild(res); b.addEventListener("click", () => openTrade(t)); return b; }
+  { const _rhT = renderHomeTrades; renderHomeTrades = function(){ _rhT(); const box = $("d-trades"); if (!box) return; const tr = jr.trades.filter(t => !t.missed).sort((a, b) => String(b.ts).localeCompare(String(a.ts))).slice(0, 6);
+      clear(box); box.className = "tklist"; tr.forEach(t => box.appendChild(tkRow(t))); const n = box.parentNode && box.parentNode.querySelector(".tnote"); if (n) n.remove(); }; try { renderHomeTrades(); } catch(e){} }
   // ---------- moving to a new address without losing data ----------
   // data/site.json: {"move": "https://new-address", "from": ["https://old-address"]}. The old site hands the data to the new one in a window the person opens.
   let site = {move: "", from: []};
