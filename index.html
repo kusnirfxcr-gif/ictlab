@@ -1485,6 +1485,7 @@ body.fx-lite .pa-ctl,body.fx-lite .lnav,body.fx-off .pa-ctl,body.fx-off .lnav{-w
   <section class="view" id="v-novinky">
     <div class="card"><h2>Co je nového</h2><span class="kick">22. 11. 2026</span>
       <ul class="stl ok">
+        <li>Angličtina: rozhraní jde přepnout v Nastavení a karty obchodu i výsledků jdou sdílet anglicky.</li>
         <li>Přehrávání trhu si data pamatuje: soubor nahraješ jednou a pak si vybíráš náhodný den, den výzvy nebo konkrétní datum. Umí i soubory z Dukascopy.</li>
         <li>Nová úvodní karta na Přehledu ve třech podobách: Čistý, Kokpit a Fokus. Přepneš je v Nastavení.</li>
         <li>Přivítání při otevření a vlastní přezdívka (změníš ji v Nastavení).</li>
@@ -4206,15 +4207,18 @@ body.fx-lite .pa-ctl,body.fx-lite .lnav,body.fx-off .pa-ctl,body.fx-off .lnav{-w
   function fitText2(g, text, x, y, size, maxW){ let s = size; g.font = cardFont(700, s); while (g.measureText(text).width > maxW && s > 12){ s -= 2; g.font = cardFont(700, s); } g.fillText(text, x, y); }
   function cardDialog(title, draw, name, units){
     const o = overlay("cardbox"), card = o.card, hold = el("div","cardprev"), fmtBox = el("div","chips"), unitBox = el("div","chips"), ctl = el("div","rp-ctl"); let cv = null, busy = 0;
+    const langBox2 = el("div","chips"), cardLang = () => cfg.card.lang || cfg.lang || "cs";
     cfg.card = cfg.card || {fmt: "portrait", unit: "R"}; if (units.indexOf(cfg.card.unit) < 0) cfg.card.unit = "R";
     const head = el("div","row"), xb = el("button","ck-del","Zavřít"); xb.type = "button"; xb.addEventListener("click", o.close); head.appendChild(el("h2", null, title)); head.appendChild(xb); card.appendChild(head);
     const paint = async () => { const my = ++busy;
       Array.prototype.forEach.call(fmtBox.children, b => b.setAttribute("aria-pressed", String(b.dataset.v === cfg.card.fmt))); Array.prototype.forEach.call(unitBox.children, b => b.setAttribute("aria-pressed", String(b.dataset.v === cfg.card.unit)));
       try { if (document.fonts && document.fonts.load) await document.fonts.load("800 60px 'Plus Jakarta Sans'"); } catch(e){}
-      const c = await draw({fmt: cfg.card.fmt, unit: cfg.card.unit}); if (my !== busy) return; cv = c; clear(hold); hold.appendChild(c); };
+      Array.prototype.forEach.call(langBox2.children, b => b.setAttribute("aria-pressed", String(b.dataset.v === cardLang())));
+      const c = cardLang() === "en" ? await cardInEnglish(() => draw({fmt: cfg.card.fmt, unit: cfg.card.unit})) : await draw({fmt: cfg.card.fmt, unit: cfg.card.unit}); if (my !== busy) return; cv = c; clear(hold); hold.appendChild(c); };
+    [["cs","Česky"],["en","English"]].forEach(u => { const b = el("button","chip", u[1]); b.type = "button"; b.dataset.v = u[0]; b.addEventListener("click", () => { cfg.card.lang = u[0]; cfgStore(); paint(); }); langBox2.appendChild(b); });
     Object.keys(CARD_FMT).forEach(k => { const b = el("button","chip", CARD_FMT[k][2]); b.type = "button"; b.dataset.v = k; b.addEventListener("click", () => { cfg.card.fmt = k; cfgStore(); paint(); }); fmtBox.appendChild(b); });
     [["R","Jen R"],["$","Jen dolary"],["both","R i dolary"]].filter(u => units.indexOf(u[0]) >= 0).forEach(u => { const b = el("button","chip", u[1]); b.type = "button"; b.dataset.v = u[0]; b.addEventListener("click", () => { cfg.card.unit = u[0]; cfgStore(); paint(); }); unitBox.appendChild(b); });
-    card.appendChild(fmtBox); if (unitBox.children.length > 1) card.appendChild(unitBox); card.appendChild(hold); hold.appendChild(el("p","small muted","Kreslím…"));
+    card.appendChild(fmtBox); if (unitBox.children.length > 1) card.appendChild(unitBox); card.appendChild(langBox2); card.appendChild(hold); hold.appendChild(el("p","small muted","Kreslím…"));
     const blob = () => new Promise(res => cv.toBlob(res, "image/png")), save = async () => { const a = document.createElement("a"); a.href = URL.createObjectURL(await blob()); a.download = name; document.body.appendChild(a); a.click(); a.remove(); };
     const mk = (txt, fn, cls) => { const b = el("button", cls || null, txt); b.type = "button"; b.addEventListener("click", () => { if (cv) fn(); }); ctl.appendChild(b); };
     mk("Sdílet", async () => { const f = new File([await blob()], name, {type: "image/png"}); if (navigator.canShare && navigator.canShare({files: [f]})){ try { await navigator.share({files: [f]}); } catch(e){} } else save(); }, "primary");
@@ -6016,6 +6020,44 @@ body.fx-lite .pa-ctl,body.fx-lite .lnav,body.fx-off .pa-ctl,body.fx-off .lnav{-w
     const r = el("div","chips"); HEROS.forEach(o => { const b = el("button","chip", o[1]); b.type = "button"; b.title = o[2]; b.setAttribute("aria-pressed", String((cfg.hero || "a") === o[0])); b.addEventListener("click", () => { cfg.hero = o[0]; cfgStore(); renderHeroPick(); try { heroPaint(); } catch(e){} toast(o[1] + ": " + o[2] + "."); }); r.appendChild(b); }); heroBox.appendChild(r);
     const go = el("a","small", "Ukázat na Přehledu"); go.href = "#prehled"; heroBox.appendChild(go); }
   { const _rsH = renderSettings; renderSettings = function(){ _rsH(); const box = $("set"); if (softLock) return; renderHeroPick(); if (heroBox.parentNode !== box) box.insertBefore(heroBox, nickBox.parentNode === box ? nickBox.nextSibling : box.firstChild); }; }
+
+
+  // ---------- English: interface dictionary applied to the page, and English share cards ----------
+  let EN = null, enLow = null, enWait = null;
+  const enLoad = () => enWait || (enWait = fetch("data/en.json").then(r => r.json()).then(d => { EN = d; enLow = {}; Object.keys(d).forEach(k => { enLow[k.toLowerCase()] = d[k]; }); return d; }).catch(() => { EN = {}; enLow = {}; return EN; }));
+  const EN_MON = {ledna: "January", února: "February", března: "March", dubna: "April", května: "May", června: "June", července: "July", srpna: "August", září: "September", října: "October", listopadu: "November", prosince: "December",
+    leden: "January", únor: "February", březen: "March", duben: "April", květen: "May", červen: "June", červenec: "July", srpen: "August", říjen: "October", listopad: "November", prosinec: "December"};
+  const EN_DAY = {pondělí: "Monday", úterý: "Tuesday", středa: "Wednesday", čtvrtek: "Thursday", pátek: "Friday", sobota: "Saturday", neděle: "Sunday"}, EN_D2 = {Po: "Mon", Út: "Tue", St: "Wed", Čt: "Thu", Pá: "Fri", So: "Sat", Ne: "Sun"};
+  const EN_RULES = [[/(\d{1,2})\. (ledna|února|března|dubna|května|června|července|srpna|září|října|listopadu|prosince)/gi, (m, d, mo) => d + " " + EN_MON[mo.toLowerCase()]],
+    [/\b(pondělí|úterý|středa|čtvrtek|pátek|sobota|neděle)\b/gi, (m, w) => { const e = EN_DAY[w.toLowerCase()]; return m === m.toUpperCase() ? e.toUpperCase() : m[0] === m[0].toUpperCase() ? e : e.toLowerCase(); }],
+    [/\b(leden|únor|březen|duben|květen|červen|červenec|srpen|září|říjen|listopad|prosinec) (\d{4})/gi, (m, mo, y) => EN_MON[mo.toLowerCase()] + " " + y],
+    [/Série (\d+) (?:den|dny|dní)/g, "Streak $1 d"], [/série (\d+) (?:den|dny|dní)/g, "streak $1 d"], [/(\d+) obchod(?:ů|y|u)?(?![a-zá-ž])/g, "$1 trades"], [/(\d+) lekc(?:í|e)(?![a-zá-ž])/g, "$1 lessons"], [/^Celkem /, "Total "], [/^Vstup /, "Entry "], [/^Výstup /, "Exit "], [/^Cíl /, "Target "], [/^Nejlépe: /, "Best: "], [/^Nejhůře: /, "Worst: "], [/, tady je tvůj minulý týden\./, ", here is your last week."], [/(\d) ze (\d)/g, "$1 of $2"], [/ % z (\d)/g, " % of $1"], [/ R z (\d)/g, " R from $1"],
+    [/\bKrok (\d+) z (\d+)/g, "Step $1 of $2"], [/\bLekce (\d+) z (\d+)/g, "Lesson $1 of $2"], [/(\d+) z (\d+)\b/g, "$1 of $2"], [/^Dobré ráno/, "Good morning"], [/^Dobrý večer/, "Good evening"], [/^Dobrou noc/, "Good night"], [/^Ahoj/, "Hi"],
+    [/^Týden (\d)/, "Week $1"], [/\bhotovo\b/g, "done"], [/\bminut dnes\b/g, "minutes today"], [/\bTento týden\b/g, "This week"], [/\bNaposledy:/g, "Last time:"], [/\bwinrate\b/g, "win rate"], [/\bR celkem\b/g, "R total"]];
+  function trEn(str, card){
+    if (!EN || !str) return str; const raw = String(str), t = raw.trim(); if (!t || !/[A-Za-zÁ-ž]/.test(t)) return card ? raw.replace(/(\d),(\d)/g, "$1.$2").replace(/(\d)[   ](\d{3})\b/g, "$1,$2") : raw;
+    let out = EN[t]; if (out == null && card && EN_D2[t]) out = EN_D2[t];
+    if (out == null){ const lw = enLow[t.toLowerCase()]; if (lw != null) out = t === t.toUpperCase() ? lw.toUpperCase() : lw; }
+    if (out == null){ out = t; for (let i = 0; i < EN_RULES.length; i++) out = out.replace(EN_RULES[i][0], EN_RULES[i][1]); if (card) out = out.replace(/(\d),(\d)/g, "$1.$2").replace(/(\d)[   ](\d{3})\b/g, "$1,$2"); if (out === t) return raw; }
+    return raw.replace(t, out);
+  }
+  async function cardInEnglish(draw){ await enLoad(); const P = CanvasRenderingContext2D.prototype, ft = P.fillText, mt = P.measureText;
+    P.fillText = function(a, x, y, w){ return w === undefined ? ft.call(this, trEn(a, true), x, y) : ft.call(this, trEn(a, true), x, y, w); }; P.measureText = function(a){ return mt.call(this, trEn(a, true)); };
+    try { return await draw(); } finally { P.fillText = ft; P.measureText = mt; } }
+  if (cfg.lang === "en"){
+    document.documentElement.lang = "en";
+    const SKIP = {SCRIPT: 1, STYLE: 1, TEXTAREA: 1, CODE: 1, PRE: 1}, ATTRS = ["placeholder", "aria-label", "title"];
+    const one = n => { if (n.nodeType === 3){ const p = n.parentNode; if (!p || SKIP[p.nodeName] || n.__en === n.nodeValue) return; const v = trEn(n.nodeValue); if (v !== n.nodeValue) n.nodeValue = v; n.__en = n.nodeValue; }
+      else if (n.nodeType === 1 && !SKIP[n.nodeName]){ ATTRS.forEach(a => { const v = n.getAttribute(a); if (v){ const e = trEn(v); if (e !== v) n.setAttribute(a, e); } }); for (let c = n.firstChild; c; c = c.nextSibling) one(c); } };
+    enLoad().then(() => { one(document.body); let q = [], raf = 0;
+      new MutationObserver(ms => { ms.forEach(m => { if (m.type === "characterData") q.push(m.target); else m.addedNodes.forEach(x => q.push(x)); }); if (!raf) raf = requestAnimationFrame(() => { raf = 0; const w = q; q = []; w.forEach(x => { if (x.isConnected) one(x); }); }); })
+        .observe(document.body, {childList: true, subtree: true, characterData: true}); });
+  }
+  const langBox = el("div","card");
+  function renderLang(){ clear(langBox); langBox.appendChild(el("h2", null, "Jazyk / Language")); const en = cfg.lang === "en";
+    langBox.appendChild(el("p","small muted", en ? "The interface is in English. Lessons, glossary and longer texts are still in Czech for now." : "Angličtina zatím překládá rozhraní: menu, nadpisy, tlačítka a sdílené karty. Lekce, slovníček a delší texty zůstávají česky."));
+    const r = el("div","chips"); [["cs","Čeština"],["en","English"]].forEach(o => { const b = el("button","chip", o[1]); b.type = "button"; b.setAttribute("aria-pressed", String((cfg.lang || "cs") === o[0])); b.addEventListener("click", () => { if ((cfg.lang || "cs") === o[0]) return; cfg.lang = o[0]; cfgStore(); location.reload(); }); r.appendChild(b); }); langBox.appendChild(r); }
+  { const _rsL = renderSettings; renderSettings = function(){ _rsL(); const box = $("set"); if (softLock) return; renderLang(); if (langBox.parentNode !== box) box.insertBefore(langBox, nickBox.parentNode === box ? nickBox.nextSibling : box.firstChild); }; }
 
   // ---------- moving to a new address without losing data ----------
   // data/site.json: {"move": "https://new-address", "from": ["https://old-address"]}. The old site hands the data to the new one in a window the person opens.
