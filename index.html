@@ -1360,17 +1360,34 @@ body.fx-lite .pa-ctl,body.fx-lite .lnav,body.fx-off .pa-ctl,body.fx-off .lnav{-w
 @media (prefers-reduced-motion:reduce){.mo-hero::after,.mo-ln,.mo-px,.mo-lt,.mo-box,.mo-cap,.mo-arr,.mo-trade,.mo-smt,.mo-ent,.mo-steps li{animation:none!important;opacity:1!important;stroke-dashoffset:0!important;transform:none!important}}
 
 /* ---------- click glow ---------- */
-.cg-glow{position:absolute;inset:-7px;border-radius:inherit;z-index:-1;pointer-events:none;background:radial-gradient(closest-side,rgba(216,180,254,.95),rgba(168,85,247,.55) 45%,rgba(124,58,237,0) 100%) no-repeat;background-size:55% 170%;background-position:-70% 50%;filter:blur(7px);animation:cgsweep .9s cubic-bezier(.35,.1,.2,1) forwards}
+.cg-glow{position:absolute;inset:-16px;border-radius:inherit;z-index:-1;pointer-events:none;background:radial-gradient(closest-side,rgba(216,180,254,.95),rgba(168,85,247,.55) 45%,rgba(124,58,237,0) 100%) no-repeat;background-size:55% 170%;background-position:-70% 50%;filter:blur(8px);animation:cgsweep .9s cubic-bezier(.35,.1,.2,1) forwards}
 .cg-glow.pink{background-image:radial-gradient(closest-side,rgba(255,214,234,.95),rgba(255,95,162,.6) 45%,rgba(255,95,162,0) 100%)}
 @keyframes cgsweep{0%{background-position:-70% 50%;opacity:0}14%{opacity:1}80%{opacity:.9}100%{background-position:170% 50%;opacity:0}}
-.cg-orbit{position:absolute;inset:-5px;border-radius:inherit;z-index:-1;pointer-events:none;background:conic-gradient(from var(--ra),rgba(124,58,237,0) 0 50%,#7c3aed 68%,#c084fc 84%,#f5d0fe 94%,rgba(124,58,237,0) 100%);filter:blur(6px);opacity:0;animation:cospin .85s linear infinite,cgin .18s ease forwards}
+.cg-orbit{position:absolute;inset:-16px;border-radius:inherit;z-index:-1;pointer-events:none;background:conic-gradient(from var(--ra),rgba(124,58,237,0) 0 50%,#7c3aed 68%,#c084fc 84%,#f5d0fe 94%,rgba(124,58,237,0) 100%);filter:blur(6px);opacity:0;animation:cospin .85s linear infinite,cgin .18s ease forwards}
 .cg-orbit.pink{background:conic-gradient(from var(--ra),rgba(255,95,162,0) 0 50%,#ff5fa2 68%,#ff9fcb 84%,#ffe1ee 94%,rgba(255,95,162,0) 100%)}
 .cg-orbit.out{animation:cospin .85s linear infinite,cgout .2s ease forwards}
-.cg-orbit.hit{animation:cospin .28s linear infinite,cgflash .5s ease forwards;inset:-8px}
+.cg-orbit.hit{animation:cospin .28s linear infinite,cgflash .5s ease forwards}
 @keyframes cgin{to{opacity:.95}}@keyframes cgout{from{opacity:.95}to{opacity:0}}@keyframes cgflash{0%{opacity:1;filter:blur(9px) brightness(1.5)}100%{opacity:.95;filter:blur(6px)}}
 .cg-pop{position:absolute;inset:-2px;border-radius:inherit;z-index:-1;pointer-events:none;border:2px solid rgba(192,132,252,.9);box-shadow:0 0 14px rgba(168,85,247,.7);animation:cgpop .6s cubic-bezier(.2,.7,.3,1) forwards}
 .cg-pop.pink{border-color:rgba(255,143,197,.95);box-shadow:0 0 14px rgba(255,95,162,.7)}
 @keyframes cgpop{from{transform:scale(1);opacity:1}to{transform:scale(1.22,1.5);opacity:0}}
+.zm-clip{position:relative;overflow:hidden;width:100%;align-self:stretch;display:flex;justify-content:center;border-radius:inherit}
+.zm-clip.zoomed{cursor:grab;touch-action:none}.zm-clip.zoomed:active{cursor:grabbing}
+.zm-clip>.pa-svg{width:100%}
+.zm-ctl{position:absolute;right:8px;bottom:8px;z-index:3;display:flex;align-items:center;gap:2px;padding:3px;border-radius:999px;background:rgba(12,12,16,.78);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(8px);opacity:.5;transition:opacity .2s}
+.zm-clip:hover .zm-ctl,.zm-clip.zoomed .zm-ctl,.zm-ctl:focus-within{opacity:1}
+.zm-ctl button{width:28px;height:28px;min-height:0;padding:0;border-radius:50%;border:0;background:transparent;color:#f5f5f6;font-size:16px;font-weight:700;line-height:1;display:grid;place-items:center}
+.zm-ctl button:hover{background:rgba(168,85,247,.25)}.zm-ctl button:disabled{opacity:.3}
+.zm-ctl span{font-size:11px;font-weight:700;min-width:40px;text-align:center;color:#c9c9d2;font-variant-numeric:tabular-nums}
+body.sakura .zm-ctl{background:rgba(255,255,255,.85);border-color:rgba(226,69,154,.25)}body.sakura .zm-ctl button{color:#7a1f52}body.sakura .zm-ctl span{color:#a0537c}
+@media (hover:none){.zm-ctl{opacity:.85}}
+.cg-orbit{filter:blur(9px)!important}
+.cg-orbit.rbw{background:conic-gradient(from var(--ra),rgba(255,95,109,0) 0 30%,#ff5f6d 42%,#ffc371 52%,#f9f871 62%,#3ddc97 72%,#8ab4ff 82%,#c58aff 92%,rgba(197,138,255,0) 100%)}
+.cg-orbit.pink.rbw{background:conic-gradient(from var(--ra),rgba(255,95,162,0) 0 30%,#ff5fa2 42%,#ffb86b 54%,#ffe98a 64%,#8ff0d0 74%,#9fc4ff 84%,#d7a6ff 94%,rgba(215,166,255,0) 100%)}
+.cg-glow.rbw{background-image:linear-gradient(90deg,rgba(255,95,109,0),#ff5f6d,#ffc371,#f9f871,#3ddc97,#8ab4ff,#c58aff,rgba(197,138,255,0))}
+.cg-star{position:fixed;z-index:96;pointer-events:none;width:12px;height:12px;margin:-6px 0 0 -6px;animation:cgstar .85s cubic-bezier(.2,.7,.3,1) forwards}.cg-star svg{display:block;width:100%;height:100%;fill:currentColor;filter:drop-shadow(0 0 5px currentColor)}
+@keyframes cgstar{0%{transform:translate(0,0) scale(.2) rotate(0);opacity:0}25%{opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(1) rotate(160deg);opacity:0}}
+body.sakura .chip[aria-pressed="true"],body.sakura button.primary{box-shadow:0 6px 18px rgba(255,95,162,.28)}
 .cg-heart{position:fixed;z-index:96;pointer-events:none;width:16px;height:15px;margin:-7px 0 0 -8px;color:#ff5fa2;animation:cgheart 1s cubic-bezier(.2,.7,.3,1) forwards}
 .cg-heart svg{display:block;width:100%;height:100%;fill:currentColor;filter:drop-shadow(0 0 6px rgba(255,95,162,.7))}
 .cg-heart:nth-child(odd){color:#ff9fcb}
@@ -1663,6 +1680,7 @@ body.sakura .copop::before{background:conic-gradient(from var(--ra),#ff5fa2,#ffc
   <section class="view" id="v-novinky">
     <div class="card"><h2>Co je nového</h2><span class="kick">22. 11. 2026</span>
       <ul class="stl ok">
+        <li>Obrázky v lekcích jdou přibližovat: tlačítka + a −, dva prsty na mobilu, Ctrl a kolečko nebo dvojklik na počítači. Přiblížený obrázek posuneš tažením.</li>
         <li>Plán dne v sedmi krocích s ukazatelem připravenosti, zprávy rozdělené na red, orange a yellow folder, checklist před vstupem z horní lišty a fialový glow při kliknutí (v Lauřině room růžový se srdíčky).</li>
         <li>MOROS v Učení: síň slávy osobního modelu, pět animovaných lekcí, kontrola před vstupem, MOR kalkulačka a nejlepší MOROS obchody z deníku.</li>
         <li>Karta obchodu umí skutečný graf: nahraj export cen z TradingView nebo Dukascopy a karta ukáže svíčky nebo čáru s tvým vstupem, výstupem a stopem.</li>
@@ -5427,15 +5445,20 @@ body.sakura .copop::before{background:conic-gradient(from var(--ra),#ff5fa2,#ffc
   function cgHearts(x, y){ for (let i = 0; i < 6; i++){ const h = el("span","cg-heart"); h.innerHTML = cgHeart; const a = (-90 + (Math.random() * 110 - 55)) * Math.PI / 180, d = 34 + Math.random() * 38;
     h.style.left = x + "px"; h.style.top = y + "px"; h.style.setProperty("--dx", (Math.cos(a) * d).toFixed(1) + "px"); h.style.setProperty("--dy", (Math.sin(a) * d - 10).toFixed(1) + "px"); h.style.setProperty("--s", (.6 + Math.random() * .6).toFixed(2)); h.style.setProperty("--rt", (Math.random() * 50 - 25).toFixed(0) + "deg"); h.style.animationDelay = (i * 25) + "ms";
     document.body.appendChild(h); setTimeout(() => h.remove(), 1100); } }
-  const CG_SEL = "button,.abtn,.chip,a.go,.tb-acc,.prem-btn,.subnav a,.nav1 a,.bottombar a";
+  const CG_SEL = "button,.abtn,.chip,a.go,.tb-acc,.prem-btn,.subnav a,.nav1 a,.bottombar a,.vgrid a,summary";
+  // the light is cut out where the button is, so it only shows around it, as if it came from behind
+  function cgClip(t, g){ const P = 16, r = t.getBoundingClientRect(), w = r.width, h = r.height, rad = Math.max(0, Math.min(parseFloat(getComputedStyle(t).borderTopLeftRadius) || 0, w / 2, h / 2)), x = P, y = P, W = w + 2 * P, H = h + 2 * P;
+    g.style.clipPath = 'path(evenodd, "M-40 -40H' + (W + 40) + 'V' + (H + 40) + 'H-40Z M' + (x + rad) + ' ' + y + 'H' + (x + w - rad) + 'A' + rad + ' ' + rad + ' 0 0 1 ' + (x + w) + ' ' + (y + rad) + 'V' + (y + h - rad) + 'A' + rad + ' ' + rad + ' 0 0 1 ' + (x + w - rad) + ' ' + (y + h) + 'H' + (x + rad) + 'A' + rad + ' ' + rad + ' 0 0 1 ' + x + ' ' + (y + h - rad) + 'V' + (y + rad) + 'A' + rad + ' ' + rad + ' 0 0 1 ' + (x + rad) + ' ' + y + 'Z")'; }
+  const cgKind = t => document.body.classList.contains("sakura") ? (t.matches(".primary,.prem-btn") ? " pink rbw" : " pink") : (t.matches(".primary,.prem-btn,.mo-gold") ? " rbw" : "");
+  const cgStar = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5 14.2 9.8 22.5 12l-8.3 2.2L12 22.5l-2.2-8.3L1.5 12l8.3-2.2z"/></svg>';
   function cgHost(t){ if (t.dataset.cg != null) return; const cs = getComputedStyle(t), back = []; if (cs.position === "static"){ t.style.position = "relative"; back.push("position"); } if (cs.isolation !== "isolate"){ t.style.isolation = "isolate"; back.push("isolation"); } t.dataset.cg = back.join(","); }
   function cgFree(t){ if (t.dataset.cg == null || t.querySelector(":scope > .cg-glow, :scope > .cg-orbit")) return; t.dataset.cg.split(",").forEach(p => { if (p) t.style[p] = ""; }); delete t.dataset.cg; }
   // hover: a purple light runs round behind the button
   { let cur = null; const calm = () => { try { return window.matchMedia("(prefers-reduced-motion: reduce)").matches || !window.matchMedia("(hover: hover)").matches; } catch(e){ return false; } };
     const off = () => { if (!cur) return; const t = cur, o = t.querySelector(":scope > .cg-orbit"); cur = null; if (o){ o.classList.add("out"); setTimeout(() => { o.remove(); cgFree(t); }, 220); } };
-    document.addEventListener("mouseover", ev => { const t = ev.target && ev.target.closest ? ev.target.closest(CG_SEL) : null; if (t === cur) return; off(); if (!t || t.disabled || calm() || t.matches(".prem-btn")) return;
+    document.addEventListener("mouseover", ev => { const t = ev.target && ev.target.closest ? ev.target.closest(CG_SEL) : null; if (t === cur) return; off(); if (!t || t.disabled || calm()) return;
       const r = t.getBoundingClientRect(); if (r.width < 8 || r.height < 8) return; const old = t.querySelector(":scope > .cg-orbit"); if (old) old.remove();
-      const o = el("span","cg-orbit" + (document.body.classList.contains("sakura") ? " pink" : "")); o.setAttribute("aria-hidden","true"); cgHost(t); t.appendChild(o); cur = t; });
+      const o = el("span","cg-orbit" + cgKind(t)); o.setAttribute("aria-hidden","true"); cgHost(t); cgClip(t, o); t.appendChild(o); cur = t; });
     document.addEventListener("mouseout", ev => { if (cur && (!ev.relatedTarget || !cur.contains(ev.relatedTarget))) off(); });
     window.addEventListener("blur", off); }
   document.addEventListener("click", ev => {
@@ -5444,12 +5467,13 @@ body.sakura .copop::before{background:conic-gradient(from var(--ra),#ff5fa2,#ffc
     const r = t.getBoundingClientRect(); if (r.width < 8 || r.height < 8) return;
     const pink = document.body.classList.contains("sakura"), c1 = pink ? "255,95,162" : "168,85,247", c2 = pink ? "255,170,210" : "196,148,255";
     if (!t.matches(".orb,.prem-btn") && !t.querySelector(":scope > .cg-glow")){
-      const g = el("span","cg-glow" + (pink ? " pink" : "")), pop = el("span","cg-pop" + (pink ? " pink" : "")); g.setAttribute("aria-hidden","true"); pop.setAttribute("aria-hidden","true"); cgHost(t);
+      const g = el("span","cg-glow" + cgKind(t)), pop = el("span","cg-pop" + (pink ? " pink" : "")); g.setAttribute("aria-hidden","true"); pop.setAttribute("aria-hidden","true"); cgHost(t); cgClip(t, g);
       t.appendChild(g); t.appendChild(pop); setTimeout(() => { g.remove(); pop.remove(); cgFree(t); }, 950); }
     const ob = t.querySelector(":scope > .cg-orbit"); if (ob){ ob.classList.remove("hit"); void ob.offsetWidth; ob.classList.add("hit"); }
     try { t.animate([{transform: "scale(1)"}, {transform: "scale(.955)", offset: .3}, {transform: "scale(1.02)", offset: .65}, {transform: "scale(1)"}], {duration: 380, easing: "cubic-bezier(.3,.7,.3,1)"}); } catch(e){}
     try { t.animate([{boxShadow: "0 0 0 0 rgba(" + c1 + ",0)"}, {boxShadow: "0 0 26px 3px rgba(" + c1 + ",.55), 0 0 60px 10px rgba(" + c2 + ",.18)", offset: .35}, {boxShadow: "0 0 0 0 rgba(" + c1 + ",0)"}], {duration: 850, easing: "cubic-bezier(.3,.1,.2,1)"}); } catch(e){}
-    if (pink) cgHearts(ev.clientX || r.left + r.width / 2, ev.clientY || r.top + r.height / 2);
+    if (pink){ const x = ev.clientX || r.left + r.width / 2, y = ev.clientY || r.top + r.height / 2; cgHearts(x, y);
+      for (let i = 0; i < 4; i++){ const st = el("span","cg-star"); st.innerHTML = cgStar; const a = Math.random() * 6.283, d = 26 + Math.random() * 40; st.style.left = x + "px"; st.style.top = y + "px"; st.style.color = ["#ffd166","#b98cff","#7fd8ff","#ffffff"][i]; st.style.setProperty("--dx", (Math.cos(a) * d).toFixed(1) + "px"); st.style.setProperty("--dy", (Math.sin(a) * d).toFixed(1) + "px"); document.body.appendChild(st); setTimeout(() => st.remove(), 900); } }
   }, true);
   // home trade cards draw their line only when the set of trades changes
   { let sig = null; const _rht = renderHomeTrades; renderHomeTrades = function(){ _rht(); const box = $("d-trades"); if (!box) return; const s = Array.prototype.map.call(box.children, (c, i) => i).length + ":" + jr.trades.length + ":" + (jr.trades.length ? jr.trades[jr.trades.length - 1].id : ""); box.classList.toggle("fresh", s !== sig); sig = s; }; }
@@ -6555,7 +6579,7 @@ body.sakura .copop::before{background:conic-gradient(from var(--ra),#ff5fa2,#ffc
   }
   function moBuild(){
     const root = $("mo"); clear(root); moBuilt = true;
-    const hero = el("section","mo-hero"); hero.innerHTML = moHeroSvg(); const hc = el("div","mo-hin");
+    const hero = el("section","mo-hero"); hero.innerHTML = '<div class="mo-hfig">' + moHeroSvg() + "</div>"; const hc = el("div","mo-hin");
     hc.appendChild(el("span","mo-kick","Síň slávy · osobní model autora")); const h = el("h1","mo-title","MOROS"); hc.appendChild(h);
     hc.appendChild(el("p","mo-sub","Midnight Opening Range, orderflow a SMT. Od biasu na denním grafu po vstup na 30 sekundách."));
     const st = el("div","mo-stat"); [["2", "setupy"], ["30s", "exekuce"], ["0,5 %", "riziko"], ["1.5R", "cíl"]].forEach(x => { const d = el("div"); d.appendChild(el("b", null, x[0])); d.appendChild(el("span", null, x[1])); st.appendChild(d); }); hc.appendChild(st);
@@ -6625,6 +6649,40 @@ body.sakura .copop::before{background:conic-gradient(from var(--ra),#ff5fa2,#ffc
     w.addEventListener("click", () => { o.close(); openTradeForm(null, {setup: cfg.setups.find(s => /^MOROS/.test(s)) || undefined}); }); m.addEventListener("click", o.close); row.appendChild(w); row.appendChild(m); o.card.appendChild(row); }
   { const tb = $("tb-new"); if (tb){ const b = el("button","tb-ck"); b.type = "button"; b.title = "Checklist před vstupem"; b.setAttribute("aria-label","Checklist před vstupem"); b.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3.5" width="16" height="17" rx="3.5"/><path d="m8 9.2 1.6 1.6L12.8 7.6M8 15.2l1.6 1.6 3.2-3.2M15 10h1.5M15 16h1.5"/></svg><span>Checklist</span>'; b.addEventListener("click", openChecklist); tb.parentNode.insertBefore(b, tb.parentNode.firstChild === tb ? tb : tb.parentNode.querySelector("#tb-quick") || tb); } }
   { const hd = document.querySelector("#plan-card .pl-ht"); if (hd){ const b = el("button","pl-ckb","✓ Checklist před vstupem"); b.type = "button"; b.addEventListener("click", openChecklist); hd.appendChild(b); } }
+
+
+  // ---------- zoom for lesson pictures: buttons, pinch, ctrl + wheel, double click; drag moves the zoomed picture ----------
+  { const ZSEL = "figure.fig, .fig.mo-mini, .mo-hfig", MAXZ = 5;
+    const apply = c => { const t = c._t, st = c._s; if (!t || !t.isConnected) return; const w = c.clientWidth, h = c.clientHeight; st.z = Math.max(1, Math.min(MAXZ, st.z));
+      st.x = Math.min(0, Math.max(w - w * st.z, st.x)); st.y = Math.min(0, Math.max(h - h * st.z, st.y)); if (st.z === 1){ st.x = 0; st.y = 0; }
+      t.style.transformOrigin = "0 0"; t.style.transform = st.z === 1 ? "" : "translate(" + st.x.toFixed(1) + "px," + st.y.toFixed(1) + "px) scale(" + st.z.toFixed(3) + ")";
+      c.classList.toggle("zoomed", st.z > 1); c._pct.textContent = Math.round(st.z * 100) + " %"; c._out.disabled = st.z <= 1; c._in.disabled = st.z >= MAXZ; };
+    const zoomAt = (c, z, px, py) => { const st = c._s, r = c.getBoundingClientRect(), cx = px == null ? r.width / 2 : px - r.left, cy = py == null ? r.height / 2 : py - r.top, nz = Math.max(1, Math.min(MAXZ, z)), k = nz / st.z;
+      st.x = cx - (cx - st.x) * k; st.y = cy - (cy - st.y) * k; st.z = nz; apply(c); };
+    function wrap(f){ if (f._zm || f.closest(".zm-clip")) return; const t = f.querySelector(".pa-svg") || f.querySelector("svg"); if (!t || t.closest(".zm-clip")) return; f._zm = 1;
+      const c = el("div","zm-clip"), ctl = el("div","zm-ctl"), mk = (txt, lab, fn) => { const b = el("button", null, txt); b.type = "button"; b.setAttribute("aria-label", lab); b.title = lab; b.addEventListener("click", ev => { ev.stopPropagation(); fn(); }); ctl.appendChild(b); return b; };
+      t.parentNode.insertBefore(c, t); c.appendChild(t); c._t = t; c._s = {z: 1, x: 0, y: 0};
+      c._out = mk("−", "Oddálit", () => zoomAt(c, c._s.z / 1.4)); c._pct = el("span", null, "100 %"); ctl.appendChild(c._pct); c._in = mk("+", "Přiblížit", () => zoomAt(c, c._s.z * 1.4)); mk("⤢", "Původní velikost", () => { c._s.z = 1; apply(c); });
+      c.appendChild(ctl); apply(c);
+      new MutationObserver(() => { if (!c.isConnected || !c._t.isConnected){ const n = c.querySelector(".pa-svg") || c.querySelector("svg"); if (n) c._t = n; } if (c._s.z > 1) apply(c); }).observe(c, {childList: true}); }
+    const scan = () => document.querySelectorAll(ZSEL).forEach(f => { try { wrap(f); } catch(e){} }); let raf = 0;
+    new MutationObserver(() => { if (!raf) raf = requestAnimationFrame(() => { raf = 0; scan(); }); }).observe(document.body, {childList: true, subtree: true}); scan();
+    const clipOf = ev => ev.target && ev.target.closest ? ev.target.closest(".zm-clip") : null;
+    document.addEventListener("wheel", ev => { const c = clipOf(ev); if (!c || !(ev.ctrlKey || ev.metaKey)) return; ev.preventDefault(); zoomAt(c, c._s.z * Math.exp(-ev.deltaY * .01), ev.clientX, ev.clientY); }, {passive: false});
+    document.addEventListener("dblclick", ev => { const c = clipOf(ev); if (!c || ev.target.closest(".zm-ctl")) return; if (c._s.z > 1){ c._s.z = 1; apply(c); } else zoomAt(c, 2.2, ev.clientX, ev.clientY); });
+    let drag = null, moved = false;
+    document.addEventListener("mousedown", ev => { const c = clipOf(ev); if (!c || c._s.z <= 1 || ev.button || ev.target.closest(".zm-ctl")) return; drag = {c: c, x: ev.clientX, y: ev.clientY, sx: c._s.x, sy: c._s.y}; moved = false; ev.preventDefault(); });
+    document.addEventListener("mousemove", ev => { if (!drag) return; const dx = ev.clientX - drag.x, dy = ev.clientY - drag.y; if (Math.abs(dx) + Math.abs(dy) > 4) moved = true; drag.c._s.x = drag.sx + dx; drag.c._s.y = drag.sy + dy; apply(drag.c); });
+    document.addEventListener("mouseup", () => { drag = null; });
+    document.addEventListener("click", ev => { if (moved){ moved = false; if (clipOf(ev)){ ev.stopPropagation(); ev.preventDefault(); } } }, true);
+    let tc = null; const dist = ts => Math.hypot(ts[0].clientX - ts[1].clientX, ts[0].clientY - ts[1].clientY);
+    document.addEventListener("touchstart", ev => { const c = clipOf(ev); if (!c || ev.target.closest(".zm-ctl")) return; const ts = ev.touches;
+      if (ts.length === 2) tc = {c: c, d: dist(ts), z: c._s.z, pinch: true}; else if (ts.length === 1 && c._s.z > 1) tc = {c: c, x: ts[0].clientX, y: ts[0].clientY, sx: c._s.x, sy: c._s.y}; else tc = null; }, {passive: true, capture: true});
+    document.addEventListener("touchmove", ev => { if (!tc) return; const ts = ev.touches; ev.preventDefault();
+      if (tc.pinch && ts.length === 2) zoomAt(tc.c, tc.z * dist(ts) / tc.d, (ts[0].clientX + ts[1].clientX) / 2, (ts[0].clientY + ts[1].clientY) / 2);
+      else if (!tc.pinch && ts.length === 1){ tc.c._s.x = tc.sx + ts[0].clientX - tc.x; tc.c._s.y = tc.sy + ts[0].clientY - tc.y; apply(tc.c); } }, {passive: false, capture: true});
+    document.addEventListener("touchend", ev => { if (tc && (tc.pinch || tc.c._s.z > 1)) ev.stopPropagation(); if (!ev.touches.length) tc = null; }, {capture: true});
+  }
 
   // ---------- moving to a new address without losing data ----------
   // data/site.json: {"move": "https://new-address", "from": ["https://old-address"]}. The old site hands the data to the new one in a window the person opens.
