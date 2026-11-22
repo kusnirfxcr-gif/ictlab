@@ -1250,6 +1250,21 @@ body:not([data-view="prehled"]):not([data-view="nastaveni"]) .tb-acc:not(.in){di
 }
 #v-prehled>.card{border-radius:24px;padding:20px}
 #v-prehled>.card>.row>h2,#v-prehled>.card>h2{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.phead{display:flex;flex-direction:column;gap:6px;padding:10px 4px 4px;animation:rise .45s cubic-bezier(.2,.8,.2,1) both}
+.phead .h2-kick{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between;gap:8px}.phead .h2-kick b{color:var(--ink);letter-spacing:.06em}
+.phead h1{font-family:var(--display);font-weight:800;font-size:clamp(30px,8.4vw,44px);letter-spacing:-.035em;line-height:1.02;margin:0}.phead h1 em{font-style:normal;color:var(--muted)}
+.phead p{margin:0;color:var(--muted);font-size:15px}
+.view>.card,.view>div>.card{border-radius:24px}
+#v-denik .card>h2,#v-denik .card>.row>h2,#v-kouc>.card>h2,#v-kouc>.card>.row>h2,#v-laura>.card>h2,#v-laura>.card>.row>h2,#v-room>.card>h2,#v-room>.card>.row>h2{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700}
+#v-kouc>.card:first-child,#v-vice>.card>h2{display:none}
+#v-vice>.card{background:none;border:0;padding:0;box-shadow:none}
+#v-vice .vgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+#v-vice .vgrid .go{flex-direction:column;align-items:flex-start;justify-content:space-between;gap:10px;min-height:104px;padding:16px;border-radius:20px;background:var(--surface)}
+#v-vice .vgrid .go b{font-size:16px}#v-vice .vgrid .go span{font-size:12.5px;line-height:1.35}
+#v-vice .vgrid .go>i{align-self:flex-end;font-style:normal;color:var(--muted);transition:transform .2s}#v-vice .vgrid .go:hover>i{transform:translateX(4px)}
+#v-vice .vgrid .go[hidden]{display:none}
+@media (min-width:860px){#v-vice .vgrid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.dscore .big,#v-kouc .dscore>b:first-child{font-family:var(--display)}
 </style>
 </head>
 <body>
@@ -1290,6 +1305,7 @@ body:not([data-view="prehled"]):not([data-view="nastaveni"]) .tb-acc:not(.in){di
 </aside>
 <div class="wrap">
   <div id="banner" role="status"></div>
+  <header class="phead" id="phead" hidden></header>
   <div class="subnav" id="subnav" hidden></div>
   <div id="lr" hidden></div>
 
@@ -1876,7 +1892,7 @@ body:not([data-view="prehled"]):not([data-view="nastaveni"]) .tb-acc:not(.in){di
   const VTITLE = {lide: "Lidé a postup", premium: "Premium", komunita: "Komunita", nastroje: "Nástroje", poznatky: "Poznatky botů", model: "Model", strategie: "Pine Script", backtest: "Backtest", napady: "Nápady", nastaveni: "Nastavení", napoveda: "Nápověda", novinky: "Co je nového", soukromi: "Soukromí a data", uvod: "O aplikaci"};
   function route(){
     const h = (location.hash || "").replace("#",""), v = VIEWS.includes(h) ? h : "prehled", g = GROUP[v] || "vice";
-    document.body.dataset.view = v; document.body.dataset.group = g;
+    document.body.dataset.view = v; document.body.dataset.group = g; try { pheadPaint(v, g); } catch(e){}
     VIEWS.forEach(x => $("v-" + x).classList.toggle("on", x === v));
     document.querySelectorAll("[data-g]").forEach(a => { if (a.dataset.g === g) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current"); });
     const sn = $("subnav"); clear(sn);
@@ -5934,6 +5950,13 @@ body:not([data-view="prehled"]):not([data-view="nastaveni"]) .tb-acc:not(.in){di
     remBox.appendChild(b); remBox.appendChild(el("p","small muted","Když budeš chtít připomínky změnit, smaž v kalendáři události Tape a stáhni soubor znovu.")); }
   { const _rsR = renderSettings; renderSettings = function(){ _rsR(); const box = $("set"); if (softLock) return; renderRem(); if (remBox.parentNode !== box) box.insertBefore(remBox, nickBox.parentNode === box ? nickBox.nextSibling : box.firstChild); }; }
 
+
+  // ---------- page header shared by the main sections ----------
+  const PHEAD = {denik: ["Deník", "Plán, obchody a čísla na jednom místě."], uceni: ["Učení", "Lekce, kurz a trénink. Každý den kousek."], kouc: ["Kouč", "Čte tvůj deník a hlídá proces, ne trh."], vice: ["Více", "Všechno ostatní, co Tape umí."]};
+  function pheadPaint(v, g){ const h = $("phead"), p = PHEAD[g]; if (!h) return; if (!p || (g === "vice" && v !== "vice")){ h.hidden = true; return; }
+    h.hidden = false; clear(h); const k = el("div","h2-kick"); k.appendChild(el("span", null, new Date().toLocaleDateString("cs-CZ", {weekday: "long", day: "numeric", month: "long"}))); const sd = streakDays(); k.appendChild(el("b", null, sd ? "série " + pl(sd, "den", "dny", "dní") : ""));
+    h.appendChild(k); const t = el("h1"); t.appendChild(document.createTextNode(p[0])); t.appendChild(el("em", null, ".")); h.appendChild(t); h.appendChild(el("p", null, p[1])); }
+  try { pheadPaint(document.body.dataset.view, document.body.dataset.group); } catch(e){}
 
   // ---------- home hero: three layouts, picked in Settings ----------
   const HEROS = [["a", "Čistý", "pozdrav, další krok, tři čísla"], ["b", "Kokpit", "velký výsledek s křivkou"], ["c", "Fokus", "jen dnešní cíl a jedno tlačítko"]];
