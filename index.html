@@ -1353,6 +1353,14 @@ body.fx-lite .pa-ctl,body.fx-lite .lnav,body.fx-off .pa-ctl,body.fx-off .lnav{-w
 .cg-glow{position:absolute;inset:-7px;border-radius:inherit;z-index:-1;pointer-events:none;background:radial-gradient(closest-side,rgba(216,180,254,.95),rgba(168,85,247,.55) 45%,rgba(124,58,237,0) 100%) no-repeat;background-size:55% 170%;background-position:-70% 50%;filter:blur(7px);animation:cgsweep .9s cubic-bezier(.35,.1,.2,1) forwards}
 .cg-glow.pink{background-image:radial-gradient(closest-side,rgba(255,214,234,.95),rgba(255,95,162,.6) 45%,rgba(255,95,162,0) 100%)}
 @keyframes cgsweep{0%{background-position:-70% 50%;opacity:0}14%{opacity:1}80%{opacity:.9}100%{background-position:170% 50%;opacity:0}}
+.cg-orbit{position:absolute;inset:-5px;border-radius:inherit;z-index:-1;pointer-events:none;background:conic-gradient(from var(--ra),rgba(124,58,237,0) 0 50%,#7c3aed 68%,#c084fc 84%,#f5d0fe 94%,rgba(124,58,237,0) 100%);filter:blur(6px);opacity:0;animation:cospin .85s linear infinite,cgin .18s ease forwards}
+.cg-orbit.pink{background:conic-gradient(from var(--ra),rgba(255,95,162,0) 0 50%,#ff5fa2 68%,#ff9fcb 84%,#ffe1ee 94%,rgba(255,95,162,0) 100%)}
+.cg-orbit.out{animation:cospin .85s linear infinite,cgout .2s ease forwards}
+.cg-orbit.hit{animation:cospin .28s linear infinite,cgflash .5s ease forwards;inset:-8px}
+@keyframes cgin{to{opacity:.95}}@keyframes cgout{from{opacity:.95}to{opacity:0}}@keyframes cgflash{0%{opacity:1;filter:blur(9px) brightness(1.5)}100%{opacity:.95;filter:blur(6px)}}
+.cg-pop{position:absolute;inset:-2px;border-radius:inherit;z-index:-1;pointer-events:none;border:2px solid rgba(192,132,252,.9);box-shadow:0 0 14px rgba(168,85,247,.7);animation:cgpop .6s cubic-bezier(.2,.7,.3,1) forwards}
+.cg-pop.pink{border-color:rgba(255,143,197,.95);box-shadow:0 0 14px rgba(255,95,162,.7)}
+@keyframes cgpop{from{transform:scale(1);opacity:1}to{transform:scale(1.22,1.5);opacity:0}}
 .cg-heart{position:fixed;z-index:96;pointer-events:none;width:16px;height:15px;margin:-7px 0 0 -8px;color:#ff5fa2;animation:cgheart 1s cubic-bezier(.2,.7,.3,1) forwards}
 .cg-heart svg{display:block;width:100%;height:100%;fill:currentColor;filter:drop-shadow(0 0 6px rgba(255,95,162,.7))}
 .cg-heart:nth-child(odd){color:#ff9fcb}
@@ -5409,15 +5417,27 @@ body.sakura .copop::before{background:conic-gradient(from var(--ra),#ff5fa2,#ffc
   function cgHearts(x, y){ for (let i = 0; i < 6; i++){ const h = el("span","cg-heart"); h.innerHTML = cgHeart; const a = (-90 + (Math.random() * 110 - 55)) * Math.PI / 180, d = 34 + Math.random() * 38;
     h.style.left = x + "px"; h.style.top = y + "px"; h.style.setProperty("--dx", (Math.cos(a) * d).toFixed(1) + "px"); h.style.setProperty("--dy", (Math.sin(a) * d - 10).toFixed(1) + "px"); h.style.setProperty("--s", (.6 + Math.random() * .6).toFixed(2)); h.style.setProperty("--rt", (Math.random() * 50 - 25).toFixed(0) + "deg"); h.style.animationDelay = (i * 25) + "ms";
     document.body.appendChild(h); setTimeout(() => h.remove(), 1100); } }
+  const CG_SEL = "button,.abtn,.chip,a.go,.tb-acc,.prem-btn,.subnav a,.nav1 a,.bottombar a";
+  function cgHost(t){ if (t.dataset.cg != null) return; const cs = getComputedStyle(t), back = []; if (cs.position === "static"){ t.style.position = "relative"; back.push("position"); } if (cs.isolation !== "isolate"){ t.style.isolation = "isolate"; back.push("isolation"); } t.dataset.cg = back.join(","); }
+  function cgFree(t){ if (t.dataset.cg == null || t.querySelector(":scope > .cg-glow, :scope > .cg-orbit")) return; t.dataset.cg.split(",").forEach(p => { if (p) t.style[p] = ""; }); delete t.dataset.cg; }
+  // hover: a purple light runs round behind the button
+  { let cur = null; const calm = () => { try { return window.matchMedia("(prefers-reduced-motion: reduce)").matches || !window.matchMedia("(hover: hover)").matches; } catch(e){ return false; } };
+    const off = () => { if (!cur) return; const t = cur, o = t.querySelector(":scope > .cg-orbit"); cur = null; if (o){ o.classList.add("out"); setTimeout(() => { o.remove(); cgFree(t); }, 220); } };
+    document.addEventListener("mouseover", ev => { const t = ev.target && ev.target.closest ? ev.target.closest(CG_SEL) : null; if (t === cur) return; off(); if (!t || t.disabled || calm() || t.matches(".prem-btn")) return;
+      const r = t.getBoundingClientRect(); if (r.width < 8 || r.height < 8) return; const old = t.querySelector(":scope > .cg-orbit"); if (old) old.remove();
+      const o = el("span","cg-orbit" + (document.body.classList.contains("sakura") ? " pink" : "")); o.setAttribute("aria-hidden","true"); cgHost(t); t.appendChild(o); cur = t; });
+    document.addEventListener("mouseout", ev => { if (cur && (!ev.relatedTarget || !cur.contains(ev.relatedTarget))) off(); });
+    window.addEventListener("blur", off); }
   document.addEventListener("click", ev => {
     const t = ev.target && ev.target.closest ? ev.target.closest("button,.abtn,.chip,a.go,.tb-acc,.orb,.prem-btn,.subnav a,.nav1 a,.bottombar a") : null; if (!t || t.disabled) return;
     try { if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return; } catch(e){}
     const r = t.getBoundingClientRect(); if (r.width < 8 || r.height < 8) return;
     const pink = document.body.classList.contains("sakura"), c1 = pink ? "255,95,162" : "168,85,247", c2 = pink ? "255,170,210" : "196,148,255";
     if (!t.matches(".orb,.prem-btn") && !t.querySelector(":scope > .cg-glow")){
-      const cs = getComputedStyle(t), g = el("span","cg-glow" + (pink ? " pink" : "")), back = []; g.setAttribute("aria-hidden","true");
-      if (cs.position === "static"){ t.style.position = "relative"; back.push("position"); } if (cs.isolation !== "isolate"){ t.style.isolation = "isolate"; back.push("isolation"); }
-      t.appendChild(g); setTimeout(() => { g.remove(); back.forEach(p => { t.style[p] = ""; }); }, 950); }
+      const g = el("span","cg-glow" + (pink ? " pink" : "")), pop = el("span","cg-pop" + (pink ? " pink" : "")); g.setAttribute("aria-hidden","true"); pop.setAttribute("aria-hidden","true"); cgHost(t);
+      t.appendChild(g); t.appendChild(pop); setTimeout(() => { g.remove(); pop.remove(); cgFree(t); }, 950); }
+    const ob = t.querySelector(":scope > .cg-orbit"); if (ob){ ob.classList.remove("hit"); void ob.offsetWidth; ob.classList.add("hit"); }
+    try { t.animate([{transform: "scale(1)"}, {transform: "scale(.955)", offset: .3}, {transform: "scale(1.02)", offset: .65}, {transform: "scale(1)"}], {duration: 380, easing: "cubic-bezier(.3,.7,.3,1)"}); } catch(e){}
     try { t.animate([{boxShadow: "0 0 0 0 rgba(" + c1 + ",0)"}, {boxShadow: "0 0 26px 3px rgba(" + c1 + ",.55), 0 0 60px 10px rgba(" + c2 + ",.18)", offset: .35}, {boxShadow: "0 0 0 0 rgba(" + c1 + ",0)"}], {duration: 850, easing: "cubic-bezier(.3,.1,.2,1)"}); } catch(e){}
     if (pink) cgHearts(ev.clientX || r.left + r.width / 2, ev.clientY || r.top + r.height / 2);
   }, true);
