@@ -2592,9 +2592,11 @@ body.fx-lite .pa-ctl,body.fx-lite .lnav,body.fx-off .pa-ctl,body.fx-off .lnav{-w
     paUI.texts.forEach((p, i) => p.classList.toggle("on", i === paStep));
     paUI.dots.forEach((d, i) => { d.className = i === paStep ? "on" : (i < paStep ? "past" : ""); });
     paUI.back.disabled = paStep === 0;
-    paUI.next.textContent = last ? (idx < pa.length - 1 ? "Další téma" : "Hotovo") : "Další";
+    paNextLabel();
     if (paUI.rem) paUI.rem.classList.toggle("on", last);
   }
+  function paNextLabel(){ const t = paTopic(); if (!t || !paUI) return; const last = paStep === t.steps.length - 1, idx = pa.indexOf(t); let lock = false; try { lock = idx < pa.length - 1 && topicLocked(idx + 1); } catch(e){}
+    paUI.next.textContent = !last ? "Další" : idx === pa.length - 1 ? "Procvičit na grafu →" : lock ? "Kontrolní otázka ↓" : "Další lekce →"; }
   function paGo(dir){
     const t = paTopic(); if (!t) return;
     const last = paStep === t.steps.length - 1, idx = pa.indexOf(t);
@@ -2603,6 +2605,7 @@ body.fx-lite .pa-ctl,body.fx-lite .lnav,body.fx-off .pa-ctl,body.fx-off .lnav{-w
     lp.seen = lp.seen || {};
     if (!lp.seen[t.id] && !t.check){ lp.seen[t.id] = true; persistLaura(); paChips(); }
     if (idx < pa.length - 1 && topicLocked(idx + 1)){ toast("Odpověz na kontrolní otázku pod grafem a odemkne se další téma."); const ex = $("pa-extra"); if (ex) ex.scrollIntoView({block: "center", behavior: "smooth"}); return; }
+    if (idx === pa.length - 1){ const pc = $("pr-card"); if (pc) arriveAt(pc); return; }
     if (idx < pa.length - 1){
       const before = paUI.next.getBoundingClientRect().top;
       paCur = pa[idx + 1].id; paStep = 0; paBuild();
@@ -4505,8 +4508,13 @@ body.fx-lite .pa-ctl,body.fx-lite .lnav,body.fx-off .pa-ctl,body.fx-off .lnav{-w
       box.appendChild(stSources(m.sources));
     } else if (stTab === "core"){
       const m = study.core, head = el("div","card"), list = el("div","list"); head.appendChild(el("h2", null, m.title)); head.appendChild(el("p", null, m.intro)); head.appendChild(el("p","small muted", m.how)); box.appendChild(head);
-      m.months.forEach(x => { const d = el("details","week"), sm = el("summary"), body = el("div","weekbody"), u = el("ul","stl"); sm.appendChild(el("h3", null, x.n + ". měsíc: " + x.title)); sm.appendChild(el("span","cnt", x.points.length + " bodů")); d.appendChild(sm);
-        x.points.forEach(p => u.appendChild(el("li", null, p))); body.appendChild(u); const b = x.topic && topicBtn(x.topic); if (b) body.appendChild(b); d.appendChild(body); list.appendChild(d); });
+      m.months.forEach(x => { const d = el("details","week"), sm = el("summary"), body = el("div","weekbody"), u = el("ul","stl"); sm.appendChild(el("h3", null, x.n + ". měsíc: " + x.title)); const mk = "m-" + x.n, cnt = el("span","cnt", lp.sq[mk] ? "splněno ✓" : x.points.length + " " + (x.points.length < 5 ? "body" : "bodů") + " k získání"); sm.appendChild(cnt); d.appendChild(sm); if (lp.sq[mk]) d.classList.add("done"); if (stCoreOpen === x.n) d.open = true; d.addEventListener("toggle", () => { if (d.open) stCoreOpen = x.n; });
+        x.points.forEach(p => u.appendChild(el("li", null, p))); body.appendChild(u); const b = x.topic && topicBtn(x.topic); if (b) body.appendChild(b);
+        const fin = el("button", lp.sq[mk] ? null : "primary", lp.sq[mk] ? "Splněno, +" + x.points.length + " b." : "Mám prostudováno, připsat " + x.points.length + " b."); fin.type = "button"; fin.disabled = !!lp.sq[mk];
+        fin.addEventListener("click", () => { if (lp.sq[mk]) return; lp.sq[mk] = 1; persistLaura(); try { confetti(fin, 18); } catch(e){} const nx = m.months.find(y => !lp.sq["m-" + y.n]); stCoreOpen = nx ? nx.n : null; toast(x.n + ". měsíc splněn, +" + x.points.length + " b." + (nx ? " Otevírám " + nx.n + ". měsíc." : " Celý core content je hotový.")); setTimeout(() => { renderStudy(); const o = $("st-body").querySelector("details[open]"); if (o) arriveAt(o); }, 500); });
+        body.appendChild(fin); d.appendChild(body); list.appendChild(d); });
+      { const dn = m.months.filter(y => lp.sq["m-" + y.n]), got = dn.reduce((a, y) => a + y.points.length, 0), all = m.months.reduce((a, y) => a + y.points.length, 0), bar = el("div","bar"), bi = el("i"); bi.style.width = Math.round(100 * dn.length / m.months.length) + "%"; bar.appendChild(bi);
+        head.appendChild(el("span","small muted","Splněno " + dn.length + " z " + m.months.length + " měsíců · " + got + " z " + all + " bodů")); head.appendChild(bar); }
       box.appendChild(list); box.appendChild(stSources(m.sources));
     } else if (stTab === "day" && study.day){
       const m = study.day, head = el("div","card"); head.appendChild(el("h2", null, m.title)); head.appendChild(el("p", null, m.intro)); box.appendChild(head);
@@ -4732,7 +4740,7 @@ body.fx-lite .pa-ctl,body.fx-lite .lnav,body.fx-off .pa-ctl,body.fx-off .lnav{-w
   }
   const _paBuild2 = paBuild; paBuild = function(){ _paBuild2(); renderPaExtra(); };
   const _paChips = paChips;
-  paChips = function(){ _paChips(); Array.prototype.forEach.call($("pa-chips").children, (b, i) => { const l = topicLocked(i); b.classList.toggle("lock", l); if (l) b.textContent += " · zamčeno"; }); };
+  paChips = function(){ _paChips(); Array.prototype.forEach.call($("pa-chips").children, (b, i) => { const l = topicLocked(i); b.classList.toggle("lock", l); if (l) b.textContent += " · zamčeno"; }); try { paNextLabel(); } catch(e){} };
   $("pa-chips").addEventListener("click", ev => { const b = ev.target.closest(".chip"); if (!b) return; const i = Array.prototype.indexOf.call($("pa-chips").children, b); if (i >= 0 && topicLocked(i)){ ev.stopPropagation(); toast("Nejdřív odpověz na kontrolní otázku u předchozího tématu."); } }, true);
   function renderDemoRoad(){
     const box = $("demo-road"); clear(box); const demo = cfg.accounts.filter(a => a.type === "demo").map(a => a.id), nd = jr.trades.filter(t => !t.missed && demo.indexOf(tAcct(t)) >= 0).length, np = (jr.paper || []).length, fin = !!(lp.final && lp.final.best / lp.final.of >= 0.8);
@@ -5282,7 +5290,7 @@ body.fx-lite .pa-ctl,body.fx-lite .lnav,body.fx-off .pa-ctl,body.fx-off .lnav{-w
             qb.appendChild(el("span","small", (ok ? "Správně. " : "Tohle ne. ") + x.quiz.why)); if (ok && !lp.sq["a-" + x.id]){ lp.sq["a-" + x.id] = 1; persistLaura(); d.classList.add("done"); cnt.textContent = "hotovo"; confetti(b, 14); } }); qb.appendChild(b); return b; });
         q.appendChild(qb); body.appendChild(q); d.appendChild(body); box.appendChild(d); });
       box.appendChild(stSources(m.sources)); }; }
-  let stAdvOpen = null;
+  let stAdvOpen = null, stCoreOpen = null;
   // ---------- coach: weekly report computed from the journal, no AI ----------
   function weeklyReport(){ const now = Date.now(), W = 7 * 864e5, all = jSorted(), cur = all.filter(t => now - new Date(t.ts) < W), prev = all.filter(t => { const a = now - new Date(t.ts); return a >= W && a < 2 * W; }), a = jStats(cur), b = jStats(prev), L = [];
     if (!cur.length) return null; const by = (key) => { const m = {}; cur.forEach(t => { [].concat(key(t) || []).forEach(k => { (m[k] = m[k] || []).push(Number(t.r) || 0); }); }); return Object.keys(m).map(k => ({k: k, n: m[k].length, r: m[k].reduce((x, y) => x + y, 0)})); };
