@@ -473,5 +473,11 @@
  "Zobrazit vše": "Show all",
  "Skrýt": "Hide",
  "Více…": "More…",
- "Méně": "Less"
+ "Méně": "Less",
+ "Svíčky": "Candles",
+ "Obrázek": "Image",
+ "Graf na kartě": "Chart on the card",
+ "Nahrát data k obchodu (CSV)": "Upload trade data (CSV)",
+ "Nahrát jiná data": "Upload other data",
+ "Čtu soubor…": "Reading file…"
 }

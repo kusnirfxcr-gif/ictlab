@@ -1270,6 +1270,7 @@ body:not([data-view="prehled"]):not([data-view="nastaveni"]) .tb-acc:not(.in){di
   .pa-fig .pa-svg svg,#l-body figure.fig svg,#c-now figure.fig svg,#st-body figure.fig svg{max-height:min(46vh,420px);width:auto;max-width:100%;margin-inline:auto;display:block}
 }
 body.fx-lite .pa-ctl,body.fx-lite .lnav,body.fx-off .pa-ctl,body.fx-off .lnav{-webkit-backdrop-filter:none;backdrop-filter:none;background:var(--surface)}
+.pxbox{display:flex;flex-direction:column;gap:8px;margin:4px 0 10px}.pxbox .pxlab{text-transform:uppercase;letter-spacing:.08em;font-size:11px}.pxbox>button{align-self:flex-start}
 </style>
 </head>
 <body>
@@ -1485,6 +1486,7 @@ body.fx-lite .pa-ctl,body.fx-lite .lnav,body.fx-off .pa-ctl,body.fx-off .lnav{-w
   <section class="view" id="v-novinky">
     <div class="card"><h2>Co je nového</h2><span class="kick">22. 11. 2026</span>
       <ul class="stl ok">
+        <li>Karta obchodu umí skutečný graf: nahraj export cen z TradingView nebo Dukascopy a karta ukáže svíčky nebo čáru s tvým vstupem, výstupem a stopem.</li>
         <li>Obrázky k obchodům se po přihlášení ukládají do účtu, takže je uvidíš i na telefonu.</li>
         <li>Angličtina: rozhraní jde přepnout v Nastavení a karty obchodu i výsledků jdou sdílet anglicky.</li>
         <li>Přehrávání trhu si data pamatuje: soubor nahraješ jednou a pak si vybíráš náhodný den, den výzvy nebo konkrétní datum. Umí i soubory z Dukascopy.</li>
@@ -4149,7 +4151,10 @@ body.fx-lite .pa-ctl,body.fx-lite .lnav,body.fx-off .pa-ctl,body.fx-off .lnav{-w
     g.fillStyle = "#101014"; rr(g, cx, cy, cw, ch, 30); g.fill(); g.strokeStyle = "#26262c"; g.lineWidth = 2; g.stroke();
     let shot = null; const keys = shotKeys(t);
     if (keys.length){ const data = await shotGet(keys[0]); if (data) shot = await new Promise(res => { const im = new Image(); im.onload = () => res(im); im.onerror = () => res(null); im.src = data; }); }
-    if (shot){ g.save(); rr(g, cx, cy, cw, ch, 30); g.clip(); const k = Math.max(cw / shot.width, ch / shot.height), w = shot.width * k, hh = shot.height * k; g.drawImage(shot, cx + (cw - w) / 2, cy + (ch - hh) / 2, w, hh); g.restore(); }
+    const want = opt.chart || cfg.card.chart || "auto", real = want === "obrazek" && shot ? null : await cardBars(t);
+    let foot = "R je násobek rizika na obchod";
+    if (real){ foot = pxChart(g, t, real, cx, cy, cw, ch, want === "cara" ? "line" : "candles", col, fm); }
+    else if (shot && (want === "obrazek" || want === "auto" || t.entry == null || t.exit == null)){ g.save(); rr(g, cx, cy, cw, ch, 30); g.clip(); const k = Math.max(cw / shot.width, ch / shot.height), w = shot.width * k, hh = shot.height * k; g.drawImage(shot, cx + (cw - w) / 2, cy + (ch - hh) / 2, w, hh); g.restore(); }
     else if (t.entry != null && t.exit != null && isFinite(t.entry) && isFinite(t.exit)){
       const P = cardPath(t), lv = parseLevels(t.levels), all = P.pts.concat(lv.map(l => l.v), t.stop != null ? [t.stop] : []); let lo = Math.min.apply(null, all), hi = Math.max.apply(null, all); const pad = (hi - lo) * .12 || 1; lo -= pad; hi += pad;
       const X = i => cx + 30 + i / (P.pts.length - 1) * (cw - 250), Y = v => cy + 24 + (hi - v) / (hi - lo) * (ch - 60);
@@ -4164,7 +4169,7 @@ body.fx-lite .pa-ctl,body.fx-lite .lnav,body.fx-off .pa-ctl,body.fx-off .lnav{-w
       g.fillStyle = "#5c5c66"; g.font = F(500, 20); g.fillText("Ilustrační průběh mezi vstupem a výstupem", cx + 24, cy + ch - 18);
     } else { g.fillStyle = "#8e8e98"; g.font = F(500, 28); g.textAlign = "center"; g.fillText("Pro graf doplň vstup a výstup nebo přilož obrázek", W / 2, cy + ch / 2); g.textAlign = "left"; }
     cardCells(g, W, cellsY, [["Vstup", fm(t.entry)], ["Výstup", fm(t.exit)], ["Stop", fm(t.stop)], useUsd ? ["Výsledek", sgn(r) + " R", col] : ["Seznam", t.ck ? t.ck.k + "/" + t.ck.n : "–"]]);
-    cardFoot(g, W, footY, "R je násobek rizika na obchod");
+    cardFoot(g, W, footY, foot);
     return c;
   }
   function periodRange(kind){
@@ -4209,7 +4214,7 @@ body.fx-lite .pa-ctl,body.fx-lite .lnav,body.fx-off .pa-ctl,body.fx-off .lnav{-w
     return c;
   }
   function fitText2(g, text, x, y, size, maxW){ let s = size; g.font = cardFont(700, s); while (g.measureText(text).width > maxW && s > 12){ s -= 2; g.font = cardFont(700, s); } g.fillText(text, x, y); }
-  function cardDialog(title, draw, name, units){
+  function cardDialog(title, draw, name, units, extra){
     const o = overlay("cardbox"), card = o.card, hold = el("div","cardprev"), fmtBox = el("div","chips"), unitBox = el("div","chips"), ctl = el("div","rp-ctl"); let cv = null, busy = 0;
     const langBox2 = el("div","chips"), cardLang = () => cfg.card.lang || cfg.lang || "cs";
     cfg.card = cfg.card || {fmt: "portrait", unit: "R"}; if (units.indexOf(cfg.card.unit) < 0) cfg.card.unit = "R";
@@ -4222,7 +4227,7 @@ body.fx-lite .pa-ctl,body.fx-lite .lnav,body.fx-off .pa-ctl,body.fx-off .lnav{-w
     [["cs","Česky"],["en","English"]].forEach(u => { const b = el("button","chip", u[1]); b.type = "button"; b.dataset.v = u[0]; b.addEventListener("click", () => { cfg.card.lang = u[0]; cfgStore(); paint(); }); langBox2.appendChild(b); });
     Object.keys(CARD_FMT).forEach(k => { const b = el("button","chip", CARD_FMT[k][2]); b.type = "button"; b.dataset.v = k; b.addEventListener("click", () => { cfg.card.fmt = k; cfgStore(); paint(); }); fmtBox.appendChild(b); });
     [["R","Jen R"],["$","Jen dolary"],["both","R i dolary"]].filter(u => units.indexOf(u[0]) >= 0).forEach(u => { const b = el("button","chip", u[1]); b.type = "button"; b.dataset.v = u[0]; b.addEventListener("click", () => { cfg.card.unit = u[0]; cfgStore(); paint(); }); unitBox.appendChild(b); });
-    card.appendChild(fmtBox); if (unitBox.children.length > 1) card.appendChild(unitBox); card.appendChild(langBox2); card.appendChild(hold); hold.appendChild(el("p","small muted","Kreslím…"));
+    card.appendChild(fmtBox); if (unitBox.children.length > 1) card.appendChild(unitBox); card.appendChild(langBox2); if (extra) extra(card, () => paint()); card.appendChild(hold); hold.appendChild(el("p","small muted","Kreslím…"));
     const blob = () => new Promise(res => cv.toBlob(res, "image/png")), save = async () => { const a = document.createElement("a"); a.href = URL.createObjectURL(await blob()); a.download = name; document.body.appendChild(a); a.click(); a.remove(); };
     const mk = (txt, fn, cls) => { const b = el("button", cls || null, txt); b.type = "button"; b.addEventListener("click", () => { if (cv) fn(); }); ctl.appendChild(b); };
     mk("Sdílet", async () => { const f = new File([await blob()], name, {type: "image/png"}); if (navigator.canShare && navigator.canShare({files: [f]})){ try { await navigator.share({files: [f]}); } catch(e){} } else save(); }, "primary");
@@ -4230,7 +4235,7 @@ body.fx-lite .pa-ctl,body.fx-lite .lnav,body.fx-off .pa-ctl,body.fx-off .lnav{-w
     card.appendChild(ctl); card.appendChild(el("p","small muted","Na telefonu tlačítko Sdílet otevře nabídku s Instagramem a dalšími aplikacemi. Na počítači se obrázek stáhne."));
     paint();
   }
-  function openCard(t){ const net = tNet(t); cardDialog("Karta obchodu", opt => drawCard(t, opt), "tape-" + String(t.ts).slice(0, 10) + ".png", net != null ? ["R", "$", "both"] : ["R"]); }
+  function openCard(t){ const net = tNet(t); cardDialog("Karta obchodu", opt => drawCard(t, opt), "tape-" + String(t.ts).slice(0, 10) + ".png", net != null ? ["R", "$", "both"] : ["R"], (card, repaint) => pxControls(t, card, repaint)); }
   function openPeriodCard(kind){ const has = jSorted().some(t => tNet(t) != null); cardDialog(kind === "day" ? "Karta dne" : kind === "week" ? "Karta týdne" : "Karta měsíce", opt => drawPeriodCard(kind, opt), "tape-" + (kind === "day" ? "den" : kind === "week" ? "tyden" : "mesic") + "-" + dayKey() + ".png", has ? ["R", "$"] : ["R"]); }
 
   // =====================================================================================
@@ -6035,7 +6040,7 @@ body.fx-lite .pa-ctl,body.fx-lite .lnav,body.fx-off .pa-ctl,body.fx-off .lnav{-w
   const EN_RULES = [[/(\d{1,2})\. (ledna|února|března|dubna|května|června|července|srpna|září|října|listopadu|prosince)/gi, (m, d, mo) => d + " " + EN_MON[mo.toLowerCase()]],
     [/\b(pondělí|úterý|středa|čtvrtek|pátek|sobota|neděle)\b/gi, (m, w) => { const e = EN_DAY[w.toLowerCase()]; return m === m.toUpperCase() ? e.toUpperCase() : m[0] === m[0].toUpperCase() ? e : e.toLowerCase(); }],
     [/\b(leden|únor|březen|duben|květen|červen|červenec|srpen|září|říjen|listopad|prosinec) (\d{4})/gi, (m, mo, y) => EN_MON[mo.toLowerCase()] + " " + y],
-    [/Série (\d+) (?:den|dny|dní)/g, "Streak $1 d"], [/série (\d+) (?:den|dny|dní)/g, "streak $1 d"], [/(\d+) obchod(?:ů|y|u)?(?![a-zá-ž])/g, "$1 trades"], [/(\d+) lekc(?:í|e)(?![a-zá-ž])/g, "$1 lessons"], [/^Celkem /, "Total "], [/^Vstup /, "Entry "], [/^Výstup /, "Exit "], [/^Cíl /, "Target "], [/^Nejlépe: /, "Best: "], [/^Nejhůře: /, "Worst: "], [/, tady je tvůj minulý týden\./, ", here is your last week."], [/(\d) ze (\d)/g, "$1 of $2"], [/ % z (\d)/g, " % of $1"], [/ R z (\d)/g, " R from $1"],
+    [/Série (\d+) (?:den|dny|dní)/g, "Streak $1 d"], [/série (\d+) (?:den|dny|dní)/g, "streak $1 d"], [/(\d+) obchod(?:ů|y|u)?(?![a-zá-ž])/g, "$1 trades"], [/(\d+) lekc(?:í|e)(?![a-zá-ž])/g, "$1 lessons"], [/^Celkem /, "Total "], [/(\d+)m svíčky/, "$1m candles"], [/(\d+)m graf/, "$1m chart"], [/čas New York/, "New York time"], [/srovnáno na cenu vstupu/, "aligned to entry price"], [/^Vstup /, "Entry "], [/^Výstup /, "Exit "], [/^Cíl /, "Target "], [/^Nejlépe: /, "Best: "], [/^Nejhůře: /, "Worst: "], [/, tady je tvůj minulý týden\./, ", here is your last week."], [/(\d) ze (\d)/g, "$1 of $2"], [/ % z (\d)/g, " % of $1"], [/ R z (\d)/g, " R from $1"],
     [/\bKrok (\d+) z (\d+)/g, "Step $1 of $2"], [/\bLekce (\d+) z (\d+)/g, "Lesson $1 of $2"], [/(\d+) z (\d+)\b/g, "$1 of $2"], [/^Dobré ráno/, "Good morning"], [/^Dobrý večer/, "Good evening"], [/^Dobrou noc/, "Good night"], [/^Ahoj/, "Hi"],
     [/^Týden (\d)/, "Week $1"], [/\bhotovo\b/g, "done"], [/\bminut dnes\b/g, "minutes today"], [/\bTento týden\b/g, "This week"], [/\bNaposledy:/g, "Last time:"], [/\bwinrate\b/g, "win rate"], [/\bR celkem\b/g, "R total"]];
   function trEn(str, card){
@@ -6094,6 +6099,115 @@ body.fx-lite .pa-ctl,body.fx-lite .lnav,body.fx-off .pa-ctl,body.fx-off .lnav{-w
   function shotsNotePaint(){ shotsNote.textContent = !auth ? "" : shotsMissing ? "Obrázky k obchodům jsou zatím jen v tomto zařízení. V účtu pro ně chybí tabulka tape_shots, postup je v README." : "Obrázky k obchodům se ukládají do účtu a stáhnou se i na dalším zařízení."; shotsNote.hidden = !auth; }
   { const _snS = syncNow; syncNow = async function(){ await _snS(); shotsSync(); };
     const _arS = accRender; accRender = function(){ _arS(); shotsNotePaint(); if (auth) accBox.appendChild(shotsNote); }; }
+
+
+  // ---------- real price chart on the trade card: bars from the user's own data (TradingView or Dukascopy export) ----------
+  // Bars are kept per New York day in IndexedDB "tape-bars"; the replay library "tape-replay" is searched too.
+  // The few hours around a trade are copied into the trade itself (t.px), so the chart syncs to the account and shows on the phone.
+  const pxDb = () => new Promise((res, rej) => { try { const r = indexedDB.open("tape-bars", 1); r.onupgradeneeded = () => r.result.createObjectStore("days", {keyPath: "day"}); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); } catch(e){ rej(e); } });
+  const pxGetDay = (name, day) => new Promise(res => { try { const r = indexedDB.open(name, 1); r.onupgradeneeded = () => { r.transaction.abort(); res(null); };
+    r.onsuccess = () => { const db = r.result; if (!db.objectStoreNames.contains("days")){ db.close(); return res(null); } const q = db.transaction("days").objectStore("days").get(day); q.onsuccess = () => { db.close(); res(q.result || null); }; q.onerror = () => { db.close(); res(null); }; }; r.onerror = () => res(null); } catch(e){ res(null); } });
+  const pxWall = ms => { const w = new Date(ms + tvZoneOff(ms, "America/New_York") * 6e4); return {day: w.toISOString().slice(0, 10), mn: w.getUTCHours() * 60 + w.getUTCMinutes()}; };
+  function pxParse(text){   // -> {day: [[minute, o, h, l, c], ...]} in New York time
+    const out = {}, lines = text.split(/\r?\n/); let n = 0;
+    for (let i = 0; i < lines.length; i++){
+      const c = lines[i].split(/[;,\t]/); if (c.length < 5) continue; let ts = c[0].trim().replace(/^"|"$/g, ""), k = 1, ms = null, wall = null, m;
+      if (/^\d{10,13}(\.\d+)?$/.test(ts)){ const v = parseFloat(ts); ms = v > 1e11 ? v : v * 1000; }
+      else if ((m = ts.match(/^(\d{4})[-./](\d{2})[-./](\d{2})[T ](\d{1,2}):(\d{2})(?::\d{2}(?:\.\d+)?)?\s*(Z|[+-]\d{2}:?\d{2})?$/))){
+        if (m[6]){ const z = m[6] === "Z" ? 0 : (m[6][0] === "-" ? -1 : 1) * (+m[6].slice(1, 3) * 60 + +m[6].slice(-2)); ms = Date.UTC(+m[1], m[2] - 1, +m[3], +m[4], +m[5]) - z * 6e4; } else wall = [m[1] + "-" + m[2] + "-" + m[3], +m[4] * 60 + +m[5]]; }
+      else if ((m = ts.match(/^(\d{2})\.(\d{2})\.(\d{4}) (\d{1,2}):(\d{2})(?::\d{2}(?:\.\d+)?)?(?: GMT([+-]\d{4}))?$/))){
+        if (m[6]){ const z = (m[6][0] === "-" ? -1 : 1) * (+m[6].slice(1, 3) * 60 + +m[6].slice(3)); ms = Date.UTC(+m[3], m[2] - 1, +m[1], +m[4], +m[5]) - z * 6e4; } else wall = [m[3] + "-" + m[2] + "-" + m[1], +m[4] * 60 + +m[5]]; }
+      else if ((m = ts.match(/^(\d{4})[-./]?(\d{2})[-./]?(\d{2})$/)) && (m = [m[0], m[1], m[2], m[3]]) && /^\d{1,2}:\d{2}/.test((c[1] || "").trim())){ const hm = c[1].trim().split(":"); wall = [m[1] + "-" + m[2] + "-" + m[3], +hm[0] * 60 + +hm[1]]; k = 2; }
+      else continue;
+      const o = parseFloat(c[k]), h = parseFloat(c[k + 1]), l = parseFloat(c[k + 2]), cl = parseFloat(c[k + 3]); if (![o, h, l, cl].every(isFinite) || h < l) continue;
+      const w = wall ? {day: wall[0], mn: wall[1]} : pxWall(ms); (out[w.day] = out[w.day] || []).push([w.mn, o, h, l, cl]); n++;
+    }
+    Object.keys(out).forEach(d => { const a = out[d].sort((x, y) => x[0] - y[0]); if (new Set(a.map(b => b[4])).size < Math.min(5, a.length)) delete out[d]; });
+    return {days: out, n: n};
+  }
+  async function pxStore(days){
+    const want = {}; jr.trades.forEach(t => { const ms = Date.parse(t.ts); if (isFinite(ms)) want[pxWall(ms).day] = 1; });
+    const keys = Object.keys(days), keep = keys.length <= 60 ? keys : keys.filter(d => want[d]);
+    if (keep.length){ const db = await pxDb(); await new Promise((res, rej) => { const tx = db.transaction("days", "readwrite"), st = tx.objectStore("days"); keep.forEach(d => st.put({day: d, b: days[d]})); tx.oncomplete = res; tx.onerror = () => rej(tx.error); }); db.close(); }
+    return {kept: keep.length, all: keys.length, hit: keys.filter(d => want[d]).length};
+  }
+  async function pxDayBars(day){
+    const a = await pxGetDay("tape-bars", day); if (a && a.b && a.b.length) return {b: a.b, src: "file"};
+    const r = await pxGetDay("tape-replay", day); if (r && r.bars && r.bars.length) return {b: r.bars.map(x => { const hm = String(x[0]).slice(11, 16).split(":"); return [+hm[0] * 60 + +hm[1], x[1], x[2], x[3], x[4]]; }), src: "replay"};
+    return null;
+  }
+  const pxSig = t => [t.ts, t.tsx || "", t.entry, t.exit, t.stop, t.dir].join("|");
+  async function cardBars(t){
+    if (t.px && t.px.sig === pxSig(t) && t.px.b && t.px.b.length) return t.px;
+    const e = Number(t.entry), x = Number(t.exit), ms = Date.parse(t.ts); if (t.entry == null || t.exit == null || !isFinite(e) || !isFinite(x) || !isFinite(ms)) return null;
+    const w = pxWall(ms), got = await pxDayBars(w.day); if (!got) return null; const b = got.b;
+    let iE = -1; for (let i = 0; i < b.length; i++){ if (b[i][0] <= w.mn) iE = i; else break; } if (iE < 0 || w.mn - b[iE][0] > 30) return null;
+    const tol = Math.abs(e) * .0006; let off = 0;
+    if (!(e >= b[iE][3] - tol && e <= b[iE][2] + tol)){ off = e - b[iE][4]; if (Math.abs(off) > Math.abs(e) * .03) return null; }   // other instrument; a CFD a few points off is aligned to the entry price
+    let xm = null; if (t.tsx){ const mx = Date.parse(t.tsx), wx = isFinite(mx) ? pxWall(mx) : null; if (wx && wx.day === w.day && wx.mn >= w.mn) xm = wx.mn; }
+    if (xm == null) for (let i = iE + 1; i < b.length && b[i][0] - w.mn <= 480; i++){ if (x >= b[i][3] + off - tol && x <= b[i][2] + off + tol){ xm = b[i][0]; break; } }
+    const hold = xm != null ? xm - w.mn : 30, pre = Math.min(Math.max(hold * .9, 25), 150), post = Math.min(Math.max(hold * .45, 12), 90), a0 = w.mn - pre, a1 = (xm != null ? xm : w.mn + 30) + post;
+    let win = b.filter(r => r[0] >= a0 && r[0] <= a1).map(r => [r[0], +(r[1] + off).toFixed(2), +(r[2] + off).toFixed(2), +(r[3] + off).toFixed(2), +(r[4] + off).toFixed(2)]);
+    if (win.length < 8) return null; if (win.length > 360) win = pxAgg(win, Math.ceil((a1 - a0) / 360));
+    const px = {sig: pxSig(t), d: w.day, em: w.mn, xm: xm, off: +off.toFixed(2), src: got.src, b: win};
+    const own = jr.trades.find(q => q.id === t.id); if (own && own.ts === t.ts){ own.px = px; try { localStorage.setItem(J_KEY, JSON.stringify(jr)); } catch(err){} }
+    return px;
+  }
+  function pxAgg(b, tf){ if (tf <= 1) return b; const out = []; b.forEach(r => { const k = Math.floor(r[0] / tf) * tf, l = out[out.length - 1]; if (l && l[0] === k){ l[2] = Math.max(l[2], r[2]); l[3] = Math.min(l[3], r[3]); l[4] = r[4]; } else out.push([k, r[1], r[2], r[3], r[4]]); }); return out; }
+  const pxHM = mn => Math.floor(mn / 60) + ":" + String(mn % 60).padStart(2, "0");
+  function pxChart(g, t, px, cx, cy, cw, ch, style, col, fm){
+    const F = cardFont, span = px.b[px.b.length - 1][0] - px.b[0][0], step = px.b.length > 1 ? Math.max(1, px.b[1][0] - px.b[0][0]) : 1;
+    const tf = [1, 2, 3, 5, 10, 15, 30, 60].find(v => v >= step && span / v <= 64) || 60, cs = pxAgg(px.b, tf), e = Number(t.entry), x = Number(t.exit), st = t.stop != null && isFinite(t.stop) ? Number(t.stop) : null, d = t.dir === "short" ? -1 : 1;
+    const lv = parseLevels(t.levels); let lo = Infinity, hi = -Infinity; cs.forEach(c => { lo = Math.min(lo, c[3]); hi = Math.max(hi, c[2]); }); [e, x].concat(st != null ? [st] : []).forEach(v => { lo = Math.min(lo, v); hi = Math.max(hi, v); });
+    lv.forEach(l => { if (l.v > lo - (hi - lo) * .3 && l.v < hi + (hi - lo) * .3){ lo = Math.min(lo, l.v); hi = Math.max(hi, l.v); } }); const pad = (hi - lo) * .08 || 1; lo -= pad; hi += pad;
+    const L = cx + 26, R = cx + cw - 200, T = cy + 26, B = cy + ch - 62, n = cs.length, sl = (R - L) / n, X = mn => L + ((mn - cs[0][0]) / tf + .5) * sl, Y = v => T + (hi - v) / (hi - lo) * (B - T);
+    g.save(); rr(g, cx, cy, cw, ch, 30); g.clip();
+    g.strokeStyle = "rgba(255,255,255,.04)"; g.lineWidth = 1; for (let i = 1; i < 5; i++){ const y = T + (B - T) * i / 5; g.beginPath(); g.moveTo(cx, y); g.lineTo(cx + cw, y); g.stroke(); }
+    const xE = X(Math.floor(px.em / tf) * tf), xX = px.xm != null ? X(Math.floor(px.xm / tf) * tf) : Math.min(R - sl, xE + sl * 8), bx0 = xE - sl * .5, bw = Math.max(xX - xE + sl, sl * 2);
+    const zone = (v1, v2, fill, edge) => { const y1 = Y(Math.max(v1, v2)), y2 = Y(Math.min(v1, v2)); g.fillStyle = fill; g.fillRect(bx0, y1, bw, Math.max(2, y2 - y1)); g.fillStyle = edge; g.fillRect(bx0, y1, 3, Math.max(2, y2 - y1)); };
+    if (d * (x - e) > 0) zone(e, x, "rgba(61,220,151,.16)", "rgba(61,220,151,.5)");
+    const lossTo = st != null ? (d * (x - st) < 0 ? x : st) : (d * (x - e) < 0 ? x : null); if (lossTo != null) zone(e, lossTo, "rgba(255,107,107,.15)", "rgba(255,107,107,.5)");
+    lv.forEach(l => { const y = Y(l.v); if (y < T - 4 || y > B + 4) return; g.strokeStyle = "rgba(242,181,96,.7)"; g.lineWidth = 2; g.setLineDash([4, 8]); g.beginPath(); g.moveTo(cx, y); g.lineTo(R + 6, y); g.stroke(); g.setLineDash([]); });
+    if (style === "line"){
+      const pts = cs.map(c => [X(c[0]), Y(c[4])]), gr = g.createLinearGradient(0, T, 0, B); gr.addColorStop(0, "rgba(245,245,246,.10)"); gr.addColorStop(1, "rgba(245,245,246,0)");
+      g.beginPath(); pts.forEach((p, i) => { if (i) g.lineTo(p[0], p[1]); else g.moveTo(p[0], p[1]); }); g.lineTo(pts[pts.length - 1][0], B); g.lineTo(pts[0][0], B); g.closePath(); g.fillStyle = gr; g.fill();
+      g.lineJoin = "round"; g.lineCap = "round"; g.lineWidth = 4; g.strokeStyle = "#8e8e98"; g.beginPath(); pts.forEach((p, i) => { if (i) g.lineTo(p[0], p[1]); else g.moveTo(p[0], p[1]); }); g.stroke();
+      g.strokeStyle = col; g.lineWidth = 5; g.beginPath(); let on = false; pts.forEach(p => { if (p[0] < xE - .5 || p[0] > xX + .5) return; if (on) g.lineTo(p[0], p[1]); else { g.moveTo(p[0], p[1]); on = true; } }); g.stroke();
+    } else {
+      const bwid = Math.max(3, Math.min(sl * .68, 22));
+      cs.forEach(c => { const xc = X(c[0]), up = c[4] >= c[1], y1 = Y(Math.max(c[1], c[4])), y2 = Y(Math.min(c[1], c[4])); g.strokeStyle = g.fillStyle = up ? "#e9e9ee" : "#6e6e7a";
+        g.lineWidth = Math.max(1.5, Math.min(3, sl * .12)); g.beginPath(); g.moveTo(xc, Y(c[2])); g.lineTo(xc, Y(c[3])); g.stroke(); g.fillRect(xc - bwid / 2, y1, bwid, Math.max(2, y2 - y1)); });
+    }
+    [[e, "#f5f5f6", [10, 8]], [x, col, [10, 8]]].concat(st != null ? [[st, "#ff6b6b", [6, 8]]] : []).forEach(it => { const y = Y(it[0]); g.strokeStyle = it[1]; g.globalAlpha = .55; g.lineWidth = 2; g.setLineDash(it[2]); g.beginPath(); g.moveTo(bx0, y); g.lineTo(R + 6, y); g.stroke(); g.setLineDash([]); g.globalAlpha = 1; });
+    const yE = Y(e), yX = Y(x), tri = (xx, yy, dirUp, c) => { g.fillStyle = "#09090b"; g.beginPath(); g.arc(xx, yy, 15, 0, 6.3); g.fill(); g.fillStyle = c; g.beginPath(); if (dirUp){ g.moveTo(xx, yy - 9); g.lineTo(xx + 9, yy + 7); g.lineTo(xx - 9, yy + 7); } else { g.moveTo(xx, yy + 9); g.lineTo(xx + 9, yy - 7); g.lineTo(xx - 9, yy - 7); } g.closePath(); g.fill(); };
+    tri(xE, yE, d > 0, "#f5f5f6"); if (px.xm != null){ g.fillStyle = "#09090b"; g.beginPath(); g.arc(xX, yX, 14, 0, 6.3); g.fill(); g.fillStyle = col; g.beginPath(); g.arc(xX, yX, 9, 0, 6.3); g.fill(); }
+    g.restore();
+    const items = lv.filter(l => { const y = Y(l.v); return y >= T - 4 && y <= B + 4; }).map(l => ({v: l.v, c: "#f2b560", t: l.name}));
+    const same = st != null && Math.abs(st - x) < 1e-9; if (st != null && !same) items.push({v: st, c: "#ff6b6b", t: "Stop"}); items.push({v: e, c: "#f5f5f6", t: "Vstup"}); items.push({v: x, c: col, t: same ? "Stop" : "Výstup"});
+    items.sort((p, q) => Y(p.v) - Y(q.v)); let ly = -1e9; items.forEach(it => { ly = Math.max(Y(it.v) + 8, ly + 28); g.fillStyle = it.c; g.font = F(600, 22); g.fillText(it.t + " " + fm(it.v), R + 18, Math.min(ly, B + 4)); });
+    g.fillStyle = "#5c5c66"; g.font = F(500, 19); const ticks = 4; for (let i = 0; i <= ticks; i++){ const c = cs[Math.round(i * (n - 1) / ticks)]; if (!c) continue; g.textAlign = i === 0 ? "left" : i === ticks ? "right" : "center"; g.fillText(pxHM(c[0]), i === 0 ? L - 6 : i === ticks ? R : X(c[0]), B + 30); } g.textAlign = "left";
+    return tf + "m " + (style === "line" ? "graf" : "svíčky") + " · čas New York" + (px.off ? " · srovnáno na cenu vstupu" : "");
+  }
+  function pxControls(t, card, repaint){
+    const box = el("div","pxbox"), chips = el("div","chips"), note = el("p","small muted"), fin = document.createElement("input"), up = el("button", null, "Nahrát data k obchodu (CSV)"); fin.type = "file"; fin.accept = ".csv,.txt,text/csv"; fin.hidden = true; up.type = "button";
+    let hasShot = shotKeys(t).length > 0, real = null;
+    const eff = () => { const w = cfg.card.chart; if (w === "obrazek" && hasShot) return "obrazek"; if (w === "cara" || w === "svicky") return w; return real ? "svicky" : hasShot ? "obrazek" : "cara"; };
+    const opts = [["svicky","Svíčky"],["cara","Čára"]].concat(hasShot ? [["obrazek","Obrázek"]] : []);
+    opts.forEach(o => { const b = el("button","chip", o[1]); b.type = "button"; b.dataset.v = o[0]; b.addEventListener("click", () => { cfg.card.chart = o[0]; cfgStore(); paintChips(); repaint(); }); chips.appendChild(b); });
+    const paintChips = () => Array.prototype.forEach.call(chips.children, b => b.setAttribute("aria-pressed", String(b.dataset.v === eff())));
+    const status = async () => { real = await cardBars(t); paintChips();
+      if (real){ note.textContent = "Graf je ze skutečných cen" + (real.src === "replay" ? " z knihovny v Přehrávání trhu" : " z nahraného souboru") + (real.off ? ", posunutých o " + fm2(real.off) + " b. na tvoji cenu vstupu (data jsou z jiného zdroje než tvůj broker)" : "") + ". Ukládá se k obchodu, takže ho uvidíš i na mobilu."; up.textContent = "Nahrát jiná data"; }
+      else note.textContent = t.entry == null || t.exit == null ? "Pro skutečný graf doplň k obchodu vstup a výstup." : "Pro skutečný graf nahraj ceny toho dne: v TradingView na grafu 1m nebo 5m dej Export chart data, nebo CSV z Dukascopy. Soubor zůstane jen v tomhle zařízení, k obchodu se uloží jen výřez kolem něj."; };
+    const fm2 = v => (v > 0 ? "+" : "") + v.toLocaleString("cs-CZ", {maximumFractionDigits: 2});
+    up.addEventListener("click", () => fin.click());
+    fin.addEventListener("change", ev => { const f = ev.target.files[0]; ev.target.value = ""; if (!f) return; note.textContent = "Čtu soubor…"; const rd = new FileReader();
+      rd.onload = async () => { try { const p = pxParse(String(rd.result)); if (!p.n){ note.textContent = "V souboru jsem nenašel ceny. Čekám sloupce čas, open, high, low, close."; return; }
+          const r = await pxStore(p.days); if (t.px) delete t.px; const own = jr.trades.find(q => q.id === t.id); if (own) delete own.px;
+          await status(); if (!real) note.textContent = "Uloženo " + pl(r.kept, "den", "dny", "dní") + ", ale den tohoto obchodu v nich není nebo ceny nesedí k tvému vstupu. Zkontroluj datum a trh v exportu."; else { jStore(); }
+          repaint(); } catch(e){ note.textContent = "Soubor se nepodařilo načíst."; } };
+      rd.readAsText(f); });
+    box.appendChild(el("div","small muted pxlab","Graf na kartě")); box.appendChild(chips); box.appendChild(note); box.appendChild(up); box.appendChild(fin); card.appendChild(box); paintChips(); status().then(() => { if (real && !cfg.card.chart) repaint(); });
+  }
 
   // ---------- moving to a new address without losing data ----------
   // data/site.json: {"move": "https://new-address", "from": ["https://old-address"]}. The old site hands the data to the new one in a window the person opens.
