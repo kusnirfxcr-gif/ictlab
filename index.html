@@ -1464,6 +1464,7 @@ body:not([data-view="prehled"]):not([data-view="nastaveni"]) .tb-acc:not(.in){di
   <section class="view" id="v-novinky">
     <div class="card"><h2>Co je nového</h2><span class="kick">22. 11. 2026</span>
       <ul class="stl ok">
+        <li>Přehrávání trhu si data pamatuje: soubor nahraješ jednou a pak si vybíráš náhodný den, den výzvy nebo konkrétní datum. Umí i soubory z Dukascopy.</li>
         <li>Nová úvodní karta na Přehledu ve třech podobách: Čistý, Kokpit a Fokus. Přepneš je v Nastavení.</li>
         <li>Přivítání při otevření a vlastní přezdívka (změníš ji v Nastavení).</li>
         <li>Výzva dne: osm grafů, každý den stejných pro všechny. Počítá se první pokus.</li>
@@ -1623,7 +1624,7 @@ body:not([data-view="prehled"]):not([data-view="nastaveni"]) .tb-acc:not(.in){di
     </div>
     <div class="card">
       <h2>Přehrávání trhu</h2>
-      <p class="small muted">Nahraj CSV s minutovými svíčkami (stejné jako pro backtester). Vybere se náhodný den a svíčky přibývají po jedné. Data zůstávají v tvém počítači.</p>
+      <p class="small muted">Nahraj jednou CSV se svíčkami (soubor z Dukascopy, export z TradingView nebo data pro backtester). Tape si dny uloží do zařízení a příště je nabídne samo: náhodný den, den výzvy nebo konkrétní datum. Svíčky přibývají po jedné a obchoduješ nanečisto. Data zůstávají jen v tomto zařízení.</p>
       <label for="rp-file" class="small" style="cursor:pointer"><span class="pill info">Vybrat CSV</span><input id="rp-file" type="file" accept=".csv,.txt,text/csv" hidden></label>
       <div class="list" id="rp-out"></div>
     </div>
@@ -3164,18 +3165,36 @@ body:not([data-view="prehled"]):not([data-view="nastaveni"]) .tb-acc:not(.in){di
   (function replay(){
     let days = [], bars = [], pos = 0, timer = null, ui = null, tr = null;
     function parse(text){
-      const lines = text.split(/\r?\n/), out = {};
+      const lines = text.split(/\r?\n/), out = {}, offC = {}; let epoch = false;
       for (let i = 0; i < lines.length; i++){
         const c = lines[i].split(/[;,\t]/); if (c.length < 5) continue;
         let k = 1, ts = c[0].trim();
+        if (/^\d{10,13}$/.test(ts)){   // epoch seconds or milliseconds (Dukascopy, TradingView): convert to New York wall time, keep 7:00-16:00
+          const ms = ts.length > 11 ? +ts : +ts * 1000, dk = Math.floor(ms / 864e5); if (offC[dk] === undefined) offC[dk] = tvZoneOff(ms + 432e5, "America/New_York");
+          const w = new Date(ms + offC[dk] * 6e4), mn = w.getUTCHours() * 60 + w.getUTCMinutes(), wd = w.getUTCDay(); if (mn < 420 || mn >= 960 || wd === 0 || wd === 6) continue;
+          ts = w.toISOString().slice(0, 16).replace("T", " "); epoch = true; }
         if (/^\d{1,2}:\d{2}/.test((c[1] || "").trim())){ ts += " " + c[1].trim(); k = 2; }
         const o = parseFloat(c[k]), h = parseFloat(c[k + 1]), l = parseFloat(c[k + 2]), cl = parseFloat(c[k + 3]);
         if (![o, h, l, cl].every(isFinite)) continue;
         const day = ts.slice(0, 10).replace(/[^0-9]/g, "-");
         (out[day] = out[day] || []).push([ts, o, h, l, cl]);
       }
-      return Object.keys(out).filter(d => out[d].length >= 200).map(d => ({day: d, bars: out[d]}));
+      if (epoch) tzOff = 0;
+      return Object.keys(out).filter(d => out[d].length >= (epoch ? 60 : 200) && !(epoch && new Set(out[d].map(b => b[4])).size < out[d].length / 3)).sort().map(d => ({day: d, bars: out[d]}));
     }
+    // library on this device: parsed days are kept in IndexedDB, so the file is loaded only once
+    const idb = () => new Promise((res, rej) => { try { const r = indexedDB.open("tape-replay", 1); r.onupgradeneeded = () => r.result.createObjectStore("days", {keyPath: "day"}); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); } catch(e){ rej(e); } });
+    const libSave = ds => idb().then(db => new Promise((res, rej) => { const tx = db.transaction("days", "readwrite"), st = tx.objectStore("days"); st.clear(); ds.forEach(d => st.put(d)); tx.oncomplete = () => res(); tx.onerror = () => rej(tx.error); }));
+    const libLoad = () => idb().then(db => new Promise((res, rej) => { const r = db.transaction("days").objectStore("days").getAll(); r.onsuccess = () => res(r.result || []); r.onerror = () => rej(r.error); }));
+    const libWipe = () => idb().then(db => new Promise(res => { const tx = db.transaction("days", "readwrite"); tx.objectStore("days").clear(); tx.oncomplete = () => res(); }));
+    function libBar(){ const out = $("rp-out"); let b = $("rp-lib"); if (b) b.remove(); if (!days.length) return; b = el("div","box"); b.id = "rp-lib";
+      b.appendChild(el("p","small", "V zařízení je uloženo " + pl(days.length, "den", "dny", "dní") + " (" + days[0].day + " až " + days[days.length - 1].day + "). Příště už soubor nahrávat nemusíš."));
+      const row = el("div","chips"), mk = (t, fn) => { const x = el("button","chip", t); x.type = "button"; x.addEventListener("click", fn); row.appendChild(x); };
+      mk("Náhodný den", () => pick()); mk("Den výzvy", () => { let h = 0; const k = dayKey(); for (let q = 0; q < k.length; q++) h = (h * 31 + k.charCodeAt(q)) >>> 0; pick(days[h % days.length]); toast("Den výzvy je dnes pro všechny se stejnými daty stejný."); });
+      const dsel = el("input"); dsel.type = "date"; dsel.min = days[0].day; dsel.max = days[days.length - 1].day; dsel.setAttribute("aria-label", "Vybrat den"); dsel.style.width = "auto";
+      dsel.addEventListener("change", () => { const d = days.find(x => x.day >= dsel.value); if (d) pick(d); }); row.appendChild(dsel);
+      mk("Smazat data", () => { libWipe().then(() => { days = []; stop(); clear($("rp-out")); toast("Uložená data jsou smazaná."); }); });
+      b.appendChild(row); out.insertBefore(b, out.firstChild); }
     function stats(){
       const p = jr.paper || [], s = jStats(p);
       ui.stat.textContent = p.length ? "Cvičné obchody: " + p.length + " · " + sgn(s.total) + " R · winrate " + Math.round(s.winrate) + " %" : "Zatím žádný cvičný obchod.";
@@ -3225,8 +3244,8 @@ body:not([data-view="prehled"]):not([data-view="nastaveni"]) .tb-acc:not(.in){di
       ui.long.disabled = ui.short.disabled = !!tr;
     }
     function stop(){ if (timer){ clearInterval(timer); timer = null; } if (ui) ui.play.textContent = "Přehrát"; }
-    function pick(){
-      stop(); tr = null; const d = days[Math.floor(Math.random() * days.length)]; bars = d.bars; ui.day = d.day; ui.msg.textContent = "";
+    function pick(want){
+      stop(); tr = null; const d = want && want.bars ? want : days[Math.floor(Math.random() * days.length)]; bars = d.bars; ui.day = d.day; ui.msg.textContent = "";
       pos = Math.min(bars.length, Math.max(60, Math.floor(bars.length * .35))); draw();
     }
     function enter(dir){
@@ -3262,9 +3281,10 @@ body:not([data-view="prehled"]):not([data-view="nastaveni"]) .tb-acc:not(.in){di
       const rd = new FileReader();
       rd.onload = () => { days = parse(String(rd.result)); clear(out);
         if (!days.length){ out.appendChild(el("p","small","V souboru jsem nenašel minutové svíčky (čas, open, high, low, close).")); return; }
-        build(); pick(); };
+        build(); pick(); libBar(); libSave(days).catch(() => toast("Data se nepodařilo uložit do zařízení, zůstanou jen do zavření stránky.")); };
       rd.readAsText(f); ev.target.value = "";
     });
+    libLoad().then(ds => { if (!ds.length || days.length) return; days = ds.sort((a, b) => a.day.localeCompare(b.day)); tzOff = 0; clear($("rp-out")); build(); pick(); libBar(); }).catch(() => {});
     window.addEventListener("hashchange", stop);
   })();
 
