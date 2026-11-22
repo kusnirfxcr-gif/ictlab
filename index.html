@@ -1282,9 +1282,9 @@ body.fx-lite .pa-ctl,body.fx-lite .lnav,body.fx-off .pa-ctl,body.fx-off .lnav{-w
 .mo-ln.m{stroke:rgba(246,220,154,.85);stroke-dasharray:none}.mo-ln.ce{stroke:rgba(246,220,154,.6)}
 @keyframes moLine{from{opacity:0;stroke-dashoffset:300}to{opacity:1;stroke-dashoffset:0}}
 .mo-lt{fill:rgba(246,220,154,.75);font-size:9px;font-weight:700;letter-spacing:.04em;opacity:0;animation:moFade .5s forwards}
-.mo-px{fill:none;stroke:url(#moG);stroke-width:2.6;stroke-linejoin:miter;stroke-linecap:round;stroke-dasharray:1000;stroke-dashoffset:1000;animation:moDraw 3s 1s cubic-bezier(.45,.1,.3,1) forwards;filter:drop-shadow(0 0 6px rgba(232,194,106,.55))}
+.mo-px{fill:none;stroke:url(#moG);stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round;stroke-dasharray:1000;stroke-dashoffset:1000;animation:moDraw 3s 1s cubic-bezier(.45,.1,.3,1) forwards;filter:drop-shadow(0 0 6px rgba(232,194,106,.55))}
 @keyframes moDraw{to{stroke-dashoffset:0}}
-.mo-dot{fill:#3ddc97;opacity:0;animation:moPop .4s 2.2s forwards}.mo-dot2{fill:var(--gold2);opacity:0;animation:moPop .4s 3.6s forwards;filter:drop-shadow(0 0 8px rgba(246,220,154,.9))}
+.mo-dot{fill:#3ddc97;opacity:0;animation:moPop .4s 2.2s forwards}.mo-dot2{fill:var(--gold2);opacity:0;animation:moPop .4s 3.95s forwards;filter:drop-shadow(0 0 8px rgba(246,220,154,.9))}
 @keyframes moPop{0%{opacity:0;transform:scale(.2)}70%{transform:scale(1.4)}100%{opacity:1;transform:scale(1)}}.mo-dot,.mo-dot2{transform-box:fill-box;transform-origin:center}
 @keyframes moFade{to{opacity:1}}
 .mo-cap{fill:rgba(246,220,154,.8);font-size:7px;font-weight:800;letter-spacing:.1em;opacity:0;animation:moFade .5s .3s forwards}
@@ -1293,9 +1293,9 @@ body.fx-lite .pa-ctl,body.fx-lite .lnav,body.fx-off .pa-ctl,body.fx-off .lnav{-w
 .mo-sl{fill:rgba(8,8,10,.82);stroke:#9a9aa6;stroke-width:1}
 .mo-tp{fill:url(#moTP);stroke:#ff9a3c;stroke-width:1.2;filter:drop-shadow(0 0 8px rgba(255,154,60,.45))}
 .mo-en{stroke:#fff3cf;stroke-width:1.2;stroke-dasharray:3 3}
-.mo-tpt{fill:#ffb061;font-size:11px;font-weight:800;text-anchor:end}.mo-slt{fill:#b9b9c4;font-size:8px;font-weight:800;text-anchor:end;letter-spacing:.08em}
-.mo-smt{opacity:0;animation:moFade .5s 2.1s forwards}.mo-smt line{stroke:#fff3cf;stroke-width:1.2;stroke-dasharray:2 2.5}.mo-smt text{fill:#fff3cf;font-size:8px;font-weight:800;letter-spacing:.1em}
-.mo-ent{opacity:0;animation:moFade .4s 2.4s forwards}.mo-ent circle{fill:#fff3cf}.mo-ent .h{fill:rgba(255,243,207,.25);transform-box:fill-box;transform-origin:center;animation:moPulse 1.8s 2.6s ease-in-out infinite}.mo-ent text{fill:#fff3cf;font-size:8px;font-weight:800;letter-spacing:.06em}
+.mo-tpt{fill:#ffb061;font-size:9.5px;font-weight:800;text-anchor:end;letter-spacing:.04em}.mo-slt{fill:#b9b9c4;font-size:7px;font-weight:800;text-anchor:end;letter-spacing:.08em}
+.mo-smt{opacity:0;animation:moFade .5s 2.1s forwards}.mo-smt line{stroke:#fff3cf;stroke-width:1.2;stroke-dasharray:2 2.5}.mo-smt text{fill:#fff3cf;font-size:7.5px;font-weight:800;letter-spacing:.1em}
+.mo-ent{opacity:0;animation:moFade .4s 2.4s forwards}.mo-ent circle{fill:#fff3cf}.mo-ent .h{fill:rgba(255,243,207,.25);transform-box:fill-box;transform-origin:center;animation:moPulse 1.8s 2.6s ease-in-out infinite}.mo-ent-t{fill:#fff3cf;font-size:7.5px;font-weight:800;letter-spacing:.1em}.mo-slc{stroke:#9a9aa6;stroke-width:1;stroke-dasharray:2 2}.mo-tph{fill:#ff9a3c;stroke:#1a1307;stroke-width:1;opacity:0;animation:moPop .35s 3.1s forwards;transform-box:fill-box;transform-origin:center;filter:drop-shadow(0 0 5px rgba(255,154,60,.9))}
 @keyframes moPulse{0%,100%{transform:scale(1);opacity:.9}50%{transform:scale(1.9);opacity:0}}
 .mo-hin{position:relative;padding:0 22px 22px;margin-top:-6px}
 .mo-kick{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
@@ -6485,16 +6485,17 @@ body.sakura .copop::before{background:conic-gradient(from var(--ra),#ff5fa2,#ffc
     return safeChart({candles: t.candles.slice(0, show), n: t.candles.length, lo: t.lo, hi: t.hi, h: t.h || 260, last: true, marks: moMarks(t, step, animate ? step : -1), newFrom: animate ? Math.min(ps, show) : show, focus: st.focus || null, prevFocus: animate ? (prev ? prev.focus || null : null) : (st.focus || null)}); }
   function moHeroSvg(){
     const W = 360, H = 214, lv = [["+2", 26], ["+1", 56], ["high", 86], ["C.E.", 101], ["low", 116], ["−1", 146], ["−2", 176]];
-    const pts = "30,110 36,92 42,112 50,88 56,108 62,94 68,112 76,132 82,122 94,148 100,134 108,158 118,132 124,140 136,118 142,128 154,102 160,114 172,84 178,96 192,64 198,76 214,44 226,62 236,50";
+    // range: starts on the left edge of the box, touches its top and bottom once, leaves through the right edge
+    const pts = "26,103 33,93 39,107 46,88.3 53,104 59,95 65,113.7 72,101 83,128 91,119 102,148 110,136 121,158 134,134 142,140 158,118 166,128 183,102 191,113 207,86 215,97 234,68 242,79 261,56";
     let s = '<svg viewBox="0 0 ' + W + ' ' + H + '" class="mo-hsvg" aria-hidden="true"><defs><linearGradient id="moG" x1="0" x2="1"><stop offset="0" stop-color="#fff0c4"/><stop offset=".5" stop-color="#f0cf7d"/><stop offset="1" stop-color="#c8963a"/></linearGradient><radialGradient id="moR" cx=".42" cy=".55" r=".62"><stop offset="0" stop-color="rgba(232,194,106,.26)"/><stop offset="1" stop-color="rgba(232,194,106,0)"/></radialGradient><linearGradient id="moTP" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="rgba(255,154,60,.20)"/><stop offset="1" stop-color="rgba(255,154,60,.48)"/></linearGradient><pattern id="moGrid" width="22" height="22" patternUnits="userSpaceOnUse"><path d="M22 0H0V22" fill="none" stroke="rgba(246,220,154,.05)" stroke-width="1"/></pattern></defs>';
     s += '<rect width="' + W + '" height="' + H + '" fill="url(#moGrid)"/><rect width="' + W + '" height="' + H + '" fill="url(#moR)"/>';
-    s += '<rect class="mo-box" x="26" y="86" width="46" height="30" rx="2"/><text class="mo-cap" x="26" y="80">MOR 00:00–00:30</text>';
+    s += '<rect class="mo-box" x="26" y="86" width="46" height="30"/><text class="mo-cap" x="26" y="80">MOR 00:00–00:30</text>';
     lv.forEach((l, i) => { const main = l[0] === "high" || l[0] === "low"; s += '<line class="mo-ln' + (main ? " m" : "") + (l[0] === "C.E." ? " ce" : "") + '" style="animation-delay:' + (.2 + i * .1).toFixed(2) + 's" x1="' + (main || l[0] === "C.E." ? 26 : 72) + '" x2="300" y1="' + l[1] + '" y2="' + l[1] + '"/><text class="mo-lt" style="animation-delay:' + (.5 + i * .1).toFixed(2) + 's" x="306" y="' + (l[1] + 3.5) + '">' + l[0] + '</text>'; });
-    s += '<g class="mo-trade"><rect class="mo-sl" x="124" y="140" width="84" height="18"/><rect class="mo-tp" x="124" y="113" width="84" height="27"/><line class="mo-en" x1="124" x2="208" y1="140" y2="140"/>';
-    s += '<text class="mo-tpt" x="204" y="124">1,5R</text><text class="mo-slt" x="204" y="152.5">SL</text></g>';
-    s += '<polyline class="mo-px" pathLength="1000" points="' + pts + '"/><path class="mo-arr" d="M225 46 L237 49 L231 60"/>';
-    s += '<g class="mo-smt"><line x1="94" y1="152" x2="108" y2="162"/><text x="84" y="170" transform="rotate(35 84 170)">SMT</text></g>';
-    s += '<g class="mo-ent"><circle cx="124" cy="140" r="7" class="h"/><circle cx="124" cy="140" r="3.6"/><text x="118" y="136" text-anchor="end">entry</text></g></svg>';
+    s += '<g class="mo-trade"><rect class="mo-sl" x="142" y="140" width="94" height="18"/><rect class="mo-tp" x="142" y="113" width="94" height="27"/><line class="mo-slc" x1="121" x2="142" y1="158" y2="158"/><line class="mo-en" x1="142" x2="236" y1="140" y2="140"/>';
+    s += '<text class="mo-tpt" x="231" y="124.5">TP 1,5R</text><text class="mo-slt" x="231" y="152">SL na low</text><text class="mo-ent-t" x="240" y="142.8">ENTRY</text></g>';
+    s += '<polyline class="mo-px" pathLength="1000" points="' + pts + '"/>';
+    s += '<g class="mo-smt"><line x1="101" y1="152.5" x2="120" y2="162.5"/><text x="107" y="166" text-anchor="middle" transform="rotate(27.8 107 166)">SMT</text></g>';
+    s += '<g class="mo-ent"><circle cx="142" cy="140" r="7" class="h"/><circle cx="142" cy="140" r="3.4"/></g><circle class="mo-tph" cx="175.8" cy="113" r="3"/><circle class="mo-dot2" cx="261" cy="56" r="4"/></svg>';
     return s;
   }
   function moLesson(){
