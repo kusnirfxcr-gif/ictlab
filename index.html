@@ -1238,6 +1238,18 @@ body.sakura .wel{background:rgba(60,20,40,.35)}
 .hero2 .h2-ring{width:118px;height:118px}.hero2 .h2-ring circle{fill:none;stroke-width:7}.hero2 .h2-ring .bg{stroke:var(--surface2)}.hero2 .h2-ring .fg{stroke:var(--accent);stroke-linecap:round;transform:rotate(-90deg);transform-origin:50% 50%;transition:stroke-dashoffset .8s cubic-bezier(.2,.8,.2,1)}
 .hero2 .h2-ringw{position:relative;display:grid;place-items:center}.hero2 .h2-ringw div{position:absolute;display:flex;flex-direction:column;line-height:1.1}.hero2 .h2-ringw b{font-family:var(--display);font-size:26px;letter-spacing:-.03em}.hero2 .h2-ringw span{font-size:11px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
 body.sakura .hero2 .h2-next{color:#fff}
+body:not([data-view="prehled"]):not([data-view="nastaveni"]) .tb-acc:not(.in){display:none}
+@media (max-width:859px){
+  .topbar{grid-template-columns:auto 1fr auto;gap:8px}
+  .topbar nav.nav1{display:flex;grid-column:auto;grid-row:auto;justify-self:center;gap:2px}
+  .topbar nav.nav1 a[data-g],.topbar nav.nav1 a.brand{display:none}
+  .topbar nav.nav1 a{width:34px;height:34px}
+  body[data-view="prehled"] .topbar nav.nav1,body[data-view="nastaveni"] .topbar nav.nav1{display:none}
+  body[data-view="prehled"] .topbar,body[data-view="nastaveni"] .topbar{grid-template-columns:1fr auto}
+  body.in-acc .topbar nav.nav1{display:flex!important} body.in-acc .topbar{grid-template-columns:auto 1fr auto!important}
+}
+#v-prehled>.card{border-radius:24px;padding:20px}
+#v-prehled>.card>.row>h2,#v-prehled>.card>h2{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700}
 </style>
 </head>
 <body>
@@ -4926,7 +4938,7 @@ body.sakura .hero2 .h2-next{color:#fff}
   document.addEventListener("visibilitychange", () => { if (auth) syncNow(); });
 
   // ---------- top bar: account button, icon navigation by view; home: recent trades; market badge ----------
-  function renderAccBtn(){ const a = $("tb-acc"); if (!a) return; clear(a); a.classList.toggle("in", !!auth);
+  function renderAccBtn(){ const a = $("tb-acc"); if (!a) return; clear(a); a.classList.toggle("in", !!auth); document.body.classList.toggle("in-acc", !!auth);
     if (auth){ a.appendChild(el("b", null, String(auth.email || "?").charAt(0).toUpperCase())); a.title = "Účet: " + (auth.email || ""); a.setAttribute("aria-label", "Účet " + (auth.email || "")); }
     else { a.appendChild(el("span", null, "Přihlásit")); a.title = "Přihlásit se nebo založit účet"; a.setAttribute("aria-label", "Přihlásit se"); } }
   const _renderAccLinkTb = renderAccLink; renderAccLink = function(){ _renderAccLinkTb(); renderAccBtn(); };
