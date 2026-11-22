@@ -1,576 +1,589 @@
 [
- {
-  "id": "20261121-01",
-  "ts": "2026-11-21T05:55:00Z",
-  "date": "2026-11-21",
-  "bot": "skaut",
-  "concept": "cas",
-  "title": "Zeussy: mapa před seancí má tři věci",
-  "source": "Forex.in.rs, shrnutí rozhovoru se Zeussym",
-  "url": "https://www.forex.in.rs/smart-money-timing",
-  "simple": "Podle shrnutí rozhovoru si Zeussy před seancí vyznačí tři věci: high a low předchozího cyklu, zjevná místa s likviditou nad a pod cenou a tři devadesátiminutové cykly newyorského dopoledne. Během správného cyklu pak čeká, až cena vybere extrém předchozího cyklu a otočí se, a chce u toho vidět SMT na malém pohybu. Cíl bere na opačné straně rozsahu předchozího cyklu. Po obchodu si zapíše, který cyklus pohyb přinesl. Je to popis postupu od třetí strany, výsledky k němu zdroj neuvádí.",
-  "takeaway": "Před seancí si vyznač high a low předchozího cyklu a hranice dnešních cyklů. Bez té mapy se nedá říct, co je výběr likvidity a co jen pohyb.",
-  "effect": "Model beze změny. Zapsán nápad na šablonu mapy v plánu dne."
- },
- {
-  "id": "20261120-01",
-  "ts": "2026-11-20T05:55:00Z",
-  "date": "2026-11-20",
-  "bot": "skaut",
-  "concept": "risk",
-  "title": "Zeussy: obchod začíná rozpočtem rizika, ne přesvědčením",
-  "source": "Forex.in.rs, shrnutí rozhovoru se Zeussym",
-  "url": "https://www.forex.in.rs/smart-money-timing",
-  "simple": "Podle shrnutí rozhovoru Zeussy staví každý obchod od rizika: nejdřív určí, kolik smí ztratit, a velikost pozice přizpůsobí tomu, jak moc se trh právě hýbe. Sílu vlastního názoru do velikosti nepromítá. Riziko dělí mezi víc trhů, typů obchodů a délek držení, aby mu den nezkazila jedna zvláštnost jednoho trhu. Scénáře si připraví předem a při obchodování je už jen plní. Je to popis jeho postupu podle třetí strany, čísla k tomu zdroj neuvádí.",
-  "takeaway": "Velikost pozice počítej z rizika a šířky stopu. Když jsi si jistější, kontrakty nepřidávej.",
-  "effect": "Model beze změny. Kalkulačka rizika v aplikaci už takhle funguje. Zapsán nápad na denní rozpočet rizika."
- },
- {
-  "id": "20261119-01",
-  "ts": "2026-11-19T05:55:00Z",
-  "date": "2026-11-19",
-  "bot": "skaut",
-  "concept": "cas",
-  "title": "Dvě mřížky času: Zeussy počítá od 2:30, quarterly theory od 18:00",
-  "source": "LuxAlgo, heslo Quarterly Theory; Forex.in.rs, shrnutí rozhovoru se Zeussym",
-  "url": "https://www.luxalgo.com/library/concept/quarterly-theory/",
-  "simple": "Klasická quarterly theory dělí den na čtyři šestihodinové části: Asie 18:00–0:00, Londýn 0:00–6:00, New York 6:00–12:00 a odpoledne 12:00–18:00, každou ještě na čtyři devadesátiminutové čtvrtiny. Zeussy podle shrnutí rozhovoru používá jinou mřížku: Londýn 2:30–7:00 a newyorské dopoledne 7:00–11:30, každé po třech devadesátiminutových cyklech (akumulace, manipulace, distribuce). Hranice cyklů se tedy mezi oběma přístupy liší o půl až hodinu a půl. Kdo míchá indikátor jedné mřížky s pravidly druhé, čte jiné cykly, než si myslí. Žádný test neukazuje, že jedna mřížka funguje líp než druhá.",
-  "takeaway": "Vyber si jednu mřížku a drž ji všude: v indikátoru, v deníku i ve statistikách. U Zeussyho končí newyorské dopoledne v 11:30, ne ve 12:00.",
-  "effect": "Model beze změny. Zapsáno jako nápad pro Premium."
- },
- {
-  "id": "20261118-01",
-  "ts": "2026-11-18T05:55:00Z",
-  "date": "2026-11-18",
-  "bot": "skaut",
-  "concept": "smt",
-  "title": "Zeussy: SMT je potvrzení, nikdy jediný důvod ke vstupu",
-  "source": "Forex.in.rs, shrnutí rozhovoru se Zeussym",
-  "url": "https://www.forex.in.rs/smart-money-timing",
-  "simple": "Podle shrnutí rozhovoru Zeussy říká, že většina lidí používá SMT špatně, protože ho bere jako samostatný signál. On ho chce vidět u svých vstupů jako potvrzení na menším pohybu, ale sám o sobě pro něj důvodem k obchodu není. Po obchodu si do deníku zapisuje, který cyklus pohyb přinesl a jestli se SMT na vstupním pohybu ukázalo. Je to popis jeho postupu, ne ověřený výsledek.",
-  "takeaway": "SMT si u obchodu zapisuj jako ano nebo ne. Vstup na něm nestav.",
-  "effect": "Model beze změny. Deník už pole pro SMT má, stačí ho vyplňovat."
- },
- {
-  "id": "20261118-02",
-  "ts": "2026-11-18T05:55:00Z",
-  "date": "2026-11-18",
-  "bot": "skaut",
-  "concept": "smt",
-  "title": "SSMT: rozdíl mezi NQ a ES na hranici dvou cyklů",
-  "source": "FX Replay, popis strategie Quarterly Theory SMT",
-  "url": "https://fxreplay.com/de/strategies/quarterly-theory-smt-strategy",
-  "simple": "Sequential SMT, zkráceně SSMT, je SMT divergence, která nevzniká v jednom okamžiku, ale mezi dvěma po sobě jdoucími devadesátiminutovými cykly. Příklad: NQ v druhém cyklu udělá nové high nad high prvního cyklu, ES ne. Podle popisu strategie má takový rozdíl mezi prvním a druhým cyklem naznačit, co udělá třetí. Obchoduje se na pětiminutovém grafu, v New Yorku na ES a NQ. Pojem pochází z quarterly theory tradera Daye, ze které vychází i práce s cykly u Zeussyho. Stránka neuvádí žádný nezávislý test.",
-  "takeaway": "Hranice cyklu je místo, kde má smysl porovnat high a low NQ a ES. Rozdíl ber jako potvrzení, ne jako samostatný signál.",
-  "effect": "Model beze změny. Zapsáno jako nápad pro Premium."
- },
- {
-  "id": "20261117-01",
-  "ts": "2026-11-17T05:55:00Z",
-  "date": "2026-11-17",
-  "bot": "skaut",
-  "concept": "cas",
-  "title": "Skript podle Zeussyho tweetů: cíl z minulého cyklu má omezenou platnost",
-  "source": "TradingView, skript itradesize Time Cycles x Zeussy (popis autora skriptu)",
-  "url": "https://in.tradingview.com/script/tyfmkJIX-itradesize-Time-Cycles-x-Zeussy",
-  "simple": "Autor veřejného skriptu, který vychází z tweetů Zeussyho a skupiny TOTK, popisuje tři praktická pravidla. Devadesátiminutové cykly se počítají od 2:30 newyorského času. High a low minulého cyklu skript táhne dál jako cíl jen do chvíle, než je cena vybere. Když je nevybere do konce dalšího cyklu, čáru přestane kreslit. Pro londýnskou seanci autor radí dívat se spíš na high a low Asie než na hranice cyklů. Je to výklad autora skriptu, ne přímá slova Zeussyho, a žádný test k tomu není.",
-  "takeaway": "High a low minulého cyklu ber jako cíl jen během následujícího cyklu. V Londýně sleduj hlavně high a low Asie.",
-  "effect": "Model beze změny. Zapsáno jako nápad pro Premium."
- },
- {
-  "id": "20261116-01",
-  "ts": "2026-11-16T05:55:00Z",
-  "date": "2026-11-16",
-  "bot": "skaut",
-  "concept": "cas",
-  "title": "Zeussy: u FVG a order blocku rozhoduje čas, kdy vznikly",
-  "source": "Thread Reader, vlákno Zeussyho o čase a PD arrays (TAPDA)",
-  "url": "https://threadreaderapp.com/thread/1729966303320920202",
-  "simple": "Zeussy ve vlákně z listopadu 2023 tvrdí, že FVG nebo order block sám o sobě moc neznamená. Důležité je, v kolik hodin vznikl. Když se k němu cena vrátí jiný den ve stejný čas, čeká od něj reakci. Když reakce nepřijde, bere to jako první známku, že se směr mění. Příklady ukazuje na devadesátiminutových svíčkách ES. Vlákno to podává jako důkaz, ale stojí jen na vybraných grafech, žádný test v něm není.",
-  "takeaway": "Ke každé zóně si poznamenej čas vzniku. Návrat ve stejný čas je podle Zeussyho silnější než návrat kdykoli jindy. Ověřené to není.",
-  "effect": "Model beze změny. Zapsáno jako nápad pro Premium a jako hypotéza k otestování."
- },
- {
-  "id": "20261115-01",
-  "ts": "2026-11-15T05:55:00Z",
-  "date": "2026-11-15",
-  "bot": "skaut",
-  "concept": "cas",
-  "title": "Zeussy: jak z předchozího cyklu poznat, kdo má navrch",
-  "source": "Thread Reader, vlákno Zeussyho Time Cycles & Market Swings",
-  "url": "https://threadreaderapp.com/thread/1841464680172126242",
-  "simple": "Zeussy sleduje, co cena udělá u high a low předchozího devadesátiminutového cyklu. Když prorazí nad staré high a při návratu se o něj opře, kupující mají navrch a pohyb pokračuje. Když se nad ním neudrží, byl to jen výběr likvidity a čeká se pohyb k opačné straně.",
-  "takeaway": "Staré high cyklu, které po proražení drží jako podpora, znamená pokračování. Když nedrží, jde o manipulaci.",
-  "effect": "Model beze změny. Zapsáno jako nápad pro analýzu dne v Premium."
- },
- {
-  "id": "20261115-02",
-  "ts": "2026-11-15T05:55:00Z",
-  "date": "2026-11-15",
-  "bot": "skaut",
-  "concept": "struktura",
-  "title": "Range poznáš podle dvou odmítnutí na každé straně",
-  "source": "LuxAlgo Library, Trading Range",
-  "url": "https://www.luxalgo.com/library/concept/trading-range/",
-  "simple": "O range jde ve chvíli, kdy se cena aspoň dvakrát zastaví ve stejném pásmu nahoře a dvakrát ve stejném pásmu dole. Hranice jsou pásma, ne přesné čáry. Za oběma okraji se hromadí stopy, takže výpad ven, který se neudrží, bývá výběr likvidity.",
-  "takeaway": "Dvě odmítnutí nahoře a dvě dole dělají range. Jeho okraje jsou likvidita na obou stranách.",
-  "effect": "Model beze změny. Použito v dnešní lekci o range."
- },
- {
-  "id": "20261114-01",
-  "ts": "2026-11-14T05:55:00Z",
-  "date": "2026-11-14",
-  "bot": "skaut",
-  "concept": "cas",
-  "title": "Zeussy: nejdřív čas, potom cena",
-  "source": "Forex.in.rs, shrnutí rozhovoru se Zeussym",
-  "url": "https://www.forex.in.rs/smart-money-timing",
-  "simple": "Zeussy dělí Londýn a New York na pevné devadesátiminutové úseky. Každý má svou roli: nabírání, falešný výpad, skutečný pohyb. Podle toho, který úsek právě běží, ví, co od trhu čekat. Když v jeho postupu chybí jediný krok, obchod nebere.",
-  "takeaway": "Čas určuje, jaké chování čekat, a setup se bere jen tehdy, když sedí celý postup.",
-  "effect": "Model beze změny. Potvrzuje pravidlo, že chybějící krok znamená žádný obchod."
- },
- {
-  "id": "20261114-02",
-  "ts": "2026-11-14T05:55:00Z",
-  "date": "2026-11-14",
-  "bot": "skaut",
-  "concept": "struktura",
-  "title": "Jeden vyšší vrchol ještě není trend",
-  "source": "CrossTrade, Market Structure",
-  "url": "https://crosstrade.io/learn/price-action/market-structure",
-  "simple": "Trend nahoru potřebuje obojí: vyšší vrcholy i vyšší dna. Když roste jen jedno z toho, je to přechod nebo pohyb do strany. A minutový graf je na čtení struktury většinou jen šum.",
-  "takeaway": "Směr urči podle vrcholů i den zároveň a na vyšším timeframu, než na kterém vstupuješ.",
-  "effect": "Model beze změny. Použito v dnešní lekci o trendu."
- },
- {
-  "id": "20261113-01",
-  "ts": "2026-11-13T07:44:01Z",
-  "date": "2026-11-13",
-  "bot": "skaut",
-  "concept": "fvg",
-  "title": "Fair value gapy proti kontrolním zónám: žádný měřitelný rozdíl",
-  "source": "TradingView, Fair Value Gap (FVG) Statistics with Placebo Control",
-  "url": "https://de.tradingview.com/script/Kbq3WncE-Fair-Value-Gap-FVG-Statistics-with-Placebo-Control/",
-  "simple": "Autor porovnal skutečné mezery se stejně velkými zónami na náhodných místech grafu. Mezery nedopadly líp.",
-  "takeaway": "Otevřený skript ke každému fair value gapu vytvoří kontrolní zónu stejné výšky, směru a vzdálenosti od ceny na svíčce, kde žádná mezera nevznikla. Ve čtrnácti měřeních na třech druzích trhů, třech timeframech a ve dvou obdobích neměly skutečné mezery proti kontrolním zónám zjistitelnou výhodu.",
-  "effect": "Samotný FVG není důvod ke vstupu. Model ho dál používá jen jako místo vstupu po sweepu a MSS a jeho přínos je potřeba ověřit ve vlastním backtestu proti vstupu bez mezery."
- },
- {
-  "id": "20261113-02",
-  "ts": "2026-11-13T07:44:01Z",
-  "date": "2026-11-13",
-  "bot": "skaut",
-  "concept": "fvg",
-  "title": "Mezery se většinou vyplní, ale náhodné úrovně také",
-  "source": "Curupira blog, FVG Magnetism: Do Fair Value Gaps Really Fill?",
-  "url": "https://curupira-blog.pages.dev/blog/fvg-magnetism-fair-value-gaps",
-  "simple": "Cena se k mezerám opravdu často vrací. Stejně často se ale vrací i k úplně náhodným cenám.",
-  "takeaway": "Studie na hodinových grafech šesti forexových a krypto trhů z let 2021–2025 měřila, jak často se cena vrátí do fair value gapu, a porovnala to s náhodně zvolenými úrovněmi. Vysoké procento vyplnění podle ní samo nic neznamená, protože i náhodné úrovně cena většinou zasáhne. Netýká se přímo NQ ani minutových grafů.",
-  "effect": "Tvrzení, že se FVG vždy vyplní, nejde brát jako výhodu. Pro model je důležité, co se stane po návratu do mezery, ne to, že k návratu dojde."
- },
- {
-  "id": "20261112-04",
-  "ts": "2026-11-12T05:52:04Z",
-  "date": "2026-11-12",
-  "bot": "skaut",
-  "concept": "bias",
-  "title": "Otevřený skript: směr dne podle svíčky 9:00–10:00 na NQ",
-  "source": "TradingView, NQ 9 AM Hour Bias (const)",
-  "url": "https://www.tradingview.com/script/88w5PTYy/",
-  "simple": "Jeden skript zkouší odhadnout směr dne podle toho, jak dopadla svíčka mezi 9:00 a 10:00. Jeho čísla ale nikdo nezávisle neověřil.",
-  "takeaway": "Skript hodnotí hodinovou svíčku 9:00–10:00 NY podle velikosti těla, místa zavření a polohy otevření v 9:30 a autor k tomu uvádí vlastní statistiky z let 2020–2025 o tom, kde den zavřel vůči ceně v 9:30. Čísla jsou ve skriptu napevno a nejsou nezávisle ověřená.",
-  "effect": "Signál je znám až v 10:00, takže by se dal použít jen jako filtr směru pro druhou půlku okna. Poloha otevření v 9:30 v rozsahu se objevuje i v našem kandidátu 2.0, což je důvod ji testovat samostatně."
- },
- {
-  "id": "20261112-03",
-  "ts": "2026-11-12T05:52:03Z",
-  "date": "2026-11-12",
-  "bot": "skaut",
-  "concept": "volatilita",
-  "title": "Pondělí má na NQ a ES nejmenší rozpětí newyorské seance",
-  "source": "edgeful (blog)",
-  "url": "https://www.edgeful.com/blog/posts/best-day-of-week-trading-strategy",
-  "simple": "V pondělí se NQ během newyorské seance hýbe nejméně, takže se hůř dosahuje vzdálených cílů.",
-  "takeaway": "Podle statistik za zhruba půl roku mělo pondělí nejmenší průměrné rozpětí NY seance (NQ kolem 302 bodů proti 390 v pátek) a naopak největší rozpětí v asijské seanci. Autor upozorňuje, že čísla se v čase mění a že zprávy typu FOMC vzorec přebijí.",
-  "effect": "Nezávislé, i když slabé vysvětlení, proč kandidát 2.0 vychází v pondělí hůř: menší pohyb hůř dosahuje cíle 2R. Vzorek je krátký, takže filtr pondělí dál zůstává hypotézou k ověření.",
-  "viz": {
-   "unit": "b.",
-   "caption": "Průměrné rozpětí newyorské seance NQ podle zdroje, zhruba za půl roku.",
-   "items": [
-    {
-     "label": "pondělí",
-     "value": 302,
-     "c": "amber"
-    },
-    {
-     "label": "pátek",
-     "value": 390,
-     "c": "accent"
+  {
+    "id": "20261122-01",
+    "ts": "2026-11-22T05:55:00Z",
+    "date": "2026-11-22",
+    "bot": "skaut",
+    "concept": "cas",
+    "title": "Zeussy: PCH a PCL, dvě úrovně, které řídí cyklus",
+    "source": "Thread Reader, veřejné vlákno @zeussy_mmxm o 90minutových cyklech",
+    "url": "https://threadreaderapp.com/thread/1746238304377311662.html",
+    "simple": "Ve veřejném vlákně Zeussy pojmenovává dvě úrovně: high předchozího devadesátiminutového cyklu je PCH (previous cycle high) a low je PCL (previous cycle low). V býčím prostředí podle něj cena chodí od PCL k PCH, v medvědím od PCH k PCL. Cykly počítá po devadesáti minutách od 7:00 do 16:00 newyorského času. V jiném svém vlákně dodává, že stejná logika platí i o patro výš: místo cyklu se dá vzít předchozí seance, den nebo týden. Je to jeho popis s vybranými příklady, čísla o úspěšnosti k tomu neuvádí.",
+    "takeaway": "Na začátku každého cyklu si vyznač PCH a PCL. Sleduj, ke které z nich cena jde a jak na ni zareaguje, teprve potom hledej vstup.",
+    "effect": "Model beze změny. Pojmy PCH a PCL chybí ve slovníčku a v sekci Premium, zapsán nápad na jejich doplnění."
+  },
+  {
+    "id": "20261121-01",
+    "ts": "2026-11-21T05:55:00Z",
+    "date": "2026-11-21",
+    "bot": "skaut",
+    "concept": "cas",
+    "title": "Zeussy: mapa před seancí má tři věci",
+    "source": "Forex.in.rs, shrnutí rozhovoru se Zeussym",
+    "url": "https://www.forex.in.rs/smart-money-timing",
+    "simple": "Podle shrnutí rozhovoru si Zeussy před seancí vyznačí tři věci: high a low předchozího cyklu, zjevná místa s likviditou nad a pod cenou a tři devadesátiminutové cykly newyorského dopoledne. Během správného cyklu pak čeká, až cena vybere extrém předchozího cyklu a otočí se, a chce u toho vidět SMT na malém pohybu. Cíl bere na opačné straně rozsahu předchozího cyklu. Po obchodu si zapíše, který cyklus pohyb přinesl. Je to popis postupu od třetí strany, výsledky k němu zdroj neuvádí.",
+    "takeaway": "Před seancí si vyznač high a low předchozího cyklu a hranice dnešních cyklů. Bez té mapy se nedá říct, co je výběr likvidity a co jen pohyb.",
+    "effect": "Model beze změny. Zapsán nápad na šablonu mapy v plánu dne."
+  },
+  {
+    "id": "20261120-01",
+    "ts": "2026-11-20T05:55:00Z",
+    "date": "2026-11-20",
+    "bot": "skaut",
+    "concept": "risk",
+    "title": "Zeussy: obchod začíná rozpočtem rizika, ne přesvědčením",
+    "source": "Forex.in.rs, shrnutí rozhovoru se Zeussym",
+    "url": "https://www.forex.in.rs/smart-money-timing",
+    "simple": "Podle shrnutí rozhovoru Zeussy staví každý obchod od rizika: nejdřív určí, kolik smí ztratit, a velikost pozice přizpůsobí tomu, jak moc se trh právě hýbe. Sílu vlastního názoru do velikosti nepromítá. Riziko dělí mezi víc trhů, typů obchodů a délek držení, aby mu den nezkazila jedna zvláštnost jednoho trhu. Scénáře si připraví předem a při obchodování je už jen plní. Je to popis jeho postupu podle třetí strany, čísla k tomu zdroj neuvádí.",
+    "takeaway": "Velikost pozice počítej z rizika a šířky stopu. Když jsi si jistější, kontrakty nepřidávej.",
+    "effect": "Model beze změny. Kalkulačka rizika v aplikaci už takhle funguje. Zapsán nápad na denní rozpočet rizika."
+  },
+  {
+    "id": "20261119-01",
+    "ts": "2026-11-19T05:55:00Z",
+    "date": "2026-11-19",
+    "bot": "skaut",
+    "concept": "cas",
+    "title": "Dvě mřížky času: Zeussy počítá od 2:30, quarterly theory od 18:00",
+    "source": "LuxAlgo, heslo Quarterly Theory; Forex.in.rs, shrnutí rozhovoru se Zeussym",
+    "url": "https://www.luxalgo.com/library/concept/quarterly-theory/",
+    "simple": "Klasická quarterly theory dělí den na čtyři šestihodinové části: Asie 18:00–0:00, Londýn 0:00–6:00, New York 6:00–12:00 a odpoledne 12:00–18:00, každou ještě na čtyři devadesátiminutové čtvrtiny. Zeussy podle shrnutí rozhovoru používá jinou mřížku: Londýn 2:30–7:00 a newyorské dopoledne 7:00–11:30, každé po třech devadesátiminutových cyklech (akumulace, manipulace, distribuce). Hranice cyklů se tedy mezi oběma přístupy liší o půl až hodinu a půl. Kdo míchá indikátor jedné mřížky s pravidly druhé, čte jiné cykly, než si myslí. Žádný test neukazuje, že jedna mřížka funguje líp než druhá.",
+    "takeaway": "Vyber si jednu mřížku a drž ji všude: v indikátoru, v deníku i ve statistikách. U Zeussyho končí newyorské dopoledne v 11:30, ne ve 12:00.",
+    "effect": "Model beze změny. Zapsáno jako nápad pro Premium."
+  },
+  {
+    "id": "20261118-01",
+    "ts": "2026-11-18T05:55:00Z",
+    "date": "2026-11-18",
+    "bot": "skaut",
+    "concept": "smt",
+    "title": "Zeussy: SMT je potvrzení, nikdy jediný důvod ke vstupu",
+    "source": "Forex.in.rs, shrnutí rozhovoru se Zeussym",
+    "url": "https://www.forex.in.rs/smart-money-timing",
+    "simple": "Podle shrnutí rozhovoru Zeussy říká, že většina lidí používá SMT špatně, protože ho bere jako samostatný signál. On ho chce vidět u svých vstupů jako potvrzení na menším pohybu, ale sám o sobě pro něj důvodem k obchodu není. Po obchodu si do deníku zapisuje, který cyklus pohyb přinesl a jestli se SMT na vstupním pohybu ukázalo. Je to popis jeho postupu, ne ověřený výsledek.",
+    "takeaway": "SMT si u obchodu zapisuj jako ano nebo ne. Vstup na něm nestav.",
+    "effect": "Model beze změny. Deník už pole pro SMT má, stačí ho vyplňovat."
+  },
+  {
+    "id": "20261118-02",
+    "ts": "2026-11-18T05:55:00Z",
+    "date": "2026-11-18",
+    "bot": "skaut",
+    "concept": "smt",
+    "title": "SSMT: rozdíl mezi NQ a ES na hranici dvou cyklů",
+    "source": "FX Replay, popis strategie Quarterly Theory SMT",
+    "url": "https://fxreplay.com/de/strategies/quarterly-theory-smt-strategy",
+    "simple": "Sequential SMT, zkráceně SSMT, je SMT divergence, která nevzniká v jednom okamžiku, ale mezi dvěma po sobě jdoucími devadesátiminutovými cykly. Příklad: NQ v druhém cyklu udělá nové high nad high prvního cyklu, ES ne. Podle popisu strategie má takový rozdíl mezi prvním a druhým cyklem naznačit, co udělá třetí. Obchoduje se na pětiminutovém grafu, v New Yorku na ES a NQ. Pojem pochází z quarterly theory tradera Daye, ze které vychází i práce s cykly u Zeussyho. Stránka neuvádí žádný nezávislý test.",
+    "takeaway": "Hranice cyklu je místo, kde má smysl porovnat high a low NQ a ES. Rozdíl ber jako potvrzení, ne jako samostatný signál.",
+    "effect": "Model beze změny. Zapsáno jako nápad pro Premium."
+  },
+  {
+    "id": "20261117-01",
+    "ts": "2026-11-17T05:55:00Z",
+    "date": "2026-11-17",
+    "bot": "skaut",
+    "concept": "cas",
+    "title": "Skript podle Zeussyho tweetů: cíl z minulého cyklu má omezenou platnost",
+    "source": "TradingView, skript itradesize Time Cycles x Zeussy (popis autora skriptu)",
+    "url": "https://in.tradingview.com/script/tyfmkJIX-itradesize-Time-Cycles-x-Zeussy",
+    "simple": "Autor veřejného skriptu, který vychází z tweetů Zeussyho a skupiny TOTK, popisuje tři praktická pravidla. Devadesátiminutové cykly se počítají od 2:30 newyorského času. High a low minulého cyklu skript táhne dál jako cíl jen do chvíle, než je cena vybere. Když je nevybere do konce dalšího cyklu, čáru přestane kreslit. Pro londýnskou seanci autor radí dívat se spíš na high a low Asie než na hranice cyklů. Je to výklad autora skriptu, ne přímá slova Zeussyho, a žádný test k tomu není.",
+    "takeaway": "High a low minulého cyklu ber jako cíl jen během následujícího cyklu. V Londýně sleduj hlavně high a low Asie.",
+    "effect": "Model beze změny. Zapsáno jako nápad pro Premium."
+  },
+  {
+    "id": "20261116-01",
+    "ts": "2026-11-16T05:55:00Z",
+    "date": "2026-11-16",
+    "bot": "skaut",
+    "concept": "cas",
+    "title": "Zeussy: u FVG a order blocku rozhoduje čas, kdy vznikly",
+    "source": "Thread Reader, vlákno Zeussyho o čase a PD arrays (TAPDA)",
+    "url": "https://threadreaderapp.com/thread/1729966303320920202",
+    "simple": "Zeussy ve vlákně z listopadu 2023 tvrdí, že FVG nebo order block sám o sobě moc neznamená. Důležité je, v kolik hodin vznikl. Když se k němu cena vrátí jiný den ve stejný čas, čeká od něj reakci. Když reakce nepřijde, bere to jako první známku, že se směr mění. Příklady ukazuje na devadesátiminutových svíčkách ES. Vlákno to podává jako důkaz, ale stojí jen na vybraných grafech, žádný test v něm není.",
+    "takeaway": "Ke každé zóně si poznamenej čas vzniku. Návrat ve stejný čas je podle Zeussyho silnější než návrat kdykoli jindy. Ověřené to není.",
+    "effect": "Model beze změny. Zapsáno jako nápad pro Premium a jako hypotéza k otestování."
+  },
+  {
+    "id": "20261115-01",
+    "ts": "2026-11-15T05:55:00Z",
+    "date": "2026-11-15",
+    "bot": "skaut",
+    "concept": "cas",
+    "title": "Zeussy: jak z předchozího cyklu poznat, kdo má navrch",
+    "source": "Thread Reader, vlákno Zeussyho Time Cycles & Market Swings",
+    "url": "https://threadreaderapp.com/thread/1841464680172126242",
+    "simple": "Zeussy sleduje, co cena udělá u high a low předchozího devadesátiminutového cyklu. Když prorazí nad staré high a při návratu se o něj opře, kupující mají navrch a pohyb pokračuje. Když se nad ním neudrží, byl to jen výběr likvidity a čeká se pohyb k opačné straně.",
+    "takeaway": "Staré high cyklu, které po proražení drží jako podpora, znamená pokračování. Když nedrží, jde o manipulaci.",
+    "effect": "Model beze změny. Zapsáno jako nápad pro analýzu dne v Premium."
+  },
+  {
+    "id": "20261115-02",
+    "ts": "2026-11-15T05:55:00Z",
+    "date": "2026-11-15",
+    "bot": "skaut",
+    "concept": "struktura",
+    "title": "Range poznáš podle dvou odmítnutí na každé straně",
+    "source": "LuxAlgo Library, Trading Range",
+    "url": "https://www.luxalgo.com/library/concept/trading-range/",
+    "simple": "O range jde ve chvíli, kdy se cena aspoň dvakrát zastaví ve stejném pásmu nahoře a dvakrát ve stejném pásmu dole. Hranice jsou pásma, ne přesné čáry. Za oběma okraji se hromadí stopy, takže výpad ven, který se neudrží, bývá výběr likvidity.",
+    "takeaway": "Dvě odmítnutí nahoře a dvě dole dělají range. Jeho okraje jsou likvidita na obou stranách.",
+    "effect": "Model beze změny. Použito v dnešní lekci o range."
+  },
+  {
+    "id": "20261114-01",
+    "ts": "2026-11-14T05:55:00Z",
+    "date": "2026-11-14",
+    "bot": "skaut",
+    "concept": "cas",
+    "title": "Zeussy: nejdřív čas, potom cena",
+    "source": "Forex.in.rs, shrnutí rozhovoru se Zeussym",
+    "url": "https://www.forex.in.rs/smart-money-timing",
+    "simple": "Zeussy dělí Londýn a New York na pevné devadesátiminutové úseky. Každý má svou roli: nabírání, falešný výpad, skutečný pohyb. Podle toho, který úsek právě běží, ví, co od trhu čekat. Když v jeho postupu chybí jediný krok, obchod nebere.",
+    "takeaway": "Čas určuje, jaké chování čekat, a setup se bere jen tehdy, když sedí celý postup.",
+    "effect": "Model beze změny. Potvrzuje pravidlo, že chybějící krok znamená žádný obchod."
+  },
+  {
+    "id": "20261114-02",
+    "ts": "2026-11-14T05:55:00Z",
+    "date": "2026-11-14",
+    "bot": "skaut",
+    "concept": "struktura",
+    "title": "Jeden vyšší vrchol ještě není trend",
+    "source": "CrossTrade, Market Structure",
+    "url": "https://crosstrade.io/learn/price-action/market-structure",
+    "simple": "Trend nahoru potřebuje obojí: vyšší vrcholy i vyšší dna. Když roste jen jedno z toho, je to přechod nebo pohyb do strany. A minutový graf je na čtení struktury většinou jen šum.",
+    "takeaway": "Směr urči podle vrcholů i den zároveň a na vyšším timeframu, než na kterém vstupuješ.",
+    "effect": "Model beze změny. Použito v dnešní lekci o trendu."
+  },
+  {
+    "id": "20261113-01",
+    "ts": "2026-11-13T07:44:01Z",
+    "date": "2026-11-13",
+    "bot": "skaut",
+    "concept": "fvg",
+    "title": "Fair value gapy proti kontrolním zónám: žádný měřitelný rozdíl",
+    "source": "TradingView, Fair Value Gap (FVG) Statistics with Placebo Control",
+    "url": "https://de.tradingview.com/script/Kbq3WncE-Fair-Value-Gap-FVG-Statistics-with-Placebo-Control/",
+    "simple": "Autor porovnal skutečné mezery se stejně velkými zónami na náhodných místech grafu. Mezery nedopadly líp.",
+    "takeaway": "Otevřený skript ke každému fair value gapu vytvoří kontrolní zónu stejné výšky, směru a vzdálenosti od ceny na svíčce, kde žádná mezera nevznikla. Ve čtrnácti měřeních na třech druzích trhů, třech timeframech a ve dvou obdobích neměly skutečné mezery proti kontrolním zónám zjistitelnou výhodu.",
+    "effect": "Samotný FVG není důvod ke vstupu. Model ho dál používá jen jako místo vstupu po sweepu a MSS a jeho přínos je potřeba ověřit ve vlastním backtestu proti vstupu bez mezery."
+  },
+  {
+    "id": "20261113-02",
+    "ts": "2026-11-13T07:44:01Z",
+    "date": "2026-11-13",
+    "bot": "skaut",
+    "concept": "fvg",
+    "title": "Mezery se většinou vyplní, ale náhodné úrovně také",
+    "source": "Curupira blog, FVG Magnetism: Do Fair Value Gaps Really Fill?",
+    "url": "https://curupira-blog.pages.dev/blog/fvg-magnetism-fair-value-gaps",
+    "simple": "Cena se k mezerám opravdu často vrací. Stejně často se ale vrací i k úplně náhodným cenám.",
+    "takeaway": "Studie na hodinových grafech šesti forexových a krypto trhů z let 2021–2025 měřila, jak často se cena vrátí do fair value gapu, a porovnala to s náhodně zvolenými úrovněmi. Vysoké procento vyplnění podle ní samo nic neznamená, protože i náhodné úrovně cena většinou zasáhne. Netýká se přímo NQ ani minutových grafů.",
+    "effect": "Tvrzení, že se FVG vždy vyplní, nejde brát jako výhodu. Pro model je důležité, co se stane po návratu do mezery, ne to, že k návratu dojde."
+  },
+  {
+    "id": "20261112-04",
+    "ts": "2026-11-12T05:52:04Z",
+    "date": "2026-11-12",
+    "bot": "skaut",
+    "concept": "bias",
+    "title": "Otevřený skript: směr dne podle svíčky 9:00–10:00 na NQ",
+    "source": "TradingView, NQ 9 AM Hour Bias (const)",
+    "url": "https://www.tradingview.com/script/88w5PTYy/",
+    "simple": "Jeden skript zkouší odhadnout směr dne podle toho, jak dopadla svíčka mezi 9:00 a 10:00. Jeho čísla ale nikdo nezávisle neověřil.",
+    "takeaway": "Skript hodnotí hodinovou svíčku 9:00–10:00 NY podle velikosti těla, místa zavření a polohy otevření v 9:30 a autor k tomu uvádí vlastní statistiky z let 2020–2025 o tom, kde den zavřel vůči ceně v 9:30. Čísla jsou ve skriptu napevno a nejsou nezávisle ověřená.",
+    "effect": "Signál je znám až v 10:00, takže by se dal použít jen jako filtr směru pro druhou půlku okna. Poloha otevření v 9:30 v rozsahu se objevuje i v našem kandidátu 2.0, což je důvod ji testovat samostatně."
+  },
+  {
+    "id": "20261112-03",
+    "ts": "2026-11-12T05:52:03Z",
+    "date": "2026-11-12",
+    "bot": "skaut",
+    "concept": "volatilita",
+    "title": "Pondělí má na NQ a ES nejmenší rozpětí newyorské seance",
+    "source": "edgeful (blog)",
+    "url": "https://www.edgeful.com/blog/posts/best-day-of-week-trading-strategy",
+    "simple": "V pondělí se NQ během newyorské seance hýbe nejméně, takže se hůř dosahuje vzdálených cílů.",
+    "takeaway": "Podle statistik za zhruba půl roku mělo pondělí nejmenší průměrné rozpětí NY seance (NQ kolem 302 bodů proti 390 v pátek) a naopak největší rozpětí v asijské seanci. Autor upozorňuje, že čísla se v čase mění a že zprávy typu FOMC vzorec přebijí.",
+    "effect": "Nezávislé, i když slabé vysvětlení, proč kandidát 2.0 vychází v pondělí hůř: menší pohyb hůř dosahuje cíle 2R. Vzorek je krátký, takže filtr pondělí dál zůstává hypotézou k ověření.",
+    "viz": {
+      "unit": "b.",
+      "caption": "Průměrné rozpětí newyorské seance NQ podle zdroje, zhruba za půl roku.",
+      "items": [
+        {
+          "label": "pondělí",
+          "value": 302,
+          "c": "amber"
+        },
+        {
+          "label": "pátek",
+          "value": 390,
+          "c": "accent"
+        }
+      ]
     }
-   ]
-  }
- },
- {
-  "id": "20261112-02",
-  "ts": "2026-11-12T05:52:02Z",
-  "date": "2026-11-12",
-  "bot": "skaut",
-  "concept": "backtest",
-  "title": "Backtest sweep + displacement + FVG na EURUSD a zlatě",
-  "source": "Backtrex (blog prodejce backtestovací platformy)",
-  "url": "https://backtrex.com/en/blog/liquidity-sweep-strategy-backtest-results",
-  "simple": "Prodejce testovací platformy tvrdí, že podobný postup bez MSS mu na forexu a zlatě vydělával. Na NQ nám vyšel opak a prodejce má na dobrém výsledku zájem.",
-  "takeaway": "Prodejce platformy uvádí pro sweep equal highs/lows na H1 s displacementem a vstupem do středu FVG v killzonách za roky 2019–2024 profit factor 1,68 na 1 247 obchodech a podobný výsledek mimo trénovací období. Test je bez MSS, na forexu a zlatě, není jasné, zda zahrnuje náklady, a autor má na dobrém výsledku obchodní zájem.",
-  "effect": "Na NQ a 1m se to přenést nedá a náš vlastní backtest říká opak. Shoduje se ale s kandidátem 2.0 v tom, že sekvence sweep, displacement a FVG se testuje bez čekání na MSS.",
-  "viz": {
-   "caption": "Profit factor: nad 1 je zisk, pod 1 ztráta.",
-   "ref": {
-    "value": 1,
-    "label": "hranice zisku"
-   },
-   "items": [
-    {
-     "label": "Backtrex: forex a zlato, H1",
-     "value": 1.68,
-     "c": "good"
-    },
-    {
-     "label": "náš model 1.0: NQ, 1m",
-     "value": 0.94,
-     "c": "bad"
+  },
+  {
+    "id": "20261112-02",
+    "ts": "2026-11-12T05:52:02Z",
+    "date": "2026-11-12",
+    "bot": "skaut",
+    "concept": "backtest",
+    "title": "Backtest sweep + displacement + FVG na EURUSD a zlatě",
+    "source": "Backtrex (blog prodejce backtestovací platformy)",
+    "url": "https://backtrex.com/en/blog/liquidity-sweep-strategy-backtest-results",
+    "simple": "Prodejce testovací platformy tvrdí, že podobný postup bez MSS mu na forexu a zlatě vydělával. Na NQ nám vyšel opak a prodejce má na dobrém výsledku zájem.",
+    "takeaway": "Prodejce platformy uvádí pro sweep equal highs/lows na H1 s displacementem a vstupem do středu FVG v killzonách za roky 2019–2024 profit factor 1,68 na 1 247 obchodech a podobný výsledek mimo trénovací období. Test je bez MSS, na forexu a zlatě, není jasné, zda zahrnuje náklady, a autor má na dobrém výsledku obchodní zájem.",
+    "effect": "Na NQ a 1m se to přenést nedá a náš vlastní backtest říká opak. Shoduje se ale s kandidátem 2.0 v tom, že sekvence sweep, displacement a FVG se testuje bez čekání na MSS.",
+    "viz": {
+      "caption": "Profit factor: nad 1 je zisk, pod 1 ztráta.",
+      "ref": {
+        "value": 1,
+        "label": "hranice zisku"
+      },
+      "items": [
+        {
+          "label": "Backtrex: forex a zlato, H1",
+          "value": 1.68,
+          "c": "good"
+        },
+        {
+          "label": "náš model 1.0: NQ, 1m",
+          "value": 0.94,
+          "c": "bad"
+        }
+      ]
     }
-   ]
-  }
- },
- {
-  "id": "20261112-01",
-  "ts": "2026-11-12T05:52:01Z",
-  "date": "2026-11-12",
-  "bot": "gems",
-  "concept": "likvidita",
-  "title": "ICT Gems - Trade without a Daily Bias Using Pre-Market Range",
-  "source": "Shrnutí videa (Video Highlight)",
-  "url": "https://videohighlight.com/v/yxVzJZwN6EY",
-  "simple": "Místo odhadu směru dne se ráno najdou dvojice stejně vysokých vrcholů a den a čeká se, kterou cena vybere první.",
-  "takeaway": "Místo denního biasu se ráno hledají dvojice téměř stejných high a low (relative equal highs/lows) v půlhodinách po 7:00, 8:00 a 9:00 NY a směr určí ta, kterou cena vybere jako první. Shrnutí je strojové, definice pre-market range v něm není jednoznačná a pravidla pro vstup a stop chybí.",
-  "effect": "Model equal highs a lows jako likviditu zatím nepoužívá (bere jen high/low předchozího dne a overnight). Je to námět na další úroveň k otestování, bez čísel ne důvod ke změně."
- },
- {
-  "id": "20261111-backtest-3",
-  "ts": "2026-11-11T19:26:00Z",
-  "date": "2026-11-11",
-  "bot": "architekt",
-  "concept": "backtest",
-  "title": "Kandidát k ověření: sweep a FVG bez MSS se dvěma filtry",
-  "source": "Vlastní backtest v2, NQ 1m 2022–2025",
-  "simple": "Jedna varianta vyšla na neviděných datech mírně v plusu, když se vynechala pondělí a jeden typ shortu. Vzorek je malý, zatím je to jen stopa k ověření.",
-  "takeaway": "Varianta bez čekání na MSS měla dvě slabá místa, která se potvrdila na tréninku i testu: pondělí a shorty ve dnech, kdy trh v 9:30 otevřel v dolní půlce nočního range. Bez nich vyšel test na 125 obchodech +0,166 R na obchod, profit factor 1,27. Vzorek je malý a výsledek není statisticky průkazný.",
-  "effect": "Hypotéza pro verzi 2.0, zatím ne změna modelu. Musí se potvrdit na datech, která při hledání nebyla použita.",
-  "viz": {
-   "unit": "R",
-   "signed": true,
-   "caption": "Průměrný výsledek na obchod u varianty bez MSS.",
-   "items": [
-    {
-     "label": "trénink, bez filtru",
-     "value": -0.036,
-     "c": "bad"
-    },
-    {
-     "label": "test, bez filtru",
-     "value": 0.055,
-     "c": "accent"
-    },
-    {
-     "label": "test, s filtrem",
-     "value": 0.166,
-     "c": "good"
+  },
+  {
+    "id": "20261112-01",
+    "ts": "2026-11-12T05:52:01Z",
+    "date": "2026-11-12",
+    "bot": "gems",
+    "concept": "likvidita",
+    "title": "ICT Gems - Trade without a Daily Bias Using Pre-Market Range",
+    "source": "Shrnutí videa (Video Highlight)",
+    "url": "https://videohighlight.com/v/yxVzJZwN6EY",
+    "simple": "Místo odhadu směru dne se ráno najdou dvojice stejně vysokých vrcholů a den a čeká se, kterou cena vybere první.",
+    "takeaway": "Místo denního biasu se ráno hledají dvojice téměř stejných high a low (relative equal highs/lows) v půlhodinách po 7:00, 8:00 a 9:00 NY a směr určí ta, kterou cena vybere jako první. Shrnutí je strojové, definice pre-market range v něm není jednoznačná a pravidla pro vstup a stop chybí.",
+    "effect": "Model equal highs a lows jako likviditu zatím nepoužívá (bere jen high/low předchozího dne a overnight). Je to námět na další úroveň k otestování, bez čísel ne důvod ke změně."
+  },
+  {
+    "id": "20261111-backtest-3",
+    "ts": "2026-11-11T19:26:00Z",
+    "date": "2026-11-11",
+    "bot": "architekt",
+    "concept": "backtest",
+    "title": "Kandidát k ověření: sweep a FVG bez MSS se dvěma filtry",
+    "source": "Vlastní backtest v2, NQ 1m 2022–2025",
+    "simple": "Jedna varianta vyšla na neviděných datech mírně v plusu, když se vynechala pondělí a jeden typ shortu. Vzorek je malý, zatím je to jen stopa k ověření.",
+    "takeaway": "Varianta bez čekání na MSS měla dvě slabá místa, která se potvrdila na tréninku i testu: pondělí a shorty ve dnech, kdy trh v 9:30 otevřel v dolní půlce nočního range. Bez nich vyšel test na 125 obchodech +0,166 R na obchod, profit factor 1,27. Vzorek je malý a výsledek není statisticky průkazný.",
+    "effect": "Hypotéza pro verzi 2.0, zatím ne změna modelu. Musí se potvrdit na datech, která při hledání nebyla použita.",
+    "viz": {
+      "unit": "R",
+      "signed": true,
+      "caption": "Průměrný výsledek na obchod u varianty bez MSS.",
+      "items": [
+        {
+          "label": "trénink, bez filtru",
+          "value": -0.036,
+          "c": "bad"
+        },
+        {
+          "label": "test, bez filtru",
+          "value": 0.055,
+          "c": "accent"
+        },
+        {
+          "label": "test, s filtrem",
+          "value": 0.166,
+          "c": "good"
+        }
+      ]
     }
-   ]
-  }
- },
- {
-  "id": "20261111-backtest-2",
-  "ts": "2026-11-11T19:25:00Z",
-  "date": "2026-11-11",
-  "bot": "architekt",
-  "concept": "nahoda",
-  "title": "Rozbor ztrát: vstupy nejsou lepší než náhoda",
-  "source": "Vlastní backtest v2, NQ 1m 2022–2025",
-  "simple": "Obchody modelu došly k cíli stejně často nebo méně často, než by došly náhodné vstupy. Chyba je ve vstupu, ne v tom, jak se obchod řídí.",
-  "takeaway": "U všech tří rodin modelu dosáhlo cílů 0,5 až 4 R stejně nebo méně obchodů, než by odpovídalo náhodnému pohybu ceny. Zhruba polovina ztrátových obchodů byla před stopem v zisku 0,5 R, ale to je přesně tolik, kolik dává náhoda, takže částečný výběr ani posun stopu výhodu nevytvoří.",
-  "effect": "Problém není v řízení obchodu ani v parametrech, ale v tom, že vstupní signál sám o sobě nepředpovídá směr. Obchod po směru dne vyšel nejhůř a dál se netestuje.",
-  "viz": {
-   "unit": "%",
-   "caption": "Kolik procent obchodů dosáhlo cíle dřív než stopu.",
-   "items": [
-    {
-     "label": "cíl 1R: původní model",
-     "value": 49.1,
-     "c": "accent"
-    },
-    {
-     "label": "cíl 1R: náhoda",
-     "value": 50,
-     "c": "muted"
-    },
-    {
-     "label": "cíl 2R: původní model",
-     "value": 27.8,
-     "c": "accent"
-    },
-    {
-     "label": "cíl 2R: náhoda",
-     "value": 33.3,
-     "c": "muted"
-    },
-    {
-     "label": "cíl 3R: původní model",
-     "value": 19.4,
-     "c": "accent"
-    },
-    {
-     "label": "cíl 3R: náhoda",
-     "value": 25,
-     "c": "muted"
+  },
+  {
+    "id": "20261111-backtest-2",
+    "ts": "2026-11-11T19:25:00Z",
+    "date": "2026-11-11",
+    "bot": "architekt",
+    "concept": "nahoda",
+    "title": "Rozbor ztrát: vstupy nejsou lepší než náhoda",
+    "source": "Vlastní backtest v2, NQ 1m 2022–2025",
+    "simple": "Obchody modelu došly k cíli stejně často nebo méně často, než by došly náhodné vstupy. Chyba je ve vstupu, ne v tom, jak se obchod řídí.",
+    "takeaway": "U všech tří rodin modelu dosáhlo cílů 0,5 až 4 R stejně nebo méně obchodů, než by odpovídalo náhodnému pohybu ceny. Zhruba polovina ztrátových obchodů byla před stopem v zisku 0,5 R, ale to je přesně tolik, kolik dává náhoda, takže částečný výběr ani posun stopu výhodu nevytvoří.",
+    "effect": "Problém není v řízení obchodu ani v parametrech, ale v tom, že vstupní signál sám o sobě nepředpovídá směr. Obchod po směru dne vyšel nejhůř a dál se netestuje.",
+    "viz": {
+      "unit": "%",
+      "caption": "Kolik procent obchodů dosáhlo cíle dřív než stopu.",
+      "items": [
+        {
+          "label": "cíl 1R: původní model",
+          "value": 49.1,
+          "c": "accent"
+        },
+        {
+          "label": "cíl 1R: náhoda",
+          "value": 50,
+          "c": "muted"
+        },
+        {
+          "label": "cíl 2R: původní model",
+          "value": 27.8,
+          "c": "accent"
+        },
+        {
+          "label": "cíl 2R: náhoda",
+          "value": 33.3,
+          "c": "muted"
+        },
+        {
+          "label": "cíl 3R: původní model",
+          "value": 19.4,
+          "c": "accent"
+        },
+        {
+          "label": "cíl 3R: náhoda",
+          "value": 25,
+          "c": "muted"
+        }
+      ]
     }
-   ]
-  }
- },
- {
-  "id": "20261111-backtest-1",
-  "ts": "2026-11-11T16:15:00Z",
-  "date": "2026-11-11",
-  "bot": "architekt",
-  "concept": "backtest",
-  "title": "První backtest: model 1.0 nemá prokazatelnou výhodu",
-  "source": "Vlastní backtest, NQ 1m 2022–2025",
-  "simple": "První test na třech letech dat: model udělal málo obchodů a skončil lehce v minusu. Nejlepší nastavení z ladění na nových datech nevydrželo.",
-  "takeaway": "Za 763 obchodních dní vzniklo jen 115 obchodů s průměrem -0,031 R. Nejlepší varianty z tréninku (kolem +0,2 R) spadly na testu na nulu, což ukazuje na náhodu, ne na výhodu.",
-  "effect": "Stav modelu změněn na Backtest nevychází. Parametry se nemění, protože žádná varianta není průkazně lepší. Je třeba testovat jiná pravidla.",
-  "viz": {
-   "unit": "R",
-   "signed": true,
-   "caption": "Průměrný výsledek na obchod.",
-   "items": [
-    {
-     "label": "model 1.0, celá data",
-     "value": -0.031,
-     "c": "bad"
-    },
-    {
-     "label": "nejlepší varianta, trénink",
-     "value": 0.228,
-     "c": "accent"
-    },
-    {
-     "label": "stejná varianta, test",
-     "value": 0.018,
-     "c": "amber"
+  },
+  {
+    "id": "20261111-backtest-1",
+    "ts": "2026-11-11T16:15:00Z",
+    "date": "2026-11-11",
+    "bot": "architekt",
+    "concept": "backtest",
+    "title": "První backtest: model 1.0 nemá prokazatelnou výhodu",
+    "source": "Vlastní backtest, NQ 1m 2022–2025",
+    "simple": "První test na třech letech dat: model udělal málo obchodů a skončil lehce v minusu. Nejlepší nastavení z ladění na nových datech nevydrželo.",
+    "takeaway": "Za 763 obchodních dní vzniklo jen 115 obchodů s průměrem -0,031 R. Nejlepší varianty z tréninku (kolem +0,2 R) spadly na testu na nulu, což ukazuje na náhodu, ne na výhodu.",
+    "effect": "Stav modelu změněn na Backtest nevychází. Parametry se nemění, protože žádná varianta není průkazně lepší. Je třeba testovat jiná pravidla.",
+    "viz": {
+      "unit": "R",
+      "signed": true,
+      "caption": "Průměrný výsledek na obchod.",
+      "items": [
+        {
+          "label": "model 1.0, celá data",
+          "value": -0.031,
+          "c": "bad"
+        },
+        {
+          "label": "nejlepší varianta, trénink",
+          "value": 0.228,
+          "c": "accent"
+        },
+        {
+          "label": "stejná varianta, test",
+          "value": 0.018,
+          "c": "amber"
+        }
+      ]
     }
-   ]
-  }
- },
- {
-  "id": "20261111-12",
-  "ts": "2026-11-11T13:59:06Z",
-  "date": "2026-11-11",
-  "bot": "skaut",
-  "concept": "riziko",
-  "title": "Otevřený skript: Silver Bullet s ATR trailing stopem",
-  "source": "TradingView, ICT Silver Bullet Backtest (MarkLeRoy)",
-  "url": "https://ru.tradingview.com/script/SuBXi3p8-ICT-Silver-Bullet-Backtest/",
-  "simple": "Místo pevného cíle jde stop posouvat za cenou podle toho, jak moc se trh hýbe. Autor ale neukázal žádné výsledky.",
-  "takeaway": "Open-source strategie vstupuje na 50 % FVG ve třech hodinových oknech a místo pevného cíle umí posouvat stop podle 2× ATR(14) po dosažení 1,5R. Autor neuvádí žádné výsledky a upozorňuje na rozdíl mezi backtestem a živým obchodem.",
-  "effect": "Vstup na 50 % FVG odpovídá pravidlu 5. ATR trailing je alternativa k pevnému 2R, kterou lze později otestovat. Bez čísel to není důvod ke změně."
- },
- {
-  "id": "20261111-11",
-  "ts": "2026-11-11T13:59:05Z",
-  "date": "2026-11-11",
-  "bot": "skaut",
-  "concept": "backtest",
-  "title": "Mechanický ICT bot na EURUSD skončil ve ztrátě",
-  "source": "Offbeat Forex",
-  "url": "https://offbeatforex.com/is-ict-strategy-profitable/",
-  "simple": "Robot, který obchodoval ICT pravidla na EURUSD čistě mechanicky, za rok prodělal.",
-  "takeaway": "Čistě pravidlová verze ICT na 15m EURUSD udělala za rok 125 obchodů s profit faktorem 0,81, bez započtení poplatků. Diskreční varianta řízená AI vyšla kladně, ale jen na 47 obchodech za dva měsíce, což autor sám označuje za malý vzorek.",
-  "effect": "Jiný trh a rámec, takže se nepřenáší přímo. Varuje, že naivní mechanizace ICT pravidel nemusí mít výhodu, a model 1.0 je přesně taková mechanizace, dokud neprojde backtestem.",
-  "viz": {
-   "caption": "Profit factor: nad 1 je zisk, pod 1 ztráta.",
-   "ref": {
-    "value": 1,
-    "label": "hranice zisku"
-   },
-   "items": [
-    {
-     "label": "mechanický ICT bot, EURUSD 15m",
-     "value": 0.81,
-     "c": "bad"
+  },
+  {
+    "id": "20261111-12",
+    "ts": "2026-11-11T13:59:06Z",
+    "date": "2026-11-11",
+    "bot": "skaut",
+    "concept": "riziko",
+    "title": "Otevřený skript: Silver Bullet s ATR trailing stopem",
+    "source": "TradingView, ICT Silver Bullet Backtest (MarkLeRoy)",
+    "url": "https://ru.tradingview.com/script/SuBXi3p8-ICT-Silver-Bullet-Backtest/",
+    "simple": "Místo pevného cíle jde stop posouvat za cenou podle toho, jak moc se trh hýbe. Autor ale neukázal žádné výsledky.",
+    "takeaway": "Open-source strategie vstupuje na 50 % FVG ve třech hodinových oknech a místo pevného cíle umí posouvat stop podle 2× ATR(14) po dosažení 1,5R. Autor neuvádí žádné výsledky a upozorňuje na rozdíl mezi backtestem a živým obchodem.",
+    "effect": "Vstup na 50 % FVG odpovídá pravidlu 5. ATR trailing je alternativa k pevnému 2R, kterou lze později otestovat. Bez čísel to není důvod ke změně."
+  },
+  {
+    "id": "20261111-11",
+    "ts": "2026-11-11T13:59:05Z",
+    "date": "2026-11-11",
+    "bot": "skaut",
+    "concept": "backtest",
+    "title": "Mechanický ICT bot na EURUSD skončil ve ztrátě",
+    "source": "Offbeat Forex",
+    "url": "https://offbeatforex.com/is-ict-strategy-profitable/",
+    "simple": "Robot, který obchodoval ICT pravidla na EURUSD čistě mechanicky, za rok prodělal.",
+    "takeaway": "Čistě pravidlová verze ICT na 15m EURUSD udělala za rok 125 obchodů s profit faktorem 0,81, bez započtení poplatků. Diskreční varianta řízená AI vyšla kladně, ale jen na 47 obchodech za dva měsíce, což autor sám označuje za malý vzorek.",
+    "effect": "Jiný trh a rámec, takže se nepřenáší přímo. Varuje, že naivní mechanizace ICT pravidel nemusí mít výhodu, a model 1.0 je přesně taková mechanizace, dokud neprojde backtestem.",
+    "viz": {
+      "caption": "Profit factor: nad 1 je zisk, pod 1 ztráta.",
+      "ref": {
+        "value": 1,
+        "label": "hranice zisku"
+      },
+      "items": [
+        {
+          "label": "mechanický ICT bot, EURUSD 15m",
+          "value": 0.81,
+          "c": "bad"
+        }
+      ]
     }
-   ]
-  }
- },
- {
-  "id": "20261111-10",
-  "ts": "2026-11-11T13:59:04Z",
-  "date": "2026-11-11",
-  "bot": "skaut",
-  "concept": "backtest",
-  "title": "Backtest 25 000 variant Silver Bullet na NQ a ES",
-  "source": "Shrnutí videa (Gistly), autor videa neověřen",
-  "url": "https://gist.ly/youtube-summarizer/i-backtested-25000-ict-silver-bullet-trades",
-  "simple": "Velký test tisíců variant Silver Bullet: skoro žádná neobstála. Pomáhal jen požadavek na sweep, čekání na MSS výsledky zhoršovalo.",
-  "takeaway": "Test na 16 letech minutových dat s poplatky a skluzem: po korekcích přežilo jen asi 1,7 % variant. Jediné pravidlo, které soustavně pomáhalo, byl požadavek na sweep likvidity. MSS a 15m bias výsledky zhoršovaly, okno 10:00–11:00 nevyšlo lépe než jiné hodiny a 1m gap byl lepší než 5m.",
-  "effect": "Důkaz proti pravidlu 4 (MSS) a proti časovému oknu, pro pravidlo 3 (sweep) a pro 1m rámec. Je to jeden zdroj přes strojové shrnutí, proto zatím jen návrh na srovnávací test bez MSS.",
-  "viz": {
-   "unit": "%",
-   "caption": "Podíl testovaných variant podle zdroje.",
-   "items": [
-    {
-     "label": "varianty, které obstály",
-     "value": 1.7,
-     "c": "good"
-    },
-    {
-     "label": "varianty, které neobstály",
-     "value": 98.3,
-     "c": "bad"
+  },
+  {
+    "id": "20261111-10",
+    "ts": "2026-11-11T13:59:04Z",
+    "date": "2026-11-11",
+    "bot": "skaut",
+    "concept": "backtest",
+    "title": "Backtest 25 000 variant Silver Bullet na NQ a ES",
+    "source": "Shrnutí videa (Gistly), autor videa neověřen",
+    "url": "https://gist.ly/youtube-summarizer/i-backtested-25000-ict-silver-bullet-trades",
+    "simple": "Velký test tisíců variant Silver Bullet: skoro žádná neobstála. Pomáhal jen požadavek na sweep, čekání na MSS výsledky zhoršovalo.",
+    "takeaway": "Test na 16 letech minutových dat s poplatky a skluzem: po korekcích přežilo jen asi 1,7 % variant. Jediné pravidlo, které soustavně pomáhalo, byl požadavek na sweep likvidity. MSS a 15m bias výsledky zhoršovaly, okno 10:00–11:00 nevyšlo lépe než jiné hodiny a 1m gap byl lepší než 5m.",
+    "effect": "Důkaz proti pravidlu 4 (MSS) a proti časovému oknu, pro pravidlo 3 (sweep) a pro 1m rámec. Je to jeden zdroj přes strojové shrnutí, proto zatím jen návrh na srovnávací test bez MSS.",
+    "viz": {
+      "unit": "%",
+      "caption": "Podíl testovaných variant podle zdroje.",
+      "items": [
+        {
+          "label": "varianty, které obstály",
+          "value": 1.7,
+          "c": "good"
+        },
+        {
+          "label": "varianty, které neobstály",
+          "value": 98.3,
+          "c": "bad"
+        }
+      ]
     }
-   ]
-  }
- },
- {
-  "id": "20261111-09",
-  "ts": "2026-11-11T13:59:03Z",
-  "date": "2026-11-11",
-  "bot": "gems",
-  "concept": "model",
-  "title": "ICT Gems: Market Maker Model in 16 Minutes",
-  "source": "Shrnutí videa (Video Highlight)",
-  "url": "https://videohighlight.com/v/Xw7HtoT2VTI",
-  "simple": "Cena jde buď pro stopy za starými vrcholy a dny, nebo zaplnit mezeru. Vstupuje se při návratu do FVG po výběru likvidity.",
-  "takeaway": "Cena podle výkladu míří buď k likviditě za starými high a low, nebo k nevyplněným gapům, jinak konsoliduje. Vstupuje se na návratu do FVG po výběru likvidity, v okně otevření New Yorku. Shrnutí neuvádí pravidla pro stop ani potvrzení.",
-  "effect": "Potvrzuje pořadí kroků modelu (sweep, displacement, návrat do FVG). Nic nového k parametrům."
- },
- {
-  "id": "20261111-08",
-  "ts": "2026-11-11T13:59:02Z",
-  "date": "2026-11-11",
-  "bot": "gems",
-  "concept": "bias",
-  "title": "ICT Gems: Here is How to Trade the ICT WAY",
-  "source": "Přepis videa (SozAI, nahráno kanálem URAH ICT)",
-  "url": "https://sozai.app/transcript/ict-gems-how-to-trade-ict-way/",
-  "simple": "Den začíná otázkou, kam cena míří. Když trh směr nepotvrdí, bias se opouští.",
-  "takeaway": "Den začíná určením cíle v likviditě a bias se opouští, když ho cena nepotvrdí. 15m graf slouží jako vodítko, exekuce je na nižším rámci, stop patří za low sweepu a půlka pozice se vybírá u krátkodobého high.",
-  "effect": "Souhlasí se stopem za sweepem a s částečným výběrem. Model nemá cíl v likviditě, používá pevné 1R a 2R."
- },
- {
-  "id": "20261111-07",
-  "ts": "2026-11-11T13:59:01Z",
-  "date": "2026-11-11",
-  "bot": "gems",
-  "concept": "premium-discount",
-  "title": "ICT Gems - How to Select Quality FVGs and OBs",
-  "source": "Shrnutí videa (Video Highlight)",
-  "url": "https://videohighlight.com/v/NXXanWVgauY",
-  "simple": "FVG pro nákup je kvalitnější, když leží v levné polovině posledního pohybu.",
-  "takeaway": "Kvalitní FVG pro long leží pod polovinou dealing range (v diskontu) a na cestě k likviditě s malým odporem. Samotný příchod ceny do zóny nestačí, čeká se na reakci trhu. Shrnutí je strojové a bez přesných pravidel.",
-  "effect": "Model zatím nekontroluje, zda FVG leží v diskontu nebo prémiu rozsahu sweep–MSS. Kandidát na budoucí filtr, až bude základní backtest."
- },
- {
-  "id": "20261111-01",
-  "ts": "2026-11-11T13:40:06Z",
-  "date": "2026-11-11",
-  "bot": "gems",
-  "concept": "cas",
-  "title": "ICT Gems: Blending Silver Bullets and Macros",
-  "source": "Shrnutí videa (Chaindesk)",
-  "url": "https://chaindesk.ai/tools/youtube-summarizer/ict-gems-blending-silver-bullets-and-macros-qHongB4cMpQ",
-  "simple": "Silver Bullet se hledá každý den mezi 10:00 a 11:00 newyorského času: čeká se na silný pohyb a FVG.",
-  "takeaway": "Silver Bullet se hledá každý obchodní den mezi 10:00 a 11:00 NY. Čeká se na displacement a vznik FVG, obchod míří do likvidity.",
-  "effect": "Okno pro vstupy končí v 11:00, vstup je přes FVG."
- },
- {
-  "id": "20261111-02",
-  "ts": "2026-11-11T13:40:05Z",
-  "date": "2026-11-11",
-  "bot": "gems",
-  "concept": "likvidita",
-  "title": "ICT Gems: 15M liquidity pools, intraday scalping",
-  "source": "Přepis videa (Lilys)",
-  "url": "https://lilys.ai/de/notes/day-trading-20260304/ict-gems-15m-liquidity-scalping",
-  "simple": "Nejdřív se zeptej, ke kterým stopům cena míří. Velké pohyby začínají kolem 8:30 a 9:30 newyorského času.",
-  "takeaway": "Nejdřív se ptát, kam cena míří za likviditou. Pohyby začínají kolem 8:30 a 9:30 NY.",
-  "effect": "Model startuje v 9:30 a likviditu bere z vyššího rámce než 1m."
- },
- {
-  "id": "20261111-03",
-  "ts": "2026-11-11T13:40:04Z",
-  "date": "2026-11-11",
-  "bot": "skaut",
-  "concept": "model",
-  "title": "Model 2022: sweep, MSS, vstup do FVG",
-  "source": "LuxAlgo Library",
-  "url": "https://www.luxalgo.com/library/concept/model-2022/",
-  "simple": "Model 2022 nemá přesnou definici. Jádro je vždy stejné: výběr likvidity, změna struktury, vstup do mezery.",
-  "takeaway": "Model 2022 je komunitní zkratka bez pevné specifikace. Stabilní jádro je výběr likvidity, změna struktury a vstup do gapu. Výsledky se liší podle trhu a je třeba je testovat.",
-  "effect": "Kostra pravidel 3 až 5."
- },
- {
-  "id": "20261111-04",
-  "ts": "2026-11-11T13:40:03Z",
-  "date": "2026-11-11",
-  "bot": "skaut",
-  "concept": "cas",
-  "title": "Samotné Silver Bullet hodiny výhodu nedávají",
-  "source": "TradingView, Silver Bullet [GBB]",
-  "url": "https://br.tradingview.com/script/teL2dDvS-Silver-Bullet-GBB/",
-  "simple": "Když někdo porovnal hodiny Silver Bullet s ostatními hodinami dne, lepší nevyšly.",
-  "takeaway": "Autor skriptu porovnal Silver Bullet okna s ostatními hodinami dne a s jeho pravidly nevyšla jako zvlášť výhodná ani samostatně zisková.",
-  "effect": "Čas je jen filtr. Model vyžaduje sweep a MSS a musí projít vlastním backtestem."
- },
- {
-  "id": "20261111-05",
-  "ts": "2026-11-11T13:40:02Z",
-  "date": "2026-11-11",
-  "bot": "skaut",
-  "concept": "likvidita",
-  "title": "Likviditní úrovně pro ES a NQ",
-  "source": "NexusFi",
-  "url": "https://nexusfi.com/a/strategies/ict-smart-money-concepts",
-  "simple": "Nejdůležitější úrovně pro NQ a ES jsou noční high a low, high a low včerejška a stejně vysoké vrcholy nebo dna.",
-  "takeaway": "Jako nejspolehlivější denní úrovně uvádí overnight high a low, high a low předchozího dne a equal highs a lows. NQ sweepuje agresivněji než ES.",
-  "effect": "Pravidlo 2. Equal highs a lows zatím v kódu chybí."
- },
- {
-  "id": "20261111-06",
-  "ts": "2026-11-11T13:40:01Z",
-  "date": "2026-11-11",
-  "bot": "architekt",
-  "concept": "riziko",
-  "title": "Strop na velikost stopu",
-  "source": "TradingView, ICT Session Scalper Toolkit",
-  "url": "https://vn.tradingview.com/script/2oj5G1YF-ICT-Session-Scalper-Toolkit/",
-  "simple": "Jeden skript nebere obchody, kde by stop na NQ vyšel dál než 25 bodů v Londýně nebo 40 bodů v New Yorku.",
-  "takeaway": "Skript používá pro NQ pevný strop stopu 25 bodů v Londýně a 40 bodů v New Yorku.",
-  "effect": "Parametr Max. stop nastaven na 40 bodů.",
-  "viz": {
-   "unit": "b.",
-   "caption": "Největší povolený stop na NQ podle skriptu.",
-   "items": [
-    {
-     "label": "londýnská seance",
-     "value": 25,
-     "c": "accent"
-    },
-    {
-     "label": "newyorská seance",
-     "value": 40,
-     "c": "accent"
+  },
+  {
+    "id": "20261111-09",
+    "ts": "2026-11-11T13:59:03Z",
+    "date": "2026-11-11",
+    "bot": "gems",
+    "concept": "model",
+    "title": "ICT Gems: Market Maker Model in 16 Minutes",
+    "source": "Shrnutí videa (Video Highlight)",
+    "url": "https://videohighlight.com/v/Xw7HtoT2VTI",
+    "simple": "Cena jde buď pro stopy za starými vrcholy a dny, nebo zaplnit mezeru. Vstupuje se při návratu do FVG po výběru likvidity.",
+    "takeaway": "Cena podle výkladu míří buď k likviditě za starými high a low, nebo k nevyplněným gapům, jinak konsoliduje. Vstupuje se na návratu do FVG po výběru likvidity, v okně otevření New Yorku. Shrnutí neuvádí pravidla pro stop ani potvrzení.",
+    "effect": "Potvrzuje pořadí kroků modelu (sweep, displacement, návrat do FVG). Nic nového k parametrům."
+  },
+  {
+    "id": "20261111-08",
+    "ts": "2026-11-11T13:59:02Z",
+    "date": "2026-11-11",
+    "bot": "gems",
+    "concept": "bias",
+    "title": "ICT Gems: Here is How to Trade the ICT WAY",
+    "source": "Přepis videa (SozAI, nahráno kanálem URAH ICT)",
+    "url": "https://sozai.app/transcript/ict-gems-how-to-trade-ict-way/",
+    "simple": "Den začíná otázkou, kam cena míří. Když trh směr nepotvrdí, bias se opouští.",
+    "takeaway": "Den začíná určením cíle v likviditě a bias se opouští, když ho cena nepotvrdí. 15m graf slouží jako vodítko, exekuce je na nižším rámci, stop patří za low sweepu a půlka pozice se vybírá u krátkodobého high.",
+    "effect": "Souhlasí se stopem za sweepem a s částečným výběrem. Model nemá cíl v likviditě, používá pevné 1R a 2R."
+  },
+  {
+    "id": "20261111-07",
+    "ts": "2026-11-11T13:59:01Z",
+    "date": "2026-11-11",
+    "bot": "gems",
+    "concept": "premium-discount",
+    "title": "ICT Gems - How to Select Quality FVGs and OBs",
+    "source": "Shrnutí videa (Video Highlight)",
+    "url": "https://videohighlight.com/v/NXXanWVgauY",
+    "simple": "FVG pro nákup je kvalitnější, když leží v levné polovině posledního pohybu.",
+    "takeaway": "Kvalitní FVG pro long leží pod polovinou dealing range (v diskontu) a na cestě k likviditě s malým odporem. Samotný příchod ceny do zóny nestačí, čeká se na reakci trhu. Shrnutí je strojové a bez přesných pravidel.",
+    "effect": "Model zatím nekontroluje, zda FVG leží v diskontu nebo prémiu rozsahu sweep–MSS. Kandidát na budoucí filtr, až bude základní backtest."
+  },
+  {
+    "id": "20261111-01",
+    "ts": "2026-11-11T13:40:06Z",
+    "date": "2026-11-11",
+    "bot": "gems",
+    "concept": "cas",
+    "title": "ICT Gems: Blending Silver Bullets and Macros",
+    "source": "Shrnutí videa (Chaindesk)",
+    "url": "https://chaindesk.ai/tools/youtube-summarizer/ict-gems-blending-silver-bullets-and-macros-qHongB4cMpQ",
+    "simple": "Silver Bullet se hledá každý den mezi 10:00 a 11:00 newyorského času: čeká se na silný pohyb a FVG.",
+    "takeaway": "Silver Bullet se hledá každý obchodní den mezi 10:00 a 11:00 NY. Čeká se na displacement a vznik FVG, obchod míří do likvidity.",
+    "effect": "Okno pro vstupy končí v 11:00, vstup je přes FVG."
+  },
+  {
+    "id": "20261111-02",
+    "ts": "2026-11-11T13:40:05Z",
+    "date": "2026-11-11",
+    "bot": "gems",
+    "concept": "likvidita",
+    "title": "ICT Gems: 15M liquidity pools, intraday scalping",
+    "source": "Přepis videa (Lilys)",
+    "url": "https://lilys.ai/de/notes/day-trading-20260304/ict-gems-15m-liquidity-scalping",
+    "simple": "Nejdřív se zeptej, ke kterým stopům cena míří. Velké pohyby začínají kolem 8:30 a 9:30 newyorského času.",
+    "takeaway": "Nejdřív se ptát, kam cena míří za likviditou. Pohyby začínají kolem 8:30 a 9:30 NY.",
+    "effect": "Model startuje v 9:30 a likviditu bere z vyššího rámce než 1m."
+  },
+  {
+    "id": "20261111-03",
+    "ts": "2026-11-11T13:40:04Z",
+    "date": "2026-11-11",
+    "bot": "skaut",
+    "concept": "model",
+    "title": "Model 2022: sweep, MSS, vstup do FVG",
+    "source": "LuxAlgo Library",
+    "url": "https://www.luxalgo.com/library/concept/model-2022/",
+    "simple": "Model 2022 nemá přesnou definici. Jádro je vždy stejné: výběr likvidity, změna struktury, vstup do mezery.",
+    "takeaway": "Model 2022 je komunitní zkratka bez pevné specifikace. Stabilní jádro je výběr likvidity, změna struktury a vstup do gapu. Výsledky se liší podle trhu a je třeba je testovat.",
+    "effect": "Kostra pravidel 3 až 5."
+  },
+  {
+    "id": "20261111-04",
+    "ts": "2026-11-11T13:40:03Z",
+    "date": "2026-11-11",
+    "bot": "skaut",
+    "concept": "cas",
+    "title": "Samotné Silver Bullet hodiny výhodu nedávají",
+    "source": "TradingView, Silver Bullet [GBB]",
+    "url": "https://br.tradingview.com/script/teL2dDvS-Silver-Bullet-GBB/",
+    "simple": "Když někdo porovnal hodiny Silver Bullet s ostatními hodinami dne, lepší nevyšly.",
+    "takeaway": "Autor skriptu porovnal Silver Bullet okna s ostatními hodinami dne a s jeho pravidly nevyšla jako zvlášť výhodná ani samostatně zisková.",
+    "effect": "Čas je jen filtr. Model vyžaduje sweep a MSS a musí projít vlastním backtestem."
+  },
+  {
+    "id": "20261111-05",
+    "ts": "2026-11-11T13:40:02Z",
+    "date": "2026-11-11",
+    "bot": "skaut",
+    "concept": "likvidita",
+    "title": "Likviditní úrovně pro ES a NQ",
+    "source": "NexusFi",
+    "url": "https://nexusfi.com/a/strategies/ict-smart-money-concepts",
+    "simple": "Nejdůležitější úrovně pro NQ a ES jsou noční high a low, high a low včerejška a stejně vysoké vrcholy nebo dna.",
+    "takeaway": "Jako nejspolehlivější denní úrovně uvádí overnight high a low, high a low předchozího dne a equal highs a lows. NQ sweepuje agresivněji než ES.",
+    "effect": "Pravidlo 2. Equal highs a lows zatím v kódu chybí."
+  },
+  {
+    "id": "20261111-06",
+    "ts": "2026-11-11T13:40:01Z",
+    "date": "2026-11-11",
+    "bot": "architekt",
+    "concept": "riziko",
+    "title": "Strop na velikost stopu",
+    "source": "TradingView, ICT Session Scalper Toolkit",
+    "url": "https://vn.tradingview.com/script/2oj5G1YF-ICT-Session-Scalper-Toolkit/",
+    "simple": "Jeden skript nebere obchody, kde by stop na NQ vyšel dál než 25 bodů v Londýně nebo 40 bodů v New Yorku.",
+    "takeaway": "Skript používá pro NQ pevný strop stopu 25 bodů v Londýně a 40 bodů v New Yorku.",
+    "effect": "Parametr Max. stop nastaven na 40 bodů.",
+    "viz": {
+      "unit": "b.",
+      "caption": "Největší povolený stop na NQ podle skriptu.",
+      "items": [
+        {
+          "label": "londýnská seance",
+          "value": 25,
+          "c": "accent"
+        },
+        {
+          "label": "newyorská seance",
+          "value": 40,
+          "c": "accent"
+        }
+      ]
     }
-   ]
   }
- }
 ]

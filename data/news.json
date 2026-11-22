@@ -1,65 +1,79 @@
 {
- "updated": "2026-11-21T05:55:00Z",
- "events": [
-  {
-   "date": "2026-11-25",
-   "time": "14:30",
-   "title": "HDP USA (2. odhad) a inflace PCE",
-   "impact": 3,
-   "note": "PCE je měřítko inflace, které sleduje Fed."
-  },
-  {
-   "date": "2026-11-26",
-   "time": "",
-   "title": "Den díkůvzdání: americké burzy zavřené",
-   "impact": 2,
-   "note": "Futures mají zkrácené obchodování a malý objem. Den bez obchodu."
-  },
-  {
-   "date": "2026-11-27",
-   "time": "19:00",
-   "title": "Zkrácený den: akciové burzy zavírají v 19:00 našeho času",
-   "impact": 1,
-   "note": "Den po Díkůvzdání bývá objem malý."
-  },
-  {
-   "date": "2026-12-04",
-   "time": "14:30",
-   "title": "Zpráva o zaměstnanosti (NFP), listopad",
-   "impact": 3,
-   "note": "Nejsledovanější data měsíce."
-  },
-  {
-   "date": "2026-12-09",
-   "time": "20:00",
-   "title": "Rozhodnutí Fedu o sazbách",
-   "impact": 3,
-   "note": "Tisková konference začíná ve 20:30."
-  },
-  {
-   "date": "2026-12-10",
-   "time": "14:30",
-   "title": "Inflace CPI, listopad",
-   "impact": 3,
-   "note": ""
-  }
- ],
- "posts": [
-  {
-   "date": "2026-11-12",
-   "who": "Donald Trump",
-   "text": "Na Truth Social pohrozil zdvojnásobením cel na Mexiko, pokud nezastaví karavany migrantů. Časový plán ani dotčené zboží neuvedl. Akcie spotřebitelských firem ten den mírně oslabily.",
-   "source": "WSMH",
-   "url": "https://midmichigannow.com/news/nation-world/trump-threatens-to-double-tariffs-mexico-if-it-fails-to-stop-migrant-caravan-truth-social",
-   "impact": 2
-  },
-  {
-   "date": "2026-11-05",
-   "who": "Donald Trump",
-   "text": "Po propadu indexu Dow o 1 833 bodů napsal, že za pokles akcií může volební výsledek demokratů.",
-   "source": "The Hill",
-   "url": "https://thehill.com/homenews/administration/6203425-donald-trump-stock-market-losses-2026-midterms-economy/",
-   "impact": 1
-  }
- ]
+  "updated": "2026-11-22T05:55:00Z",
+  "events": [
+    {
+      "date": "2026-11-23",
+      "time": "15:45",
+      "title": "Předběžné indexy PMI (USA)",
+      "impact": 2,
+      "note": "Průzkum mezi firmami, první pohled na listopad."
+    },
+    {
+      "date": "2026-11-25",
+      "time": "14:30",
+      "title": "HDP USA (2. odhad), inflace PCE, zboží dlouhodobé spotřeby a žádosti o podporu",
+      "impact": 3,
+      "note": "Čtyři zprávy najednou. Žádosti o podporu vycházejí kvůli svátku o den dřív. PCE je měřítko inflace, které sleduje Fed."
+    },
+    {
+      "date": "2026-11-25",
+      "time": "20:00",
+      "title": "Béžová kniha Fedu",
+      "impact": 1,
+      "note": "Popis stavu ekonomiky z jednotlivých regionů."
+    },
+    {
+      "date": "2026-11-26",
+      "time": "",
+      "title": "Den díkůvzdání: americké burzy zavřené",
+      "impact": 2,
+      "note": "Futures mají zkrácené obchodování a malý objem. Den bez obchodu."
+    },
+    {
+      "date": "2026-11-27",
+      "time": "19:00",
+      "title": "Zkrácený den: akciové burzy zavírají v 19:00 našeho času",
+      "impact": 1,
+      "note": "Den po Díkůvzdání bývá objem malý."
+    },
+    {
+      "date": "2026-12-04",
+      "time": "14:30",
+      "title": "Zpráva o zaměstnanosti (NFP), listopad",
+      "impact": 3,
+      "note": "Nejsledovanější data měsíce."
+    },
+    {
+      "date": "2026-12-09",
+      "time": "20:00",
+      "title": "Rozhodnutí Fedu o sazbách",
+      "impact": 3,
+      "note": "Tisková konference začíná ve 20:30."
+    },
+    {
+      "date": "2026-12-10",
+      "time": "14:30",
+      "title": "Inflace CPI, listopad",
+      "impact": 3,
+      "note": ""
+    }
+  ],
+  "posts": [
+    {
+      "date": "2026-11-12",
+      "who": "Donald Trump",
+      "text": "Na Truth Social pohrozil zdvojnásobením cel na Mexiko, pokud nezastaví karavany migrantů. Časový plán ani dotčené zboží neuvedl. Akcie spotřebitelských firem ten den mírně oslabily.",
+      "source": "WSMH",
+      "url": "https://midmichigannow.com/news/nation-world/trump-threatens-to-double-tariffs-mexico-if-it-fails-to-stop-migrant-caravan-truth-social",
+      "impact": 2
+    },
+    {
+      "date": "2026-11-05",
+      "who": "Donald Trump",
+      "text": "Po propadu indexu Dow o 1 833 bodů napsal, že za pokles akcií může volební výsledek demokratů.",
+      "source": "The Hill",
+      "url": "https://thehill.com/homenews/administration/6203425-donald-trump-stock-market-losses-2026-midterms-economy/",
+      "impact": 1
+    }
+  ]
 }

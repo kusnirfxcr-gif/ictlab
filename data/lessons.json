@@ -1,657 +1,713 @@
 [
- {
-  "id": "20261121-L12",
-  "ts": "2026-11-21T05:55:00Z",
-  "date": "2026-11-21",
-  "n": 12,
-  "week": 4,
-  "title": "Co je likvidita: kde čekají cizí příkazy",
-  "body": [
-   "Začíná čtvrtý týden a s ním nejdůležitější slovo celého ICT: likvidita.",
-   "Každý, kdo je v obchodu, má někde stop-loss. Kdo koupil, má ho pod nějakým dnem. Kdo prodal, má ho nad nějakým vrcholem.",
-   "Stop-loss kupujícího je příkaz k prodeji. Stop-loss prodávajícího je příkaz k nákupu. Na místech, kde má stop hodně lidí, proto čeká hromada příkazů.",
-   "Téhle hromadě se říká likvidita. Nad vrcholy leží buy-side likvidita, tedy nákupní příkazy. Pod dny leží sell-side likvidita, tedy prodejní příkazy.",
-   "Proč to velké hráče zajímá: kdo chce koupit hodně kontraktů, potřebuje, aby mu je někdo prodal. Pod dnem najde spoustu prodejních příkazů najednou. Cena proto často zamíří právě tam, kde je příkazů nejvíc.",
-   "Pro tebe z toho plynou dvě věci. Likvidita ukazuje, kam cena nejspíš půjde. A tvůj vlastní stop na zjevném místě je součástí té hromady."
-  ],
-  "example": "NQ udělal během dopoledne tři dna těsně u sebe kolem 21 000. Kupující mají stopy těsně pod nimi, třeba na 20 995. To je sell-side likvidita. Cena sjede na 20 992, stopy se spustí jako prodeje, velký hráč proti nim nakoupí a cena se otočí nahoru. Kdo měl stop přesně pod dny, je venku těsně před pohybem, na který čekal.",
-  "remember": "Likvidita jsou čekající příkazy, hlavně cizí stop-lossy. Nad vrcholy je buy-side, pod dny sell-side. Cena k nim často míří.",
-  "terms": [
-   "likvidita",
-   "bsl",
-   "ssl"
-  ],
-  "quiz": [
-   {
-    "q": "Kde leží sell-side likvidita?",
-    "options": [
-     "Nad vrcholy",
-     "Pod dny",
-     "Uprostřed pásma"
+  {
+    "id": "20261122-L13",
+    "ts": "2026-11-22T05:55:00Z",
+    "date": "2026-11-22",
+    "n": 13,
+    "week": 4,
+    "title": "Kde likviditu hledat: čtyři místa, která vidí každý",
+    "body": [
+      "Včera jsme si řekli, co likvidita je. Dnes, kde ji na grafu najdeš, než tam cena dojde.",
+      "Platí jednoduché pravidlo: čím je úroveň viditelnější, tím víc stopů u ní leží. Kam se dívá každý, tam si každý schová stop.",
+      "První místo je high a low předchozího dne. Říká se jim PDH a PDL. Vidí je každý obchodník na světě, proto jsou nejsilnější.",
+      "Druhé místo je high a low noční seance, tedy pohybu před otevřením New Yorku. Ráno bývají první na řadě.",
+      "Třetí místo jsou equal highs a equal lows: dva nebo víc vrcholů či den skoro ve stejné ceně. Vypadají jako pevný strop nebo podlaha, a právě proto se za nimi stopy hromadí.",
+      "Čtvrté místo jsou starší výrazné vrcholy a dna, třeba z minulého týdne. Čím déle úroveň drží, tím víc příkazů u ní čeká.",
+      "Před seancí si těchhle pár úrovní vyznač. Dostaneš mapu míst, kam může cena zamířit, a zároveň seznam míst, kam svůj stop nedávat."
     ],
-    "correct": 1,
-    "why": "Pod dny mají stop-lossy kupující. Jejich stopy jsou prodejní příkazy."
-   },
-   {
-    "q": "Čím je stop-loss člověka, který je v shortu?",
-    "options": [
-     "Příkazem k nákupu",
-     "Příkazem k prodeji",
-     "Ničím, dokud se nespustí"
+    "example": "Je 8:00 newyorského času a NQ stojí na 21 050. Včerejší high je 21 120, noční high 21 095 a noční low 21 010. Kolem 20 980 jsou tři dna těsně u sebe, tedy equal lows. Mapa je hotová: nad cenou leží likvidita na 21 095 a 21 120, pod cenou na 21 010 a 20 980. Když cena po otevření sjede pod 21 010, jen ho propíchne a vrátí se, víš, že vybrala noční low. A víš taky, že další cíl nahoře je 21 095.",
+    "remember": "Nejvíc stopů leží u high a low včerejška, noční seance, u stejně vysokých vrcholů a den a u starých výrazných extrémů. Vyznač si je před seancí.",
+    "terms": [
+      "pdh-pdl",
+      "overnight",
+      "eqh"
     ],
-    "correct": 0,
-    "why": "Short se zavírá nákupem, takže jeho stop je čekající nákupní příkaz nad vrcholem."
-   },
-   {
-    "q": "Proč cena často míří k likviditě?",
-    "options": [
-     "Protože to tak vychází z indikátorů",
-     "Protože velký hráč tam najde dost protistrany pro svůj obchod",
-     "Protože se tam mění den"
+    "quiz": [
+      {
+        "q": "U které úrovně čekáš nejvíc stop-lossů?",
+        "options": [
+          "U high předchozího dne",
+          "U náhodné ceny uprostřed dne",
+          "U ceny, kde se nikdy nic nestalo"
+        ],
+        "correct": 0,
+        "why": "High předchozího dne vidí každý, proto u něj leží nejvíc stopů."
+      },
+      {
+        "q": "Co jsou equal lows?",
+        "options": [
+          "Dvě nebo víc den skoro ve stejné ceně",
+          "Low, které je přesně v polovině dne",
+          "Dvě svíčky se stejným close"
+        ],
+        "correct": 0,
+        "why": "Dna těsně u sebe vypadají jako podlaha a pod nimi se hromadí stopy kupujících."
+      },
+      {
+        "q": "Proč si úrovně vyznačit před seancí?",
+        "options": [
+          "Aby graf vypadal odborně",
+          "Abys věděl, kam cena může zamířit a kam nedávat stop",
+          "Protože to vyžaduje broker"
+        ],
+        "correct": 1,
+        "why": "Mapa likvidity ukazuje pravděpodobné cíle ceny i místa, kde je stop nejvíc ohrožený."
+      }
+    ]
+  },
+  {
+    "id": "20261121-L12",
+    "ts": "2026-11-21T05:55:00Z",
+    "date": "2026-11-21",
+    "n": 12,
+    "week": 4,
+    "title": "Co je likvidita: kde čekají cizí příkazy",
+    "body": [
+      "Začíná čtvrtý týden a s ním nejdůležitější slovo celého ICT: likvidita.",
+      "Každý, kdo je v obchodu, má někde stop-loss. Kdo koupil, má ho pod nějakým dnem. Kdo prodal, má ho nad nějakým vrcholem.",
+      "Stop-loss kupujícího je příkaz k prodeji. Stop-loss prodávajícího je příkaz k nákupu. Na místech, kde má stop hodně lidí, proto čeká hromada příkazů.",
+      "Téhle hromadě se říká likvidita. Nad vrcholy leží buy-side likvidita, tedy nákupní příkazy. Pod dny leží sell-side likvidita, tedy prodejní příkazy.",
+      "Proč to velké hráče zajímá: kdo chce koupit hodně kontraktů, potřebuje, aby mu je někdo prodal. Pod dnem najde spoustu prodejních příkazů najednou. Cena proto často zamíří právě tam, kde je příkazů nejvíc.",
+      "Pro tebe z toho plynou dvě věci. Likvidita ukazuje, kam cena nejspíš půjde. A tvůj vlastní stop na zjevném místě je součástí té hromady."
     ],
-    "correct": 1,
-    "why": "Kdo potřebuje koupit hodně, hledá místo, kde hodně lidí najednou prodává."
-   }
-  ]
- },
- {
-  "id": "20261120-L11",
-  "ts": "2026-11-20T05:55:00Z",
-  "date": "2026-11-20",
-  "n": 11,
-  "week": 3,
-  "title": "Struktura na více timeframech: velký graf velí, malý časuje",
-  "body": [
-   "Otevřeš hodinový graf a vidíš trend nahoru. Přepneš na pětiminutový a cena klesá. Který má pravdu? Oba. Jen každý ukazuje jinou vzdálenost.",
-   "Pokles na pětiminutovém grafu je často jen korekce uvnitř hodinového trendu. Na hodinovém grafu to vypadá jako jedna nebo dvě menší červené svíčky v růstu.",
-   "Proto platí pořadí: směr určuje vyšší timeframe, nižší slouží k načasování. Vyššímu timeframu se říká HTF, nižšímu LTF.",
-   "V praxi to znamená tři kroky. Na hodinovém grafu zjistíš, kam trh míří. Počkáš, až proti tomu směru přijde korekce. Na pětiminutovém grafu pak hledáš chvíli, kdy korekce končí, tedy zlom zpátky ve směru hodinového trendu.",
-   "Největší chyba začátečníků je opačný postup: vidí na minutovém grafu silný pohyb a naskočí, aniž by věděli, že jdou proti hodinovému trendu.",
-   "Když si grafy odporují tak, že nevíš, co je trend a co korekce, je správná odpověď neobchodovat. To se stává často a není to selhání."
-  ],
-  "example": "Hodinový NQ dělá vyšší vrcholy a vyšší dna, poslední dno je na 21 000. Na pětiminutovém grafu cena klesá z 21 120 na 21 050 a dělá nižší vrcholy. Kdo vidí jen pětiminutový graf, chce prodávat. Kdo zná hodinový, ví, že je to korekce nad 21 000, a čeká, až pětiminutový graf otočí nahoru. Teprve potom hledá nákup.",
-  "remember": "Směr ber z vyššího timeframu, vstup z nižšího. Pohyb proti vyššímu trendu je nejčastěji korekce. Když si nejsi jistý, neobchoduj.",
-  "terms": [
-   "htf",
-   "ltf",
-   "top-down"
-  ],
-  "quiz": [
-   {
-    "q": "Hodinový graf roste, pětiminutový klesá. Co to nejčastěji je?",
-    "options": [
-     "Konec hodinového trendu",
-     "Korekce uvnitř hodinového trendu",
-     "Chyba v datech"
+    "example": "NQ udělal během dopoledne tři dna těsně u sebe kolem 21 000. Kupující mají stopy těsně pod nimi, třeba na 20 995. To je sell-side likvidita. Cena sjede na 20 992, stopy se spustí jako prodeje, velký hráč proti nim nakoupí a cena se otočí nahoru. Kdo měl stop přesně pod dny, je venku těsně před pohybem, na který čekal.",
+    "remember": "Likvidita jsou čekající příkazy, hlavně cizí stop-lossy. Nad vrcholy je buy-side, pod dny sell-side. Cena k nim často míří.",
+    "terms": [
+      "likvidita",
+      "bsl",
+      "ssl"
     ],
-    "correct": 1,
-    "why": "Menší graf ukazuje detail. Pokles na něm bývá jen korekce většího růstu."
-   },
-   {
-    "q": "K čemu slouží nižší timeframe?",
-    "options": [
-     "K určení směru",
-     "K načasování vstupu",
-     "K ničemu"
+    "quiz": [
+      {
+        "q": "Kde leží sell-side likvidita?",
+        "options": [
+          "Nad vrcholy",
+          "Pod dny",
+          "Uprostřed pásma"
+        ],
+        "correct": 1,
+        "why": "Pod dny mají stop-lossy kupující. Jejich stopy jsou prodejní příkazy."
+      },
+      {
+        "q": "Čím je stop-loss člověka, který je v shortu?",
+        "options": [
+          "Příkazem k nákupu",
+          "Příkazem k prodeji",
+          "Ničím, dokud se nespustí"
+        ],
+        "correct": 0,
+        "why": "Short se zavírá nákupem, takže jeho stop je čekající nákupní příkaz nad vrcholem."
+      },
+      {
+        "q": "Proč cena často míří k likviditě?",
+        "options": [
+          "Protože to tak vychází z indikátorů",
+          "Protože velký hráč tam najde dost protistrany pro svůj obchod",
+          "Protože se tam mění den"
+        ],
+        "correct": 1,
+        "why": "Kdo potřebuje koupit hodně, hledá místo, kde hodně lidí najednou prodává."
+      }
+    ]
+  },
+  {
+    "id": "20261120-L11",
+    "ts": "2026-11-20T05:55:00Z",
+    "date": "2026-11-20",
+    "n": 11,
+    "week": 3,
+    "title": "Struktura na více timeframech: velký graf velí, malý časuje",
+    "body": [
+      "Otevřeš hodinový graf a vidíš trend nahoru. Přepneš na pětiminutový a cena klesá. Který má pravdu? Oba. Jen každý ukazuje jinou vzdálenost.",
+      "Pokles na pětiminutovém grafu je často jen korekce uvnitř hodinového trendu. Na hodinovém grafu to vypadá jako jedna nebo dvě menší červené svíčky v růstu.",
+      "Proto platí pořadí: směr určuje vyšší timeframe, nižší slouží k načasování. Vyššímu timeframu se říká HTF, nižšímu LTF.",
+      "V praxi to znamená tři kroky. Na hodinovém grafu zjistíš, kam trh míří. Počkáš, až proti tomu směru přijde korekce. Na pětiminutovém grafu pak hledáš chvíli, kdy korekce končí, tedy zlom zpátky ve směru hodinového trendu.",
+      "Největší chyba začátečníků je opačný postup: vidí na minutovém grafu silný pohyb a naskočí, aniž by věděli, že jdou proti hodinovému trendu.",
+      "Když si grafy odporují tak, že nevíš, co je trend a co korekce, je správná odpověď neobchodovat. To se stává často a není to selhání."
     ],
-    "correct": 1,
-    "why": "Směr dává vyšší timeframe. Nižší ukáže, kdy korekce končí."
-   },
-   {
-    "q": "Grafy si odporují a nevíš, co je trend. Co uděláš?",
-    "options": [
-     "Vstoupím podle minutového grafu",
-     "Neobchoduju",
-     "Otevřu long i short"
+    "example": "Hodinový NQ dělá vyšší vrcholy a vyšší dna, poslední dno je na 21 000. Na pětiminutovém grafu cena klesá z 21 120 na 21 050 a dělá nižší vrcholy. Kdo vidí jen pětiminutový graf, chce prodávat. Kdo zná hodinový, ví, že je to korekce nad 21 000, a čeká, až pětiminutový graf otočí nahoru. Teprve potom hledá nákup.",
+    "remember": "Směr ber z vyššího timeframu, vstup z nižšího. Pohyb proti vyššímu trendu je nejčastěji korekce. Když si nejsi jistý, neobchoduj.",
+    "terms": [
+      "htf",
+      "ltf",
+      "top-down"
     ],
-    "correct": 1,
-    "why": "Bez jasného směru není důvod k obchodu. Den bez obchodu není ztráta."
-   }
-  ]
- },
- {
-  "id": "20261119-L10",
-  "ts": "2026-11-19T05:55:00Z",
-  "date": "2026-11-19",
-  "n": 10,
-  "week": 3,
-  "title": "Silný a slabý zlom: ne každý průraz znamená totéž",
-  "body": [
-   "Už víš, co je BOS a MSS. Oba jsou zavřením těla svíčky za důležitou úrovní. Dnes se podíváš na to, jak ten zlom vypadá.",
-   "Silný zlom proběhne rychle. Jedna až tři velké svíčky s plnými těly a malými knoty projdou úrovní a pokračují dál. Cena se k úrovni hned nevrací.",
-   "Slabý zlom je pomalý. Malé svíčky se k úrovni doplazí, těsně ji překročí, mají dlouhé knoty a střídají barvy. Často se cena brzy vrátí zpátky.",
-   "Proč na tom záleží: silný zlom ukazuje, že jedna strana opravdu chtěla obchodovat a měla sílu. Slabý zlom ukazuje spíš to, že druhá strana na chvíli polevila.",
-   "Tomu rychlému silnému pohybu se říká displacement. Podrobně ho probereš v pátém týdnu. Zatím stačí, když si u každého zlomu položíš dvě otázky: jak velké byly svíčky proti těm okolním a zůstala cena za úrovní?",
-   "Pozor na opačnou chybu. Ani silný zlom není jistota. Je to jen silnější důkaz než slabý."
-  ],
-  "example": "NQ má poslední swing high na 21 150. Varianta A: tři malé svíčky se k němu přiblíží, čtvrtá zavře na 21 152 a hned další padá zpátky pod 21 150. To je slabý zlom. Varianta B: jedna svíčka vyrazí z 21 138 a zavře na 21 171, další pokračuje na 21 185. To je silný zlom, kupující úroveň převálcovali.",
-  "remember": "Silný zlom je rychlý, s velkými těly a cena za úrovní zůstane. Slabý je pomalý, s knoty a cena se vrací. Silnému věř víc, ale jistota to není.",
-  "terms": [
-   "displacement",
-   "bos",
-   "mss"
-  ],
-  "quiz": [
-   {
-    "q": "Jak vypadá silný zlom úrovně?",
-    "options": [
-     "Malé svíčky s dlouhými knoty",
-     "Velké svíčky s plnými těly, cena jde dál",
-     "Cena se úrovně jen dotkne"
+    "quiz": [
+      {
+        "q": "Hodinový graf roste, pětiminutový klesá. Co to nejčastěji je?",
+        "options": [
+          "Konec hodinového trendu",
+          "Korekce uvnitř hodinového trendu",
+          "Chyba v datech"
+        ],
+        "correct": 1,
+        "why": "Menší graf ukazuje detail. Pokles na něm bývá jen korekce většího růstu."
+      },
+      {
+        "q": "K čemu slouží nižší timeframe?",
+        "options": [
+          "K určení směru",
+          "K načasování vstupu",
+          "K ničemu"
+        ],
+        "correct": 1,
+        "why": "Směr dává vyšší timeframe. Nižší ukáže, kdy korekce končí."
+      },
+      {
+        "q": "Grafy si odporují a nevíš, co je trend. Co uděláš?",
+        "options": [
+          "Vstoupím podle minutového grafu",
+          "Neobchoduju",
+          "Otevřu long i short"
+        ],
+        "correct": 1,
+        "why": "Bez jasného směru není důvod k obchodu. Den bez obchodu není ztráta."
+      }
+    ]
+  },
+  {
+    "id": "20261119-L10",
+    "ts": "2026-11-19T05:55:00Z",
+    "date": "2026-11-19",
+    "n": 10,
+    "week": 3,
+    "title": "Silný a slabý zlom: ne každý průraz znamená totéž",
+    "body": [
+      "Už víš, co je BOS a MSS. Oba jsou zavřením těla svíčky za důležitou úrovní. Dnes se podíváš na to, jak ten zlom vypadá.",
+      "Silný zlom proběhne rychle. Jedna až tři velké svíčky s plnými těly a malými knoty projdou úrovní a pokračují dál. Cena se k úrovni hned nevrací.",
+      "Slabý zlom je pomalý. Malé svíčky se k úrovni doplazí, těsně ji překročí, mají dlouhé knoty a střídají barvy. Často se cena brzy vrátí zpátky.",
+      "Proč na tom záleží: silný zlom ukazuje, že jedna strana opravdu chtěla obchodovat a měla sílu. Slabý zlom ukazuje spíš to, že druhá strana na chvíli polevila.",
+      "Tomu rychlému silnému pohybu se říká displacement. Podrobně ho probereš v pátém týdnu. Zatím stačí, když si u každého zlomu položíš dvě otázky: jak velké byly svíčky proti těm okolním a zůstala cena za úrovní?",
+      "Pozor na opačnou chybu. Ani silný zlom není jistota. Je to jen silnější důkaz než slabý."
     ],
-    "correct": 1,
-    "why": "Rychlý pohyb s velkými těly ukazuje, že jedna strana měla opravdovou sílu."
-   },
-   {
-    "q": "Cena úroveň těsně překročí a hned se vrátí zpátky. Co to je?",
-    "options": [
-     "Silný zlom",
-     "Slabý zlom",
-     "Displacement"
+    "example": "NQ má poslední swing high na 21 150. Varianta A: tři malé svíčky se k němu přiblíží, čtvrtá zavře na 21 152 a hned další padá zpátky pod 21 150. To je slabý zlom. Varianta B: jedna svíčka vyrazí z 21 138 a zavře na 21 171, další pokračuje na 21 185. To je silný zlom, kupující úroveň převálcovali.",
+    "remember": "Silný zlom je rychlý, s velkými těly a cena za úrovní zůstane. Slabý je pomalý, s knoty a cena se vrací. Silnému věř víc, ale jistota to není.",
+    "terms": [
+      "displacement",
+      "bos",
+      "mss"
     ],
-    "correct": 1,
-    "why": "Pomalé překročení s rychlým návratem je slabý zlom, často jen výběr stop-lossů."
-   },
-   {
-    "q": "Znamená silný zlom jistý pokračující pohyb?",
-    "options": [
-     "Ano, vždy",
-     "Ne, je to jen silnější důkaz",
-     "Ano, pokud je ráno"
+    "quiz": [
+      {
+        "q": "Jak vypadá silný zlom úrovně?",
+        "options": [
+          "Malé svíčky s dlouhými knoty",
+          "Velké svíčky s plnými těly, cena jde dál",
+          "Cena se úrovně jen dotkne"
+        ],
+        "correct": 1,
+        "why": "Rychlý pohyb s velkými těly ukazuje, že jedna strana měla opravdovou sílu."
+      },
+      {
+        "q": "Cena úroveň těsně překročí a hned se vrátí zpátky. Co to je?",
+        "options": [
+          "Silný zlom",
+          "Slabý zlom",
+          "Displacement"
+        ],
+        "correct": 1,
+        "why": "Pomalé překročení s rychlým návratem je slabý zlom, často jen výběr stop-lossů."
+      },
+      {
+        "q": "Znamená silný zlom jistý pokračující pohyb?",
+        "options": [
+          "Ano, vždy",
+          "Ne, je to jen silnější důkaz",
+          "Ano, pokud je ráno"
+        ],
+        "correct": 1,
+        "why": "V tradingu žádná jistota není. Silný zlom má jen větší váhu než slabý."
+      }
+    ]
+  },
+  {
+    "id": "20261118-L09",
+    "ts": "2026-11-18T05:55:00Z",
+    "date": "2026-11-18",
+    "n": 9,
+    "week": 3,
+    "title": "MSS: první varování, že se trend láme",
+    "body": [
+      "Minule jsi poznal BOS, tedy zlom ve směru trendu. MSS je jeho opak: zlom proti trendu.",
+      "MSS je zkratka z anglického market structure shift, česky posun struktury trhu. V trendu nahoru nastane, když cena zavře tělem pod posledním vyšším dnem. V trendu dolů, když zavře nad posledním nižším vrcholem.",
+      "Proč je to důležité: rostoucí trend stojí na vyšších dnech. Dokud drží, kupující mají navrch. Když jedno z nich padne, je to první známka, že se síly přesouvají k prodávajícím.",
+      "Stejně jako u BOS se počítá jen zavření těla za úrovní. Knot pod dnem, po kterém se cena vrátí, je sweep, ne MSS.",
+      "MSS je varování, ne jistota. Trh se po něm často ještě vrátí a původní trend pokračuje. Větší váhu má, když přijde rychle a velkými svíčkami, tedy s displacementem, a když mu předcházel sweep likvidity na druhé straně.",
+      "V modelu z Tape je MSS třetí krok: nejdřív sweep, potom MSS s displacementem a teprve po něm se hledá vstup."
     ],
-    "correct": 1,
-    "why": "V tradingu žádná jistota není. Silný zlom má jen větší váhu než slabý."
-   }
-  ]
- },
- {
-  "id": "20261118-L09",
-  "ts": "2026-11-18T05:55:00Z",
-  "date": "2026-11-18",
-  "n": 9,
-  "week": 3,
-  "title": "MSS: první varování, že se trend láme",
-  "body": [
-   "Minule jsi poznal BOS, tedy zlom ve směru trendu. MSS je jeho opak: zlom proti trendu.",
-   "MSS je zkratka z anglického market structure shift, česky posun struktury trhu. V trendu nahoru nastane, když cena zavře tělem pod posledním vyšším dnem. V trendu dolů, když zavře nad posledním nižším vrcholem.",
-   "Proč je to důležité: rostoucí trend stojí na vyšších dnech. Dokud drží, kupující mají navrch. Když jedno z nich padne, je to první známka, že se síly přesouvají k prodávajícím.",
-   "Stejně jako u BOS se počítá jen zavření těla za úrovní. Knot pod dnem, po kterém se cena vrátí, je sweep, ne MSS.",
-   "MSS je varování, ne jistota. Trh se po něm často ještě vrátí a původní trend pokračuje. Větší váhu má, když přijde rychle a velkými svíčkami, tedy s displacementem, a když mu předcházel sweep likvidity na druhé straně.",
-   "V modelu z Tape je MSS třetí krok: nejdřív sweep, potom MSS s displacementem a teprve po něm se hledá vstup."
-  ],
-  "example": "NQ roste a poslední vyšší dno je na 21 040. Cena vybere vrchol na 21 120 a otočí se. Jedna pětiminutová svíčka sjede na 21 035, ale zavře na 21 046. To MSS není, pod dnem byl jen knot. Další velká červená svíčka zavře na 21 022. Teď je to MSS: tělo zavřelo pod 21 040 a ještě rychle. Trend nahoru dostal první trhlinu.",
-  "remember": "MSS je zavření těla za posledním swingem proti trendu. BOS trend potvrzuje, MSS před jeho koncem varuje. Samotný MSS obrat nezaručuje.",
-  "terms": [
-   "mss",
-   "bos",
-   "struktura-trhu"
-  ],
-  "quiz": [
-   {
-    "q": "Co je MSS v trendu nahoru?",
-    "options": [
-     "Zavření těla nad posledním vrcholem",
-     "Zavření těla pod posledním vyšším dnem",
-     "Knot pod posledním dnem"
+    "example": "NQ roste a poslední vyšší dno je na 21 040. Cena vybere vrchol na 21 120 a otočí se. Jedna pětiminutová svíčka sjede na 21 035, ale zavře na 21 046. To MSS není, pod dnem byl jen knot. Další velká červená svíčka zavře na 21 022. Teď je to MSS: tělo zavřelo pod 21 040 a ještě rychle. Trend nahoru dostal první trhlinu.",
+    "remember": "MSS je zavření těla za posledním swingem proti trendu. BOS trend potvrzuje, MSS před jeho koncem varuje. Samotný MSS obrat nezaručuje.",
+    "terms": [
+      "mss",
+      "bos",
+      "struktura-trhu"
     ],
-    "correct": 1,
-    "why": "MSS je zlom proti trendu. V růstu tedy padne poslední vyšší dno, a to zavřením těla."
-   },
-   {
-    "q": "Čím se liší BOS a MSS?",
-    "options": [
-     "BOS jde ve směru trendu, MSS proti němu",
-     "BOS je na denním grafu, MSS na minutovém",
-     "Ničím, je to totéž"
+    "quiz": [
+      {
+        "q": "Co je MSS v trendu nahoru?",
+        "options": [
+          "Zavření těla nad posledním vrcholem",
+          "Zavření těla pod posledním vyšším dnem",
+          "Knot pod posledním dnem"
+        ],
+        "correct": 1,
+        "why": "MSS je zlom proti trendu. V růstu tedy padne poslední vyšší dno, a to zavřením těla."
+      },
+      {
+        "q": "Čím se liší BOS a MSS?",
+        "options": [
+          "BOS jde ve směru trendu, MSS proti němu",
+          "BOS je na denním grafu, MSS na minutovém",
+          "Ničím, je to totéž"
+        ],
+        "correct": 0,
+        "why": "BOS trend potvrzuje. MSS je první zlom proti němu."
+      },
+      {
+        "q": "Kdy má MSS větší váhu?",
+        "options": [
+          "Když přijde pomalu malými svíčkami",
+          "Když přijde rychle a předcházel mu sweep likvidity",
+          "Když je v noci"
+        ],
+        "correct": 1,
+        "why": "Rychlý zlom po vybrání likvidity ukazuje, že druhá strana opravdu převzala trh."
+      }
+    ]
+  },
+  {
+    "id": "20261117-L08",
+    "ts": "2026-11-17T05:55:00Z",
+    "date": "2026-11-17",
+    "n": 8,
+    "week": 3,
+    "title": "BOS: důkaz, že trend pokračuje",
+    "body": [
+      "Z minulých lekcí víš, že rostoucí trend dělá vyšší vrcholy a vyšší dna. BOS je chvíle, kdy vznikne nový vyšší vrchol.",
+      "BOS je zkratka z anglického break of structure, česky prolomení struktury. V trendu nahoru to znamená, že cena prorazila poslední swing high. V trendu dolů prorazila poslední swing low.",
+      "Důležité je, jak ho prorazila. Počítá se jen to, když svíčka za úrovní zavře tělem. Když úroveň přesáhne jen knot a svíčka zavře zpátky pod ní, BOS to není.",
+      "Proč takové pravidlo: knot nad vrcholem často jen vybere stop-lossy a cena se vrátí. Zavření tělem ukazuje, že kupující cenu nad úrovní opravdu udrželi.",
+      "K čemu BOS slouží: potvrzuje, že trend žije. Po BOS obvykle přijde korekce a v ní se hledá vstup ve směru trendu.",
+      "BOS není pokyn k nákupu. Kdo kupuje hned na průrazu, kupuje na konci impulsu, tedy draho. O tom byla minulá lekce."
     ],
-    "correct": 0,
-    "why": "BOS trend potvrzuje. MSS je první zlom proti němu."
-   },
-   {
-    "q": "Kdy má MSS větší váhu?",
-    "options": [
-     "Když přijde pomalu malými svíčkami",
-     "Když přijde rychle a předcházel mu sweep likvidity",
-     "Když je v noci"
+    "example": "NQ roste a poslední swing high je na 21 080. Pětiminutová svíčka vyjede na 21 090, ale zavře na 21 072. To BOS není, nad úrovní byl jen knot. Další svíčka zavře na 21 095. Teď je to BOS: tělo zavřelo nad 21 080. Trend nahoru je potvrzený a čeká se na korekci.",
+    "remember": "BOS je zavření těla svíčky za posledním swingem ve směru trendu. Samotný knot se nepočítá. BOS potvrzuje trend, není to signál ke vstupu.",
+    "terms": [
+      "bos",
+      "swing",
+      "trend"
     ],
-    "correct": 1,
-    "why": "Rychlý zlom po vybrání likvidity ukazuje, že druhá strana opravdu převzala trh."
-   }
-  ]
- },
- {
-  "id": "20261117-L08",
-  "ts": "2026-11-17T05:55:00Z",
-  "date": "2026-11-17",
-  "n": 8,
-  "week": 3,
-  "title": "BOS: důkaz, že trend pokračuje",
-  "body": [
-   "Z minulých lekcí víš, že rostoucí trend dělá vyšší vrcholy a vyšší dna. BOS je chvíle, kdy vznikne nový vyšší vrchol.",
-   "BOS je zkratka z anglického break of structure, česky prolomení struktury. V trendu nahoru to znamená, že cena prorazila poslední swing high. V trendu dolů prorazila poslední swing low.",
-   "Důležité je, jak ho prorazila. Počítá se jen to, když svíčka za úrovní zavře tělem. Když úroveň přesáhne jen knot a svíčka zavře zpátky pod ní, BOS to není.",
-   "Proč takové pravidlo: knot nad vrcholem často jen vybere stop-lossy a cena se vrátí. Zavření tělem ukazuje, že kupující cenu nad úrovní opravdu udrželi.",
-   "K čemu BOS slouží: potvrzuje, že trend žije. Po BOS obvykle přijde korekce a v ní se hledá vstup ve směru trendu.",
-   "BOS není pokyn k nákupu. Kdo kupuje hned na průrazu, kupuje na konci impulsu, tedy draho. O tom byla minulá lekce."
-  ],
-  "example": "NQ roste a poslední swing high je na 21 080. Pětiminutová svíčka vyjede na 21 090, ale zavře na 21 072. To BOS není, nad úrovní byl jen knot. Další svíčka zavře na 21 095. Teď je to BOS: tělo zavřelo nad 21 080. Trend nahoru je potvrzený a čeká se na korekci.",
-  "remember": "BOS je zavření těla svíčky za posledním swingem ve směru trendu. Samotný knot se nepočítá. BOS potvrzuje trend, není to signál ke vstupu.",
-  "terms": [
-   "bos",
-   "swing",
-   "trend"
-  ],
-  "quiz": [
-   {
-    "q": "Co je BOS v trendu nahoru?",
-    "options": [
-     "Cena zavře tělem nad posledním swing high",
-     "Cena zavře pod posledním dnem",
-     "Cena se zastaví v pásmu"
+    "quiz": [
+      {
+        "q": "Co je BOS v trendu nahoru?",
+        "options": [
+          "Cena zavře tělem nad posledním swing high",
+          "Cena zavře pod posledním dnem",
+          "Cena se zastaví v pásmu"
+        ],
+        "correct": 0,
+        "why": "BOS je průraz posledního swingu ve směru trendu, v růstu tedy posledního vrcholu."
+      },
+      {
+        "q": "Svíčka přesáhne poslední vrchol knotem a zavře pod ním. Je to BOS?",
+        "options": [
+          "Ano, stačí dotyk",
+          "Ne, počítá se jen zavření těla za úrovní",
+          "Ano, když je svíčka zelená"
+        ],
+        "correct": 1,
+        "why": "Knot často jen vybere stop-lossy. Rozhoduje, kde svíčka zavřela."
+      },
+      {
+        "q": "Co uděláš hned po BOS?",
+        "options": [
+          "Koupím na průrazu",
+          "Počkám na korekci a hledám vstup v ní",
+          "Otevřu short proti trendu"
+        ],
+        "correct": 1,
+        "why": "BOS potvrzuje trend. Lepší cena přichází až v korekci."
+      }
+    ]
+  },
+  {
+    "id": "20261116-L07",
+    "ts": "2026-11-16T05:55:00Z",
+    "date": "2026-11-16",
+    "n": 7,
+    "week": 2,
+    "title": "Impuls a korekce: dva kroky vpřed, jeden zpět",
+    "body": [
+      "Trend nikdy neběží rovně. Střídají se v něm dva druhy pohybu: impuls a korekce.",
+      "Impuls je rychlý pohyb ve směru trendu. Svíčky jsou velké, mají plná těla a jdou jedna za druhou stejným směrem. Cena urazí hodně bodů za krátkou dobu.",
+      "Korekce je pomalejší návrat proti trendu. Svíčky jsou menší, překrývají se a střídají barvy. Cena vrátí jen část toho, co impuls udělal.",
+      "V rostoucím trendu tedy vidíš: impuls nahoru, korekce dolů, další impuls nahoru. Dno korekce je vyšší dno, o kterém byla lekce o trendu.",
+      "Proč na tom záleží: kdo nakoupí na konci impulsu, kupuje draho a stop-loss musí dát daleko. Kdo počká na korekci, kupuje levněji a stop má blíž. Stejný obchod, menší riziko.",
+      "Pozor na jedno. Když je návrat stejně rychlý a velký jako impuls před ním, není to korekce. Může to být začátek otočení a je lepší počkat."
     ],
-    "correct": 0,
-    "why": "BOS je průraz posledního swingu ve směru trendu, v růstu tedy posledního vrcholu."
-   },
-   {
-    "q": "Svíčka přesáhne poslední vrchol knotem a zavře pod ním. Je to BOS?",
-    "options": [
-     "Ano, stačí dotyk",
-     "Ne, počítá se jen zavření těla za úrovní",
-     "Ano, když je svíčka zelená"
+    "example": "NQ vyrazí z 21 000 na 21 060 během čtyř velkých zelených svíček. To je impuls, 60 bodů. Pak se osm malých svíček pomalu vrací na 21 035. To je korekce, vrátila 25 bodů. Nákup na 21 060 by znamenal koupit na vrcholu. Nákup kolem 21 035 se stopem pod 21 000 má lepší cenu i jasné místo pro stop.",
+    "remember": "Impuls je rychlý a jde s trendem, korekce je pomalá a jde proti němu. Vstupuje se v korekci, ne na konci impulsu.",
+    "terms": [
+      "impuls",
+      "trend",
+      "hh-hl"
     ],
-    "correct": 1,
-    "why": "Knot často jen vybere stop-lossy. Rozhoduje, kde svíčka zavřela."
-   },
-   {
-    "q": "Co uděláš hned po BOS?",
-    "options": [
-     "Koupím na průrazu",
-     "Počkám na korekci a hledám vstup v ní",
-     "Otevřu short proti trendu"
+    "quiz": [
+      {
+        "q": "Podle čeho poznáš impuls?",
+        "options": [
+          "Malé svíčky, které se překrývají",
+          "Velké svíčky s plnými těly jdoucí jedním směrem",
+          "Cena stojí na místě"
+        ],
+        "correct": 1,
+        "why": "Impuls je rychlý pohyb: velká těla a málo překryvu."
+      },
+      {
+        "q": "Kdy je v rostoucím trendu lepší cena pro nákup?",
+        "options": [
+          "Na konci impulsu",
+          "V korekci",
+          "Kdykoli, na ceně nezáleží"
+        ],
+        "correct": 1,
+        "why": "V korekci kupuješ levněji a stop-loss můžeš dát blíž."
+      },
+      {
+        "q": "Návrat proti trendu je stejně rychlý a velký jako impuls před ním. Co to znamená?",
+        "options": [
+          "Běžná korekce, nakupuj",
+          "Může jít o otočení, počkej",
+          "Trend zrychluje"
+        ],
+        "correct": 1,
+        "why": "Korekce bývá pomalejší a menší. Když není, trend možná končí."
+      }
+    ]
+  },
+  {
+    "id": "20261115-L06",
+    "ts": "2026-11-15T05:55:00Z",
+    "date": "2026-11-15",
+    "n": 6,
+    "week": 2,
+    "title": "Range: když trh jde do strany",
+    "body": [
+      "Trh není pořád v trendu. Velkou část dne cena jen přechází nahoru a dolů mezi dvěma hranicemi a nikam se neposouvá. Tomu se říká range nebo konsolidace.",
+      "Poznáš ho takhle: cena se aspoň dvakrát zastaví ve stejném pásmu nahoře a aspoň dvakrát ve stejném pásmu dole. Vrcholy nejsou čím dál výš a dna nejsou čím dál níž. Svíčky se překrývají.",
+      "Hranice ber jako pásmo, ne jako přesnou čáru. Cena se málokdy otočí na stejném ticku.",
+      "Uvnitř range je pro začátečníka nejtěžší prostředí. Průrazy často selžou, cena se vrací do středu a stop-lossy padají na obou stranách. Střed range je nejhorší místo pro vstup.",
+      "K čemu je tedy range dobrý? Nad jeho horní hranou a pod dolní hranou se hromadí stop-lossy, tedy likvidita. Až trh z range vyrazí, často nejdřív vybere jednu stranu a pak jde na druhou. O tom bude týden o likviditě."
     ],
-    "correct": 1,
-    "why": "BOS potvrzuje trend. Lepší cena přichází až v korekci."
-   }
-  ]
- },
- {
-  "id": "20261116-L07",
-  "ts": "2026-11-16T05:55:00Z",
-  "date": "2026-11-16",
-  "n": 7,
-  "week": 2,
-  "title": "Impuls a korekce: dva kroky vpřed, jeden zpět",
-  "body": [
-   "Trend nikdy neběží rovně. Střídají se v něm dva druhy pohybu: impuls a korekce.",
-   "Impuls je rychlý pohyb ve směru trendu. Svíčky jsou velké, mají plná těla a jdou jedna za druhou stejným směrem. Cena urazí hodně bodů za krátkou dobu.",
-   "Korekce je pomalejší návrat proti trendu. Svíčky jsou menší, překrývají se a střídají barvy. Cena vrátí jen část toho, co impuls udělal.",
-   "V rostoucím trendu tedy vidíš: impuls nahoru, korekce dolů, další impuls nahoru. Dno korekce je vyšší dno, o kterém byla lekce o trendu.",
-   "Proč na tom záleží: kdo nakoupí na konci impulsu, kupuje draho a stop-loss musí dát daleko. Kdo počká na korekci, kupuje levněji a stop má blíž. Stejný obchod, menší riziko.",
-   "Pozor na jedno. Když je návrat stejně rychlý a velký jako impuls před ním, není to korekce. Může to být začátek otočení a je lepší počkat."
-  ],
-  "example": "NQ vyrazí z 21 000 na 21 060 během čtyř velkých zelených svíček. To je impuls, 60 bodů. Pak se osm malých svíček pomalu vrací na 21 035. To je korekce, vrátila 25 bodů. Nákup na 21 060 by znamenal koupit na vrcholu. Nákup kolem 21 035 se stopem pod 21 000 má lepší cenu i jasné místo pro stop.",
-  "remember": "Impuls je rychlý a jde s trendem, korekce je pomalá a jde proti němu. Vstupuje se v korekci, ne na konci impulsu.",
-  "terms": [
-   "impuls",
-   "trend",
-   "hh-hl"
-  ],
-  "quiz": [
-   {
-    "q": "Podle čeho poznáš impuls?",
-    "options": [
-     "Malé svíčky, které se překrývají",
-     "Velké svíčky s plnými těly jdoucí jedním směrem",
-     "Cena stojí na místě"
+    "example": "NQ se hodinu pohybuje mezi 21 040 a 21 080. Třikrát se otočil kolem 21 080 a dvakrát kolem 21 040. To je range široký 40 bodů. Vstup na 21 060 uprostřed nemá kam jít ani kde logicky umístit stop. Správné rozhodnutí je vyznačit obě hrany a čekat.",
+    "remember": "Range jsou aspoň dvě odmítnutí nahoře a dvě dole bez nových vrcholů a den. Uvnitř se neobchoduje, jeho hrany jsou budoucí likvidita.",
+    "terms": [
+      "range",
+      "konsolidace",
+      "likvidita"
     ],
-    "correct": 1,
-    "why": "Impuls je rychlý pohyb: velká těla a málo překryvu."
-   },
-   {
-    "q": "Kdy je v rostoucím trendu lepší cena pro nákup?",
-    "options": [
-     "Na konci impulsu",
-     "V korekci",
-     "Kdykoli, na ceně nezáleží"
+    "quiz": [
+      {
+        "q": "Jak poznáš range?",
+        "options": [
+          "Cena dělá vyšší vrcholy a vyšší dna",
+          "Cena se opakovaně otáčí ve stejném pásmu nahoře i dole",
+          "Jedna velká svíčka prorazí high dne"
+        ],
+        "correct": 1,
+        "why": "Range jsou opakovaná odmítnutí na obou stranách bez posunu vrcholů a den."
+      },
+      {
+        "q": "Kde je v range nejhorší místo pro vstup?",
+        "options": [
+          "Uprostřed",
+          "U horní hrany",
+          "U dolní hrany"
+        ],
+        "correct": 0,
+        "why": "Uprostřed nemá obchod kam jít a stop nemá logické místo."
+      },
+      {
+        "q": "Co leží nad horní hranou range?",
+        "options": [
+          "Nic důležitého",
+          "Stop-lossy, tedy likvidita",
+          "Jistý odpor, který nejde prorazit"
+        ],
+        "correct": 1,
+        "why": "Za hranami se hromadí stopy. Trh si pro ně často dojde, než vyrazí opačným směrem."
+      }
+    ]
+  },
+  {
+    "id": "20261114-L05",
+    "ts": "2026-11-14T05:55:00Z",
+    "date": "2026-11-14",
+    "n": 5,
+    "week": 2,
+    "title": "Trend nahoru a trend dolů",
+    "body": [
+      "Minule jsme si vyznačili swing high a swing low. Teď z nich přečteme směr. Stačí porovnat každý nový vrchol s tím předchozím a každé nové dno s tím předchozím.",
+      "Trend nahoru: každý další vrchol je výš než ten předchozí (higher high, HH) a každé další dno je taky výš (higher low, HL). Kupující jsou ochotni platit čím dál víc a při poklesu se vracejí dřív.",
+      "Trend dolů je zrcadlo: každý další vrchol je níž (lower high, LH) a každé další dno je níž (lower low, LL).",
+      "Platí obojí zároveň. Když jsou vrcholy výš, ale dno spadne pod to předchozí, trend nahoru dostal první trhlinu. Když se vrcholy i dna střídají bez řádu, trh jde do strany a směr nemá.",
+      "Směr čti na vyšším timeframu, než na kterém chceš vstupovat. Na minutovém grafu se struktura mění každých pár minut a většinou nic neznamená."
     ],
-    "correct": 1,
-    "why": "V korekci kupuješ levněji a stop-loss můžeš dát blíž."
-   },
-   {
-    "q": "Návrat proti trendu je stejně rychlý a velký jako impuls před ním. Co to znamená?",
-    "options": [
-     "Běžná korekce, nakupuj",
-     "Může jít o otočení, počkej",
-     "Trend zrychluje"
+    "example": "NQ na patnáctiminutovém grafu: dno 21 000, vrchol 21 060, dno 21 030, vrchol 21 090. Druhé dno je výš než první (HL) a druhý vrchol je výš než první (HH). To je trend nahoru. Kdyby další dno spadlo na 21 010, pod 21 030, trend dostal trhlinu.",
+    "remember": "Trend nahoru jsou vyšší vrcholy a vyšší dna, trend dolů nižší vrcholy a nižší dna. Musí platit obojí.",
+    "terms": [
+      "trend",
+      "hh-hl",
+      "lh-ll"
     ],
-    "correct": 1,
-    "why": "Korekce bývá pomalejší a menší. Když není, trend možná končí."
-   }
-  ]
- },
- {
-  "id": "20261115-L06",
-  "ts": "2026-11-15T05:55:00Z",
-  "date": "2026-11-15",
-  "n": 6,
-  "week": 2,
-  "title": "Range: když trh jde do strany",
-  "body": [
-   "Trh není pořád v trendu. Velkou část dne cena jen přechází nahoru a dolů mezi dvěma hranicemi a nikam se neposouvá. Tomu se říká range nebo konsolidace.",
-   "Poznáš ho takhle: cena se aspoň dvakrát zastaví ve stejném pásmu nahoře a aspoň dvakrát ve stejném pásmu dole. Vrcholy nejsou čím dál výš a dna nejsou čím dál níž. Svíčky se překrývají.",
-   "Hranice ber jako pásmo, ne jako přesnou čáru. Cena se málokdy otočí na stejném ticku.",
-   "Uvnitř range je pro začátečníka nejtěžší prostředí. Průrazy často selžou, cena se vrací do středu a stop-lossy padají na obou stranách. Střed range je nejhorší místo pro vstup.",
-   "K čemu je tedy range dobrý? Nad jeho horní hranou a pod dolní hranou se hromadí stop-lossy, tedy likvidita. Až trh z range vyrazí, často nejdřív vybere jednu stranu a pak jde na druhou. O tom bude týden o likviditě."
-  ],
-  "example": "NQ se hodinu pohybuje mezi 21 040 a 21 080. Třikrát se otočil kolem 21 080 a dvakrát kolem 21 040. To je range široký 40 bodů. Vstup na 21 060 uprostřed nemá kam jít ani kde logicky umístit stop. Správné rozhodnutí je vyznačit obě hrany a čekat.",
-  "remember": "Range jsou aspoň dvě odmítnutí nahoře a dvě dole bez nových vrcholů a den. Uvnitř se neobchoduje, jeho hrany jsou budoucí likvidita.",
-  "terms": [
-   "range",
-   "konsolidace",
-   "likvidita"
-  ],
-  "quiz": [
-   {
-    "q": "Jak poznáš range?",
-    "options": [
-     "Cena dělá vyšší vrcholy a vyšší dna",
-     "Cena se opakovaně otáčí ve stejném pásmu nahoře i dole",
-     "Jedna velká svíčka prorazí high dne"
+    "quiz": [
+      {
+        "q": "Co je higher low?",
+        "options": [
+          "Dno, které je výš než předchozí dno",
+          "Vrchol, který je níž než předchozí vrchol",
+          "Nejnižší cena dne"
+        ],
+        "correct": 0,
+        "why": "Higher low je nové dno nad tím předchozím. Patří k trendu nahoru."
+      },
+      {
+        "q": "Vrcholy jsou čím dál výš, ale poslední dno spadlo pod předchozí. Co to znamená?",
+        "options": [
+          "Trend nahoru je silnější",
+          "Trend nahoru dostal první trhlinu",
+          "Začal jistý trend dolů"
+        ],
+        "correct": 1,
+        "why": "Trend nahoru potřebuje vyšší vrcholy i vyšší dna. Nižší dno je varování, ne hotový obrat."
+      },
+      {
+        "q": "Na jakém grafu je lepší číst směr?",
+        "options": [
+          "Na minutovém, je nejpřesnější",
+          "Na vyšším timeframu, než na kterém vstupuješ",
+          "Na tom, kde to vypadá nejlíp"
+        ],
+        "correct": 1,
+        "why": "Vyšší timeframe ukazuje směr, nižší jen načasování."
+      }
+    ]
+  },
+  {
+    "id": "20261113-L04",
+    "ts": "2026-11-13T07:44:01Z",
+    "date": "2026-11-13",
+    "n": "4",
+    "week": "2",
+    "title": "Swing high a swing low: kostra grafu",
+    "body": [
+      "Cena nikdy nejde rovně. Jde kus nahoru, kousek se vrátí a pokračuje dál. Místům, kde se otočí, se říká swingy. Swing high je vrchol, swing low je dno.",
+      "Swing se dá poznat přesně a stačí k tomu tři svíčky. Swing high je svíčka, která má po obou stranách svíčky s nižším high. Swing low je zrcadlově svíčka, která má po obou stranách svíčky s vyšším low.",
+      "Swing je potvrzený až ve chvíli, kdy zavře svíčka napravo. Dokud se tvoří, může cena vrchol ještě překonat. Proto se swingy na grafu označují vždy s jednou svíčkou zpoždění.",
+      "Na swingech záleží ze dvou důvodů. Nad vrcholy a pod dny si obchodníci nechávají stop-lossy, takže se k nim cena často vrací. A podle toho, jestli vrcholy a dna stoupají, nebo klesají, se pozná trend. Tomu se věnuje příští lekce.",
+      "Swing na vyšším timeframu má větší váhu než swing na nižším. Jeden swing na hodinovém grafu v sobě schová desítky malých swingů na minutovém."
     ],
-    "correct": 1,
-    "why": "Range jsou opakovaná odmítnutí na obou stranách bez posunu vrcholů a den."
-   },
-   {
-    "q": "Kde je v range nejhorší místo pro vstup?",
-    "options": [
-     "Uprostřed",
-     "U horní hrany",
-     "U dolní hrany"
+    "example": "Na pětiminutovém grafu NQ mají tři svíčky po sobě high 21 040, 21 065 a 21 050. Prostřední svíčka má high nejvýš a obě sousední níž, takže 21 065 je swing high. O něco později mají tři svíčky low 20 990, 20 972 a 20 985. Prostřední low 20 972 je swing low. Mezi 20 972 a 21 065 je 93 bodů a právě tyhle dvě ceny si na graf vyznačíš.",
+    "remember": "Swing high je svíčka s nižším high po obou stranách, swing low svíčka s vyšším low po obou stranách. Platí až po zavření svíčky napravo.",
+    "terms": [
+      "swing",
+      "struktura-trhu",
+      "likvidita"
     ],
-    "correct": 0,
-    "why": "Uprostřed nemá obchod kam jít a stop nemá logické místo."
-   },
-   {
-    "q": "Co leží nad horní hranou range?",
-    "options": [
-     "Nic důležitého",
-     "Stop-lossy, tedy likvidita",
-     "Jistý odpor, který nejde prorazit"
+    "quiz": [
+      {
+        "q": "Tři svíčky po sobě mají high 21 040, 21 065 a 21 050. Kde je swing high?",
+        "options": [
+          "21 040",
+          "21 065",
+          "21 050"
+        ],
+        "correct": 1,
+        "why": "Prostřední svíčka má high výš než obě sousední."
+      },
+      {
+        "q": "Kdy je swing high potvrzený?",
+        "options": [
+          "Jakmile cena udělá nové high",
+          "Až zavře svíčka napravo s nižším high",
+          "Až cena klesne o 50 bodů"
+        ],
+        "correct": 1,
+        "why": "Dokud svíčka napravo nezavřela, může cena vrchol ještě překonat."
+      },
+      {
+        "q": "Proč se cena ke swingům často vrací?",
+        "options": [
+          "Nad vrcholy a pod dny leží stop-lossy",
+          "Nařizuje to burza",
+          "Swingy jsou vždy na kulatých cenách"
+        ],
+        "correct": 0,
+        "why": "Za swingy se hromadí příkazy. Říká se jim likvidita a podrobně je probereme ve čtvrtém týdnu."
+      }
+    ]
+  },
+  {
+    "id": "20261112-L03",
+    "ts": "2026-11-12T05:52:05Z",
+    "date": "2026-11-12",
+    "n": 3,
+    "week": 1,
+    "title": "Seance: kdy se trh hýbe",
+    "body": [
+      "Futures NQ a ES se obchodují skoro nepřetržitě. Burza otevírá v neděli v 18:00 newyorského času a zavírá v pátek v 17:00. Každý den je mezi 17:00 a 18:00 hodinová přestávka. V 18:00 tak začíná nový obchodní den.",
+      "Trh ale není celý den stejně živý. Den se dělí na seance (sessions) podle toho, která část světa je zrovna v práci: nejdřív Asie, potom Londýn a nakonec New York. Hranice mezi nimi nejsou úřední, různí obchodníci je kreslí trochu jinak. Tape používá tohle dělení v newyorském čase: Asie 18:00–2:30, Londýn 2:30–7:00, NY AM 7:00–12:00, oběd 12:00–13:00 a NY PM 13:00–16:00.",
+      "Pro NQ a ES je nejdůležitější 9:30 newyorského času. Tehdy otevírá americká akciová burza, říká se tomu cash open, a zavírá v 16:00. Po 9:30 bývá na grafu nejvíc pohybu i objemu. V Česku je to většinou 15:30, protože New York je o šest hodin pozadu. Pár týdnů v roce, kdy se jinde mění čas dřív, je rozdíl jen pět hodin.",
+      "Všemu, co se stane od 18:00 do 9:30, se říká overnight, tedy noční obchodování. Nejvyšší a nejnižší cena z té doby tvoří overnight high a overnight low. Model v Tape si tyhle dvě úrovně ráno označí a obchod hledá jen mezi 9:30 a 11:00.",
+      "Všechny časy v ICT materiálech jsou v newyorském čase. Proto si v grafu nastav časové pásmo New York a nemusíš nic přepočítávat."
     ],
-    "correct": 1,
-    "why": "Za hranami se hromadí stopy. Trh si pro ně často dojde, než vyrazí opačným směrem."
-   }
-  ]
- },
- {
-  "id": "20261114-L05",
-  "ts": "2026-11-14T05:55:00Z",
-  "date": "2026-11-14",
-  "n": 5,
-  "week": 2,
-  "title": "Trend nahoru a trend dolů",
-  "body": [
-   "Minule jsme si vyznačili swing high a swing low. Teď z nich přečteme směr. Stačí porovnat každý nový vrchol s tím předchozím a každé nové dno s tím předchozím.",
-   "Trend nahoru: každý další vrchol je výš než ten předchozí (higher high, HH) a každé další dno je taky výš (higher low, HL). Kupující jsou ochotni platit čím dál víc a při poklesu se vracejí dřív.",
-   "Trend dolů je zrcadlo: každý další vrchol je níž (lower high, LH) a každé další dno je níž (lower low, LL).",
-   "Platí obojí zároveň. Když jsou vrcholy výš, ale dno spadne pod to předchozí, trend nahoru dostal první trhlinu. Když se vrcholy i dna střídají bez řádu, trh jde do strany a směr nemá.",
-   "Směr čti na vyšším timeframu, než na kterém chceš vstupovat. Na minutovém grafu se struktura mění každých pár minut a většinou nic neznamená."
-  ],
-  "example": "NQ na patnáctiminutovém grafu: dno 21 000, vrchol 21 060, dno 21 030, vrchol 21 090. Druhé dno je výš než první (HL) a druhý vrchol je výš než první (HH). To je trend nahoru. Kdyby další dno spadlo na 21 010, pod 21 030, trend dostal trhlinu.",
-  "remember": "Trend nahoru jsou vyšší vrcholy a vyšší dna, trend dolů nižší vrcholy a nižší dna. Musí platit obojí.",
-  "terms": [
-   "trend",
-   "hh-hl",
-   "lh-ll"
-  ],
-  "quiz": [
-   {
-    "q": "Co je higher low?",
-    "options": [
-     "Dno, které je výš než předchozí dno",
-     "Vrchol, který je níž než předchozí vrchol",
-     "Nejnižší cena dne"
+    "example": "NQ se přes noc (18:00–9:30) pohybuje mezi 20 960 a 21 080. Overnight low je 20 960, overnight high 21 080 a noční rozpětí je 120 bodů. V 9:30 newyorského času, u nás v 15:30, otevře cash seance a během první půlhodiny cena udělá dalších 90 bodů. Za třicet minut se trh pohnul skoro stejně jako za celou noc.",
+    "remember": "Hlavní pohyb na NQ a ES začíná v 9:30 newyorského času (u nás většinou 15:30). Co bylo předtím od 18:00, je overnight.",
+    "terms": [
+      "seance",
+      "newyorsky-cas",
+      "cash-open",
+      "overnight"
     ],
-    "correct": 0,
-    "why": "Higher low je nové dno nad tím předchozím. Patří k trendu nahoru."
-   },
-   {
-    "q": "Vrcholy jsou čím dál výš, ale poslední dno spadlo pod předchozí. Co to znamená?",
-    "options": [
-     "Trend nahoru je silnější",
-     "Trend nahoru dostal první trhlinu",
-     "Začal jistý trend dolů"
+    "quiz": [
+      {
+        "q": "V kolik hodin newyorského času otevírá americká akciová burza (cash open)?",
+        "options": [
+          "8:30",
+          "9:30",
+          "18:00"
+        ],
+        "correct": 1,
+        "why": "Akciová burza v New Yorku obchoduje od 9:30 do 16:00. V 18:00 začíná nový den na futures."
+      },
+      {
+        "q": "Co je overnight high?",
+        "options": [
+          "Nejvyšší cena předchozího dne",
+          "Nejvyšší cena mezi 18:00 a 9:30 newyorského času",
+          "První cena po otevření v 9:30"
+        ],
+        "correct": 1,
+        "why": "Overnight je noční obchodování před otevřením cash seance, overnight high je jeho nejvyšší cena."
+      },
+      {
+        "q": "Overnight low je 20 960 a overnight high 21 080. Jak velké je noční rozpětí?",
+        "options": [
+          "80 bodů",
+          "120 bodů",
+          "160 bodů"
+        ],
+        "correct": 1,
+        "why": "21 080 − 20 960 = 120 bodů."
+      }
+    ]
+  },
+  {
+    "id": "20261111-L02",
+    "ts": "2026-11-11T14:20:02Z",
+    "date": "2026-11-11",
+    "n": 2,
+    "week": 1,
+    "title": "Svíčka a timeframe",
+    "body": [
+      "Graf se skládá ze svíček. Každá svíčka shrnuje jeden úsek času čtyřmi cenami: kde cena začala (open), nejvýš kam došla (high), nejníž kam klesla (low) a kde skončila (close).",
+      "Tlustá část svíčky je tělo, vede od open ke close. Tenké čárky nad a pod tělem jsou knoty a ukazují high a low. Když close skončí nad open, svíčka je rostoucí. Když pod ním, je klesající.",
+      "Timeframe říká, jak dlouhý úsek jedna svíčka pokrývá. Na 1m grafu je to jedna minuta, na 15m grafu patnáct minut. Je to pořád stejný trh, jen jinak přiblížený. Patnáct minutových svíček dá dohromady jednu patnáctiminutovou.",
+      "Model v Tape hledá vstupy na 1m grafu a směr si ověřuje na 15m. Vyšší timeframe ukazuje, kam trh míří, nižší ukazuje přesné místo."
     ],
-    "correct": 1,
-    "why": "Trend nahoru potřebuje vyšší vrcholy i vyšší dna. Nižší dno je varování, ne hotový obrat."
-   },
-   {
-    "q": "Na jakém grafu je lepší číst směr?",
-    "options": [
-     "Na minutovém, je nejpřesnější",
-     "Na vyšším timeframu, než na kterém vstupuješ",
-     "Na tom, kde to vypadá nejlíp"
+    "example": "Minutová svíčka na NQ: open 21 000, high 21 006, low 20 998, close 21 004. Tělo má 4 body, horní knot 2 body, dolní knot 2 body a svíčka je rostoucí.",
+    "remember": "Svíčka = open, high, low, close za jeden úsek času. Timeframe je délka toho úseku.",
+    "terms": [
+      "svicka",
+      "ohlc",
+      "timeframe"
     ],
-    "correct": 1,
-    "why": "Vyšší timeframe ukazuje směr, nižší jen načasování."
-   }
-  ]
- },
- {
-  "id": "20261113-L04",
-  "ts": "2026-11-13T07:44:01Z",
-  "date": "2026-11-13",
-  "n": "4",
-  "week": "2",
-  "title": "Swing high a swing low: kostra grafu",
-  "body": [
-   "Cena nikdy nejde rovně. Jde kus nahoru, kousek se vrátí a pokračuje dál. Místům, kde se otočí, se říká swingy. Swing high je vrchol, swing low je dno.",
-   "Swing se dá poznat přesně a stačí k tomu tři svíčky. Swing high je svíčka, která má po obou stranách svíčky s nižším high. Swing low je zrcadlově svíčka, která má po obou stranách svíčky s vyšším low.",
-   "Swing je potvrzený až ve chvíli, kdy zavře svíčka napravo. Dokud se tvoří, může cena vrchol ještě překonat. Proto se swingy na grafu označují vždy s jednou svíčkou zpoždění.",
-   "Na swingech záleží ze dvou důvodů. Nad vrcholy a pod dny si obchodníci nechávají stop-lossy, takže se k nim cena často vrací. A podle toho, jestli vrcholy a dna stoupají, nebo klesají, se pozná trend. Tomu se věnuje příští lekce.",
-   "Swing na vyšším timeframu má větší váhu než swing na nižším. Jeden swing na hodinovém grafu v sobě schová desítky malých swingů na minutovém."
-  ],
-  "example": "Na pětiminutovém grafu NQ mají tři svíčky po sobě high 21 040, 21 065 a 21 050. Prostřední svíčka má high nejvýš a obě sousední níž, takže 21 065 je swing high. O něco později mají tři svíčky low 20 990, 20 972 a 20 985. Prostřední low 20 972 je swing low. Mezi 20 972 a 21 065 je 93 bodů a právě tyhle dvě ceny si na graf vyznačíš.",
-  "remember": "Swing high je svíčka s nižším high po obou stranách, swing low svíčka s vyšším low po obou stranách. Platí až po zavření svíčky napravo.",
-  "terms": [
-   "swing",
-   "struktura-trhu",
-   "likvidita"
-  ],
-  "quiz": [
-   {
-    "q": "Tři svíčky po sobě mají high 21 040, 21 065 a 21 050. Kde je swing high?",
-    "options": [
-     "21 040",
-     "21 065",
-     "21 050"
+    "quiz": [
+      {
+        "q": "Co ukazuje horní knot svíčky?",
+        "options": [
+          "Kde svíčka zavřela",
+          "Nejvyšší cenu dosaženou během svíčky",
+          "Objem obchodů"
+        ],
+        "correct": 1,
+        "why": "Knoty sahají k high a low, tělo vede od open ke close."
+      },
+      {
+        "q": "Svíčka má open 100 a close 97. Jaká je?",
+        "options": [
+          "Rostoucí",
+          "Klesající",
+          "Nedá se říct"
+        ],
+        "correct": 1,
+        "why": "Close je pod open, cena během svíčky klesla."
+      },
+      {
+        "q": "Kolik 1m svíček tvoří jednu 15m svíčku?",
+        "options": [
+          "5",
+          "15",
+          "60"
+        ],
+        "correct": 1,
+        "why": "15m svíčka pokrývá patnáct minut, tedy patnáct minutových svíček."
+      }
+    ]
+  },
+  {
+    "id": "20261111-L01",
+    "ts": "2026-11-11T14:20:01Z",
+    "date": "2026-11-11",
+    "n": 1,
+    "week": 1,
+    "title": "Co je NQ a ES a co znamená bod a tick",
+    "body": [
+      "NQ a ES jsou futures kontrakty na americké akciové indexy. NQ sleduje Nasdaq 100, tedy sto velkých technologických firem. ES sleduje S&P 500, pět set největších amerických firem. Nekupuješ akcie, obchoduješ smlouvu, jejíž cena se hýbe spolu s indexem.",
+      "Cena se měří v bodech. Nejmenší krok, o který se cena může pohnout, se jmenuje tick. U NQ i ES je tick čtvrtina bodu, takže čtyři ticky dělají jeden bod.",
+      "Každý bod má pevnou hodnotu v dolarech. U NQ je to 20 dolarů za bod, u ES 50 dolarů za bod. Existují i desetkrát menší kontrakty MNQ a MES, kde je bod za 2 a za 5 dolarů. Na těch se začátečníci učí, protože chyba stojí desetinu.",
+      "NQ se hýbe rychleji a o víc bodů než ES. Proto se v Tape velikost stopu počítá v bodech pro každý trh zvlášť."
     ],
-    "correct": 1,
-    "why": "Prostřední svíčka má high výš než obě sousední."
-   },
-   {
-    "q": "Kdy je swing high potvrzený?",
-    "options": [
-     "Jakmile cena udělá nové high",
-     "Až zavře svíčka napravo s nižším high",
-     "Až cena klesne o 50 bodů"
+    "example": "Cena NQ jde z 21 000,00 na 21 010,00. To je 10 bodů, tedy 40 ticků. Na jednom kontraktu NQ je to 200 dolarů, na jednom MNQ 20 dolarů.",
+    "remember": "Tick je nejmenší krok ceny, bod jsou čtyři ticky. Hodnota bodu: NQ 20 USD, ES 50 USD, MNQ 2 USD, MES 5 USD.",
+    "terms": [
+      "futures",
+      "nq",
+      "es",
+      "tick",
+      "bod"
     ],
-    "correct": 1,
-    "why": "Dokud svíčka napravo nezavřela, může cena vrchol ještě překonat."
-   },
-   {
-    "q": "Proč se cena ke swingům často vrací?",
-    "options": [
-     "Nad vrcholy a pod dny leží stop-lossy",
-     "Nařizuje to burza",
-     "Swingy jsou vždy na kulatých cenách"
-    ],
-    "correct": 0,
-    "why": "Za swingy se hromadí příkazy. Říká se jim likvidita a podrobně je probereme ve čtvrtém týdnu."
-   }
-  ]
- },
- {
-  "id": "20261112-L03",
-  "ts": "2026-11-12T05:52:05Z",
-  "date": "2026-11-12",
-  "n": 3,
-  "week": 1,
-  "title": "Seance: kdy se trh hýbe",
-  "body": [
-   "Futures NQ a ES se obchodují skoro nepřetržitě. Burza otevírá v neděli v 18:00 newyorského času a zavírá v pátek v 17:00. Každý den je mezi 17:00 a 18:00 hodinová přestávka. V 18:00 tak začíná nový obchodní den.",
-   "Trh ale není celý den stejně živý. Den se dělí na seance (sessions) podle toho, která část světa je zrovna v práci: nejdřív Asie, potom Londýn a nakonec New York. Hranice mezi nimi nejsou úřední, různí obchodníci je kreslí trochu jinak. Tape používá tohle dělení v newyorském čase: Asie 18:00–2:30, Londýn 2:30–7:00, NY AM 7:00–12:00, oběd 12:00–13:00 a NY PM 13:00–16:00.",
-   "Pro NQ a ES je nejdůležitější 9:30 newyorského času. Tehdy otevírá americká akciová burza, říká se tomu cash open, a zavírá v 16:00. Po 9:30 bývá na grafu nejvíc pohybu i objemu. V Česku je to většinou 15:30, protože New York je o šest hodin pozadu. Pár týdnů v roce, kdy se jinde mění čas dřív, je rozdíl jen pět hodin.",
-   "Všemu, co se stane od 18:00 do 9:30, se říká overnight, tedy noční obchodování. Nejvyšší a nejnižší cena z té doby tvoří overnight high a overnight low. Model v Tape si tyhle dvě úrovně ráno označí a obchod hledá jen mezi 9:30 a 11:00.",
-   "Všechny časy v ICT materiálech jsou v newyorském čase. Proto si v grafu nastav časové pásmo New York a nemusíš nic přepočítávat."
-  ],
-  "example": "NQ se přes noc (18:00–9:30) pohybuje mezi 20 960 a 21 080. Overnight low je 20 960, overnight high 21 080 a noční rozpětí je 120 bodů. V 9:30 newyorského času, u nás v 15:30, otevře cash seance a během první půlhodiny cena udělá dalších 90 bodů. Za třicet minut se trh pohnul skoro stejně jako za celou noc.",
-  "remember": "Hlavní pohyb na NQ a ES začíná v 9:30 newyorského času (u nás většinou 15:30). Co bylo předtím od 18:00, je overnight.",
-  "terms": [
-   "seance",
-   "newyorsky-cas",
-   "cash-open",
-   "overnight"
-  ],
-  "quiz": [
-   {
-    "q": "V kolik hodin newyorského času otevírá americká akciová burza (cash open)?",
-    "options": [
-     "8:30",
-     "9:30",
-     "18:00"
-    ],
-    "correct": 1,
-    "why": "Akciová burza v New Yorku obchoduje od 9:30 do 16:00. V 18:00 začíná nový den na futures."
-   },
-   {
-    "q": "Co je overnight high?",
-    "options": [
-     "Nejvyšší cena předchozího dne",
-     "Nejvyšší cena mezi 18:00 a 9:30 newyorského času",
-     "První cena po otevření v 9:30"
-    ],
-    "correct": 1,
-    "why": "Overnight je noční obchodování před otevřením cash seance, overnight high je jeho nejvyšší cena."
-   },
-   {
-    "q": "Overnight low je 20 960 a overnight high 21 080. Jak velké je noční rozpětí?",
-    "options": [
-     "80 bodů",
-     "120 bodů",
-     "160 bodů"
-    ],
-    "correct": 1,
-    "why": "21 080 − 20 960 = 120 bodů."
-   }
-  ]
- },
- {
-  "id": "20261111-L02",
-  "ts": "2026-11-11T14:20:02Z",
-  "date": "2026-11-11",
-  "n": 2,
-  "week": 1,
-  "title": "Svíčka a timeframe",
-  "body": [
-   "Graf se skládá ze svíček. Každá svíčka shrnuje jeden úsek času čtyřmi cenami: kde cena začala (open), nejvýš kam došla (high), nejníž kam klesla (low) a kde skončila (close).",
-   "Tlustá část svíčky je tělo, vede od open ke close. Tenké čárky nad a pod tělem jsou knoty a ukazují high a low. Když close skončí nad open, svíčka je rostoucí. Když pod ním, je klesající.",
-   "Timeframe říká, jak dlouhý úsek jedna svíčka pokrývá. Na 1m grafu je to jedna minuta, na 15m grafu patnáct minut. Je to pořád stejný trh, jen jinak přiblížený. Patnáct minutových svíček dá dohromady jednu patnáctiminutovou.",
-   "Model v Tape hledá vstupy na 1m grafu a směr si ověřuje na 15m. Vyšší timeframe ukazuje, kam trh míří, nižší ukazuje přesné místo."
-  ],
-  "example": "Minutová svíčka na NQ: open 21 000, high 21 006, low 20 998, close 21 004. Tělo má 4 body, horní knot 2 body, dolní knot 2 body a svíčka je rostoucí.",
-  "remember": "Svíčka = open, high, low, close za jeden úsek času. Timeframe je délka toho úseku.",
-  "terms": [
-   "svicka",
-   "ohlc",
-   "timeframe"
-  ],
-  "quiz": [
-   {
-    "q": "Co ukazuje horní knot svíčky?",
-    "options": [
-     "Kde svíčka zavřela",
-     "Nejvyšší cenu dosaženou během svíčky",
-     "Objem obchodů"
-    ],
-    "correct": 1,
-    "why": "Knoty sahají k high a low, tělo vede od open ke close."
-   },
-   {
-    "q": "Svíčka má open 100 a close 97. Jaká je?",
-    "options": [
-     "Rostoucí",
-     "Klesající",
-     "Nedá se říct"
-    ],
-    "correct": 1,
-    "why": "Close je pod open, cena během svíčky klesla."
-   },
-   {
-    "q": "Kolik 1m svíček tvoří jednu 15m svíčku?",
-    "options": [
-     "5",
-     "15",
-     "60"
-    ],
-    "correct": 1,
-    "why": "15m svíčka pokrývá patnáct minut, tedy patnáct minutových svíček."
-   }
-  ]
- },
- {
-  "id": "20261111-L01",
-  "ts": "2026-11-11T14:20:01Z",
-  "date": "2026-11-11",
-  "n": 1,
-  "week": 1,
-  "title": "Co je NQ a ES a co znamená bod a tick",
-  "body": [
-   "NQ a ES jsou futures kontrakty na americké akciové indexy. NQ sleduje Nasdaq 100, tedy sto velkých technologických firem. ES sleduje S&P 500, pět set největších amerických firem. Nekupuješ akcie, obchoduješ smlouvu, jejíž cena se hýbe spolu s indexem.",
-   "Cena se měří v bodech. Nejmenší krok, o který se cena může pohnout, se jmenuje tick. U NQ i ES je tick čtvrtina bodu, takže čtyři ticky dělají jeden bod.",
-   "Každý bod má pevnou hodnotu v dolarech. U NQ je to 20 dolarů za bod, u ES 50 dolarů za bod. Existují i desetkrát menší kontrakty MNQ a MES, kde je bod za 2 a za 5 dolarů. Na těch se začátečníci učí, protože chyba stojí desetinu.",
-   "NQ se hýbe rychleji a o víc bodů než ES. Proto se v Tape velikost stopu počítá v bodech pro každý trh zvlášť."
-  ],
-  "example": "Cena NQ jde z 21 000,00 na 21 010,00. To je 10 bodů, tedy 40 ticků. Na jednom kontraktu NQ je to 200 dolarů, na jednom MNQ 20 dolarů.",
-  "remember": "Tick je nejmenší krok ceny, bod jsou čtyři ticky. Hodnota bodu: NQ 20 USD, ES 50 USD, MNQ 2 USD, MES 5 USD.",
-  "terms": [
-   "futures",
-   "nq",
-   "es",
-   "tick",
-   "bod"
-  ],
-  "quiz": [
-   {
-    "q": "Kolik ticků je jeden bod na NQ?",
-    "options": [
-     "2",
-     "4",
-     "10"
-    ],
-    "correct": 1,
-    "why": "Tick je 0,25 bodu, takže bod jsou čtyři ticky."
-   },
-   {
-    "q": "Cena ES stoupne o 3 body. Kolik je to na jednom kontraktu ES?",
-    "options": [
-     "60 USD",
-     "150 USD",
-     "15 USD"
-    ],
-    "correct": 1,
-    "why": "Bod na ES má hodnotu 50 USD, tři body jsou 150 USD."
-   },
-   {
-    "q": "Proč se začátečník učí spíš na MNQ než na NQ?",
-    "options": [
-     "MNQ se hýbe pomaleji",
-     "Bod na MNQ má desetinovou hodnotu, takže chyba stojí méně",
-     "MNQ se obchoduje jen dopoledne"
-    ],
-    "correct": 1,
-    "why": "MNQ kopíruje cenu NQ, jen bod stojí 2 USD místo 20 USD."
-   }
-  ]
- }
+    "quiz": [
+      {
+        "q": "Kolik ticků je jeden bod na NQ?",
+        "options": [
+          "2",
+          "4",
+          "10"
+        ],
+        "correct": 1,
+        "why": "Tick je 0,25 bodu, takže bod jsou čtyři ticky."
+      },
+      {
+        "q": "Cena ES stoupne o 3 body. Kolik je to na jednom kontraktu ES?",
+        "options": [
+          "60 USD",
+          "150 USD",
+          "15 USD"
+        ],
+        "correct": 1,
+        "why": "Bod na ES má hodnotu 50 USD, tři body jsou 150 USD."
+      },
+      {
+        "q": "Proč se začátečník učí spíš na MNQ než na NQ?",
+        "options": [
+          "MNQ se hýbe pomaleji",
+          "Bod na MNQ má desetinovou hodnotu, takže chyba stojí méně",
+          "MNQ se obchoduje jen dopoledne"
+        ],
+        "correct": 1,
+        "why": "MNQ kopíruje cenu NQ, jen bod stojí 2 USD místo 20 USD."
+      }
+    ]
+  }
 ]
