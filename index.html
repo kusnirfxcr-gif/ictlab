@@ -1540,6 +1540,15 @@ body.sakura #streak.streak2:not(.off)::before{border-color:#ff8fc5;background:li
 body.sakura #streak.streak3:not(.off){background:#fff0f7;border-color:rgba(255,95,162,.45);box-shadow:0 0 18px -8px rgba(255,95,162,.8)}body.sakura #streak.streak3:not(.off) b{background-image:linear-gradient(0deg,#c2187a,#ff5fa2 40%,#ffb3d6 75%,#fff 100%)}body.sakura #streak.streak3 span{color:#b0447f}
 @media (max-width:859px){#streak.streak3{height:36px;padding:0 11px}#streak.streak3 span{display:none}}
 @media (prefers-reduced-motion:reduce){#streak.streak3 b{animation:none}}
+
+/* coach button: no ring, a soft purple light drifts round behind it */
+.orb{box-shadow:0 12px 34px rgba(0,0,0,.55)!important;animation:none!important;overflow:visible}
+.orb::before{inset:-14px!important;background:conic-gradient(from var(--ra),rgba(124,58,237,0) 0deg,rgba(124,58,237,.85) 70deg,rgba(192,132,252,.9) 130deg,rgba(124,58,237,0) 200deg,rgba(91,33,182,.55) 280deg,rgba(124,58,237,0) 360deg)!important;filter:blur(14px)!important;opacity:.85;animation:cospin 6s linear infinite!important;transform:none!important}
+.orb::after{inset:0!important;background:radial-gradient(circle at 35% 28%,#24202e,#0c0c0f 72%)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
+.orb:hover::before{opacity:1;filter:blur(12px)!important;animation-duration:3s!important}
+body.sakura .orb::before{background:conic-gradient(from var(--ra),rgba(255,95,162,0) 0deg,rgba(255,95,162,.85) 70deg,rgba(255,190,220,.95) 130deg,rgba(255,95,162,0) 200deg,rgba(255,140,190,.55) 280deg,rgba(255,95,162,0) 360deg)!important}
+body.sakura .orb::after{background:radial-gradient(circle at 35% 28%,#ffffff,#ffe6f2 72%)!important}
+@media (prefers-reduced-motion:reduce){.orb::before{animation:none!important}}
 .cg-star{position:fixed;z-index:96;pointer-events:none;width:12px;height:12px;margin:-6px 0 0 -6px;animation:cgstar .85s cubic-bezier(.2,.7,.3,1) forwards}.cg-star svg{display:block;width:100%;height:100%;fill:currentColor;filter:drop-shadow(0 0 5px currentColor)}
 @keyframes cgstar{0%{transform:translate(0,0) scale(.2) rotate(0);opacity:0}25%{opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(1) rotate(160deg);opacity:0}}
 body.sakura .chip[aria-pressed="true"],body.sakura button.primary{box-shadow:0 6px 18px rgba(255,95,162,.28)}
@@ -1549,13 +1558,6 @@ body.sakura .chip[aria-pressed="true"],body.sakura button.primary{box-shadow:0 6
 @keyframes cgheart{0%{transform:translate(0,0) scale(.2) rotate(0);opacity:0}20%{opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(var(--s)) rotate(var(--rt));opacity:0}}
 .rbw-ring{display:none!important}
 /* AI assistant and premium: purple instead of rainbow */
-.orb::before{background:conic-gradient(from 0deg,#5b21b6,#a855f7,#f0abfc,#c084fc,#7c3aed,#5b21b6)!important;filter:none!important;animation:orbspin 4s linear infinite}
-.orb{box-shadow:0 12px 34px rgba(0,0,0,.55),0 0 26px rgba(168,85,247,.35);animation:orbpulse 3.2s ease-in-out infinite}
-@keyframes orbpulse{0%,100%{box-shadow:0 12px 34px rgba(0,0,0,.55),0 0 18px rgba(168,85,247,.25)}50%{box-shadow:0 12px 34px rgba(0,0,0,.55),0 0 34px rgba(192,132,252,.55)}}
-.orb:hover::before{filter:blur(3px) saturate(1.2)!important}
-body.sakura .orb::before{background:conic-gradient(from 0deg,#ff5fa2,#ffc2dd,#ff8fc5,#ffd6e8,#ff5fa2)!important}
-body.sakura .orb{animation-name:orbpink}
-@keyframes orbpink{0%,100%{box-shadow:0 12px 34px rgba(0,0,0,.3),0 0 18px rgba(255,95,162,.3)}50%{box-shadow:0 12px 34px rgba(0,0,0,.3),0 0 34px rgba(255,143,197,.6)}}
 .copop::before{background:conic-gradient(from var(--ra),#5b21b6,#a855f7,#f0abfc,#7c3aed,#5b21b6)!important}
 body.sakura .copop::before{background:conic-gradient(from var(--ra),#ff5fa2,#ffc2dd,#ff8fc5,#ff5fa2)!important}
 .prem-btn::before{background:linear-gradient(90deg,#5b21b6,#a855f7,#f0abfc,#a855f7,#5b21b6,#a855f7,#f0abfc,#a855f7,#5b21b6)!important;background-size:200% 100%!important}
