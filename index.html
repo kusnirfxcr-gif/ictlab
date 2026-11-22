@@ -6880,7 +6880,7 @@ body.sakura .copop::before{background:conic-gradient(from var(--ra),#ff5fa2,#ffc
       t.style.transformOrigin = "0 0"; t.style.transform = st.z === 1 ? "" : "translate(" + st.x.toFixed(1) + "px," + st.y.toFixed(1) + "px) scale(" + st.z.toFixed(3) + ")"; ui(c); };
     const magAt = (c, z, px, py) => { const st = c._s, r = c.getBoundingClientRect(), cx = px == null ? r.width / 2 : px - r.left, cy = py == null ? r.height / 2 : py - r.top, nz = Math.max(1, Math.min(MAXZ, z)), k = nz / st.z; st.x = cx - (cx - st.x) * k; st.y = cy - (cy - st.y) * k; st.z = nz; apply(c); };
     // chart geometry in screen pixels
-    const geo = c => { const q = entry(c); if (!q) return null; const r = q.sv.getBoundingClientRect(), k = r.width / FW; return {q: q, left: r.left + q.e.padL * k, plotW: q.e.plot * k, right: r.left + (q.e.padL + q.e.plot) * k, plotH: q.e.pv * k, r: r}; };
+    const geo = c => { const q = entry(c); if (!q) return null; const r = q.sv.getBoundingClientRect(), vb = q.sv.viewBox && q.sv.viewBox.baseVal, k = r.width / (vb && vb.width ? vb.width : FW); return {q: q, left: r.left + q.e.padL * k, plotW: q.e.plot * k, right: r.left + (q.e.padL + q.e.plot) * k, plotH: q.e.pv * k, r: r}; };
     function zoomX(c, f, clientX){ const g = geo(c); if (!g) return; const st = c._s, e = g.q.e, nv = e.n / st.zx, fx = clientX == null ? .5 : Math.max(0, Math.min(1, (clientX - g.left) / g.plotW)), at = st.px + fx * nv, nz = Math.max(.4, Math.min(10, st.zx * f)); st.zx = Math.abs(nz - 1) < .04 ? 1 : nz; st.px = at - fx * (e.n / st.zx); if (st.zx === 1 && Math.abs(st.px) < .3) st.px = 0; sched(c); }
     function zoomY(c, f){ const st = c._s, nz = Math.max(.3, Math.min(8, st.zy * f)); st.zy = Math.abs(nz - 1) < .04 ? 1 : nz; if (st.zy === 1 && Math.abs(st.py) < 1e-6) st.py = 0; sched(c); }
     function reset(c){ c._s = {z: 1, x: 0, y: 0, zx: 1, zy: 1, px: 0, py: 0}; if (entry(c)) draw(c); else apply(c); }
@@ -6908,7 +6908,9 @@ body.sakura .copop::before{background:conic-gradient(from var(--ra),#ff5fa2,#ffc
     window.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(() => document.querySelectorAll(".zm-clip").forEach(c => { const q = entry(c); if (q && String(fwOf(c, q.e) || "") !== (q.sv.dataset.fw || "")) draw(c); }), 200); });
     new MutationObserver(() => { if (!raf) raf = requestAnimationFrame(() => { raf = 0; scan(); }); }).observe(document.body, {childList: true, subtree: true}); scan();
     const clipOf = ev => ev.target && ev.target.closest ? ev.target.closest(".zm-clip") : null;
-    document.addEventListener("wheel", ev => { const c = clipOf(ev); if (!c || !(ev.ctrlKey || ev.metaKey || ev.shiftKey)) return; ev.preventDefault(); const f = Math.exp(-(ev.deltaY || ev.deltaX) * .01);
+    document.addEventListener("wheel", ev => { const c = clipOf(ev); if (!c) return;
+      if (!(ev.ctrlKey || ev.metaKey || ev.shiftKey)){ const g = geo(c); if (!g) return; const onP = ev.clientX > g.right && ev.clientX < g.r.right, onT = ev.clientY > g.r.top + g.r.height * (1 - 30 / ((g.q.e.spec.h || 210) + 14)) && ev.clientY < g.r.bottom; if (!onP && !onT) return;
+        ev.preventDefault(); const f = Math.exp(-ev.deltaY * .004); if (onP) zoomY(c, f); else zoomX(c, f, ev.clientX); return; } ev.preventDefault(); const f = Math.exp(-(ev.deltaY || ev.deltaX) * .01);
       if (entry(c)){ if (ev.shiftKey && !ev.ctrlKey) zoomY(c, f); else zoomX(c, f, ev.clientX); } else magAt(c, c._s.z * f, ev.clientX, ev.clientY); }, {passive: false});
     document.addEventListener("dblclick", ev => { const c = clipOf(ev); if (!c || ev.target.closest(".zm-ctl")) return; if (entry(c)){ if (isOne(c._s)) zoomX(c, 2, ev.clientX); else reset(c); } else if (c._s.z > 1){ c._s.z = 1; apply(c); } else magAt(c, 2.2, ev.clientX, ev.clientY); });
     // drag: in the plot it moves the view, on the price scale it stretches the price axis
