@@ -479,5 +479,8 @@
  "Graf na kartě": "Chart on the card",
  "Nahrát data k obchodu (CSV)": "Upload trade data (CSV)",
  "Nahrát jiná data": "Upload other data",
- "Čtu soubor…": "Reading file…"
+ "Čtu soubor…": "Reading file…",
+ "dní": "days",
+ "dny": "days",
+ "Podrobný zápis obchodu": "Detailed trade entry"
 }
