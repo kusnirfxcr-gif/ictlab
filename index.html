@@ -1485,6 +1485,7 @@ body.fx-lite .pa-ctl,body.fx-lite .lnav,body.fx-off .pa-ctl,body.fx-off .lnav{-w
   <section class="view" id="v-novinky">
     <div class="card"><h2>Co je nového</h2><span class="kick">22. 11. 2026</span>
       <ul class="stl ok">
+        <li>Obrázky k obchodům se po přihlášení ukládají do účtu, takže je uvidíš i na telefonu.</li>
         <li>Angličtina: rozhraní jde přepnout v Nastavení a karty obchodu i výsledků jdou sdílet anglicky.</li>
         <li>Přehrávání trhu si data pamatuje: soubor nahraješ jednou a pak si vybíráš náhodný den, den výzvy nebo konkrétní datum. Umí i soubory z Dukascopy.</li>
         <li>Nová úvodní karta na Přehledu ve třech podobách: Čistý, Kokpit a Fokus. Přepneš je v Nastavení.</li>
@@ -3712,10 +3713,13 @@ body.fx-lite .pa-ctl,body.fx-lite .lnav,body.fx-off .pa-ctl,body.fx-off .lnav{-w
   // ---------- pictures attached to trades (IndexedDB, stays on this device) ----------
   let idb = null;
   const idbOpen = () => idb || (idb = new Promise((res, rej) => { const r = indexedDB.open("tape", 1); r.onupgradeneeded = () => r.result.createObjectStore("shots"); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); }));
-  const shotPut = (k, v) => idbOpen().then(db => new Promise((res, rej) => { const t = db.transaction("shots", "readwrite"); t.objectStore("shots").put(v, k); t.oncomplete = res; t.onerror = () => rej(t.error); }));
-  const shotGet = k => idbOpen().then(db => new Promise(res => { const r = db.transaction("shots").objectStore("shots").get(k); r.onsuccess = () => res(r.result); r.onerror = () => res(null); })).catch(() => null);
-  const shotDel = k => idbOpen().then(db => { db.transaction("shots", "readwrite").objectStore("shots").delete(k); }).catch(() => {});
+  const shotPutRaw = (k, v) => idbOpen().then(db => new Promise((res, rej) => { const t = db.transaction("shots", "readwrite"); t.objectStore("shots").put(v, k); t.oncomplete = res; t.onerror = () => rej(t.error); }));
+  const shotGetRaw = k => idbOpen().then(db => new Promise(res => { const r = db.transaction("shots").objectStore("shots").get(k); r.onsuccess = () => res(r.result); r.onerror = () => res(null); })).catch(() => null);
+  const shotDelRaw = k => idbOpen().then(db => { db.transaction("shots", "readwrite").objectStore("shots").delete(k); }).catch(() => {});
   const shotAll = () => idbOpen().then(db => new Promise(res => { const out = {}, c = db.transaction("shots").objectStore("shots").openCursor(); c.onsuccess = () => { const cur = c.result; if (cur){ out[cur.key] = cur.value; cur.continue(); } else res(out); }; c.onerror = () => res(out); })).catch(() => ({}));
+  const shotPut = (k, v) => shotPutRaw(k, v).then(() => { shotMark("tape-shot-dirty", k); });
+  const shotGet = k => shotGetRaw(k).then(d => d || shotFetch(k));
+  const shotDel = k => { shotMark("tape-shot-gone", k); return shotDelRaw(k); };
   const shotKeys = t => t.shots ? Array.from({length: t.shots}, (x, i) => t.id + "#" + i) : (t.shot ? [t.id] : []);
   function fileToShot(file){
     return new Promise(res => { const rd = new FileReader(); rd.onerror = () => res(null);
@@ -4945,7 +4949,7 @@ body.fx-lite .pa-ctl,body.fx-lite .lnav,body.fx-off .pa-ctl,body.fx-off .lnav{-w
       run(b, async () => { if (p.value.length < 8){ accMsg = "Heslo musí mít aspoň 8 znaků."; return; } await sbAuth("user", {password: p.value}, await accToken(), "PUT"); accMode = "in"; accMsg = "Heslo je změněné."; setTimeout(syncNow, 50); });
       accBox.appendChild(p); accBox.appendChild(b);
     } else if (auth){
-      accBox.appendChild(el("p","small muted","Přihlášen jako " + (auth.email || "") + ". Deník, postup v učení a nastavení se ukládají k účtu a načtou se i na jiném zařízení. Obrázky k obchodům zatím zůstávají jen v tomhle zařízení."));
+      accBox.appendChild(el("p","small muted","Přihlášen jako " + (auth.email || "") + ". Deník, postup v učení a nastavení se ukládají k účtu a načtou se i na jiném zařízení."));
       if (accConflict){
         const w = el("div","box"), a = btn("primary","Použít data z účtu"), c = btn(null,"Nahrát data z tohoto zařízení"), r = el("div","rp-ctl");
         w.appendChild(el("b", null, "Data se liší")); w.appendChild(el("p","small muted","V účtu jsou uložená jiná data než v tomhle zařízení (v účtu naposledy " + fmtDateTime(accConflict.updated_at) + "). Vyber, která platí. Druhá se přepíšou, takže si případně nejdřív stáhni zálohu níž."));
@@ -5315,7 +5319,7 @@ body.fx-lite .pa-ctl,body.fx-lite .lnav,body.fx-off .pa-ctl,body.fx-off .lnav{-w
   { const _refreshAllWk = refreshAll; refreshAll = function(){ _refreshAllWk(); try { if (document.body.dataset.view === "kouc") renderWeekly(); } catch(e){ if (window.console) console.error(e); } }; }
   // ---------- account: wipe the copy of the data stored with the account ----------
   { const _accRenderDel = accRender; accRender = function(){ _accRenderDel(); if (!auth || accMode === "newpass" || accConflict) return; const d = el("details","ans"), b = el("button","danger","Smazat data uložená v účtu"); b.type = "button"; d.appendChild(el("summary", null, "Smazání dat z účtu")); d.appendChild(el("p","small muted","Smaže kopii deníku, postupu a nastavení uloženou u účtu a odhlásí tě. Data v tomhle zařízení zůstanou. Účet samotný (e-mail a heslo) umíme zrušit zatím jen na požádání."));
-      twoStep(b, "Opravdu smazat", async () => { try { await sbData("POST", "?on_conflict=user_id", {user_id: auth.id, data: {}, updated_at: new Date().toISOString()}); try { await sbAuth("logout", null, await accToken()); } catch(e){} authSave(null); try { localStorage.removeItem(SYNC_KEY); } catch(e){} accMsg = "Data v účtu jsou smazaná a jsi odhlášen."; } catch(e){ accMsg = "Smazání se nepovedlo. Zkus to znovu."; } accRender(); }); d.appendChild(b); accBox.appendChild(d); }; accRender(); }
+      twoStep(b, "Opravdu smazat", async () => { try { await sbData("POST", "?on_conflict=user_id", {user_id: auth.id, data: {}, updated_at: new Date().toISOString()}); try { await sbShots("DELETE", "?user_id=eq." + encodeURIComponent(auth.id)); } catch(e){} try { await sbAuth("logout", null, await accToken()); } catch(e){} authSave(null); try { localStorage.removeItem(SYNC_KEY); } catch(e){} accMsg = "Data v účtu jsou smazaná a jsi odhlášen."; } catch(e){ accMsg = "Smazání se nepovedlo. Zkus to znovu."; } accRender(); }); d.appendChild(b); accBox.appendChild(d); }; accRender(); }
 
   // ---------- prop accounts: consistency rule meter and a ledger of fees, resets and payouts ----------
   { const _propGuardC = propGuard; propGuard = function(){ _propGuardC(); const box = $("pg"), a = cfg.accounts.find(x => x.id === (cfg.acct === "all" ? (cfg.accounts.find(y => num(y.start) > 0) || {}).id : cfg.acct)), lim = a ? num(a.cons) : 0; if (!a || !(lim > 0) || $("pg-card").hidden) return;
@@ -6058,6 +6062,38 @@ body.fx-lite .pa-ctl,body.fx-lite .lnav,body.fx-off .pa-ctl,body.fx-off .lnav{-w
     langBox.appendChild(el("p","small muted", en ? "The interface is in English. Lessons, glossary and longer texts are still in Czech for now." : "Angličtina zatím překládá rozhraní: menu, nadpisy, tlačítka a sdílené karty. Lekce, slovníček a delší texty zůstávají česky."));
     const r = el("div","chips"); [["cs","Čeština"],["en","English"]].forEach(o => { const b = el("button","chip", o[1]); b.type = "button"; b.setAttribute("aria-pressed", String((cfg.lang || "cs") === o[0])); b.addEventListener("click", () => { if ((cfg.lang || "cs") === o[0]) return; cfg.lang = o[0]; cfgStore(); location.reload(); }); r.appendChild(b); }); langBox.appendChild(r); }
   { const _rsL = renderSettings; renderSettings = function(){ _rsL(); const box = $("set"); if (softLock) return; renderLang(); if (langBox.parentNode !== box) box.insertBefore(langBox, nickBox.parentNode === box ? nickBox.nextSibling : box.firstChild); }; }
+
+
+  // ---------- trade images in the account: table tape_shots, one row per image ----------
+  let shotsBusy = false, shotsMissing = false, shotsRetry = 0;
+  const shotList = n => { try { return JSON.parse(localStorage.getItem(n) || "[]"); } catch(e){ return []; } }, shotListSet = (n, a) => { try { localStorage.setItem(n, JSON.stringify(a)); } catch(e){} };
+  function shotMark(n, k){ const a = shotList(n); if (a.indexOf(k) < 0){ a.push(k); shotListSet(n, a); } clearTimeout(shotMark.t); shotMark.t = setTimeout(shotsSync, 2500); }
+  const shotUnmark = (n, k) => shotListSet(n, shotList(n).filter(x => x !== k));
+  async function sbShots(method, q, body){ const t = await accToken(); if (!t) throw new Error("auth");
+    const r = await fetch(SB.url + "/rest/v1/tape_shots" + q, {method: method, headers: {"apikey": SB.key, "Authorization": "Bearer " + t, "Content-Type": "application/json", "Prefer": "resolution=merge-duplicates,return=minimal"}, body: body ? JSON.stringify(body) : undefined});
+    if (!r.ok){ const e = new Error("shots"); e.status = r.status; throw e; } return method === "GET" ? r.json() : null; }
+  async function shotFetch(k){ if (!auth || shotsMissing || !navigator.onLine) return null;
+    try { const rows = await sbShots("GET", "?select=data&user_id=eq." + encodeURIComponent(auth.id) + "&k=eq." + encodeURIComponent(k)), d = rows && rows[0] && rows[0].data;
+      if (d && /^data:image\//.test(d)){ await shotPutRaw(k, d); return d; } } catch(e){} return null; }
+  const shotLocalKeys = () => idbOpen().then(db => new Promise(res => { const r = db.transaction("shots").objectStore("shots").getAllKeys(); r.onsuccess = () => { const o = {}; r.result.forEach(k => { o[k] = 1; }); res(o); }; r.onerror = () => res({}); })).catch(() => ({}));
+  async function shotsSync(){
+    if (!auth || shotsBusy || accConflict || !navigator.onLine || (shotsMissing && Date.now() < shotsRetry)) return; shotsBusy = true;
+    try { const uid = auth.id, me = "user_id=eq." + encodeURIComponent(uid), rows = await sbShots("GET", "?select=k&" + me), remote = {}, need = {}; shotsMissing = false;
+      rows.forEach(r => { remote[r.k] = 1; }); jr.trades.forEach(t => shotKeys(t).forEach(k => { need[k] = 1; }));
+      const local = await shotLocalKeys(), dirty = shotList("tape-shot-dirty"); let got = 0;
+      for (const k of Object.keys(need)){
+        if (local[k] && (!remote[k] || dirty.indexOf(k) >= 0)){ const d = await shotGetRaw(k); if (d){ await sbShots("POST", "?on_conflict=user_id,k", {user_id: uid, k: k, data: d, updated_at: new Date().toISOString()}); remote[k] = 1; } shotUnmark("tape-shot-dirty", k); }
+        else if (!local[k] && remote[k]){ if (await shotFetch(k)) got++; } }
+      for (const k of shotList("tape-shot-gone")){ if (!need[k] && remote[k]) await sbShots("DELETE", "?" + me + "&k=eq." + encodeURIComponent(k)); shotUnmark("tape-shot-gone", k); }
+      shotListSet("tape-shot-dirty", shotList("tape-shot-dirty").filter(k => need[k]));
+      if (got && document.body.dataset.view === "denik") renderJournal();
+    } catch(e){ if (e.status === 404){ shotsMissing = true; shotsRetry = Date.now() + 600000; } }
+    shotsBusy = false; shotsNotePaint();
+  }
+  const shotsNote = el("p","small muted");
+  function shotsNotePaint(){ shotsNote.textContent = !auth ? "" : shotsMissing ? "Obrázky k obchodům jsou zatím jen v tomto zařízení. V účtu pro ně chybí tabulka tape_shots, postup je v README." : "Obrázky k obchodům se ukládají do účtu a stáhnou se i na dalším zařízení."; shotsNote.hidden = !auth; }
+  { const _snS = syncNow; syncNow = async function(){ await _snS(); shotsSync(); };
+    const _arS = accRender; accRender = function(){ _arS(); shotsNotePaint(); if (auth) accBox.appendChild(shotsNote); }; }
 
   // ---------- moving to a new address without losing data ----------
   // data/site.json: {"move": "https://new-address", "from": ["https://old-address"]}. The old site hands the data to the new one in a window the person opens.

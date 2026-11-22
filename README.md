@@ -82,7 +82,21 @@ Kromě šesti botů se každý den dělá i studium Zeussyho přístupu: veřejn
 
 ## Účet a synchronizace
 
-Přihlášení a ukládání dat k účtu běží přes Supabase (adresa projektu a veřejný klíč jsou v `index.html` v objektu `SB`; tajný klíč do repozitáře nepatří). Každý člověk má jeden řádek v tabulce `public.tape_data` (`user_id`, `data` jsonb, `updated_at`) chráněný pravidly RLS. Do účtu jdou klíče z `SYNC_KEYS`; obrázky (IndexedDB), `tape-key` a `tape-coach-chat` zůstávají v zařízení. Stav přihlášení je v `tape-auth`, stav synchronizace v `tape-sync`.
+Přihlášení a ukládání dat k účtu běží přes Supabase (adresa projektu a veřejný klíč jsou v `index.html` v objektu `SB`; tajný klíč do repozitáře nepatří). Každý člověk má jeden řádek v tabulce `public.tape_data` (`user_id`, `data` jsonb, `updated_at`) chráněný pravidly RLS. Do účtu jdou klíče z `SYNC_KEYS`; `tape-key` a `tape-coach-chat` zůstávají v zařízení. Obrázky k obchodům (IndexedDB) se ukládají do tabulky `public.tape_shots`, jeden řádek na obrázek; dokud tabulka neexistuje, zůstávají jen v zařízení. Založení tabulky v Supabase (SQL Editor):
+
+```sql
+create table if not exists public.tape_shots (
+  user_id uuid not null references auth.users(id) on delete cascade,
+  k text not null,
+  data text not null,
+  updated_at timestamptz not null default now(),
+  primary key (user_id, k)
+);
+alter table public.tape_shots enable row level security;
+create policy "tape_shots own rows" on public.tape_shots for all to authenticated
+  using (auth.uid() = user_id) with check (auth.uid() = user_id);
+```
+ Stav přihlášení je v `tape-auth`, stav synchronizace v `tape-sync`.
 
 ### Postup lidí a zprávy
 
