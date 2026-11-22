@@ -1590,6 +1590,26 @@ body.sakura .lb-focus{border-color:rgba(226,69,154,.35);background:rgba(255,255,
 }
 body.sakura .ob .card{color:#4a1d3d}body.sakura .drov .drq,body.sakura .drov .big,body.sakura .ob .card h2,body.sakura .ob .card h3{color:#5a1f45}
 .cg-orbit.cg-glow.hit.tch{animation-duration:.9s}
+
+/* Laura's room: windows and the coach are light and pink, everything readable */
+body.sakura .ob,body.sakura .copop{--bg:#fff4fa;--surface:#ffffff;--surface2:#fff0f7;--ink:#43163f;--muted:#8d5f88;--line:rgba(198,118,170,.32);--accent:#e2459a;--accent-soft:rgba(226,69,154,.1);--amber:#bf7410;--good:#0f9d77;--bad:#e23d5e;color:var(--ink)}
+body.sakura .ob{background:rgba(255,228,242,.72)}
+body.sakura .ob .card{background:#fffafd;border-color:rgba(226,69,154,.22);box-shadow:0 24px 60px rgba(214,90,160,.22);color:var(--ink)}
+body.sakura .copop{background:#fffafd!important;box-shadow:0 24px 60px rgba(214,90,160,.28)}
+body.sakura .cohead{border-bottom-color:rgba(226,69,154,.15);background:linear-gradient(135deg,#ffe3f1,#f3e6ff)}
+body.sakura .cohead::before{background:radial-gradient(40% 50% at 18% 42%,rgba(255,143,197,.35),transparent 70%),radial-gradient(40% 50% at 80% 30%,rgba(185,140,255,.3),transparent 70%)!important}
+body.sakura .cohead,body.sakura .cohead b,body.sakura .cohead h2,body.sakura .cottl{color:#43163f}
+body.sakura .costat,body.sakura .cohead span{color:#8d5f88}
+body.sakura .coclose{color:#8d5f88;border-color:rgba(226,69,154,.25);background:rgba(255,255,255,.6)}
+body.sakura .coav{color:#fff}body.sakura .coav::before{background:conic-gradient(#ff5fa2,#ffc2dd,#b98cff,#ff8fc5,#ff5fa2)}body.sakura .coav::after{background:radial-gradient(circle at 35% 28%,#ff8fc5,#d0348a 72%)}
+body.sakura .cosp{background:#ff8fc5}
+body.sakura .cohello b{color:#43163f}body.sakura .cohello span{color:#8d5f88}
+body.sakura .copop .card{background:transparent}
+body.sakura .copop .chip,body.sakura #co-quick .chip{background:#fff;color:#5a1f45;border-color:rgba(226,69,154,.22)}
+body.sakura .copop .msg.ai{background:#fff0f7;border-color:rgba(226,69,154,.18);color:#43163f}
+body.sakura .copop .msg.me{background:linear-gradient(135deg,#ff8fc5,#b98cff);color:#fff}
+body.sakura .copop .askrow{background:#fff;border-color:rgba(226,69,154,.25)}body.sakura .copop .askrow textarea{color:#43163f}
+body.sakura .copop details summary{color:#d0348a}
 .cg-star{position:fixed;z-index:96;pointer-events:none;width:12px;height:12px;margin:-6px 0 0 -6px;animation:cgstar .85s cubic-bezier(.2,.7,.3,1) forwards}.cg-star svg{display:block;width:100%;height:100%;fill:currentColor;filter:drop-shadow(0 0 5px currentColor)}
 @keyframes cgstar{0%{transform:translate(0,0) scale(.2) rotate(0);opacity:0}25%{opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(1) rotate(160deg);opacity:0}}
 body.sakura .chip[aria-pressed="true"],body.sakura button.primary{box-shadow:0 6px 18px rgba(255,95,162,.28)}
