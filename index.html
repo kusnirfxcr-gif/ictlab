@@ -1461,6 +1461,32 @@ body[data-group="uceni"] .subnav .sk-btn{min-height:40px;padding:8px 16px;border
 .cg-orbit.rbw.out{animation:cgout .2s ease forwards,cospin 5s linear infinite}
 .cg-orbit.rbw.hit{animation:cgflash .55s ease forwards,cospin 5s linear infinite}
 .cg-orbit.rbw.cg-glow.hit{animation:cgtap .6s ease forwards,cospin 5s linear infinite}
+/* zoom controls: small and quiet */
+.zm-ctl{top:10px;right:10px;bottom:auto;gap:0;padding:2px;background:rgba(14,14,18,.72);border:1px solid rgba(255,255,255,.08);opacity:0;transition:opacity .2s}
+.zm-clip:hover>.zm-ctl,.zm-clip.zoomed>.zm-ctl{opacity:1}
+.zm-ctl.inbar{position:static;opacity:.75;margin-left:auto;background:transparent;border-color:var(--line)}
+.fig:hover .zm-ctl.inbar,.zm-ctl.inbar:focus-within{opacity:1}
+.zm-ctl button{width:26px;height:26px}.zm-ctl button svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.zm-ctl button[hidden],.zm-ctl span[hidden]{display:none}
+.zm-ctl span{min-width:34px;font-size:10.5px}
+.zm-ctl button:hover{background:rgba(255,255,255,.08)}
+@media (hover:none){.zm-ctl{opacity:.7}}
+@media (min-width:640px){.pa-svg svg[data-fw],#l-body figure.fig svg[data-fw],.zm-clip svg[data-fw]{max-width:none!important;width:100%!important;max-height:none!important;height:auto}}
+.zm-full{position:fixed!important;inset:0;z-index:120;margin:0!important;max-width:none!important;min-height:0!important;overflow:auto;background:#09090b;padding:18px 22px 22px;display:flex;flex-direction:column;gap:10px}
+.lesson-body.zm-full .pa-ctl{position:static}
+body.sakura .zm-full{background:linear-gradient(180deg,#fff7fb,#ffeef7)}
+body.zm-fullon{overflow:hidden}body.zm-fullon .orb,body.zm-fullon .bottombar{display:none}
+.zm-full .zm-clip svg[data-cid],.zm-full .zm-clip svg{max-width:none!important;max-height:none!important;width:100%!important;height:auto}
+.zm-full figure.fig,.zm-full.fig,.zm-full.mo-hfig{width:100%}
+.zm-ctl button[aria-pressed="true"]{color:#c4b5fd}
+/* MOROS hero: grid and glow over the whole card, chart without a visible edge */
+.mo-hfig{position:relative;background-image:linear-gradient(rgba(246,220,154,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(246,220,154,.045) 1px,transparent 1px),radial-gradient(60% 75% at 50% 45%,rgba(232,194,106,.16),transparent 70%);background-size:34px 34px,34px 34px,100% 100%;background-position:center;-webkit-mask-image:linear-gradient(180deg,#000 80%,transparent);mask-image:linear-gradient(180deg,#000 80%,transparent)}
+.mo-hsvg{-webkit-mask-image:none!important;mask-image:none!important;max-height:380px!important}
+.mo-hfig .zm-ctl{top:auto;bottom:10px}
+.mo-sym text{fill:#e9dfc6;font-size:6.4px;font-weight:700;letter-spacing:.05em}
+.mo-ax line{stroke:rgba(246,220,154,.28);stroke-width:.5}.mo-ax text{fill:rgba(246,220,154,.6);font-size:5.4px;font-weight:600;font-variant-numeric:tabular-nums}
+.mo-last{fill:#e8c26a}.mo-lastt{fill:#1a1307!important;font-weight:800!important}
+.zm-full>*{flex-shrink:0}
 .cg-star{position:fixed;z-index:96;pointer-events:none;width:12px;height:12px;margin:-6px 0 0 -6px;animation:cgstar .85s cubic-bezier(.2,.7,.3,1) forwards}.cg-star svg{display:block;width:100%;height:100%;fill:currentColor;filter:drop-shadow(0 0 5px currentColor)}
 @keyframes cgstar{0%{transform:translate(0,0) scale(.2) rotate(0);opacity:0}25%{opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(1) rotate(160deg);opacity:0}}
 body.sakura .chip[aria-pressed="true"],body.sakura button.primary{box-shadow:0 6px 18px rgba(255,95,162,.28)}
@@ -2371,7 +2397,7 @@ body.sakura .copop::before{background:conic-gradient(from var(--ra),#ff5fa2,#ffc
   var CHARTS = new Map(), chartSeq = 0;
   function chart(spec){
     const H = spec.h || 210, padL = 8, padT = 26, padB = 20, cs = spec.candles, n = spec.n || cs.length, marks = spec.marks || [], V = spec.view || null;
-    const axis = spec.axis !== false, plotR = FW - (axis ? AXW : 8), step = (plotR - padL) / (V && V.nv > 0 ? V.nv : n), vx0 = V ? (V.x0 || 0) : 0;
+    const CW = spec.fw > FW ? spec.fw : FW, axis = spec.axis !== false, plotR = CW - (axis ? AXW : 8), step = (plotR - padL) / (V && V.nv > 0 ? V.nv : n), vx0 = V ? (V.x0 || 0) : 0;
     const stepper = spec.newFrom != null, nf = stepper ? spec.newFrom : 0, st = stepper ? 150 : 45;
     let lo = Infinity, hi = -Infinity;
     cs.forEach(c => { if (c){ hi = Math.max(hi, c[1]); lo = Math.min(lo, c[2]); } });
@@ -2443,7 +2469,7 @@ body.sakura .copop::before{background:conic-gradient(from var(--ra),#ff5fa2,#ffc
       }
     });
 
-    const bw = Math.min(step * 0.62, V ? 64 : 16), foc = Array.isArray(spec.focus) && spec.focus.length ? spec.focus : null, pfoc = Array.isArray(spec.prevFocus) && spec.prevFocus.length ? spec.prevFocus : null;
+    const bw = Math.min(step * 0.62, V ? 64 : CW > FW ? 26 : 16), foc = Array.isArray(spec.focus) && spec.focus.length ? spec.focus : null, pfoc = Array.isArray(spec.prevFocus) && spec.prevFocus.length ? spec.prevFocus : null;
     let cnd = "", lastC = null;
     cs.forEach((c, i) => {
       if (!c) return;
@@ -2465,9 +2491,9 @@ body.sakura .copop::before{background:conic-gradient(from var(--ra),#ff5fa2,#ffc
     }
     let hits = "";
     if (spec.pick) cs.forEach((c, i) => { if (c) hits += '<rect x="' + num(X(i) - step / 2) + '" y="0" width="' + num(step) + '" height="' + H + '" class="hit" data-i="' + i + '"/>'; });
-    const id = ++chartSeq, bspec = Object.assign({}, spec); delete bspec.view; CHARTS.set(id, {spec: bspec, lo: lo0, hi: hi0, n: n, plot: plotR - padL, padL: padL, pv: H - padT - padB}); if (CHARTS.size > 500) CHARTS.delete(CHARTS.keys().next().value);
+    const id = ++chartSeq, bspec = Object.assign({}, spec); delete bspec.view; delete bspec.fw; CHARTS.set(id, {spec: bspec, lo: lo0, hi: hi0, n: n, plot: plotR - padL, padL: padL, pv: H - padT - padB}); if (CHARTS.size > 500) CHARTS.delete(CHARTS.keys().next().value);
     const body = V ? '<defs><clipPath id="cv' + id + '"><rect x="0" y="0" width="' + num(plotR) + '" height="' + H + '"/></clipPath></defs>' + grid + lp + '<g clip-path="url(#cv' + id + ')">' + zones + cnd + lines + top + hits + '</g>' : grid + zones + lp + cnd + lines + top + hits;
-    return svgWrap(H, body, "--st:" + st + "ms").replace("<svg ", '<svg data-cid="' + id + '"' + (V ? ' data-zv="1" ' : " "));
+    return svgWrap(H, body, "--st:" + st + "ms").replace("<svg ", '<svg data-cid="' + id + '"' + (V ? ' data-zv="1"' : "") + (CW > FW ? ' data-fw="' + Math.round(CW) + '"' : "") + " ").replace('viewBox="0 0 ' + FW + " ", 'viewBox="0 0 ' + num(CW) + " ");
   }
   function figOhlc(){
     const H = 236, yH = 36, yT = 72, yB = 150, yL = 188, bw = 36; let s = "";
@@ -6569,18 +6595,25 @@ body.sakura .copop::before{background:conic-gradient(from var(--ra),#ff5fa2,#ffc
   function moChart(t, step, animate){ const st = t.steps[step], prev = step > 0 ? t.steps[step - 1] : null, show = st.show, ps = prev ? prev.show : 0;
     return safeChart({candles: t.candles.slice(0, show), n: t.candles.length, lo: t.lo, hi: t.hi, h: t.h || 260, last: true, marks: moMarks(t, step, animate ? step : -1), newFrom: animate ? Math.min(ps, show) : show, focus: st.focus || null, prevFocus: animate ? (prev ? prev.focus || null : null) : (st.focus || null)}); }
   function moHeroSvg(){
-    const W = 360, H = 214, lv = [["+2", 26], ["+1", 56], ["high", 86], ["C.E.", 101], ["low", 116], ["−1", 146], ["−2", 176]];
-    // range: starts on the left edge of the box, touches its top and bottom once, leaves through the right edge
-    // every swing sits on a level: the first low touches -1, the sweep goes below it, TP 1.5R lands on the MOR low, the path ends on +1
+    // y in the picture maps to a NASDAQ 100 price: MOR high 25 040 at y 86, low 25 000 at y 116 (30 px = 40 points)
+    const W = 360, H = 216, AX = 300, P = y => 25000 + (116 - y) * 4 / 3, f = v => Math.round(v).toLocaleString("cs-CZ");
+    const lv = [["+2", 26], ["+1", 56], ["high", 86], ["C.E.", 101], ["low", 116], ["−1", 146], ["−2", 176]];
     const pts = "26,103 33,93 39,107 46,87 53,104 59,95 65,115 72,101 83,128 91,119 102,146 110,134 121,156 134,132 142,140 158,120 166,128 183,101 191,112 207,86 215,96 234,68 242,78 261,56";
-    let s = '<svg viewBox="0 0 ' + W + ' ' + H + '" class="mo-hsvg" aria-hidden="true"><defs><linearGradient id="moG" x1="0" x2="1"><stop offset="0" stop-color="#fff0c4"/><stop offset=".5" stop-color="#f0cf7d"/><stop offset="1" stop-color="#c8963a"/></linearGradient><radialGradient id="moR" cx=".42" cy=".55" r=".62"><stop offset="0" stop-color="rgba(232,194,106,.22)"/><stop offset="1" stop-color="rgba(232,194,106,0)"/></radialGradient><linearGradient id="moTP" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="rgba(255,154,60,.16)"/><stop offset="1" stop-color="rgba(255,154,60,.40)"/></linearGradient><pattern id="moGrid" width="22" height="22" patternUnits="userSpaceOnUse"><path d="M22 0H0V22" fill="none" stroke="rgba(246,220,154,.045)" stroke-width=".6"/></pattern></defs>';
-    s += '<rect width="' + W + '" height="' + H + '" fill="url(#moGrid)"/><rect width="' + W + '" height="' + H + '" fill="url(#moR)"/>';
+    let s = '<svg viewBox="0 0 ' + W + ' ' + H + '" class="mo-hsvg" aria-hidden="true"><defs><linearGradient id="moG" x1="0" x2="1"><stop offset="0" stop-color="#fff0c4"/><stop offset=".5" stop-color="#f0cf7d"/><stop offset="1" stop-color="#c8963a"/></linearGradient><linearGradient id="moTP" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="rgba(255,154,60,.16)"/><stop offset="1" stop-color="rgba(255,154,60,.40)"/></linearGradient></defs>';
+    // symbol in the corner, like a trading platform
+    s += '<g class="mo-sym"><g transform="translate(222 9.6)"><rect width="13" height="8.5" rx="1" fill="#f4f4f6"/>' + [0,2,4,6].map(i => '<rect y="' + (i * 1.2143) + '" width="13" height="0.6071" fill="#c8323c"/>').join("") + '<rect y="7.2857" width="13" height="0.6071" fill="#c8323c"/><rect width="5.6" height="4.25" fill="#2a3f8f"/></g><text x="' + (AX - 2) + '" y="15.6" text-anchor="end">NASDAQ 100 · 1m</text></g>';
     s += '<rect class="mo-box" x="26" y="86" width="46" height="30"/><text class="mo-cap" x="26" y="81">MOR 00:00–00:30</text>';
-    lv.forEach((l, i) => { const main = l[0] === "high" || l[0] === "low"; s += '<line class="mo-ln' + (main ? " m" : "") + (l[0] === "C.E." ? " ce" : "") + '" style="animation-delay:' + (.2 + i * .1).toFixed(2) + 's" x1="' + (main || l[0] === "C.E." ? 26 : 72) + '" x2="298" y1="' + l[1] + '" y2="' + l[1] + '"/><text class="mo-lt" style="animation-delay:' + (.5 + i * .1).toFixed(2) + 's" x="304" y="' + (l[1] + 2.4) + '">' + l[0] + '</text>'; });
+    lv.forEach((l, i) => { const main = l[0] === "high" || l[0] === "low"; s += '<line class="mo-ln' + (main ? " m" : "") + (l[0] === "C.E." ? " ce" : "") + '" style="animation-delay:' + (.2 + i * .1).toFixed(2) + 's" x1="' + (main || l[0] === "C.E." ? 26 : 72) + '" x2="' + AX + '" y1="' + l[1] + '" y2="' + l[1] + '"/>' +
+      '<text class="mo-lt" style="animation-delay:' + (.5 + i * .1).toFixed(2) + 's" x="' + (AX - 3) + '" y="' + (l[1] - 2.2) + '" text-anchor="end">' + l[0] + '</text>'; });
+    // price scale on the right and time scale at the bottom
+    s += '<g class="mo-ax"><line x1="' + AX + '" y1="20" x2="' + AX + '" y2="190"/><line x1="14" y1="190" x2="' + AX + '" y2="190"/>';
+    lv.forEach(l => { s += '<line x1="' + AX + '" x2="' + (AX + 3) + '" y1="' + l[1] + '" y2="' + l[1] + '"/><text x="' + (AX + 6) + '" y="' + (l[1] + 2.2) + '">' + f(P(l[1])) + '</text>'; });
+    [[26, "00:00"], [72, "00:30"], [107, "04:00"], [142, "09:50"], [174, "10:20"], [261, "11:30"]].forEach(t => { s += '<line x1="' + t[0] + '" x2="' + t[0] + '" y1="190" y2="193"/><text x="' + t[0] + '" y="201" text-anchor="middle">' + t[1] + '</text>'; });
+    s += '<rect class="mo-last" x="' + (AX + 1) + '" y="51" width="44" height="10" rx="2"/><text class="mo-lastt" x="' + (AX + 6) + '" y="58.2">' + f(P(56)) + '</text></g>';
     s += '<g class="mo-trade"><rect class="mo-sl" x="142" y="140" width="94" height="16"/><rect class="mo-tp" x="142" y="116" width="94" height="24"/><line class="mo-slc" x1="121" x2="142" y1="156" y2="156"/><line class="mo-en" x1="142" x2="236" y1="140" y2="140"/>';
     s += '<text class="mo-tpt" x="232" y="124.5">TP 1,5R</text><text class="mo-slt" x="232" y="150.2">SL na low</text><text class="mo-ent-t" x="240" y="142.1">ENTRY</text></g>';
     s += '<polyline class="mo-px" pathLength="1000" points="' + pts + '"/>';
-    s += '<g class="mo-smt"><line x1="102" y1="146" x2="121" y2="156"/><circle cx="102" cy="146" r="1.7"/><circle cx="121" cy="156" r="1.7"/><rect x="92" y="161" width="21" height="9.5" rx="4.75"/><text x="102.5" y="167.900" text-anchor="middle">SMT</text></g>';
+    s += '<g class="mo-smt"><line x1="102" y1="146" x2="121" y2="156"/><circle cx="102" cy="146" r="1.7"/><circle cx="121" cy="156" r="1.7"/><rect x="92" y="161" width="21" height="9.5" rx="4.75"/><text x="102.5" y="167.9" text-anchor="middle">SMT</text></g>';
     s += '<g class="mo-ent"><circle cx="142" cy="140" r="5.5" class="h"/><circle cx="142" cy="140" r="2.6"/></g><circle class="mo-tph" cx="173.8" cy="116" r="2.2"/><circle class="mo-dot2" cx="261" cy="56" r="3"/></svg>';
     return s;
   }
@@ -6744,14 +6777,16 @@ body.sakura .copop::before{background:conic-gradient(from var(--ra),#ff5fa2,#ffc
   { const ZSEL = "figure.fig, .fig.mo-mini, .mo-hfig", MAXZ = 5;
     const entry = c => { const sv = c.querySelector("svg[data-cid]"), e = sv ? CHARTS.get(+sv.dataset.cid) : null; return e && !e.spec.pick ? {sv: sv, e: e} : null; };
     const isOne = st => st.zx === 1 && st.zy === 1 && !st.px && !st.py;
-    function draw(c, keepAnim){ const q = entry(c); if (!q) return; const st = c._s, e = q.e, nv = e.n / st.zx, rng = (e.hi - e.lo) / st.zy, mid = (e.hi + e.lo) / 2 + st.py;
+    // on a computer the chart fills the width of the window: the virtual canvas gets wider, the height stays
+    const fullOf = c => c.closest(".zm-full");
+    const fwOf = (c, e) => { const w = c.clientWidth, fu = fullOf(c); if (w < 640 && !fu) return 0; const h = fu ? Math.max(260, window.innerHeight - (fu.classList.contains("lesson-body") ? 330 : 120)) : Math.min(window.innerHeight * .5, 440), k = h / (e.spec.h || 210); return Math.round(Math.max(FW, Math.min(1400, w / k))); };
+    function draw(c, keepAnim){ const q = entry(c); if (!q) return; const st = c._s, e = q.e, fw = fwOf(c, e), still = {newFrom: e.spec.candles.length, marks: (e.spec.marks || []).map(m => Object.assign({}, m, {fresh: false}))}, nv = e.n / st.zx, rng = (e.hi - e.lo) / st.zy, mid = (e.hi + e.lo) / 2 + st.py;
       st.px = Math.max(-nv * .8, Math.min(e.n - nv * .2, st.px)); c._lock = true;
-      if (isOne(st)) q.sv.outerHTML = chart(Object.assign({}, e.spec, keepAnim ? {} : {newFrom: e.spec.candles.length, marks: (e.spec.marks || []).map(m => Object.assign({}, m, {fresh: false}))}));
-      else q.sv.outerHTML = chart(Object.assign({}, e.spec, {view: {x0: st.px, nv: nv, lo: mid - rng / 2, hi: mid + rng / 2}}, keepAnim ? {} : {newFrom: e.spec.candles.length, marks: (e.spec.marks || []).map(m => Object.assign({}, m, {fresh: false}))}));
+      q.sv.outerHTML = chart(Object.assign({}, e.spec, {fw: fw}, isOne(st) ? {} : {view: {x0: st.px, nv: nv, lo: mid - rng / 2, hi: mid + rng / 2}}, keepAnim ? {} : still));
       c._lock = false; ui(c); }
     const sched = c => { if (c._raf) return; c._raf = requestAnimationFrame(() => { c._raf = 0; draw(c); }); };
     function ui(c){ const st = c._s, ch = !!entry(c); c.classList.toggle("zoomed", ch ? !isOne(st) : st.z > 1); c.classList.toggle("zm-chart", ch);
-      const pt = Math.round((ch ? st.zx : st.z) * 100) + " %"; if (c._pct.textContent !== pt) c._pct.textContent = pt; c._out.disabled = ch ? st.zx <= .4 : st.z <= 1; c._in.disabled = ch ? st.zx >= 10 : st.z >= MAXZ; c._vy.hidden = !ch; }
+      const pt = Math.round((ch ? st.zx : st.z) * 100) + " %"; if (c._pct.textContent !== pt) c._pct.textContent = pt; c._pct.hidden = pt === "100 %"; c._rs.hidden = ch ? isOne(st) : st.z <= 1; c._out.disabled = ch ? st.zx <= .4 : st.z <= 1; c._in.disabled = ch ? st.zx >= 10 : st.z >= MAXZ; }
     // magnify (non-chart pictures)
     const apply = c => { const t = c._t, st = c._s; if (!t || !t.isConnected) return; const w = c.clientWidth, h = c.clientHeight; st.z = Math.max(1, Math.min(MAXZ, st.z));
       st.x = Math.min(0, Math.max(w - w * st.z, st.x)); st.y = Math.min(0, Math.max(h - h * st.z, st.y)); if (st.z === 1){ st.x = 0; st.y = 0; }
@@ -6763,15 +6798,27 @@ body.sakura .copop::before{background:conic-gradient(from var(--ra),#ff5fa2,#ffc
     function zoomY(c, f){ const st = c._s, nz = Math.max(.3, Math.min(8, st.zy * f)); st.zy = Math.abs(nz - 1) < .04 ? 1 : nz; if (st.zy === 1 && Math.abs(st.py) < 1e-6) st.py = 0; sched(c); }
     function reset(c){ c._s = {z: 1, x: 0, y: 0, zx: 1, zy: 1, px: 0, py: 0}; if (entry(c)) draw(c); else apply(c); }
     function wrap(f){ if (f._zm || f.closest(".zm-clip")) return; const t = f.querySelector(".pa-svg") || f.querySelector("svg"); if (!t || t.closest(".zm-clip")) return; f._zm = 1;
-      const c = el("div","zm-clip"), ctl = el("div","zm-ctl"), mk = (txt, lab, fn, box) => { const b = el("button", null, txt); b.type = "button"; b.setAttribute("aria-label", lab); b.title = lab; b.addEventListener("click", ev => { ev.stopPropagation(); fn(); }); (box || ctl).appendChild(b); return b; };
+      const bar = f.querySelector(":scope > .pa-bar"), c = el("div","zm-clip"), ctl = el("div","zm-ctl" + (bar ? " inbar" : "")), mk = (txt, lab, fn, box) => { const b = el("button"); b.innerHTML = txt; b.type = "button"; b.setAttribute("aria-label", lab); b.title = lab; b.addEventListener("click", ev => { ev.stopPropagation(); fn(); }); (box || ctl).appendChild(b); return b; };
       t.parentNode.insertBefore(c, t); c.appendChild(t); c._t = t; c._s = {z: 1, x: 0, y: 0, zx: 1, zy: 1, px: 0, py: 0};
-      c._out = mk("−", "Oddálit (užší svíčky)", () => entry(c) ? zoomX(c, 1 / 1.35) : magAt(c, c._s.z / 1.4)); c._pct = el("span", null, "100 %"); ctl.appendChild(c._pct); c._in = mk("+", "Přiblížit (širší svíčky)", () => entry(c) ? zoomX(c, 1.35) : magAt(c, c._s.z * 1.4));
-      c._vy = el("span","zm-vy"); mk("↕", "Roztáhnout cenovou osu", () => zoomY(c, 1.3), c._vy); mk("⇵", "Stáhnout cenovou osu", () => zoomY(c, 1 / 1.3), c._vy); ctl.appendChild(c._vy);
-      mk("⤢", "Původní zobrazení", () => reset(c)); c.appendChild(ctl); ui(c);
+      c._out = mk('<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8h9"/></svg>', "Oddálit (užší svíčky)", () => entry(c) ? zoomX(c, 1 / 1.35) : magAt(c, c._s.z / 1.4)); c._pct = el("span", null, "100 %"); ctl.appendChild(c._pct); c._in = mk('<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8h9M8 3.5v9"/></svg>', "Přiblížit (širší svíčky)", () => entry(c) ? zoomX(c, 1.35) : magAt(c, c._s.z * 1.4));
+      const fs = mk('<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 6V2.5H6M10 2.5h3.5V6M13.5 10v3.5H10M6 13.5H2.5V10"/></svg>', "Celá obrazovka", () => cgFull(c, f)); c._fsb = fs;
+      c._rs = mk('<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.2 6.2A5 5 0 1 1 3.4 10"/><path d="M2.8 2.8v3.6h3.6"/></svg>', "Původní zobrazení", () => reset(c));
+      if (bar){ const rp = bar.querySelector(".pa-replay"); bar.insertBefore(ctl, rp || null); } else c.appendChild(ctl); ui(c); if (entry(c) && fwOf(c, entry(c).e)) draw(c, true);
       // a new step of the lesson redraws the picture: keep the current view and let the step animate
       new MutationObserver(ms => { if (c._lock || ms.every(m => ctl.contains(m.target))) return; if (!c._t.isConnected){ const n = c.querySelector(".pa-svg") || c.querySelector("svg"); if (n) c._t = n; }
-        const q = entry(c); if (q){ if (c._s.z !== 1){ c._s.z = 1; c._t.style.transform = ""; } if (!isOne(c._s) && !q.sv.dataset.zv) draw(c, true); else ui(c); } else if (c._s.z > 1) apply(c); else ui(c); }).observe(c, {childList: true, subtree: true}); }
-    const scan = () => document.querySelectorAll(ZSEL).forEach(f => { try { wrap(f); } catch(e){} }); let raf = 0;
+        const q = entry(c); if (q){ if (c._s.z !== 1){ c._s.z = 1; c._t.style.transform = ""; } const fw = fwOf(c, q.e); if ((!isOne(c._s) && !q.sv.dataset.zv) || String(fw || "") !== (q.sv.dataset.fw || "")) draw(c, true); else ui(c); } else if (c._s.z > 1) apply(c); else ui(c); }).observe(c, {childList: true, subtree: true}); }
+    // full window: the whole lesson (picture, text and steps) or the single picture fills the screen; Esc or the same button closes it
+    // the box is lifted to the end of the page while it is full, so no parent with a transform can trap it; a placeholder keeps its place
+    function cgFullOff(){ document.querySelectorAll(".zm-full").forEach(x => { x.classList.remove("zm-full"); if (x._ph && x._ph.parentNode){ x._ph.parentNode.insertBefore(x, x._ph); x._ph.remove(); } x._ph = null; }); document.body.classList.remove("zm-fullon"); }
+    function cgFull(c, f){ const box = f.closest(".zm-full") || f.closest(".lesson-body") || f, on = !box.classList.contains("zm-full"); cgFullOff();
+      if (on){ box._ph = document.createComment("zm"); box.parentNode.insertBefore(box._ph, box); document.body.appendChild(box); box.classList.add("zm-full"); document.body.classList.add("zm-fullon"); }
+      requestAnimationFrame(() => box.querySelectorAll(".zm-clip").forEach(x => { const q = entry(x); if (q) draw(x); else apply(x); x._fsb && x._fsb.setAttribute("aria-pressed", String(on)); })); }
+    document.addEventListener("keydown", ev => { const fu = document.querySelector(".zm-full"); if (!fu) return;
+      if (ev.key === "Escape"){ const c = fu.querySelector(".zm-clip"); if (c) cgFull(c, c.closest("figure, .fig, .mo-hfig") || c); }
+      else if (ev.key === "ArrowRight" || ev.key === "ArrowLeft"){ const b = fu.querySelectorAll(".pa-ctl button"); if (b.length){ (ev.key === "ArrowRight" ? b[b.length - 1] : b[0]).click(); ev.preventDefault(); } } });
+    window.addEventListener("hashchange", cgFullOff);
+    const scan = () => document.querySelectorAll(ZSEL).forEach(f => { try { wrap(f); } catch(e){} }); let raf = 0, rt = 0;
+    window.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(() => document.querySelectorAll(".zm-clip").forEach(c => { const q = entry(c); if (q && String(fwOf(c, q.e) || "") !== (q.sv.dataset.fw || "")) draw(c); }), 200); });
     new MutationObserver(() => { if (!raf) raf = requestAnimationFrame(() => { raf = 0; scan(); }); }).observe(document.body, {childList: true, subtree: true}); scan();
     const clipOf = ev => ev.target && ev.target.closest ? ev.target.closest(".zm-clip") : null;
     document.addEventListener("wheel", ev => { const c = clipOf(ev); if (!c || !(ev.ctrlKey || ev.metaKey || ev.shiftKey)) return; ev.preventDefault(); const f = Math.exp(-(ev.deltaY || ev.deltaX) * .01);
