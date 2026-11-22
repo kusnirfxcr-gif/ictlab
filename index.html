@@ -1265,6 +1265,11 @@ body:not([data-view="prehled"]):not([data-view="nastaveni"]) .tb-acc:not(.in){di
 #v-vice .vgrid .go[hidden]{display:none}
 @media (min-width:860px){#v-vice .vgrid{grid-template-columns:repeat(4,minmax(0,1fr))}}
 .dscore .big,#v-kouc .dscore>b:first-child{font-family:var(--display)}
+@media (min-width:860px){
+  .pa-ctl,.lnav{position:sticky;bottom:14px;z-index:4;padding:10px 12px;margin-inline:-12px;border:1px solid var(--line);border-radius:18px;background:color-mix(in srgb,var(--surface) 88%,transparent);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 10px 30px rgba(0,0,0,.35)}
+  .pa-fig .pa-svg svg,#l-body figure.fig svg,#c-now figure.fig svg,#st-body figure.fig svg{max-height:min(46vh,420px);width:auto;max-width:100%;margin-inline:auto;display:block}
+}
+body.fx-lite .pa-ctl,body.fx-lite .lnav,body.fx-off .pa-ctl,body.fx-off .lnav{-webkit-backdrop-filter:none;backdrop-filter:none;background:var(--surface)}
 </style>
 </head>
 <body>
