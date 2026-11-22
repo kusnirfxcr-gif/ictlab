@@ -1360,17 +1360,6 @@ body.fx-lite .pa-ctl,body.fx-lite .lnav,body.fx-off .pa-ctl,body.fx-off .lnav{-w
 @media (prefers-reduced-motion:reduce){.mo-hero::after,.mo-ln,.mo-px,.mo-lt,.mo-box,.mo-cap,.mo-arr,.mo-trade,.mo-smt,.mo-ent,.mo-steps li{animation:none!important;opacity:1!important;stroke-dashoffset:0!important;transform:none!important}}
 
 /* ---------- click glow ---------- */
-.cg-glow{position:absolute;inset:-16px;border-radius:inherit;z-index:-1;pointer-events:none;background:radial-gradient(closest-side,rgba(216,180,254,.95),rgba(168,85,247,.55) 45%,rgba(124,58,237,0) 100%) no-repeat;background-size:55% 170%;background-position:-70% 50%;filter:blur(8px);animation:cgsweep .9s cubic-bezier(.35,.1,.2,1) forwards}
-.cg-glow.pink{background-image:radial-gradient(closest-side,rgba(255,214,234,.95),rgba(255,95,162,.6) 45%,rgba(255,95,162,0) 100%)}
-@keyframes cgsweep{0%{background-position:-70% 50%;opacity:0}14%{opacity:1}80%{opacity:.9}100%{background-position:170% 50%;opacity:0}}
-.cg-orbit{position:absolute;inset:-16px;border-radius:inherit;z-index:-1;pointer-events:none;background:conic-gradient(from var(--ra),rgba(124,58,237,0) 0 50%,#7c3aed 68%,#c084fc 84%,#f5d0fe 94%,rgba(124,58,237,0) 100%);filter:blur(6px);opacity:0;animation:cospin .85s linear infinite,cgin .18s ease forwards}
-.cg-orbit.pink{background:conic-gradient(from var(--ra),rgba(255,95,162,0) 0 50%,#ff5fa2 68%,#ff9fcb 84%,#ffe1ee 94%,rgba(255,95,162,0) 100%)}
-.cg-orbit.out{animation:cospin .85s linear infinite,cgout .2s ease forwards}
-.cg-orbit.hit{animation:cospin .28s linear infinite,cgflash .5s ease forwards}
-@keyframes cgin{to{opacity:.95}}@keyframes cgout{from{opacity:.95}to{opacity:0}}@keyframes cgflash{0%{opacity:1;filter:blur(9px) brightness(1.5)}100%{opacity:.95;filter:blur(6px)}}
-.cg-pop{position:absolute;inset:-2px;border-radius:inherit;z-index:-1;pointer-events:none;border:2px solid rgba(192,132,252,.9);box-shadow:0 0 14px rgba(168,85,247,.7);animation:cgpop .6s cubic-bezier(.2,.7,.3,1) forwards}
-.cg-pop.pink{border-color:rgba(255,143,197,.95);box-shadow:0 0 14px rgba(255,95,162,.7)}
-@keyframes cgpop{from{transform:scale(1);opacity:1}to{transform:scale(1.22,1.5);opacity:0}}
 .zm-clip{position:relative;overflow:hidden;width:100%;align-self:stretch;display:flex;justify-content:center;border-radius:inherit}
 .zm-clip.zoomed{cursor:grab;touch-action:none}.zm-clip.zoomed:active{cursor:grabbing}
 .zm-clip>.pa-svg{width:100%}
@@ -1381,10 +1370,16 @@ body.fx-lite .pa-ctl,body.fx-lite .lnav,body.fx-off .pa-ctl,body.fx-off .lnav{-w
 .zm-ctl span{font-size:11px;font-weight:700;min-width:40px;text-align:center;color:#c9c9d2;font-variant-numeric:tabular-nums}
 body.sakura .zm-ctl{background:rgba(255,255,255,.85);border-color:rgba(226,69,154,.25)}body.sakura .zm-ctl button{color:#7a1f52}body.sakura .zm-ctl span{color:#a0537c}
 @media (hover:none){.zm-ctl{opacity:.85}}
-.cg-orbit{filter:blur(9px)!important}
-.cg-orbit.rbw{background:conic-gradient(from var(--ra),rgba(255,95,109,0) 0 30%,#ff5f6d 42%,#ffc371 52%,#f9f871 62%,#3ddc97 72%,#8ab4ff 82%,#c58aff 92%,rgba(197,138,255,0) 100%)}
-.cg-orbit.pink.rbw{background:conic-gradient(from var(--ra),rgba(255,95,162,0) 0 30%,#ff5fa2 42%,#ffb86b 54%,#ffe98a 64%,#8ff0d0 74%,#9fc4ff 84%,#d7a6ff 94%,rgba(215,166,255,0) 100%)}
-.cg-glow.rbw{background-image:linear-gradient(90deg,rgba(255,95,109,0),#ff5f6d,#ffc371,#f9f871,#3ddc97,#8ab4ff,#c58aff,rgba(197,138,255,0))}
+.cg-orbit{position:absolute;inset:-4px;border-radius:inherit;z-index:-1;pointer-events:none;background:linear-gradient(120deg,#7c3aed,#a855f7 50%,#c084fc);filter:blur(5px);opacity:0;animation:cgin .22s ease forwards}
+.cg-orbit.pink{background:linear-gradient(120deg,#ff5fa2,#ff8fc5 50%,#ffc2dd)}
+.cg-orbit.rbw{background:linear-gradient(100deg,#ff5f6d,#ffc371,#f9f871,#3ddc97,#8ab4ff,#c58aff)}
+.cg-orbit.pink.rbw{background:linear-gradient(100deg,#ff5fa2,#ffb86b,#ffe98a,#8ff0d0,#9fc4ff,#d7a6ff)}
+.cg-orbit.out{animation:cgout .2s ease forwards}
+.cg-orbit.hit{animation:cgflash .55s ease forwards}
+.cg-orbit.cg-glow.hit{animation:cgtap .6s ease forwards}
+@keyframes cgin{to{opacity:.55}}@keyframes cgout{from{opacity:.55}to{opacity:0}}
+@keyframes cgflash{0%{opacity:.55}30%{opacity:1;filter:blur(7px) brightness(1.25)}100%{opacity:.55}}
+@keyframes cgtap{0%{opacity:0}30%{opacity:.9;filter:blur(7px)}100%{opacity:0}}
 .cg-star{position:fixed;z-index:96;pointer-events:none;width:12px;height:12px;margin:-6px 0 0 -6px;animation:cgstar .85s cubic-bezier(.2,.7,.3,1) forwards}.cg-star svg{display:block;width:100%;height:100%;fill:currentColor;filter:drop-shadow(0 0 5px currentColor)}
 @keyframes cgstar{0%{transform:translate(0,0) scale(.2) rotate(0);opacity:0}25%{opacity:1}100%{transform:translate(var(--dx),var(--dy)) scale(1) rotate(160deg);opacity:0}}
 body.sakura .chip[aria-pressed="true"],body.sakura button.primary{box-shadow:0 6px 18px rgba(255,95,162,.28)}
@@ -5447,7 +5442,7 @@ body.sakura .copop::before{background:conic-gradient(from var(--ra),#ff5fa2,#ffc
     document.body.appendChild(h); setTimeout(() => h.remove(), 1100); } }
   const CG_SEL = "button,.abtn,.chip,a.go,.tb-acc,.prem-btn,.subnav a,.nav1 a,.bottombar a,.vgrid a,summary";
   // the light is cut out where the button is, so it only shows around it, as if it came from behind
-  function cgClip(t, g){ const P = 16, r = t.getBoundingClientRect(), w = r.width, h = r.height, rad = Math.max(0, Math.min(parseFloat(getComputedStyle(t).borderTopLeftRadius) || 0, w / 2, h / 2)), x = P, y = P, W = w + 2 * P, H = h + 2 * P;
+  function cgClip(t, g){ const P = 4, r = t.getBoundingClientRect(), w = r.width, h = r.height, rad = Math.max(0, Math.min(parseFloat(getComputedStyle(t).borderTopLeftRadius) || 0, w / 2, h / 2)), x = P, y = P, W = w + 2 * P, H = h + 2 * P;
     g.style.clipPath = 'path(evenodd, "M-40 -40H' + (W + 40) + 'V' + (H + 40) + 'H-40Z M' + (x + rad) + ' ' + y + 'H' + (x + w - rad) + 'A' + rad + ' ' + rad + ' 0 0 1 ' + (x + w) + ' ' + (y + rad) + 'V' + (y + h - rad) + 'A' + rad + ' ' + rad + ' 0 0 1 ' + (x + w - rad) + ' ' + (y + h) + 'H' + (x + rad) + 'A' + rad + ' ' + rad + ' 0 0 1 ' + x + ' ' + (y + h - rad) + 'V' + (y + rad) + 'A' + rad + ' ' + rad + ' 0 0 1 ' + (x + rad) + ' ' + y + 'Z")'; }
   const cgKind = t => document.body.classList.contains("sakura") ? (t.matches(".primary,.prem-btn") ? " pink rbw" : " pink") : (t.matches(".primary,.prem-btn,.mo-gold") ? " rbw" : "");
   const cgStar = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5 14.2 9.8 22.5 12l-8.3 2.2L12 22.5l-2.2-8.3L1.5 12l8.3-2.2z"/></svg>';
@@ -5467,11 +5462,11 @@ body.sakura .copop::before{background:conic-gradient(from var(--ra),#ff5fa2,#ffc
     const r = t.getBoundingClientRect(); if (r.width < 8 || r.height < 8) return;
     const pink = document.body.classList.contains("sakura"), c1 = pink ? "255,95,162" : "168,85,247", c2 = pink ? "255,170,210" : "196,148,255";
     if (!t.matches(".orb,.prem-btn") && !t.querySelector(":scope > .cg-glow")){
-      const g = el("span","cg-glow" + cgKind(t)), pop = el("span","cg-pop" + (pink ? " pink" : "")); g.setAttribute("aria-hidden","true"); pop.setAttribute("aria-hidden","true"); cgHost(t); cgClip(t, g);
-      t.appendChild(g); t.appendChild(pop); setTimeout(() => { g.remove(); pop.remove(); cgFree(t); }, 950); }
-    const ob = t.querySelector(":scope > .cg-orbit"); if (ob){ ob.classList.remove("hit"); void ob.offsetWidth; ob.classList.add("hit"); }
+      const g = el("span","cg-glow cg-orbit hit" + cgKind(t)); g.setAttribute("aria-hidden","true"); cgHost(t); cgClip(t, g);
+      if (!t.querySelector(":scope > .cg-orbit")){ t.appendChild(g); setTimeout(() => { g.remove(); cgFree(t); }, 620); } }
+    const ob = t.querySelector(":scope > .cg-orbit:not(.cg-glow)"); if (ob){ ob.classList.remove("hit"); void ob.offsetWidth; ob.classList.add("hit"); }
     try { t.animate([{transform: "scale(1)"}, {transform: "scale(.955)", offset: .3}, {transform: "scale(1.02)", offset: .65}, {transform: "scale(1)"}], {duration: 380, easing: "cubic-bezier(.3,.7,.3,1)"}); } catch(e){}
-    try { t.animate([{boxShadow: "0 0 0 0 rgba(" + c1 + ",0)"}, {boxShadow: "0 0 26px 3px rgba(" + c1 + ",.55), 0 0 60px 10px rgba(" + c2 + ",.18)", offset: .35}, {boxShadow: "0 0 0 0 rgba(" + c1 + ",0)"}], {duration: 850, easing: "cubic-bezier(.3,.1,.2,1)"}); } catch(e){}
+    try { t.animate([{boxShadow: "0 0 0 0 rgba(" + c1 + ",0)"}, {boxShadow: "0 0 12px 1px rgba(" + c1 + ",.4)", offset: .35}, {boxShadow: "0 0 0 0 rgba(" + c1 + ",0)"}], {duration: 520, easing: "cubic-bezier(.3,.1,.2,1)"}); } catch(e){}
     if (pink){ const x = ev.clientX || r.left + r.width / 2, y = ev.clientY || r.top + r.height / 2; cgHearts(x, y);
       for (let i = 0; i < 4; i++){ const st = el("span","cg-star"); st.innerHTML = cgStar; const a = Math.random() * 6.283, d = 26 + Math.random() * 40; st.style.left = x + "px"; st.style.top = y + "px"; st.style.color = ["#ffd166","#b98cff","#7fd8ff","#ffffff"][i]; st.style.setProperty("--dx", (Math.cos(a) * d).toFixed(1) + "px"); st.style.setProperty("--dy", (Math.sin(a) * d).toFixed(1) + "px"); document.body.appendChild(st); setTimeout(() => st.remove(), 900); } }
   }, true);
