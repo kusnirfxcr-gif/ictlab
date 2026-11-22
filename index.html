@@ -1449,7 +1449,7 @@ body.sakura .streak2:not(.off) .f1{fill:#ff5fa2}body.sakura .streak2:not(.off) .
 body.sakura #streak.streak2:not(.off){background:linear-gradient(100deg,rgba(255,95,162,.3),rgba(255,255,255,.8));animation:none}body.sakura .streak2 .f0{fill:#e2459a}body.sakura #streak.streak2:not(.off) b{background:linear-gradient(180deg,#ff8fc5,#c2187a);-webkit-background-clip:text;background-clip:text;color:transparent;filter:none}body.sakura #streak.streak2 span:last-of-type{color:#b0447f}
 @media (max-width:859px){#streak.streak2 span:last-of-type{display:none}}
 @media (prefers-reduced-motion:reduce){#streak.streak2,#streak.streak2 em::before,.streak2 .f0{animation:none!important}}
-.cg-orbit{position:fixed!important;inset:auto;z-index:94!important}
+.cg-orbit{position:fixed!important;inset:auto;z-index:25!important}body.zm-fullon .cg-orbit{z-index:130!important}.ob .cg-orbit,body.modal>.cg-orbit{z-index:45!important}
 /* Učení tabs: one clean row */
 body[data-group="uceni"] .subnav{grid-template-columns:repeat(2,minmax(0,1fr));gap:4px;padding:5px;border-radius:18px;align-items:stretch}
 body[data-group="uceni"] .subnav a{display:grid;place-items:center;min-height:40px;padding:8px 10px;border-radius:13px;font-size:14px;white-space:nowrap}
@@ -4138,6 +4138,7 @@ body.sakura .copop::before{background:conic-gradient(from var(--ra),#ff5fa2,#ffc
     t.textContent = msg; t.classList.add("on"); clearTimeout(toast.tm); toast.tm = setTimeout(() => t.classList.remove("on"), 3400);
   }
   function overlay(cls, sticky){
+    document.querySelectorAll("body > .cg-orbit").forEach(g => g.remove());
     const ov = el("div","ob"), card = el("div","card " + (cls || "")); ov.appendChild(card); document.body.appendChild(ov); document.body.classList.add("modal");
     const close = () => { if (!ov.parentNode) return; ov.remove(); if (!document.querySelector(".ob")) document.body.classList.remove("modal"); if (ov.onclose) ov.onclose(); };
     if (!sticky) ov.addEventListener("mousedown", ev => { if (ev.target === ov) close(); });
@@ -5685,12 +5686,12 @@ body.sakura .copop::before{background:conic-gradient(from var(--ra),#ff5fa2,#ffc
     const pink = document.body.classList.contains("sakura"), c1 = pink ? "255,95,162" : "168,85,247", c2 = pink ? "255,170,210" : "196,148,255";
     const hst = cgTarget(t), touch = (() => { try { return !window.matchMedia("(hover: hover)").matches; } catch(e){ return false; } })(), wasModal = document.body.classList.contains("modal");
     // on a phone, or when the click opens a window, skip the light: it would flash over the window as it opens
-    if (touch && !pink) return;
-    requestAnimationFrame(() => { if (!wasModal && document.body.classList.contains("modal")) return; if (!t.isConnected) return;
-    if (!touch && !t.matches(".orb")){ if (cgCur === hst && cgCurG && cgCurG.isConnected){ cgCurG.classList.remove("hit"); void cgCurG.offsetWidth; cgCurG.classList.add("hit"); }
+    // the effect waits one frame: if this click opened a window, it is skipped, so nothing flashes over the window as it opens
+    requestAnimationFrame(() => { if (!wasModal && document.body.classList.contains("modal")) return; if (!t.isConnected || !t.getBoundingClientRect().width) return;
+    if (!t.matches(".orb")){ if (cgCur === hst && cgCurG && cgCurG.isConnected){ cgCurG.classList.remove("hit"); void cgCurG.offsetWidth; cgCurG.classList.add("hit"); }
       else { const g = cgSpawn(hst, " cg-glow hit"); setTimeout(() => g.remove(), 620); } }
-    if (!touch) try { t.animate([{transform: "scale(1)"}, {transform: "scale(.955)", offset: .3}, {transform: "scale(1.02)", offset: .65}, {transform: "scale(1)"}], {duration: 380, easing: "cubic-bezier(.3,.7,.3,1)"}); } catch(e){}
-    if (!touch) try { t.animate([{boxShadow: "0 0 0 0 rgba(" + c1 + ",0)"}, {boxShadow: "0 0 12px 1px rgba(" + c1 + ",.4)", offset: .35}, {boxShadow: "0 0 0 0 rgba(" + c1 + ",0)"}], {duration: 520, easing: "cubic-bezier(.3,.1,.2,1)"}); } catch(e){}
+    try { t.animate([{transform: "scale(1)"}, {transform: "scale(.955)", offset: .3}, {transform: "scale(1.02)", offset: .65}, {transform: "scale(1)"}], {duration: 380, easing: "cubic-bezier(.3,.7,.3,1)"}); } catch(e){}
+    try { t.animate([{boxShadow: "0 0 0 0 rgba(" + c1 + ",0)"}, {boxShadow: "0 0 12px 1px rgba(" + c1 + ",.4)", offset: .35}, {boxShadow: "0 0 0 0 rgba(" + c1 + ",0)"}], {duration: 520, easing: "cubic-bezier(.3,.1,.2,1)"}); } catch(e){}
     if (pink){ const x = ev.clientX || r.left + r.width / 2, y = ev.clientY || r.top + r.height / 2; cgHearts(x, y);
       for (let i = 0; i < 4; i++){ const st = el("span","cg-star"); st.innerHTML = cgStar; const a = Math.random() * 6.283, d = 26 + Math.random() * 40; st.style.left = x + "px"; st.style.top = y + "px"; st.style.color = ["#ffd166","#b98cff","#7fd8ff","#ffffff"][i]; st.style.setProperty("--dx", (Math.cos(a) * d).toFixed(1) + "px"); st.style.setProperty("--dy", (Math.sin(a) * d).toFixed(1) + "px"); document.body.appendChild(st); setTimeout(() => st.remove(), 900); } }
     });
