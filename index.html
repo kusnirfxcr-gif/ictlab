@@ -5975,7 +5975,7 @@ body.sakura .copop::before{background:conic-gradient(from var(--ra),#ff5fa2,#ffc
         if (cs.n) o.card.appendChild(el("p","small muted", "Výzev celkem " + cs.n + " · průměr " + fnum(Math.round(cs.avg * 10) / 10) + " z " + ROUNDS + (cs.run > 1 ? " · " + cs.run + " dny v řadě" : "")));
         const go = el("button","primary", cs.today ? "Zahrát znovu" : "Začít výzvu"); go.type = "button"; go.addEventListener("click", start); o.card.appendChild(go); };
       const intro = () => { if (chal) return introChal(); clear(o.card); o.card.appendChild(head()); o.card.appendChild(el("p","drq","Co chceš trénovat?")); o.card.appendChild(el("p","muted","Osm cvičných grafů. Ťukni na svíčku, šipkami ji případně posuň a potvrď. Grafy jsou vymyšlené pro trénink oka, nejsou to skutečná data z trhu."));
-        const ch = el("div","chips"); KINDS.forEach(k => { const b = el("button","chip" + (k[0] === mode ? " on" : ""), k[1]); b.type = "button"; b.addEventListener("click", () => { mode = k[0]; intro(); }); ch.appendChild(b); }); o.card.appendChild(ch);
+        const ch = el("div","chips"); KINDS.forEach(k => { const b = el("button","chip", k[1]); b.type = "button"; b.setAttribute("aria-pressed", String(k[0] === mode)); b.addEventListener("click", () => { mode = k[0]; Array.prototype.forEach.call(ch.children, x => x.setAttribute("aria-pressed", String(x === b))); }); ch.appendChild(b); }); o.card.appendChild(ch);
         const go = el("button","primary","Začít"); go.type = "button"; go.addEventListener("click", start); o.card.appendChild(go); };
       const finish = () => { drSeed = null; clear(o.card); o.card.appendChild(head()); const good = res.filter(Boolean).length;
         if (chal){ lp.chal = lp.chal || {}; const k = chalKey(), first = !lp.chal[k]; if (first){ lp.chal[k] = {ok: good, n: ROUNDS, s: Math.round((Date.now() - t0) / 1000)}; keep(); try { pushProgress(true); } catch(e){} }
@@ -6076,7 +6076,7 @@ body.sakura .copop::before{background:conic-gradient(from var(--ra),#ff5fa2,#ffc
     fxApply(); document.addEventListener("visibilitychange", () => document.body.classList.toggle("fx-hidden", document.hidden));
     const box = el("div","card"); const _rsFx = renderSettings; renderSettings = function(){ _rsFx(); try { if (fontBox.parentNode && box.previousElementSibling !== fontBox) fontBox.parentNode.insertBefore(box, fontBox.nextSibling); } catch(e){} };
     const fxRender = () => { clear(box); box.appendChild(el("h2", null, "Animace a výkon")); box.appendChild(el("p","small muted","Když se aplikace na telefonu seká, nech Úsporné nebo zvol Vypnuté. Na telefonu je Úsporné výchozí: méně padajících lístků, žádné rozmazané pozadí pod kartami. Platí jen pro tohle zařízení."));
-      const ch = el("div","chips"); LV.forEach(o => { const b = el("button","chip" + (fx === o[0] ? " on" : ""), o[1]); b.type = "button"; b.addEventListener("click", () => { fx = o[0]; try { localStorage.setItem(FK, fx); } catch(e){} fxApply(); fxRender(); }); ch.appendChild(b); }); box.appendChild(ch);
+      const ch = el("div","chips"); LV.forEach(o => { const b = el("button","chip" + (fx === o[0] ? " on" : ""), o[1]); b.type = "button"; b.setAttribute("aria-pressed", String(fx === o[0])); b.addEventListener("click", () => { fx = o[0]; try { localStorage.setItem(FK, fx); } catch(e){} fxApply(); fxRender(); }); ch.appendChild(b); }); box.appendChild(ch);
       box.appendChild(el("span","small muted","Teď běží: " + ({full: "plné animace", lite: "úsporný režim", off: "animace vypnuté"})[eff()] + ".")); };
     fxRender();
   }
