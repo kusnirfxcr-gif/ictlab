@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#09090b">
-<script>try{var t=(JSON.parse(localStorage.getItem("tape-settings")||"{}").theme)||"";if(t&&t!=="noc"){var r=document.documentElement;r.dataset.t=t;r.dataset.tk=t==="ametyst"?"l":"d"}}catch(e){}</script>
+<script>try{var t=(JSON.parse(localStorage.getItem("tape-settings")||"{}").theme)||"";if(t&&t!=="noc"){var r=document.documentElement;r.dataset.t=t;r.dataset.tk=(t==="ametyst"||t==="bubblegum")?"l":"d"}}catch(e){}</script>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Tape">
 <link rel="manifest" href="manifest.json">
@@ -1849,6 +1849,129 @@ html[data-tk="d"] body:not(.sakura) #lr .lr-go{color:#111}
 html[data-tk="d"] body:not(.sakura) .copop #co-send{background:var(--th-pri);color:var(--th-priink);border-color:transparent}
 html[data-tk="d"] body:not(.sakura) .copop::before{background:conic-gradient(from var(--ra),var(--th-glow),var(--th-glow2),var(--th-glow))!important}
 html[data-tk="d"] body:not(.sakura) .coav::before{background:conic-gradient(var(--th-glow),var(--th-glow2),var(--th-glow))}
+
+/* bubblegum: very light pink, soft and calm; used as an app theme and as Laura's quieter look */
+html[data-t="bubblegum"] body:not(.sakura){--bg:#fff4fa;--surface:rgba(255,255,255,.7);--surface2:rgba(255,236,247,.8);--line:rgba(198,118,170,.3);--ink:#43163f;--muted:#8d5f88;--accent:#e2459a;--accent-soft:rgba(226,69,154,.1);--amber:#bf7410;--good:#0f9d77;--bad:#e23d5e;background:#fde6f3;color:var(--ink)}
+html[data-t="bubblegum"] body:not(.sakura) .card,html[data-t="bubblegum"] body:not(.sakura) details.week{background:var(--surface);border-color:rgba(255,255,255,.8);-webkit-backdrop-filter:blur(18px) saturate(1.5);backdrop-filter:blur(18px) saturate(1.5);box-shadow:0 14px 44px rgba(214,90,160,.14),inset 0 1px 0 rgba(255,255,255,.9)}
+html[data-t="bubblegum"] body:not(.sakura) .topbar,html[data-t="bubblegum"] body:not(.sakura) .bottombar{background:rgba(255,241,249,.72);border-color:rgba(198,118,170,.24)}
+html[data-t="bubblegum"] body:not(.sakura) .brand span{background:linear-gradient(180deg,#5b1e5c 20%,#c0458f 100%);-webkit-background-clip:text;background-clip:text}
+html[data-t="bubblegum"] body:not(.sakura) nav{background:rgba(255,255,255,.62);border-color:rgba(198,118,170,.25);box-shadow:0 10px 30px rgba(214,90,160,.12)}
+html[data-t="bubblegum"] body:not(.sakura) nav a,html[data-t="bubblegum"] body:not(.sakura) .bottombar a{color:#9a6a94}
+html[data-t="bubblegum"] body:not(.sakura) .nav1 a[aria-current="page"]{background:rgba(226,69,154,.14);border-color:rgba(226,69,154,.32);color:#43163f}
+html[data-t="bubblegum"] body:not(.sakura) .bottombar a[aria-current="page"]{color:#d0348a}
+html[data-t="bubblegum"] body:not(.sakura) .bottombar a[aria-current="page"] svg{filter:drop-shadow(0 0 6px rgba(226,69,154,.45))}
+html[data-t="bubblegum"] body:not(.sakura) .subnav a{background:rgba(255,255,255,.62);border-color:var(--line);color:#8d5f88}
+html[data-t="bubblegum"] body:not(.sakura) button.primary,html[data-t="bubblegum"] body:not(.sakura) .abtn.primary,html[data-t="bubblegum"] body:not(.sakura) .subnav a[aria-current="page"]{background:linear-gradient(135deg,#ff6fb1,#b98cff);border-color:transparent;color:#ffffff;box-shadow:0 8px 22px rgba(226,69,154,.28)}
+html[data-t="bubblegum"] body:not(.sakura) a{color:#d0348a}
+html[data-t="bubblegum"] body:not(.sakura) .pill{background:rgba(255,255,255,.55)}
+html[data-t="bubblegum"] body:not(.sakura) input,html[data-t="bubblegum"] body:not(.sakura) textarea,html[data-t="bubblegum"] body:not(.sakura) select{background:rgba(255,255,255,.82);border-color:var(--line);color:var(--ink)}
+html[data-t="bubblegum"] body:not(.sakura) .lesson input{background:rgba(255,255,255,.9);border-color:#dba3c9}
+html[data-t="bubblegum"] body:not(.sakura) .lesson input:checked{background:linear-gradient(135deg,#ff6fb1,#b98cff);border-color:transparent}
+html[data-t="bubblegum"] body:not(.sakura) .bar i{background:linear-gradient(90deg,#ff6fb1,#b98cff,#5fd9cc);box-shadow:0 0 14px rgba(226,69,154,.4)}
+html[data-t="bubblegum"] body:not(.sakura) ol.lsteps li::before{background:linear-gradient(135deg,#ff7fbc,#b98cff);border:0;color:#ffffff}
+html[data-t="bubblegum"] body:not(.sakura) .toast{background:#43163f;color:#ffffff}
+html[data-t="bubblegum"] body:not(.sakura) .ldots i.c{background:linear-gradient(90deg,#ff6fb1,#b98cff);box-shadow:0 0 10px rgba(226,69,154,.45)}
+html[data-t="bubblegum"] body:not(.sakura) .ob,html[data-t="bubblegum"] body:not(.sakura) .copop{--bg:#09090b;--surface:#1a1222;--surface2:#241a2e;--ink:#f5f5f6;--muted:#a79bb0;--line:#3a2c44;--accent:#ff9cc2;--accent-soft:rgba(255,156,194,.14);--amber:#f2b560;--good:#3ddc97;--bad:#ff6b6b;color:var(--ink)}
+html[data-t="bubblegum"] body:not(.sakura) .ob .card{background:#1a1222;border-color:#3a2c44;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
+html[data-t="bubblegum"] body:not(.sakura) .ob button.primary{color:#ffffff}
+@media (hover:hover){html[data-t="bubblegum"] body:not(.sakura) button:not(.fab):not(:disabled):hover,html[data-t="bubblegum"] body:not(.sakura) .abtn:hover,html[data-t="bubblegum"] body:not(.sakura) .chip:hover,html[data-t="bubblegum"] body:not(.sakura) .nav1 a:hover,html[data-t="bubblegum"] body:not(.sakura) a.go:hover,html[data-t="bubblegum"] body:not(.sakura) .tb-acc:not(.in):hover{background-image:radial-gradient(circle 90px at var(--mx) var(--my),rgba(255,95,170,calc(.3*var(--gl))),transparent 70%)}html[data-t="bubblegum"] body:not(.sakura) button.primary:not(:disabled):hover,html[data-t="bubblegum"] body:not(.sakura) .abtn.primary:hover{background-image:radial-gradient(circle 90px at var(--mx) var(--my),rgba(255,255,255,calc(.55*var(--gl))),transparent 70%),linear-gradient(135deg,#ff6fb1,#b98cff)!important}}
+html[data-t="bubblegum"] body:not(.sakura) .fig .rb{stroke:url(#figrb)}
+html[data-t="bubblegum"] body:not(.sakura) .fig .tb.rbf{fill:url(#figrb)}
+html[data-t="bubblegum"] body:not(.sakura) figure.fig{--bg:#ffffff;--surface:#ffffff;--surface2:#fff3f9;--ink:#43163f;--muted:#9a6f95;--line:rgba(180,110,160,.28);--accent:#8f6bf2;--accent-soft:rgba(143,107,242,.12);--amber:#e8811c;--good:#12b596;--bad:#ff5a93;color:var(--ink)}
+html[data-t="bubblegum"] body:not(.sakura) figure.fig,html[data-t="bubblegum"] body:not(.sakura) figure.fig.pa-fig{background:linear-gradient(180deg,#ffffff,#fff0f8);border-color:rgba(226,69,154,.2);box-shadow:0 10px 30px rgba(214,90,160,.14),inset 0 1px 0 #ffffff}
+html[data-t="bubblegum"] body:not(.sakura) .fcard{background:linear-gradient(180deg,#ffffff,#fff0f8);border-color:rgba(226,69,154,.2);box-shadow:0 10px 30px rgba(214,90,160,.14)}
+html[data-t="bubblegum"] body:not(.sakura) .fig .gl{stroke:rgba(150,90,140,.16)}
+html[data-t="bubblegum"] body:not(.sakura) .fig .tgb{fill:rgba(255,255,255,.96)}
+html[data-t="bubblegum"] body:not(.sakura) .fig .tgb:not([class*="s-"]){stroke:rgba(150,90,140,.4)}
+html[data-t="bubblegum"] body:not(.sakura) .fig .bgc{fill:#ffffff}
+html[data-t="bubblegum"] body:not(.sakura) .fig text.lpt,html[data-t="bubblegum"] body:not(.sakura) .fig text.tl.in{fill:#ffffff}
+html[data-t="bubblegum"] body:not(.sakura) .fig .brt{fill:rgba(150,90,140,.1)}
+html[data-t="bubblegum"] body:not(.sakura) .fig .z{fill-opacity:.2}
+html[data-t="bubblegum"] body:not(.sakura) .fig .bh{fill-opacity:.38}
+html[data-t="bubblegum"] body:not(.sakura) .fig .hit:hover{fill:rgba(226,69,154,.08)}
+html[data-t="bubblegum"] body:not(.sakura) .brand,html[data-t="bubblegum"] body:not(.sakura) .ob,html[data-t="bubblegum"] body:not(.sakura) .copop{--display:"Plus Jakarta Sans",system-ui,sans-serif;--body:"Plus Jakarta Sans",system-ui,sans-serif;font-family:var(--body)}
+html[data-t="bubblegum"] body:not(.sakura) .view h2,html[data-t="bubblegum"] body:not(.sakura) .view h3,html[data-t="bubblegum"] body:not(.sakura) #c-now h2{font-family:var(--display);font-weight:700;letter-spacing:-.01em}
+html[data-t="bubblegum"] body:not(.sakura) .lkey{position:relative;border-left:0;padding-left:20px;border-radius:14px}
+html[data-t="bubblegum"] body:not(.sakura) .ldots i.d{background:linear-gradient(90deg,#3ed6c2,#5fb8ff)}
+html[data-t="bubblegum"] body:not(.sakura) .lkey.trap::before{background:linear-gradient(180deg,#ffb347,#ff7a59)}
+html[data-t="bubblegum"] body:not(.sakura) #lr{background:linear-gradient(135deg,#ff6fb1 0%,#c58cff 70%,#8fb8ff 100%);box-shadow:0 14px 34px rgba(226,69,154,.3)}
+html[data-t="bubblegum"] body:not(.sakura) #lr .lr-go{color:#a12c78}
+html[data-t="bubblegum"] body:not(.sakura) .wel{background:rgba(60,20,40,.35)}
+html[data-t="bubblegum"] body:not(.sakura) .hero2 .h2-next{color:#ffffff}
+html[data-t="bubblegum"] body:not(.sakura) .zm-ctl{background:rgba(255,255,255,.85);border-color:rgba(226,69,154,.25)}
+html[data-t="bubblegum"] body:not(.sakura) .zm-ctl button{color:#7a1f52}
+html[data-t="bubblegum"] body:not(.sakura) .zm-ctl span{color:#a0537c}
+html[data-t="bubblegum"] body:not(.sakura) .tb-trade #tb-quick{background:linear-gradient(160deg,#ff8fc5,#e2459a)}
+html[data-t="bubblegum"] body:not(.sakura) .zm-full{background:linear-gradient(180deg,#fff7fb,#ffeef7)}
+html[data-t="bubblegum"] body:not(.sakura) .tb-lang button[aria-pressed="true"]{background:linear-gradient(135deg,#ff6fb1,#b98cff);color:#ffffff}
+html[data-t="bubblegum"] body:not(.sakura) .tk{background:rgba(255,255,255,.6)}
+html[data-t="bubblegum"] body:not(.sakura) .lb-focus{border-color:rgba(226,69,154,.35);background:rgba(255,255,255,.7);color:#a0336c}
+html[data-t="bubblegum"] body:not(.sakura) .ob .card{color:#4a1d3d}
+html[data-t="bubblegum"] body:not(.sakura) .drov .drq,html[data-t="bubblegum"] body:not(.sakura) .drov .big,html[data-t="bubblegum"] body:not(.sakura) .ob .card h2,html[data-t="bubblegum"] body:not(.sakura) .ob .card h3{color:#5a1f45}
+html[data-t="bubblegum"] body:not(.sakura) .ob,html[data-t="bubblegum"] body:not(.sakura) .copop{--bg:#fff4fa;--surface:#ffffff;--surface2:#fff0f7;--ink:#43163f;--muted:#8d5f88;--line:rgba(198,118,170,.32);--accent:#e2459a;--accent-soft:rgba(226,69,154,.1);--amber:#bf7410;--good:#0f9d77;--bad:#e23d5e;color:var(--ink)}
+html[data-t="bubblegum"] body:not(.sakura) .ob{background:rgba(255,228,242,.72)}
+html[data-t="bubblegum"] body:not(.sakura) .ob .card{background:#fffafd;border-color:rgba(226,69,154,.22);box-shadow:0 24px 60px rgba(214,90,160,.22);color:var(--ink)}
+html[data-t="bubblegum"] body:not(.sakura) .copop{background:#fffafd!important;box-shadow:0 24px 60px rgba(214,90,160,.28)}
+html[data-t="bubblegum"] body:not(.sakura) .cohead{border-bottom-color:rgba(226,69,154,.15);background:linear-gradient(135deg,#ffe3f1,#f3e6ff)}
+html[data-t="bubblegum"] body:not(.sakura) .cohead::before{background:radial-gradient(40% 50% at 18% 42%,rgba(255,143,197,.35),transparent 70%),radial-gradient(40% 50% at 80% 30%,rgba(185,140,255,.3),transparent 70%)!important}
+html[data-t="bubblegum"] body:not(.sakura) .cohead,html[data-t="bubblegum"] body:not(.sakura) .cohead b,html[data-t="bubblegum"] body:not(.sakura) .cohead h2,html[data-t="bubblegum"] body:not(.sakura) .cottl{color:#43163f}
+html[data-t="bubblegum"] body:not(.sakura) .costat,html[data-t="bubblegum"] body:not(.sakura) .cohead span{color:#8d5f88}
+html[data-t="bubblegum"] body:not(.sakura) .coclose{color:#8d5f88;border-color:rgba(226,69,154,.25);background:rgba(255,255,255,.6)}
+html[data-t="bubblegum"] body:not(.sakura) .coav{color:#ffffff}
+html[data-t="bubblegum"] body:not(.sakura) .coav::after{background:radial-gradient(circle at 35% 28%,#ff8fc5,#d0348a 72%)}
+html[data-t="bubblegum"] body:not(.sakura) .cosp{background:#ff8fc5}
+html[data-t="bubblegum"] body:not(.sakura) .cohello b{color:#43163f}
+html[data-t="bubblegum"] body:not(.sakura) .cohello span{color:#8d5f88}
+html[data-t="bubblegum"] body:not(.sakura) .copop .card{background:transparent}
+html[data-t="bubblegum"] body:not(.sakura) .copop .chip,html[data-t="bubblegum"] body:not(.sakura) #co-quick .chip{background:#ffffff;color:#5a1f45;border-color:rgba(226,69,154,.22)}
+html[data-t="bubblegum"] body:not(.sakura) .copop .msg.ai{background:#fff0f7;border-color:rgba(226,69,154,.18);color:#43163f}
+html[data-t="bubblegum"] body:not(.sakura) .copop .msg.me{background:linear-gradient(135deg,#ff8fc5,#b98cff);color:#ffffff}
+html[data-t="bubblegum"] body:not(.sakura) .copop .askrow{background:#ffffff;border-color:rgba(226,69,154,.25)}
+html[data-t="bubblegum"] body:not(.sakura) .copop .askrow textarea{color:#43163f}
+html[data-t="bubblegum"] body:not(.sakura) .copop details summary{color:#d0348a}
+html[data-t="bubblegum"] body:not(.sakura) .chip[aria-pressed="true"],html[data-t="bubblegum"] body:not(.sakura) button.primary{box-shadow:0 6px 18px rgba(255,95,162,.28)}
+html[data-t="bubblegum"] body:not(.sakura) #v-moros{--gold:#9a6f12;--gold2:#8a6410}
+html[data-t="bubblegum"] body:not(.sakura) #v-moros .mo-hero,html[data-t="bubblegum"] body:not(.sakura) #v-moros .mo-trophy{--gold:#e8c26a;--gold2:#f6dc9a;color:#f4ead2}
+html[data-t="bubblegum"] body:not(.sakura) #v-moros .mo-trophy p{color:#e9dfc6}
+html[data-t="bubblegum"] body:not(.sakura) #v-moros .mo-trophy p.muted,html[data-t="bubblegum"] body:not(.sakura) #v-moros .mo-trophy .mo-date{color:#a89d86}
+html[data-t="bubblegum"] body:not(.sakura) #v-moros .mo-trophy>button{background:rgba(255,255,255,.08);color:#f4ead2;border-color:rgba(232,194,106,.35)}
+html[data-t="bubblegum"] body:not(.sakura) .mo-note{color:var(--muted)}
+html[data-t="bubblegum"] body:not(.sakura) .mo-r.w{color:var(--good)}
+html[data-t="bubblegum"] body:not(.sakura) .mo-r.l{color:var(--bad)}
+html[data-t="bubblegum"] body:not(.sakura) .mo-verdict.go{border-color:var(--good);color:var(--good)}
+html[data-t="bubblegum"] body:not(.sakura) .mo-verdict.stop{border-color:var(--bad);color:var(--bad)}
+html[data-t="bubblegum"] body:not(.sakura) .mo-verdict.warn{border-color:var(--amber);color:var(--amber)}
+html[data-t="bubblegum"] body:not(.sakura) .mo-opts button.ok{border-color:var(--good);color:var(--good)}
+html[data-t="bubblegum"] body:not(.sakura) .mo-opts button.no{border-color:var(--bad);color:var(--bad)}
+html[data-t="bubblegum"] body:not(.sakura) #subnav a[href="#moros"]:not([aria-current]){color:#9a6f12}
+html[data-t="bubblegum"] body:not(.sakura) .mo-ckb.on span{color:var(--ink)}
+html[data-t="bubblegum"] body:not(.sakura) .mo-rung.edge{background:rgba(154,111,18,.12)}
+html[data-t="bubblegum"] body:not(.sakura) .mo-prog{background:rgba(154,111,18,.15)}
+html[data-t="bubblegum"] body:not(.sakura) .tk-m .tk-tag{color:var(--amber)}
+:is(html[data-t="bubblegum"] body:not(.sakura),body.sakura.bubble){--bg:#fff8fc;--surface:#ffffff;--surface2:#fff1f8;--line:rgba(255,140,190,.24);--ink:#4f2244;--muted:#9a6f90;--accent:#f0478f;--accent-soft:rgba(240,71,143,.1);--amber:#b86a00;--good:#0e9470;--bad:#e0365e;background:#fff3f9;color:var(--ink)}
+:is(html[data-t="bubblegum"] body:not(.sakura),body.sakura.bubble) #thbg{display:block}:is(html[data-t="bubblegum"] body:not(.sakura),body.sakura.bubble) #thbg i:first-child{background:radial-gradient(55% 34% at 100% 0%,rgba(255,182,217,.45),transparent 70%),radial-gradient(50% 30% at 0% 40%,rgba(255,214,235,.6),transparent 70%)}
+:is(html[data-t="bubblegum"] body:not(.sakura),body.sakura.bubble) .card,:is(html[data-t="bubblegum"] body:not(.sakura),body.sakura.bubble) details.week,:is(html[data-t="bubblegum"] body:not(.sakura),body.sakura.bubble) .hero2{background:#ffffff;border-color:rgba(255,160,205,.28);box-shadow:0 10px 30px -18px rgba(240,71,143,.35);-webkit-backdrop-filter:none;backdrop-filter:none}
+:is(html[data-t="bubblegum"] body:not(.sakura),body.sakura.bubble) .topbar,:is(html[data-t="bubblegum"] body:not(.sakura),body.sakura.bubble) .bottombar{background:rgba(255,248,252,.88);border-color:rgba(255,160,205,.25)}
+:is(html[data-t="bubblegum"] body:not(.sakura),body.sakura.bubble) nav{background:rgba(255,255,255,.85);border-color:rgba(255,160,205,.3);box-shadow:0 8px 24px -14px rgba(240,71,143,.3)}
+:is(html[data-t="bubblegum"] body:not(.sakura),body.sakura.bubble) button.primary,:is(html[data-t="bubblegum"] body:not(.sakura),body.sakura.bubble) .abtn.primary,:is(html[data-t="bubblegum"] body:not(.sakura),body.sakura.bubble) .subnav a[aria-current="page"]:not([href="#moros"]),:is(html[data-t="bubblegum"] body:not(.sakura),body.sakura.bubble) .hero2:not([data-h="b"]) .h2-next{background:linear-gradient(135deg,#f0478f,#ff7fb5);border-color:transparent;color:#fff;box-shadow:0 10px 22px -12px rgba(240,71,143,.7)}
+:is(html[data-t="bubblegum"] body:not(.sakura),body.sakura.bubble) button.chip[aria-pressed="true"]{background:#f0478f;border-color:#f0478f;color:#fff}
+:is(html[data-t="bubblegum"] body:not(.sakura),body.sakura.bubble) input,:is(html[data-t="bubblegum"] body:not(.sakura),body.sakura.bubble) textarea,:is(html[data-t="bubblegum"] body:not(.sakura),body.sakura.bubble) select{background:#fff;border-color:rgba(255,140,190,.35);color:var(--ink)}
+:is(html[data-t="bubblegum"] body:not(.sakura),body.sakura.bubble) .ob{background:rgba(255,232,244,.75)}:is(html[data-t="bubblegum"] body:not(.sakura),body.sakura.bubble) .ob .card{background:#fffafd}
+:is(html[data-t="bubblegum"] body:not(.sakura),body.sakura.bubble) figure.fig,:is(html[data-t="bubblegum"] body:not(.sakura),body.sakura.bubble) figure.fig.pa-fig{background:#fffafd;border-color:rgba(255,160,205,.3)}
+:is(html[data-t="bubblegum"] body:not(.sakura),body.sakura.bubble) #lr{background:linear-gradient(135deg,#f0478f,#ff86bd);box-shadow:0 14px 30px -14px rgba(240,71,143,.6)}
+:is(html[data-t="bubblegum"] body:not(.sakura),body.sakura.bubble) .tb-ck,:is(html[data-t="bubblegum"] body:not(.sakura),body.sakura.bubble) .pl-ckb,:is(html[data-t="bubblegum"] body:not(.sakura),body.sakura.bubble) .lb-focus{border-color:rgba(240,71,143,.4);background:rgba(240,71,143,.08);color:#c42a6f}
+:is(html[data-t="bubblegum"] body:not(.sakura),body.sakura.bubble) .tb-trade #tb-quick{background:linear-gradient(160deg,#ff9cc8,#f0478f);color:#fff}
+:is(html[data-t="bubblegum"] body:not(.sakura),body.sakura.bubble) .brand span{background:linear-gradient(180deg,#6b2557,#f0478f);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+:is(html[data-t="bubblegum"] body:not(.sakura),body.sakura.bubble) .copop{background:#fffafd!important}
+body.sakura.bubble .sk-scene,body.sakura.bubble .sk-petals,body.sakura.bubble .sk-bub,body.sakura.bubble .sk-front,body.sakura.bubble .sk-ribbon,body.sakura.bubble .sk-twk,body.sakura.bubble .sk-blob{display:none!important}
+html[data-t="bubblegum"] body:not(.sakura) .orb::after,body.sakura.bubble .orb::after{background:radial-gradient(circle at 35% 28%,#ffffff,#ffe3f0 72%)!important}html[data-t="bubblegum"] body:not(.sakura) .orb{color:#d0348a}html[data-t="bubblegum"] body:not(.sakura) .orb::before{background:conic-gradient(from var(--ra),transparent 0deg,rgba(240,71,143,.8) 70deg,rgba(255,170,210,.9) 130deg,transparent 200deg,rgba(240,71,143,.5) 280deg,transparent 360deg)!important}
+/* Laura's look picker */
+.sk-btn.lk-btn{color:#a0336c!important;background:rgba(255,255,255,.85)!important;border-color:rgba(226,69,154,.3)!important;box-shadow:none!important}
+.lk-pick{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.lk-o{display:flex;flex-direction:column;gap:8px;text-align:left;padding:10px;border-radius:18px;min-height:0;background:#fff;border:1px solid rgba(226,69,154,.25);color:#43163f}
+.lk-o .sw{height:86px;border-radius:12px;position:relative;overflow:hidden}
+.lk-o b{font-size:15px}.lk-o span{font-size:12.5px;color:#8d5f88;line-height:1.35}
+.lk-o[aria-pressed="true"]{border-color:#e2459a;box-shadow:0 0 0 3px rgba(226,69,154,.18)}
 .thpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:8px}
 .thp{display:flex;flex-direction:column;gap:8px;align-items:stretch;text-align:left;padding:8px;border-radius:16px;min-height:0}
 .thp .sw{height:54px;border-radius:10px;position:relative;overflow:hidden;border:1px solid rgba(128,128,128,.25)}
@@ -5792,8 +5915,17 @@ html[data-tk="d"] body:not(.sakura) .coav::before{background:conic-gradient(var(
       const s = el("div","sk-sweep"); let h = '<b></b>'; for (let i = 0; i < 80; i++) h += '<i style="left:' + (Math.random() * 100).toFixed(1) + '%;top:' + (Math.random() * 100).toFixed(1) + '%;--r:' + (Math.random() * 360).toFixed(0) + 'deg;--k:' + (0.7 + Math.random() * 1.6).toFixed(2) + ';animation-delay:' + (Math.random() * 0.5).toFixed(2) + 's"></i>';
       s.innerHTML = h; document.body.appendChild(s); setTimeout(done, 620); setTimeout(() => s.remove(), 1900);
     }
-    function enter(){ sweep(() => { on = true; set(KO, true); if (document.body.dataset.view !== "room") location.hash = "#room"; apply(); setTimeout(() => { try { const sd = streakDays(); palSay(sd >= 2 ? "Série " + sd + (sd <= 4 ? " dny" : " dní") + " v řadě. Jsi skvělá!" : "Vítej, Lauro! Dnes stačí jedna lekce.", "yay"); } catch(e){} }, 1300); }); }
+    function enter(){ sweep(() => { on = true; set(KO, true); if (document.body.dataset.view !== "room") location.hash = "#room"; apply(); if (!cfg.lauraLook) setTimeout(lookPick, 900); setTimeout(() => { try { const sd = streakDays(); palSay(sd >= 2 ? "Série " + sd + (sd <= 4 ? " dny" : " dní") + " v řadě. Jsi skvělá!" : "Vítej, Lauro! Dnes stačí jedna lekce.", "yay"); } catch(e){} }, 1300); }); }
     function leave(){ on = false; set(KO, false); apply(); }
+    const lookApply = () => { document.body.classList.toggle("bubble", document.body.classList.contains("sakura") && cfg.lauraLook === "bubblegum"); const m = document.querySelector('meta[name="theme-color"]'); if (m && document.body.classList.contains("sakura")) m.setAttribute("content", cfg.lauraLook === "bubblegum" ? "#fff3f9" : "#fde6f3"); };
+    { const _apL = apply; apply = function(){ _apL(); lookApply(); }; }
+    function lookPick(){ const o = overlay("lkbox"), head = el("div","row"), xb = el("button","ck-del","Zavřít"); xb.type = "button"; xb.addEventListener("click", () => { if (!cfg.lauraLook){ cfg.lauraLook = "sakura"; cfgStore(); } o.close(); });
+      head.appendChild(el("h2", null, "Jaký vzhled chceš?")); head.appendChild(xb); o.card.appendChild(head); o.card.appendChild(el("p","small muted","Vyber si, jak má tvůj prostor vypadat. Změnit to jde kdykoliv tlačítkem Vzhled nahoře."));
+      const g = el("div","lk-pick"), cur = cfg.lauraLook || "sakura";
+      [["sakura","Sakura zahrada","Japonská zahrada, padající lístky a maskot.","linear-gradient(160deg,#ffd6ea,#e7d6ff 60%,#c9f2ea)"],["bubblegum","Bubblegum","Hodně světle růžový, klidný a čistý. Bez zahrady.","radial-gradient(60% 50% at 80% 10%,#ffd1e6,transparent 70%),#fff6fb"]].forEach(x => {
+        const b = el("button","lk-o"), sw = el("div","sw"); b.type = "button"; sw.style.background = x[3]; b.setAttribute("aria-pressed", String(cur === x[0])); b.appendChild(sw); b.appendChild(el("b", null, x[1])); b.appendChild(el("span", null, x[2]));
+        b.addEventListener("click", () => { cfg.lauraLook = x[0]; cfgStore(); lookApply(); Array.prototype.forEach.call(g.children, y => y.setAttribute("aria-pressed", String(y === b))); setTimeout(o.close, 350); }); g.appendChild(b); });
+      o.card.appendChild(g); }
     function ask(){ const o = overlay("qlog"), f = el("form","tform"), i = inp("password", "", "Heslo"), b = el("button","primary","Vstoupit"), m = el("span","small muted"), head = el("div","row"), xb = el("button","ck-del","Zavřít"); xb.type = "button"; xb.addEventListener("click", o.close);
       head.appendChild(el("h2", null, "Lauřin room")); head.appendChild(xb); o.card.appendChild(head); o.card.appendChild(el("p","small muted","Tenhle prostor je jen pro Lauru. Napiš heslo.")); i.setAttribute("aria-label","Heslo"); i.autocomplete = "off"; b.type = "submit"; f.appendChild(i); f.appendChild(b); f.appendChild(m); o.card.appendChild(f); try { i.focus(); } catch(e){}
       f.addEventListener("submit", async ev => { ev.preventDefault(); try { const d = await crypto.subtle.digest("SHA-256", new TextEncoder().encode("tape-laura:" + i.value.trim())), h = Array.prototype.map.call(new Uint8Array(d), x => x.toString(16).padStart(2, "0")).join("");
@@ -5801,8 +5933,10 @@ html[data-tk="d"] body:not(.sakura) .coav::before{background:conic-gradient(var(
     const _routeSk = route;
     route = function(){ _routeSk(); const sn = $("subnav");
       if (document.body.dataset.group === "uceni"){ const b = el("button","sk-btn"); b.type = "button"; b.id = "sk-btn"; b.insertAdjacentHTML("afterbegin", '<svg viewBox="0 0 24 24" aria-hidden="true"><g fill="currentColor"><ellipse cx="12" cy="6.500" rx="2.600" ry="4"/><ellipse cx="12" cy="6.500" rx="2.600" ry="4" transform="rotate(72 12 12)"/><ellipse cx="12" cy="6.500" rx="2.600" ry="4" transform="rotate(144 12 12)"/><ellipse cx="12" cy="6.500" rx="2.600" ry="4" transform="rotate(216 12 12)"/><ellipse cx="12" cy="6.500" rx="2.600" ry="4" transform="rotate(288 12 12)"/></g><circle cx="12" cy="12" r="1.800" fill="#fff"/></svg>'); b.appendChild(el("span", null, "Lauřin room"));
-        b.addEventListener("click", () => { if (document.body.classList.contains("sakura")) leave(); else if (get(KU)) enter(); else ask(); }); sn.appendChild(b); sn.hidden = false; }
-      apply(); };
+        b.addEventListener("click", () => { if (document.body.classList.contains("sakura")) leave(); else if (get(KU)) enter(); else ask(); }); sn.appendChild(b); sn.hidden = false;
+        if (document.body.classList.contains("sakura") || on){ const lk = el("button","sk-btn lk-btn","Vzhled"); lk.type = "button"; lk.addEventListener("click", lookPick); sn.appendChild(lk); } }
+      apply(); lookApply(); };
+    const _enterLk = enter; enter = function(){ _enterLk(); setTimeout(() => { try { route(); } catch(e){} }, 700); };
     route();
   })();
 
@@ -7084,12 +7218,12 @@ html[data-tk="d"] body:not(.sakura) .coav::before{background:conic-gradient(var(
     const isOne = st => st.zx === 1 && st.zy === 1 && !st.px && !st.py;
     // on a computer the chart fills the width of the window: the virtual canvas gets wider, the height stays
     const fullOf = c => c.closest(".zm-full");
-    const fwOf = (c, e) => { const w = c.clientWidth, fu = fullOf(c); if (w < 640 && !fu) return 0; const side = fu && fu.classList.contains("lesson-body") && window.innerWidth >= 1000, h = fu ? Math.max(260, window.innerHeight - (fu.classList.contains("lesson-body") && !side ? 330 : 150)) : Math.min(window.innerHeight * .46, 400), k = h / ((e.spec.h || 210) + 14); c._k = k; const cap = fu ? 1400 : Math.max(FW, e.n * 24 + 70); return Math.round(Math.max(FW, Math.min(cap, w / k))); };
+    const fwOf = (c, e) => { const fu = fullOf(c), w = fu ? (fu.querySelector(":scope > figure, :scope figure") || fu).clientWidth || c.clientWidth : c.clientWidth; if (w < 640 && !fu) return 0; const side = fu && fu.classList.contains("lesson-body") && window.innerWidth >= 1000, h = fu ? Math.max(260, window.innerHeight - (fu.classList.contains("lesson-body") && !side ? 330 : 150)) : Math.min(window.innerHeight * .46, 400), k = h / ((e.spec.h || 210) + 14); c._k = k; const cap = fu ? 1400 : Math.max(FW, e.n * 24 + 70); return Math.round(Math.max(FW, Math.min(cap, w / k))); };
     function draw(c, keepAnim){ const q = entry(c); if (!q) return; const st = c._s, e = q.e, fw = fwOf(c, e), still = {newFrom: e.spec.candles.length, marks: (e.spec.marks || []).map(m => Object.assign({}, m, {fresh: false}))}, nv = e.n / st.zx, rng = (e.hi - e.lo) / st.zy, mid = (e.hi + e.lo) / 2 + st.py;
       st.px = Math.max(-nv * .8, Math.min(e.n - nv * .2, st.px)); c._lock = true;
       const put = () => { const ns = c.querySelector("svg[data-cid]"); if (ns && fw) ns.style.width = Math.round(fw * c._k) + "px"; };
       q.sv.outerHTML = chart(Object.assign({}, e.spec, {fw: fw}, isOne(st) ? {} : {view: {x0: st.px, nv: nv, lo: mid - rng / 2, hi: mid + rng / 2}}, keepAnim ? {} : still)); put();
-      c._lock = false; ui(c); }
+      queueMicrotask(() => { c._lock = false; }); ui(c); }
     const sched = c => { if (c._raf) return; c._raf = requestAnimationFrame(() => { c._raf = 0; draw(c); }); };
     document.addEventListener("mousemove", ev => { if (drag) return; const c = clipOf(ev); if (!c) return; const g = geo(c); if (!g) return; const ta = ev.clientY > g.r.top + g.r.height * (1 - 30 / ((g.q.e.spec.h || 210) + 14)); c.style.cursor = ev.clientX > g.right ? "ns-resize" : ta ? "ew-resize" : isOne(c._s) ? "" : "grab"; });
     function ui(c){ const st = c._s, ch = !!entry(c); c.classList.toggle("zoomed", ch ? !isOne(st) : st.z > 1); c.classList.toggle("zm-chart", ch);
@@ -7113,7 +7247,7 @@ html[data-tk="d"] body:not(.sakura) .coav::before{background:conic-gradient(var(
       c._rs = mk('<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.2 6.2A5 5 0 1 1 3.4 10"/><path d="M2.8 2.8v3.6h3.6"/></svg>', "Původní zobrazení", () => reset(c));
       if (bar){ const rp = bar.querySelector(".pa-replay"); bar.insertBefore(ctl, rp || null); } else c.appendChild(ctl); ui(c); if (entry(c) && fwOf(c, entry(c).e)) draw(c, true);
       // a new step of the lesson redraws the picture: keep the current view and let the step animate
-      new MutationObserver(ms => { if (c._lock || ms.every(m => ctl.contains(m.target))) return; if (!c._t.isConnected){ const n = c.querySelector(".pa-svg") || c.querySelector("svg"); if (n) c._t = n; }
+      new MutationObserver(ms => { if (c._lock || ms.every(m => ctl.contains(m.target))) return; const now = performance.now(); if (now - (c._mt || 0) < 400){ if (++c._mn > 6) return; } else { c._mt = now; c._mn = 0; } if (!c._t.isConnected){ const n = c.querySelector(".pa-svg") || c.querySelector("svg"); if (n) c._t = n; }
         const q = entry(c); if (q){ if (c._s.z !== 1){ c._s.z = 1; c._t.style.transform = ""; } const fw = fwOf(c, q.e); if ((!isOne(c._s) && !q.sv.dataset.zv) || String(fw || "") !== (q.sv.dataset.fw || "")) draw(c, true); else ui(c); } else if (c._s.z > 1) apply(c); else ui(c); }).observe(c, {childList: true, subtree: true}); }
     // full window: the whole lesson (picture, text and steps) or the single picture fills the screen; Esc or the same button closes it
     // the box is lifted to the end of the page while it is full, so no parent with a transform can trap it; a placeholder keeps its place
@@ -7215,15 +7349,15 @@ html[data-tk="d"] body:not(.sakura) .coav::before{background:conic-gradient(var(
 
   // ---------- themes: seven looks, picked in Settings; Laura's room keeps its own pink look ----------
   const THEMES = [["noc","Noc","Tmavý, výchozí",["#09090b","#1b1b1f","#a78bfa"],"#09090b"],["ametyst","Ametyst","Bílý a fialový",["#f6f2ff","#ffffff","#7c3aed"],"#f6f2ff"],["navy","Navy","Námořní modř",["#081226","#16294f","#56c2ff"],"#081226",'Sora:wght@400;500;600;700;800'],
-    ["blossom","Blossom","Růžový soumrak",["#1a0e2b","#35204d","#ff86c8"],"#1a0e2b",'Quicksand:wght@500;600;700&family=Nunito:wght@400;600;700;800'],["zatmeni","Zatmění","Černá a koróna",["#050505","#191816","#f3d9a0"],"#050505"],["aurora","Aurora","Polární záře",["#03070b","#1c2c30","#7df0cf"],"#03070b"],["opal","Opál","Perleťový lesk",["#0a0b11","#1c1e2a","#c7d4ff"],"#0a0b11"]];
+    ["blossom","Blossom","Růžový soumrak",["#1a0e2b","#35204d","#ff86c8"],"#1a0e2b",'Quicksand:wght@500;600;700&family=Nunito:wght@400;600;700;800'],["zatmeni","Zatmění","Černá a koróna",["#050505","#191816","#f3d9a0"],"#050505"],["aurora","Aurora","Polární záře",["#03070b","#1c2c30","#7df0cf"],"#03070b"],["opal","Opál","Perleťový lesk",["#0a0b11","#1c1e2a","#c7d4ff"],"#0a0b11"],["bubblegum","Bubblegum","Světle růžový",["#fff3f9","#ffffff","#f0478f"],"#fff3f9"]];
   function applyTheme(){ const th = THEMES.find(x => x[0] === cfg.theme) || THEMES[0], r = document.documentElement;
-    if (th[0] === "noc"){ delete r.dataset.t; delete r.dataset.tk; } else { r.dataset.t = th[0]; r.dataset.tk = th[0] === "ametyst" ? "l" : "d"; }
+    if (th[0] === "noc"){ delete r.dataset.t; delete r.dataset.tk; } else { r.dataset.t = th[0]; r.dataset.tk = th[0] === "ametyst" || th[0] === "bubblegum" ? "l" : "d"; }
     if (th[5] && !document.getElementById("thf-" + th[0])){ const l = document.createElement("link"); l.id = "thf-" + th[0]; l.rel = "stylesheet"; l.href = "https://fonts.googleapis.com/css2?family=" + th[5] + "&display=swap"; document.head.appendChild(l); }
     if (!$("thbg")){ const d = el("div"); d.id = "thbg"; d.setAttribute("aria-hidden","true"); d.appendChild(el("i")); d.appendChild(el("i")); document.body.insertBefore(d, document.body.firstChild); }
     const m = document.querySelector('meta[name="theme-color"]'); if (m) m.setAttribute("content", document.body.classList.contains("sakura") ? "#fde6f3" : th[4]); try { _mf = null; } catch(e){} }
   applyTheme();
   const themeBox = el("div","card");
-  function renderThemePick(){ clear(themeBox); themeBox.appendChild(el("h2", null, "Vzhled aplikace")); themeBox.appendChild(el("p","small muted","Sedm vzhledů. Změna se projeví hned a uloží se k účtu. Lauřin room má dál svůj růžový vzhled."));
+  function renderThemePick(){ clear(themeBox); themeBox.appendChild(el("h2", null, "Vzhled aplikace")); themeBox.appendChild(el("p","small muted","Osm vzhledů. Změna se projeví hned a uloží se k účtu. Lauřin room má dál svůj růžový vzhled."));
     const g = el("div","thpick"), cur = (THEMES.find(x => x[0] === cfg.theme) || THEMES[0])[0];
     THEMES.forEach(t => { const b = el("button","thp"), sw = el("div","sw"), i = el("i"), u = el("u"); b.type = "button"; b.setAttribute("aria-pressed", String(t[0] === cur)); sw.style.background = t[3][0]; i.style.background = t[3][1]; u.style.background = t[3][2]; sw.appendChild(i); sw.appendChild(u);
       b.appendChild(sw); b.appendChild(el("b", null, t[1])); b.appendChild(el("span", null, t[2])); b.addEventListener("click", () => { cfg.theme = t[0]; cfgStore(); applyTheme(); renderThemePick(); }); g.appendChild(b); });
