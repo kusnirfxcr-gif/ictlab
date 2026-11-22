@@ -1186,6 +1186,24 @@ details.lex svg{width:100%;height:auto;display:block;border-radius:12px;backgrou
 details.lex .lxr{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 10px;font-size:14px;line-height:1.45}
 details.lex .lxr b{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.05em;padding-top:2px;white-space:nowrap}
 @media (max-width:420px){details.lex .lxr{grid-template-columns:1fr} details.lex .lxr b{padding-top:6px}}
+.tv-ctl{align-items:flex-end;gap:12px;flex-wrap:wrap}.tv-tz{display:flex;flex-direction:column;gap:4px;min-width:140px}
+.tv-verdict{border:1px solid var(--line);border-radius:16px;padding:12px 14px;background:var(--surface2);display:flex;flex-direction:column;gap:6px}
+.tv-verdict b{font-size:1.02rem}.tv-verdict.good{border-color:color-mix(in srgb,var(--good) 55%,var(--line))}.tv-verdict.bad{border-color:color-mix(in srgb,var(--bad) 55%,var(--line))}
+.tv-files tr{cursor:pointer}.tv-files tr[aria-selected="true"] td{background:color-mix(in srgb,var(--accent) 14%,transparent)}
+.tv-head{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.arrive{animation:arrIn .5s cubic-bezier(.2,.8,.2,1) both,arrGlow 1.4s ease-out both}
+@keyframes arrIn{from{opacity:.25;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes arrGlow{0%,35%{box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 70%,transparent),0 0 28px color-mix(in srgb,var(--accent) 35%,transparent)}100%{box-shadow:0 0 0 0 transparent}}
+.wel{position:fixed;inset:0;z-index:45;display:flex;align-items:center;justify-content:center;padding:18px;background:rgba(5,5,7,.72);animation:welBg .35s ease both}
+.wel.out{animation:welOut .3s ease both}
+.wel .card{max-width:400px;width:100%;gap:12px;animation:welIn .45s cubic-bezier(.2,.8,.2,1) both;position:relative;overflow:hidden}
+.wel h2{font-size:1.55rem;line-height:1.15;margin:0}.wel .wel-sub{color:var(--muted)}
+.wel .wel-stats{display:flex;gap:8px;flex-wrap:wrap}.wel .wel-stats span{border:1px solid var(--line);border-radius:999px;padding:5px 11px;font-size:.85rem;background:var(--surface2)}
+.wel form{display:flex;gap:8px}.wel form input{flex:1;min-width:0}
+.wel .wel-bar{position:absolute;left:0;bottom:0;height:3px;background:var(--accent);transform-origin:left;animation:welBar 4s linear both}
+.wel.hold .wel-bar{display:none}
+@keyframes welBg{from{opacity:0}to{opacity:1}}@keyframes welOut{to{opacity:0}}@keyframes welIn{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}@keyframes welBar{from{transform:scaleX(1)}to{transform:scaleX(0)}}
+body.sakura .wel{background:rgba(60,20,40,.35)}
 </style>
 </head>
 <body>
@@ -1399,7 +1417,11 @@ details.lex .lxr b{color:var(--muted);font-size:12px;text-transform:uppercase;le
   </section>
 
   <section class="view" id="v-novinky">
-    <div class="card"><h2>Co je nového</h2><span class="kick">12. 11. 2026</span>
+    <div class="card"><h2>Co je nového</h2><span class="kick">22. 11. 2026</span>
+      <ul class="stl ok">
+        <li>Rozbor strategie z TradingView v sekci Backtest: nahraješ seznam obchodů a Tape ukáže, jestli má strategie výhodu, kolik vzaly poplatky a jak si vede po seancích, hodinách a dnech. Víc exportů jde porovnat vedle sebe.</li>
+      </ul>
+      <span class="kick">12. 11. 2026</span>
       <ul class="stl ok">
         <li>Nová navigace: pět hlavních sekcí, na telefonu spodní lišta a tlačítko pro rychlý zápis obchodu.</li>
         <li>Deník v záložkách Dnes, Obchody, Statistiky a Playbook. Obchod jde upravit a má vlastní detail.</li>
@@ -1529,6 +1551,14 @@ details.lex .lxr b{color:var(--muted);font-size:12px;text-transform:uppercase;le
   </section>
 
   <section class="view" id="v-backtest">
+    <div class="card" id="tv-card">
+      <h2>Rozbor strategie z TradingView</h2>
+      <p class="small muted">V TradingView otevři Tester strategií, záložku Seznam obchodů, stáhni CSV a nahraj ho sem. Tape spočítá, jestli má strategie výhodu, kde vydělává a kde ztrácí. Soubor zůstává jen v tomto prohlížeči.</p>
+      <div class="row tv-ctl"><label for="tv-file" class="small" style="cursor:pointer"><span class="pill info">Vybrat CSV</span><input id="tv-file" type="file" accept=".csv,text/csv" multiple hidden></label>
+        <label for="tv-tz" class="small tv-tz">Časy v exportu<select id="tv-tz"><option value="America/New_York">New York</option><option value="Europe/Prague">Praha</option><option value="UTC">UTC</option></select></label></div>
+      <p class="small muted" id="tv-msg"></p>
+      <div class="list" id="tv-out"></div>
+    </div>
     <div class="card">
       <h2>Jak sem přibývají výsledky</h2>
       <p class="small muted">Backtest běží na tvém počítači v programu ictlab_backtest.py. Soubor analyza.txt nebo vysledky.json pošli Claudovi v chatu, ten čísla zapíše sem a boti je použijí při ladění modelu.</p>
@@ -3324,11 +3354,13 @@ details.lex .lxr b{color:var(--muted);font-size:12px;text-transform:uppercase;le
     if (course) course.weeks.forEach(w => s.push({kind: "ex", n: w.n, title: "Zkouška " + w.n + ". týdne", done: examOk(w.n)}));
     return s;
   }
-  function openTopic(id){ location.hash = "#laura"; paCur = id; paStep = 0; paBuild(); setTimeout(() => $("pa-card").scrollIntoView({block: "start"}), 80); }
+  function arriveAt(n){ if (!n) return; let calm = false; try { calm = document.body.classList.contains("fx-off") || window.matchMedia("(prefers-reduced-motion: reduce)").matches; } catch(e){}
+    n.scrollIntoView({block: "start", behavior: calm ? "auto" : "smooth"}); n.classList.remove("arrive"); void n.offsetWidth; n.classList.add("arrive"); setTimeout(() => n.classList.remove("arrive"), 1400); }
+  function openTopic(id){ location.hash = "#laura"; paCur = id; paStep = 0; paBuild(); setTimeout(() => arriveAt($("pa-card")), 80); }
   function goStep(st){
     if (st.kind === "pa") openTopic(st.id);
-    else if (st.kind === "pr"){ location.hash = "#laura"; setTimeout(() => $("pr-card").scrollIntoView({block: "start"}), 80); }
-    else { location.hash = "#room"; openWeek = st.n; renderCourse(); setTimeout(() => { const r = courseRefs[st.n]; if (r) r.d.scrollIntoView({block: "start"}); }, 80); }
+    else if (st.kind === "pr"){ location.hash = "#laura"; setTimeout(() => arriveAt($("pr-card")), 80); }
+    else { location.hash = "#room"; openWeek = st.n; renderCourse(); setTimeout(() => { const r = courseRefs[st.n]; if (r) arriveAt(r.d); }, 80); }
   }
   function renderPath(){
     const s = pathSteps(), cur = s.findIndex(x => !x.done), got = s.filter(x => x.done).length;
@@ -5024,14 +5056,16 @@ details.lex .lxr b{color:var(--muted);font-size:12px;text-transform:uppercase;le
     try { if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return; } catch(e){}
     let r = t.getBoundingClientRect(); if (r.width < 8 || r.height < 8) return;
     // the ring floats above the page and follows the button every frame; if the button was redrawn, it finds its twin
-    const SEL = "button,.abtn,.chip,a.go,.tb-acc,.orb,.prem-btn,.subnav a,.nav1 a,.bottombar a", ring = el("div","rbw-ring"), tag = t.tagName, txt = (t.textContent || "").trim().slice(0, 60), t0 = performance.now(), px = ev.clientX, py = ev.clientY;
+    const SEL = "button,.abtn,.chip,a.go,.tb-acc,.orb,.prem-btn,.subnav a,.nav1 a,.bottombar a", ring = el("div","rbw-ring"), tag = t.tagName, h0 = location.hash, txt = (t.textContent || "").trim().slice(0, 60), t0 = performance.now(), px = ev.clientX, py = ev.clientY;
     let node = t, sx = window.scrollX, sy = window.scrollY, tries = 0;
     const live = n => n && n.isConnected && n.getBoundingClientRect().width > 7, round = n => { const rad = parseFloat(getComputedStyle(n).borderTopLeftRadius) || 0; ring.style.borderRadius = Math.min(rad + 3, (n.getBoundingClientRect().height + 6) / 2) + "px"; };
     const seen = q => q.width > 7 && q.bottom > 0 && q.top < window.innerHeight && q.right > 0 && q.left < window.innerWidth;
     const place = () => {
+      if (!live(node) && location.hash !== h0){ ring.remove(); return; }
       if (!live(node)){ tries++; let best = null, bd = 1e9; const all = document.getElementsByTagName(tag);
         for (let i = 0; i < all.length; i++){ const c = all[i]; if ((c.textContent || "").trim().slice(0, 60) !== txt) continue; const q = c.getBoundingClientRect(); if (!seen(q)) continue; const d = Math.abs(q.left - r.left) + Math.abs(q.top - (r.top + sy - window.scrollY)); if (d < bd){ bd = d; best = c; } }
         if (!best && (px || py)){ const under = document.elementFromPoint(px, py), c = under && under.closest ? under.closest(SEL) : null; if (c && !c.disabled && seen(c.getBoundingClientRect())) best = c; }
+        if (best && bd > 90) best = null;
         if (best){ node = best; round(node); } else if (tries >= 3){ ring.remove(); return; } else { ring.style.visibility = "hidden"; requestAnimationFrame(place); return; } }
       ring.style.visibility = "";
       const q = node.getBoundingClientRect(); r = q; sx = window.scrollX; sy = window.scrollY; const ox = 0, oy = 0;
@@ -5517,6 +5551,179 @@ details.lex .lxr b{color:var(--muted);font-size:12px;text-transform:uppercase;le
     d.appendChild(b); return d;
   }
   window.__lex = lexBuild;
+
+
+  // ---------- strategy report from a TradingView "List of trades" export ----------
+  const TVK = "tape-tv";
+  let tvSt = {files: [], sel: 0, tz: "America/New_York"};
+  try { const raw = JSON.parse(localStorage.getItem(TVK) || "null"); if (raw && Array.isArray(raw.files)) tvSt = Object.assign(tvSt, raw); } catch(e){}
+  const tvSave = () => { try { localStorage.setItem(TVK, JSON.stringify(tvSt)); } catch(e){ $("tv-msg").textContent = "Na uložení není v prohlížeči místo, rozbor zůstane jen do zavření stránky."; } };
+  const tvNum = v => { const x = String(v == null ? "" : v).trim().replace(/−/g, "-").replace(/\s/g, ""); if (!x) return NaN; return parseFloat(/,\d+$/.test(x) && !/\./.test(x) ? x.replace(",", ".") : x.replace(/,/g, "")); };
+  function tvZoneOff(ms, tz){ // minutes to add to UTC to get wall time in tz
+    const p = {}; new Intl.DateTimeFormat("en-US", {timeZone: tz, hourCycle: "h23", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit"}).formatToParts(new Date(ms)).forEach(x => { p[x.type] = x.value; });
+    return (Date.UTC(+p.year, +p.month - 1, +p.day, +p.hour % 24, +p.minute) - Math.floor(ms / 60000) * 60000) / 60000;
+  }
+  function tvWall(str, tz){ // wall time in tz -> wall time in New York {y,m,d,mn,dow,key}
+    const g = String(str).match(/(\d{4})-(\d{2})-(\d{2})[ T](\d{1,2}):(\d{2})/); if (!g) return null;
+    let ms = Date.UTC(+g[1], +g[2] - 1, +g[3], +g[4], +g[5]);
+    if (tz !== "America/New_York"){ const guess = ms - tvZoneOff(ms, tz) * 60000; const utc = ms - tvZoneOff(guess, tz) * 60000; ms = utc + tvZoneOff(utc, "America/New_York") * 60000; }
+    const dt = new Date(ms);
+    return {y: dt.getUTCFullYear(), m: dt.getUTCMonth() + 1, d: dt.getUTCDate(), mn: dt.getUTCHours() * 60 + dt.getUTCMinutes(), dow: (dt.getUTCDay() + 6) % 7};
+  }
+  function tvParse(text, name){
+    const rows = csvRows(text); if (rows.length < 2) return {err: "V souboru nejsou žádné řádky."};
+    const hd = rows[0].map(h => String(h).toLowerCase().trim()), col = (re, not) => hd.findIndex(h => re.test(h) && !(not && not.test(h)));
+    const c = {num: col(/trade|obchod|^#/, /date|datum/), type: col(/^type|^typ/), date: col(/date|datum|time|čas/), sig: col(/signal|signál/), price: col(/^price|^cena/),
+      qty: col(/qty|množ/), pnl: col(/net p&?l|net pnl|čist|^profit|^p&l|zisk/, /cum|kumul|%/), fee: col(/commission|provize|poplat/), bars: col(/bars|svíč|svic/)};
+    if (c.pnl < 0 || c.date < 0 || c.type < 0) return {err: "Tohle nevypadá jako Seznam obchodů z Testeru strategií. Chybí sloupec se ziskem, typem nebo časem."};
+    const by = {}; rows.slice(1).forEach((r, i) => { const k = c.num >= 0 ? String(r[c.num]).trim() : String(i >> 1); (by[k] = by[k] || []).push(r); });
+    const tr = [];
+    Object.keys(by).forEach(k => {
+      const rs = by[k]; if (!rs.length) return;
+      let en = rs.find(r => /entry|vstup/i.test(r[c.type])), ex = rs.find(r => /exit|výstup|vystup/i.test(r[c.type]));
+      if (!en || !ex){ const s = rs.slice().sort((a, b) => String(a[c.date]).localeCompare(String(b[c.date]))); en = s[0]; ex = s[s.length - 1]; }
+      const net = tvNum(ex[c.pnl]); if (!isFinite(net)) return;
+      const fee = c.fee >= 0 ? Math.abs(tvNum(ex[c.fee])) || 0 : 0, ty = String(en[c.type]) + " " + String(ex[c.type]);
+      tr.push({n: +k || tr.length + 1, t: String(en[c.date]).trim(), dir: /short|krátk|kratk|sell/i.test(ty) ? "short" : "long", net: net, fee: fee,
+        qty: c.qty >= 0 ? Math.abs(tvNum(en[c.qty])) || 1 : 1, sig: c.sig >= 0 ? String(ex[c.sig] || "").trim().slice(0, 18) : "", bars: c.bars >= 0 ? tvNum(ex[c.bars]) : NaN});
+    });
+    if (!tr.length) return {err: "V souboru jsem nenašel žádný uzavřený obchod."};
+    tr.sort((a, b) => a.t.localeCompare(b.t) || a.n - b.n);
+    return {name: String(name || "export").replace(/\.csv$/i, "").slice(0, 60), added: Date.now(), trades: tr};
+  }
+  function tvCalc(f){
+    const tr = f.trades, n = tr.length, p = tr.map(t => t.net), sum = p.reduce((a, b) => a + b, 0), mean = sum / n;
+    const sd = n > 1 ? Math.sqrt(p.reduce((a, b) => a + (b - mean) * (b - mean), 0) / (n - 1)) : 0, se = n > 1 ? sd / Math.sqrt(n) : 0, tt = se > 0 ? mean / se : 0;
+    const w = p.filter(v => v > 0), l = p.filter(v => v <= 0), aw = w.length ? w.reduce((a, b) => a + b, 0) / w.length : 0, al = l.length ? -l.reduce((a, b) => a + b, 0) / l.length : 0;
+    const fees = tr.reduce((a, t) => a + t.fee, 0), gross = sum + fees, top3 = p.slice().sort((a, b) => b - a).slice(0, 3).reduce((a, b) => a + b, 0);
+    let eq = 0, pk = 0, dd = 0, run = 0, ser = 0; p.forEach(v => { eq += v; pk = Math.max(pk, eq); dd = Math.max(dd, pk - eq); run = v <= 0 ? run + 1 : 0; ser = Math.max(ser, run); });
+    return {n: n, sum: sum, mean: mean, se: se, t: tt, win: 100 * w.length / n, be: aw + al > 0 ? 100 * al / (aw + al) : null, aw: aw, al: al, pf: l.length && al > 0 ? (aw * w.length) / (al * l.length) : null,
+      fees: fees, gross: gross, noTop: sum - (n > 3 ? top3 : 0), dd: dd, ser: ser, from: tr[0].t.slice(0, 10), to: tr[n - 1].t.slice(0, 10)};
+  }
+  function tvVerdict(s){
+    if (s.n < 30) return ["", "Na hodnocení je to zatím málo obchodů", "Z " + pl(s.n, "obchodu", "obchodů", "obchodů") + " se výhoda poznat nedá. Smysl to začíná mít od 30 obchodů, spolehlivě od zhruba 200."];
+    const lo = s.mean - 1.96 * s.se, hi = s.mean + 1.96 * s.se, rng = "S 95% jistotou je skutečný průměr mezi " + usd(lo) + " a " + usd(hi) + " na obchod.";
+    if (s.t >= 2) return ["good", "Průměr je statisticky nad nulou", rng + " Pozor: když jsi zkoušel hodně nastavení, jedno takové vyjde i náhodou. Ověř ho na období, na kterém jsi neladil."];
+    if (s.t <= -2) return ["bad", "Strategie je statisticky ztrátová", rng + " Tohle už není smůla, pravidla v téhle podobě prodělávají."];
+    return ["", "Výhoda zatím není prokázaná", rng + " Výsledek se od nuly neliší víc, než dokáže náhoda."];
+  }
+  const TV_SES = ["Asie", "Londýn", "NY AM", "Lunch", "NY PM", "16:00–18:00"];
+  const tvSes = m => m >= 1080 || m < 150 ? "Asie" : m < 420 ? "Londýn" : m < 720 ? "NY AM" : m < 780 ? "Lunch" : m < 960 ? "NY PM" : "16:00–18:00";
+  function tvRender(){
+    const out = $("tv-out"); clear(out); $("tv-tz").value = tvSt.tz;
+    if (!tvSt.files.length){ const e = el("div","empty"); e.appendChild(el("b", null, "Zatím žádný export.")); e.appendChild(el("span", null, "Když nahraješ víc souborů najednou, třeba skutečné nastavení a kontrolu s posunutými levely, porovnají se vedle sebe.")); out.appendChild(e); return; }
+    if (tvSt.sel >= tvSt.files.length) tvSt.sel = 0;
+    if (tvSt.files.length > 1){
+      const wrap = el("div","tablebox"), tb = el("table","tv-files"), th = el("thead"), hr = el("tr"), bd = el("tbody");
+      ["Export", "Obchodů", "Úspěšnost", "Na nulu", "Čistě", "Průměr", ""].forEach(h => hr.appendChild(el("th", null, h))); th.appendChild(hr); tb.appendChild(th);
+      tvSt.files.forEach((f, i) => { const s = tvCalc(f), r = el("tr"); r.setAttribute("aria-selected", String(i === tvSt.sel)); r.tabIndex = 0;
+        r.appendChild(el("td", null, f.name)); r.appendChild(el("td","num", s.n)); r.appendChild(el("td","num", Math.round(s.win) + " %")); r.appendChild(el("td","num", s.be == null ? "–" : Math.round(s.be) + " %"));
+        const c = el("td","num", usd(s.sum)); c.style.color = s.sum >= 0 ? "var(--good)" : "var(--bad)"; r.appendChild(c); r.appendChild(el("td","num", usd(s.mean)));
+        const x = el("td"), b = el("button", null, "Odebrat"); b.type = "button"; b.addEventListener("click", ev => { ev.stopPropagation(); tvSt.files.splice(i, 1); tvSave(); tvRender(); }); x.appendChild(b); r.appendChild(x);
+        const pick = () => { tvSt.sel = i; tvSave(); tvRender(); }; r.addEventListener("click", pick); r.addEventListener("keydown", ev => { if (ev.key === "Enter") pick(); });
+        bd.appendChild(r); });
+      tb.appendChild(bd); wrap.appendChild(tb); out.appendChild(wrap);
+    }
+    const f = tvSt.files[tvSt.sel], s = tvCalc(f), head = el("div","tv-head");
+    head.appendChild(el("b", null, f.name + " · " + s.from + " až " + s.to));
+    if (tvSt.files.length === 1){ const b = el("button", null, "Odebrat"); b.type = "button"; b.addEventListener("click", () => { tvSt.files = []; tvSave(); tvRender(); }); head.appendChild(b); }
+    out.appendChild(head);
+    const v = tvVerdict(s), vb = el("div","tv-verdict" + (v[0] ? " " + v[0] : "")); vb.appendChild(el("b", null, v[1])); vb.appendChild(el("span","small", v[2]));
+    if (s.be != null) vb.appendChild(el("span","small", "Úspěšnost " + Math.round(s.win) + " %, na nulu je při téhle velikosti výher a ztrát potřeba " + Math.round(s.be) + " %. " + (s.win > s.be ? "Rozdíl " + Math.round(s.win - s.be) + " bodů je tvůj náskok." : "Strategie je pod hranicí nuly.")));
+    if (s.fees > 0 && s.gross > 0 && s.sum < 0) vb.appendChild(el("span","small", "Před poplatky byla strategie v plusu (" + usd(s.gross) + "), poplatky $" + Math.round(s.fees).toLocaleString("cs-CZ") + " ji stáhly do mínusu."));
+    else if (s.fees > 0 && s.gross > 0) vb.appendChild(el("span","small", "Poplatky sebraly " + Math.round(100 * s.fees / s.gross) + " % zisku před poplatky."));
+    out.appendChild(vb);
+    const g = el("div","tiles");
+    g.appendChild(tile("Obchodů", String(s.n))); g.appendChild(tile("Čistý výsledek", usd(s.sum), s.sum >= 0 ? "pos" : "neg")); g.appendChild(tile("Průměr na obchod", usd(s.mean), s.mean >= 0 ? "pos" : "neg"));
+    g.appendChild(tile("Úspěšnost", Math.round(s.win) + " %")); g.appendChild(tile("Na nulu je potřeba", s.be == null ? "–" : Math.round(s.be) + " %")); g.appendChild(tile("Profit factor", s.pf == null ? "–" : fnum(Math.round(s.pf * 100) / 100)));
+    g.appendChild(tile("Průměrná výhra", usd(s.aw))); g.appendChild(tile("Průměrná ztráta", usd(-s.al))); g.appendChild(tile("Poplatky celkem", s.fees ? usd(-s.fees) : "–"));
+    g.appendChild(tile("Největší propad", usd(-s.dd))); g.appendChild(tile("Nejdelší série ztrát", String(s.ser))); g.appendChild(tile("Bez 3 nejlepších obchodů", s.n > 3 ? usd(s.noTop) : "–", s.noTop >= 0 ? "pos" : "neg"));
+    out.appendChild(g);
+    const ps = f.trades.map(t => { const w = tvWall(t.t, tvSt.tz); return {usd: t.net, dir: t.dir, w: w, sig: t.sig, qty: t.qty, bars: t.bars}; });
+    const eq = equityFig(ps, "$"); if (eq) out.appendChild(eq);
+    const tvMon = t => t.w ? t.w.y + "-" + String(t.w.m).padStart(2, "0") : null;
+    const D = ["Po","Út","St","Čt","Pá","So","Ne"], H = Array.from({length: 24}, (x, i) => String(i).padStart(2, "0") + ":00");
+    [groupTable("Směr", ps, t => t.dir === "short" ? "Short" : "Long", ["Long", "Short"], "$"),
+     groupTable("Seance (New York)", ps, t => t.w ? tvSes(t.w.mn) : null, TV_SES, "$"),
+     groupTable("Hodina vstupu (New York)", ps, t => t.w ? H[Math.floor(t.w.mn / 60)] : null, H, "$"),
+     groupTable("Den", ps, t => t.w ? D[t.w.dow] : null, D, "$"),
+     groupTable("Výstup", ps, t => t.sig || null, null, "$"),
+     groupTable("Kontraktů", ps, t => t.qty <= 1 ? "1" : t.qty <= 3 ? "2–3" : "4 a víc", ["1", "2–3", "4 a víc"], "$"),
+     groupTable("Svíček v obchodu", ps, t => !isFinite(t.bars) ? null : t.bars <= 1 ? "1" : t.bars <= 5 ? "2–5" : t.bars <= 20 ? "6–20" : "přes 20", ["1", "2–5", "6–20", "přes 20"], "$"),
+     groupTable("Měsíc", ps, tvMon, ps.map(tvMon).filter(Boolean).sort(), "$")].forEach(x => { if (x){ out.appendChild(x); } });
+    out.appendChild(el("p","small muted","Seance a hodiny jsou v newyorském čase podle pásma exportu nahoře. Úspěšnost potřebná na nulu vychází z průměrné výhry a ztráty v tomhle exportu."));
+  }
+  $("tv-tz").addEventListener("change", ev => { tvSt.tz = ev.target.value; tvSave(); tvRender(); });
+  $("tv-file").addEventListener("change", ev => {
+    const fl = Array.prototype.slice.call(ev.target.files || []); if (!fl.length) return; const msgs = []; let left = fl.length;
+    fl.forEach(fi => { const rd = new FileReader(); rd.onload = () => { const r = tvParse(String(rd.result), fi.name);
+      if (r.err) msgs.push(fi.name + ": " + r.err); else { tvSt.files = tvSt.files.filter(x => x.name !== r.name).concat([r]).slice(-8); tvSt.sel = tvSt.files.length - 1; msgs.push(fi.name + ": " + pl(r.trades.length, "obchod", "obchody", "obchodů") + "."); }
+      if (--left === 0){ $("tv-msg").textContent = msgs.join(" "); tvSave(); tvRender(); ev.target.value = ""; } }; rd.readAsText(fi); });
+  });
+  tvRender();
+
+
+  // ---------- welcome on every visit and a nickname ----------
+  const nickOf = () => String((profile && profile.name) || "").trim();
+  function nickSave(v){ const pf = profile || {sym: "NQ", syms: ["NQ"], goal: 10, level: "start"}; pf.name = String(v).trim().slice(0, 20); profile = pf; try { localStorage.setItem("knot-profile", JSON.stringify(pf)); } catch(e){} try { if (typeof pushProgress === "function") pushProgress(); } catch(e){} }
+  const hiWord = () => { const h = new Date().getHours(); return h < 5 ? "Dobrou noc" : h < 11 ? "Dobré ráno" : h < 18 ? "Ahoj" : "Dobrý večer"; };
+  function nickForm(onDone, label){
+    const f = el("form"), i = el("input"); i.maxLength = 20; i.placeholder = "Tvoje přezdívka"; i.value = nickOf(); i.setAttribute("aria-label", label || "Přezdívka"); i.autocomplete = "nickname";
+    const b = el("button","primary","Uložit"); b.type = "submit"; f.appendChild(i); f.appendChild(b);
+    f.addEventListener("submit", ev => { ev.preventDefault(); const v = i.value.trim(); if (v.length < 2){ i.focus(); toast("Přezdívka musí mít aspoň 2 znaky."); return; } nickSave(v); onDone(v); });
+    return {f: f, i: i};
+  }
+  function welcomeShow(){
+    if (document.querySelector(".wel")) return;
+    const ov = el("div","wel"), c = el("div","card"), nick = nickOf(); ov.appendChild(c);
+    const title = el("h2"), sub = el("p","wel-sub small"), stats = el("div","wel-stats");
+    const paint = () => { const n = nickOf(); title.textContent = n ? hiWord() + ", " + n + "!" : "Vítej v Tape"; sub.textContent = n ? "Rád tě zase vidím. Tady je, kde stojíš." : "Než začneš, jak ti máme říkat?"; };
+    paint();
+    const sd = streakDays(), tr = jSorted().filter(t => Date.now() - new Date(t.ts).getTime() < 7 * 864e5), mn = (typeof minToday === "function") ? minToday() : null;
+    if (sd) stats.appendChild(el("span", null, "Série " + pl(sd, "den", "dny", "dní")));
+    stats.appendChild(el("span", null, tr.length ? "Tento týden " + pl(tr.length, "obchod", "obchody", "obchodů") : "Tento týden zatím bez obchodu"));
+    let ll = null; try { ll = JSON.parse(localStorage.getItem("tape-learn-last") || "null"); } catch(e){}
+    if (ll && ll.title) stats.appendChild(el("span", null, "Naposledy: " + String(ll.title).slice(0, 40)));
+    c.appendChild(el("span","kick", new Date().toLocaleDateString("cs-CZ", {weekday: "long", day: "numeric", month: "long"})));
+    c.appendChild(title); c.appendChild(sub);
+    let timer = null, closed = false;
+    const close = () => { if (closed) return; closed = true; clearTimeout(timer); ov.classList.add("out"); setTimeout(() => { ov.remove(); document.body.classList.remove("modal"); }, 280); refreshAll(); };
+    const hold = () => { clearTimeout(timer); ov.classList.add("hold"); };
+    const go = el("button", nick ? "primary" : null, nick ? "Jdeme na to" : "Teď ne"); go.type = "button"; go.addEventListener("click", close);
+    if (!nick){
+      const nf = nickForm(() => { paint(); nf.f.remove(); go.textContent = "Jdeme na to"; go.className = "primary"; c.insertBefore(stats, go); setTimeout(close, 900); });
+      c.appendChild(nf.f); setTimeout(() => { try { nf.i.focus(); } catch(e){} }, 350);
+    } else {
+      c.appendChild(stats);
+      const ch = el("button", null, "Změnit přezdívku"); ch.type = "button"; ch.className = "small";
+      ch.addEventListener("click", () => { hold(); const nf = nickForm(() => { paint(); nf.f.remove(); }); c.insertBefore(nf.f, go); ch.remove(); nf.i.focus(); nf.i.select(); });
+      c.appendChild(ch);
+      c.appendChild(el("i","wel-bar")); timer = setTimeout(close, 4000);
+    }
+    c.appendChild(go);
+    c.addEventListener("pointerdown", hold); c.addEventListener("focusin", hold);
+    ov.addEventListener("click", ev => { if (ev.target === ov) close(); });
+    document.addEventListener("keydown", function esc(ev){ if (ev.key === "Escape"){ document.removeEventListener("keydown", esc); close(); } });
+    document.body.appendChild(ov); document.body.classList.add("modal");
+  }
+  (function welcomeWhenCalm(){
+    let ok = false; try { ok = !sessionStorage.getItem("tape-hi"); } catch(e){ ok = true; }
+    if (!ok) return; let tries = 0;
+    const tick = () => { tries++;
+      const busy = document.querySelector(".ob,.gtour,.wel"), tourDone = (() => { try { return localStorage.getItem("tape-tour") === "1"; } catch(e){ return true; } })();
+      if (!busy && profile && tourDone){ try { sessionStorage.setItem("tape-hi", "1"); } catch(e){} welcomeShow(); return; }
+      if (tries < 40) setTimeout(tick, 500); };
+    setTimeout(tick, 700);
+  })();
+  // greeting in the home hero
+  { const _rd = renderDash; renderDash = function(){ _rd(); const n = nickOf(), k = $("d-date"); if (k && n) k.textContent = hiWord() + ", " + n + " · " + k.textContent; }; }
+  // nickname in settings
+  const nickBox = el("div","card");
+  function renderNick(){ clear(nickBox); nickBox.appendChild(el("h2", null, "Přezdívka"));
+    nickBox.appendChild(el("p","small muted","Tak tě Tape pozdraví, podepíše tvoje příspěvky v Komunitě a ukáže tě v přehledu postupu. Synchronizuje se s účtem."));
+    const nf = nickForm(() => { toast("Přezdívka uložena."); renderNick(); refreshAll(); }); nickBox.appendChild(nf.f);
+    const b = el("button", null, "Ukázat uvítání"); b.type = "button"; b.addEventListener("click", welcomeShow); nickBox.appendChild(b); }
+  { const _rsN = renderSettings; renderSettings = function(){ _rsN(); const box = $("set"); if (softLock) return; if (document.activeElement && nickBox.contains(document.activeElement)) return; renderNick(); if (nickBox.parentNode !== box) box.insertBefore(nickBox, box.firstChild); }; }
 
   // ---------- moving to a new address without losing data ----------
   // data/site.json: {"move": "https://new-address", "from": ["https://old-address"]}. The old site hands the data to the new one in a window the person opens.
