@@ -12,6 +12,12 @@ return Promise.all([f0(u,o),f0("data/en/"+m[1]+".json").then(function(r){return 
 <meta name="apple-mobile-web-app-title" content="Tape">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="icon" href="icon-192.png" type="image/png" sizes="192x192">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-title" content="Tape">
+<meta name="application-name" content="Tape">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
 <title>Tape</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -7740,7 +7746,7 @@ html body .wel.lt .wel-go:not(:disabled):hover,html body .wel.lt button.primary:
     if (th[0] === "noc"){ delete r.dataset.t; delete r.dataset.tk; } else { r.dataset.t = th[0]; r.dataset.tk = th[0] === "ametyst" || th[0] === "bubblegum" ? "l" : "d"; }
     if (th[5] && !document.getElementById("thf-" + th[0])){ const l = document.createElement("link"); l.id = "thf-" + th[0]; l.rel = "stylesheet"; l.href = "https://fonts.googleapis.com/css2?family=" + th[5] + "&display=swap"; document.head.appendChild(l); }
     if (!$("thbg")){ const d = el("div"); d.id = "thbg"; d.setAttribute("aria-hidden","true"); d.appendChild(el("i")); d.appendChild(el("i")); document.body.insertBefore(d, document.body.firstChild); }
-    const m = document.querySelector('meta[name="theme-color"]'); if (m) m.setAttribute("content", document.body.classList.contains("sakura") ? "#fde6f3" : th[4]); try { _mf = null; } catch(e){} }
+    const m = document.querySelector('meta[name="theme-color"]'); if (m) m.setAttribute("content", document.body.classList.contains("sakura") ? "#fde6f3" : th[4]); try { _mf = null; } catch(e){} try { favPaint(); } catch(e){} }
   applyTheme();
   const themeBox = el("div","card");
   function renderThemePick(){ clear(themeBox); themeBox.appendChild(el("h2", null, "Vzhled aplikace")); themeBox.appendChild(el("p","small muted","Osm vzhledů. Změna se projeví hned a uloží se k účtu. Lauřin room má dál svůj růžový vzhled."));
@@ -7905,6 +7911,12 @@ html body .wel.lt .wel-go:not(:disabled):hover,html body .wel.lt button.primary:
   { const _ph = pheadPaint; pheadPaint = function(v, g){ _ph(v, g); const h = $("phead"); if (g === "uceni" && h && !h.hidden && !h.querySelector(".mus-btn")){ const b = musButton(); b.style.marginTop = "12px"; h.appendChild(b); } }; try { pheadPaint(document.body.dataset.view, document.body.dataset.group); } catch(e){} }
   { const _rdM = renderDash; renderDash = function(){ _rdM(); try { if (!hero2.querySelector(".mus-btn")){ const b = musButton(); b.classList.add("h2-mus"); hero2.appendChild(b); } } catch(e){} }; try { renderDash(); } catch(e){} }
   function musLesson(lb, fb){ if (!lb || lb.querySelector(":scope > .mus-btn")) return; lb.insertBefore(musButton(), fb ? fb.nextSibling : lb.firstChild); }
+  // ---------- tab icon in the colours of the chosen theme ----------
+  function favPaint(){ const sak = document.body.classList.contains("sakura"), q = sak ? {bg: "#fff0f7", b: ["#ff8cc6","#ffc2e0","#c9a6ff"], c: ["#b0447f"], light: 1} : GLASS[cfg.theme] || GLASS.noc, ink = q.light ? q.c[0] : "#ffffff";
+    const rg = (id, cx, cy, r, c, o) => '<radialGradient id="' + id + '" cx="' + cx + '" cy="' + cy + '" r="' + r + '"><stop offset="0" stop-color="' + c + '" stop-opacity="' + o + '"/><stop offset="1" stop-color="' + c + '" stop-opacity="0"/></radialGradient>';
+    const sv = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><defs>' + rg("a", .18, .12, .75, q.b[0], .95) + rg("b", .95, .65, .7, q.b[1], .8) + rg("c", .35, 1.1, .7, q.b[2], .75) + '</defs><rect width="96" height="96" rx="22" fill="' + q.bg + '"/><rect width="96" height="96" rx="22" fill="url(#a)"/><rect width="96" height="96" rx="22" fill="url(#b)"/><rect width="96" height="96" rx="22" fill="url(#c)"/><rect x="45" y="15" width="6" height="66" rx="3" fill="' + ink + '" opacity=".55"/><rect x="34" y="29" width="28" height="38" rx="8.5" fill="' + ink + '"/></svg>';
+    let l = document.querySelector('link[rel="icon"][type="image/svg+xml"]'); if (!l) return; l.href = "data:image/svg+xml," + encodeURIComponent(sv); }
+  try { favPaint(); } catch(e){}
   // ---------- moving to a new address without losing data ----------
   // data/site.json: {"move": "https://new-address", "from": ["https://old-address"]}. The old site hands the data to the new one in a window the person opens.
   let site = {move: "", from: []};
