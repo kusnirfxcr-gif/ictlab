@@ -658,9 +658,17 @@ body[data-view="kouc"] .orb,body.modal .orb{display:none}
 .copop #co-quick{flex-wrap:wrap}
 .copop .chat{max-height:38vh;overflow:auto}
 @media (max-width:859px){.copop{left:8px;right:8px;width:auto;bottom:calc(72px + env(safe-area-inset-bottom));max-height:calc(100vh - 150px)} body.copen .fab,body.copen .orb{display:none} .copop #co-quick{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-bottom:2px} .copop #co-quick .chip{flex:none;white-space:nowrap}}
-.logrow{display:grid;grid-template-columns:1fr 1fr;gap:10px;order:-1}
-.logrow button{display:flex;align-items:center;justify-content:center;gap:8px;padding:14px 12px;font-size:15.5px;font-weight:800;border-radius:16px}
-.logrow svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.logrow{display:flex;align-items:stretch;gap:1px;order:-1;height:60px;border-radius:20px;filter:drop-shadow(0 10px 22px rgba(0,0,0,.35))}
+.logrow button{display:flex;align-items:center;gap:11px;margin:0;border:0;min-height:0;height:100%;font-weight:800}
+.logrow .lg-main{flex:1;min-width:0;justify-content:flex-start;padding:0 16px 0 12px;border-radius:20px 0 0 20px;text-align:left}
+.logrow .lg-ic{display:grid;place-items:center;flex:none;width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,.1)}
+.logrow .lg-ic svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round}
+.logrow .lg-tx{display:flex;flex-direction:column;min-width:0;line-height:1.15}
+.logrow .lg-tx b{font-size:16px;font-weight:800;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.logrow .lg-tx small{font-size:11.5px;font-weight:600;opacity:.62;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.logrow .lg-quick{flex:none;flex-direction:column;justify-content:center;gap:2px;width:78px;padding:0 4px 0 0;border-radius:0 20px 20px 0;background:linear-gradient(160deg,#a855f7,#6d28d9);color:#fff;font-size:11px;font-weight:800;letter-spacing:.04em}
+.logrow .lg-quick svg{width:19px;height:19px;fill:currentColor}
+.logrow button:active{filter:brightness(.92)}
 .card.qlog{max-width:420px;width:100%}
 @media (min-width:860px){.logrow{display:none}}
 @media (max-width:859px){#tb-quick{display:none}}
@@ -1073,11 +1081,17 @@ body.sakura #lr .lr-go{color:#a12c78}
 .cmsg .row{gap:8px;justify-content:flex-end}
 @keyframes fade{from{opacity:0}to{opacity:1}}
 /* guided tour */
-.gtour{position:fixed;inset:0;z-index:90}
-.gtour-hole{position:fixed;border-radius:16px;box-shadow:0 0 0 200vmax rgba(4,4,8,.78);outline:2px solid rgba(183,161,255,.95);outline-offset:3px;transition:left .45s cubic-bezier(.2,.8,.2,1),top .45s cubic-bezier(.2,.8,.2,1),width .45s cubic-bezier(.2,.8,.2,1),height .45s cubic-bezier(.2,.8,.2,1),opacity .3s;pointer-events:none}
-.gtour-hole::after{content:"";position:absolute;inset:-9px;border-radius:22px;border:2px solid rgba(183,161,255,.6);animation:tourp 1.6s ease-out infinite}
-@keyframes tourp{0%{opacity:.9;transform:scale(.98)}100%{opacity:0;transform:scale(1.08)}}
-.gtour-card{position:fixed;left:50%;width:min(360px,calc(100vw - 28px));transform:translateX(-50%);display:flex;flex-direction:column;gap:10px;padding:18px;border-radius:20px;background:#17171d;border:1px solid rgba(183,161,255,.45);color:#f3f3f6;box-shadow:0 24px 60px rgba(0,0,0,.65);transition:top .45s cubic-bezier(.2,.8,.2,1),opacity .25s}
+.gtour{position:fixed;inset:0;z-index:90;animation:gtIn .3s ease both;transition:opacity .26s ease}
+.gtour.out{opacity:0;pointer-events:none}
+.gtour-dim{position:absolute;inset:0;width:100%;height:100%;display:block}
+.gtour-dim path{fill:rgba(4,4,8,.8)}
+.gtour-ring{position:absolute;left:0;top:0;width:0;height:0;border-radius:16px;opacity:0;pointer-events:none;box-shadow:0 0 0 2px rgba(183,161,255,.95),0 0 0 5px rgba(183,161,255,.16),0 0 34px 2px rgba(183,161,255,.4);will-change:transform,width,height}
+.gtour-ring::after{content:"";position:absolute;inset:-8px;border-radius:22px;border:2px solid rgba(183,161,255,.6);animation:tourp 1.8s ease-out infinite}
+@keyframes tourp{0%{opacity:.85;transform:scale(.98)}100%{opacity:0;transform:scale(1.07)}}
+@keyframes gtIn{from{opacity:0}to{opacity:1}}
+.gtour-card{position:fixed;left:50%;top:0;width:min(360px,calc(100vw - 28px));transform:translate3d(-50%,40vh,0);display:flex;flex-direction:column;gap:10px;padding:18px;border-radius:22px;background:rgba(23,23,29,.92);-webkit-backdrop-filter:blur(18px) saturate(1.3);backdrop-filter:blur(18px) saturate(1.3);border:1px solid rgba(183,161,255,.45);color:#f3f3f6;box-shadow:0 24px 60px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,255,255,.08);will-change:transform}
+.gtour-card.on{transition:transform .55s cubic-bezier(.22,.9,.24,1)}
+.gtour-card button:focus-visible{outline:2px solid rgba(183,161,255,.9);outline-offset:2px}
 .gtour-card .k{font-size:11px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:#b7a1ff}
 .gtour-card h3{margin:0;font-size:18px;line-height:1.3;color:#fff}
 .gtour-card p{margin:0;font-size:14.5px;line-height:1.5;color:#c9c9d4}
@@ -1092,7 +1106,7 @@ body.sakura #lr .lr-go{color:#a12c78}
 .gtour-card .k,.gtour-card h3,.gtour-card p{transition:opacity .22s}
 .gtour-card.sw .k,.gtour-card.sw h3,.gtour-card.sw p{opacity:0}
 @media (max-width:440px){.gtour-card .dots{display:none}}
-@media (prefers-reduced-motion:reduce){.gtour-hole,.gtour-card{transition:none}.gtour-hole::after{animation:none}}
+@media (prefers-reduced-motion:reduce){.gtour-card.on{transition:none}.gtour-ring::after{animation:none}}
 /* training: chart drill, weak spots; richer results calendar */
 .train{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .train h2{grid-column:1/-1;margin:0}
@@ -1164,7 +1178,7 @@ body.fx-lite .sk-scene .sk-petals i:nth-child(n+13),body.fx-lite .sk-front i:nth
 body.fx-lite .sk-petals b{animation:none} body.fx-lite .sk-petals u,body.fx-lite .sk-petals i.near u{filter:none;opacity:.9;animation-name:ptspin}
 @keyframes ptspin{to{transform:rotate(360deg)}}
 body.fx-lite .sk-head b{animation:none;background-size:100% 100%} body.fx-lite .sk-emb{filter:none}
-body.fx-lite #lr::after,body.fx-lite .gtour-hole::after{animation:none;display:none}
+body.fx-lite #lr::after,body.fx-lite .gtour-ring::after{animation:none;display:none}
 body.fx-lite .rbw-ring{will-change:auto}
 body.fx-off .sk-scene *,body.fx-off .sk-emb,body.fx-off .sk-head b{animation:none!important} body.fx-off .sk-petals,body.fx-off .sk-bub,body.fx-off .sk-twk,body.fx-off .sk-ribbon,body.fx-off .sk-front,body.fx-off .rbw-ring{display:none!important}
 body.fx-off *,body.fx-off *::before,body.fx-off *::after{animation-duration:.01s!important;animation-iteration-count:1!important;animation-delay:0s!important}
@@ -1228,11 +1242,17 @@ details.lex .lxr b{color:var(--muted);font-size:12px;text-transform:uppercase;le
 .wel .wel-link{background:none;border:0;color:var(--wm);font-size:.85rem;font-weight:600;padding:4px 0;text-decoration:underline;text-underline-offset:3px;align-self:flex-start}
 .wel .wel-bar{position:absolute;left:0;bottom:0;height:3px;width:100%;background:linear-gradient(90deg,var(--w1),var(--w2),var(--w3));transform-origin:left;animation:welBar 4.5s linear both}
 .wel.hold .wel-bar{display:none}
-.wel .wel-th{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
+.wel .wel-card{max-height:calc(100vh - 28px);max-height:calc(100dvh - 28px)}
+.wel .wel-th{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;overflow-y:auto;min-height:0;flex:0 1 auto;padding:3px;margin:-3px;overscroll-behavior:contain;scrollbar-width:none}
+.wel .wel-th::-webkit-scrollbar{display:none}
+.wel .wel-top,.wel .wel-hi,.wel h2,.wel .wel-sub,.wel .wel-go{flex:none}
+
 .wel .wel-th button{display:flex;flex-direction:column;align-items:stretch;gap:7px;padding:8px;text-align:left;border-radius:16px;transition:transform .2s ease,border-color .2s ease}
 .wel .wel-th button[aria-pressed="true"]{border-color:var(--wi);box-shadow:0 0 0 1px var(--wi),0 10px 26px -14px var(--w1);transform:translateY(-2px)}
-.wel .wel-th .sw{height:54px;border-radius:11px;position:relative;overflow:hidden}
+.wel .wel-th .sw{height:50px;border-radius:11px;position:relative;overflow:hidden}
 .wel .wel-th b{font-size:.92rem;padding:0 3px}.wel .wel-th small{font-size:.74rem;color:var(--wm);padding:0 3px;margin-top:-6px}
+@media (max-height:780px){.wel .wel-th .sw{height:38px}.wel .wel-th small{display:none}.wel .wel-th button{gap:4px;padding:7px 7px 5px}.wel .wel-card{gap:10px;padding:20px 20px 18px}.wel h2{font-size:clamp(2rem,9vw,2.6rem)}.wel .wel-sub{font-size:.88rem}}
+@media (max-height:640px){.wel .wel-sub{display:none}.wel .wel-th .sw{height:30px}}
 @keyframes welBg{from{opacity:0}to{opacity:1}}@keyframes welOut{to{opacity:0;transform:scale(1.02)}}@keyframes welIn{from{opacity:0;transform:translateY(22px) scale(.96)}to{opacity:1;transform:none}}
 @keyframes welUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}@keyframes welShine{to{background-position:-250% 0}}@keyframes welSpin{to{--wa:360deg}}
 @keyframes welSheen{0%{left:-80%}55%,100%{left:140%}}@keyframes welFloat{to{transform:translate(6vmax,5vmax) scale(1.08)}}
@@ -2048,6 +2068,25 @@ body.modal #musdock{z-index:30}
 @keyframes musIn{from{opacity:0;transform:translateY(16px) scale(.97)}to{opacity:1;transform:none}}
 html[data-tk="l"] body:not(.sakura) #musdock,body.sakura #musdock{background:rgba(255,255,255,.72);color:#2a1740;border-color:#fff;box-shadow:0 24px 60px -24px rgba(90,40,110,.4)}
 html[data-tk="l"] body:not(.sakura) #musdock .md-head button,html[data-tk="l"] body:not(.sakura) #musdock .md-head a,body.sakura #musdock .md-head button,body.sakura #musdock .md-head a{background:rgba(60,20,80,.07);color:#2a1740}
+.fab{font-size:0}.fab svg{display:block;width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round}
+@media (max-width:859px){.fab{right:17px;width:52px;height:52px}}
+body.sakura .logrow .lg-quick{background:linear-gradient(160deg,#ff8fc5,#e2459a)}
+html[data-t="ametyst"] body:not(.sakura) .logrow .lg-quick{background:linear-gradient(160deg,#c08fff,#8745e2)}
+html[data-tk="d"] body:not(.sakura) .logrow .lg-quick{background:linear-gradient(160deg,var(--th-glow2),var(--th-glow));color:var(--th-priink)}
+:is(html[data-t="bubblegum"] body:not(.sakura),body.sakura.bubble) .logrow .lg-quick{background:linear-gradient(160deg,#ff9cc8,#f0478f);color:#fff}
+/* ---------- cards light up under the pointer or the finger ---------- */
+:root{--chl:rgba(255,255,255,.24);--cgl:rgba(255,255,255,.2);--csp:rgba(255,255,255,.075)}
+html[data-t="ametyst"] body:not(.sakura){--chl:rgba(124,58,237,.45);--cgl:rgba(124,58,237,.42);--csp:rgba(124,58,237,.07)}
+body.sakura,html[data-t="bubblegum"] body:not(.sakura){--chl:rgba(240,71,143,.5);--cgl:rgba(240,71,143,.4);--csp:rgba(240,71,143,.07)}
+.view .card,.view .hero2,.view details.week{transition:border-color .3s ease,box-shadow .35s ease}
+.spot{position:relative}
+.spot::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity .35s ease;background:radial-gradient(340px circle at var(--mx,50%) var(--my,0%),var(--csp),transparent 68%)}
+.spot.lit::after{opacity:1}
+.view .lit:not(#_){border-color:var(--chl);box-shadow:0 0 0 1px rgba(255,255,255,.03),0 22px 54px -26px var(--cgl),inset 0 1px 0 rgba(255,255,255,.07)}
+body.fx-off .spot::after{display:none}
+/* the basic look: a very soft white light behind the page */
+html:not([data-t]) body:not(.sakura) #thbg{display:block}
+html:not([data-t]) body:not(.sakura) #thbg i:first-child{background:radial-gradient(75% 40% at 50% -8%,rgba(255,255,255,.1),transparent 70%),radial-gradient(42% 30% at 100% 46%,rgba(255,255,255,.04),transparent 70%),radial-gradient(46% 32% at 0% 88%,rgba(255,255,255,.035),transparent 70%)}
 .thpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:8px}
 .thp{display:flex;flex-direction:column;gap:8px;align-items:stretch;text-align:left;padding:8px;border-radius:16px;min-height:0}
 .thp .sw{height:54px;border-radius:10px;position:relative;overflow:hidden;border:1px solid rgba(128,128,128,.25)}
@@ -2665,7 +2704,7 @@ html[data-tk="l"] body:not(.sakura) #musdock .md-head button,html[data-tk="l"] b
   <a href="#kouc" data-g="kouc"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg><span>Kouč</span></a>
   <a href="#vice" data-g="vice"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h5v5H5zM14 5h5v5h-5zM5 14h5v5H5zM14 14h5v5h-5z"/></svg><span>Více</span></a>
 </div>
-<button type="button" class="fab" id="fab" aria-label="Zapsat obchod">+</button>
+<button type="button" class="fab" id="fab" aria-label="Zapsat obchod"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
 <a class="orb" id="orb" href="#kouc" aria-label="Otevřít AI kouče" title="AI kouč"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.500l1.700 4.300 4.300 1.700-4.300 1.700L12 16.500l-1.700-4.300L6 10.500l4.300-1.700z"/><path d="M18 15.500l.7 1.800 1.800.7-1.800.7-.7 1.800-.7-1.800-1.800-.7 1.800-.7z"/></svg></a>
 <script>
 (function(){
@@ -5903,9 +5942,10 @@ html[data-tk="l"] body:not(.sakura) #musdock .md-head button,html[data-tk="l"] b
   function openQuick(){ const o = overlay("qlog"), head = el("div","row"), xb = el("button","ck-del","Zavřít"), box = el("div","list"); xb.type = "button"; xb.addEventListener("click", o.close); box.id = "d-quick";
     head.appendChild(el("h2", null, "Rychlý zápis")); head.appendChild(xb); o.card.appendChild(head); o.card.appendChild(el("p","small muted","Trh, směr a výsledek. Zbytek doplníš později klepnutím na obchod.")); o.card.appendChild(box);
     qlClose = o.close; o.ov.onclose = () => { qlClose = null; }; renderQuick(true); const f = box.querySelector("input"); if (f) try { f.focus({preventScroll: true}); } catch(e){} }
-  function logRow(){ const r = el("div","logrow"), q = el("button", null, "Rychlý zápis"), a = el("button","primary","Podrobný zápis"); q.type = a.type = "button"; q.className = "lq";
-    q.insertAdjacentHTML("afterbegin", '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 3L5 14h6l-1 7 8-11h-6z"/></svg>'); a.insertAdjacentHTML("afterbegin", '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>');
-    q.addEventListener("click", openQuick); a.addEventListener("click", () => openTradeForm()); r.appendChild(q); r.appendChild(a); return r; }
+  function logRow(){ const r = el("div","logrow"), q = el("button","lg-quick"), a = el("button","primary lg-main"), tx = el("span","lg-tx"); q.type = a.type = "button";
+    a.insertAdjacentHTML("afterbegin", '<i class="lg-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></i>'); tx.appendChild(el("b", null, "Zapsat obchod")); tx.appendChild(el("small", null, "Podrobný zápis se vším")); a.appendChild(tx);
+    q.insertAdjacentHTML("afterbegin", '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.2 2.5 5 13.4h5.6l-1 8.1L18 10.4h-5.7z"/></svg>'); q.appendChild(el("span", null, "Rychle")); q.title = "Rychlý zápis"; q.setAttribute("aria-label", "Rychlý zápis");
+    q.addEventListener("click", openQuick); a.addEventListener("click", () => openTradeForm()); r.appendChild(a); r.appendChild(q); return r; }
   { const v = $("v-prehled"), r = logRow(); r.id = "d-log"; v.insertBefore(r, v.firstChild);
     const tq = el("button", null, "Rychlý zápis"); tq.type = "button"; tq.id = "tb-quick"; tq.addEventListener("click", openQuick); $("tb-new").parentNode.insertBefore(tq, $("tb-new")); $("tb-new").textContent = "+ Podrobný zápis"; }
 
@@ -6074,8 +6114,8 @@ html[data-tk="l"] body:not(.sakura) #musdock .md-head button,html[data-tk="l"] b
     document.body.appendChild(h); setTimeout(() => h.remove(), 1100); } }
   const CG_SEL = "button,.abtn,.chip,a.go,.tb-acc,.prem-btn,.subnav a,.nav1 a,.bottombar a,.vgrid a,summary";
   // the light lives in a layer above the page, so no container can crop it; it is cut out where the button is, so it only shows around it, as if it came from behind
-  const cgTarget = t => (t && t.closest(".tb-trade")) || t;
-  const cgKind = t => document.body.classList.contains("sakura") ? (t.matches(".primary,.prem-btn,.tb-trade") ? " pink rbw" : " pink") : (t.matches(".primary,.prem-btn,.mo-gold,.tb-trade") ? " rbw" : "");
+  const cgTarget = t => (t && t.closest(".tb-trade,.logrow")) || t;
+  const cgKind = t => document.body.classList.contains("sakura") ? (t.matches(".primary,.prem-btn,.tb-trade,.logrow") ? " pink rbw" : " pink") : (t.matches(".primary,.prem-btn,.mo-gold,.tb-trade,.logrow") ? " rbw" : "");
   const cgStar = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5 14.2 9.8 22.5 12l-8.3 2.2L12 22.5l-2.2-8.3L1.5 12l8.3-2.2z"/></svg>';
   function cgSpawn(t, cls){ const g = el("span","cg-orbit" + cls + cgKind(t)), P = 4; g.setAttribute("aria-hidden","true"); let last = "";
     const place = () => { if (!g.isConnected) return; if (!t.isConnected){ g.remove(); return; } const r = t.getBoundingClientRect(), w = r.width, h = r.height; if (w < 8 || h < 8){ g.remove(); return; }
@@ -6355,31 +6395,57 @@ html[data-tk="l"] body:not(.sakura) #musdock .md-head button,html[data-tk="l"] b
     const STEPS = [
       {t: "Vítej v Tape", p: "Ukážu ti za minutu, kde co je. Kdykoli to můžeš přeskočit a pustit znovu z Nápovědy."},
       {h: "prehled", s: nav("prehled"), t: "Přehled", p: "Úvodní stránka. Vidíš tu sérii dní, dnešní cíl a poslední obchody."},
-      {h: "prehled", s: ["#d-log", "#tb-quick"], t: "Zápis obchodu", p: "Rychlý zápis je na pár ťuknutí hned po obchodu. Podrobný zápis má všechno: setup, emoce, screenshot i poznámky."},
+      {h: "prehled", s: ["#d-log", ".tb-trade", "#tb-quick"], t: "Zápis obchodu", p: "Jedno tlačítko, dvě cesty. Velká část otevře podrobný zápis se setupem, emocemi a screenshotem. Blesk vpravo je rychlý zápis na pár ťuknutí hned po obchodu."},
       {h: "denik", s: nav("denik"), t: "Deník", p: "Plán dne, všechny obchody a statistiky. Tady zjistíš, co ti funguje a kde chybuješ."},
       {h: "laura", s: nav("uceni"), t: "Učení", p: "Škola price action od nuly. Má vlastní barvy, takže hned poznáš, že jsi v ní."},
       {h: "laura", s: ["#lr"], t: "Tady jsi skončil", p: "Karta nahoře si pamatuje, kde ses učil naposledy. Jedno ťuknutí a jsi zpátky na stejném místě."},
       {h: "laura", s: ["#subnav"], t: "Tři části učení", p: "Obrázky a lekce jsou krátká témata a kartičky. Kurz 12 týdnů je hlavní cesta lekci po lekci. Studium ICT jde do hloubky."},
       {h: "prehled", s: ["#orb"], t: "AI kouč", p: "Kulaté tlačítko otevře okno s koučem. Zeptej se na pojem, lekci nebo na svoje obchody."},
       {h: "prehled", s: ["#tb-acc"], t: "Účet", p: "Přihlášení a synchronizace. S účtem máš deník i postup na všech zařízeních."},
-      {h: "prehled", s: nav("vice"), t: "Více", p: "Nástroje, backtest, nastavení a nápověda. Průvodce tu najdeš znovu pod Nápovědou."}
+      {h: "prehled", s: nav("vice"), t: "Více", p: "Nástroje, backtest, nastavení a nápověda. Průvodce tu najdeš znovu pod Nápovědou. Teď si ještě vyber vzhled, ve kterém ti bude Tape nejvíc sedět."}
     ];
-    function tourStart(){ if (tv) return; let i = 0; const ov = el("div","gtour"), hole = el("div","gtour-hole"), card = el("div","gtour-card"); ov.appendChild(hole); ov.appendChild(card); document.body.appendChild(ov); tv = ov;
-      let cur = null; const place = () => { const st = STEPS[i], n = cur, vw = innerWidth, vh = innerHeight;
-        if (!n){ hole.style.opacity = "0"; hole.style.left = vw / 2 + "px"; hole.style.top = vh / 2 + "px"; hole.style.width = hole.style.height = "0px"; card.style.top = Math.max(20, vh / 2 - card.offsetHeight / 2) + "px"; return; }
-        const r = n.getBoundingClientRect(), pad = 6; hole.style.opacity = "1"; hole.style.left = r.left - pad + "px"; hole.style.top = r.top - pad + "px"; hole.style.width = r.width + pad * 2 + "px"; hole.style.height = r.height + pad * 2 + "px";
-        const ch = card.offsetHeight, below = r.bottom + 18, above = r.top - 18 - ch; card.style.top = (below + ch < vh - 10 ? below : above > 10 ? above : Math.max(10, vh - ch - 10)) + "px"; };
-      const end = () => { try { localStorage.setItem(TK, "1"); } catch(e){} removeEventListener("resize", place); removeEventListener("scroll", place, true); ov.remove(); tv = null; if (location.hash !== "#prehled") location.hash = "#prehled"; };
+    function tourStart(){ if (tv) return; let i = 0; const ov = el("div","gtour"), ring = el("div","gtour-ring"), card = el("div","gtour-card"), NS = "http://www.w3.org/2000/svg", svg = document.createElementNS(NS, "svg"), path = document.createElementNS(NS, "path");
+      svg.setAttribute("class", "gtour-dim"); svg.setAttribute("aria-hidden", "true"); path.setAttribute("fill-rule", "evenodd"); svg.appendChild(path); ov.appendChild(svg); ov.appendChild(ring); ov.appendChild(card); document.body.appendChild(ov); tv = ov;
+      let cur = null, R = null, anim = 0, seq = 0, busy = false, raf = 0, first = true, still = false; try { still = window.matchMedia("(prefers-reduced-motion: reduce)").matches; } catch(e){}
+      // the dark layer is one shape with a rounded opening; moving the opening only repaints, it never reflows the page
+      const paint = r => { const vw = innerWidth, vh = innerHeight, f = v => v.toFixed(1); let d = "M0 0H" + vw + "V" + vh + "H0Z";
+        if (r && r.w > 1 && r.h > 1){ const q = Math.min(16, r.w / 2, r.h / 2), x = r.x, y = r.y, w = r.w, h = r.h, A = "A" + f(q) + " " + f(q) + " 0 0 1 ";
+          d += "M" + f(x + q) + " " + f(y) + "H" + f(x + w - q) + A + f(x + w) + " " + f(y + q) + "V" + f(y + h - q) + A + f(x + w - q) + " " + f(y + h) + "H" + f(x + q) + A + f(x) + " " + f(y + h - q) + "V" + f(y + q) + A + f(x + q) + " " + f(y) + "Z";
+          ring.style.transform = "translate3d(" + f(x) + "px," + f(y) + "px,0)"; ring.style.width = f(w) + "px"; ring.style.height = f(h) + "px"; ring.style.opacity = r.o == null ? "1" : String(r.o); R = r; }
+        else { ring.style.opacity = "0"; R = null; }
+        path.setAttribute("d", d); };
+      const rectOf = n => { const c = n.getBoundingClientRect(), p = 6; return {x: c.left - p, y: c.top - p, w: c.width + p * 2, h: c.height + p * 2, o: 1}; };
+      const mix = (p, q, t) => p + (q - p) * t;
+      const glide = (to, ms, done) => { const id = ++anim, from = R; if (!from && !to){ paint(null); if (done) done(); return; }
+        const p = from || {x: to.x + to.w / 2, y: to.y + to.h / 2, w: 0, h: 0, o: 0}, q = to || {x: p.x + p.w / 2, y: p.y + p.h / 2, w: 0, h: 0, o: 0};
+        if (still || ms <= 0){ paint(to); if (done) done(); return; } const t0 = performance.now();
+        const step = now => { if (id !== anim || !tv) return; const t = Math.min(1, (now - t0) / ms), e = t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+          paint(t >= 1 ? to : {x: mix(p.x, q.x, e), y: mix(p.y, q.y, e), w: mix(p.w, q.w, e), h: mix(p.h, q.h, e), o: mix(p.o == null ? 1 : p.o, q.o == null ? 1 : q.o, e)});
+          if (t < 1) requestAnimationFrame(step); else if (done) done(); }; requestAnimationFrame(step); };
+      const placeCard = r => { const vh = innerHeight, ch = card.offsetHeight; let y;
+        if (!r) y = Math.max(20, vh / 2 - ch / 2); else { const below = r.y + r.h + 14, above = r.y - 14 - ch; y = below + ch < vh - 10 ? below : above > 10 ? above : Math.max(10, vh - ch - 10); }
+        card.style.transform = "translate3d(-50%," + Math.round(y) + "px,0)"; };
+      const sync = () => { if (busy || !tv) return; cancelAnimationFrame(raf); raf = requestAnimationFrame(() => { if (busy || !tv) return; anim++; const r = cur && cur.isConnected ? rectOf(cur) : null; paint(r); placeCard(r); }); };
+      const end = skipped => { if (!tv) return; try { localStorage.setItem(TK, "1"); } catch(e){} removeEventListener("resize", sync); removeEventListener("scroll", sync, true); anim++; seq++; tv = null; ov.classList.add("out"); setTimeout(() => ov.remove(), 280);
+        if (location.hash !== "#prehled") location.hash = "#prehled";
+        // right after the tour: pick a look (the first time it leads on to the welcome)
+        setTimeout(() => { try { if (document.body.classList.contains("sakura") || document.querySelector(".ob,.wel")) return; let asked = true; try { asked = localStorage.getItem(THEME_ASK) === "1"; } catch(e){}
+          if (!asked){ try { sessionStorage.setItem("tape-hi", "1"); } catch(e){} welcomeShow(); } else if (!skipped) welcomeShow({only: true}); } catch(e){} }, 420); };
       const kEl = el("span","k"), hEl = el("h3"), pEl = el("p"), tr = el("div","tr"), dots = el("div","dots"), tb = el("div","tb"), skip = el("button","skip","Přeskočit"), back = el("button", null, "Zpět"), next = el("button","primary","Další"); skip.type = back.type = next.type = "button";
       STEPS.forEach(() => dots.appendChild(el("i"))); tb.appendChild(back); tb.appendChild(next); tr.appendChild(skip); tr.appendChild(dots); tr.appendChild(tb); card.appendChild(kEl); card.appendChild(hEl); card.appendChild(pEl); card.appendChild(tr);
-      skip.addEventListener("click", end); back.addEventListener("click", () => { if (i > 0){ i--; show(); } }); next.addEventListener("click", () => { if (i === STEPS.length - 1) end(); else { i++; show(); } });
-      let first = true; const show = () => { const st = STEPS[i]; card.classList.add("sw"); if (st.h && location.hash !== "#" + st.h) location.hash = "#" + st.h;
-        setTimeout(() => { cur = st.s ? pick(st.s) : null; if (st.s && !cur){ if (i < STEPS.length - 1){ i++; show(); } else end(); return; }
+      skip.addEventListener("click", () => end(true)); back.addEventListener("click", () => { if (i > 0){ i--; show(); } }); next.addEventListener("click", () => { if (i === STEPS.length - 1) end(false); else { i++; show(); } });
+      const show = () => { const st = STEPS[i], my = ++seq, turn = !!(st.h && location.hash !== "#" + st.h); let tries = 0; busy = true; card.classList.add("sw");
+        const go = () => { if (my !== seq || !tv) return; cur = st.s ? pick(st.s) : null;
+          if (st.s && !cur){ if (++tries < 14){ setTimeout(go, 70); return; } if (i < STEPS.length - 1){ i++; show(); } else end(false); return; }
           if (cur && getComputedStyle(cur).position !== "fixed" && !cur.closest("nav, header, .orb")){ try { cur.scrollIntoView({block: "center"}); } catch(e){} }
           kEl.textContent = "Průvodce · " + (i + 1) + " z " + STEPS.length; hEl.textContent = st.t; pEl.textContent = st.p; Array.prototype.forEach.call(dots.children, (d, k) => d.classList.toggle("on", k === i));
-          next.textContent = i === STEPS.length - 1 ? "Hotovo" : i === 0 ? "Jdeme na to" : "Další"; back.style.display = i > 0 ? "" : "none"; skip.style.visibility = i === STEPS.length - 1 ? "hidden" : "";
-          setTimeout(() => { place(); card.classList.remove("sw"); if (first){ first = false; next.focus({preventScroll: true}); } }, 60); setTimeout(place, 500); }, st.h ? 260 : 30); };
-      addEventListener("resize", place); addEventListener("scroll", place, true); ov.addEventListener("keydown", ev => { if (ev.key === "Escape"){ ev.stopPropagation(); end(); } }); show(); }
+          next.textContent = i === STEPS.length - 1 ? "Vybrat vzhled" : i === 0 ? "Jdeme na to" : "Další"; back.style.display = i > 0 ? "" : "none"; skip.style.visibility = i === STEPS.length - 1 ? "hidden" : "";
+          requestAnimationFrame(() => { if (my !== seq || !tv) return; const r = cur ? rectOf(cur) : null; placeCard(r); card.classList.remove("sw");
+            if (first){ first = false; requestAnimationFrame(() => card.classList.add("on")); try { next.focus({preventScroll: true}); } catch(e){} }
+            glide(r, turn ? 380 : 520, () => { if (my !== seq) return; busy = false; sync(); setTimeout(sync, 450); }); }); };
+        // a step on another page: close the opening, switch the page under the dark layer, open it again on the new spot
+        if (turn) glide(null, 200, () => { if (my !== seq || !tv) return; location.hash = "#" + st.h; setTimeout(go, 150); }); else setTimeout(go, first ? 30 : 130); };
+      paint(null); addEventListener("resize", sync); addEventListener("scroll", sync, true); ov.addEventListener("keydown", ev => { if (ev.key === "Escape"){ ev.stopPropagation(); end(true); } }); show(); }
     $("tour-start").addEventListener("click", tourStart);
     let tries = 0, calm = 0; const auto = setInterval(() => { let seen = "1"; try { seen = localStorage.getItem(TK); } catch(e){} if (seen || ++tries > 300){ clearInterval(auto); return; }
       if (!profile || document.querySelector(".ob, .cmsg, .copop:not([hidden])") || document.body.classList.contains("modal")){ calm = 0; return; } if (++calm < 3) return; clearInterval(auto); tourStart(); }, 1200);
@@ -7543,6 +7609,18 @@ html[data-tk="l"] body:not(.sakura) #musdock .md-head button,html[data-tk="l"] b
     Object.defineProperty(P, "shadowBlur", {configurable: true, get: dB.get, set(v){ dB.set.call(this, P0.light ? Math.min(v, 22) : P0.glass ? Math.min(v, 36) : v); }});
     G.addColorStop = function(o, c){ return aC.call(this, o, map(c)); };
     try { return await draw(); } finally { Object.defineProperty(P, "fillStyle", dF); Object.defineProperty(P, "strokeStyle", dS); Object.defineProperty(P, "shadowColor", dH); Object.defineProperty(P, "shadowBlur", dB); G.addColorStop = aC; cardGl = null; } }
+  // ---------- cards light up under the pointer (or the finger on a phone) ----------
+  { let litCard = null, lx = 0, ly = 0, lraf = 0, ltm = 0;
+    const cardAt = t => { const c = t && t.closest ? t.closest(".view .card,.view .hero2,.view details.week") : null; if (!c) return null;
+      if (!c.classList.contains("spot") && c.dataset.nospot !== "1"){ let free = true; try { const a = getComputedStyle(c, "::after").content, p = getComputedStyle(c).position; free = (a === "none" || a === "normal") && (p === "static" || p === "relative"); } catch(e){ free = false; }
+        if (free) c.classList.add("spot"); else c.dataset.nospot = "1"; }
+      return c; };
+    const unlit = () => { clearTimeout(ltm); if (litCard){ litCard.classList.remove("lit"); litCard = null; } };
+    const aim = () => { lraf = 0; const c = litCard; if (!c || !c.isConnected) return; const r = c.getBoundingClientRect(); c.style.setProperty("--mx", (lx - r.left).toFixed(0) + "px"); c.style.setProperty("--my", (ly - r.top).toFixed(0) + "px"); };
+    const light = (ev, hold) => { const c = cardAt(ev.target); lx = ev.clientX; ly = ev.clientY; if (c !== litCard){ unlit(); litCard = c; if (c) c.classList.add("lit"); } if (c && !lraf) lraf = requestAnimationFrame(aim); if (hold){ clearTimeout(ltm); ltm = setTimeout(unlit, hold); } };
+    document.addEventListener("pointermove", ev => { if (ev.pointerType === "touch") light(ev, 650); else light(ev, 0); }, {passive: true});
+    document.addEventListener("pointerdown", ev => { if (ev.pointerType === "touch") light(ev, 900); }, {passive: true});
+    document.addEventListener("pointerleave", unlit); window.addEventListener("blur", unlit); window.addEventListener("hashchange", unlit); }
   // ---------- music for focus: Spotify or YouTube player that stays while you move around the app ----------
   const MUS = [
     {k: "deep", n: "Deep Focus", d: "Klidná ambientní hudba", src: "Spotify", u: "https://open.spotify.com/playlist/37i9dQZF1DWZeKCadgRdKQ", art: "radial-gradient(80% 90% at 20% 10%,#3b82f6,transparent 70%),radial-gradient(80% 90% at 100% 90%,#14b8a6,transparent 70%),#0b1530"},
