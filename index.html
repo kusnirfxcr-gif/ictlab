@@ -5004,11 +5004,13 @@ html[data-t="bubblegum"] body:not(.sakura) .orb::after,body.sakura.bubble .orb::
       Array.prototype.forEach.call(fmtBox.children, b => b.setAttribute("aria-pressed", String(b.dataset.v === cfg.card.fmt))); Array.prototype.forEach.call(unitBox.children, b => b.setAttribute("aria-pressed", String(b.dataset.v === cfg.card.unit)));
       try { if (document.fonts && document.fonts.load) await document.fonts.load("800 60px 'Plus Jakarta Sans'"); } catch(e){}
       Array.prototype.forEach.call(langBox2.children, b => b.setAttribute("aria-pressed", String(b.dataset.v === cardLang())));
-      const c = cardLang() === "en" ? await cardInEnglish(() => draw({fmt: cfg.card.fmt, unit: cfg.card.unit})) : await draw({fmt: cfg.card.fmt, unit: cfg.card.unit}); if (my !== busy) return; cv = c; clear(hold); hold.appendChild(c); };
+      Array.prototype.forEach.call(lookBox.children, b => b.setAttribute("aria-pressed", String(b.dataset.v === (cfg.card.look || "app"))));
+      const d0 = () => draw({fmt: cfg.card.fmt, unit: cfg.card.unit}), d1 = () => cardThemed(d0), c = cardLang() === "en" ? await cardInEnglish(d1) : await d1(); if (my !== busy) return; cv = c; clear(hold); hold.appendChild(c); };
+    const lookBox = el("div","chips"); [["app","Podle vzhledu aplikace"],["dark","Klasická tmavá"]].forEach(u => { const b = el("button","chip", u[1]); b.type = "button"; b.dataset.v = u[0]; b.addEventListener("click", () => { cfg.card.look = u[0]; cfgStore(); paint(); }); lookBox.appendChild(b); });
     [["cs","Česky"],["en","English"]].forEach(u => { const b = el("button","chip", u[1]); b.type = "button"; b.dataset.v = u[0]; b.addEventListener("click", () => { cfg.card.lang = u[0]; cfgStore(); paint(); }); langBox2.appendChild(b); });
     Object.keys(CARD_FMT).forEach(k => { const b = el("button","chip", CARD_FMT[k][2]); b.type = "button"; b.dataset.v = k; b.addEventListener("click", () => { cfg.card.fmt = k; cfgStore(); paint(); }); fmtBox.appendChild(b); });
     [["R","Jen R"],["$","Jen dolary"],["both","R i dolary"]].filter(u => units.indexOf(u[0]) >= 0).forEach(u => { const b = el("button","chip", u[1]); b.type = "button"; b.dataset.v = u[0]; b.addEventListener("click", () => { cfg.card.unit = u[0]; cfgStore(); paint(); }); unitBox.appendChild(b); });
-    card.appendChild(fmtBox); if (unitBox.children.length > 1) card.appendChild(unitBox); card.appendChild(langBox2); if (extra) extra(card, () => paint()); card.appendChild(hold); hold.appendChild(el("p","small muted","Kreslím…"));
+    card.appendChild(fmtBox); if (unitBox.children.length > 1) card.appendChild(unitBox); card.appendChild(langBox2); card.appendChild(lookBox); if (extra) extra(card, () => paint()); card.appendChild(hold); hold.appendChild(el("p","small muted","Kreslím…"));
     const blob = () => new Promise(res => cv.toBlob(res, "image/png")), save = async () => { const a = document.createElement("a"); a.href = URL.createObjectURL(await blob()); a.download = name; document.body.appendChild(a); a.click(); a.remove(); };
     const mk = (txt, fn, cls) => { const b = el("button", cls || null, txt); b.type = "button"; b.addEventListener("click", () => { if (cv) fn(); }); ctl.appendChild(b); };
     mk("Sdílet", async () => { const f = new File([await blob()], name, {type: "image/png"}); if (navigator.canShare && navigator.canShare({files: [f]})){ try { await navigator.share({files: [f]}); } catch(e){} } else save(); }, "primary");
@@ -7399,6 +7401,29 @@ html[data-t="bubblegum"] body:not(.sakura) .orb::after,body.sakura.bubble .orb::
   }
   { const _tkR = tkRow; tkRow = function(t){ const b = _tkR(t), old = b.querySelector(".symb"); if (old){ const fl = el("span","tk-flag"); fl.innerHTML = US_FLAG; fl.title = "USA · CME"; old.replaceWith(fl); }
       const c = tkChart(t); if (c){ const w = el("div","tk-ch"); w.innerHTML = c; b.appendChild(w); b.classList.add("has-ch"); } return b; }; try { renderHomeTrades(); } catch(e){} }
+
+  // ---------- share cards follow the app theme: colours are remapped while the card is drawn ----------
+  const CARD_PAL = {
+    ametyst: ["#f7f3ff","#ffffff","#efe7ff","#e0d5fa","#2a1759","#75679f","#a99cc9","#0b8a68","#d42a52","#a86200"],
+    navy: ["#081226","#0f1e3f","#16294f","#22396b","#e9f0ff","#8ea4d0","#5d72a0","#3fe0a8","#ff7a90","#ffc46b"],
+    blossom: ["#1a0e2b","#2a173f","#35204d","#4a2d66","#ffeaf6","#cfa6cc","#9a7499","#7fe8d6","#ff8fa8","#ffcf8a"],
+    zatmeni: ["#050505","#0f0f0e","#191816","#2a2824","#f6f3ec","#948f83","#66625a","#a5e3bd","#f08d7f","#f3d9a0"],
+    aurora: ["#03070b","#0c171b","#13232a","#1f3238","#eefcf8","#8aa7a3","#5c7672","#7df0cf","#ff93a8","#ffd58a"],
+    opal: ["#0a0b11","#13141d","#1c1e2a","#2a2c3c","#f3f4fb","#9195ad","#61657d","#b6fff0","#ffb1c8","#fff1c2"],
+    bubblegum: ["#fff3f9","#ffffff","#fff0f7","#f7cfe3","#4f2244","#9a6f90","#c49bb8","#0e9470","#e0365e","#b86a00"],
+    sakura: ["#fff4fa","#ffffff","#ffeaf5","#f5c6df","#43163f","#8d5f88","#c09ab8","#0f9d77","#e23d5e","#bf7410"]};
+  function cardPal(){ if ((cfg.card && cfg.card.look) === "dark") return null; if (document.body.classList.contains("sakura")) return CARD_PAL[document.body.classList.contains("bubble") ? "bubblegum" : "sakura"]; return CARD_PAL[cfg.theme] || null; }
+  async function cardThemed(draw){ const p = cardPal(); if (!p) return draw();
+    const h2r = h => [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)], rgba = (h, a) => { const c = h2r(h); return "rgba(" + c[0] + "," + c[1] + "," + c[2] + "," + a + ")"; };
+    const M = {"#09090b": p[0], "#0b0b0d": p[0], "#101014": p[1], "#111114": p[1], "#131316": p[1], "#17171b": p[2], "#1b1b1f": p[2], "#26262c": p[3], "#2c2c33": p[3], "#24242a": p[3], "#f5f5f6": p[4], "#f4f4f5": p[4], "#e9e9ee": p[4], "#ffffff": p[4], "#fff": p[4], "#8e8e98": p[5], "#5c5c66": p[6], "#6e6e7a": p[6], "#3ddc97": p[7], "#ff6b6b": p[8], "#f2b560": p[9]};
+    const map = v => { if (typeof v !== "string") return v; const k = v.trim().toLowerCase(); if (M[k]) return M[k]; const m = k.match(/^rgba\((\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)$/); if (!m) return v;
+      const key = m[1] + "," + m[2] + "," + m[3]; if (key === "61,220,151") return rgba(p[7], m[4]); if (key === "255,107,107") return rgba(p[8], m[4]); if (key === "255,255,255") return rgba(p[4], m[4]); if (key === "0,0,0") return rgba(p[0] === "#ffffff" ? "#000000" : p[0], m[4]); return v; };
+    const P = CanvasRenderingContext2D.prototype, G = CanvasGradient.prototype, dF = Object.getOwnPropertyDescriptor(P, "fillStyle"), dS = Object.getOwnPropertyDescriptor(P, "strokeStyle"), dH = Object.getOwnPropertyDescriptor(P, "shadowColor"), aC = G.addColorStop;
+    Object.defineProperty(P, "fillStyle", {configurable: true, get: dF.get, set(v){ dF.set.call(this, map(v)); }});
+    Object.defineProperty(P, "strokeStyle", {configurable: true, get: dS.get, set(v){ dS.set.call(this, map(v)); }});
+    Object.defineProperty(P, "shadowColor", {configurable: true, get: dH.get, set(v){ dH.set.call(this, map(v)); }});
+    G.addColorStop = function(o, c){ return aC.call(this, o, map(c)); };
+    try { return await draw(); } finally { Object.defineProperty(P, "fillStyle", dF); Object.defineProperty(P, "strokeStyle", dS); Object.defineProperty(P, "shadowColor", dH); G.addColorStop = aC; } }
   // ---------- moving to a new address without losing data ----------
   // data/site.json: {"move": "https://new-address", "from": ["https://old-address"]}. The old site hands the data to the new one in a window the person opens.
   let site = {move: "", from: []};
