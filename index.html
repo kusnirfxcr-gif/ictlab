@@ -2070,7 +2070,7 @@ body.modal #musdock{z-index:30}
 #musdock .md-head svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 #musdock .md-eq{color:var(--mc,#7df0cf)}
 #musdock .md-body{padding:0 8px 8px;transition:height .3s ease}
-#musdock .md-body iframe{display:block;width:100%;border:0;border-radius:13px;background:#000}
+#musdock .md-body iframe{display:block;width:100%;border:0;border-radius:13px;background:transparent;color-scheme:normal}
 #musdock.min{width:auto;max-width:calc(100vw - 110px)}#musdock.min .md-head .t{max-width:42vw}#musdock.min .md-head .t small{display:none}#musdock.min .md-body{height:0;padding:0;overflow:hidden}
 #musdock.min .md-body iframe{height:1px!important}
 @keyframes musIn{from{opacity:0;transform:translateY(16px) scale(.97)}to{opacity:1;transform:none}}
@@ -7839,7 +7839,7 @@ html body .wel.lt .wel-go:not(:disabled):hover,html body .wel.lt button.primary:
     {k: "synth", n: "Synthwave rádio", d: "Energie na backtest", src: "YouTube", u: "https://www.youtube.com/watch?v=4xDzrJKXOOY", art: "radial-gradient(80% 90% at 20% 0%,#ec4899,transparent 70%),radial-gradient(80% 90% at 100% 100%,#22d3ee,transparent 70%),#140726"}];
   const musGet = () => { try { return JSON.parse(localStorage.getItem("tape-music") || "null"); } catch(e){ return null; } }, musSet = v => { try { localStorage.setItem("tape-music", JSON.stringify(v)); } catch(e){} };
   function musParse(url){ const u = String(url || "").trim(); let m = u.match(/open\.spotify\.com\/(?:intl-[a-z]+\/)?(playlist|album|track|artist|episode|show)\/([A-Za-z0-9]{10,40})/);
-    if (m) return {src: "Spotify", emb: "https://open.spotify.com/embed/" + m[1] + "/" + m[2] + "?utm_source=generator&theme=0", open: "https://open.spotify.com/" + m[1] + "/" + m[2], h: m[1] === "track" || m[1] === "episode" || innerWidth < 700 ? 152 : 232};
+    if (m) return {src: "Spotify", emb: "https://open.spotify.com/embed/" + m[1] + "/" + m[2] + "?utm_source=generator&theme=0", open: "https://open.spotify.com/" + m[1] + "/" + m[2], h: 152};
     const v = (u.match(/(?:youtube\.com\/(?:watch\?(?:.*&)?v=|live\/|shorts\/|embed\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/) || [])[1], l = (u.match(/[?&]list=([A-Za-z0-9_-]{10,})/) || [])[1];
     if (/youtu/.test(u) && (v || l)) return {src: "YouTube", emb: "https://www.youtube-nocookie.com/embed/" + (v || "videoseries") + "?autoplay=1&rel=0&modestbranding=1" + (l ? "&list=" + l : ""), open: (/music\.youtube/.test(u) ? "https://music.youtube.com/" : "https://www.youtube.com/") + (v ? "watch?v=" + v + (l ? "&list=" + l : "") : "playlist?list=" + l), h: 0};
     return null; }
