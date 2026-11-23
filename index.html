@@ -1195,16 +1195,49 @@ details.lex .lxr b{color:var(--muted);font-size:12px;text-transform:uppercase;le
 .arrive{animation:arrIn .5s cubic-bezier(.2,.8,.2,1) both,arrGlow 1.4s ease-out both}
 @keyframes arrIn{from{opacity:.25;transform:translateY(10px)}to{opacity:1;transform:none}}
 @keyframes arrGlow{0%,35%{box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 70%,transparent),0 0 28px color-mix(in srgb,var(--accent) 35%,transparent)}100%{box-shadow:0 0 0 0 transparent}}
-.wel{position:fixed;inset:0;z-index:45;display:flex;align-items:center;justify-content:center;padding:18px;background:rgba(5,5,7,.72);animation:welBg .35s ease both}
-.wel.out{animation:welOut .3s ease both}
-.wel .card{max-width:400px;width:100%;gap:12px;animation:welIn .45s cubic-bezier(.2,.8,.2,1) both;position:relative;overflow:hidden}
-.wel h2{font-size:1.55rem;line-height:1.15;margin:0}.wel .wel-sub{color:var(--muted)}
-.wel .wel-stats{display:flex;gap:8px;flex-wrap:wrap}.wel .wel-stats span{border:1px solid var(--line);border-radius:999px;padding:5px 11px;font-size:.85rem;background:var(--surface2)}
-.wel form{display:flex;gap:8px}.wel form input{flex:1;min-width:0}
-.wel .wel-bar{position:absolute;left:0;bottom:0;height:3px;background:var(--accent);transform-origin:left;animation:welBar 4s linear both}
+.wel{position:fixed;inset:0;z-index:45;display:flex;align-items:center;justify-content:center;padding:18px;background:var(--wbg,#07070b);animation:welBg .45s ease both;overflow:hidden;--w1:#a855f7;--w2:#38bdf8;--w3:#3ddc97;--wi:#fff;--wm:rgba(255,255,255,.66);--wg:rgba(255,255,255,.07);--wl:rgba(255,255,255,.16);transition:background .5s ease}
+.wel.out{animation:welOut .35s ease both}
+.wel .wel-blob{position:absolute;width:70vmax;height:70vmax;border-radius:50%;filter:blur(60px);opacity:.55;pointer-events:none;transition:background .6s ease;animation:welFloat 14s ease-in-out infinite alternate}
+.wel .wel-blob.b1{background:radial-gradient(circle,var(--w1),transparent 62%);left:-30vmax;top:-34vmax}
+.wel .wel-blob.b2{background:radial-gradient(circle,var(--w2),transparent 62%);right:-34vmax;top:4vmax;animation-delay:-5s;animation-duration:17s}
+.wel .wel-blob.b3{background:radial-gradient(circle,var(--w3),transparent 62%);left:-6vmax;bottom:-42vmax;animation-delay:-9s;animation-duration:19s}
+.wel.lt .wel-blob{opacity:.6}
+.wel .wel-card{position:relative;max-width:430px;width:100%;display:flex;flex-direction:column;gap:14px;padding:26px 24px 24px;border-radius:28px;background:var(--wg);border:1px solid var(--wl);-webkit-backdrop-filter:blur(26px) saturate(1.4);backdrop-filter:blur(26px) saturate(1.4);box-shadow:0 40px 90px -40px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,255,255,.18);color:var(--wi);animation:welIn .6s cubic-bezier(.2,.8,.2,1) both;overflow:hidden;isolation:isolate}
+.wel.lt .wel-card{box-shadow:0 40px 90px -40px rgba(80,30,90,.35),inset 0 1px 0 #fff}
+.wel .wel-card::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.5px;background:conic-gradient(from var(--wa,0deg),transparent 0 20%,var(--w1) 30%,var(--w2) 42%,transparent 52% 70%,var(--w3) 80%,transparent 90%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:welSpin 6s linear infinite;opacity:.9;pointer-events:none;z-index:-1}
+.wel .wel-card::after{content:"";position:absolute;top:-50%;left:-80%;width:55%;height:200%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.22) 45%,rgba(255,255,255,.04) 55%,transparent);transform:rotate(12deg);animation:welSheen 4.5s cubic-bezier(.4,0,.2,1) .5s infinite;pointer-events:none;z-index:-1}
+.wel.lt .wel-card::after{background:linear-gradient(100deg,transparent,rgba(255,255,255,.75) 45%,rgba(255,255,255,.1) 55%,transparent)}
+@property --wa{syntax:"<angle>";inherits:false;initial-value:0deg}
+.wel .wel-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.wel .wel-logo{display:flex;align-items:center;gap:7px;font-weight:800;font-size:1.15rem;letter-spacing:-.02em;color:var(--wi)}
+.wel .wel-logo i{display:block;width:6px;height:18px;border-radius:2px;background:linear-gradient(var(--w3),var(--w2));position:relative;box-shadow:0 0 14px var(--w3)}
+.wel .wel-logo i::before{content:"";position:absolute;left:2px;top:-6px;width:2px;height:30px;border-radius:1px;background:inherit}
+.wel .kick{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--wm)}
+.wel .wel-hi{margin:6px 0 0;font-size:1.05rem;font-weight:600;color:var(--wm);animation:welUp .6s .15s cubic-bezier(.2,.8,.2,1) both}
+.wel h2{margin:-6px 0 0;font-size:clamp(2.3rem,10vw,3.1rem);line-height:1.05;font-weight:800;letter-spacing:-.035em;background:linear-gradient(100deg,var(--wi) 0%,var(--w1) 25%,var(--wi) 45%,var(--w2) 65%,var(--w3) 85%,var(--wi) 100%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:welUp .7s .25s cubic-bezier(.2,.8,.2,1) both,welShine 5s linear .9s infinite;overflow-wrap:anywhere;padding-bottom:2px}
+.wel .wel-sub{margin:0;color:var(--wm);font-size:.95rem;animation:welUp .6s .35s cubic-bezier(.2,.8,.2,1) both}
+.wel .wel-stats{display:flex;gap:8px;flex-wrap:wrap;animation:welUp .6s .45s cubic-bezier(.2,.8,.2,1) both}
+.wel .wel-stats span{border:1px solid var(--wl);border-radius:999px;padding:6px 12px;font-size:.84rem;font-weight:600;background:var(--wg);color:var(--wi)}
+.wel .wel-stats span b{color:var(--w3);font-weight:800}
+.wel.lt .wel-stats span b{color:inherit}
+.wel form{display:flex;gap:8px}.wel form input{flex:1;min-width:0;background:var(--wg);border:1px solid var(--wl);color:var(--wi);border-radius:14px}
+.wel button{border-radius:14px;color:var(--wi);background:var(--wg);border:1px solid var(--wl)}
+.wel button.primary,.wel .wel-go{background:linear-gradient(110deg,var(--w1),var(--w2));color:#fff;border:0;font-weight:800;box-shadow:0 12px 30px -12px var(--w1);text-shadow:0 1px 2px rgba(0,0,0,.25)}
+.wel.lt button.primary,.wel.lt .wel-go{background:linear-gradient(110deg,var(--wb1,var(--w1)),var(--wb2,var(--w2)));box-shadow:0 12px 30px -12px var(--wb1,var(--w1))}
+.wel .wel-row{display:flex;gap:8px;flex-wrap:wrap}.wel .wel-row button{flex:1}
+.wel .wel-link{background:none;border:0;color:var(--wm);font-size:.85rem;font-weight:600;padding:4px 0;text-decoration:underline;text-underline-offset:3px;align-self:flex-start}
+.wel .wel-bar{position:absolute;left:0;bottom:0;height:3px;width:100%;background:linear-gradient(90deg,var(--w1),var(--w2),var(--w3));transform-origin:left;animation:welBar 4.5s linear both}
 .wel.hold .wel-bar{display:none}
+.wel .wel-th{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
+.wel .wel-th button{display:flex;flex-direction:column;align-items:stretch;gap:7px;padding:8px;text-align:left;border-radius:16px;transition:transform .2s ease,border-color .2s ease}
+.wel .wel-th button[aria-pressed="true"]{border-color:var(--wi);box-shadow:0 0 0 1px var(--wi),0 10px 26px -14px var(--w1);transform:translateY(-2px)}
+.wel .wel-th .sw{height:54px;border-radius:11px;position:relative;overflow:hidden}
+.wel .wel-th b{font-size:.92rem;padding:0 3px}.wel .wel-th small{font-size:.74rem;color:var(--wm);padding:0 3px;margin-top:-6px}
+@keyframes welBg{from{opacity:0}to{opacity:1}}@keyframes welOut{to{opacity:0;transform:scale(1.02)}}@keyframes welIn{from{opacity:0;transform:translateY(22px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes welUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}@keyframes welShine{to{background-position:-250% 0}}@keyframes welSpin{to{--wa:360deg}}
+@keyframes welSheen{0%{left:-80%}55%,100%{left:140%}}@keyframes welFloat{to{transform:translate(6vmax,5vmax) scale(1.08)}}
+@media (prefers-reduced-motion:reduce){.wel .wel-blob,.wel .wel-card::before,.wel .wel-card::after,.wel h2{animation:none}}
 @keyframes welBg{from{opacity:0}to{opacity:1}}@keyframes welOut{to{opacity:0}}@keyframes welIn{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}@keyframes welBar{from{transform:scaleX(1)}to{transform:scaleX(0)}}
-body.sakura .wel{background:rgba(60,20,40,.35)}
 .wrep .stl{margin:0}.wrep>p{margin:0}
 #v-prehled>.herocard{display:none}
 #v-prehled>.hero2{order:-1}#v-prehled>[data-card="zprava"]{order:0}#v-prehled>[data-card="vyzva"]{order:1}
@@ -1734,7 +1767,6 @@ html[data-t="ametyst"] body:not(.sakura) .ldots i.d{background:linear-gradient(9
 html[data-t="ametyst"] body:not(.sakura) .lkey.trap::before{background:linear-gradient(180deg,#ffb347,#ff7a59)}
 html[data-t="ametyst"] body:not(.sakura) #lr{background:linear-gradient(135deg,#b06fff 0%,#c58cff 70%,#8fb8ff 100%);box-shadow:0 14px 34px rgba(135,69,226,.3)}
 html[data-t="ametyst"] body:not(.sakura) #lr .lr-go{color:#592ca1}
-html[data-t="ametyst"] body:not(.sakura) .wel{background:rgba(37,20,60,.35)}
 html[data-t="ametyst"] body:not(.sakura) .hero2 .h2-next{color:#ffffff}
 html[data-t="ametyst"] body:not(.sakura) .zm-ctl{background:rgba(255,255,255,.85);border-color:rgba(135,69,226,.25)}
 html[data-t="ametyst"] body:not(.sakura) .zm-ctl button{color:#451f7a}
@@ -1896,7 +1928,6 @@ html[data-t="bubblegum"] body:not(.sakura) .ldots i.d{background:linear-gradient
 html[data-t="bubblegum"] body:not(.sakura) .lkey.trap::before{background:linear-gradient(180deg,#ffb347,#ff7a59)}
 html[data-t="bubblegum"] body:not(.sakura) #lr{background:linear-gradient(135deg,#ff6fb1 0%,#c58cff 70%,#8fb8ff 100%);box-shadow:0 14px 34px rgba(226,69,154,.3)}
 html[data-t="bubblegum"] body:not(.sakura) #lr .lr-go{color:#a12c78}
-html[data-t="bubblegum"] body:not(.sakura) .wel{background:rgba(60,20,40,.35)}
 html[data-t="bubblegum"] body:not(.sakura) .hero2 .h2-next{color:#ffffff}
 html[data-t="bubblegum"] body:not(.sakura) .zm-ctl{background:rgba(255,255,255,.85);border-color:rgba(226,69,154,.25)}
 html[data-t="bubblegum"] body:not(.sakura) .zm-ctl button{color:#7a1f52}
@@ -6664,37 +6695,61 @@ html[data-t="bubblegum"] body:not(.sakura) .orb::after,body.sakura.bubble .orb::
     f.addEventListener("submit", ev => { ev.preventDefault(); const v = i.value.trim(); if (v.length < 2){ i.focus(); toast("Přezdívka musí mít aspoň 2 znaky."); return; } nickSave(v); onDone(v); });
     return {f: f, i: i};
   }
-  function welcomeShow(){
-    if (document.querySelector(".wel")) return;
-    const ov = el("div","wel"), c = el("div","card"), nick = nickOf(); ov.appendChild(c);
-    const title = el("h2"), sub = el("p","wel-sub small"), stats = el("div","wel-stats");
-    const paint = () => { const n = nickOf(); title.textContent = n ? hiWord() + ", " + n + "!" : "Vítej v Tape"; sub.textContent = n ? "Rád tě zase vidím. Tady je, kde stojíš." : "Než začneš, jak ti máme říkat?"; };
-    const askNick = !nick && (() => { try { return localStorage.getItem("tape-nick-skip") !== "1"; } catch(e){ return true; } })();
-    if (!nick && !askNick){ title.textContent = hiWord() + "!"; sub.textContent = "Vítej zpátky v Tape. Tady je, kde stojíš."; } else paint();
-    const sd = streakDays(), tr = jSorted().filter(t => Date.now() - new Date(t.ts).getTime() < 7 * 864e5), mn = (typeof minToday === "function") ? minToday() : null;
-    if (sd) stats.appendChild(el("span", null, "Série " + pl(sd, "den", "dny", "dní")));
-    stats.appendChild(el("span", null, tr.length ? "Tento týden " + pl(tr.length, "obchod", "obchody", "obchodů") : "Tento týden zatím bez obchodu"));
-    let ll = null; try { ll = JSON.parse(localStorage.getItem("tape-learn-last") || "null"); } catch(e){}
-    if (ll && ll.title) stats.appendChild(el("span", null, "Naposledy: " + String(ll.title).slice(0, 40)));
-    c.appendChild(el("span","kick", new Date().toLocaleDateString("cs-CZ", {weekday: "long", day: "numeric", month: "long"})));
-    c.appendChild(title); c.appendChild(sub);
+  const THEME_ASK = "tape-theme-asked";
+  function welTone(ov){ const k = cardTheme(), q = GLASS[k] || GLASS.noc;
+    ov.style.setProperty("--wbg", q.bg); ov.style.setProperty("--w1", q.b[0]); ov.style.setProperty("--w2", q.b[1]); ov.style.setProperty("--w3", q.b[2]);
+    ov.classList.toggle("lt", !!q.light);
+    const dk = {ametyst: ["#7c3aed","#c026d3"], bubblegum: ["#e8408a","#9d4edd"], sakura: ["#db2777","#b5479b"]}[k]; if (dk){ ov.style.setProperty("--wb1", dk[0]); ov.style.setProperty("--wb2", dk[1]); } else { ov.style.removeProperty("--wb1"); ov.style.removeProperty("--wb2"); }
+    ov.style.setProperty("--wi", q.light ? q.c[0] : "#ffffff"); ov.style.setProperty("--wm", q.light ? q.c[1] : "rgba(255,255,255,.68)");
+    ov.style.setProperty("--wg", q.light ? "rgba(255,255,255,.58)" : "rgba(255,255,255,.07)"); ov.style.setProperty("--wl", q.light ? "rgba(255,255,255,.95)" : "rgba(255,255,255,.16)"); }
+  function welcomeShow(opt){
+    if (document.querySelector(".wel")) return; opt = opt || {};
+    const ov = el("div","wel"), c = el("div","wel-card"); ["b1","b2","b3"].forEach(k => ov.appendChild(el("i","wel-blob " + k))); ov.appendChild(c); welTone(ov);
     let timer = null, closed = false;
-    const close = () => { if (closed) return; closed = true; clearTimeout(timer); ov.classList.add("out"); setTimeout(() => { ov.remove(); document.body.classList.remove("modal"); }, 280); refreshAll(); };
+    const close = () => { if (closed) return; closed = true; clearTimeout(timer); ov.classList.add("out"); setTimeout(() => { ov.remove(); document.body.classList.remove("modal"); }, 330); refreshAll(); };
     const hold = () => { clearTimeout(timer); ov.classList.add("hold"); };
-    const go = el("button", askNick ? null : "primary", askNick ? "Teď ne" : "Jdeme na to"); go.type = "button"; go.addEventListener("click", () => { if (askNick && !nickOf()){ try { localStorage.setItem("tape-nick-skip", "1"); } catch(e){} } close(); });
-    if (askNick){
-      const nf = nickForm(() => { paint(); nf.f.remove(); go.textContent = "Jdeme na to"; go.className = "primary"; c.insertBefore(stats, go); setTimeout(close, 900); });
-      c.appendChild(nf.f); setTimeout(() => { try { nf.i.focus(); } catch(e){} }, 350);
-    } else {
-      c.appendChild(stats);
-      const ch = el("button", null, nick ? "Změnit přezdívku" : "Nastavit přezdívku"); ch.type = "button"; ch.className = "small";
-      ch.addEventListener("click", () => { hold(); const nf = nickForm(() => { paint(); nf.f.remove(); }); c.insertBefore(nf.f, go); ch.remove(); nf.i.focus(); nf.i.select(); });
-      c.appendChild(ch);
-      c.appendChild(el("i","wel-bar")); timer = setTimeout(close, 4000);
-    }
-    c.appendChild(go);
+    const top = () => { const t = el("div","wel-top"), lg = el("span","wel-logo"); lg.appendChild(document.createTextNode("tape")); lg.appendChild(el("i")); t.appendChild(lg); t.appendChild(el("span","kick", new Date().toLocaleDateString("cs-CZ", {weekday: "long", day: "numeric", month: "long"}))); return t; };
+    const themeStep = () => { hold(); clear(c); c.appendChild(top());
+      c.appendChild(el("p","wel-hi", nickOf() ? hiWord() + ", " + nickOf() : "Vítej v Tape"));
+      const h = el("h2", null, "Vyber si motiv"); c.appendChild(h);
+      c.appendChild(el("p","wel-sub","Změní se celá aplikace i karty ke sdílení. Kdykoli to přepneš v Nastavení."));
+      const g = el("div","wel-th");
+      const draw = () => { clear(g); const cur = (THEMES.find(x => x[0] === cfg.theme) || THEMES[0])[0];
+        THEMES.forEach(t => { const q = GLASS[t[0]] || GLASS.noc, b = el("button"), sw = el("div","sw"); b.type = "button"; b.setAttribute("aria-pressed", String(t[0] === cur));
+          sw.style.background = "radial-gradient(70% 90% at 15% 10%," + q.b[0] + "cc,transparent 70%),radial-gradient(70% 90% at 95% 60%," + q.b[1] + "aa,transparent 70%),radial-gradient(60% 80% at 40% 120%," + q.b[2] + "99,transparent 70%)," + q.bg;
+          b.appendChild(sw); b.appendChild(el("b", null, t[1])); b.appendChild(el("small", null, t[2]));
+          b.addEventListener("click", () => { cfg.theme = t[0]; cfgStore(); applyTheme(); welTone(ov); draw(); }); g.appendChild(b); }); };
+      draw(); c.appendChild(g);
+      const go = el("button","wel-go","Hotovo"); go.type = "button"; go.addEventListener("click", () => { try { localStorage.setItem(THEME_ASK, "1"); } catch(e){} if (opt.only) close(); else hello(true); }); c.appendChild(go); };
+    const hello = held => { clear(c); c.appendChild(top()); const nick = nickOf();
+      const hi = el("p","wel-hi"), title = el("h2"), sub = el("p","wel-sub"), stats = el("div","wel-stats");
+      const paint = () => { const n = nickOf(); hi.textContent = n ? hiWord() + "," : "Vítej v Tape"; title.textContent = n ? n : "Ahoj!"; sub.textContent = n ? "Rád tě zase vidím. Tady je, kde stojíš." : "Než začneš, jak ti máme říkat?"; };
+      const askNick = !nick && (() => { try { return localStorage.getItem("tape-nick-skip") !== "1"; } catch(e){ return true; } })();
+      if (!nick && !askNick){ hi.textContent = "Vítej zpátky"; title.textContent = hiWord() + "!"; sub.textContent = "Tady je, kde stojíš."; } else paint();
+      const sd = streakDays(), tr = jSorted().filter(t => Date.now() - new Date(t.ts).getTime() < 7 * 864e5);
+      const chip = (b, rest) => { const sp = el("span"); if (b){ sp.appendChild(el("b", null, b)); sp.appendChild(document.createTextNode(" ")); } sp.appendChild(document.createTextNode(rest)); stats.appendChild(sp); };
+      if (sd){ const w = pl(sd, "den", "dny", "dní").split(" "); chip("🔥 " + w[0], "série " + w.slice(1).join(" ")); }
+      if (tr.length){ const w = pl(tr.length, "obchod", "obchody", "obchodů").split(" "); chip(w[0], w.slice(1).join(" ") + " tento týden"); } else chip("", "Tento týden zatím bez obchodu");
+      let ll = null; try { ll = JSON.parse(localStorage.getItem("tape-learn-last") || "null"); } catch(e){}
+      if (ll && ll.title) chip("", "Naposledy: " + String(ll.title).slice(0, 36));
+      c.appendChild(hi); c.appendChild(title); c.appendChild(sub);
+      const go = el("button", askNick ? null : "wel-go", askNick ? "Teď ne" : "Jdeme na to"); go.type = "button"; go.addEventListener("click", () => { if (askNick && !nickOf()){ try { localStorage.setItem("tape-nick-skip", "1"); } catch(e){} } close(); });
+      if (askNick){ hold();
+        const nf = nickForm(() => { paint(); nf.f.remove(); go.textContent = "Jdeme na to"; go.className = "wel-go"; c.insertBefore(stats, go); setTimeout(close, 1400); });
+        c.appendChild(nf.f); setTimeout(() => { try { nf.i.focus(); } catch(e){} }, 450);
+        c.appendChild(go);
+      } else {
+        c.appendChild(stats); c.appendChild(go);
+        const row = el("div","wel-row"), ch = el("button","wel-link", "Změnit přezdívku"), tb = el("button","wel-link", "Změnit motiv"); ch.type = tb.type = "button";
+        ch.addEventListener("click", () => { hold(); const nf = nickForm(() => { paint(); nf.f.remove(); }); c.insertBefore(nf.f, go); row.remove(); nf.i.focus(); nf.i.select(); });
+        tb.addEventListener("click", () => themeStep());
+        if (!document.body.classList.contains("sakura")) row.appendChild(tb); row.appendChild(ch); c.appendChild(row);
+        if (!held){ c.appendChild(el("i","wel-bar")); timer = setTimeout(close, 4500); }
+      } };
+    const askTheme = !document.body.classList.contains("sakura") && (() => { try { return localStorage.getItem(THEME_ASK) !== "1"; } catch(e){ return false; } })();
+    if (opt.only || askTheme) themeStep(); else hello(false);
     c.addEventListener("pointerdown", hold); c.addEventListener("focusin", hold);
-    ov.addEventListener("click", ev => { if (ev.target === ov) close(); });
+    ov.addEventListener("click", ev => { if (ev.target === ov || ev.target.classList.contains("wel-blob")) close(); });
     document.addEventListener("keydown", function esc(ev){ if (ev.key === "Escape"){ document.removeEventListener("keydown", esc); close(); } });
     document.body.appendChild(ov); document.body.classList.add("modal");
   }
@@ -6702,7 +6757,7 @@ html[data-t="bubblegum"] body:not(.sakura) .orb::after,body.sakura.bubble .orb::
     let ok = false; try { ok = !sessionStorage.getItem("tape-hi"); } catch(e){ ok = true; }
     if (!ok) return; let tries = 0;
     const tick = () => { tries++;
-      const busy = document.querySelector(".ob,.gtour,.wel"), tourDone = (() => { try { return localStorage.getItem("tape-tour") === "1"; } catch(e){ return true; } })();
+      const busy = document.querySelector(".ob,.gtour,.wel,.lkbox,.lk-pick"), tourDone = (() => { try { return localStorage.getItem("tape-tour") === "1"; } catch(e){ return true; } })();
       if (!busy && profile && tourDone){ try { sessionStorage.setItem("tape-hi", "1"); } catch(e){} welcomeShow(); return; }
       if (tries < 40) setTimeout(tick, 500); };
     setTimeout(tick, 700);
