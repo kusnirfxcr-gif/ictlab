@@ -2087,6 +2087,53 @@ body.fx-off .spot::after{display:none}
 /* the basic look: a very soft white light behind the page */
 html:not([data-t]) body:not(.sakura) #thbg{display:block}
 html:not([data-t]) body:not(.sakura) #thbg i:first-child{background:radial-gradient(75% 40% at 50% -8%,rgba(255,255,255,.1),transparent 70%),radial-gradient(42% 30% at 100% 46%,rgba(255,255,255,.04),transparent 70%),radial-gradient(46% 32% at 0% 88%,rgba(255,255,255,.035),transparent 70%)}
+/* ---------- trade form in sections ---------- */
+.ob>.card.tform{max-width:620px;padding:0;gap:0;counter-reset:tf}
+.ob:has(>.card.tform){padding-bottom:0}
+.tform .tf-body{display:flex;flex-direction:column;gap:12px;padding:18px 18px 14px}
+.tform .tf-mode{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;border-radius:14px;background:var(--surface2);border:1px solid var(--line)}
+.tform .tf-mode button{border:0;background:none;padding:8px;border-radius:10px;font-weight:700;color:var(--muted);min-height:0}
+.tform .tf-mode button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.tform.tf-basic .adv{display:none!important}
+.tf-sec{display:flex;flex-direction:column;gap:12px;padding:14px;border-radius:18px;border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.012));counter-increment:tf;transition:border-color .25s ease}
+.tf-sec:focus-within{border-color:var(--chl,rgba(255,255,255,.24))}
+.tf-h{display:flex;align-items:center;gap:10px;min-width:0}
+.tf-h h3{margin:0;font-size:16px;font-weight:800;letter-spacing:-.01em;white-space:nowrap}
+.tf-h>span{font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tf-n{display:grid;place-items:center;flex:none;width:24px;height:24px;border-radius:8px;border:1px solid var(--line);background:var(--accent-soft);color:var(--accent);font-style:normal;font-size:12px;font-weight:800}
+.tf-n::before{content:counter(tf)}
+.tf-grp{display:flex;flex-direction:column;gap:8px;--tc:var(--muted)}
+.tf-grp.c1{--tc:var(--accent)}.tf-grp.c2{--tc:var(--good)}.tf-grp.c3{--tc:var(--amber)}.tf-grp.c4{--tc:var(--bad)}
+.tf-k{display:flex;align-items:center;gap:8px;font-size:11.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--tc)}
+.tf-k>span{display:inline-flex;align-items:center;gap:7px}.tf-k>span::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor;box-shadow:0 0 10px currentColor}
+.tf-k b{font-size:11px;letter-spacing:0;min-width:18px;text-align:center;padding:1px 6px;border-radius:99px;background:var(--tc);color:var(--bg)}.tf-k b:empty{display:none}
+.tf-k::after{content:"";flex:1;height:1px;background:var(--line);order:2}.tf-k .tf-ed{order:3}
+.tf-ed{background:none;border:0;padding:2px 0;min-height:0;font-size:12px;font-weight:600;letter-spacing:0;text-transform:none;color:var(--muted);text-decoration:underline;text-underline-offset:3px}
+.tf-hint{margin:-2px 0 0;font-size:12.5px;color:var(--muted)}
+.tf-grp .chip[aria-pressed="true"]{background:var(--tc);border-color:var(--tc);color:var(--bg)}
+.tf-grp:not(.c1):not(.c2):not(.c3):not(.c4) .chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink)}
+.tf-grp .chip.mo{border-color:rgba(243,217,160,.5);color:#f3d9a0}.tf-grp .chip.mo[aria-pressed="true"]{background:linear-gradient(120deg,#f6e2b0,#d9a94e);border-color:transparent;color:#2a1c05}
+html[data-tk="l"] body:not(.sakura) .tf-grp .chip.mo:not([aria-pressed="true"]),body.sakura .tf-grp .chip.mo:not([aria-pressed="true"]){color:#8a5a00;border-color:rgba(168,98,0,.45)}
+.tf-grp .chip.tf-add{border-style:dashed;background:none;color:var(--muted)}
+.tf-grp .chip.tf-ok{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.tf-grp .chip.rm{display:inline-flex;align-items:center;gap:6px;border-color:var(--bad);color:var(--ink)}.tf-grp .chip.rm i{font-style:normal;font-weight:800;color:var(--bad);line-height:1}
+.tf-grp .tf-in{width:150px;flex:0 1 150px;padding:5px 11px;border-radius:999px;font-size:13.5px}
+.tform .seg button{display:inline-flex;align-items:center;justify-content:center;gap:6px}.tform .seg svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.tf-duo button[data-t="good"][aria-pressed="true"]{background:rgba(61,220,151,.16);border-color:var(--good);color:var(--good)}
+.tf-duo button[data-t="bad"][aria-pressed="true"]{background:rgba(255,107,107,.16);border-color:var(--bad);color:var(--bad)}
+.tf-rr{margin:0;font-size:13px;font-weight:700;color:var(--amber)}
+.tf-grade{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.tf-grade button{padding:11px 0;border-radius:12px;font-weight:800;font-size:16px;border:1px solid color-mix(in srgb,var(--gc) 45%,transparent);background:color-mix(in srgb,var(--gc) 12%,transparent);color:var(--gc);transition:transform .2s ease,box-shadow .2s ease}
+.tf-grade button[data-g="5"],.tf-grade button[data-g="4"]{--gc:var(--good)}.tf-grade button[data-g="3"]{--gc:var(--muted)}.tf-grade button[data-g="2"]{--gc:var(--amber)}.tf-grade button[data-g="1"]{--gc:var(--bad)}
+.tf-grade button[aria-pressed="true"]{background:var(--gc);color:var(--bg);border-color:var(--gc);transform:translateY(-2px);box-shadow:0 10px 22px -12px var(--gc)}
+.tf-bar{position:sticky;bottom:0;z-index:3;display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 18px calc(12px + env(safe-area-inset-bottom));border-top:1px solid var(--line);background:var(--bg);border-bottom-left-radius:inherit;border-bottom-right-radius:inherit}
+.tf-bar .primary{flex:1 1 150px;padding:12px 16px;font-size:15.5px;font-weight:800;border-radius:14px}
+.tf-bar .danger{border-radius:14px;padding:12px 14px}
+.tf-bar .tf-msg{flex:1 1 100%;order:5}.tf-bar .tf-msg:empty{display:none}
+.tf-live{margin-left:auto;font-size:19px;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap}.tf-live.pos{color:var(--good)}.tf-live.neg{color:var(--bad)}.tf-live:empty{display:none}
+html[data-tk="l"] body:not(.sakura) .tf-sec,body.sakura .tf-sec{background:rgba(255,255,255,.55)}
+.td-grp{display:flex;flex-direction:column;gap:6px}.td-k{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+@media (max-width:480px){.tform .tf-body{padding:14px 12px 12px}.tf-sec{padding:12px}.tf-bar{padding-left:12px;padding-right:12px}}
 .thpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:8px}
 .thp{display:flex;flex-direction:column;gap:8px;align-items:stretch;text-align:left;padding:8px;border-radius:16px;min-height:0}
 .thp .sw{height:54px;border-radius:10px;position:relative;overflow:hidden;border:1px solid rgba(128,128,128,.25)}
@@ -4646,83 +4693,143 @@ html:not([data-t]) body:not(.sakura) #thbg i:first-child{background:radial-gradi
 
   // ---------- trade form (new and edit) ----------
   const EMO = ["Klid", "Nejistota", "Netrpělivost", "Strach", "Euforie"];
+  // pick lists for the trade form: defaults here, the person's own additions and removals live in cfg.jl
+  const MO_NAMES = ["MOROS Reversal", "MOROS Continuation"];
+  const JL_DEF = {
+    dol: ["PDH", "PDL", "Equal highs", "Equal lows", "High seance", "Low seance", "Swing high", "Swing low", "Nevyplněný FVG", "Gap", "Midnight open", "MOR C.E.", "MOR +1", "MOR −1", "MOR +2", "MOR −2", "MOR 5,5", "MOR 6,5"],
+    conf: ["FVG", "Order block", "Breaker", "Equilibrium", "Premium / discount", "Sweep likvidity", "HTF POI", "MOR level", "MOR flip", "Midnight open", "Killzone"],
+    cfm: ["MSS", "CISD", "iFVG", "Displacement", "Rejection", "Retest", "BOS"],
+    bonus: ["SMT s ES", "30s CISD", "Bias 1D ve směru", "HTF ve směru", "Bez zpráv", "Rejection od 9:30 open"],
+    epos: ["Trpělivost", "Disciplína", "Soustředění", "Klid", "Sebejistota", "Podle pravidel", "Jen A setup", "Připravenost"],
+    neg: ["Netrpělivost", "Strach", "Chamtivost", "Přehnaná sebedůvěra", "Rozptýlení", "Frustrace", "Nervozita"]};
+  const GRADES = [[5, "A+"], [4, "A"], [3, "B"], [2, "C"], [1, "F"]], gradeName = g => { const x = GRADES.find(q => q[0] === Number(g)); return x ? x[1] : ""; };
+  const TF_SESS = ["Asie", "London", "Pre-market", "NY AM", "Lunch", "NY PM", "After"], sessOfTrade = t => t.sess || tkSession(t.ts) || null;
+  function jlList(k){ const st = (cfg.jl && cfg.jl[k]) || {}, base = k === "neg" ? J_TAGS.concat(JL_DEF.neg.filter(x => J_TAGS.indexOf(x) < 0)) : JL_DEF[k], hide = st.hide || [], out = base.filter(x => hide.indexOf(x) < 0); (st.add || []).forEach(x => { if (out.indexOf(x) < 0) out.push(x); }); return out; }
+  function jlEdit(k, fn){ cfg.jl = cfg.jl || {}; const st = cfg.jl[k] = cfg.jl[k] || {}; st.add = st.add || []; st.hide = st.hide || []; fn(st); cfgStore(); }
+  // one group of chips: pick, add your own, or switch to editing and remove what you never use
+  function pickGroup(o){ const w = el("div","tf-grp" + (o.tone ? " " + o.tone : "")), hd = el("div","tf-k"), box = el("div","chips"), cnt = el("b"), ed = el("button","tf-ed","Upravit"), sel = o.sel; let editing = false, adding = false; ed.type = "button";
+    hd.appendChild(el("span", null, o.title)); hd.appendChild(cnt); hd.appendChild(ed); w.appendChild(hd); if (o.hint) w.appendChild(el("p","tf-hint", o.hint)); w.appendChild(box);
+    const list = () => { const l = o.list ? o.list() : jlList(o.key); Object.keys(sel).forEach(x => { if (sel[x] && l.indexOf(x) < 0) l.push(x); }); return l; };
+    const draw = () => { clear(box); const l = list(); let n = 0;
+      l.forEach(x => { const b = el("button","chip" + (MO_NAMES.indexOf(x) >= 0 ? " mo" : ""), x), fixed = o.fixed && o.fixed.indexOf(x) >= 0; b.type = "button"; b.setAttribute("aria-pressed", String(!!sel[x])); if (sel[x]) n++;
+        if (editing && !fixed){ b.classList.add("rm"); b.appendChild(el("i", null, "×")); b.setAttribute("aria-label", "Odebrat ze seznamu: " + x); }
+        b.addEventListener("click", () => { if (editing){ if (fixed) return; delete sel[x]; if (o.remove) o.remove(x); else jlEdit(o.key, st => { const i = st.add.indexOf(x); if (i >= 0) st.add.splice(i, 1); else if (st.hide.indexOf(x) < 0) st.hide.push(x); }); draw(); if (o.change) o.change(); return; }
+          const on = !sel[x]; if (o.single) Object.keys(sel).forEach(k => { sel[k] = false; }); sel[x] = on; draw(); if (o.change) o.change(); });
+        box.appendChild(b); });
+      if (adding){ const i = el("input"), ok = el("button","chip tf-ok","Přidat"); i.className = "tf-in"; i.maxLength = 28; i.placeholder = o.ph || "Vlastní"; i.setAttribute("aria-label", "Vlastní položka: " + o.title); ok.type = "button";
+        const put = () => { const v = i.value.trim().replace(/\s+/g, " ").slice(0, 28); adding = false; if (v.length >= 2){ if (o.add) o.add(v); else jlEdit(o.key, st => { const h = st.hide.indexOf(v); if (h >= 0) st.hide.splice(h, 1); else if (st.add.indexOf(v) < 0 && jlList(o.key).indexOf(v) < 0) st.add.push(v); }); if (o.single) Object.keys(sel).forEach(k => { sel[k] = false; }); sel[v] = true; if (o.change) o.change(); } draw(); };
+        i.addEventListener("keydown", ev => { if (ev.key === "Enter"){ ev.preventDefault(); put(); } else if (ev.key === "Escape"){ ev.stopPropagation(); adding = false; draw(); } }); ok.addEventListener("click", put); box.appendChild(i); box.appendChild(ok); setTimeout(() => { try { i.focus({preventScroll: true}); } catch(e){} }, 20); }
+      else if (!editing){ const ad = el("button","chip tf-add","+ Vlastní"); ad.type = "button"; ad.addEventListener("click", () => { adding = true; draw(); }); box.appendChild(ad); }
+      else if (!o.list){ const st = (cfg.jl && cfg.jl[o.key]) || {}; if ((st.hide || []).length){ const rs = el("button","chip tf-add","Vrátit výchozí"); rs.type = "button"; rs.addEventListener("click", () => { jlEdit(o.key, q => { q.hide = []; }); draw(); }); box.appendChild(rs); } }
+      cnt.textContent = n && !o.single ? String(n) : ""; ed.textContent = editing ? "Hotovo" : "Upravit"; w.classList.toggle("editing", editing); };
+    ed.addEventListener("click", () => { editing = !editing; adding = false; draw(); }); draw(); return w; }
+  const pickOn = sel => Object.keys(sel).filter(k => sel[k]), pickOf = a => { const m = {}; (Array.isArray(a) ? a : []).forEach(x => { m[x] = true; }); return m; };
+
   function openTradeForm(src, preset){
     const editing = !!(src && src.id);
     const t = Object.assign({ts: new Date().toISOString(), sym: (profile && profile.sym) || "NQ", dir: "long", setup: J_SETUPS[0], acct: cfg.acct === "all" ? cfg.accounts[0].id : cfg.acct, qty: 1, tags: []}, src || {}, preset || {});
-    const o = overlay("tform", true), card = o.card;
-    let shots = [], shotsReady = !editing || !shotKeys(src).length, dir = t.dir === "short" ? "short" : "long", emo = t.emo || "", grade = Number(t.grade) || 0, autoFee = "";
-    const tags = {}; (t.tags || []).forEach(x => { tags[x] = true; });
+    const o = overlay("tform", true), card = o.card, body = el("div","tf-body"); card.appendChild(body);
+    let shots = [], shotsReady = !editing || !shotKeys(src).length, dir = t.dir === "short" ? "short" : "long", emo = t.emo || "", grade = Number(t.grade) || 0, autoFee = "", plan = t.plan === "yes" || t.plan === "no" ? t.plan : "", sess = t.sess || "", rev = t.rev === true ? "yes" : t.rev === false ? "no" : "";
+    const sSetup = {}, sDol = pickOf(t.dol), sConf = pickOf(t.conf), sCfm = pickOf(t.cfm), sBonus = pickOf(t.bonus), sPos = pickOf(t.epos), sNeg = pickOf(t.tags); if (t.setup) sSetup[t.setup] = true;
+    const setupNow = () => pickOn(sSetup)[0] || "";
     const head = el("div","row"), xb = el("button","ck-del","Zavřít"); xb.type = "button"; xb.addEventListener("click", o.close);
-    head.appendChild(el("h2", null, editing ? "Upravit obchod" : "Nový obchod")); head.appendChild(xb); card.appendChild(head);
-    const g = el("div","fgrid"); card.appendChild(g);
+    head.appendChild(el("h2", null, editing ? "Upravit obchod" : "Nový obchod")); head.appendChild(xb); body.appendChild(head);
+    const mode = el("div","tf-mode"); [["basic","Základní"],["full","Podrobný"]].forEach(m => { const b = el("button", null, m[1]); b.type = "button"; b.dataset.v = m[0]; b.addEventListener("click", () => { cfg.tfmode = m[0]; cfgStore(); paintMode(); }); mode.appendChild(b); });
+    const paintMode = () => { const m = cfg.tfmode === "basic" ? "basic" : "full"; card.classList.toggle("tf-basic", m === "basic"); Array.prototype.forEach.call(mode.children, b => b.setAttribute("aria-pressed", String(b.dataset.v === m))); };
+    body.appendChild(mode);
+    const sec = (title, note, adv) => { const sc = el("section","tf-sec" + (adv ? " adv" : "")), h = el("div","tf-h"); h.appendChild(el("i","tf-n")); h.appendChild(el("h3", null, title)); if (note) h.appendChild(el("span", null, note)); sc.appendChild(h); body.appendChild(sc); return sc; };
+    const duo = (label, opts, get, set, cls) => { const w = el("div","flab" + (cls ? " " + cls : "")), sg = el("div","seg tf-duo"); opts.forEach(x => { const b = el("button", null, x[1]); b.type = "button"; b.dataset.v = x[0]; if (x[2]) b.dataset.t = x[2]; b.addEventListener("click", () => { set(get() === x[0] ? "" : x[0]); paint(); }); sg.appendChild(b); });
+      const paint = () => Array.prototype.forEach.call(sg.children, b => b.setAttribute("aria-pressed", String(b.dataset.v === get()))); w.appendChild(el("span", null, label)); w.appendChild(sg); paint(); return w; };
 
+    // 1 · the trade
+    const s1 = sec("Obchod"), g = el("div","fgrid"); s1.appendChild(g);
     const fTs = inp("datetime-local", toLocalInput(t.ts));
     const mine = ((profile && profile.syms) || []).filter(k => PV[k]), syms = mine.concat(Object.keys(PV).filter(k => mine.indexOf(k) < 0)); if (t.sym && syms.indexOf(t.sym) < 0) syms.push(t.sym);
-    const setups = J_SETUPS.slice(); if (t.setup && setups.indexOf(t.setup) < 0) setups.push(t.setup);
-    const fSym = sel(syms, t.sym), fSetup = sel(setups, t.setup), fAcct = sel(cfg.accounts.map(a => [a.id, a.name]), cfg.accounts.some(a => a.id === t.acct) ? t.acct : cfg.accounts[0].id);
-    const seg = el("div","seg"), segWrap = el("div","flab");
-    [["long","Long"],["short","Short"]].forEach(x => { const b = el("button", null, x[1]); b.type = "button"; b.dataset.v = x[0]; b.addEventListener("click", () => { dir = x[0]; paintSeg(); calc(); warn(); }); seg.appendChild(b); });
+    const fSym = sel(syms, t.sym), fAcct = sel(cfg.accounts.map(a => [a.id, a.name]), cfg.accounts.some(a => a.id === t.acct) ? t.acct : cfg.accounts[0].id);
+    const seg = el("div","seg"), segWrap = el("div","flab wide");
+    [["long","Long"],["short","Short"]].forEach(x => { const b = el("button", null, x[1]); b.type = "button"; b.dataset.v = x[0]; b.insertAdjacentHTML("afterbegin", '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="' + (x[0] === "long" ? "M8 13V3M4 7l4-4 4 4" : "M8 3v10M4 9l4 4 4-4") + '"/></svg>'); b.addEventListener("click", () => { dir = x[0]; paintSeg(); calc(); warn(); }); seg.appendChild(b); });
     const paintSeg = () => Array.prototype.forEach.call(seg.children, b => b.setAttribute("aria-pressed", String(b.dataset.v === dir)));
     segWrap.appendChild(el("span", null, "Směr")); segWrap.appendChild(seg);
-    g.appendChild(lab("Kdy", fTs, "wide")); g.appendChild(lab("Trh", fSym)); g.appendChild(segWrap);
-    g.appendChild(lab("Setup", fSetup, cfg.accounts.length > 1 ? null : "wide")); if (cfg.accounts.length > 1) g.appendChild(lab("Účet", fAcct));
-    const fEntry = inp(null, nv(t.entry), "", "decimal"), fStop = inp(null, nv(t.stop), "", "decimal"), fExit = inp(null, nv(t.exit), "", "decimal"), fQty = inp(null, nv(t.qty), "1", "numeric");
-    g.appendChild(lab("Vstup", fEntry)); g.appendChild(lab("Stop", fStop)); g.appendChild(lab("Výstup", fExit)); g.appendChild(lab("Kontrakty", fQty));
-    const fR = inp(null, nv(t.r), "například 2 nebo -1"), fUsd = inp(null, nv(t.usd), "dopočítá se z cen");
-    g.appendChild(lab("Výsledek v R", fR)); g.appendChild(lab("Výsledek v $", fUsd));
-    const fLev = inp(null, t.levels || "", "PDL 21310, FVG 21345, PDH 21480"); fLev.maxLength = 160; g.appendChild(lab("Úrovně, podle kterých jsi obchod bral", fLev, "wide"));
-    const allTags = J_TAGS.concat((t.tags || []).filter(x => J_TAGS.indexOf(x) < 0)), tagBox = el("div","chips"), tw = el("div","wide flab");
-    allTags.forEach(x => { const b = el("button","chip", x); b.type = "button"; b.setAttribute("aria-pressed", String(!!tags[x])); b.addEventListener("click", () => { tags[x] = !tags[x]; b.setAttribute("aria-pressed", String(!!tags[x])); }); tagBox.appendChild(b); });
-    tw.appendChild(el("span", null, "Chyby")); tw.appendChild(tagBox); g.appendChild(tw);
-    const fNote = el("textarea"); fNote.rows = 2; fNote.maxLength = 600; fNote.value = t.note || ""; fNote.placeholder = "Proč jsem obchod vzal a co bych příště udělal jinak"; g.appendChild(lab("Poznámka", fNote, "wide"));
-    const tpl = el("button","ck-del","Vložit otázky k poznámce"); tpl.type = "button"; tpl.addEventListener("click", () => { const q = "Proč jsem vstoupil: \nCo bylo dobře: \nCo příště jinak: "; if (fNote.value.indexOf("Proč jsem vstoupil") < 0) fNote.value = (fNote.value ? fNote.value.trim() + "\n" : "") + q; fNote.rows = 4; fNote.focus(); }); const tplw = el("div","wide"); tplw.appendChild(tpl); g.appendChild(tplw);
+    g.appendChild(lab("Trh", fSym)); g.appendChild(lab("Kdy", fTs)); g.appendChild(segWrap); if (cfg.accounts.length > 1) g.appendChild(lab("Účet", fAcct, "wide"));
+    const seBox = el("div","chips"), seW = el("div","flab wide adv"), seHint = el("p","tf-hint");
+    const sessAuto = () => { const d = new Date(fTs.value); return isNaN(d) ? "" : tkSession(d.toISOString()); };
+    const paintSess = () => { const au = sessAuto(), cur = sess || au; Array.prototype.forEach.call(seBox.children, b => b.setAttribute("aria-pressed", String(b.textContent === cur))); seHint.textContent = sess && sess !== au ? "Vybráno ručně. Podle času vstupu by to byla seance " + (au || "neznámá") + "." : au ? "Podle času vstupu v New Yorku. Jiná seance jde vybrat ručně." : ""; };
+    TF_SESS.forEach(x => { const b = el("button","chip", x); b.type = "button"; b.addEventListener("click", () => { sess = x === sessAuto() ? "" : x; paintSess(); }); seBox.appendChild(b); });
+    seW.appendChild(el("span", null, "Seance")); seW.appendChild(seBox); seW.appendChild(seHint); g.appendChild(seW); fTs.addEventListener("change", () => { paintSess(); paintRev(); });
+    g.appendChild(duo("Dodržel jsem plán", [["yes","Ano","good"],["no","Ne","bad"]], () => plan, v => { plan = v; }, "wide"));
+    const missed = inp("checkbox"), ml = el("label","wide chk adv"); missed.checked = !!t.missed; ml.appendChild(missed); ml.appendChild(el("span", null, "Obchod jsem nevzal (zmeškaný). Do výsledků se nepočítá.")); g.appendChild(ml);
 
-    const shBox = el("div","shots"), shIn = inp("file"), sw = el("div","wide flab"); shIn.accept = "image/*"; shIn.multiple = true; shIn.hidden = true;
+    // 2 · execution
+    const s2 = sec("Provedení"), g2 = el("div","fgrid"); s2.appendChild(g2);
+    const fEntry = inp(null, nv(t.entry), "", "decimal"), fStop = inp(null, nv(t.stop), "", "decimal"), fExit = inp(null, nv(t.exit), "", "decimal"), fTp = inp(null, nv(t.tp), "", "decimal"), fQty = inp(null, nv(t.qty), "1", "numeric");
+    g2.appendChild(lab("Vstup", fEntry)); g2.appendChild(lab("Výstup", fExit)); g2.appendChild(lab("Stop loss", fStop)); g2.appendChild(lab("Cíl (take profit)", fTp, "adv")); g2.appendChild(lab("Kontrakty", fQty));
+    const fR = inp(null, nv(t.r), "například 2 nebo -1"), fUsd = inp(null, nv(t.usd), "dopočítá se z cen");
+    g2.appendChild(lab("Výsledek v R", fR)); g2.appendChild(lab("Výsledek v $", fUsd));
+    const rrLine = el("p","tf-rr wide adv"); g2.appendChild(rrLine);
+    const fTsx = inp("datetime-local", t.tsx ? toLocalInput(t.tsx) : ""), fTp1 = inp(null, nv(t.tp1), "", "decimal"), fTp1p = inp(null, nv(t.tp1pct), "například 50", "numeric"), fFee = inp(null, nv(t.fee), "0", "decimal"), fMae = inp(null, nv(t.mae), "", "decimal"), fMfe = inp(null, nv(t.mfe), "", "decimal");
+    g2.appendChild(lab("Čas výstupu", fTsx, "wide adv")); g2.appendChild(lab("Částečný výstup: cena", fTp1, "adv")); g2.appendChild(lab("Kolik procent pozice", fTp1p, "adv"));
+    g2.appendChild(lab("Poplatky celkem ($)", fFee, "wide adv")); g2.appendChild(lab("MAE: nejvíc proti (body)", fMae, "adv")); g2.appendChild(lab("MFE: nejvíc pro (body)", fMfe, "adv"));
+    const fLev = inp(null, t.levels || "", "PDL 21310, FVG 21345, PDH 21480"); fLev.maxLength = 160; g2.appendChild(lab("Úrovně do grafu na kartě", fLev, "wide adv"));
+
+    // 3 · setup, 4 · draw on liquidity, 5 · breakdown
+    const s3 = sec("Setup", "podle čeho jsi obchod bral");
+    s3.appendChild(pickGroup({title: "Playbook", sel: sSetup, single: true, fixed: MO_NAMES, ph: "Název setupu", list: () => MO_NAMES.concat(J_SETUPS.filter(x => MO_NAMES.indexOf(x) < 0)),
+      add: v => { if (cfg.setups.indexOf(v) < 0 && MO_NAMES.indexOf(v) < 0){ cfg.setups.push(v); cfgStore(); } }, remove: x => { cfg.setups = cfg.setups.filter(q => q !== x); if (!cfg.setups.length) cfg.setups = DEF_SETUPS.slice(); cfgStore(); }, change: () => warn()}));
+    const s4 = sec("Draw on liquidity", "DOL", true);
+    s4.appendChild(pickGroup({key: "dol", title: "Kam jsi mířil", sel: sDol, hint: "Likvidita nebo level, ke kterému měl obchod dojít.", ph: "Vlastní cíl"}));
+    const s5 = sec("Rozbor", "proč zrovna tady", true);
+    s5.appendChild(pickGroup({key: "conf", title: "Confluence", tone: "c1", sel: sConf, ph: "Vlastní confluence"}));
+    s5.appendChild(pickGroup({key: "cfm", title: "Potvrzení", tone: "c2", sel: sCfm, ph: "Vlastní potvrzení"}));
+    s5.appendChild(pickGroup({key: "bonus", title: "Bonus", tone: "c3", sel: sBonus, ph: "Vlastní bonus"}));
+
+    // 6 · psychology
+    const s6 = sec("Psychika", "", true);
+    const eBox = el("div","chips"), ew = el("div","tf-grp"), ek = el("div","tf-k"); ek.appendChild(el("span", null, "Jak ti bylo před vstupem")); EMO.forEach(x => { const b = el("button","chip", x); b.type = "button"; b.addEventListener("click", () => { emo = emo === x ? "" : x; paintE(); }); eBox.appendChild(b); });
+    const paintE = () => Array.prototype.forEach.call(eBox.children, b => b.setAttribute("aria-pressed", String(b.textContent === emo)));
+    ew.appendChild(ek); ew.appendChild(eBox); s6.appendChild(ew);
+    s6.appendChild(pickGroup({key: "epos", title: "Co ti pomohlo", tone: "c2", sel: sPos, ph: "Vlastní"}));
+    s6.appendChild(pickGroup({key: "neg", title: "Co ti uškodilo", tone: "c4", sel: sNeg, ph: "Vlastní chyba"}));
+    const revW = duo("Vstup po dnešní ztrátě: byl to revenge trade?", [["no","Ne, čistý vstup","good"],["yes","Ano, revenge","bad"]], () => rev, v => { rev = v; }); s6.appendChild(revW);
+    const paintRev = () => { const d = new Date(fTs.value), k = isNaN(d) ? "" : dayKey(d), iso = isNaN(d) ? "" : d.toISOString(); revW.hidden = !(rev || jr.trades.some(x => !x.missed && x.id !== t.id && (Number(x.r) || 0) < 0 && tDay(x) === k && String(x.ts) < iso)); };
+
+    // 7 · grade, 8 · notes, pictures
+    const s7 = sec("Hodnocení", "provedení, ne výsledek"), gBox = el("div","tf-grade"); GRADES.forEach(x => { const b = el("button", null, x[1]); b.type = "button"; b.dataset.g = String(x[0]); b.addEventListener("click", () => { grade = grade === x[0] ? 0 : x[0]; paintG(); }); gBox.appendChild(b); });
+    const paintG = () => Array.prototype.forEach.call(gBox.children, b => b.setAttribute("aria-pressed", String(Number(b.dataset.g) === grade))); s7.appendChild(gBox);
+    const s8 = sec("Poznámky"), fNote = el("textarea"); fNote.rows = 3; fNote.maxLength = 600; fNote.value = t.note || ""; fNote.placeholder = "Proč jsem obchod vzal, co se povedlo a co bych příště udělal jinak"; fNote.setAttribute("aria-label", "Poznámky"); s8.appendChild(fNote);
+    const tpl = el("button","ck-del","Vložit otázky k poznámce"); tpl.type = "button"; tpl.addEventListener("click", () => { const q = "Proč jsem vstoupil: \nCo bylo dobře: \nCo příště jinak: "; if (fNote.value.indexOf("Proč jsem vstoupil") < 0) fNote.value = (fNote.value ? fNote.value.trim() + "\n" : "") + q; fNote.rows = 5; fNote.focus(); }); s8.appendChild(tpl);
+    const s9 = sec("Obrázky", "nejvýš 3, jdou i vložit"), shBox = el("div","shots"), shIn = inp("file"); shIn.accept = "image/*"; shIn.multiple = true; shIn.hidden = true;
     const drawShots = () => { clear(shBox);
-      shots.forEach((s, i) => { const w = el("div","sh"), im = el("img"), rm = el("button", null, "×"); im.src = s; im.alt = "Obrázek " + (i + 1); rm.type = "button"; rm.setAttribute("aria-label", "Odebrat obrázek"); rm.addEventListener("click", () => { shots.splice(i, 1); drawShots(); }); w.appendChild(im); w.appendChild(rm); shBox.appendChild(w); });
+      shots.forEach((sh, i) => { const w = el("div","sh"), im = el("img"), rm = el("button", null, "×"); im.src = sh; im.alt = "Obrázek " + (i + 1); rm.type = "button"; rm.setAttribute("aria-label", "Odebrat obrázek"); rm.addEventListener("click", () => { shots.splice(i, 1); drawShots(); }); w.appendChild(im); w.appendChild(rm); shBox.appendChild(w); });
       if (shots.length < 3){ const add = el("button","shadd","+ Obrázek"); add.type = "button"; add.addEventListener("click", () => shIn.click()); shBox.appendChild(add); } };
     const addFiles = async files => { for (const f of files){ if (shots.length >= 3) break; if (!/^image\//.test(f.type)) continue; const d = await fileToShot(f); if (d) shots.push(d); } shotsReady = true; drawShots(); };
     shIn.addEventListener("change", ev => { addFiles(Array.from(ev.target.files || [])); ev.target.value = ""; });
     const onPaste = ev => { const fs = Array.from((ev.clipboardData && ev.clipboardData.files) || []).filter(f => /^image\//.test(f.type)); if (fs.length){ ev.preventDefault(); addFiles(fs); } };
     document.addEventListener("paste", onPaste); o.ov.onclose = () => document.removeEventListener("paste", onPaste);
-    sw.appendChild(el("span", null, "Obrázky grafu (nejvýš 3, jdou i vložit ze schránky)")); sw.appendChild(shBox); sw.appendChild(shIn); g.appendChild(sw);
+    s9.appendChild(shBox); s9.appendChild(shIn);
     if (editing && !shotsReady) Promise.all(shotKeys(src).map(shotGet)).then(a => { shots = a.filter(Boolean); shotsReady = true; drawShots(); }); else drawShots();
 
-    const det = el("details","ans tdet"), dg = el("div","fgrid"); det.appendChild(el("summary", null, "Další údaje: čas výstupu, částečný výstup, poplatky, MAE a MFE, emoce, hodnocení")); det.appendChild(dg); card.appendChild(det);
-    const fTsx = inp("datetime-local", t.tsx ? toLocalInput(t.tsx) : ""), fTp1 = inp(null, nv(t.tp1), "", "decimal"), fTp1p = inp(null, nv(t.tp1pct), "například 50", "numeric"), fFee = inp(null, nv(t.fee), "0", "decimal"), fMae = inp(null, nv(t.mae), "", "decimal"), fMfe = inp(null, nv(t.mfe), "", "decimal");
-    dg.appendChild(lab("Čas výstupu", fTsx, "wide")); dg.appendChild(lab("Cena částečného výstupu", fTp1)); dg.appendChild(lab("Kolik procent pozice", fTp1p));
-    dg.appendChild(lab("Poplatky celkem ($)", fFee)); dg.appendChild(el("span"));
-    dg.appendChild(lab("MAE: největší pohyb proti (body)", fMae)); dg.appendChild(lab("MFE: největší pohyb pro (body)", fMfe));
-    const eBox = el("div","chips"), ew = el("div","wide flab"); EMO.forEach(x => { const b = el("button","chip", x); b.type = "button"; b.addEventListener("click", () => { emo = emo === x ? "" : x; paintE(); }); eBox.appendChild(b); });
-    const paintE = () => Array.prototype.forEach.call(eBox.children, b => b.setAttribute("aria-pressed", String(b.textContent === emo)));
-    ew.appendChild(el("span", null, "Jak ti bylo před vstupem")); ew.appendChild(eBox); dg.appendChild(ew);
-    const gBox = el("div","chips"), gw = el("div","wide flab"); [1, 2, 3, 4, 5].forEach(x => { const b = el("button","chip", String(x)); b.type = "button"; b.addEventListener("click", () => { grade = grade === x ? 0 : x; paintG(); }); gBox.appendChild(b); });
-    const paintG = () => Array.prototype.forEach.call(gBox.children, b => b.setAttribute("aria-pressed", String(Number(b.textContent) === grade)));
-    gw.appendChild(el("span", null, "Provedení podle plánu (1 nejhorší, 5 přesně podle plánu), bez ohledu na výsledek")); gw.appendChild(gBox); dg.appendChild(gw);
-    const missed = inp("checkbox"), ml = el("label","wide chk"); missed.checked = !!t.missed; ml.appendChild(missed); ml.appendChild(el("span", null, "Obchod jsem nevzal (zmeškaný). Do výsledků se nepočítá.")); dg.appendChild(ml);
-    if (editing && (t.tsx || t.tp1 != null || t.fee != null || t.mae != null || t.mfe != null || t.emo || t.grade || t.missed)) det.open = true;
-    if (t.missed) det.open = true;
-
+    const bar = el("div","tf-bar"), live = el("b","tf-live"), msg = el("span","small muted tf-msg"), saveB = el("button","primary", editing ? "Uložit změny" : "Uložit obchod"); saveB.type = "button";
     const read = () => ({dir: dir, sym: fSym.value, entry: num(fEntry.value), stop: num(fStop.value), exit: num(fExit.value), qty: num(fQty.value), tp1: num(fTp1.value), tp1pct: num(fTp1p.value)});
+    const paintLive = () => { const r = num(fR.value); live.textContent = isFinite(r) ? sgn(r) + " R" : ""; live.className = "tf-live" + (isFinite(r) ? (r >= 0 ? " pos" : " neg") : "");
+      const e = num(fEntry.value), sp = num(fStop.value), tp = num(fTp.value); rrLine.textContent = isFinite(e) && isFinite(sp) && isFinite(tp) && e !== sp ? "Plánované RR 1 : " + fnum(Math.round(Math.abs(tp - e) / Math.abs(e - sp) * 100) / 100) : ""; rrLine.hidden = !rrLine.textContent; };
     const calc = () => { const c = calcTrade(read()); if (isFinite(c.r)) fR.value = nv(c.r); if (isFinite(c.usd)) fUsd.value = nv(c.usd);
-      const q = num(fQty.value), pc = num(cfg.fee); if (isFinite(pc) && pc > 0 && isFinite(q) && q > 0 && (fFee.value === "" || fFee.value === autoFee)){ autoFee = nv(Math.round(pc * q * 100) / 100); fFee.value = autoFee; } };
-    [fEntry, fStop, fExit, fQty, fTp1, fTp1p].forEach(i => i.addEventListener("input", calc)); fSym.addEventListener("change", calc);
-    const wb = el("div","ptw"), warn = () => { clear(wb); if (editing || missed.checked) return; preTrade(dir, fSetup.value).forEach(x => wb.appendChild(el("p","small ptl " + x[0], x[1]))); };
-    fSetup.addEventListener("change", warn); missed.addEventListener("change", warn); card.appendChild(wb);
-
-    const msg = el("span","small muted"), act = el("div","row"), left = el("div","rp-ctl"), saveB = el("button","primary", editing ? "Uložit změny" : "Uložit obchod"); saveB.type = "button";
-    left.appendChild(saveB);
-    if (editing){ const del = el("button","danger","Smazat obchod"); del.type = "button"; twoStep(del, "Smazat obchod", () => { o.close(); deleteTrade(src); }); left.appendChild(del); }
-    act.appendChild(left); act.appendChild(msg); card.appendChild(act);
+      const q = num(fQty.value), pc = num(cfg.fee); if (isFinite(pc) && pc > 0 && isFinite(q) && q > 0 && (fFee.value === "" || fFee.value === autoFee)){ autoFee = nv(Math.round(pc * q * 100) / 100); fFee.value = autoFee; } paintLive(); };
+    [fEntry, fStop, fExit, fQty, fTp1, fTp1p].forEach(i => i.addEventListener("input", calc)); fSym.addEventListener("change", calc); [fR, fTp].forEach(i => i.addEventListener("input", paintLive));
+    const wb = el("div","ptw"), warn = () => { clear(wb); if (editing || missed.checked) return; preTrade(dir, setupNow()).forEach(x => wb.appendChild(el("p","small ptl " + x[0], x[1]))); };
+    missed.addEventListener("change", warn); body.appendChild(wb);
+    bar.appendChild(saveB);
+    if (editing){ const del = el("button","danger","Smazat"); del.type = "button"; twoStep(del, "Smazat", () => { o.close(); deleteTrade(src); }); bar.appendChild(del); }
+    bar.appendChild(msg); bar.appendChild(live); card.appendChild(bar);
     saveB.addEventListener("click", async () => {
       const c = read(), u = num(fUsd.value); let r = num(fR.value);
       if (!isFinite(r)){ const risk = num(jr.risk); if (isFinite(u) && isFinite(risk) && risk > 0) r = Math.round(u / risk * 100) / 100; }
       if (!isFinite(r)){ msg.textContent = "Doplň výsledek v R, nebo vstup, stop a výstup."; fR.focus(); return; }
       saveB.disabled = true;
-      const d = new Date(fTs.value), dx = fTsx.value ? new Date(fTsx.value) : null, id = editing ? src.id : "t" + Date.now().toString(36), nn = x => isFinite(x) ? x : null;
-      const out = Object.assign({}, editing ? src : {}, {id: id, ts: isNaN(d) ? new Date().toISOString() : d.toISOString(), tsx: dx && !isNaN(dx) ? dx.toISOString() : null, sym: fSym.value, dir: dir, setup: fSetup.value, acct: fAcct.value,
-        entry: nn(c.entry), stop: nn(c.stop), exit: nn(c.exit), qty: nn(c.qty), tp1: nn(c.tp1), tp1pct: nn(c.tp1pct), r: r, usd: nn(u), fee: nn(num(fFee.value)), mae: nn(num(fMae.value)), mfe: nn(num(fMfe.value)),
-        levels: fLev.value.trim().slice(0, 160), tags: allTags.filter(x => tags[x]), emo: emo || null, grade: grade || null, note: fNote.value.trim().slice(0, 600), missed: missed.checked ? true : null});
+      const d = new Date(fTs.value), dx = fTsx.value ? new Date(fTsx.value) : null, id = editing ? src.id : "t" + Date.now().toString(36), nn = x => isFinite(x) ? x : null, arr = m => { const a = pickOn(m); return a.length ? a : null; };
+      const out = Object.assign({}, editing ? src : {}, {id: id, ts: isNaN(d) ? new Date().toISOString() : d.toISOString(), tsx: dx && !isNaN(dx) ? dx.toISOString() : null, sym: fSym.value, dir: dir, setup: setupNow() || "Jiný", acct: fAcct.value,
+        entry: nn(c.entry), stop: nn(c.stop), exit: nn(c.exit), qty: nn(c.qty), tp1: nn(c.tp1), tp1pct: nn(c.tp1pct), r: r, usd: nn(u), fee: nn(num(fFee.value)), mae: nn(num(fMae.value)), mfe: nn(num(fMfe.value)), tp: nn(num(fTp.value)),
+        levels: fLev.value.trim().slice(0, 160), tags: pickOn(sNeg), emo: emo || null, grade: grade || null, note: fNote.value.trim().slice(0, 600), missed: missed.checked ? true : null,
+        dol: arr(sDol), conf: arr(sConf), cfm: arr(sCfm), bonus: arr(sBonus), epos: arr(sPos), plan: plan || null, sess: sess || null, rev: rev === "yes" ? true : rev === "no" ? false : null});
       if (!editing){ const n = ck.items.length, k = ck.items.filter(i => ckOn[i.id]).length; out.ck = k && !out.missed ? {k: k, n: n} : null; if (k && !out.missed){ ckOn = {}; renderCk(); } }
       if (shotsReady){
         try { await Promise.all((editing ? shotKeys(src) : []).map(shotDel)); for (let i = 0; i < shots.length; i++) await shotPut(id + "#" + i, shots[i]); out.shots = shots.length; }
@@ -4733,8 +4840,8 @@ html:not([data-t]) body:not(.sakura) #thbg i:first-child{background:radial-gradi
       touchDay(); o.close(); jStore();
       const lm = !editing && !out.missed ? limitState() : null; toast(editing ? "Změny uloženy." : ("Obchod uložen." + (lm ? " " + lm : "")));
     });
-    paintSeg(); paintE(); paintG(); if (!editing){ calc(); warn(); }
-    setTimeout(() => { try { (editing ? fNote : fEntry).focus({preventScroll: true}); } catch(e){} }, 60);
+    paintMode(); paintSeg(); paintSess(); paintRev(); paintE(); paintG(); if (!editing){ calc(); warn(); } paintLive();
+    setTimeout(() => { try { if (!editing) fEntry.focus({preventScroll: true}); } catch(e){} }, 60);
   }
 
   // ---------- trade detail ----------
@@ -4755,11 +4862,12 @@ html:not([data-t]) body:not(.sakura) #thbg i:first-child{background:radial-gradi
     if (t.tsx){ const m = Math.round((new Date(t.tsx) - new Date(t.ts)) / 60000); if (m >= 0) add("Doba držení", m < 60 ? m + " min" : Math.floor(m / 60) + " h " + (m % 60) + " min"); }
     const rk = t.entry != null && t.stop != null ? Math.abs(t.entry - t.stop) : 0, inR = x => rk ? " (" + fnum(Math.round(x / rk * 100) / 100) + " R)" : "";
     if (t.mae != null) add("MAE", fnum(t.mae) + " b." + inR(t.mae)); if (t.mfe != null) add("MFE", fnum(t.mfe) + " b." + inR(t.mfe));
-    if (premOn()) add("Cyklus", tradeCycle(t)); if (t.ck) add("Seznam před vstupem", t.ck.k + " z " + t.ck.n); if (t.grade) add("Provedení", t.grade + " z 5"); if (t.emo) add("Před vstupem", t.emo);
+    if (premOn()) add("Cyklus", tradeCycle(t)); if (t.ck) add("Seznam před vstupem", t.ck.k + " z " + t.ck.n); if (t.grade) add("Hodnocení", gradeName(t.grade)); if (t.emo) add("Před vstupem", t.emo);
+    if (t.tp != null) add("Cíl", f(t.tp)); { const ss = sessOfTrade(t); if (ss) add("Seance", ss); } if (t.plan) add("Plán", t.plan === "yes" ? "Dodržen" : "Nedodržen"); if (t.rev != null) add("Po ztrátě", t.rev ? "Revenge trade" : "Čistý vstup");
     if (cfg.accounts.length > 1){ const a = cfg.accounts.find(x => x.id === tAcct(t)); if (a) add("Účet", a.name); }
     if (g.children.length) card.appendChild(g);
     if (t.levels){ const b = el("div","box"); b.appendChild(el("b", null, "Úrovně")); b.appendChild(el("span", null, t.levels)); card.appendChild(b); }
-    if ((t.tags || []).length){ const c = el("div","chips"); t.tags.forEach(x => c.appendChild(el("span","pill warn", x))); card.appendChild(c); }
+    [["Draw on liquidity", t.dol, "info"], ["Confluence", t.conf, "info"], ["Potvrzení", t.cfm, "good"], ["Bonus", t.bonus, "warn"], ["Co pomohlo", t.epos, "good"], ["Co uškodilo", t.tags, "bad"]].forEach(q => { if (!(q[1] || []).length) return; const w = el("div","td-grp"), c = el("div","chips"); w.appendChild(el("span","td-k", q[0])); q[1].forEach(x => c.appendChild(el("span","pill " + q[2], x))); w.appendChild(c); card.appendChild(w); });
     if (t.note){ const b = el("div","box"); b.appendChild(el("b", null, "Poznámka")); b.appendChild(el("span", null, t.note)); card.appendChild(b); }
     const act = el("div","rp-ctl"), mk = (txt, fn, cls) => { const b = el("button", cls || null, txt); b.type = "button"; if (fn) b.addEventListener("click", fn); act.appendChild(b); return b; };
     mk("Upravit", () => { o.close(); openTradeForm(t); }, "primary"); if (!t.missed) mk("Karta ke sdílení", () => openCard(t));
@@ -4818,7 +4926,7 @@ html:not([data-t]) body:not(.sakura) #thbg i:first-child{background:radial-gradi
     const r = Number(t.r) || 0, b = el("button","trow " + (t.missed ? "miss" : r >= 0 ? "w" : "l")), a = el("div","tinfo"), c = el("div","tres"), net = tNet(t), n = shotKeys(t).length;
     b.type = "button"; a.appendChild(el("b", null, (t.sym || "") + " · " + (t.dir === "short" ? "Short" : "Long") + (t.missed ? " · zmeškaný" : "")));
     a.appendChild(el("span", null, (t.setup || "") + " · " + fmtDateTime(t.ts)));
-    const bits = (t.tags || []).slice(); if (n) bits.push(n === 1 ? "1 obrázek" : n + " obrázky"); if (t.grade) bits.push("provedení " + t.grade + "/5");
+    const bits = (t.tags || []).slice(); if (n) bits.push(n === 1 ? "1 obrázek" : n + " obrázky"); if (t.grade) bits.push("hodnocení " + gradeName(t.grade));
     if (bits.length) a.appendChild(el("span","tmeta", bits.join(" · ")));
     c.appendChild(el("b", r >= 0 ? "pos" : "neg", sgn(r) + " R")); if (net != null) c.appendChild(el("span", null, usd(net)));
     b.appendChild(a); b.appendChild(c); b.addEventListener("click", () => openTrade(t)); return b;
@@ -4955,7 +5063,11 @@ html:not([data-t]) body:not(.sakura) #thbg i:first-child{background:radial-gradi
        groupTable("Hodina", tr, t => { const h = new Date(t.ts).getHours(); return isNaN(h) ? null : String(h).padStart(2, "0") + ":00"; }, Array.from({length: 24}, (x, i) => String(i).padStart(2, "0") + ":00"), unit),
        premOn() ? groupTable("Cyklus (New York)", tr, tradeCycle, CYCN.concat(["Londýn", "Asie", "Mimo cykly"]), unit) : null, groupTable("Směr", tr, t => t.dir === "short" ? "Short" : "Long", null, unit), groupTable("Plán dne", tr, bias, ["Ve směru plánu","Proti plánu","Bez plánu"], unit),
        groupTable("Seznam", tr, t => t.ck ? (t.ck.k === t.ck.n ? "Splněný" : "Nesplněný") : null, null, unit), groupTable("Chyba", tr, t => (t.tags && t.tags.length) ? t.tags : null, null, unit),
-       groupTable("Před vstupem", tr, t => t.emo || null, EMO, unit), groupTable("Provedení", tr, t => t.grade ? String(t.grade) + " z 5" : null, ["5 z 5","4 z 5","3 z 5","2 z 5","1 z 5"], unit),
+       groupTable("Před vstupem", tr, t => t.emo || null, EMO, unit), groupTable("Hodnocení", tr, t => t.grade ? gradeName(t.grade) : null, GRADES.map(x => x[1]), unit),
+       groupTable("Seance", tr, sessOfTrade, TF_SESS, unit), groupTable("Plán obchodu", tr, t => t.plan ? (t.plan === "yes" ? "Dodržen" : "Nedodržen") : null, ["Dodržen","Nedodržen"], unit),
+       groupTable("Draw on liquidity", tr, t => (t.dol && t.dol.length) ? t.dol : null, null, unit), groupTable("Confluence", tr, t => (t.conf && t.conf.length) ? t.conf : null, null, unit),
+       groupTable("Potvrzení", tr, t => (t.cfm && t.cfm.length) ? t.cfm : null, null, unit), groupTable("Bonus", tr, t => (t.bonus && t.bonus.length) ? t.bonus : null, null, unit),
+       groupTable("Co pomohlo", tr, t => (t.epos && t.epos.length) ? t.epos : null, null, unit), groupTable("Po ztrátě", tr, t => t.rev == null ? null : (t.rev ? "Revenge trade" : "Čistý vstup"), null, unit),
        groupTable("Doba držení", tr, hold, ["do 5 min","5–15 min","15–60 min","přes hodinu"], unit)].forEach(x => { if (x) tb.appendChild(x); }); }
     else tb.appendChild(el("p","small muted","Rozpady podle setupu, dne, hodiny, chyb a dalších údajů se ukážou s prvními obchody."));
     renderGoals();
