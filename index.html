@@ -2191,6 +2191,15 @@ button,.chip,.abtn,a.go,.subnav a,.tb-acc,.mo-ckb i,.mo-steps i{background-origi
 html body .wel .wel-go:not(:disabled):hover,html body .wel button.primary:not(:disabled):hover{background-image:radial-gradient(circle 90px at var(--mx) var(--my),rgba(255,255,255,.28),transparent 70%),linear-gradient(110deg,var(--w1),var(--w2))!important;background-origin:border-box!important;color:#fff!important;filter:brightness(1.06);transform:translateY(-1px)}
 html body .wel.lt .wel-go:not(:disabled):hover,html body .wel.lt button.primary:not(:disabled):hover{background-image:radial-gradient(circle 90px at var(--mx) var(--my),rgba(255,255,255,.28),transparent 70%),linear-gradient(110deg,var(--wb1,var(--w1)),var(--wb2,var(--w2)))!important}
 .wel .wel-go{transition:transform .2s ease,filter .2s ease}
+.lg-tabs{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+.lg-tabs button{border-radius:999px;padding:8px 15px;font-weight:650}
+.lg-tabs button.on{background:var(--th-pri,var(--accent));background-origin:border-box;color:#fff;border-color:transparent}
+.lg-doc{max-width:780px;display:block!important}
+.lg-doc>*+*{margin-top:0}
+.lg-doc h3{margin:22px 0 6px;font-size:1rem}
+.lg-doc p{line-height:1.62;margin:0 0 9px}
+.lg-doc .lg-ph{background:color-mix(in srgb,#f5b301 22%,transparent);color:inherit;border-radius:5px;padding:1px 5px}
+.lg-foot a{white-space:nowrap}
 .thpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:8px}
 .thp{display:flex;flex-direction:column;gap:8px;align-items:stretch;text-align:left;padding:8px;border-radius:16px;min-height:0}
 .thp .sw{height:54px;border-radius:10px;position:relative;overflow:hidden;border:1px solid rgba(128,128,128,.25)}
@@ -2310,6 +2319,7 @@ html body .wel.lt .wel-go:not(:disabled):hover,html body .wel.lt button.primary:
       <a class="go" href="#napoveda"><div><b>Nápověda</b><span>První kroky a klávesové zkratky</span></div><i>›</i></a>
       <a class="go" href="#novinky"><div><b>Co je nového</b><span>Seznam změn</span></div><i>›</i></a>
       <a class="go" href="#soukromi"><div><b>Soukromí a data</b><span>Co se kam ukládá</span></div><i>›</i></a>
+      <a class="go" href="#pravni"><div><b>Právní informace</b><span>Podmínky, soukromí, cookies a rizika</span></div><i>›</i></a>
       <a class="go" href="#uvod"><div><b>O aplikaci</b><span>Co Tape umí a pro koho je</span></div><i>›</i></a>
     </div></div>
   </section>
@@ -2474,11 +2484,14 @@ html body .wel.lt .wel-go:not(:disabled):hover,html body .wel.lt button.primary:
         <li><b>Písma:</b> načítají se z Google Fonts, takže prohlížeč pošle požadavek Googlu.</li>
         <li><b>AI kouč:</b> jen když si sám nastavíš API klíč. Pak se otázka a údaje z deníku posílají společnosti Anthropic.</li>
         <li><b>Sdílení:</b> karta obchodu opustí zařízení jen tehdy, když ji sám sdílíš nebo stáhneš.</li>
-        <li><b>Cookies a měření:</b> aplikace žádné cookies ani analytiku nepoužívá.</li>
+        <li><b>Hudba:</b> přehrávač Spotify nebo YouTube se načte, až když si hudbu pustíš. Pak tyto služby můžou nastavit vlastní cookies.</li>
+        <li><b>Cookies a měření:</b> Tape sám žádné reklamní cookies ani analytiku nepoužívá.</li>
       </ul>
-      <p class="small muted">Když smažeš data prohlížeče, přijdeš o všechno, co není v záloze. Zálohu i úplné smazání najdeš v <a href="#nastaveni">Nastavení</a>. Pro placenou verzi s účty bude potřeba plné znění podmínek a zásad zpracování údajů od právníka.</p>
+      <p class="small muted">Když smažeš data prohlížeče, přijdeš o všechno, co není v záloze. Zálohu i úplné smazání najdeš v <a href="#nastaveni">Nastavení</a>. Plné znění najdeš v <a href="#pravni" data-lt="gdpr">Právních informacích</a>.</p>
     </div>
   </section>
+
+  <section class="view" id="v-pravni"><div id="lg"></div></section>
 
   <section class="view land" id="v-uvod">
     <div class="card herocard">
@@ -2792,7 +2805,7 @@ html body .wel.lt .wel-go:not(:disabled):hover,html body .wel.lt button.primary:
     </div>
   </section>
 
-  <p class="small muted">Vzdělávací nástroj, žádné investiční doporučení. Obchodování futures je rizikové a žádný model nezaručuje zisk. <a href="#uvod">O aplikaci</a></p>
+  <p class="small muted lg-foot">Vzdělávací nástroj, žádné investiční doporučení. Obchodování futures je rizikové a žádný model nezaručuje zisk. <a href="#pravni" data-lt="rizika">Rizika</a> · <a href="#pravni" data-lt="podminky">Podmínky</a> · <a href="#pravni" data-lt="gdpr">Ochrana osobních údajů</a> · <a href="#pravni" data-lt="cookies">Cookies</a> · <a href="#uvod">O aplikaci</a></p>
 </div>
 <aside class="rail" aria-label="Dnešek">
   <div class="card"><span class="kick">V kalendáři</span><div id="rr-news"></div></div>
@@ -2864,10 +2877,10 @@ html body .wel.lt .wel-go:not(:disabled):hover,html body .wel.lt button.primary:
   });
 
   // Views
-  const VIEWS = ["prehled","denik","kouc","laura","room","studium","moros","vice","nastroje","poznatky","model","strategie","backtest","napady","komunita","premium","nastaveni","napoveda","novinky","soukromi","uvod","lide"];
+  const VIEWS = ["prehled","denik","kouc","laura","room","studium","moros","vice","nastroje","poznatky","model","strategie","backtest","napady","komunita","premium","nastaveni","napoveda","novinky","soukromi","pravni","uvod","lide"];
   const GROUP = {prehled: "prehled", denik: "denik", kouc: "kouc", laura: "uceni", room: "uceni", studium: "uceni", moros: "uceni"};
   const SUBNAV = {uceni: [["laura","Obrázky a lekce"],["room","Kurz 12 týdnů"],["studium","Studium ICT"],["moros","MOROS"]]};
-  const VTITLE = {lide: "Lidé a postup", premium: "Premium", komunita: "Komunita", nastroje: "Nástroje", poznatky: "Poznatky botů", model: "Model", strategie: "Pine Script", backtest: "Backtest", napady: "Nápady", nastaveni: "Nastavení", napoveda: "Nápověda", novinky: "Co je nového", soukromi: "Soukromí a data", uvod: "O aplikaci"};
+  const VTITLE = {lide: "Lidé a postup", premium: "Premium", komunita: "Komunita", nastroje: "Nástroje", poznatky: "Poznatky botů", model: "Model", strategie: "Pine Script", backtest: "Backtest", napady: "Nápady", nastaveni: "Nastavení", napoveda: "Nápověda", novinky: "Co je nového", soukromi: "Soukromí a data", pravni: "Právní informace", uvod: "O aplikaci"};
   function route(){
     const h = (location.hash || "").replace("#",""), v = VIEWS.includes(h) ? h : "prehled", g = GROUP[v] || "vice";
     document.body.dataset.view = v; document.body.dataset.group = g; try { pheadPaint(v, g); } catch(e){}
@@ -5319,7 +5332,7 @@ html body .wel.lt .wel-go:not(:disabled):hover,html body .wel.lt button.primary:
     const o = overlay("search"), card = o.card, q = inp("search", "", "Hledat pojem, téma, lekci, obchod nebo sekci"), res = el("div","list sres"), idx = [];
     q.setAttribute("aria-label", "Hledat"); card.appendChild(q); card.appendChild(res);
     const add = (kind, title, sub, fn) => idx.push({kind: kind, title: String(title || ""), sub: String(sub || ""), key: (title + " " + (sub || "")).toLowerCase(), fn: fn});
-    [["prehled","Přehled"],["denik","Deník"],["kouc","Kouč"],["laura","Obrázky a lekce"],["room","Kurz 12 týdnů"],["studium","Studium ICT: Model 2022 a core content"],["nastroje","Nástroje: kalkulačka pozice a hodiny seancí"],["poznatky","Poznatky botů"],["model","Model"],["strategie","Pine Script"],["backtest","Backtest a přehrávání trhu"],["napady","Nápady"],["nastaveni","Nastavení"],["napoveda","Nápověda"],["novinky","Co je nového"],["soukromi","Soukromí a data"]]
+    [["prehled","Přehled"],["denik","Deník"],["kouc","Kouč"],["laura","Obrázky a lekce"],["room","Kurz 12 týdnů"],["studium","Studium ICT: Model 2022 a core content"],["nastroje","Nástroje: kalkulačka pozice a hodiny seancí"],["poznatky","Poznatky botů"],["model","Model"],["strategie","Pine Script"],["backtest","Backtest a přehrávání trhu"],["napady","Nápady"],["nastaveni","Nastavení"],["napoveda","Nápověda"],["novinky","Co je nového"],["soukromi","Soukromí a data"],["pravni","Právní informace: podmínky, GDPR, cookies, rizika"]]
       .forEach(s => add("Sekce", s[1], "", () => { location.hash = "#" + s[0]; }));
     glossary.forEach(gl => add("Pojem", gl.term || gl.id, (gl.en && gl.en !== gl.term ? gl.en + " · " : "") + (gl.def || ""), () => { location.hash = "#laura"; gCat = "all"; $("g-q").value = gl.term || ""; renderGlossary(); setTimeout(() => $("g-q").scrollIntoView({block: "center"}), 90); }));
     pa.forEach(t => add("Téma v obrázcích", t.title, t.en || "", () => openTopic(t.id)));
@@ -7917,6 +7930,16 @@ html body .wel.lt .wel-go:not(:disabled):hover,html body .wel.lt button.primary:
     const sv = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><defs>' + rg("a", .18, .12, .75, q.b[0], .95) + rg("b", .95, .65, .7, q.b[1], .8) + rg("c", .35, 1.1, .7, q.b[2], .75) + '</defs><rect width="96" height="96" rx="22" fill="' + q.bg + '"/><rect width="96" height="96" rx="22" fill="url(#a)"/><rect width="96" height="96" rx="22" fill="url(#b)"/><rect width="96" height="96" rx="22" fill="url(#c)"/><rect x="45" y="15" width="6" height="66" rx="3" fill="' + ink + '" opacity=".55"/><rect x="34" y="29" width="28" height="38" rx="8.5" fill="' + ink + '"/></svg>';
     let l = document.querySelector('link[rel="icon"][type="image/svg+xml"]'); if (!l) return; l.href = "data:image/svg+xml," + encodeURIComponent(sv); }
   try { favPaint(); } catch(e){}
+  // ---------- legal pages: risks, terms, privacy, cookies ----------
+  const LEGAL = [{"id": "rizika", "t": "Upozornění na rizika", "i": "Přečti si to, než začneš obchodovat podle čehokoli, co se tu naučíš.", "s": [{"h": "Vzdělávání, ne doporučení", "p": ["Tape je vzdělávací nástroj a obchodní deník. Nic v aplikaci, v lekcích, v AI kouči ani v ukázkových obchodech není investiční doporučení, investiční poradenství ani obchodní signál.", "Provozovatel není obchodník s cennými papíry, investiční zprostředkovatel ani investiční poradce a nemá k tomu povolení České národní banky.", "O každém obchodu rozhoduješ sám a sám neseš jeho výsledek."]}, {"h": "Futures jsou rizikové", "p": ["Obchodování futures (například NQ, ES, MNQ a MES) používá páku. Ztráta může být rychlá a může převýšit peníze, které máš na účtu.", "Obchoduj jen s penězi, o které si můžeš dovolit přijít. Když si nejsi jistý, poraď se s nezávislým odborníkem."]}, {"h": "Výsledky a modely", "p": ["Backtesty, statistiky a příklady obchodů jsou hypotetické nebo minulé. Minulé výsledky nezaručují budoucí a žádný model ani strategie v Tape nemá prokázanou výhodu na trhu.", "Automatické strategie a skripty zkoušej jen na demo účtu. Za jejich nastavení a provoz odpovídáš sám.", "Pravidla prop firem se mění. Vždy platí podmínky konkrétní firmy, ne to, co je uvedeno v Tape."]}, {"h": "Značky a zdroje", "p": ["Tape není spojený s ICT (Inner Circle Trader), s CME Group, Nasdaq, S&P ani s žádnou prop firmou nebo autorem, který je v aplikaci zmíněn. Jejich názvy patří jejich vlastníkům.", "Pojmy a myšlenky jiných autorů jsou vysvětlené vlastními slovy a s uvedením zdroje."]}]}, {"id": "podminky", "t": "Obchodní podmínky", "i": "Účinné od 23. 11. 2026. Používáním Tape s nimi souhlasíš.", "s": [{"h": "1. Provozovatel", "p": ["Provozovatelem Tape je [doplní provozovatel: jméno nebo firma, IČO, sídlo]. Kontakt: [kontaktní e-mail]."]}, {"h": "2. Co Tape je", "p": ["Tape je webová aplikace pro výuku price action a vedení obchodního deníku. Slouží ke vzdělávání a k rozboru vlastního obchodování, ne k poskytování investičních služeb. Platí také Upozornění na rizika."]}, {"h": "3. Účet", "p": ["Aplikaci lze používat i bez účtu, pak data zůstávají jen v tvém prohlížeči. Když si účet založíš, odpovídáš za správnost údajů a za to, že přístup nikomu nepředáš.", "Účet můžeš kdykoli smazat v Nastavení."]}, {"h": "4. Pravidla užívání", "p": ["Nesmíš aplikaci zneužívat, obcházet zabezpečení nebo placený přístup, přetěžovat ji ani kopírovat a dál šířit její obsah bez souhlasu provozovatele."]}, {"h": "5. Obsah a autorská práva", "p": ["Texty, lekce, grafika a kód Tape jsou chráněné autorským právem. Pro vlastní učení je smíš používat; k dalšímu šíření nebo prodeji potřebuješ souhlas.", "Tvoje záznamy v deníku patří tobě. Provozovateli dáváš jen svolení je uložit a zobrazit, aby ti aplikace fungovala."]}, {"h": "6. Placené předplatné", "p": ["Tento článek platí od spuštění placené verze. Cena, délka období a obsah předplatného budou uvedené v ceníku před zaplacením, včetně DPH.", "Předplatné se automaticky obnovuje. Zrušit ho můžeš kdykoli a přístup ti zůstane do konce zaplaceného období.", "Jako spotřebitel můžeš od smlouvy odstoupit do 14 dnů. Pokud ale výslovně požádáš o zpřístupnění obsahu hned a vezmeš na vědomí, že tím právo na odstoupení ztrácíš, toto právo zaniká zpřístupněním obsahu."]}, {"h": "7. Odpovědnost", "p": ["Aplikace se poskytuje tak, jak je. Provozovatel se snaží, aby byla správná a dostupná, ale nezaručuje to a neodpovídá za obchodní ztráty ani za rozhodnutí, která na jejím základě uděláš.", "Tím nejsou dotčena práva, která ti jako spotřebiteli dává zákon."]}, {"h": "8. Změny a ukončení", "p": ["Provozovatel může aplikaci a tyto podmínky měnit. O podstatných změnách tě předem informuje v aplikaci. Při porušení podmínek může přístup omezit nebo zrušit."]}, {"h": "9. Reklamace a spory", "p": ["Reklamace a stížnosti posílej na [kontaktní e-mail]. Vyřídíme je do 30 dnů.", "Spotřebitelský spor můžeš řešit mimosoudně u České obchodní inspekce (adr.coi.cz). Platí právo České republiky."]}]}, {"id": "gdpr", "t": "Ochrana osobních údajů", "i": "Jak Tape zpracovává osobní údaje podle nařízení GDPR. Účinné od 23. 11. 2026.", "s": [{"h": "Správce", "p": ["Správcem osobních údajů je [doplní provozovatel: jméno nebo firma, IČO, sídlo]. Kontakt: [kontaktní e-mail]."]}, {"h": "Jaké údaje a proč", "p": ["Bez účtu: deník, plány, postup v učení a nastavení zůstávají jen v tvém prohlížeči a provozovatel k nim nemá přístup.", "S účtem: e-mail (u přihlášení přes Google i jméno a e-mail z účtu Google), deník, plány, postup v učení a nastavení. Důvod: plnění smlouvy, tedy aby ti aplikace fungovala na více zařízeních.", "Souhrn učení (hotové lekce, série, čas) vidí správce aplikace, aby mohl kurz zlepšovat a poslat ti zprávu. Deník a obchody nevidí. Důvod: oprávněný zájem.", "Technické údaje, například IP adresa, které vidí poskytovatelé hostingu. Důvod: oprávněný zájem na bezpečném provozu.", "Po spuštění plateb: údaje o předplatném a fakturách. Důvod: plnění smlouvy a zákonné povinnosti. Údaje o kartě zpracovává jen platební brána, provozovatel je nevidí."]}, {"h": "Komu se údaje dostanou", "p": ["Supabase (databáze a přihlášení), GitHub (hosting stránky), Google (písma a přihlášení přes Google), Spotify a YouTube (jen když si pustíš hudbu), Anthropic (jen když si v AI kouči nastavíš vlastní klíč) a po spuštění plateb Stripe.", "Někteří z nich sídlí v USA. Předávání je chráněné rámcem EU–USA pro ochranu osobních údajů nebo standardními smluvními doložkami.", "Údaje neprodáváme a nepoužíváme k reklamě."]}, {"h": "Jak dlouho", "p": ["Údaje účtu uchováváme, dokud účet nesmažeš. Účetní doklady uchováváme po dobu, kterou vyžaduje zákon, obvykle 10 let."]}, {"h": "Tvoje práva", "p": ["Máš právo na přístup ke svým údajům, jejich opravu, výmaz, omezení zpracování, přenositelnost a právo vznést námitku. Data si můžeš kdykoli stáhnout a smazat v Nastavení.", "Stížnost můžeš podat u Úřadu pro ochranu osobních údajů (uoou.gov.cz)."]}]}, {"id": "cookies", "t": "Cookies", "i": "Co se ukládá do tvého prohlížeče.", "s": [{"h": "Tape", "p": ["Tape nepoužívá reklamní ani analytické cookies. Deník, nastavení a přihlášení ukládá do místního úložiště prohlížeče, protože bez toho by aplikace nefungovala."]}, {"h": "Služby třetích stran", "p": ["Přehrávač Spotify nebo YouTube se načte až ve chvíli, kdy si sám pustíš hudbu. Tyto služby pak můžou nastavit vlastní cookies podle svých pravidel.", "Písma se načítají z Google Fonts. Ty cookies nenastavují, ale Google vidí IP adresu prohlížeče.", "Úložiště a cookies můžeš kdykoli smazat v nastavení prohlížeče. Data, která nemáš v záloze nebo v účtu, tím ale ztratíš."]}]}];
+  let legalTab = "rizika";
+  function renderLegal(){ const box = $("lg"); if (!box) return; clear(box);
+    const tabs = el("div","lg-tabs"); LEGAL.forEach(d => { const b = el("button", d.id === legalTab ? "on" : "", d.t); b.type = "button"; b.addEventListener("click", () => { legalTab = d.id; renderLegal(); }); tabs.appendChild(b); }); box.appendChild(tabs);
+    const d = LEGAL.find(x => x.id === legalTab) || LEGAL[0], c = el("div","card lg-doc"); c.appendChild(el("h2", null, d.t)); c.appendChild(el("p","muted", d.i));
+    d.s.forEach(x => { c.appendChild(el("h3", null, x.h)); x.p.forEach(t => { const p = el("p"); if (cfg.lang === "en") try { t = trEn(t); } catch(e){} t.split(/(\[[^\]]+\])/).forEach(part => { if (!part) return; if (/^\[.*\]$/.test(part)) p.appendChild(el("mark","lg-ph", part)); else p.appendChild(document.createTextNode(part)); }); c.appendChild(p); }); });
+    box.appendChild(c); }
+  document.addEventListener("click", e => { const a = e.target.closest && e.target.closest("a[data-lt]"); if (!a) return; legalTab = a.dataset.lt; if (location.hash === "#pravni"){ e.preventDefault(); renderLegal(); window.scrollTo(0,0); } else setTimeout(renderLegal, 0); });
+  try { renderLegal(); } catch(e){}
   // ---------- moving to a new address without losing data ----------
   // data/site.json: {"move": "https://new-address", "from": ["https://old-address"]}. The old site hands the data to the new one in a window the person opens.
   let site = {move: "", from: []};
