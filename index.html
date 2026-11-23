@@ -4,6 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#09090b">
+<script>try{if(JSON.parse(localStorage.getItem("tape-settings")||"{}").lang==="en"){document.documentElement.lang="en";(function(){var f0=window.fetch.bind(window),tr=function(v,m){if(typeof v==="string")return Object.prototype.hasOwnProperty.call(m,v)?m[v]:v;if(Array.isArray(v))return v.map(function(x){return tr(x,m)});if(v&&typeof v==="object"){var o={};Object.keys(v).forEach(function(k){o[k]=tr(v[k],m)});return o}return v};
+window.fetch=function(u,o){var m=typeof u==="string"&&/^(?:data\/)?([a-z]+)\.json$/.exec(u);if(!m||m[1]==="en"||m[1]==="site"||m[1]==="manifest")return f0(u,o);
+return Promise.all([f0(u,o),f0("data/en/"+m[1]+".json").then(function(r){return r.ok?r.json():{}}).catch(function(){return{}})]).then(function(a){var r=a[0];if(!r.ok)return r;return r.json().then(function(v){var d=tr(v,a[1]||{});return{ok:true,status:200,headers:r.headers,json:function(){return Promise.resolve(d)},text:function(){return Promise.resolve(JSON.stringify(d))}}})})}})()}}catch(e){}</script>
 <script>try{var t=(JSON.parse(localStorage.getItem("tape-settings")||"{}").theme)||"";if(t&&t!=="noc"){var r=document.documentElement;r.dataset.t=t;r.dataset.tk=(t==="ametyst"||t==="bubblegum")?"l":"d"}}catch(e){}</script>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Tape">
@@ -3786,7 +3789,7 @@ html[data-tk="l"] body:not(.sakura) .tf-sec,body.sakura .tf-sec{background:rgba(
     return "Jsi trpělivý lektor na stránce Tape. Učíš úplného začátečníka základy tradingu podle konceptů ICT (Inner Circle Trader) na futures NQ a ES. "
       + "Odpovídej česky, krátce a jednoduše, s jedním konkrétním příkladem na grafu popsaným slovy. Anglické pojmy nech v originále a při prvním použití je vysvětli. "
       + "Nedávej investiční doporučení ani pokyny, co koupit nebo prodat, a neslibuj zisk. Když se ptá, jestli koncept funguje, řekni poctivě, že ICT koncepty nejsou prokázanou výhodou a musí se ověřit backtestem. "
-      + "Když si nejsi jistý, řekni to. Piš prostý text bez Markdownu.\n\n"
+      + "Když si nejsi jistý, řekni to. Piš prostý text bez Markdownu." + (cfg.lang === "en" ? " IMPORTANT: the user has the app in English. Answer in English, whatever language these instructions are written in." : "") + "\n\n"
       + lessonText.slice(0, 6000) + "\n\nSlovníček stránky:\n" + (gl || "prázdný");
   }
   async function setupAsk(){
@@ -4753,8 +4756,8 @@ html[data-tk="l"] body:not(.sakura) .tf-sec,body.sakura .tf-sec{background:rgba(
     g.appendChild(lab("Trh", fSym)); g.appendChild(lab("Kdy", fTs)); g.appendChild(segWrap); if (cfg.accounts.length > 1) g.appendChild(lab("Účet", fAcct, "wide"));
     const seBox = el("div","chips"), seW = el("div","flab wide adv"), seHint = el("p","tf-hint");
     const sessAuto = () => { const d = new Date(fTs.value); return isNaN(d) ? "" : tkSession(d.toISOString()); };
-    const paintSess = () => { const au = sessAuto(), cur = sess || au; Array.prototype.forEach.call(seBox.children, b => b.setAttribute("aria-pressed", String(b.textContent === cur))); seHint.textContent = sess && sess !== au ? "Vybráno ručně. Podle času vstupu by to byla seance " + (au || "neznámá") + "." : au ? "Podle času vstupu v New Yorku. Jiná seance jde vybrat ručně." : ""; };
-    TF_SESS.forEach(x => { const b = el("button","chip", x); b.type = "button"; b.addEventListener("click", () => { sess = x === sessAuto() ? "" : x; paintSess(); }); seBox.appendChild(b); });
+    const paintSess = () => { const au = sessAuto(), cur = sess || au; Array.prototype.forEach.call(seBox.children, b => b.setAttribute("aria-pressed", String(b.dataset.v === cur))); seHint.textContent = sess && sess !== au ? "Vybráno ručně. Podle času vstupu by to byla seance " + (au || "neznámá") + "." : au ? "Podle času vstupu v New Yorku. Jiná seance jde vybrat ručně." : ""; };
+    TF_SESS.forEach(x => { const b = el("button","chip", x); b.type = "button"; b.dataset.v = x; b.addEventListener("click", () => { sess = x === sessAuto() ? "" : x; paintSess(); }); seBox.appendChild(b); });
     seW.appendChild(el("span", null, "Seance")); seW.appendChild(seBox); seW.appendChild(seHint); g.appendChild(seW); fTs.addEventListener("change", () => { paintSess(); paintRev(); });
     g.appendChild(duo("Dodržel jsem plán", [["yes","Ano","good"],["no","Ne","bad"]], () => plan, v => { plan = v; }, "wide"));
     const missed = inp("checkbox"), ml = el("label","wide chk adv"); missed.checked = !!t.missed; ml.appendChild(missed); ml.appendChild(el("span", null, "Obchod jsem nevzal (zmeškaný). Do výsledků se nepočítá.")); g.appendChild(ml);
@@ -4784,8 +4787,8 @@ html[data-tk="l"] body:not(.sakura) .tf-sec,body.sakura .tf-sec{background:rgba(
 
     // 6 · psychology
     const s6 = sec("Psychika", "", true);
-    const eBox = el("div","chips"), ew = el("div","tf-grp"), ek = el("div","tf-k"); ek.appendChild(el("span", null, "Jak ti bylo před vstupem")); EMO.forEach(x => { const b = el("button","chip", x); b.type = "button"; b.addEventListener("click", () => { emo = emo === x ? "" : x; paintE(); }); eBox.appendChild(b); });
-    const paintE = () => Array.prototype.forEach.call(eBox.children, b => b.setAttribute("aria-pressed", String(b.textContent === emo)));
+    const eBox = el("div","chips"), ew = el("div","tf-grp"), ek = el("div","tf-k"); ek.appendChild(el("span", null, "Jak ti bylo před vstupem")); EMO.forEach(x => { const b = el("button","chip", x); b.type = "button"; b.dataset.v = x; b.addEventListener("click", () => { emo = emo === x ? "" : x; paintE(); }); eBox.appendChild(b); });
+    const paintE = () => Array.prototype.forEach.call(eBox.children, b => b.setAttribute("aria-pressed", String(b.dataset.v === emo)));
     ew.appendChild(ek); ew.appendChild(eBox); s6.appendChild(ew);
     s6.appendChild(pickGroup({key: "epos", title: "Co ti pomohlo", tone: "c2", sel: sPos, ph: "Vlastní"}));
     s6.appendChild(pickGroup({key: "neg", title: "Co ti uškodilo", tone: "c4", sel: sNeg, ph: "Vlastní chyba"}));
@@ -5473,7 +5476,7 @@ html[data-tk="l"] body:not(.sakura) .tf-sec,body.sakura .tf-sec{background:rgba(
     ["Zhodnoť moje obchody z posledního týdne", "Zhodnoť můj poslední obchod", "Co dělám nejčastěji špatně?", "Na čem mám pracovat zítra?"].forEach(q => { const b = el("button","chip", q); b.type = "button"; b.addEventListener("click", () => { $("co-box").value = q; send(); }); $("co-quick").appendChild(b); });
     $("co-copy").addEventListener("click", async () => {
       const q = $("co-box").value.trim() || "Zhodnoť moje obchody a řekni, na čem mám pracovat.";
-      try { await navigator.clipboard.writeText(COACH_SYS + "\n\n" + coachContext() + "\n\nOTÁZKA: " + q); $("co-msg").textContent = "Zkopírováno. Vlož to do chatu s Claudem."; }
+      try { await navigator.clipboard.writeText(COACH_SYS + (cfg.lang === "en" ? " IMPORTANT: the user has the app in English. Answer in English, whatever language these instructions are written in." : "") + "\n\n" + coachContext() + "\n\nOTÁZKA: " + q); $("co-msg").textContent = "Zkopírováno. Vlož to do chatu s Claudem."; }
       catch(e){ $("co-msg").textContent = "Kopírování se nepodařilo."; }
     });
     async function send(){
@@ -5484,7 +5487,7 @@ html[data-tk="l"] body:not(.sakura) .tf-sec,body.sakura .tf-sec{background:rgba(
       const turns = chat.slice(-10); while (turns.length && turns[0].role !== "user") turns.shift();
       try {
         const r = await fetch("https://api.anthropic.com/v1/messages", {method: "POST", headers: {"content-type": "application/json", "x-api-key": key(), "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true"},
-          body: JSON.stringify({model: "claude-sonnet-5-5", max_tokens: 1200, system: COACH_SYS + "\n\n" + coachContext(), messages: turns})});
+          body: JSON.stringify({model: "claude-sonnet-5-5", max_tokens: 1200, system: COACH_SYS + (cfg.lang === "en" ? " IMPORTANT: the user has the app in English. Answer in English, whatever language these instructions are written in." : "") + "\n\n" + coachContext(), messages: turns})});
         const j = await r.json();
         if (!r.ok) throw new Error(r.status === 401 ? "Klíč není platný." : (j && j.error && j.error.message) || ("Chyba " + r.status));
         const out = (j.content || []).filter(c => c.type === "text").map(c => c.text).join("\n").trim() || "Bez odpovědi.";
@@ -5697,7 +5700,7 @@ html[data-tk="l"] body:not(.sakura) .tf-sec,body.sakura .tf-sec{background:rgba(
     const c = _postEl(p, opts), ACT = {up: "nahoru", down: "dolů", flat: "do strany"};
     if (p.kind === "plan"){ const big = c.querySelector(".tbig"); if (big) big.remove(); const sub = c.querySelector(".tinfo span"); if (sub) sub.textContent = "Plán dne" + (p.ts && !isNaN(new Date(p.ts)) ? " · " + new Date(p.ts).toLocaleDateString("cs-CZ", {day: "numeric", month: "numeric"}) : "");
       const act = c.querySelector(".rp-ctl"); [["Bias", p.dir === "short" ? "Short" : "Long"], ["Úrovně", p.levels], ["Co chci vidět", p.note], ["Jak to dopadlo", p.actual ? "Trh šel " + (ACT[p.actual] || p.actual) : ""]].forEach(x => { if (x[1]){ const b = el("div","box"); b.appendChild(el("b", null, x[0])); b.appendChild(el("span", null, x[1])); c.insertBefore(b, act); } });
-      Array.prototype.forEach.call(act.children, b => { if (b.textContent === "Karta jako obrázek") b.remove(); }); }
+      Array.prototype.forEach.call(act.children, b => { if (b.textContent === "Karta jako obrázek" || b.textContent === trEn("Karta jako obrázek")) b.remove(); }); }
     const meta = el("div","chips"); if (p.src) meta.appendChild(el("span","pill " + (p.src === "import" ? "good" : ""), p.src === "import" ? "Z importu od brokera" : "Ruční zápis")); if (p.score != null) meta.appendChild(el("span","pill info","Disciplína " + p.score + " / 100"));
     if (meta.children.length) c.insertBefore(meta, c.children[1]);
     const cm = el("div","list"), act2 = c.querySelector(".rp-ctl"); (p.c || []).forEach(x => { const b = el("div","msg ai"); b.appendChild(el("b", null, x.a + ": ")); b.appendChild(document.createTextNode(x.x)); cm.appendChild(b); });
@@ -7126,33 +7129,57 @@ html[data-tk="l"] body:not(.sakura) .tf-sec,body.sakura .tf-sec{background:rgba(
     leden: "January", únor: "February", březen: "March", duben: "April", květen: "May", červen: "June", červenec: "July", srpen: "August", říjen: "October", listopad: "November", prosinec: "December"};
   const EN_DAY = {pondělí: "Monday", úterý: "Tuesday", středa: "Wednesday", čtvrtek: "Thursday", pátek: "Friday", sobota: "Saturday", neděle: "Sunday"}, EN_D2 = {Po: "Mon", Út: "Tue", St: "Wed", Čt: "Thu", Pá: "Fri", So: "Sat", Ne: "Sun"};
   const EN_RULES = [[/(\d{1,2})\. (ledna|února|března|dubna|května|června|července|srpna|září|října|listopadu|prosince)/gi, (m, d, mo) => d + " " + EN_MON[mo.toLowerCase()]],
-    [/\b(pondělí|úterý|středa|čtvrtek|pátek|sobota|neděle)\b/gi, (m, w) => { const e = EN_DAY[w.toLowerCase()]; return m === m.toUpperCase() ? e.toUpperCase() : m[0] === m[0].toUpperCase() ? e : e.toLowerCase(); }],
+    [/(?<![A-Za-zÀ-ž])(pondělí|úterý|středa|čtvrtek|pátek|sobota|neděle)(?![A-Za-zÀ-ž])/gi, (m, w) => { const e = EN_DAY[w.toLowerCase()]; return m === m.toUpperCase() ? e.toUpperCase() : m[0] === m[0].toUpperCase() ? e : e.toLowerCase(); }],
     [/\b(leden|únor|březen|duben|květen|červen|červenec|srpen|září|říjen|listopad|prosinec) (\d{4})/gi, (m, mo, y) => EN_MON[mo.toLowerCase()] + " " + y],
     [/Série (\d+) (?:den|dny|dní)/g, "Streak $1 d"], [/série (\d+) (?:den|dny|dní)/g, "streak $1 d"], [/(\d+) obchod(?:ů|y|u)?(?![a-zá-ž])/g, "$1 trades"], [/(\d+) lekc(?:í|e)(?![a-zá-ž])/g, "$1 lessons"], [/^Celkem /, "Total "], [/(\d+)m svíčky/, "$1m candles"], [/(\d+)m graf/, "$1m chart"], [/čas New York/, "New York time"], [/srovnáno na cenu vstupu/, "aligned to entry price"], [/^Vstup /, "Entry "], [/^Výstup /, "Exit "], [/^Cíl /, "Target "], [/^Nejlépe: /, "Best: "], [/^Nejhůře: /, "Worst: "], [/, tady je tvůj minulý týden\./, ", here is your last week."], [/(\d) ze (\d)/g, "$1 of $2"], [/ % z (\d)/g, " % of $1"], [/ R z (\d)/g, " R from $1"],
     [/\bKrok (\d+) z (\d+)/g, "Step $1 of $2"], [/\bLekce (\d+) z (\d+)/g, "Lesson $1 of $2"], [/(\d+) z (\d+)\b/g, "$1 of $2"], [/^Dobré ráno/, "Good morning"], [/^Dobrý večer/, "Good evening"], [/^Dobrou noc/, "Good night"], [/^Ahoj/, "Hi"],
     [/^Týden (\d)/, "Week $1"], [/\bhotovo\b/g, "done"], [/\bminut dnes\b/g, "minutes today"], [/\bTento týden\b/g, "This week"], [/\bNaposledy:/g, "Last time:"], [/\bwinrate\b/g, "win rate"], [/\bR celkem\b/g, "R total"]];
+  const EN_CZ = /[ěščřžýáíéúůňťďóĚŠČŘŽÝÁÍÉÚŮŇŤĎÓ]/, enMemo = new Map(); let enFrag = null;
+  const enW = (w, to) => [new RegExp("(\\d+) (?:" + w + ")(?![A-Za-zÀ-ž])", "g"), "$1 " + to];
+  const EN_RULES2 = [[/(\d+)\. týden kurzu/g, "week $1 of the course"], [/(\d+)\. týdne/g, "week $1"], [/(\d+)\. týden/g, "week $1"], [/(\d+)\. měsíc/g, "month $1"], [/(\d+)\. měsíce/g, "month $1"],
+    enW("dny|dní|dnů|den", "d"), enW("minut|minuty|minuta", "min"), enW("pojmů|pojmy|pojem", "terms"), enW("otázek|otázky|otázka", "questions"), enW("témat|témata|téma", "topics"), enW("svíček|svíčky|svíčka", "candles"), enW("bodů|body|bod", "points"),
+    enW("ztrát|ztráty|ztráta", "losses"), enW("výher|výhry|výhra", "wins"), enW("kontraktů|kontrakty|kontrakt", "contracts"), enW("hodin|hodiny|hodina", "h"), enW("obrázků|obrázky|obrázek", "pictures"), enW("lidí|lidé|člověk", "people"), enW("týdnů|týdny|týden", "weeks"), enW("měsíců|měsíce|měsíc", "months"),
+    enW("úloh|úlohy|úloha", "tasks"), enW("kroků|kroky|krok", "steps"), enW("chyb|chyby|chyba", "mistakes"), enW("grafů|grafy|graf", "charts"), enW("setupů|setupy", "setups"), enW("zpráv|zprávy|zpráva", "news items"), enW("účtů|účty|účet", "accounts"), enW("příspěvků|příspěvky|příspěvek", "posts"), enW("lekcí|lekce", "lessons"),
+    [/(?<![A-Za-zÀ-ž])ve? (\d{1,2}:\d\d)/g, "at $1"], [/(?<![A-Za-zÀ-ž])za (\d+ (?:min|h|d))(?![A-Za-zÀ-ž])/g, "in $1"], [/(?<![A-Za-zÀ-ž])před (\d+ (?:min|h|d))(?![A-Za-zÀ-ž])/g, "$1 ago"]];
+  const isL = c => !!c && /[\p{L}\p{N}]/u.test(c);
+  // a short piece (a single word) is swapped only where it stands on its own: at the start or end of the text, or next to punctuation
+  const enShortOk = (s, at, len) => { const b = s.slice(0, at).replace(/\s+$/, ""), a = s.slice(at + len).replace(/^\s+/, ""); return /[:.]$/.test(s.slice(at, at + len)) || !b || /[.:;·(–—\-]$/.test(b) || !a || /^[.:;,·)–—\-]/.test(a) || /^\d/.test(a); };
+  // sentences put together from pieces: every known piece is swapped for its English; the result is used only when no Czech is left
+  function enPieces(t){ if (!enFrag) enFrag = Object.keys(EN).filter(k => k.length >= 3 && EN[k] !== k).sort((p, q) => q.length - p.length); let out = t;
+    for (let i = 0; i < enFrag.length; i++){ const k = enFrag[i]; if (k.length > out.length) continue; let at = out.indexOf(k); if (at < 0) continue; const v = EN[k], a0 = isL(k[0]), a1 = isL(k[k.length - 1]); let res = "", from = 0;
+      while (at >= 0){ const ok = (!a0 || !isL(out[at - 1])) && (!a1 || !isL(out[at + k.length])) && (k.length >= 7 || enShortOk(out, at, k.length)); res += out.slice(from, at) + (ok ? v : k); from = at + k.length; at = out.indexOf(k, from); }
+      out = res + out.slice(from); if (!EN_CZ.test(out)) break; }
+    return out; }
   function trEn(str, card){
-    if (!EN || !str) return str; const raw = String(str), t = raw.trim(); if (!t || !/[A-Za-zÁ-ž]/.test(t)) return card ? raw.replace(/(\d),(\d)/g, "$1.$2").replace(/(\d)[   ](\d{3})\b/g, "$1,$2") : raw;
+    if (!EN || !str) return str; const raw = String(str), t = raw.trim(); if (!t || !/[A-Za-zÁ-ž]/.test(t)) return card ? raw.replace(/(\d),(\d)/g, "$1.$2").replace(/(\d)[   ](\d{3})\b/g, "$1,$2") : raw;
+    const mk = (card ? "1" : "0") + t; if (enMemo.has(mk)){ const r = enMemo.get(mk); return r === t ? raw : raw.replace(t, () => r); }
     let out = EN[t]; if (out == null && card && EN_D2[t]) out = EN_D2[t];
     if (out == null){ const lw = enLow[t.toLowerCase()]; if (lw != null) out = t === t.toUpperCase() ? lw.toUpperCase() : lw; }
-    if (out == null){ out = t; for (let i = 0; i < EN_RULES.length; i++) out = out.replace(EN_RULES[i][0], EN_RULES[i][1]); if (card) out = out.replace(/(\d),(\d)/g, "$1.$2").replace(/(\d)[   ](\d{3})\b/g, "$1,$2"); if (out === t) return raw; }
-    return raw.replace(t, out);
+    if (out == null){ out = t; const rules = x => { for (let i = 0; i < EN_RULES.length; i++) x = x.replace(EN_RULES[i][0], EN_RULES[i][1]); return x; };
+      if (EN_CZ.test(out) && t.length > 12){ const p0 = rules(enPieces(out)); if (!EN_CZ.test(p0)) out = p0; }
+      if (out === t) out = rules(out);
+      if (EN_CZ.test(out)){ let p = enPieces(out); if (EN_CZ.test(p)){ for (let i = 0; i < EN_RULES2.length; i++) p = p.replace(EN_RULES2[i][0], EN_RULES2[i][1]); if (EN_CZ.test(p)) p = enPieces(p); } if (!EN_CZ.test(p)) out = p.replace(/ {2,}/g, " "); }
+      if (card) out = out.replace(/(\d),(\d)/g, "$1.$2").replace(/(\d)[   ](\d{3})\b/g, "$1,$2"); }
+    if (enMemo.size > 6000) enMemo.clear(); enMemo.set(mk, out);
+    return out === t ? raw : raw.replace(t, () => out);
   }
   async function cardInEnglish(draw){ await enLoad(); const P = CanvasRenderingContext2D.prototype, ft = P.fillText, mt = P.measureText;
     P.fillText = function(a, x, y, w){ return w === undefined ? ft.call(this, trEn(a, true), x, y) : ft.call(this, trEn(a, true), x, y, w); }; P.measureText = function(a){ return mt.call(this, trEn(a, true)); };
     try { return await draw(); } finally { P.fillText = ft; P.measureText = mt; } }
   if (cfg.lang === "en"){
     document.documentElement.lang = "en";
-    const SKIP = {SCRIPT: 1, STYLE: 1, TEXTAREA: 1, CODE: 1, PRE: 1}, ATTRS = ["placeholder", "aria-label", "title"];
+    const SKIP = {SCRIPT: 1, STYLE: 1, TEXTAREA: 1, CODE: 1, PRE: 1}, ATTRS = ["placeholder", "aria-label", "title", "alt"];
     const one = n => { if (n.nodeType === 3){ const p = n.parentNode; if (!p || SKIP[p.nodeName] || n.__en === n.nodeValue) return; const v = trEn(n.nodeValue); if (v !== n.nodeValue) n.nodeValue = v; n.__en = n.nodeValue; }
+      else if (n.nodeType === 1 && n.nodeName === "TEXTAREA"){ ATTRS.forEach(a => { const v = n.getAttribute(a); if (v){ const e = trEn(v); if (e !== v) n.setAttribute(a, e); } }); }
       else if (n.nodeType === 1 && !SKIP[n.nodeName]){ ATTRS.forEach(a => { const v = n.getAttribute(a); if (v){ const e = trEn(v); if (e !== v) n.setAttribute(a, e); } }); for (let c = n.firstChild; c; c = c.nextSibling) one(c); } };
     enLoad().then(() => { one(document.body); let q = [], raf = 0;
       new MutationObserver(ms => { ms.forEach(m => { if (m.type === "characterData") q.push(m.target); else m.addedNodes.forEach(x => q.push(x)); }); if (!raf) raf = requestAnimationFrame(() => { raf = 0; const w = q; q = []; w.forEach(x => { if (x.isConnected) one(x); }); }); })
-        .observe(document.body, {childList: true, subtree: true, characterData: true}); });
+        .observe(document.body, {childList: true, subtree: true, characterData: true});
+      new MutationObserver(ms => ms.forEach(m => { const n = m.target, v = n.getAttribute(m.attributeName); if (v){ const e = trEn(v); if (e !== v) n.setAttribute(m.attributeName, e); } })).observe(document.body, {subtree: true, attributes: true, attributeFilter: ATTRS}); });
   }
   const langBox = el("div","card");
   function renderLang(){ clear(langBox); langBox.appendChild(el("h2", null, "Jazyk / Language")); const en = cfg.lang === "en";
-    langBox.appendChild(el("p","small muted", en ? "The interface is in English. Lessons, glossary and longer texts are still in Czech for now." : "Angličtina zatím překládá rozhraní: menu, nadpisy, tlačítka a sdílené karty. Lekce, slovníček a delší texty zůstávají česky."));
+    langBox.appendChild(el("p","small muted", en ? "The whole app is in English: menus, lessons, the glossary and share cards. Your own notes stay as you wrote them." : "Angličtina překládá celou aplikaci: menu, lekce, slovníček i sdílené karty. Tvoje vlastní poznámky zůstávají tak, jak jsi je napsal."));
     const r = el("div","chips"); [["cs","Čeština"],["en","English"]].forEach(o => { const b = el("button","chip", o[1]); b.type = "button"; b.setAttribute("aria-pressed", String((cfg.lang || "cs") === o[0])); b.addEventListener("click", () => { if ((cfg.lang || "cs") === o[0]) return; cfg.lang = o[0]; cfgStore(); location.reload(); }); r.appendChild(b); }); langBox.appendChild(r); }
   { const _rsL = renderSettings; renderSettings = function(){ _rsL(); const box = $("set"); if (softLock) return; renderLang(); if (langBox.parentNode !== box) box.insertBefore(langBox, nickBox.parentNode === box ? nickBox.nextSibling : box.firstChild); }; }
 
