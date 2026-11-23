@@ -1,5 +1,61 @@
 [
   {
+    "id": "20261123-L14",
+    "ts": "2026-11-23T05:55:00Z",
+    "date": "2026-11-23",
+    "n": 14,
+    "week": 4,
+    "title": "Sweep, nebo průraz? Rozhodne to, co přijde potom",
+    "body": [
+      "Včera jsme si vyznačili místa, kde leží likvidita. Dnes, co se stane, když k nim cena dojde.",
+      "Cena úroveň skoro vždycky na chvíli prorazí. Otázka nezní, jestli ji prorazí, ale co udělá hned potom.",
+      "Sweep je krátký výpad za úroveň a rychlý návrat zpátky. Stopy se vyberou, nikdo za úrovní nezůstane a trh se otočí.",
+      "Průraz je výpad, po kterém cena za úrovní zůstane. Svíčky zavírají za ní, další se k ní nevracejí a pohyb pokračuje.",
+      "Předem to poznat nejde. Proto se na proražení nikdy nevstupuje hned. Počkáš, až svíčka zavře, a díváš se, kde zavřela.",
+      "Zavřela zpátky uvnitř a další svíčka jde opačným směrem? Je to sweep. Zavřela za úrovní a následující svíčky drží za ní? Je to průraz.",
+      "Pomáhá i čas. Sweep, který přijde v killzoně a hned po něm silný pohyb opačným směrem, je čitelnější než pomalé ploužení kolem úrovně uprostřed oběda."
+    ],
+    "example": "NQ v noci udělal low na 21 010. V 9:41 newyorského času cena sjede na 20 996, tedy 14 bodů pod noční low. Svíčka ale zavře na 21 018, zpátky nad úrovní, a další dvě minutové svíčky rostou. To je sweep: stopy pod 21 010 se vybraly a cena se vrátila. Kdyby místo toho svíčka zavřela na 20 990 a další by ji následovaly níž, šlo by o průraz a noční low by se stal stropem.",
+    "remember": "Za úroveň cena vyjede skoro vždycky. Sweep poznáš podle rychlého návratu a close zpátky uvnitř, průraz podle toho, že za úrovní zůstane. Rozhoduj až po close svíčky.",
+    "terms": [
+      "sweep",
+      "stop-hunt",
+      "likvidita"
+    ],
+    "quiz": [
+      {
+        "q": "Kdy poznáš, jestli šlo o sweep, nebo o průraz?",
+        "options": [
+          "V okamžiku, kdy cena úroveň prorazí",
+          "Až podle close svíčky a toho, co cena udělá potom",
+          "Podle barvy první svíčky v seanci"
+        ],
+        "correct": 1,
+        "why": "Předem to nevíš. Rozhodne close a následující svíčky."
+      },
+      {
+        "q": "Svíčka propíchne včerejší low, ale zavře zpátky nad ním a další roste. Co to je?",
+        "options": [
+          "Sweep",
+          "Průraz",
+          "Nic, úroveň neplatí"
+        ],
+        "correct": 0,
+        "why": "Krátký výpad pod úroveň a návrat zpět je sweep: stopy se vybraly a trh se otočil."
+      },
+      {
+        "q": "Cena prorazí high, svíčky zavírají nad ním a k high se už nevrací. Co to je?",
+        "options": [
+          "Sweep",
+          "Průraz",
+          "Equal highs"
+        ],
+        "correct": 1,
+        "why": "Cena za úrovní zůstala a pokračuje, takže jde o skutečný průraz."
+      }
+    ]
+  },
+  {
     "id": "20261122-L13",
     "ts": "2026-11-22T05:55:00Z",
     "date": "2026-11-22",

@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-22T05:55:00Z",
+  "updated": "2026-11-23T05:55:00Z",
   "events": [
     {
       "date": "2026-11-23",
@@ -35,6 +35,27 @@
       "title": "Zkrácený den: akciové burzy zavírají v 19:00 našeho času",
       "impact": 1,
       "note": "Den po Díkůvzdání bývá objem malý."
+    },
+    {
+      "date": "2026-12-01",
+      "time": "16:00",
+      "title": "ISM ve zpracovatelském průmyslu a JOLTS (USA)",
+      "impact": 2,
+      "note": "Průzkum mezi průmyslovými firmami a počet volných pracovních míst."
+    },
+    {
+      "date": "2026-12-03",
+      "time": "14:30",
+      "title": "Žádosti o podporu v nezaměstnanosti (USA)",
+      "impact": 2,
+      "note": "Týdenní data o trhu práce."
+    },
+    {
+      "date": "2026-12-03",
+      "time": "16:00",
+      "title": "ISM ve službách (USA)",
+      "impact": 2,
+      "note": "Průzkum mezi firmami ve službách."
     },
     {
       "date": "2026-12-04",

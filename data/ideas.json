@@ -1,5 +1,17 @@
 [
   {
+    "id": "asia-range-cely-blok",
+    "ts": "2026-11-23T05:55:00Z",
+    "date": "2026-11-23",
+    "title": "Asia range ve slovníčku a v plánu dne jako celý blok 19:00–5:00",
+    "area": "vyuka",
+    "value": 2,
+    "effort": 1,
+    "status": "new",
+    "what": "Upřesnit heslo Asia range ve slovníčku na celý blok 19:00 až 5:00 newyorského času a v Plánu dne v kroku Mapa úrovní přidat řádek pro asijské high a low.",
+    "why": "Podle dnešního poznatku ICT hledá likviditu Asie v celém nočním bloku, ne jen v killzóně. V plánu dne zatím na Asii není místo."
+  },
+  {
     "id": "pch-pcl-ve-slovnicku-a-premium",
     "ts": "2026-11-22T05:55:00Z",
     "date": "2026-11-22",
