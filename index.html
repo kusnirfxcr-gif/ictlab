@@ -1972,6 +1972,17 @@ html[data-t="bubblegum"] body:not(.sakura) .orb::after,body.sakura.bubble .orb::
 .lk-o .sw{height:86px;border-radius:12px;position:relative;overflow:hidden}
 .lk-o b{font-size:15px}.lk-o span{font-size:12.5px;color:#8d5f88;line-height:1.35}
 .lk-o[aria-pressed="true"]{border-color:#e2459a;box-shadow:0 0 0 3px rgba(226,69,154,.18)}
+
+.tk.has-ch{flex-wrap:wrap;row-gap:10px}
+.tk-flag{width:34px;height:34px;flex:none;border-radius:50%;box-shadow:0 2px 8px -2px rgba(0,0,0,.35)}.tk-flag svg{display:block;width:100%;height:100%}
+.tk-ch{flex-basis:100%;padding:4px 0;border-radius:12px;overflow:hidden;background:linear-gradient(180deg,rgba(255,255,255,.025),transparent)}
+.tkc{display:block;width:100%;height:auto;max-height:120px;overflow:visible}
+.tkc .zw{fill:rgba(61,220,151,.13)}.tkc .zl{fill:rgba(255,107,107,.12)}
+.tkc .le{stroke:var(--muted);stroke-width:1;stroke-dasharray:3 3;vector-effect:non-scaling-stroke;opacity:.7}.tkc .ls{stroke:var(--bad);stroke-width:1;stroke-dasharray:2 3;vector-effect:non-scaling-stroke;opacity:.8}
+.tkc .pa{fill:none;stroke:var(--muted);stroke-width:1.4;opacity:.55;vector-effect:non-scaling-stroke;stroke-linejoin:round}
+.tkc .pb{fill:none;stroke-width:2;vector-effect:non-scaling-stroke;stroke-linejoin:round;stroke-linecap:round}.tkc .pb.w{stroke:var(--good)}.tkc .pb.l{stroke:var(--bad)}
+.tkc .de{fill:var(--ink);stroke:var(--bg);stroke-width:1.5}.tkc .dx{stroke:var(--bg);stroke-width:1.5}.tkc .dx.w{fill:var(--good)}.tkc .dx.l{fill:var(--bad)}
+.tkc .tt{font-size:7.5px;font-weight:700;font-variant-numeric:tabular-nums}.tkc .te{fill:var(--muted)}.tkc .ts{fill:var(--bad)}.tkc .tw{fill:var(--good)}.tkc .tl{fill:var(--bad)}.tkc .tk-k{font-weight:800;opacity:.7;font-size:6.5px;letter-spacing:.06em}
 .thpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:8px}
 .thp{display:flex;flex-direction:column;gap:8px;align-items:stretch;text-align:left;padding:8px;border-radius:16px;min-height:0}
 .thp .sw{height:54px;border-radius:10px;position:relative;overflow:hidden;border:1px solid rgba(128,128,128,.25)}
@@ -7334,7 +7345,7 @@ html[data-t="bubblegum"] body:not(.sakura) .orb::after,body.sakura.bubble .orb::
   // ---------- home: recent trades as clean tickets ----------
   function tkSession(ts){ const ms = Date.parse(ts); if (!isFinite(ms)) return ""; const w = new Date(ms + tvZoneOff(ms, "America/New_York") * 6e4), m = w.getUTCHours() * 60 + w.getUTCMinutes();
     return m >= 1080 || m < 120 ? "Asie" : m < 300 ? "London" : m < 570 ? "Pre-market" : m < 720 ? "NY AM" : m < 810 ? "Lunch" : m < 960 ? "NY PM" : "After"; }
-  function tkRow(t){ const r = Number(t.r) || 0, net = tNet(t), b = el("button","tk"), d = new Date(t.ts); b.type = "button";
+  var tkRow; tkRow = function(t){ const r = Number(t.r) || 0, net = tNet(t), b = el("button","tk"), d = new Date(t.ts); b.type = "button";
     const who = el("div","tk-l"), nm = el("div","tk-n"), meta = el("div","tk-m"), res = el("div","tk-r");
     nm.appendChild(el("b", null, t.sym || "")); nm.appendChild(el("span","tk-d " + (t.dir === "short" ? "s" : "l"), t.dir === "short" ? "Short" : "Long"));
     const hold = t.tsx ? Math.round((Date.parse(t.tsx) - Date.parse(t.ts)) / 6e4) : null;
@@ -7343,7 +7354,7 @@ html[data-t="bubblegum"] body:not(.sakura) .orb::after,body.sakura.bubble .orb::
     who.appendChild(symBadge(t.sym)); const tx = el("div","tk-t"); tx.appendChild(nm); tx.appendChild(meta); who.appendChild(tx);
     const rv = el("b", r > 0 ? "pos" : r < 0 ? "neg" : "", (r > 0 ? "+" : r < 0 ? "−" : "") + Math.abs(r).toLocaleString("cs-CZ", {maximumFractionDigits: 2})); rv.appendChild(el("small", null, " R")); res.appendChild(rv);
     if (net != null) res.appendChild(el("span", null, usd(net)));
-    b.appendChild(who); b.appendChild(res); b.addEventListener("click", () => openTrade(t)); return b; }
+    b.appendChild(who); b.appendChild(res); b.addEventListener("click", () => openTrade(t)); return b; };
   { const _rhT = renderHomeTrades; renderHomeTrades = function(){ _rhT(); const box = $("d-trades"); if (!box) return; const tr = jr.trades.filter(t => !t.missed).sort((a, b) => String(b.ts).localeCompare(String(a.ts))).slice(0, 6);
       clear(box); box.className = "tklist"; tr.forEach(t => box.appendChild(tkRow(t))); const n = box.parentNode && box.parentNode.querySelector(".tnote"); if (n) n.remove(); }; try { renderHomeTrades(); } catch(e){} }
 
@@ -7363,6 +7374,31 @@ html[data-t="bubblegum"] body:not(.sakura) .orb::after,body.sakura.bubble .orb::
       b.appendChild(sw); b.appendChild(el("b", null, t[1])); b.appendChild(el("span", null, t[2])); b.addEventListener("click", () => { cfg.theme = t[0]; cfgStore(); applyTheme(); renderThemePick(); }); g.appendChild(b); });
     themeBox.appendChild(g); }
   { const _rsT = renderSettings; renderSettings = function(){ _rsT(); const box = $("set"); if (softLock) return; renderThemePick(); if (themeBox.parentNode !== box) box.insertBefore(themeBox, heroBox.parentNode === box ? heroBox : box.firstChild); }; }
+
+  // ---------- recent trades: US flag and a small position chart (entry, stop, exit) ----------
+  const US_FLAG = '<svg viewBox="0 0 32 32" aria-hidden="true"><defs><clipPath id="usfc"><circle cx="16" cy="16" r="16"/></clipPath></defs><g clip-path="url(#usfc)"><rect width="32" height="32" fill="#f4f4f6"/>' + [0,2,4,6,8,10,12].map(i => '<rect y="' + (i * 32 / 13).toFixed(2) + '" width="32" height="' + (32 / 13).toFixed(2) + '" fill="#d22f3d"/>').join("") + '<rect width="15" height="' + (7 * 32 / 13).toFixed(2) + '" fill="#2d3f8f"/>' +
+    [[3,3],[7,3],[11,3],[5,6.5],[9,6.5],[3,10],[7,10],[11,10],[5,13.5],[9,13.5]].map(p => '<circle cx="' + p[0] + '" cy="' + (p[1] + .5) + '" r=".9" fill="#fff"/>').join("") + '</g><circle cx="16" cy="16" r="15.5" fill="none" stroke="rgba(0,0,0,.18)"/></svg>';
+  function tkChart(t){
+    const e = Number(t.entry), x = Number(t.exit); if (t.entry == null || t.exit == null || !isFinite(e) || !isFinite(x)) return null;
+    let pts, iE, iX; if (t.px && t.px.b && t.px.b.length > 6 && t.px.sig === pxSig(t)){ const b = t.px.b; pts = b.map(c => c[4]); iE = Math.max(0, b.findIndex(c => c[0] >= t.px.em)); iX = t.px.xm != null ? Math.max(iE, b.findIndex(c => c[0] >= t.px.xm)) : Math.min(b.length - 1, iE + 8); pts[iE] = e; pts[iX] = x; }
+    else { const P = cardPath(t); pts = P.pts; iE = P.iE; iX = P.iX; }
+    const st = t.stop != null && isFinite(t.stop) ? Number(t.stop) : null, W = 320, H = 92, win = x - e, d = t.dir === "short" ? -1 : 1, ok = d * win > 0;
+    let lo = Math.min.apply(null, pts.concat(st != null ? [st] : [])), hi = Math.max.apply(null, pts.concat(st != null ? [st] : [])); const pad = (hi - lo) * .14 || 1; lo -= pad; hi += pad;
+    const X = i => 6 + i / (pts.length - 1) * (W - 72), Y = v => 8 + (hi - v) / (hi - lo) * (H - 16), x0 = X(iE), x1 = Math.max(X(iX), x0 + 10), f = v => v.toLocaleString("cs-CZ", {maximumFractionDigits: 2});
+    const line = (a, z) => pts.slice(a, z + 1).map((v, k) => (k ? "L" : "M") + X(a + k).toFixed(1) + " " + Y(v).toFixed(1)).join("");
+    let g = '<svg viewBox="0 0 ' + W + ' ' + H + '" class="tkc">';
+    const zone = (a, b, cls) => { const y1 = Y(Math.max(a, b)), y2 = Y(Math.min(a, b)); g += '<rect class="' + cls + '" x="' + x0.toFixed(1) + '" y="' + y1.toFixed(1) + '" width="' + (x1 - x0).toFixed(1) + '" height="' + Math.max(1.5, y2 - y1).toFixed(1) + '"/>'; };
+    if (ok) zone(e, x, "zw"); if (st != null) zone(e, ok ? st : (d * (x - st) < 0 ? x : st), "zl"); else if (!ok) zone(e, x, "zl");
+    g += '<line class="le" x1="0" x2="' + (W - 62) + '" y1="' + Y(e).toFixed(1) + '" y2="' + Y(e).toFixed(1) + '"/>';
+    if (st != null) g += '<line class="ls" x1="' + x0.toFixed(1) + '" x2="' + (W - 62) + '" y1="' + Y(st).toFixed(1) + '" y2="' + Y(st).toFixed(1) + '"/>';
+    g += '<path class="pa" d="' + line(0, iE) + '"/><path class="pb ' + (ok ? "w" : "l") + '" d="' + line(iE, iX) + '"/><path class="pa" d="' + line(iX, pts.length - 1) + '"/>';
+    g += '<circle class="de" cx="' + x0.toFixed(1) + '" cy="' + Y(e).toFixed(1) + '" r="3.4"/><circle class="dx ' + (ok ? "w" : "l") + '" cx="' + X(iX).toFixed(1) + '" cy="' + Y(x).toFixed(1) + '" r="3.8"/>';
+    const lab = [[e, "te", "Vstup"], [x, ok ? "tw" : "tl", "Výstup"]].concat(st != null && Math.abs(st - x) > 1e-9 ? [[st, "ts", "Stop"]] : []).sort((p, q) => Y(p[0]) - Y(q[0])); let ly = -99;
+    lab.forEach(l => { ly = Math.max(Y(l[0]) + 3, ly + 11); g += '<text class="tt ' + l[1] + '" x="' + (W - 58) + '" y="' + Math.min(H - 3, ly).toFixed(1) + '"><tspan class="tk-k">' + (l[2] === "Vstup" ? "E" : l[2] === "Stop" ? "SL" : "X") + '</tspan> ' + f(l[0]) + '</text>'; });
+    return g + "</svg>";
+  }
+  { const _tkR = tkRow; tkRow = function(t){ const b = _tkR(t), old = b.querySelector(".symb"); if (old){ const fl = el("span","tk-flag"); fl.innerHTML = US_FLAG; fl.title = "USA · CME"; old.replaceWith(fl); }
+      const c = tkChart(t); if (c){ const w = el("div","tk-ch"); w.innerHTML = c; b.appendChild(w); b.classList.add("has-ch"); } return b; }; try { renderHomeTrades(); } catch(e){} }
   // ---------- moving to a new address without losing data ----------
   // data/site.json: {"move": "https://new-address", "from": ["https://old-address"]}. The old site hands the data to the new one in a window the person opens.
   let site = {move: "", from: []};
