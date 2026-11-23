@@ -2200,5 +2200,11 @@
  "Název (nepovinné)": "Name (optional)",
  "Odebrat ze seznamu": "Remove from the list",
  "Odkaz": "Link",
- "Moje video": "My video"
+ "Moje video": "My video",
+ "Odkaz na playlist nebo album ze Spotify": "A link to a Spotify playlist or album",
+ "Odkaz z YouTube Music nebo YouTube": "A link from YouTube Music or YouTube",
+ "To je odkaz z YouTube, přepnul jsem na YouTube Music.": "That is a YouTube link, I switched to YouTube Music.",
+ "To je odkaz ze Spotify, přepnul jsem na Spotify.": "That is a Spotify link, I switched to Spotify.",
+ "V přehrávači klikni na Přihlásit. Přihlášený hraje celé písničky, bez přihlášení jen ukázky. V Safari na iPhonu může zůstat u ukázek, pak použij šipku a pusť to v aplikaci Spotify.": "Click Log in inside the player. Logged in it plays whole songs, without logging in only previews. In Safari on iPhone it may stay on previews; then use the arrow and play it in the Spotify app.",
+ "YouTube Music nemá vlastní přehrávač pro weby, takže se tvůj odkaz pustí přes YouTube. Šipkou v přehrávači ho otevřeš přímo v YouTube Music.": "YouTube Music has no player for websites, so your link plays through YouTube. The arrow in the player opens it right in YouTube Music."
 }

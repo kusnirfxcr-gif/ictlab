@@ -2038,8 +2038,12 @@ html[data-t="bubblegum"] body:not(.sakura) .orb::after,body.sakura.bubble .orb::
 .tkc .pb{fill:none;stroke-width:2;vector-effect:non-scaling-stroke;stroke-linejoin:round;stroke-linecap:round}.tkc .pb.w{stroke:var(--good)}.tkc .pb.l{stroke:var(--bad)}
 .tkc .de{fill:var(--ink);stroke:var(--bg);stroke-width:1.5}.tkc .dx{stroke:var(--bg);stroke-width:1.5}.tkc .dx.w{fill:var(--good)}.tkc .dx.l{fill:var(--bad)}
 .tkc .tt{font-size:7.5px;font-weight:700;font-variant-numeric:tabular-nums}.tkc .te{fill:var(--muted)}.tkc .ts{fill:var(--bad)}.tkc .tw{fill:var(--good)}.tkc .tl{fill:var(--bad)}.tkc .tk-k{font-weight:800;opacity:.7;font-size:6.5px;letter-spacing:.06em}
-.mus-btn{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface2);color:var(--ink);font-size:13.5px;font-weight:700}
-.mus-btn svg{width:15px;height:15px}
+.mus-btn{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;flex-wrap:wrap}
+.mus-btn>button{display:inline-flex;align-items:center;gap:8px;padding:8px 14px 8px 9px;border-radius:999px;border:1px solid var(--line);background:var(--surface2);color:var(--ink);font-size:13.5px;font-weight:700;min-height:0}
+.mus-btn>button .lg{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;flex:none}.mus-btn>button .lg svg{width:22px;height:22px;display:block}
+.mus-btn>button .mus-eq{display:none;color:var(--mc)}.mus-btn>button.on .mus-eq{display:inline-flex}
+.mus-btn>button.sp{--mc:#1ed760}.mus-btn>button.yt{--mc:#ff3b3b}
+.mus-btn>button.on{border-color:var(--mc);box-shadow:0 0 0 1px var(--mc) inset}
 .lesson-body>.mus-btn{margin:0 0 10px 8px}.lesson-body>.lb-focus+.mus-btn{margin-left:0}
 .lb-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .zm-full>.mus-btn{display:none}
@@ -2168,6 +2172,9 @@ button,.chip,.abtn,a.go,.subnav a,.tb-acc,.mo-ckb i,.mo-steps i{background-origi
 .musbox .mus-st.mine{min-height:96px}.musbox .mus-rm{position:absolute;top:8px;right:8px;display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:rgba(0,0,0,.45);font-style:normal;font-weight:800;font-size:14px;line-height:1;color:#fff}
 .musbox form.mus-add{flex-wrap:wrap}.musbox form.mus-add input:first-child{flex:1 1 100%}.musbox form.mus-add input+input{flex:1 1 160px}
 .hero2 .h2-mus{margin-top:4px;align-self:flex-start}
+.musbox .mus-ttl{display:flex;align-items:center;gap:10px}.musbox .mus-ttl svg{width:26px;height:26px}
+.musbox .mus-tabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;border-radius:14px;background:var(--surface2);border:1px solid var(--line)}
+.musbox .mus-tabs button{border:0;background:none;padding:8px;border-radius:10px;font-weight:700;color:var(--muted);min-height:0}.musbox .mus-tabs button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
 .thpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:8px}
 .thp{display:flex;flex-direction:column;gap:8px;align-items:stretch;text-align:left;padding:8px;border-radius:16px;min-height:0}
 .thp .sw{height:54px;border-radius:10px;position:relative;overflow:hidden;border:1px solid rgba(128,128,128,.25)}
@@ -7825,7 +7832,7 @@ button,.chip,.abtn,a.go,.subnav a,.tb-acc,.mo-ckb i,.mo-steps i{background-origi
   function musParse(url){ const u = String(url || "").trim(); let m = u.match(/open\.spotify\.com\/(?:intl-[a-z]+\/)?(playlist|album|track|artist|episode|show)\/([A-Za-z0-9]{10,40})/);
     if (m) return {src: "Spotify", emb: "https://open.spotify.com/embed/" + m[1] + "/" + m[2] + "?utm_source=generator&theme=0", open: "https://open.spotify.com/" + m[1] + "/" + m[2], h: m[1] === "track" || m[1] === "episode" || innerWidth < 700 ? 152 : 232};
     const v = (u.match(/(?:youtube\.com\/(?:watch\?(?:.*&)?v=|live\/|shorts\/|embed\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/) || [])[1], l = (u.match(/[?&]list=([A-Za-z0-9_-]{10,})/) || [])[1];
-    if (/youtu/.test(u) && (v || l)) return {src: "YouTube", emb: "https://www.youtube-nocookie.com/embed/" + (v || "videoseries") + "?autoplay=1&rel=0&modestbranding=1" + (l ? "&list=" + l : ""), open: v ? "https://www.youtube.com/watch?v=" + v + (l ? "&list=" + l : "") : "https://www.youtube.com/playlist?list=" + l, h: 0};
+    if (/youtu/.test(u) && (v || l)) return {src: "YouTube", emb: "https://www.youtube-nocookie.com/embed/" + (v || "videoseries") + "?autoplay=1&rel=0&modestbranding=1" + (l ? "&list=" + l : ""), open: (/music\.youtube/.test(u) ? "https://music.youtube.com/" : "https://www.youtube.com/") + (v ? "watch?v=" + v + (l ? "&list=" + l : "") : "playlist?list=" + l), h: 0};
     return null; }
   const MI = {min: '<svg viewBox="0 0 16 16"><path d="M4 6l4 4 4-4"/></svg>', max: '<svg viewBox="0 0 16 16"><path d="M4 10l4-4 4 4"/></svg>', x: '<svg viewBox="0 0 16 16"><path d="M4 4l8 8M12 4l-8 8"/></svg>', out: '<svg viewBox="0 0 16 16"><path d="M9 3h4v4M13 3L7.5 8.5M11 9.5V13H3V5h3.5"/></svg>', list: '<svg viewBox="0 0 16 16"><path d="M3 4.5h10M3 8h10M3 11.5h6"/></svg>'};
   const eqEl = () => { const e = el("span","mus-eq"); e.appendChild(el("i")); e.appendChild(el("i")); e.appendChild(el("i")); return e; };
@@ -7853,30 +7860,37 @@ button,.chip,.abtn,a.go,.subnav a,.tb-acc,.mo-ckb i,.mo-steps i{background-origi
     const end = ev => { if (!st) return; st = null; d.classList.remove("dragging"); const r = d.getBoundingClientRect(); try { localStorage.setItem("tape-music-pos", JSON.stringify({x: r.left / innerWidth, y: r.top / innerHeight})); } catch(e){} };
     hd.addEventListener("pointerup", end); hd.addEventListener("pointercancel", end);
     window.addEventListener("resize", () => { if (d.isConnected && d.style.left) put(parseFloat(d.style.left), parseFloat(d.style.top)); }); }
-  function musPick(){ const o = overlay("musbox"), card = o.card, head = el("div","row"), xb = el("button","ck-del","Zavřít"); xb.type = "button"; xb.addEventListener("click", o.close);
-    head.appendChild(el("h2", null, "Hudba na soustředění")); head.appendChild(xb); card.appendChild(head);
+  function musPick(only){ if (only !== "sp" && only !== "yt"){ const v = musGet(); only = v && $("musdock") ? musSrcOf(v.u) || "sp" : "sp"; }
+    const o = overlay("musbox"), card = o.card, head = el("div","row"), xb = el("button","ck-del","Zavřít"), tabs = el("div","mus-tabs"); xb.type = "button"; xb.addEventListener("click", o.close);
+    const ttl = el("h2"); ttl.innerHTML = MUS_LOGO[only]; ttl.appendChild(document.createTextNode(only === "sp" ? "Spotify" : "YouTube Music")); ttl.className = "mus-ttl"; head.appendChild(ttl); head.appendChild(xb); card.appendChild(head);
+    [["sp","Spotify"],["yt","YouTube Music"]].forEach(x => { const b = el("button", null, x[1]); b.type = "button"; b.setAttribute("aria-pressed", String(x[0] === only)); b.addEventListener("click", () => { if (x[0] === only) return; o.close(); musPick(x[0]); }); tabs.appendChild(b); }); card.appendChild(tabs);
+    const keep = u => musSrcOf(u) === only;
     card.appendChild(el("p","small muted","Vyber stanici. Přehrávač zůstane dole v rohu a hraje dál, i když se přepneš do lekce nebo deníku."));
     const g = el("div","mus-grid"), cur = musGet();
-    MUS.forEach(m => { const b = el("button","mus-st"); b.type = "button"; b.style.setProperty("--art", m.art); b.setAttribute("aria-pressed", String(!!(cur && cur.u === m.u && $("musdock"))));
+    MUS.filter(m => keep(m.u)).forEach(m => { const b = el("button","mus-st"); b.type = "button"; b.style.setProperty("--art", m.art); b.setAttribute("aria-pressed", String(!!(cur && cur.u === m.u && $("musdock"))));
       b.appendChild(el("span","mus-src", m.src)); b.appendChild(el("b", null, m.n)); b.appendChild(el("small", null, m.d)); b.addEventListener("click", () => { if (musPlay(m.n, m.u)) o.close(); }); g.appendChild(b); });
     card.appendChild(g);
-    const mine = musMine(), mg = el("div","mus-grid");
+    const mine = musMine().filter(m => keep(m.u)), mg = el("div","mus-grid");
     if (mine.length){ card.appendChild(el("h3", null, "Moje playlisty"));
       mine.forEach((m, k) => { const p = musParse(m.u), b = el("button","mus-st mine"), rm = el("i","mus-rm","×"); b.type = "button"; b.style.setProperty("--art", MUS_ART[k % MUS_ART.length]); b.setAttribute("aria-pressed", String(!!(cur && cur.u === m.u && $("musdock"))));
         b.appendChild(el("span","mus-src", p ? p.src : "Odkaz")); b.appendChild(el("b", null, m.n)); rm.title = "Odebrat ze seznamu"; rm.setAttribute("role","button"); rm.setAttribute("aria-label","Odebrat " + m.n); b.appendChild(rm);
-        b.addEventListener("click", ev => { if (ev.target === rm){ ev.stopPropagation(); musMineSet(musMine().filter(x => x.u !== m.u)); o.close(); musPick(); return; } if (musPlay(m.n, m.u)) o.close(); }); mg.appendChild(b); });
+        b.addEventListener("click", ev => { if (ev.target === rm){ ev.stopPropagation(); musMineSet(musMine().filter(x => x.u !== m.u)); o.close(); musPick(only); return; } if (musPlay(m.n, m.u)) o.close(); }); mg.appendChild(b); });
       card.appendChild(mg); }
     card.appendChild(el("h3", null, "Přidat playlist"));
-    const f = el("form","mus-add"), i = el("input"), nm = el("input"), b = el("button","primary","Uložit a pustit"); i.placeholder = "Odkaz ze Spotify, YouTube nebo YouTube Music"; i.inputMode = "url"; i.autocomplete = "off"; nm.placeholder = "Název (nepovinné)"; nm.maxLength = 40; b.type = "submit"; f.appendChild(i); f.appendChild(nm); f.appendChild(b);
+    const f = el("form","mus-add"), i = el("input"), nm = el("input"), b = el("button","primary","Uložit a pustit"); i.placeholder = only === "sp" ? "Odkaz na playlist nebo album ze Spotify" : "Odkaz z YouTube Music nebo YouTube"; i.inputMode = "url"; i.autocomplete = "off"; nm.placeholder = "Název (nepovinné)"; nm.maxLength = 40; b.type = "submit"; f.appendChild(i); f.appendChild(nm); f.appendChild(b);
     f.addEventListener("submit", ev => { ev.preventDefault(); const p = musParse(i.value); if (!p){ toast("Tenhle odkaz neznám. Vlož odkaz ze Spotify nebo z YouTube."); i.focus(); return; }
+      if (musSrcOf(i.value) !== only){ o.close(); musPick(musSrcOf(i.value)); toast(only === "sp" ? "To je odkaz z YouTube, přepnul jsem na YouTube Music." : "To je odkaz ze Spotify, přepnul jsem na Spotify."); return; }
       const name = nm.value.trim() || (p.src === "Spotify" ? "Můj playlist" : "Moje video") + (mine.length ? " " + (mine.length + 1) : ""), u = i.value.trim(); musMineSet(musMine().filter(x => x.u !== u).concat([{n: name, u: u}]).slice(-24)); if (musPlay(name, u)) o.close(); });
     card.appendChild(f);
-    card.appendChild(el("p","small muted","Spotify: v přehrávači klikni na Přihlásit. Přihlášený hraje celé písničky, bez přihlášení jen ukázky. V Safari na iPhonu může zůstat u ukázek, pak použij šipku a pusť to v aplikaci Spotify. YouTube Music nemá přehrávač do webů, ale jeho odkaz sem vložíš a pustí se přes YouTube.")); }
+    card.appendChild(el("p","small muted", only === "sp" ? "V přehrávači klikni na Přihlásit. Přihlášený hraje celé písničky, bez přihlášení jen ukázky. V Safari na iPhonu může zůstat u ukázek, pak použij šipku a pusť to v aplikaci Spotify." : "YouTube Music nemá vlastní přehrávač pro weby, takže se tvůj odkaz pustí přes YouTube. Šipkou v přehrávači ho otevřeš přímo v YouTube Music.")); }
   const MUS_ART = ["radial-gradient(80% 90% at 20% 10%,#a855f7,transparent 70%),radial-gradient(80% 90% at 100% 100%,#0ea5e9,transparent 70%),#140f2a","radial-gradient(80% 90% at 20% 10%,#22c55e,transparent 70%),radial-gradient(80% 90% at 100% 100%,#0ea5e9,transparent 70%),#08201a","radial-gradient(80% 90% at 20% 10%,#f97316,transparent 70%),radial-gradient(80% 90% at 100% 100%,#e11d48,transparent 70%),#2a0f12","radial-gradient(80% 90% at 20% 10%,#eab308,transparent 70%),radial-gradient(80% 90% at 100% 100%,#a855f7,transparent 70%),#241a0a"];
   function musMine(){ try { const v = JSON.parse(localStorage.getItem("tape-music-mine") || "[]"); return Array.isArray(v) ? v.filter(x => x && x.u) : []; } catch(e){ return []; } }
   function musMineSet(v){ try { localStorage.setItem("tape-music-mine", JSON.stringify(v)); } catch(e){} }
-  function musSync(){ const on = !!$("musdock"); document.querySelectorAll(".mus-btn").forEach(b => { const e = b.querySelector(".mus-eq"); if (e) e.classList.toggle("off", !on); const s = b.querySelector("span:last-child"); if (s) s.textContent = on ? "Hraje hudba" : "Hudba na soustředění"; }); }
-  function musButton(){ const b = el("button","mus-btn"); b.type = "button"; b.appendChild(eqEl()); b.appendChild(el("span", null, "Hudba na soustředění")); b.addEventListener("click", musPick); setTimeout(musSync, 0); return b; }
+  const MUS_LOGO = {sp: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="#1ed760"/><path d="M6.2 9.3c3.9-1.1 8.2-.8 11.6 1.1M7 12.6c3.2-.9 6.6-.6 9.4 1M7.8 15.7c2.5-.6 5.1-.4 7.3.8" fill="none" stroke="#000" stroke-width="1.8" stroke-linecap="round"/></svg>',
+    yt: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="#ff0033"/><circle cx="12" cy="12" r="6.2" fill="none" stroke="#fff" stroke-width="1.5"/><path d="M10.4 9.3v5.4l4.4-2.7z" fill="#fff"/></svg>'};
+  const musSrcOf = u => { const p = musParse(u); return p ? (p.src === "Spotify" ? "sp" : "yt") : ""; };
+  function musSync(){ const d = $("musdock"), v = musGet(), cur = d && v ? musSrcOf(v.u) : ""; document.querySelectorAll(".mus-btn>button").forEach(b => { const on = b.dataset.s === cur; b.classList.toggle("on", on); b.title = on ? "Hraje hudba" : "Hudba na soustředění"; }); }
+  function musButton(){ const w = el("div","mus-btn"); [["sp","Spotify"],["yt","YouTube Music"]].forEach(x => { const b = el("button", x[0]); b.type = "button"; b.dataset.s = x[0]; const lg = el("i","lg"); lg.innerHTML = MUS_LOGO[x[0]]; b.appendChild(lg); b.appendChild(el("span", null, x[1])); b.appendChild(eqEl()); b.addEventListener("click", () => musPick(x[0])); w.appendChild(b); }); setTimeout(musSync, 0); return w; }
   { const _ph = pheadPaint; pheadPaint = function(v, g){ _ph(v, g); const h = $("phead"); if (g === "uceni" && h && !h.hidden && !h.querySelector(".mus-btn")){ const b = musButton(); b.style.marginTop = "12px"; h.appendChild(b); } }; try { pheadPaint(document.body.dataset.view, document.body.dataset.group); } catch(e){} }
   { const _rdM = renderDash; renderDash = function(){ _rdM(); try { if (!hero2.querySelector(".mus-btn")){ const b = musButton(); b.classList.add("h2-mus"); hero2.appendChild(b); } } catch(e){} }; try { renderDash(); } catch(e){} }
   function musLesson(lb, fb){ if (!lb || lb.querySelector(":scope > .mus-btn")) return; lb.insertBefore(musButton(), fb ? fb.nextSibling : lb.firstChild); }
