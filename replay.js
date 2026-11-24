@@ -207,20 +207,25 @@
     S.draws.forEach(d => { if (d.k !== "pos" || !(d.st === "open" || d.st === "draft" || d.st === "pending")) return; tag(c, PW, yOf(d.sl), num(d.sl, 2), P.dn, "#fff"); tag(c, PW, yOf(d.tp), num(d.tp, 2), P.up, "#fff"); });
     if (m && m.x < PW && m.y < PH && m.y >= 0){ tag(c, PW, m.y, num(rt(pOf(m.y)), 2), P.light ? "#2b2440" : "#e9e9ee", P.light ? "#fff" : "#111"); const t = tIdx(Math.round(iOf(m.x))); const tw = S.tf >= 1440 ? 62 : 92; c.fillStyle = P.light ? "#2b2440" : "#e9e9ee"; rrect(c, m.x - tw / 2, PH + 3, tw, AXH - 6, 4); c.fill(); c.fillStyle = P.light ? "#fff" : "#111"; c.textAlign = "center"; c.fillText(S.tf >= 1440 ? new Date((t + 360) * 6e4).toLocaleDateString(loc(), {day: "numeric", month: "numeric", year: "2-digit", timeZone: "UTC"}) : new Date((t + 360) * 6e4).toLocaleDateString(loc(), {day: "numeric", month: "numeric", timeZone: "UTC"}) + " " + hm(t), m.x, PH + AXH / 2); }
     legend();
-    panelPaint();
+    panelPaint(); otbPaint();
   }
   function rrect(c, x, y, w, h, r){ c.beginPath(); c.moveTo(x + r, y); c.arcTo(x + w, y, x + w, y + h, r); c.arcTo(x + w, y + h, x, y + h, r); c.arcTo(x, y + h, x, y, r); c.arcTo(x, y, x + w, y, r); c.closePath(); }
   function tag(c, x, y, txt, bg, fg){ if (y < -8 || y > PH + 8) return; c.font = "600 11px Inter,system-ui,sans-serif"; const w = AXW - 4; c.fillStyle = bg; rrect(c, x + 2, y - 9, w, 18, 4); c.fill(); c.fillStyle = fg; c.textAlign = "left"; c.textBaseline = "middle"; c.fillText(txt, x + 7, y); }
   function label(c, x, y, txt, bg, fg){ c.font = "600 11.5px Inter,system-ui,sans-serif"; const w = c.measureText(txt).width + 14; c.fillStyle = bg; rrect(c, x - w / 2, y - 10, w, 20, 6); c.fill(); c.fillStyle = fg; c.textAlign = "center"; c.textBaseline = "middle"; c.fillText(txt, x, y + .5); }
 
   function drawObj(c, P, d){
-    const sel = S.sel === d, col = d.col || P.draw; c.lineWidth = sel ? 2 : 1.5; c.strokeStyle = col; c.fillStyle = col;
-    if (d.k === "h"){ const y = Math.round(yOf(d.p)) + .5; c.beginPath(); c.moveTo(0, y); c.lineTo(PW, y); c.stroke(); c.font = "600 10.5px Inter,system-ui,sans-serif"; c.textAlign = "right"; c.textBaseline = "bottom"; c.fillText(num(d.p, 2), PW - 6, y - 3); if (sel) hdl(c, PW / 2, y, P); return; }
+    if (d.k !== "pos"){ const lw = d.lw || 1.5; c.lineWidth = lw + (S.sel === d ? .6 : 0); c.setLineDash(d.ls === "d" ? [7, 5] : d.ls === "o" ? [1.5, 3.5] : []); c.lineCap = d.ls === "o" ? "round" : "butt"; }
+    shape(c, P, d); c.setLineDash([]); c.lineCap = "butt"; c.globalAlpha = 1;
+  }
+  function shape(c, P, d){
+    const sel = S.sel === d, col = d.col || P.draw; c.strokeStyle = col; c.fillStyle = col;
+    if (d.k === "h"){ const y = Math.round(yOf(d.p)) + .5; c.beginPath(); c.moveTo(0, y); c.lineTo(PW, y); c.stroke(); if (d.lab !== false){ c.font = "600 10.5px Inter,system-ui,sans-serif"; c.textAlign = "right"; c.textBaseline = "bottom"; c.fillText(num(d.p, 2), PW - 6, y - 3); } if (sel) hdl(c, PW / 2, y, P); return; }
+    if (d.k === "txt"){ const x = xOf(idxT(d.a.t)), y = yOf(d.a.p), fs = d.fs || 14; c.font = "600 " + fs + "px Inter,system-ui,sans-serif"; c.textAlign = "left"; c.textBaseline = "middle"; const lines = String(d.s || "").split("\n"); let w = 0; lines.forEach((l, k) => { c.fillText(l, x, y + k * fs * 1.25); w = Math.max(w, c.measureText(l).width); }); d._w = w; d._h = lines.length * fs * 1.25; if (sel){ c.setLineDash([3, 3]); c.lineWidth = 1; c.strokeRect(x - 4, y - fs * .7, w + 8, d._h + fs * .15); c.setLineDash([]); } return; }
     if (d.k === "line" || d.k === "ray"){ const x1 = xOf(idxT(d.a.t)), y1 = yOf(d.a.p), x2 = xOf(idxT(d.b.t)), y2 = yOf(d.b.p); c.beginPath(); c.moveTo(x1, y1); if (d.k === "ray" && x2 !== x1){ const k = (y2 - y1) / (x2 - x1), xe = x2 > x1 ? PW : 0; c.lineTo(xe, y1 + k * (xe - x1)); } else c.lineTo(x2, y2); c.stroke(); if (sel){ hdl(c, x1, y1, P); hdl(c, x2, y2, P); } return; }
-    if (d.k === "rect"){ const x1 = xOf(idxT(d.a.t)), y1 = yOf(d.a.p), x2 = xOf(idxT(d.b.t)), y2 = yOf(d.b.p); c.globalAlpha = .13; c.fillRect(Math.min(x1, x2), Math.min(y1, y2), Math.abs(x2 - x1), Math.abs(y2 - y1)); c.globalAlpha = 1; c.strokeRect(Math.min(x1, x2), Math.min(y1, y2), Math.abs(x2 - x1), Math.abs(y2 - y1)); if (sel){ hdl(c, x1, y1, P); hdl(c, x2, y2, P); } return; }
+    if (d.k === "rect"){ const x1 = xOf(idxT(d.a.t)), y1 = yOf(d.a.p), x2 = xOf(idxT(d.b.t)), y2 = yOf(d.b.p); c.globalAlpha = d.fo != null ? d.fo : .13; c.fillRect(Math.min(x1, x2), Math.min(y1, y2), Math.abs(x2 - x1), Math.abs(y2 - y1)); c.globalAlpha = 1; c.strokeRect(Math.min(x1, x2), Math.min(y1, y2), Math.abs(x2 - x1), Math.abs(y2 - y1)); if (sel){ hdl(c, x1, y1, P); hdl(c, x2, y2, P); } return; }
     if (d.k === "fib"){ const x1 = xOf(idxT(d.a.t)), x2 = xOf(idxT(d.b.t)), xl = Math.min(x1, x2), xr = Math.max(x1, x2) + 60, lv = [[0, "0"], [.5, "0.5"], [.62, "0.62"], [.705, "0.705"], [.79, "0.79"], [1, "1"]];
       c.font = "600 10px Inter,system-ui,sans-serif"; c.textBaseline = "bottom"; c.textAlign = "left";
-      const pAt = f => d.b.p + (d.a.p - d.b.p) * f; c.globalAlpha = .1; c.fillRect(xl, yOf(pAt(.62)), xr - xl, yOf(pAt(.79)) - yOf(pAt(.62))); c.globalAlpha = 1;
+      const pAt = f => d.b.p + (d.a.p - d.b.p) * f; c.globalAlpha = d.fo != null ? d.fo : .1; c.fillRect(xl, yOf(pAt(.62)), xr - xl, yOf(pAt(.79)) - yOf(pAt(.62))); c.globalAlpha = 1;
       lv.forEach(l => { const y = Math.round(yOf(pAt(l[0]))) + .5; c.globalAlpha = l[0] === 0 || l[0] === 1 ? 1 : .75; c.beginPath(); c.moveTo(xl, y); c.lineTo(xr, y); c.stroke(); c.fillText(l[1] + "  " + num(rt(pAt(l[0])), 2), xl + 4, y - 2); }); c.globalAlpha = 1;
       c.setLineDash([3, 3]); c.beginPath(); c.moveTo(x1, yOf(d.a.p)); c.lineTo(x2, yOf(d.b.p)); c.stroke(); c.setLineDash([]); if (sel){ hdl(c, x1, yOf(d.a.p), P); hdl(c, x2, yOf(d.b.p), P); } return; }
     if (d.k === "pos") posPaint(c, P, d, sel);
@@ -351,11 +356,14 @@
     for (const d of list){
       if (d.k === "pos"){ const g = posGeo(d), editable = d.st !== "win" && d.st !== "loss" && d.st !== "be" && d.st !== "closed";
         if (editable && (S.sel === d || d.st)){ if (near(P, {x: g.x1, y: g.ys})) return {d: d, h: "sl"}; if (near(P, {x: g.x1, y: g.yt})) return {d: d, h: "tp"}; if (d.st !== "open" && near(P, {x: g.x1, y: g.ye})) return {d: d, h: "e"}; if (near(P, {x: g.x2, y: g.ye})) return {d: d, h: "w"}; }
+        if (d.lock && d.st === "plan"){ if (x >= g.x1 && x <= g.x2 && y >= Math.min(g.ys, g.yt) && y <= Math.max(g.ys, g.yt)) return {d: d, h: "sel"}; continue; }
         const top = Math.min(g.ys, g.yt), bot = Math.max(g.ys, g.yt); if (x >= g.x1 && x <= g.x2 && y >= top && y <= bot) return {d: d, h: editable && (d.st === "open") ? "sel" : editable ? "move" : "sel"};
         if (editable && Math.abs(y - g.ys) < 5 && x >= g.x1 - 4 && x <= g.x2) return {d: d, h: "sl"}; if (editable && Math.abs(y - g.yt) < 5 && x >= g.x1 - 4 && x <= g.x2) return {d: d, h: "tp"};
         continue; }
-      if (d.k === "h"){ if (Math.abs(y - yOf(d.p)) < 6) return {d: d, h: "move"}; continue; }
+      if (d.k === "h"){ if (Math.abs(y - yOf(d.p)) < 6) return {d: d, h: d.lock ? "sel" : "move"}; continue; }
+      if (d.k === "txt"){ const tx = xOf(idxT(d.a.t)), ty = yOf(d.a.p), fs = d.fs || 14; if (x >= tx - 4 && x <= tx + (d._w || 40) + 4 && y >= ty - fs * .7 && y <= ty + (d._h || fs) ) return {d: d, h: d.lock ? "sel" : "move"}; continue; }
       const x1 = xOf(idxT(d.a.t)), y1 = yOf(d.a.p), x2 = xOf(idxT(d.b.t)), y2 = yOf(d.b.p);
+      if (d.lock){ if (segD(x, y, x1, y1, x2, y2) < 6 || (d.k !== "line" && d.k !== "ray" && x >= Math.min(x1, x2) && x <= Math.max(x1, x2) + (d.k === "fib" ? 60 : 0) && y >= Math.min(y1, y2) && y <= Math.max(y1, y2))) return {d: d, h: "sel"}; continue; }
       if (near(P, {x: x1, y: y1})) return {d: d, h: "a"}; if (near(P, {x: x2, y: y2})) return {d: d, h: "b"};
       if (d.k === "line" || d.k === "ray" || d.k === "fib"){ if (segD(x, y, x1, y1, x2, y2) < 6) return {d: d, h: "move"}; if (d.k === "fib"){ const xl = Math.min(x1, x2), xr = Math.max(x1, x2) + 60; if (x >= xl && x <= xr && y >= Math.min(y1, y2) && y <= Math.max(y1, y2)) return {d: d, h: "move"}; } }
       if (d.k === "rect" && x >= Math.min(x1, x2) - 4 && x <= Math.max(x1, x2) + 4 && y >= Math.min(y1, y2) - 4 && y <= Math.max(y1, y2) + 4) return {d: d, h: "move"};
@@ -367,6 +375,7 @@
     if (snap && set.magnet){ const a = agg().a, k = Math.round(i), b = a.find(z => z.i === k); if (b){ const opts = [b.h, b.l, b.o, b.c]; let best = null; opts.forEach(v => { const dy = Math.abs(yOf(v) - y); if (dy < 12 && (!best || dy < best.dy)) best = {v: v, dy: dy}; }); if (best){ p = best.v; i = k; } } }
     return {t: tIdx(i), p: rt(p)};
   }
+  function sty(d){ const st = (set.ds || {})[d.k === "ray" ? "line" : d.k]; if (st) ["col", "lw", "ls", "fo"].forEach(k => { if (st[k] != null) d[k] = st[k]; }); return d; }
   function newPos(dir, t, p, st){
     const d0 = Math.max(rt(atr(14) * 1.5), tick() * 4), d = {k: "pos", id: uid++, dir: dir, t1: t, t2: tIdx(idxT(t) + 30), e: rt(p), sl: rt(p - dir * d0), tp: rt(p + dir * d0 * 2), st: st};
     return d;
@@ -380,9 +389,10 @@
     if (S.creating && S.creating.stage === 2){ finishCreate(); return; }
     if (S.tool !== "cur"){
       const pt = ptAt(x, y, true), tool = S.tool;
-      if (tool === "h"){ const d = {k: "h", id: uid++, p: pt.p, t: pt.t}; S.draws.push(d); S.sel = d; setTool("cur"); saveDraw(); req(); return; }
+      if (tool === "txt"){ const d = sty({k: "txt", id: uid++, a: {t: pt.t, p: pOf(y)}, s: T("Text", "Text"), fs: 14}); S.draws.push(d); S.sel = d; setTool("cur"); saveDraw(); req(); setTimeout(() => { const i = ui.otb.querySelector(".rp-otxt"); if (i){ i.focus(); i.select(); } }, 60); return; }
+      if (tool === "h"){ const d = sty({k: "h", id: uid++, p: pt.p, t: pt.t}); S.draws.push(d); S.sel = d; setTool("cur"); saveDraw(); req(); return; }
       if (tool === "long" || tool === "short"){ const d = newPos(tool === "long" ? 1 : -1, pt.t, pt.p, "plan"); S.draws.push(d); S.sel = d; setTool("cur"); saveDraw(); req(); return; }
-      S.creating = {d: {k: tool, id: uid++, a: pt, b: Object.assign({}, pt)}, x: x, y: y, stage: 1}; req(); return;
+      S.creating = {d: sty({k: tool, id: uid++, a: pt, b: Object.assign({}, pt)}), x: x, y: y, stage: 1}; req(); return;
     }
     const h = hit(x, y);
     if (h){ S.sel = h.d; if (h.h !== "sel") S.drag = {k: "obj", h: h.h, d: h.d, x: x, y: y, orig: JSON.parse(JSON.stringify(h.d))}; else S.drag = {k: "pan", x: x, y: y, R: rightIdx(), lo: yLo, hi: yHi}; posList(); req(); return; }
@@ -412,6 +422,7 @@
       if (d.st === "open" || d.st === "pending" || d.st === "draft") posList();
       return; }
     if (d.k === "h"){ d.p = rt(o.p + dp); return; }
+    if (d.k === "txt"){ d.a = {t: sh(o.a.t), p: o.a.p + dp}; return; }
     if (D.h === "a"){ d.a = ptAt(x, y, true); return; } if (D.h === "b"){ d.b = ptAt(x, y, true); return; }
     d.a = {t: sh(o.a.t), p: rt(o.a.p + dp)}; d.b = {t: sh(o.b.t), p: rt(o.b.p + dp)};
   }
@@ -435,7 +446,7 @@
     if (location.hash !== "#backtest") return;
     if (ev.key === " "){ ev.preventDefault(); play(); } else if (ev.key === "ArrowRight"){ ev.preventDefault(); stop(); stepTF(ev.shiftKey ? 10 : 1); } else if (ev.key === "ArrowLeft"){ ev.preventDefault(); stop(); back(); }
     else if (ev.key === "Delete" || ev.key === "Backspace"){ if (S.sel){ ev.preventDefault(); delSel(); } } else if (ev.key === "Escape"){ setTool("cur"); S.sel = null; S.draws = S.draws.filter(d => d.st !== "draft"); posList(); req(); }
-    else if (!ev.ctrlKey && !ev.metaKey && !ev.altKey){ const m = {t: "line", h: "h", r: "rect", f: "fib", l: "long", s: "short", v: "cur"}[ev.key.toLowerCase()]; if (m) setTool(m); }
+    else if (!ev.ctrlKey && !ev.metaKey && !ev.altKey){ const m = {t: "line", h: "h", r: "rect", f: "fib", x: "txt", l: "long", s: "short", v: "cur"}[ev.key.toLowerCase()]; if (m) setTool(m); }
   }
 
   // ---------- orders from the corner panel ----------
@@ -466,6 +477,7 @@
     h: '<path d="M3 12h18"/><circle cx="12" cy="12" r="1.8"/>', rect: '<rect x="4" y="6" width="16" height="12" rx="1.5"/>', fib: '<path d="M4 5h16M4 10h16M4 14h16M4 19h16"/>',
     long: '<rect x="5" y="4" width="14" height="8" fill="currentColor" opacity=".25" stroke="none"/><path d="M5 12h14M5 4h14v16H5z"/><path d="M9 9l3-3 3 3" />', short: '<rect x="5" y="12" width="14" height="8" fill="currentColor" opacity=".25" stroke="none"/><path d="M5 12h14M5 4h14v16H5z"/><path d="M9 15l3 3 3-3"/>',
     del: '<path d="M5 7h14M10 7V4h4v3M7 7l1 13h8l1-13"/>', clr: '<path d="M4 4l16 16M20 4L4 20"/>', mag: '<path d="M6 4v8a6 6 0 0012 0V4h-4v8a2 2 0 01-4 0V4z"/>',
+    txt: '<path d="M5 6V4h14v2M12 4v16M9 20h6"/>', lock: '<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/>', unlock: '<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 017.5-2"/>', copy: '<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 00-1-1H5a1 1 0 00-1 1v10a1 1 0 001 1h3"/>', ext: '<path d="M4 18L20 6"/><path d="M15 6h5v5"/>', go: '<path d="M5 12h12M13 7l5 5-5 5"/>',
     full: '<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>', play: '<path d="M7 4l13 8-13 8z" fill="currentColor"/>', pause: '<path d="M7 4h4v16H7zM13 4h4v16h-4z" fill="currentColor"/>', next: '<path d="M5 4l10 8-10 8zM17 4h2v16h-2z" fill="currentColor"/>', prev: '<path d="M19 4L9 12l10 8zM5 4h2v16H5z" fill="currentColor"/>',
     gear: '<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/>', grip: '<circle cx="9" cy="6" r="1.3" fill="currentColor"/><circle cx="15" cy="6" r="1.3" fill="currentColor"/><circle cx="9" cy="12" r="1.3" fill="currentColor"/><circle cx="15" cy="12" r="1.3" fill="currentColor"/><circle cx="9" cy="18" r="1.3" fill="currentColor"/><circle cx="15" cy="18" r="1.3" fill="currentColor"/>'
   };
@@ -478,6 +490,48 @@
     const I = inst(), d = new Date(S.day + "T12:00:00"), ds = isNaN(d) ? S.day : d.toLocaleDateString(loc(), {weekday: "short", day: "numeric", month: "numeric", year: "numeric"});
     ui.ttl.textContent = (S.demo ? (S.demo === "SIM" ? T("Ukázka (vymyšlená data)", "Demo (invented data)") : "BTCUSDT · Binance") : I.n + " · " + I.full) + " · " + (TFS.find(x => x[0] === S.tf) || [0, S.tf + "m"])[1] + " · " + ds;
     if (b){ const dc = I.tick < 1 && I.tick >= .25 ? 2 : 2, ch = b.c - b.o; ui.ohlc.innerHTML = ""; [["O", b.o], ["H", b.h], ["L", b.l], ["C", b.c]].forEach(x => { const s = mk("span", null, x[0] + " "); const v = mk("b", ch >= 0 ? "up" : "dn", num(x[1], dc)); s.appendChild(v); ui.ohlc.appendChild(s); }); ui.ohlc.appendChild(mk("span", ch >= 0 ? "up" : "dn", (ch >= 0 ? "+" : "") + num(ch, 2))); if (m && m.x < PW) ui.ohlc.appendChild(mk("span", null, S.tf >= 1440 ? new Date((b.t + 360) * 6e4).toLocaleDateString(loc(), {day: "numeric", month: "numeric", year: "numeric", timeZone: "UTC"}) : new Date(b.t * 6e4).toLocaleDateString(loc(), {day: "numeric", month: "numeric", timeZone: "UTC"}) + " " + hm(b.t))); ui.clock.textContent = (last() ? new Date((last().t) * 6e4).toLocaleDateString(loc(), {day: "numeric", month: "numeric", timeZone: "UTC"}) + " " + hm(last().t) : "") + " NY"; }
+  }
+  // ---------- object toolbar (like TradingView): colour, width, style, fill, lock, clone, delete ----------
+  const COLS = ["#a98bff", "#7c4dff", "#2962ff", "#2196f3", "#00bcd4", "#26a69a", "#16b67f", "#8bc34a", "#ffeb3b", "#ffb300", "#ff9800", "#ff5722", "#f0475a", "#e91e63", "#ec407a", "#9c27b0", "#ffffff", "#9e9e9e", "#1d1530"];
+  function palette(anchor, d, upd){
+    let pp = ui.otb.querySelector(".rp-pal"); if (pp){ pp.remove(); return; } pp = mk("div", "rp-pal");
+    COLS.forEach(c => { const b = btn("rp-sw" + ((d.col || "") === c ? " on" : ""), null, () => { d.col = c; anchor.firstChild.style.background = c; pp.remove(); upd(); }, c); b.style.background = c; pp.appendChild(b); });
+    const ci = mk("input"); ci.type = "color"; ci.value = /^#[0-9a-f]{6}$/i.test(d.col || "") ? d.col : "#a98bff"; ci.title = T("Vlastní barva", "Custom colour"); ci.addEventListener("input", () => { d.col = ci.value; anchor.firstChild.style.background = ci.value; upd(); }); pp.appendChild(ci);
+    ui.otb.appendChild(pp);
+  }
+  function clone(d){ const c = JSON.parse(JSON.stringify(d)); c.id = uid++; delete c._w; c.lock = false; const shf = t => tIdx(idxT(t) + 5); if (c.a) c.a.t = shf(c.a.t); if (c.b) c.b.t = shf(c.b.t); if (c.t1 != null){ c.t1 = shf(c.t1); c.t2 = shf(c.t2); } if (c.k === "h") c.p = rt(c.p + tick() * 8); S.draws.push(c); S.sel = c; saveDraw(); req(); }
+  function planToOrder(d){
+    const lb = last(); if (!lb) return; S.draws = S.draws.filter(x => x.st !== "draft"); const ot = Math.abs(d.e - lb.c) < tick() ? "mkt" : d.dir * (d.e - lb.c) < 0 ? "lim" : "stp";
+    if (ot === "mkt"){ const dp = lb.c - d.e; d.e = lb.c; d.sl = rt(d.sl + dp); d.tp = rt(d.tp + dp); d.follow = true; d.t1 = grp(lb.t, S.tf); } else d.follow = false;
+    d.st = "draft"; d.ot = ot; d.lock = false; set.ot = ot; saveSet(); if (ui) ui.pOT.querySelectorAll("button").forEach(b => b.classList.toggle("on", b.dataset.ot === ot)); saveDraw(); posList(); req(); toast(T("Pozice je připravená jako pokyn. Potvrď ho v panelu.", "The position is ready as an order. Confirm it in the panel."));
+  }
+  function otbPaint(){
+    if (!ui) return; const d = S.sel, box = ui.otb, ok = d && S.draws.indexOf(d) >= 0 && (d.k !== "pos" || d.st === "plan");
+    if (!ok){ if (!box.hidden){ box.hidden = true; ui.otbId = null; } return; }
+    if (ui.otbId === d.id && !box.hidden) return; ui.otbId = d.id; box.innerHTML = ""; box.hidden = false;
+    const upd = () => { const k = d.k === "ray" ? "line" : d.k; set.ds = set.ds || {}; set.ds[k] = {col: d.col, lw: d.lw, ls: d.ls, fo: d.fo}; saveSet(); saveDraw(); req(); };
+    const grp2 = () => { const g = mk("div", "rp-og"); box.appendChild(g); return g; };
+    if (d.k !== "pos"){
+      const g1 = grp2(), cb = btn("rp-oc", null, null, T("Barva", "Colour")); cb.innerHTML = "<i></i>"; cb.firstChild.style.background = d.col || pal().draw; cb.addEventListener("click", () => palette(cb, d, upd)); g1.appendChild(cb);
+      if (d.k !== "txt"){
+        const wg = mk("div", "rp-seg rp-ow"); [1, 2, 3, 4].forEach(w => { const b = btn((d.lw || 1) === w ? "on" : "", null, () => { d.lw = w; wg.querySelectorAll("button").forEach(x => x.classList.toggle("on", x === b)); upd(); }, T("Tloušťka ", "Width ") + w + " px"); b.innerHTML = '<svg viewBox="0 0 24 24"><path d="M4 12h16" stroke-width="' + w + '"/></svg>'; wg.appendChild(b); }); g1.appendChild(wg);
+        const sg = mk("div", "rp-seg rp-ow"); [["s", "M4 12h16", T("Plná", "Solid")], ["d", "M3 12h5M10 12h5M17 12h4", T("Čárkovaná", "Dashed")], ["o", "M4 12h.1M8 12h.1M12 12h.1M16 12h.1M20 12h.1", T("Tečkovaná", "Dotted")]].forEach(x => { const b = btn((d.ls || "s") === x[0] ? "on" : "", null, () => { d.ls = x[0]; sg.querySelectorAll("button").forEach(y => y.classList.toggle("on", y === b)); upd(); }, x[2]); b.innerHTML = '<svg viewBox="0 0 24 24"><path d="' + x[1] + '" stroke-width="2" stroke-linecap="round"/></svg>'; sg.appendChild(b); }); g1.appendChild(sg);
+      }
+      if (d.k === "rect" || d.k === "fib"){ const fl = mk("label", "rp-ofl"), r = mk("input"); r.type = "range"; r.min = 0; r.max = 50; r.value = Math.round(100 * (d.fo != null ? d.fo : d.k === "fib" ? .1 : .13)); r.title = T("Výplň", "Fill"); r.addEventListener("input", () => { d.fo = r.value / 100; upd(); }); fl.appendChild(mk("span", "small muted", T("Výplň", "Fill"))); fl.appendChild(r); grp2().appendChild(fl); }
+      if (d.k === "line" || d.k === "ray"){ const b = ibtn("ext", T("Prodloužit doprava", "Extend right"), () => { d.k = d.k === "ray" ? "line" : "ray"; b.classList.toggle("on", d.k === "ray"); saveDraw(); req(); }); b.classList.toggle("on", d.k === "ray"); grp2().appendChild(b); }
+      if (d.k === "h"){ const b = btn("chip rp-otog" + (d.lab !== false ? " on" : ""), T("Cena", "Price"), () => { d.lab = d.lab === false; b.classList.toggle("on", d.lab !== false); saveDraw(); req(); }, T("Zobrazit cenu", "Show price")); grp2().appendChild(b); }
+      if (d.k === "txt"){ const g = grp2(), ti = mk("textarea", "rp-otxt"); ti.rows = 1; ti.value = d.s || ""; ti.setAttribute("aria-label", T("Text", "Text")); ti.addEventListener("input", () => { d.s = ti.value; saveDraw(); req(); }); ti.addEventListener("keydown", e => e.stopPropagation());
+        const fs = mk("select"); [11, 12, 14, 16, 20, 24, 30].forEach(v => { const o = mk("option", null, v + " px"); o.value = v; if (v === (d.fs || 14)) o.selected = true; fs.appendChild(o); }); fs.addEventListener("change", () => { d.fs = +fs.value; saveDraw(); req(); }); fs.setAttribute("aria-label", T("Velikost písma", "Font size")); g.appendChild(ti); g.appendChild(fs); }
+    } else { grp2().appendChild(btn("chip rp-otog on", T("Použít jako pokyn", "Use as order"), () => planToOrder(d), T("Z nakreslené pozice udělá limit, stop nebo tržní pokyn", "Turns the drawn position into a limit, stop or market order"))); }
+    const g3 = grp2(), lk = ibtn(d.lock ? "lock" : "unlock", d.lock ? T("Odemknout", "Unlock") : T("Zamknout", "Lock"), () => { d.lock = !d.lock; lk.innerHTML = svgI(d.lock ? "lock" : "unlock"); lk.classList.toggle("on", !!d.lock); lk.title = d.lock ? T("Odemknout", "Unlock") : T("Zamknout", "Lock"); saveDraw(); req(); }); lk.classList.toggle("on", !!d.lock);
+    g3.appendChild(lk); g3.appendChild(ibtn("copy", T("Duplikovat", "Clone"), () => clone(d))); g3.appendChild(ibtn("del", T("Smazat (Del)", "Delete (Del)"), () => delSel(), "rp-odel"));
+  }
+  function ctxMenu(ev){
+    ev.preventDefault(); const r = ui.cv.getBoundingClientRect(), x = ev.clientX - r.left, y = ev.clientY - r.top, h = x < PW && y < PH ? hit(x, y) : null; let m = ui.cm; m.innerHTML = ""; m.hidden = false;
+    const it = (t, fn, cls) => { const b = btn("rp-cmi" + (cls ? " " + cls : ""), t, () => { m.hidden = true; fn(); }); m.appendChild(b); };
+    if (h && (h.d.k !== "pos" || h.d.st === "plan")){ S.sel = h.d; it(T("Duplikovat", "Clone"), () => clone(h.d)); it(h.d.lock ? T("Odemknout", "Unlock") : T("Zamknout", "Lock"), () => { h.d.lock = !h.d.lock; ui.otbId = null; saveDraw(); req(); }); if (h.d.k === "pos") it(T("Použít jako pokyn", "Use as order"), () => planToOrder(h.d)); it(T("Smazat", "Delete"), () => delSel(), "rp-cmd"); }
+    else { it(T("Resetovat pohled", "Reset view"), () => { S.yMan = null; S.follow = true; S.off = 14; req(); }); it(T("Long pozice sem", "Long position here"), () => { const pt = ptAt(x, y, false), d = newPos(1, pt.t, pt.p, "plan"); S.draws.push(d); S.sel = d; saveDraw(); req(); }); it(T("Short pozice sem", "Short position here"), () => { const pt = ptAt(x, y, false), d = newPos(-1, pt.t, pt.p, "plan"); S.draws.push(d); S.sel = d; saveDraw(); req(); }); it(T("Horizontála sem", "Horizontal line here"), () => { const pt = ptAt(x, y, false), d = sty({k: "h", id: uid++, p: pt.p, t: pt.t}); S.draws.push(d); S.sel = d; saveDraw(); req(); }); }
+    const br = ui.box.getBoundingClientRect(); m.style.left = Math.min(x, br.width - 190) + "px"; m.style.top = Math.min(y, br.height - m.offsetHeight - 6) + "px"; req();
   }
   function panelPaint(){
     if (!ui) return; const lb = last(), dr = S.draws.find(d => d.st === "draft"), I = inst();
@@ -576,7 +630,7 @@
     bar.appendChild(dnav); bar.appendChild(tfs); bar.appendChild(pl); bar.appendChild(right);
     // chart area
     const area = mk("div", "rp-area"), tools = mk("div", "rp-tools"), box = mk("div", "rp-box"), cv = mk("canvas"); cv.setAttribute("aria-label", T("Graf replaye", "Replay chart")); cv.setAttribute("role", "img");
-    [["cur", T("Kurzor (V)", "Cursor (V)")], ["line", T("Trendová čára (T)", "Trend line (T)")], ["ray", T("Paprsek", "Ray")], ["h", T("Horizontální čára (H)", "Horizontal line (H)")], ["rect", T("Obdélník (R)", "Rectangle (R)")], ["fib", T("Fibonacci s OTE (F)", "Fibonacci with OTE (F)")], ["long", T("Long pozice (L)", "Long position (L)")], ["short", T("Short pozice (S)", "Short position (S)")]].forEach(x => { const b = ibtn(x[0], x[1], () => setTool(x[0])); b.dataset.t = x[0]; tools.appendChild(b); });
+    [["cur", T("Kurzor (V)", "Cursor (V)")], ["line", T("Trendová čára (T)", "Trend line (T)")], ["ray", T("Paprsek", "Ray")], ["h", T("Horizontální čára (H)", "Horizontal line (H)")], ["rect", T("Obdélník (R)", "Rectangle (R)")], ["fib", T("Fibonacci s OTE (F)", "Fibonacci with OTE (F)")], ["txt", T("Text (X)", "Text (X)")], ["long", T("Long pozice (L)", "Long position (L)")], ["short", T("Short pozice (S)", "Short position (S)")]].forEach(x => { const b = ibtn(x[0], x[1], () => setTool(x[0])); b.dataset.t = x[0]; tools.appendChild(b); });
     tools.appendChild(mk("i", "rp-sep")); tools.appendChild(ibtn("del", T("Smazat vybrané (Del)", "Delete selected (Del)"), delSel)); tools.appendChild(ibtn("clr", T("Smazat všechny kresby", "Delete all drawings"), () => { S.draws = S.draws.filter(d => d.k === "pos" && d.st && d.st !== "plan"); S.sel = null; saveDraw(); req(); }));
     box.appendChild(cv);
     // corner order panel (draggable)
@@ -591,6 +645,8 @@
     pQty.appendChild(pQm); pQty.appendChild(pQtyI); pQty.appendChild(pQp); pQty.appendChild(pQtyU);
     pConf.appendChild(pOk); pConf.appendChild(pNo); pConf.hidden = true; panel.appendChild(pr); panel.appendChild(pOT); panel.appendChild(pSize); panel.appendChild(pQty); panel.appendChild(pRisk); panel.appendChild(pConf); box.appendChild(panel);
     const setp = mk("div", "rp-setp"); setp.hidden = true; box.appendChild(setp);
+    const otb = mk("div", "rp-otb"); otb.hidden = true; box.appendChild(otb); const cm = mk("div", "rp-cm"); cm.hidden = true; box.appendChild(cm);
+    document.addEventListener("pointerdown", e => { if (!cm.hidden && !cm.contains(e.target)) cm.hidden = true; const pp = otb.querySelector(".rp-pal"); if (pp && !otb.contains(e.target)) pp.remove(); }, true);
     const empty = mk("div", "rp-empty"); box.appendChild(empty);
     area.appendChild(tools); area.appendChild(box);
     const prog = mk("div", "rp-prog"), pi = mk("i"); prog.appendChild(pi);
@@ -604,11 +660,11 @@
     const stH = mk("div", "rp-sth"), stT = mk("h3", null, T("Výsledky replaye", "Replay results")), scope = mk("div", "rp-seg"); stH.appendChild(stT); stH.appendChild(scope);
     const stats = mk("div", "rp-stats");
     wrap.appendChild(head); wrap.appendChild(bar); wrap.appendChild(prog); wrap.appendChild(area); wrap.appendChild(pos); wrap.appendChild(quiz); wrap.appendChild(libB); wrap.appendChild(stH); wrap.appendChild(stats);
-    ui = {wrap: wrap, ttl: t1, ohlc: ohlc, clock: clock, daySel: daySel, tfs: tfs, play: playB, jt: jt, tools: tools, box: box, cv: cv, panel: panel, pSell: pSell, pBuy: pBuy, pRisk: pRisk, pOT: pOT, pSize: pSize, pQty: pQty, pQtyI: pQtyI, pQtyU: pQtyU, pConf: pConf, pOk: pOk, setp: setp, empty: empty, prog: pi, pos: pos, quiz: quiz, libInfo: libInfo, stats: stats, scope: "all"};
+    ui = {wrap: wrap, ttl: t1, ohlc: ohlc, clock: clock, daySel: daySel, tfs: tfs, play: playB, jt: jt, tools: tools, box: box, cv: cv, otb: otb, cm: cm, panel: panel, pSell: pSell, pBuy: pBuy, pRisk: pRisk, pOT: pOT, pSize: pSize, pQty: pQty, pQtyI: pQtyI, pQtyU: pQtyU, pConf: pConf, pOk: pOk, setp: setp, empty: empty, prog: pi, pos: pos, quiz: quiz, libInfo: libInfo, stats: stats, scope: "all"};
     [["all", T("Vše", "All")], ["day", T("Tento den", "This day")]].forEach(x => { const b = btn(x[0] === "all" ? "on" : "", x[1], () => { ui.scope = x[0]; scope.querySelectorAll("button").forEach(z => z.classList.toggle("on", z === b)); statsPaint(); }); scope.appendChild(b); });
     panelDrag(grip); setTool("cur");
     cv.addEventListener("pointerdown", onDown); cv.addEventListener("pointermove", onMove); cv.addEventListener("pointerup", onUp); cv.addEventListener("pointercancel", onUp); cv.addEventListener("pointerleave", () => { S.mouse = null; req(); }); cv.addEventListener("wheel", onWheel, {passive: false}); cv.addEventListener("dblclick", onDbl);
-    cv.addEventListener("contextmenu", e => { e.preventDefault(); });
+    cv.addEventListener("contextmenu", ctxMenu);
     if (window.ResizeObserver) new ResizeObserver(() => { placePanel(); req(); }).observe(box); else window.addEventListener("resize", req);
     document.addEventListener("keydown", key);
     document.addEventListener("fullscreenchange", () => { wrap.classList.toggle("rp-fs", !!document.fullscreenElement); setTimeout(() => { placePanel(); req(); }, 60); });
