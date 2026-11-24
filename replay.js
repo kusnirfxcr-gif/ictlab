@@ -31,7 +31,7 @@
   const CYC = [420, 510, 600, 690, 780, 870, 960];
 
   // ---------- settings and storage ----------
-  const DEF = {bal: 50000, mode: "%", risk: 1, inst: "NQ", comm: 0, tf: 1, speed: 3, panel: null, cyc: false, tz: 0, magnet: true};
+  const DEF = {ot: "mkt", size: "risk", qty: 1, bal: 50000, mode: "%", risk: 1, inst: "NQ", comm: 0, tf: 1, speed: 3, panel: null, cyc: false, tz: 0, magnet: true};
   const set = Object.assign({}, DEF, LS("tape-rp-set") || {});
   try { const s = (API().sym && API().sym()) || ""; if (!LS("tape-rp-set") && INSTR[s]) set.inst = s; } catch(e){}
   const saveSet = () => LS("tape-rp-set", set);
@@ -97,7 +97,8 @@
   const riskUsd = () => set.mode === "%" ? equity() * (+set.risk || 0) / 100 : (+set.risk || 0);
 
   function sizing(e, sl){
-    const I = inst(), pts = Math.abs(e - sl), want = riskUsd(); if (!(pts > 0) || !(want > 0)) return null;
+    const I = inst(), pts = Math.abs(e - sl), want = riskUsd();
+    if (set.size === "qty"){ if (!(pts > 0)) return null; let q = Math.max(I.step, Math.round((+set.qty || 0) / I.step) * I.step); q = Math.round(q * 1000) / 1000; return {q: q, risk: q * pts * I.pv, want: q * pts * I.pv, pts: pts, small: false, fixed: true}; } if (!(pts > 0) || !(want > 0)) return null;
     let q = want / (pts * I.pv); q = I.step >= 1 ? Math.floor(q) : Math.floor(q / I.step) * I.step; const small = q < I.step; if (small) q = I.step;
     q = Math.round(q * 1000) / 1000; return {q: q, risk: q * pts * I.pv, want: want, pts: pts, small: small};
   }
@@ -218,7 +219,7 @@
       label(c, cx, g.yt + (g.yt < g.ye ? -14 : 14), lt, P.up, "#fff");
       label(c, cx, g.ys + (g.ys > g.ye ? 14 : -14), ls, P.dn, "#fff");
       let mid = (d.dir > 0 ? "Long " : "Short ") + (qtxt ? "· " + qtxt : "");
-      if (d.st === "draft") mid = T("Návrh · ", "Draft · ") + mid; if (d.st === "pending") mid = T("Čeká na vstup · ", "Pending · ") + mid;
+      if (d.st === "draft") mid = T("Návrh ", "Draft ") + otName(d.ot || "mkt").toLowerCase() + " · " + mid; if (d.st === "pending") mid = otName(d.ot || "lim") + T(" čeká · ", " pending · ") + mid;
       if (d.st === "open"){ const lb = last(), pnl = lb ? d.dir * (lb.c - d.e) * d.q * I.pv : 0, r = d.dir * ((lb ? lb.c : d.e) - d.e) / Math.abs(d.e - d.sl0); mid += " · " + rr(r) + " · " + usd(pnl); }
       if (done) mid = (d.st === "win" ? T("Cíl ✓ ", "Target ✓ ") : d.st === "loss" ? T("Stop ✕ ", "Stop ✕ ") : d.st === "be" ? T("Na nule ", "Breakeven ") : T("Zavřeno ", "Closed ")) + rr(d.r) + " · " + usd(d.usd);
       if (sz && sz.small && !d.q && live) mid += T(" · stop je na zvolené riziko moc široký", " · stop too wide for your risk");
@@ -373,7 +374,7 @@
     if (d.k === "pos"){
       if (D.h === "sl"){ let v = p; if (d.st === "open" && lb) v = d.dir > 0 ? Math.min(v, lb.c - tick()) : Math.max(v, lb.c + tick()); else v = d.dir > 0 ? Math.min(v, d.e - tick()) : Math.max(v, d.e + tick()); d.sl = rt(v); }
       else if (D.h === "tp"){ let v = p; if (d.st === "open" && lb) v = d.dir > 0 ? Math.max(v, lb.c + tick()) : Math.min(v, lb.c - tick()); else v = d.dir > 0 ? Math.max(v, d.e + tick()) : Math.min(v, d.e - tick()); d.tp = rt(v); }
-      else if (D.h === "e"){ d.e = rt(clamp(p, Math.min(d.sl, d.tp) + tick(), Math.max(d.sl, d.tp) - tick())); d.follow = false; }
+      else if (D.h === "e"){ const ne = rt(clamp(p, Math.min(d.sl, d.tp) + tick(), Math.max(d.sl, d.tp) - tick())); if (d.st === "draft" && lb){ if (d.ot === "mkt" && Math.abs(ne - lb.c) >= tick()){ d.ot = d.dir * (ne - lb.c) < 0 ? "lim" : "stp"; set.ot = d.ot; saveSet(); if (ui) ui.pOT.querySelectorAll("button").forEach(b => b.classList.toggle("on", b.dataset.ot === d.ot)); } } d.e = ne; d.follow = d.ot === "mkt" && Math.abs(ne - (lb ? lb.c : ne)) < tick(); if (d.st === "draft" && d.ot === "mkt") d.e = lb.c; }
       else if (D.h === "w"){ d.t2 = Math.max(d.t1 + S.tf * 3, o.t2 + dt); }
       else if (D.h === "move" && (!d.st || d.st === "plan")){ d.t1 = o.t1 + dt; d.t2 = o.t2 + dt; d.e = rt(o.e + dp); d.sl = rt(o.sl + dp); d.tp = rt(o.tp + dp); }
       if (d.st === "open" || d.st === "pending" || d.st === "draft") posList();
@@ -406,14 +407,22 @@
   }
 
   // ---------- orders from the corner panel ----------
+  const OT = {mkt: ["Trh", "Market"], lim: ["Limit", "Limit"], stp: ["Stop", "Stop"]};
+  const otName = k => T(OT[k][0], OT[k][1]);
+  function entryFor(dir, ot){ const lb = last(), off = Math.max(rt(atr(14) * 1.2), tick() * 4); return ot === "lim" ? rt(lb.c - dir * off) : ot === "stp" ? rt(lb.c + dir * off) : lb.c; }
+  function retype(d, ot){ const lb = last(), e = entryFor(d.dir, ot), dp = e - d.e; d.ot = ot; d.follow = ot === "mkt"; d.e = e; d.sl = rt(d.sl + dp); d.tp = rt(d.tp + dp); if (ot === "mkt"){ d.t1 = lb.t; } }
+  function setOT(ot){ set.ot = ot; saveSet(); const d = S.draws.find(x => x.st === "draft"); if (d) retype(d, ot); if (ui) ui.pOT.querySelectorAll("button").forEach(b => b.classList.toggle("on", b.dataset.ot === ot)); posList(); req(); }
   function draft(dir){
-    if (!S.B.length) return; const lb = last(); S.draws = S.draws.filter(d => d.st !== "draft"); const d = newPos(dir, lb.t, lb.c, "draft"); d.follow = true; S.draws.push(d); S.sel = d; if (S.follow) S.off = Math.max(S.off, Math.min(40, Math.floor(PW / S.bw * .42))); posList(); req();
+    if (!S.B.length) return; const lb = last(); S.draws = S.draws.filter(d => d.st !== "draft"); const d = newPos(dir, lb.t, lb.c, "draft"); d.follow = true; d.ot = "mkt"; if (set.ot !== "mkt") retype(d, set.ot); S.draws.push(d); S.sel = d; if (S.follow) S.off = Math.max(S.off, Math.min(40, Math.floor(PW / S.bw * .42))); posList(); req();
   }
   function confirm(d){
-    const sz = sizing(d.e, d.sl); if (!sz){ toast(T("Nastav riziko v dolarech nebo procentech.", "Set your risk in dollars or percent.")); return; }
-    const lb = last(); d.q = sz.q; d.sl0 = d.sl;
-    if (d.follow || Math.abs(d.e - lb.c) < tick() / 2){ d.e = lb.c; d.st = "open"; d.t1 = lb.t; d.sl0 = d.sl; toast((d.dir > 0 ? "Long " : "Short ") + num(d.q, inst().step < 1 ? 3 : 0) + " " + inst().n + " @ " + num(d.e, 2) + T(" · riziko ", " · risk ") + "$" + num(sz.risk, 0)); }
-    else { d.st = "pending"; d.ot = d.dir > 0 ? (d.e < lb.c ? "lim" : "stp") : (d.e > lb.c ? "lim" : "stp"); toast((d.ot === "lim" ? "Limit " : "Stop ") + T("pokyn čeká na ", "order waiting at ") + num(d.e, 2)); }
+    const sz = sizing(d.e, d.sl); if (!sz){ toast(T("Nastav riziko nebo počet kontraktů.", "Set your risk or the number of contracts.")); return; }
+    const lb = last(), ot = d.ot || "mkt";
+    if (ot === "lim" && (d.dir > 0 ? d.e >= lb.c : d.e <= lb.c)){ toast(d.dir > 0 ? T("Limit long musí být pod aktuální cenou. Nad ní použij stop pokyn.", "A buy limit must be below the current price. Above it, use a stop order.") : T("Limit short musí být nad aktuální cenou. Pod ní použij stop pokyn.", "A sell limit must be above the current price. Below it, use a stop order.")); return; }
+    if (ot === "stp" && (d.dir > 0 ? d.e <= lb.c : d.e >= lb.c)){ toast(d.dir > 0 ? T("Stop long musí být nad aktuální cenou. Pod ní použij limit.", "A buy stop must be above the current price. Below it, use a limit.") : T("Stop short musí být pod aktuální cenou. Nad ní použij limit.", "A sell stop must be below the current price. Above it, use a limit.")); return; }
+    d.q = sz.q; d.sl0 = d.sl;
+    if (ot === "mkt"){ d.e = lb.c; d.st = "open"; d.t1 = lb.t; d.sl0 = d.sl; toast((d.dir > 0 ? "Long " : "Short ") + num(d.q, inst().step < 1 ? 3 : 0) + " " + inst().n + " @ " + num(d.e, 2) + T(" · riziko ", " · risk ") + "$" + num(sz.risk, 0)); }
+    else { d.st = "pending"; toast(otName(ot) + " " + (d.dir > 0 ? "long" : "short") + T(" čeká na ", " waiting at ") + num(d.e, 2) + " · " + num(d.q, inst().step < 1 ? 3 : 0) + " " + inst().n); }
     S.sel = d; posList(); req();
   }
   function closeNow(d){ const lb = last(); if (d.st === "pending" || d.st === "draft"){ S.draws = S.draws.filter(x => x !== d); posList(); req(); return; } close(d, lb.c, lb.t, "manual"); req(); }
@@ -441,8 +450,9 @@
   function panelPaint(){
     if (!ui) return; const lb = last(), dr = S.draws.find(d => d.st === "draft"), I = inst();
     ui.pSell.querySelector("b").textContent = lb ? num(lb.c, 2) : "–"; ui.pBuy.querySelector("b").textContent = lb ? num(lb.c, 2) : "–";
-    const rk = riskUsd(); ui.pRisk.textContent = (set.mode === "%" ? num(set.risk, 2) + " % = " : "") + "$" + num(rk, 0) + " · " + I.n;
-    ui.pConf.hidden = !dr; if (dr){ const sz = sizing(dr.e, dr.sl), lim = !dr.follow && lb && Math.abs(dr.e - lb.c) >= tick() / 2; ui.pOk.textContent = (lim ? T("Zadat pokyn ", "Place order ") : T("Vstoupit ", "Enter ")) + (dr.dir > 0 ? "long" : "short") + (sz ? " · " + num(sz.q, I.step < 1 ? 3 : 0) + " " + I.n + " · $" + num(sz.risk, 0) : ""); ui.pOk.className = "rp-ok " + (dr.dir > 0 ? "buy" : "sell"); }
+    const rk = riskUsd(); ui.pRisk.textContent = set.size === "qty" ? T("Velikost ", "Size ") + num(set.qty, I.step < 1 ? 3 : 0) + " " + I.n : T("Riziko ", "Risk ") + (set.mode === "%" ? num(set.risk, 2) + " % = " : "") + "$" + num(rk, 0) + " · " + I.n;
+    ui.pSize.querySelectorAll("button").forEach(b => b.classList.toggle("on", b.dataset.sz === set.size)); ui.pQty.hidden = set.size !== "qty"; if (document.activeElement !== ui.pQtyI) ui.pQtyI.value = set.qty; ui.pQtyI.step = I.step; ui.pQtyU.textContent = I.n;
+    ui.pConf.hidden = !dr; if (dr){ const sz = sizing(dr.e, dr.sl), ot = dr.ot || "mkt"; ui.pOk.textContent = (ot === "mkt" ? T("Vstoupit ", "Enter ") + (dr.dir > 0 ? "long" : "short") + T(" za trh", " at market") : otName(ot) + " " + (dr.dir > 0 ? "long" : "short") + " @ " + num(dr.e, 2)) + (sz ? " · " + num(sz.q, I.step < 1 ? 3 : 0) + " " + I.n + " · $" + num(sz.risk, 0) : ""); ui.pOk.className = "rp-ok " + (dr.dir > 0 ? "buy" : "sell"); }
   }
   function posList(){
     if (!ui) return; const box = ui.pos; box.innerHTML = ""; const lb = last(), I = inst();
@@ -450,7 +460,7 @@
     if (!live.length){ box.hidden = true; panelPaint(); return; } box.hidden = false;
     live.forEach(d => { const row = mk("div", "rp-prow"), pnl = d.st === "open" && lb ? d.dir * (lb.c - d.e) * d.q * I.pv : 0, r = d.st === "open" && lb ? d.dir * (lb.c - d.e) / Math.abs(d.e - d.sl0) : 0;
       row.appendChild(mk("span", "rp-dir " + (d.dir > 0 ? "buy" : "sell"), d.dir > 0 ? "Long" : "Short"));
-      row.appendChild(mk("span", "small", num(d.q, I.step < 1 ? 3 : 0) + " " + I.n + " @ " + num(d.e, 2) + (d.st === "pending" ? T(" · čeká", " · pending") : "")));
+      row.appendChild(mk("span", "small", num(d.q, I.step < 1 ? 3 : 0) + " " + I.n + " @ " + num(d.e, 2) + (d.st === "pending" ? " · " + otName(d.ot || "lim") + T(" čeká", " pending") : "")));
       row.appendChild(mk("span", "small muted", "SL " + num(d.sl, 2) + " · TP " + num(d.tp, 2)));
       if (d.st === "open") row.appendChild(mk("b", pnl >= 0 ? "pos" : "neg", rr(r) + " · " + usd(pnl)));
       const act = mk("div", "rp-pact"); if (d.st === "open") act.appendChild(btn("chip", T("Stop na nulu", "Stop to BE"), () => toBE(d))); act.appendChild(btn("chip", d.st === "pending" ? T("Zrušit", "Cancel") : T("Zavřít", "Close"), () => closeNow(d))); row.appendChild(act);
@@ -533,7 +543,12 @@
     const pr = mk("div", "rp-prow2"), pSell = btn("rp-sell", null, () => draft(-1), T("Short: návrh pozice", "Short: draft a position")), pBuy = btn("rp-buy", null, () => draft(1), T("Long: návrh pozice", "Long: draft a position"));
     pSell.innerHTML = "<span>SHORT</span><b>–</b>"; pBuy.innerHTML = "<span>LONG</span><b>–</b>"; pr.appendChild(grip); pr.appendChild(pSell); pr.appendChild(pBuy);
     const pRisk = btn("rp-risk", "", () => settingsPop(), T("Změnit riziko", "Change risk")), pConf = mk("div", "rp-conf"), pOk = btn("rp-ok", "", () => { const d = S.draws.find(x => x.st === "draft"); if (d) confirm(d); }), pNo = btn("rp-no", T("Zrušit", "Cancel"), () => { S.draws = S.draws.filter(x => x.st !== "draft"); S.sel = null; posList(); req(); });
-    pConf.appendChild(pOk); pConf.appendChild(pNo); pConf.hidden = true; panel.appendChild(pr); panel.appendChild(pRisk); panel.appendChild(pConf); box.appendChild(panel);
+    const pOT = mk("div", "rp-seg rp-ot"); ["mkt", "lim", "stp"].forEach(k => { const b = btn(k === set.ot ? "on" : "", otName(k), () => setOT(k), k === "mkt" ? T("Za trh: vstup hned za aktuální cenu", "Market: fill now at the current price") : k === "lim" ? T("Limit: long pod cenou, short nad cenou", "Limit: buy below, sell above the price") : T("Stop: long nad cenou, short pod cenou, vstup při průrazu", "Stop: buy above, sell below the price, fills on the break")); b.dataset.ot = k; pOT.appendChild(b); });
+    const pSize = mk("div", "rp-seg rp-ot"); [["risk", T("Podle rizika", "By risk")], ["qty", T("Kontrakty", "Contracts")]].forEach(x => { const b = btn(x[0] === set.size ? "on" : "", x[1], () => { set.size = x[0]; saveSet(); posList(); req(); }); b.dataset.sz = x[0]; pSize.appendChild(b); });
+    const pQty = mk("div", "rp-qty"), pQm = btn("", "−", () => { set.qty = Math.max(inst().step, Math.round((+set.qty - inst().step) * 1000) / 1000); saveSet(); posList(); req(); }), pQtyI = mk("input"), pQp = btn("", "+", () => { set.qty = Math.round((+set.qty + inst().step) * 1000) / 1000; saveSet(); posList(); req(); }), pQtyU = mk("span", "small muted");
+    pQtyI.type = "number"; pQtyI.min = "0"; pQtyI.inputMode = "decimal"; pQtyI.setAttribute("aria-label", T("Počet kontraktů", "Number of contracts")); pQtyI.addEventListener("input", () => { const v = parseFloat(String(pQtyI.value).replace(",", ".")); if (v > 0){ set.qty = v; saveSet(); req(); panelPaint(); } });
+    pQty.appendChild(pQm); pQty.appendChild(pQtyI); pQty.appendChild(pQp); pQty.appendChild(pQtyU);
+    pConf.appendChild(pOk); pConf.appendChild(pNo); pConf.hidden = true; panel.appendChild(pr); panel.appendChild(pOT); panel.appendChild(pSize); panel.appendChild(pQty); panel.appendChild(pRisk); panel.appendChild(pConf); box.appendChild(panel);
     const setp = mk("div", "rp-setp"); setp.hidden = true; box.appendChild(setp);
     const empty = mk("div", "rp-empty"); box.appendChild(empty);
     area.appendChild(tools); area.appendChild(box);
@@ -548,7 +563,7 @@
     const stH = mk("div", "rp-sth"), stT = mk("h3", null, T("Výsledky replaye", "Replay results")), scope = mk("div", "rp-seg"); stH.appendChild(stT); stH.appendChild(scope);
     const stats = mk("div", "rp-stats");
     wrap.appendChild(head); wrap.appendChild(bar); wrap.appendChild(prog); wrap.appendChild(area); wrap.appendChild(pos); wrap.appendChild(quiz); wrap.appendChild(lib); wrap.appendChild(stH); wrap.appendChild(stats);
-    ui = {wrap: wrap, ttl: t1, ohlc: ohlc, clock: clock, daySel: daySel, tfs: tfs, play: playB, jt: jt, tools: tools, box: box, cv: cv, panel: panel, pSell: pSell, pBuy: pBuy, pRisk: pRisk, pConf: pConf, pOk: pOk, setp: setp, empty: empty, prog: pi, pos: pos, quiz: quiz, libInfo: libInfo, stats: stats, scope: "all"};
+    ui = {wrap: wrap, ttl: t1, ohlc: ohlc, clock: clock, daySel: daySel, tfs: tfs, play: playB, jt: jt, tools: tools, box: box, cv: cv, panel: panel, pSell: pSell, pBuy: pBuy, pRisk: pRisk, pOT: pOT, pSize: pSize, pQty: pQty, pQtyI: pQtyI, pQtyU: pQtyU, pConf: pConf, pOk: pOk, setp: setp, empty: empty, prog: pi, pos: pos, quiz: quiz, libInfo: libInfo, stats: stats, scope: "all"};
     [["all", T("Vše", "All")], ["day", T("Tento den", "This day")]].forEach(x => { const b = btn(x[0] === "all" ? "on" : "", x[1], () => { ui.scope = x[0]; scope.querySelectorAll("button").forEach(z => z.classList.toggle("on", z === b)); statsPaint(); }); scope.appendChild(b); });
     panelDrag(grip); setTool("cur");
     cv.addEventListener("pointerdown", onDown); cv.addEventListener("pointermove", onMove); cv.addEventListener("pointerup", onUp); cv.addEventListener("pointercancel", onUp); cv.addEventListener("pointerleave", () => { S.mouse = null; req(); }); cv.addEventListener("wheel", onWheel, {passive: false}); cv.addEventListener("dblclick", onDbl);
