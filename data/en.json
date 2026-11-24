@@ -13,7 +13,7 @@
  "Poslední běh botů": "Last bot run",
  "Poznatků": "Insights",
  "Milníky": "Milestones",
- "Seance": "Sessions",
+ "Seance": "Session",
  "Kalendář zpráv": "News calendar",
  "Výkon": "Performance",
  "Otevřít deník": "Open journal",
@@ -2310,5 +2310,11 @@
  "Spotify hlasitost v přehrávači nepouští, nastav ji v počítači nebo telefonu.": "Spotify doesn't allow volume control in the embedded player; set it on your computer or phone.",
  "Hlasitost": "Volume",
  "Zapnout zvuk": "Unmute",
- "Ztlumit": "Mute"
+ "Ztlumit": "Mute",
+ "Cyklus obchodu": "Cycle",
+ "Nejistota": "Uncertainty",
+ "Klid": "Calm",
+ "Strach": "Fear",
+ "Euforie": "Euphoria",
+ "Cyklus": "Cycle"
 }

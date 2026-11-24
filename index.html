@@ -2982,13 +2982,14 @@ body[data-mode="trader"] #v-prehled>[data-card="replay"]{order:0}
 </div>
 <button type="button" class="fab" id="fab" aria-label="Zapsat obchod"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
 <a class="orb" id="orb" href="#kouc" aria-label="Otevřít AI kouče" title="AI kouč"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.500l1.700 4.300 4.300 1.700-4.300 1.700L12 16.500l-1.700-4.300L6 10.500l4.300-1.700z"/><path d="M18 15.500l.7 1.800 1.800.7-1.800.7-.7 1.800-.7-1.800-1.800-.7 1.800-.7z"/></svg></a>
+<script>var LOCD = document.documentElement.lang === "en" ? "en-GB" : "cs-CZ";</script>
 <script>
 (function(){
   const $ = id => document.getElementById(id);
   const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = String(text); return n; };
   const clear = n => { while (n.firstChild) n.removeChild(n.firstChild); };
-  const fmtDate = v => { if (!v) return "—"; const d = new Date(v); return isNaN(d) ? String(v) : d.toLocaleDateString("cs-CZ", {day:"numeric", month:"numeric", year:"numeric"}); };
-  const fmtDateTime = v => { if (!v) return "zatím neproběhl"; const d = new Date(v); return isNaN(d) ? String(v) : d.toLocaleString("cs-CZ", {day:"numeric", month:"numeric", hour:"2-digit", minute:"2-digit"}); };
+  const fmtDate = v => { if (!v) return "—"; const d = new Date(v); return isNaN(d) ? String(v) : d.toLocaleDateString(LOCD, {day:"numeric", month:"numeric", year:"numeric"}); };
+  const fmtDateTime = v => { if (!v) return "zatím neproběhl"; const d = new Date(v); return isNaN(d) ? String(v) : d.toLocaleString(LOCD, {day:"numeric", month:"numeric", hour:"2-digit", minute:"2-digit"}); };
   const BOT_NAMES = {skaut:"Skaut", gems:"Gems", architekt:"Architekt", ucitel:"Učitel", vizionar:"Vizionář"};
   const STATUS = {untested:["Neověřeno backtestem","warn"], testing:["V testování","info"], validated:["Ověřeno backtestem","good"], failing:["Backtest nevychází","bad"]};
 
@@ -4300,7 +4301,7 @@ body[data-mode="trader"] #v-prehled>[data-card="replay"]{order:0}
   }
   function renderDash(){
     const tr = jSorted(), st = jStats(tr), d = new Date();
-    $("d-date").textContent = d.toLocaleDateString("cs-CZ", {weekday: "long", day: "numeric", month: "long", year: "numeric"});
+    $("d-date").textContent = d.toLocaleDateString(LOCD, {weekday: "long", day: "numeric", month: "long", year: "numeric"});
     $("rr-date").textContent = d.getDate() + "/" + (d.getMonth() + 1);
     const hero = $("d-hero"); hero.textContent = tr.length ? sgn(st.total) + " R" : ""; hero.hidden = !tr.length; hero.className = "hero " + (st.total < 0 ? "neg" : "");
     const week = tr.filter(t => Date.now() - new Date(t.ts).getTime() < 7 * 864e5), ws = jStats(week);
@@ -4379,7 +4380,7 @@ body[data-mode="trader"] #v-prehled>[data-card="replay"]{order:0}
     let tot = 0, cnt = 0; for (let d = 1; d <= days; d++){ const a = byDay[dayKey(new Date(y, m, d))]; if (a){ tot += a.reduce((p, c) => p + c, 0); cnt += a.length; } }
     document.querySelectorAll(".calbox").forEach(box => {
       clear(box);
-      const head = el("div","row"), nav = el("div","rp-ctl"), ttl = el("h2", null, calM.toLocaleDateString("cs-CZ", {month: "long", year: "numeric"}));
+      const head = el("div","row"), nav = el("div","rp-ctl"), ttl = el("h2", null, calM.toLocaleDateString(LOCD, {month: "long", year: "numeric"}));
       [["‹", -1], ["›", 1]].forEach(o => { const b = el("button","calb", o[0]); b.type = "button"; b.setAttribute("aria-label", o[1] < 0 ? "Předchozí měsíc" : "Další měsíc"); b.addEventListener("click", () => { calM.setMonth(calM.getMonth() + o[1]); renderCal(); }); nav.appendChild(b); });
       head.appendChild(ttl); head.appendChild(nav); box.appendChild(head);
       box.appendChild(el("span","small " + (cnt ? (tot >= 0 ? "pos" : "neg") : "muted"), cnt ? "Měsíc: " + sgn(tot) + " R z " + cnt + " obchodů" : "V tomto měsíci žádný obchod."));
@@ -4654,20 +4655,20 @@ body[data-mode="trader"] #v-prehled>[data-card="replay"]{order:0}
     [[0, "Vše", ev.length]].concat([3, 2, 1].map(k => [k, FOLD[k][1], cnt(k)])).forEach(x => { const b = el("button","chip nwf" + (x[0] ? " " + FOLD[x[0]][0] : "")); b.type = "button"; if (x[0]) b.innerHTML = folderSvg(x[0]); b.appendChild(el("span", null, x[1])); b.appendChild(el("em", null, String(x[2]))); b.setAttribute("aria-pressed", String(nwF === x[0])); b.addEventListener("click", () => { nwF = x[0]; renderNews(); }); fb.appendChild(b); });
     if (ev.length) box.appendChild(fb);
     ev.filter(e => !nwF || (Number(e.impact) || 1) === nwF).forEach(e => {
-      if (e.date !== last){ last = e.date; const d = new Date(e.date + "T12:00:00"); box.appendChild(el("span","kick", e.date === today ? "Dnes" : d.toLocaleDateString("cs-CZ", {weekday: "long", day: "numeric", month: "numeric"}))); }
+      if (e.date !== last){ last = e.date; const d = new Date(e.date + "T12:00:00"); box.appendChild(el("span","kick", e.date === today ? "Dnes" : d.toLocaleDateString(LOCD, {weekday: "long", day: "numeric", month: "numeric"}))); }
       const r = el("div","nrow"), m = el("div"); r.appendChild(el("b","ntime", e.time || "")); m.appendChild(el("b", null, e.title)); if (e.note) m.appendChild(el("span", null, e.note)); r.appendChild(m); r.appendChild(impEl(Number(e.impact) || 1)); r.classList.add("f" + Math.max(1, Math.min(3, Number(e.impact) || 1))); box.appendChild(r);
     });
     if (!ev.length) box.appendChild(el("p","small muted","V nejbližších dnech není v kalendáři nic zapsaného."));
     const posts = (news.posts || []).slice().sort((a, b) => String(b.date).localeCompare(String(a.date))).slice(0, 6);
     if (posts.length){
       box.appendChild(el("span","kick","Výroky, které hýbou trhem"));
-      posts.forEach(p => { const it = el("div","npost"), h = el("div","row"); h.appendChild(el("b", null, p.who)); h.appendChild(el("span","small muted", new Date(p.date + "T12:00:00").toLocaleDateString("cs-CZ", {day: "numeric", month: "numeric"}))); it.appendChild(h);
+      posts.forEach(p => { const it = el("div","npost"), h = el("div","row"); h.appendChild(el("b", null, p.who)); h.appendChild(el("span","small muted", new Date(p.date + "T12:00:00").toLocaleDateString(LOCD, {day: "numeric", month: "numeric"}))); it.appendChild(h);
         it.appendChild(el("p","small", p.text)); if (/^https:\/\//.test(p.url || "")){ const a = el("a","small", p.source || "Zdroj"); a.href = p.url; a.target = "_blank"; a.rel = "noopener"; it.appendChild(a); } box.appendChild(it); });
     }
     $("nw-upd").textContent = news.updated ? "Aktualizováno " + fmtDateTime(news.updated) : "";
     const td = ev.filter(e => e.date === today), nx = td.length ? td : ev.slice(0, 1);
     if (!nx.length) rail.appendChild(el("p","small muted","Nic důležitého."));
-    nx.forEach(e => { const r = el("div","rrow f" + Math.max(1, Math.min(3, Number(e.impact) || 1))); r.appendChild(impEl(Number(e.impact) || 1)); r.appendChild(el("span", null, (td.length ? "" : new Date(e.date + "T12:00:00").toLocaleDateString("cs-CZ", {day: "numeric", month: "numeric"}) + " ") + (e.time || ""))); r.appendChild(el("b", null, e.title)); rail.appendChild(r); });
+    nx.forEach(e => { const r = el("div","rrow f" + Math.max(1, Math.min(3, Number(e.impact) || 1))); r.appendChild(impEl(Number(e.impact) || 1)); r.appendChild(el("span", null, (td.length ? "" : new Date(e.date + "T12:00:00").toLocaleDateString(LOCD, {day: "numeric", month: "numeric"}) + " ") + (e.time || ""))); r.appendChild(el("b", null, e.title)); rail.appendChild(r); });
   }
   fetch("data/news.json", {cache: "no-store"}).then(r => { if (!r.ok) throw 0; return r.json(); }).then(v => { news = v; }).catch(() => {}).then(() => { newsTried = true; renderNews(); });
 
@@ -4955,7 +4956,7 @@ body[data-mode="trader"] #v-prehled>[data-card="replay"]{order:0}
     const head = el("div","row"), ttl = el("div","tdh"), xb = el("button","ck-del","Zavřít"); xb.type = "button"; xb.addEventListener("click", o.close);
     ttl.appendChild(el("span","pill " + (t.dir === "short" ? "bad" : "good"), t.dir === "short" ? "Short" : "Long")); ttl.appendChild(el("h2", null, (t.sym || "") + (t.setup ? " · " + t.setup : "")));
     head.appendChild(ttl); head.appendChild(xb); card.appendChild(head);
-    card.appendChild(el("span","small muted", new Date(t.ts).toLocaleString("cs-CZ", {weekday: "long", day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit"}) + (t.missed ? " · zmeškaný obchod, do výsledků se nepočítá" : "")));
+    card.appendChild(el("span","small muted", new Date(t.ts).toLocaleString(LOCD, {weekday: "long", day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit"}) + (t.missed ? " · zmeškaný obchod, do výsledků se nepočítá" : "")));
     const big = el("div","tbig " + (r >= 0 ? "pos" : "neg"), sgn(r) + " R"); if (net != null) big.appendChild(el("span", null, usd(net) + (t.fee ? " po poplatcích" : ""))); card.appendChild(big);
     const gal = el("div","tgal"); card.appendChild(gal);
     shotKeys(t).forEach(k => { const w = el("div","tshot"), im = el("img"), dr = el("button", null, "Kreslit do obrázku"); im.alt = "Graf k obchodu"; dr.type = "button";
@@ -4967,7 +4968,7 @@ body[data-mode="trader"] #v-prehled>[data-card="replay"]{order:0}
     if (t.tsx){ const m = Math.round((new Date(t.tsx) - new Date(t.ts)) / 60000); if (m >= 0) add("Doba držení", m < 60 ? m + " min" : Math.floor(m / 60) + " h " + (m % 60) + " min"); }
     const rk = t.entry != null && t.stop != null ? Math.abs(t.entry - t.stop) : 0, inR = x => rk ? " (" + fnum(Math.round(x / rk * 100) / 100) + " R)" : "";
     if (t.mae != null) add("MAE", fnum(t.mae) + " b." + inR(t.mae)); if (t.mfe != null) add("MFE", fnum(t.mfe) + " b." + inR(t.mfe));
-    if (premOn()) add("Cyklus", tradeCycle(t)); if (t.ck) add("Seznam před vstupem", t.ck.k + " z " + t.ck.n); if (t.grade) add("Hodnocení", gradeName(t.grade)); if (t.emo) add("Před vstupem", t.emo);
+    if (premOn()) add("Cyklus obchodu", tradeCycle(t)); if (t.ck) add("Seznam před vstupem", t.ck.k + " z " + t.ck.n); if (t.grade) add("Hodnocení", gradeName(t.grade)); if (t.emo) add("Před vstupem", t.emo);
     if (t.tp != null) add("Cíl", f(t.tp)); { const ss = sessOfTrade(t); if (ss) add("Seance", ss); } if (t.plan) add("Plán", t.plan === "yes" ? "Dodržen" : "Nedodržen"); if (t.rev != null) add("Po ztrátě", t.rev ? "Revenge trade" : "Čistý vstup");
     if (cfg.accounts.length > 1){ const a = cfg.accounts.find(x => x.id === tAcct(t)); if (a) add("Účet", a.name); }
     if (g.children.length) card.appendChild(g);
@@ -5244,7 +5245,7 @@ body[data-mode="trader"] #v-prehled>[data-card="replay"]{order:0}
     const fmt = CARD_FMT[opt.fmt] || CARD_FMT.portrait, W = fmt[0], H = fmt[1], c = document.createElement("canvas"); c.width = W; c.height = H;
     const g = c.getContext("2d"), F = cardFont, r = Number(t.r) || 0, net = tNet(t), col = r >= 0 ? "#3ddc97" : "#ff6b6b", fm = v => v == null || !isFinite(v) ? "–" : v.toLocaleString("cs-CZ", {maximumFractionDigits: 2});
     const top = opt.fmt === "story" ? 220 : 0, sq = opt.fmt === "square", useUsd = opt.unit === "$" && net != null;
-    cardBase(g, W, H, r >= 0); cardHead(g, W, top, new Date(t.ts).toLocaleDateString("cs-CZ", {day: "numeric", month: "long", year: "numeric"}));
+    cardBase(g, W, H, r >= 0); cardHead(g, W, top, new Date(t.ts).toLocaleDateString(LOCD, {day: "numeric", month: "long", year: "numeric"}));
     const gl = !!cardGl, L0 = gl ? 112 : 80, bigY = top + (sq ? 452 : 500);
     if (gl){ const y0 = top + 166, y1 = bigY + (sq ? 30 : 44); g.fillStyle = "#101014"; rr(g, 80, y0, W - 160, y1 - y0, 34); g.fill(); g.strokeStyle = "#26262c"; g.lineWidth = 2; g.stroke(); }
     cardFlag(g, L0 + 28, top + 218, 28);
@@ -5283,10 +5284,10 @@ body[data-mode="trader"] #v-prehled>[data-card="replay"]{order:0}
   }
   function periodRange(kind){
     const n = new Date(); n.setHours(0, 0, 0, 0);
-    if (kind === "day"){ const b = new Date(n); b.setDate(b.getDate() + 1); const nm = n.toLocaleDateString("cs-CZ", {weekday: "long", day: "numeric", month: "numeric", year: "numeric"}); return {a: n, b: b, title: nm.charAt(0).toUpperCase() + nm.slice(1)}; }
+    if (kind === "day"){ const b = new Date(n); b.setDate(b.getDate() + 1); const nm = n.toLocaleDateString(LOCD, {weekday: "long", day: "numeric", month: "numeric", year: "numeric"}); return {a: n, b: b, title: nm.charAt(0).toUpperCase() + nm.slice(1)}; }
     if (kind === "week"){ const a = new Date(n); a.setDate(a.getDate() - ((a.getDay() + 6) % 7)); const b = new Date(a); b.setDate(b.getDate() + 7); const e = new Date(b); e.setDate(e.getDate() - 1);
       return {a: a, b: b, title: "Týden " + a.getDate() + ". " + (a.getMonth() + 1) + ". – " + e.getDate() + ". " + (e.getMonth() + 1) + ". " + e.getFullYear()}; }
-    const a = new Date(n.getFullYear(), n.getMonth(), 1), b = new Date(n.getFullYear(), n.getMonth() + 1, 1), nm = a.toLocaleDateString("cs-CZ", {month: "long", year: "numeric"});
+    const a = new Date(n.getFullYear(), n.getMonth(), 1), b = new Date(n.getFullYear(), n.getMonth() + 1, 1), nm = a.toLocaleDateString(LOCD, {month: "long", year: "numeric"});
     return {a: a, b: b, title: nm.charAt(0).toUpperCase() + nm.slice(1)};
   }
   async function drawPeriodCard(kind, opt){
@@ -5303,7 +5304,7 @@ body[data-mode="trader"] #v-prehled>[data-card="replay"]{order:0}
     g.fillStyle = "#101014"; rr(g, cx, cy, cw, ch, 30); g.fill(); g.strokeStyle = "#26262c"; g.lineWidth = 2; g.stroke();
     if (kind === "week" || kind === "day"){
       let names = ["Po","Út","St","Čt","Pá","So","Ne"], days = [], nd;
-      if (kind === "day"){ const vs = tr.map(t => [new Date(t.ts).toLocaleTimeString("cs-CZ", {hour: "2-digit", minute: "2-digit"}), val(t)]).filter(x => x[1] != null).slice(-8); names = vs.map(x => x[0]); days = vs.map(x => x[1]); nd = Math.max(1, vs.length); }
+      if (kind === "day"){ const vs = tr.map(t => [new Date(t.ts).toLocaleTimeString(LOCD, {hour: "2-digit", minute: "2-digit"}), val(t)]).filter(x => x[1] != null).slice(-8); names = vs.map(x => x[0]); days = vs.map(x => x[1]); nd = Math.max(1, vs.length); }
       else { for (let i = 0; i < 7; i++){ const d = new Date(rg.a); d.setDate(d.getDate() + i); days.push(byDay[dayKey(d)]); } nd = days[5] != null || days[6] != null ? 7 : 5; }
       const mx = Math.max.apply(null, days.slice(0, nd).map(v => Math.abs(v || 0)).concat([0])) || 1, bw = (cw - 80) / nd, mid = cy + ch / 2, half = ch / 2 - 74;
       g.strokeStyle = "#2c2c33"; g.lineWidth = 2; g.beginPath(); g.moveTo(cx + 30, mid); g.lineTo(cx + cw - 30, mid); g.stroke();
@@ -5415,7 +5416,7 @@ body[data-mode="trader"] #v-prehled>[data-card="replay"]{order:0}
     if (!k) return; const p = jr.plans[k]; if (p.skip || jr.trades.some(t => tDay(t) === k)) return;
     const dd = new Date(k + "T15:30:00"), row = el("div","rp-ctl"), a = el("button","primary","Zapsat obchod"), b = el("button", null, "Neobchodoval jsem"); a.type = b.type = "button";
     c.hidden = false; c.appendChild(el("b", null, "Chybí zápis"));
-    c.appendChild(el("p","small muted", "Na " + dd.toLocaleDateString("cs-CZ", {weekday: "long", day: "numeric", month: "numeric"}) + " máš napsaný plán dne, ale v deníku není žádný obchod. Deník má cenu jen tehdy, když je úplný."));
+    c.appendChild(el("p","small muted", "Na " + dd.toLocaleDateString(LOCD, {weekday: "long", day: "numeric", month: "numeric"}) + " máš napsaný plán dne, ale v deníku není žádný obchod. Deník má cenu jen tehdy, když je úplný."));
     a.addEventListener("click", () => openTradeForm(null, {ts: dd.toISOString()})); b.addEventListener("click", () => { p.skip = "Bez obchodu"; jStore(); });
     row.appendChild(a); row.appendChild(b); c.appendChild(row);
   }
@@ -5668,7 +5669,7 @@ body[data-mode="trader"] #v-prehled>[data-card="replay"]{order:0}
     g.strokeStyle = "#3a3a43"; g.lineWidth = 2; g.beginPath(); g.moveTo(W / 2 - 320, 540); g.lineTo(W / 2 + 320, 540); g.stroke();
     g.fillStyle = "#c9c9d1"; g.font = F(500, 34); g.fillText("dokončil(a) dvanáctitýdenní kurz price action", W / 2, 620); g.fillText("a složil(a) závěrečnou zkoušku", W / 2, 668);
     g.fillStyle = "#3ddc97"; g.font = F(800, 44); g.fillText(lp.final.best + " z " + lp.final.of + " správně", W / 2, 770);
-    g.fillStyle = "#8e8e98"; g.font = F(500, 28); g.fillText(new Date((lp.final.date || dayKey()) + "T12:00:00").toLocaleDateString("cs-CZ", {day: "numeric", month: "long", year: "numeric"}), W / 2, 826);
+    g.fillStyle = "#8e8e98"; g.font = F(500, 28); g.fillText(new Date((lp.final.date || dayKey()) + "T12:00:00").toLocaleDateString(LOCD, {day: "numeric", month: "long", year: "numeric"}), W / 2, 826);
     g.fillStyle = "#5c5c66"; g.font = F(500, 22); g.fillText("Potvrzení o absolvování kurzu v aplikaci Tape. Není to odborná kvalifikace ani investiční doporučení.", W / 2, H - 138); g.fillStyle = "#8e8e98"; g.fillText(siteMark(), W / 2, H - 100);
     g.textAlign = "left"; return c;
   }
@@ -5800,7 +5801,7 @@ body[data-mode="trader"] #v-prehled>[data-card="replay"]{order:0}
   const _postEl = postEl;
   postEl = function(p, opts){
     const c = _postEl(p, opts), ACT = {up: "nahoru", down: "dolů", flat: "do strany"};
-    if (p.kind === "plan"){ const big = c.querySelector(".tbig"); if (big) big.remove(); const sub = c.querySelector(".tinfo span"); if (sub) sub.textContent = "Plán dne" + (p.ts && !isNaN(new Date(p.ts)) ? " · " + new Date(p.ts).toLocaleDateString("cs-CZ", {day: "numeric", month: "numeric"}) : "");
+    if (p.kind === "plan"){ const big = c.querySelector(".tbig"); if (big) big.remove(); const sub = c.querySelector(".tinfo span"); if (sub) sub.textContent = "Plán dne" + (p.ts && !isNaN(new Date(p.ts)) ? " · " + new Date(p.ts).toLocaleDateString(LOCD, {day: "numeric", month: "numeric"}) : "");
       const act = c.querySelector(".rp-ctl"); [["Bias", p.dir === "short" ? "Short" : "Long"], ["Úrovně", p.levels], ["Co chci vidět", p.note], ["Jak to dopadlo", p.actual ? "Trh šel " + (ACT[p.actual] || p.actual) : ""]].forEach(x => { if (x[1]){ const b = el("div","box"); b.appendChild(el("b", null, x[0])); b.appendChild(el("span", null, x[1])); c.insertBefore(b, act); } });
       Array.prototype.forEach.call(act.children, b => { if (b.textContent === "Karta jako obrázek" || b.textContent === trEn("Karta jako obrázek")) b.remove(); }); }
     const meta = el("div","chips"); if (p.src) meta.appendChild(el("span","pill " + (p.src === "import" ? "good" : ""), p.src === "import" ? "Z importu od brokera" : "Ruční zápis")); if (p.score != null) meta.appendChild(el("span","pill info","Disciplína " + p.score + " / 100"));
@@ -6804,7 +6805,7 @@ body[data-mode="trader"] #v-prehled>[data-card="replay"]{order:0}
       const ds = []; for (let d = 1; d <= days; d++){ const k = dayKey(new Date(y, m, d)), a = byDay[k]; if (a) ds.push({k: k, s: sum(a), n: a.length}); }
       const tot = ds.reduce((p, d) => p + d.s, 0), cnt = ds.reduce((p, d) => p + d.n, 0), mx = Math.max.apply(null, ds.map(d => Math.abs(d.s)).concat([0.0001]));
       document.querySelectorAll(".calbox").forEach(box => { clear(box);
-        const head = el("div","row"), nav = el("div","rp-ctl"), ttl = el("h2", null, calM.toLocaleDateString("cs-CZ", {month: "long", year: "numeric"}));
+        const head = el("div","row"), nav = el("div","rp-ctl"), ttl = el("h2", null, calM.toLocaleDateString(LOCD, {month: "long", year: "numeric"}));
         if (hasUsd){ const u = el("div","calu"); [["r","R"],["usd","$"]].forEach(o => { const b = el("button", calU === o[0] ? "on" : null, o[1]); b.type = "button"; b.setAttribute("aria-label", o[0] === "r" ? "Ukázat v R" : "Ukázat v dolarech"); b.addEventListener("click", () => { calU = o[0]; renderCal(); }); u.appendChild(b); }); nav.appendChild(u); }
         [["‹", -1], ["›", 1]].forEach(o => { const b = el("button","calb", o[0]); b.type = "button"; b.setAttribute("aria-label", o[1] < 0 ? "Předchozí měsíc" : "Další měsíc"); b.addEventListener("click", () => { calM.setMonth(calM.getMonth() + o[1]); calSel = null; renderCal(); }); nav.appendChild(b); });
         head.appendChild(ttl); head.appendChild(nav); box.appendChild(head);
@@ -6822,7 +6823,7 @@ body[data-mode="trader"] #v-prehled>[data-card="replay"]{order:0}
         if (col){ while (col < 7){ g.appendChild(el("span")); col++; } endWeek(); }
         box.appendChild(g);
         if (calSel && byDay[calSel]){ const a = byDay[calSel], dd = el("div","calday"), hr = el("div","row"), s3 = sum(a), wins = a.filter(t => (Number(t.r) || 0) > 0).length, dt = new Date(calSel + "T12:00:00");
-          hr.appendChild(el("h3", null, dt.toLocaleDateString("cs-CZ", {weekday: "long", day: "numeric", month: "long"}))); hr.appendChild(el("b", s3 >= 0 ? "pos" : "neg", fmt(s3))); dd.appendChild(hr);
+          hr.appendChild(el("h3", null, dt.toLocaleDateString(LOCD, {weekday: "long", day: "numeric", month: "long"}))); hr.appendChild(el("b", s3 >= 0 ? "pos" : "neg", fmt(s3))); dd.appendChild(hr);
           dd.appendChild(el("span","small muted", a.length + (a.length === 1 ? " obchod" : a.length < 5 ? " obchody" : " obchodů") + " · úspěšnost " + Math.round(100 * wins / a.length) + " %"));
           const tc = el("div","tcards"); a.forEach(t => { try { tc.appendChild(tradeCard(t)); } catch(e){} }); dd.appendChild(tc); box.appendChild(dd); }
         else if (cnt) box.appendChild(el("span","small muted","Ťukni na den a uvidíš jeho obchody."));
@@ -7049,7 +7050,7 @@ body[data-mode="trader"] #v-prehled>[data-card="replay"]{order:0}
     let timer = null, closed = false;
     const close = () => { if (closed) return; closed = true; clearTimeout(timer); ov.classList.add("out"); setTimeout(() => { ov.remove(); document.body.classList.remove("modal"); }, 330); refreshAll(); };
     const hold = () => { clearTimeout(timer); ov.classList.add("hold"); };
-    const top = () => { const t = el("div","wel-top"), lg = el("span","wel-logo"); lg.appendChild(document.createTextNode("tape")); lg.appendChild(el("i")); t.appendChild(lg); t.appendChild(el("span","kick", new Date().toLocaleDateString("cs-CZ", {weekday: "long", day: "numeric", month: "long"}))); return t; };
+    const top = () => { const t = el("div","wel-top"), lg = el("span","wel-logo"); lg.appendChild(document.createTextNode("tape")); lg.appendChild(el("i")); t.appendChild(lg); t.appendChild(el("span","kick", new Date().toLocaleDateString(LOCD, {weekday: "long", day: "numeric", month: "long"}))); return t; };
     const themeStep = () => { hold(); clear(c); c.appendChild(top());
       c.appendChild(el("p","wel-hi", nickOf() ? hiWord() + ", " + nickOf() : "Vítej v Tape"));
       const h = el("h2", null, "Vyber si motiv"); c.appendChild(h);
@@ -7138,8 +7139,8 @@ body[data-mode="trader"] #v-prehled>[data-card="replay"]{order:0}
     return {a: a, b: b, tr: tr, st: st, actD: actD, minW: minW, ch: ch, ks: ks, tg: tg, tags: tags, task: task};
   }
   function weekReportEl(w, onHide){
-    const c = el("div","card wrep"), row = el("div","row"), d1 = w.a.toLocaleDateString("cs-CZ", {day: "numeric", month: "numeric"}), e = new Date(w.b); e.setDate(e.getDate() - 1);
-    row.appendChild(el("h2", null, "Zpráva od kouče")); row.appendChild(el("span","small muted", d1 + " – " + e.toLocaleDateString("cs-CZ", {day: "numeric", month: "numeric"}))); c.appendChild(row);
+    const c = el("div","card wrep"), row = el("div","row"), d1 = w.a.toLocaleDateString(LOCD, {day: "numeric", month: "numeric"}), e = new Date(w.b); e.setDate(e.getDate() - 1);
+    row.appendChild(el("h2", null, "Zpráva od kouče")); row.appendChild(el("span","small muted", d1 + " – " + e.toLocaleDateString(LOCD, {day: "numeric", month: "numeric"}))); c.appendChild(row);
     const n = nickOf(); c.appendChild(el("p", null, (n ? n + ", tady" : "Tady") + " je tvůj minulý týden."));
     const g = el("div","tiles");
     g.appendChild(tile("Obchody", w.tr.length ? sgn(Math.round(w.st.total * 100) / 100) + " R" : "žádné", w.tr.length ? (w.st.total >= 0 ? "pos" : "neg") : null));
@@ -7198,7 +7199,7 @@ body[data-mode="trader"] #v-prehled>[data-card="replay"]{order:0}
   // ---------- page header shared by the main sections ----------
   const PHEAD = {denik: ["Deník", "Plán, obchody a čísla na jednom místě."], uceni: ["Učení", "Lekce, kurz a trénink. Každý den kousek."], kouc: ["Kouč", "Čte tvůj deník a hlídá proces, ne trh."], vice: ["Více", "Všechno ostatní, co Tape umí."]};
   function pheadPaint(v, g){ const h = $("phead"), p = PHEAD[g]; if (!h) return; if (!p || v === "moros" || (g === "vice" && v !== "vice")){ h.hidden = true; return; }
-    h.hidden = false; clear(h); const k = el("div","h2-kick"); k.appendChild(el("span", null, new Date().toLocaleDateString("cs-CZ", {weekday: "long", day: "numeric", month: "long"}))); const sd = streakDays(); k.appendChild(el("b", null, sd ? "série " + pl(sd, "den", "dny", "dní") : ""));
+    h.hidden = false; clear(h); const k = el("div","h2-kick"); k.appendChild(el("span", null, new Date().toLocaleDateString(LOCD, {weekday: "long", day: "numeric", month: "long"}))); const sd = streakDays(); k.appendChild(el("b", null, sd ? "série " + pl(sd, "den", "dny", "dní") : ""));
     h.appendChild(k); const t = el("h1"); t.appendChild(document.createTextNode(p[0])); t.appendChild(el("em", null, ".")); h.appendChild(t); h.appendChild(el("p", null, p[1])); }
   try { pheadPaint(document.body.dataset.view, document.body.dataset.group); } catch(e){}
 
@@ -7218,7 +7219,7 @@ body[data-mode="trader"] #v-prehled>[data-card="replay"]{order:0}
     if (cta.parentNode === hero2) old.appendChild(cta); clear(hero2);
     const n = nickOf(), d = new Date(), tr = jSorted(), st = jStats(tr), wk = jStats(tr.filter(t => Date.now() - new Date(t.ts).getTime() < 7 * 864e5)), sd = streakDays();
     const m = Math.floor((mins[dayKey()] || 0) / 60), g = goalMin(), pct = Math.min(1, m / g), steps = pathSteps(), cur = steps.find(x => !x.done), trader = document.body.dataset.mode === "trader";
-    const kick = el("div","h2-kick"); kick.appendChild(el("span", null, d.toLocaleDateString("cs-CZ", {weekday: "long", day: "numeric", month: "long"}))); kick.appendChild(el("b", null, sd ? "série " + pl(sd, "den", "dny", "dní") : "začni sérii")); hero2.appendChild(kick);
+    const kick = el("div","h2-kick"); kick.appendChild(el("span", null, d.toLocaleDateString(LOCD, {weekday: "long", day: "numeric", month: "long"}))); kick.appendChild(el("b", null, sd ? "série " + pl(sd, "den", "dny", "dní") : "začni sérii")); hero2.appendChild(kick);
     const h = el("h1"); h.appendChild(document.createTextNode(hiWord() + (n ? ", " : ""))); if (n){ h.appendChild(document.createTextNode(n)); } h.appendChild(el("em", null, ".")); 
     const next = el("button","h2-next"), ns = el("span"); next.type = "button";
     if (trader || !cur){ ns.appendChild(el("small", null, "Dnes")); ns.appendChild(el("b", null, "Plán dne a zápis obchodu")); next.addEventListener("click", () => { location.hash = "#denik"; }); }
@@ -7258,7 +7259,7 @@ body[data-mode="trader"] #v-prehled>[data-card="replay"]{order:0}
   const EN_RULES = [[/(\d{1,2})\. (ledna|února|března|dubna|května|června|července|srpna|září|října|listopadu|prosince)/gi, (m, d, mo) => d + " " + EN_MON[mo.toLowerCase()]],
     [/(?<![A-Za-zÀ-ž])(pondělí|úterý|středa|čtvrtek|pátek|sobota|neděle)(?![A-Za-zÀ-ž])/gi, (m, w) => { const e = EN_DAY[w.toLowerCase()]; return m === m.toUpperCase() ? e.toUpperCase() : m[0] === m[0].toUpperCase() ? e : e.toLowerCase(); }],
     [/\b(leden|únor|březen|duben|květen|červen|červenec|srpen|září|říjen|listopad|prosinec) (\d{4})/gi, (m, mo, y) => EN_MON[mo.toLowerCase()] + " " + y],
-    [/Série (\d+) (?:den|dny|dní)/g, "Streak $1 d"], [/série (\d+) (?:den|dny|dní)/g, "streak $1 d"], [/(\d+) obchod(?:ů|y|u)?(?![a-zá-ž])/g, "$1 trades"], [/(\d+) lekc(?:í|e)(?![a-zá-ž])/g, "$1 lessons"], [/^Celkem /, "Total "], [/(?<![A-Za-zÀ-ž])Lekce (\d+)/g, "Lesson $1"], [/(?<![A-Za-zÀ-ž])lekce (\d+)/g, "lesson $1"], [/^Verze (\d)/, "Version $1"], [/(\d+)m svíčky/, "$1m candles"], [/(\d+)m graf/, "$1m chart"], [/čas New York/, "New York time"], [/srovnáno na cenu vstupu/, "aligned to entry price"], [/^Vstup /, "Entry "], [/^Výstup /, "Exit "], [/^Cíl /, "Target "], [/^Nejlépe: /, "Best: "], [/^Nejhůře: /, "Worst: "], [/, tady je tvůj minulý týden\./, ", here is your last week."], [/(\d) ze (\d)/g, "$1 of $2"], [/ % z (\d)/g, " % of $1"], [/ R z (\d)/g, " R from $1"],
+    [/Série (\d+) (?:den|dny|dní)/g, "Streak $1 d"], [/série (\d+) (?:den|dny|dní)/g, "streak $1 d"], [/(\d+) obchod(?:ů|y|u)?(?![a-zá-ž])/g, "$1 trades"], [/(\d+) lekc(?:í|e)(?![a-zá-ž])/g, "$1 lessons"], [/^Celkem /, "Total "], [/(\d) b\.(?=\s|$|\))/g, "$1 pts"], [/(?<![A-Za-zÀ-ž])Lekce (\d+)/g, "Lesson $1"], [/(?<![A-Za-zÀ-ž])lekce (\d+)/g, "lesson $1"], [/^Verze (\d)/, "Version $1"], [/(\d+)m svíčky/, "$1m candles"], [/(\d+)m graf/, "$1m chart"], [/čas New York/, "New York time"], [/srovnáno na cenu vstupu/, "aligned to entry price"], [/^Vstup /, "Entry "], [/^Výstup /, "Exit "], [/^Cíl /, "Target "], [/^Nejlépe: /, "Best: "], [/^Nejhůře: /, "Worst: "], [/, tady je tvůj minulý týden\./, ", here is your last week."], [/(\d) ze (\d)/g, "$1 of $2"], [/ % z (\d)/g, " % of $1"], [/ R z (\d)/g, " R from $1"],
     [/\bKrok (\d+) z (\d+)/g, "Step $1 of $2"], [/\bLekce (\d+) z (\d+)/g, "Lesson $1 of $2"], [/(\d+) z (\d+)\b/g, "$1 of $2"], [/^Dobré ráno/, "Good morning"], [/^Dobrý večer/, "Good evening"], [/^Dobrou noc/, "Good night"], [/^Ahoj/, "Hi"],
     [/^Týden (\d)/, "Week $1"], [/\bhotovo\b/g, "done"], [/\bminut dnes\b/g, "minutes today"], [/\bTento týden\b/g, "This week"], [/\bNaposledy:/g, "Last time:"], [/\bwinrate\b/g, "win rate"], [/\bR celkem\b/g, "R total"]];
   const EN_CZ = /[ěščřžýáíéúůňťďóĚŠČŘŽÝÁÍÉÚŮŇŤĎÓ]/, enMemo = new Map(); let enFrag = null;
@@ -7572,7 +7573,7 @@ body[data-mode="trader"] #v-prehled>[data-card="replay"]{order:0}
       mine.appendChild(el("h3", null, "Tvoje MOROS obchody z deníku"));
       if (!tr.length){ mine.appendChild(el("p","small muted","Zatím žádný. Zapiš obchod se setupem MOROS Reversal nebo MOROS Continuation a nejlepší se objeví tady.")); }
       else { const st = jStats(tr, "R"), s = el("div","mo-stats"); [["Obchodů", tr.length], ["Winrate", Math.round(tr.filter(t => (Number(t.r) || 0) > 0).length / tr.length * 100) + " %"], ["Celkem", sgn(Math.round(tr.reduce((a, t) => a + (Number(t.r) || 0), 0) * 100) / 100) + " R"]].forEach(x => { const d = el("div"); d.appendChild(el("span", null, x[0])); d.appendChild(el("b", null, String(x[1]))); s.appendChild(d); }); mine.appendChild(s);
-        tr.slice(0, 5).forEach((t, i) => { const row = el("button","mo-row"); row.type = "button"; row.appendChild(el("span","mo-rank", "#" + (i + 1))); const a = el("div"); a.appendChild(el("b", null, (t.sym || "") + " · " + (t.setup || ""))); a.appendChild(el("span","small muted", new Date(t.ts).toLocaleDateString("cs-CZ", {day: "numeric", month: "long", year: "numeric"}))); row.appendChild(a); row.appendChild(el("b","mo-r " + ((Number(t.r) || 0) >= 0 ? "w" : "l"), sgn(Number(t.r) || 0) + " R")); row.addEventListener("click", () => openCard(t)); mine.appendChild(row); }); }
+        tr.slice(0, 5).forEach((t, i) => { const row = el("button","mo-row"); row.type = "button"; row.appendChild(el("span","mo-rank", "#" + (i + 1))); const a = el("div"); a.appendChild(el("b", null, (t.sym || "") + " · " + (t.setup || ""))); a.appendChild(el("span","small muted", new Date(t.ts).toLocaleDateString(LOCD, {day: "numeric", month: "long", year: "numeric"}))); row.appendChild(a); row.appendChild(el("b","mo-r " + ((Number(t.r) || 0) >= 0 ? "w" : "l"), sgn(Number(t.r) || 0) + " R")); row.addEventListener("click", () => openCard(t)); mine.appendChild(row); }); }
       const has = Object.keys(MO_SETUPS).every(k => cfg.setups.indexOf(k) >= 0);
       if (!has){ const b = el("button","primary","Přidat MOROS setupy do deníku"); b.type = "button"; b.addEventListener("click", () => { jr.playbook = jr.playbook || {}; Object.keys(MO_SETUPS).forEach(k => { if (cfg.setups.indexOf(k) < 0) cfg.setups.unshift(k); if (!jr.playbook[k]) jr.playbook[k] = MO_SETUPS[k]; }); cfgStore(); jStore(); toast("MOROS Reversal a MOROS Continuation jsou v deníku i v playbooku."); w._paint(); }); mine.appendChild(b); } };
     w._paint(); return w;
@@ -7619,7 +7620,7 @@ body[data-mode="trader"] #v-prehled>[data-card="replay"]{order:0}
     const sec = {bias: has(p.bias) && has(p.yc), map: (has(p.morH) && has(p.morL)) || has(p.levels) || has(p.poi), plan: has(p.planA) && has(p.note), head: has(p.sleep) && has(p.mood), ses: Array.isArray(p.ses) && p.ses.length > 0, eve: has(p.actual) && has(p.kept)};
     const items = [has(p.bias), has(p.yc), has(p.draw), sec.map, has(p.planA), has(p.note), sec.head, sec.ses]; return {sec: sec, pct: Math.round(items.filter(Boolean).length / items.length * 100)}; }
   function plPaint(){ if (!$("plan-card")) return; const p = planToday();
-    $("pl-date").textContent = new Date().toLocaleDateString("cs-CZ", {weekday: "long", day: "numeric", month: "long"});
+    $("pl-date").textContent = new Date().toLocaleDateString(LOCD, {weekday: "long", day: "numeric", month: "long"});
     plChips("pl-yc", PL_YC, "yc"); plChips("pl-sleep", PL_SLEEP, "sleep"); plChips("pl-mood", PL_MOOD, "mood"); plChips("pl-ses", PL_SES, "ses", true); plChips("pl-kept", PL_KEPT, "kept");
     PL_TXT.forEach(f => { const i = $(f[0]); if (i && document.activeElement !== i) i.value = p[f[1]] || ""; }); plLadder();
     const h = $("pl-yc-hint"); clear(h); h.hidden = !p.yc;
@@ -7780,7 +7781,7 @@ body[data-mode="trader"] #v-prehled>[data-card="replay"]{order:0}
     const who = el("div","tk-l"), nm = el("div","tk-n"), meta = el("div","tk-m"), res = el("div","tk-r");
     nm.appendChild(el("b", null, t.sym || "")); nm.appendChild(el("span","tk-d " + (t.dir === "short" ? "s" : "l"), t.dir === "short" ? "Short" : "Long"));
     const hold = t.tsx ? Math.round((Date.parse(t.tsx) - Date.parse(t.ts)) / 6e4) : null;
-    [d.toLocaleDateString("cs-CZ", {day: "numeric", month: "numeric"}) + " " + d.toLocaleTimeString("cs-CZ", {hour: "2-digit", minute: "2-digit"}), tkSession(t.ts), t.setup || "", hold != null && hold >= 0 ? (hold < 60 ? hold + " min" : Math.floor(hold / 60) + " h " + (hold % 60) + " min") : ""].filter(Boolean).forEach(x => meta.appendChild(el("span", null, x)));
+    [d.toLocaleDateString(LOCD, {day: "numeric", month: "numeric"}) + " " + d.toLocaleTimeString(LOCD, {hour: "2-digit", minute: "2-digit"}), tkSession(t.ts), t.setup || "", hold != null && hold >= 0 ? (hold < 60 ? hold + " min" : Math.floor(hold / 60) + " h " + (hold % 60) + " min") : ""].filter(Boolean).forEach(x => meta.appendChild(el("span", null, x)));
     (t.tags || []).slice(0, 2).forEach(x => meta.appendChild(el("span","tk-tag", x)));
     who.appendChild(symBadge(t.sym)); const tx = el("div","tk-t"); tx.appendChild(nm); tx.appendChild(meta); who.appendChild(tx);
     const rv = el("b", r > 0 ? "pos" : r < 0 ? "neg" : "", (r > 0 ? "+" : r < 0 ? "−" : "") + Math.abs(r).toLocaleString("cs-CZ", {maximumFractionDigits: 2})); rv.appendChild(el("small", null, " R")); res.appendChild(rv);
