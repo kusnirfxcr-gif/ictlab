@@ -500,10 +500,11 @@
   }
   // ---------- object toolbar (like TradingView): colour, width, style, fill, lock, clone, delete ----------
   const COLS = ["#a98bff", "#7c4dff", "#2962ff", "#2196f3", "#00bcd4", "#26a69a", "#16b67f", "#8bc34a", "#ffeb3b", "#ffb300", "#ff9800", "#ff5722", "#f0475a", "#e91e63", "#ec407a", "#9c27b0", "#ffffff", "#9e9e9e", "#1d1530"];
+  function customSw(cur, fn){ const l = mk("label", "rp-cust"), ci = mk("input"); ci.type = "color"; ci.value = /^#[0-9a-f]{6}$/i.test(cur || "") ? cur : "#a98bff"; l.title = T("Vlastní barva", "Custom colour"); l.setAttribute("aria-label", l.title); ci.addEventListener("input", () => fn(ci.value)); l.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7v10M7 12h10"/></svg>'; l.appendChild(ci); return l; }
   function palette(anchor, d, upd){
     let pp = ui.otb.querySelector(".rp-pal"); if (pp){ pp.remove(); return; } pp = mk("div", "rp-pal");
     COLS.forEach(c => { const b = btn("rp-sw" + ((d.col || "") === c ? " on" : ""), null, () => { d.col = c; anchor.firstChild.style.background = c; pp.remove(); upd(); }, c); b.style.background = c; pp.appendChild(b); });
-    const ci = mk("input"); ci.type = "color"; ci.value = /^#[0-9a-f]{6}$/i.test(d.col || "") ? d.col : "#a98bff"; ci.title = T("Vlastní barva", "Custom colour"); ci.addEventListener("input", () => { d.col = ci.value; anchor.firstChild.style.background = ci.value; upd(); }); pp.appendChild(ci);
+    pp.appendChild(customSw(d.col, v => { d.col = v; anchor.firstChild.style.background = v; upd(); }));
     ui.otb.appendChild(pp);
   }
   function cpal(anchor, cur, set1){
@@ -511,7 +512,7 @@
     const pp = mk("div", "rp-pal rp-cpal"); pp._a = anchor;
     const EXT = COLS.concat(["#089981", "#f23645", "#0ecb81", "#f6465d", "#4caf50", "#d32f2f", "#5c5c68", "#e8e8ee"]);
     EXT.forEach(c => { const b = btn("rp-sw" + (cur === c ? " on" : ""), null, () => { set1(c); pp.remove(); }, c); b.style.background = c; pp.appendChild(b); });
-    const ci = mk("input"); ci.type = "color"; ci.value = /^#[0-9a-f]{6}$/i.test(cur) ? cur : "#16b67f"; ci.title = T("Vlastní barva", "Custom colour"); ci.addEventListener("input", () => set1(ci.value)); pp.appendChild(ci);
+    pp.appendChild(customSw(cur, set1));
     const br = ui.box.getBoundingClientRect(), ar = anchor.getBoundingClientRect(); pp.style.left = Math.min(ar.left - br.left, br.width - 240) + "px"; ui.box.appendChild(pp); const hh = pp.offsetHeight || 120; pp.style.top = (ar.bottom - br.top + 6 + hh > br.height ? Math.max(4, ar.top - br.top - hh - 6) : ar.bottom - br.top + 6) + "px";
   }
   function clone(d){ const c = JSON.parse(JSON.stringify(d)); c.id = uid++; delete c._w; c.lock = false; const shf = t => tIdx(idxT(t) + 5); if (c.a) c.a.t = shf(c.a.t); if (c.b) c.b.t = shf(c.b.t); if (c.t1 != null){ c.t1 = shf(c.t1); c.t2 = shf(c.t2); } if (c.k === "h") c.p = rt(c.p + tick() * 8); S.draws.push(c); S.sel = c; saveDraw(); req(); }

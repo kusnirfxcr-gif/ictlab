@@ -2265,6 +2265,11 @@ html[data-tk="l"] .rp-pal{background:#fff}
 .rp-sw{width:24px;height:24px;padding:0!important;border-radius:7px!important;border:1px solid rgba(128,128,128,.35)!important;box-shadow:none!important;min-height:0}
 .rp-sw.on{outline:2px solid var(--accent);outline-offset:2px}
 .rp-pal input[type=color]{width:24px;height:24px;padding:0;border:1px dashed var(--line);border-radius:7px;background:none;cursor:pointer}
+.rp-cust{position:relative;display:grid;place-items:center;width:24px;height:24px;border-radius:50%;cursor:pointer;background:conic-gradient(from 180deg,#ff5f6d,#ffc371,#f9f871,#3ddc97,#26c6da,#8ab4ff,#c58aff,#ff5fa2,#ff5f6d);box-shadow:inset 0 0 0 2px rgba(255,255,255,.55);transition:transform .15s}
+.rp-cust:hover{transform:scale(1.1)}
+.rp-cust svg{width:14px;height:14px;fill:none;stroke:#fff;stroke-width:2.6;stroke-linecap:round;filter:drop-shadow(0 1px 1px rgba(0,0,0,.45))}
+.rp-cust input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;padding:0;border:0}
+.rp-cpal .rp-cust{width:22px;height:22px}
 .rp-cm{position:absolute;z-index:7;min-width:180px;display:flex;flex-direction:column;padding:5px;border-radius:12px;background:var(--surface);border:1px solid var(--line);box-shadow:0 14px 40px rgba(0,0,0,.35)}
 html[data-tk="l"] .rp-cm{background:#fff}
 .rp-cmi{justify-content:flex-start!important;text-align:left;padding:8px 10px!important;border-radius:8px!important;background:transparent!important;border:0!important;color:var(--ink)!important;font-size:13px;box-shadow:none!important;min-height:0}
