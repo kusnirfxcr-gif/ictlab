@@ -1,9 +1,9 @@
 {
   "state": {
-    "lastRun": "2026-11-23T05:55:00Z",
+    "lastRun": "2026-11-24T05:55:00Z",
     "modelVersion": "1.0",
-    "runCount": 14,
-    "lastReport": "Skaut nenašel nový doložený poznatek o Zeussym, přidal poznatek o asijské likviditě z lednové přednášky ICT. Učitel napsal lekci 14 o rozdílu mezi sweepem a průrazem. Vizionář navrhl upřesnit Asia range na celý blok 19:00–5:00. Zpravodaj odstranil minulé události a doplnil týden 30. 11.–4. 12.: v úterý ISM a JOLTS, ve čtvrtek žádosti o podporu a ISM ve službách, v pátek NFP. Gems a Architekt beze změny."
+    "runCount": 15,
+    "lastReport": "Skaut nenašel nový doložený poznatek o Zeussym ani jiný nový zdroj, proto dnes žádný poznatek nepřibyl. Učitel napsal lekci 15 o draw on liquidity. Vizionář navrhl políčko Můj DOL v Plánu dne, které se předvyplní do deníku. Zpravodaj odstranil minulé události, podle kalendáře BLS potvrdil CPI ve čtvrtek 10. 12. a NFP v pátek 4. 12. a přidal PPI na 15. 12. Gems a Architekt beze změny."
   },
   "model": {
     "version": "1.0",
@@ -86,8 +86,8 @@
       "order": 1,
       "name": "Skaut",
       "role": "hledá nový ICT obsah",
-      "lastRun": "2026-11-22T05:55:00Z",
-      "lastReport": "Poznatek o úrovních PCH a PCL z veřejného vlákna Zeussyho."
+      "lastRun": "2026-11-24T05:55:00Z",
+      "lastReport": "Žádný nový doložený poznatek o Zeussym ani z jiného veřejného zdroje."
     },
     {
       "id": "gems",
@@ -110,16 +110,16 @@
       "order": 4,
       "name": "Učitel",
       "role": "připravuje denní lekce pro Lauru",
-      "lastRun": "2026-11-22T05:55:00Z",
-      "lastReport": "Lekce 13: Kde likviditu hledat."
+      "lastRun": "2026-11-24T05:55:00Z",
+      "lastReport": "Lekce 15: draw on liquidity, kam cena nejspíš míří."
     },
     {
       "id": "vizionar",
       "order": 5,
       "name": "Vizionář",
       "role": "navrhuje vylepšení aplikace",
-      "lastRun": "2026-11-13T07:44:01Z",
-      "lastReport": "Přidán jeden nápad, protože otevřených je přes čtyřicet: test pojmu proti náhodě na vlastních datech."
+      "lastRun": "2026-11-24T05:55:00Z",
+      "lastReport": "Nápad: políčko Můj DOL v Plánu dne předvyplněné do deníku."
     }
   ],
   "versions": [

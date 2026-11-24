@@ -1,5 +1,62 @@
 [
   {
+    "id": "20261124-L15",
+    "ts": "2026-11-24T05:55:00Z",
+    "date": "2026-11-24",
+    "n": 15,
+    "week": 4,
+    "title": "Draw on liquidity: kam cena nejspíš míří",
+    "body": [
+      "Poslední dvě lekce jsme hledali likviditu a učili se poznat sweep od průrazu. Dnes to spojí jedna otázka: ke které likviditě cena půjde příště?",
+      "Té úrovni ICT říká draw on liquidity, zkráceně DOL. Je to cíl, ke kterému trh nejspíš táhne, a dává ti dvě věci najednou: směr a místo, kde vybrat zisk.",
+      "Kandidáty už znáš: high a low předchozího dne, noční high a low, equal highs a equal lows. Nad cenou leží buyside likvidita (BSL), pod cenou sellside likvidita (SSL).",
+      "Který z nich je DOL? Podívej se, co cena udělala naposledy. Když právě vybrala likviditu pod sebou a vrátila se zpátky, další cíl bývá na opačné straně, tedy BSL nahoře.",
+      "Pomáhá i vzdálenost a zjevnost. Bližší a výraznější úroveň, třeba hladké equal highs, bývá pravděpodobnější cíl než vzdálený vrchol z minulého týdne.",
+      "DOL není signál ke vstupu. Říká jen, kam se díváš. Vstup hledáš až v korekci ve směru k cíli a podle svých pravidel.",
+      "Když cena začne dělat opak, například nižší dna místo vyšších, tvůj DOL přestal platit. Přehodnoť ho, nebo obchod nech být."
+    ],
+    "example": "Ráno v 9:30 newyorského času je NQ na 21 080. Pod ním leží noční low 21 010, nad ním včerejší high 21 190. V 9:41 cena sjede na 20 996, vybere noční low a svíčka zavře zpátky nad ním. Sellside likvidita dole je vybraná, takže DOL je teď včerejší high 21 190. Nekupuješ hned. Čekáš na první korekci po návratu nad 21 010 a zisk bereš těsně pod 21 190.",
+    "remember": "Draw on liquidity je likvidita, ke které cena nejspíš půjde příště. Dává směr i cíl, ale není to signál ke vstupu. Po sweepu na jedné straně hledej DOL na opačné.",
+    "terms": [
+      "dol",
+      "likvidita",
+      "bsl",
+      "ssl"
+    ],
+    "quiz": [
+      {
+        "q": "Co je draw on liquidity?",
+        "options": [
+          "Místo, kam dáváš stop-loss",
+          "Likvidita, ke které cena nejspíš půjde příště",
+          "První svíčka po otevření trhu"
+        ],
+        "correct": 1,
+        "why": "DOL je cíl, ke kterému trh nejspíš táhne. Dává směr i cíl."
+      },
+      {
+        "q": "Cena právě vybrala noční low a zavřela zpátky nad ním. Kde nejspíš hledat DOL?",
+        "options": [
+          "Ještě níž pod nočním low",
+          "Nahoře u buyside likvidity, třeba u včerejšího high",
+          "Nikde, po sweepu se neobchoduje"
+        ],
+        "correct": 1,
+        "why": "Sellside likvidita dole je vybraná. Další cíl bývá na opačné straně."
+      },
+      {
+        "q": "Víš, že DOL je nahoře. Kdy nakupuješ?",
+        "options": [
+          "Hned, protože víš, kam cena jde",
+          "Až v korekci ve směru k cíli a podle svých pravidel",
+          "Až když cena DOL vybere"
+        ],
+        "correct": 1,
+        "why": "DOL říká směr a cíl, ne okamžik vstupu."
+      }
+    ]
+  },
+  {
     "id": "20261123-L14",
     "ts": "2026-11-23T05:55:00Z",
     "date": "2026-11-23",

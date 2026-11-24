@@ -1,5 +1,17 @@
 [
   {
+    "id": "dol-v-planu-dne",
+    "ts": "2026-11-24T05:55:00Z",
+    "date": "2026-11-24",
+    "title": "Políčko Můj DOL v Plánu dne, předvyplněné do deníku",
+    "area": "denik",
+    "value": 3,
+    "effort": 2,
+    "status": "new",
+    "what": "V Plánu dne v kroku Mapa úrovní přidat výběr dnešního draw on liquidity: BSL, nebo SSL, a úroveň. Při zápisu obchodu se pak DOL v deníku předvyplní z plánu a ve statistikách jde vidět, jak často cena ranní DOL opravdu došla.",
+    "why": "Dnešní lekce učí určit DOL před vstupem. Deník už pole DOL má, ale plán dne na něj zatím nemyslí, takže se vyplňuje až zpětně."
+  },
+  {
     "id": "asia-range-cely-blok",
     "ts": "2026-11-23T05:55:00Z",
     "date": "2026-11-23",

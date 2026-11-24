@@ -1,13 +1,6 @@
 {
-  "updated": "2026-11-23T05:55:00Z",
+  "updated": "2026-11-24T05:55:00Z",
   "events": [
-    {
-      "date": "2026-11-23",
-      "time": "15:45",
-      "title": "Předběžné indexy PMI (USA)",
-      "impact": 2,
-      "note": "Průzkum mezi firmami, první pohled na listopad."
-    },
     {
       "date": "2026-11-25",
       "time": "14:30",
@@ -74,9 +67,16 @@
     {
       "date": "2026-12-10",
       "time": "14:30",
-      "title": "Inflace CPI, listopad",
+      "title": "Inflace CPI (listopad) a žádosti o podporu",
       "impact": 3,
-      "note": ""
+      "note": "Spotřebitelská inflace podle kalendáře BLS a týdenní data o trhu práce, obojí ve 14:30."
+    },
+    {
+      "date": "2026-12-15",
+      "time": "14:30",
+      "title": "Výrobní ceny PPI, listopad",
+      "impact": 2,
+      "note": "Inflace na úrovni výrobců, termín podle kalendáře BLS."
     }
   ],
   "posts": [

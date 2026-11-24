@@ -53,5 +53,9 @@
 "Python backtester, data z Kaggle. Průměr -0,031 R na obchod, celkem -3,6 R, max. drawdown 9,2 R. Náklady 0,75 bodu na obchod.": "Python backtester, data from Kaggle. Average -0.031 R per trade, total -3.6 R, max. drawdown 9.2 R. Costs 0.75 points per trade.",
 "testovací část, posledních 30 % dní": "test part, last 30 % of days",
 "Nejlepší z 864 variant podle tréninku (jen overnight likvidita, okno do 11:30, RR 1,5, bez částečného výběru, setup 30 svíček). Trénink +0,228 R na obchod, test +0,018 R. Výhoda se na neviděných datech nepotvrdila.": "The best of 864 variants by training (overnight liquidity only, window until 11:30, RR 1.5, no partial exit, 30-candle setup). Training +0.228 R per trade, test +0.018 R. The edge was not confirmed on unseen data.",
-"kandidát 2.0": "candidate 2.0"
+"kandidát 2.0": "candidate 2.0",
+"Skaut nenašel nový doložený poznatek o Zeussym ani jiný nový zdroj, proto dnes žádný poznatek nepřibyl. Učitel napsal lekci 15 o draw on liquidity. Vizionář navrhl políčko Můj DOL v Plánu dne, které se předvyplní do deníku. Zpravodaj odstranil minulé události, podle kalendáře BLS potvrdil CPI ve čtvrtek 10. 12. a NFP v pátek 4. 12. a přidal PPI na 15. 12. Gems a Architekt beze změny.": "The Scout found no new verified insight about Zeussy and no other new source, so no insight was added today. The Teacher wrote lesson 15 on the draw on liquidity. The Visionary suggested a My DOL field in the Daily plan that is prefilled into the journal. The Newsroom removed past events, confirmed CPI on Thursday 10 Dec and NFP on Friday 4 Dec from the BLS calendar and added PPI on 15 Dec. Gems and Architect unchanged.",
+"Žádný nový doložený poznatek o Zeussym ani z jiného veřejného zdroje.": "No new verified insight about Zeussy or from any other public source.",
+"Lekce 15: draw on liquidity, kam cena nejspíš míří.": "Lesson 15: draw on liquidity, where price is most likely heading.",
+"Nápad: políčko Můj DOL v Plánu dne předvyplněné do deníku.": "Idea: a My DOL field in the Daily plan prefilled into the journal."
 }
