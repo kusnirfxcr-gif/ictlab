@@ -2051,7 +2051,9 @@ html[data-t="bubblegum"] body:not(.sakura) .orb::after,body.sakura.bubble .orb::
 .mus-btn>button .lg{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;flex:none}.mus-btn>button .lg svg{width:22px;height:22px;display:block}
 .mus-btn>button .mus-eq{display:none;color:var(--mc)}.mus-btn>button.on .mus-eq{display:inline-flex}
 .mus-btn>button.sp{--mc:#1ed760}.mus-btn>button.yt{--mc:#ff3b3b}
-.mus-btn>button.on{border-color:var(--mc);box-shadow:0 0 0 1px var(--mc) inset}
+.mus-btn>button.on{border-color:var(--mc);box-shadow:0 0 0 1px var(--mc),0 6px 18px color-mix(in srgb,var(--mc) 22%,transparent)}
+html body .mus-btn>button{background-repeat:no-repeat!important;background-clip:padding-box!important;background-origin:padding-box!important}
+html body .mus-btn>button:hover{background-image:radial-gradient(circle 70px at var(--mx,50%) var(--my,50%),color-mix(in srgb,var(--mc) 16%,transparent),transparent 70%)!important}
 .lesson-body>.mus-btn{margin:0 0 10px 8px}.lesson-body>.lb-focus+.mus-btn{margin-left:0}
 .lb-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .zm-full>.mus-btn{display:none}
