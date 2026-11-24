@@ -6351,8 +6351,10 @@ body[data-mode="trader"] #v-prehled>[data-card="replay"]{order:0}
   const cgTarget = t => (t && t.closest(".tb-trade,.logrow")) || t;
   const cgKind = t => document.body.classList.contains("sakura") ? (t.matches(".primary,.prem-btn,.tb-trade,.logrow") ? " pink rbw" : " pink") : (t.matches(".primary,.prem-btn,.mo-gold,.tb-trade,.logrow") ? " rbw" : "");
   const cgStar = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5 14.2 9.8 22.5 12l-8.3 2.2L12 22.5l-2.2-8.3L1.5 12l8.3-2.2z"/></svg>';
+  let cgTop = null;
   function cgSpawn(t, cls){ const g = el("span","cg-orbit" + cls + cgKind(t)), P = 4; g.setAttribute("aria-hidden","true"); let last = "";
     const place = () => { if (!g.isConnected) return; if (!t.isConnected){ g.remove(); return; } const r = t.getBoundingClientRect(), w = r.width, h = r.height; if (w < 8 || h < 8){ g.remove(); return; }
+      const tb = cgTop || (cgTop = document.querySelector(".topbar")), under = tb && !tb.contains(t) && !t.closest(".ob,#musdock,.modal,.copop,#accpop") && r.top - P < tb.getBoundingClientRect().bottom; g.style.visibility = under ? "hidden" : "";
       const key = r.left.toFixed(1) + "," + r.top.toFixed(1) + "," + w.toFixed(1) + "," + h.toFixed(1);
       if (key !== last){ last = key; const cs = getComputedStyle(t), m = Math.min(w, h) / 2, R = k => Math.max(0, Math.min(parseFloat(cs[k]) || 0, m)), a = R("borderTopLeftRadius"), b = R("borderTopRightRadius"), c = R("borderBottomRightRadius"), d = R("borderBottomLeftRadius"), x = P, y = P, W = w + 2 * P, H = h + 2 * P;
         g.style.left = (r.left - P) + "px"; g.style.top = (r.top - P) + "px"; g.style.width = W + "px"; g.style.height = H + "px"; g.style.borderRadius = (a + P) + "px " + (b + P) + "px " + (c + P) + "px " + (d + P) + "px";
