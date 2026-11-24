@@ -36,7 +36,7 @@
   const CYC = [420, 510, 600, 690, 780, 870, 960];
 
   // ---------- settings and storage ----------
-  const DEF = {cup: "", cdn: "", hollow: false, ot: "mkt", size: "risk", qty: 1, bal: 50000, mode: "%", risk: 1, inst: "NQ", comm: 0, tf: 1, speed: 3, panel: null, cyc: false, tz: 0, magnet: true};
+  const DEF = {sess: "eth", cup: "", cdn: "", hollow: false, ot: "mkt", size: "risk", qty: 1, bal: 50000, mode: "%", risk: 1, inst: "NQ", comm: 0, tf: 1, speed: 3, panel: null, cyc: false, tz: 0, magnet: true};
   const set = Object.assign({}, DEF, LS("tape-rp-set") || {});
   try { const s = (API().sym && API().sym()) || ""; if (!LS("tape-rp-set") && INSTR[s]) set.inst = s; } catch(e){}
   const saveSet = () => LS("tape-rp-set", set);
@@ -185,6 +185,9 @@
     c.font = "500 11px Inter,system-ui,sans-serif";
     // cycles (training)
     if (set.cyc) cycPaint(c, P);
+    // extended hours shading (outside 9:30-16:00 New York)
+    if (set.sess === "eth" && S.tf < 240){ c.fillStyle = P.light ? "rgba(40,25,80,.035)" : "rgba(255,255,255,.025)"; let st = null;
+      for (let k = Math.max(0, i0); k <= Math.min(a.length - 1, i1) + 1; k++){ const b = a[k], out = b ? (modOf(b.t) < 570 || modOf(b.t) >= 960) : false; if (out && st == null) st = k; if ((!out || !b) && st != null){ const xa = xOf(st) - S.bw / 2, xb = xOf(k) - S.bw / 2; c.fillRect(Math.max(0, xa), 0, Math.min(PW, xb) - Math.max(0, xa), PH); st = null; } } }
     // candles
     const bw = Math.max(1, S.bw * .7);
     c.save(); c.beginPath(); c.rect(0, 0, PW, PH); c.clip();
@@ -335,7 +338,7 @@
   function loadDay(d, startAt){
     stop(); S.demo = d.demo || ""; const L = lib(), k = Math.max(0, L.findIndex(x => x.day === d.day)), win = L.slice(Math.max(0, k - 60), k + 16);
     const B = []; win.forEach(w => { const sh = w.ny || w.demo ? 0 : (+set.tz || 0); w.bars.forEach(x => { const ts = String(x[0]); B.push({t: dayBase(ts.slice(0, 10)) + +ts.slice(11, 13) * 60 + +ts.slice(14, 16) + sh, o: x[1], h: x[2], l: x[3], c: x[4]}); }); });
-    B.sort((a, b) => a.t - b.t); const B2 = []; B.forEach(b => { if (!B2.length || b.t !== B2[B2.length - 1].t) B2.push(b); }); S.B = B2;
+    B.sort((a, b) => a.t - b.t); const B2 = []; S.ethData = false; B.forEach(b => { const m = modOf(b.t); if (m < 420 || m >= 960) S.ethData = true; if (set.sess === "rth" && (m < 570 || m >= 960)) return; if (!B2.length || b.t !== B2[B2.length - 1].t) B2.push(b); }); S.B = B2;
     const t0 = S.B.length ? S.B[0].t : 0, t1 = S.B.length ? S.B[S.B.length - 1].t + 1440 * 3 : 0;
     const all = S.demo ? [] : (drawStore.all || []); S.drawOut = all.filter(x => { const a = anchor(x); return !(a >= t0 && a <= t1); });
     S.draws = all.filter(x => { const a = anchor(x); return a >= t0 && a <= t1; }).map(x => Object.assign({}, x, {id: uid++}));
@@ -563,7 +566,7 @@
     if (!ui) return; const sel = ui.daySel; sel.innerHTML = "";
     if (!lib().length){ const o = mk("option", null, T("Žádná data", "No data")); sel.appendChild(o); sel.disabled = true; }
     else { sel.disabled = false; lib().forEach(d => { const o = mk("option", null, d.day); o.value = d.day; if (d.day === S.day) o.selected = true; sel.appendChild(o); }); }
-    ui.libInfo.textContent = S.days.length ? T("V zařízení ", "Stored on this device: ") + S.days.length + T(" dní · ", " days · ") + S.days[0].day + " – " + S.days[S.days.length - 1].day : T("Data zůstávají jen v tomto zařízení.", "Data stays on this device only.");
+    ui.libInfo.textContent = (S.B.length && !S.ethData && !S.demo && set.sess === "eth" ? T("Tato data mají jen 7:00–16:00 NY. Pro Asii a Londýn nahraj CSV s celou seancí znovu. ", "This data only covers 7:00–16:00 NY. Re-upload a full-session CSV for Asia and London. ") : "") + (S.days.length ? T("V zařízení ", "Stored on this device: ") + S.days.length + T(" dní · ", " days · ") + S.days[0].day + " – " + S.days[S.days.length - 1].day : T("Data zůstávají jen v tomto zařízení.", "Data stays on this device only."));
   }
   function statsPaint(){
     if (!ui) return; const box = ui.stats; box.innerHTML = "";
@@ -627,7 +630,8 @@
     const jt = mk("input", "rp-jt"); jt.type = "time"; jt.step = 60; jt.setAttribute("aria-label", T("Skočit na čas", "Jump to time")); jt.title = T("Skočit na čas (newyorský)", "Jump to time (New York)"); jt.addEventListener("change", () => { const m = jt.value.match(/(\d+):(\d+)/); if (m) jump(+m[1] * 60 + +m[2]); });
     pl.appendChild(bk); pl.appendChild(playB); pl.appendChild(nx); pl.appendChild(sp); pl.appendChild(jt);
     const right = mk("div", "rp-grp"); right.appendChild(ibtn("gear", T("Nastavení rizika a replaye", "Risk and replay settings"), () => settingsPop())); right.appendChild(ibtn("full", T("Celá obrazovka", "Full screen"), () => fullscreen()));
-    bar.appendChild(dnav); bar.appendChild(tfs); bar.appendChild(pl); bar.appendChild(right);
+    const ses = mk("div", "rp-seg rp-ses"); [["eth", "ETH", T("Elektronická seance: celý den 18:00–17:00, mimo hlavní seanci podbarvená", "Electronic trading hours: the full 18:00–17:00 session, extended hours shaded")], ["rth", "RTH", T("Jen hlavní seance 9:30–16:00 New York", "Regular trading hours only, 9:30–16:00 New York")]].forEach(x => { const b = btn(set.sess === x[0] ? "on" : "", x[1], () => { if (set.sess === x[0]) return; set.sess = x[0]; saveSet(); ses.querySelectorAll("button").forEach(z => z.classList.toggle("on", z === b)); const at = last() ? last().t : null, d = lib().find(z => z.day === S.day) || lib()[lib().length - 1]; if (d) loadDay(d, at); }, x[2]); ses.appendChild(b); });
+    bar.appendChild(dnav); bar.appendChild(tfs); bar.appendChild(ses); bar.appendChild(pl); bar.appendChild(right);
     // chart area
     const area = mk("div", "rp-area"), tools = mk("div", "rp-tools"), box = mk("div", "rp-box"), cv = mk("canvas"); cv.setAttribute("aria-label", T("Graf replaye", "Replay chart")); cv.setAttribute("role", "img");
     [["cur", T("Kurzor (V)", "Cursor (V)")], ["line", T("Trendová čára (T)", "Trend line (T)")], ["ray", T("Paprsek", "Ray")], ["h", T("Horizontální čára (H)", "Horizontal line (H)")], ["rect", T("Obdélník (R)", "Rectangle (R)")], ["fib", T("Fibonacci s OTE (F)", "Fibonacci with OTE (F)")], ["txt", T("Text (X)", "Text (X)")], ["long", T("Long pozice (L)", "Long position (L)")], ["short", T("Short pozice (S)", "Short position (S)")]].forEach(x => { const b = ibtn(x[0], x[1], () => setTool(x[0])); b.dataset.t = x[0]; tools.appendChild(b); });
