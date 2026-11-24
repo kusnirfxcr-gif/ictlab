@@ -2328,8 +2328,11 @@ body[data-view="backtest"] .rail{display:none!important}
 @media (min-width:1180px){ body[data-view="backtest"] .app{grid-template-columns:minmax(0,1fr)} body[data-view="backtest"] .app>.wrap{max-width:1360px} }
 .rp-promo{gap:12px;overflow:hidden;position:relative}
 .rp-promo .rp-pm{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
-.rp-promo .rp-pmi{flex:none;width:54px;height:54px;border-radius:16px;display:grid;place-items:center;background:var(--th-pri,var(--accent));background-origin:border-box;color:#fff;box-shadow:0 10px 26px var(--accent-soft)}
-.rp-promo .rp-pmi svg{width:28px;height:28px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.rp-promo .rp-pmi{flex:none;position:relative;width:58px;height:58px;border-radius:18px;display:grid;place-items:center;overflow:hidden;background:var(--th-pri,var(--accent));background-origin:border-box;box-shadow:0 12px 28px var(--accent-soft),inset 0 1px 0 rgba(255,255,255,.35),inset 0 -8px 18px rgba(0,0,0,.12)}
+.rp-promo .rp-pmi::before{content:"";position:absolute;inset:0;background:radial-gradient(120% 70% at 20% 0%,rgba(255,255,255,.42),transparent 55%);pointer-events:none}
+.rp-promo .rp-pmi svg{position:relative;width:36px;height:36px;filter:drop-shadow(0 2px 4px rgba(0,0,0,.18))}
+.rp-promo .rp-pmi .rp-pmp{fill:var(--accent)}
+.rp-promo:hover .rp-pmi{transform:translateY(-1px) rotate(-3deg);transition:transform .25s ease}
 .rp-promo .rp-pmt{flex:1;min-width:200px;display:flex;flex-direction:column;gap:3px}
 .rp-promo .rp-pmt b{font-size:17px}
 .rp-promo .rp-pmb{display:flex;gap:8px;flex-wrap:wrap}
@@ -2393,7 +2396,10 @@ body[data-mode="trader"] #v-prehled>[data-card="replay"]{order:0}
       <div class="herostats" id="d-hs"></div>
       <div class="cta" id="d-cta"></div>
     </div>
-    <div class="card rp-promo" data-card="replay"><div class="rp-pm"><span class="rp-pmi"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V9M9 19V5M14 19v-8M19 19V7"/><path d="M3 21h18"/></svg></span>
+    <div class="card rp-promo" data-card="replay"><div class="rp-pm"><span class="rp-pmi"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="rpg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity=".72"/></linearGradient></defs>
+        <path d="M14 9v30" stroke="#fff" stroke-opacity=".55" stroke-width="2" stroke-linecap="round"/><rect x="9.5" y="15" width="9" height="16" rx="3" fill="url(#rpg1)"/>
+        <path d="M27 6v22" stroke="#fff" stroke-opacity=".55" stroke-width="2" stroke-linecap="round"/><rect x="22.5" y="10" width="9" height="13" rx="3" fill="#fff" fill-opacity=".38" stroke="#fff" stroke-opacity=".9" stroke-width="1.6"/>
+        <circle cx="35" cy="35" r="9" fill="#fff"/><path d="M32.6 30.9v8.2l6.6-4.1z" class="rp-pmp"/></svg></span>
       <div class="rp-pmt"><b>Backtest a replay</b><span class="small muted" id="rp-pm-sub">Přehraj si den svíčku po svíčce, kresli, natáhni stop a cíl a obchoduj nanečisto s rizikem v dolarech.</span></div>
       <div class="rp-pmb"><a class="abtn primary" href="#backtest" id="rp-pm-go">Otevřít replay</a></div></div></div>
     <div class="card" id="d-move" hidden></div>
