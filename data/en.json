@@ -2306,5 +2306,9 @@
  "Svíčka po svíčce, s rizikem v dolarech nebo procentech": "Candle by candle, with risk in dollars or percent",
  "Vstup za trhu je za zavírací cenu poslední svíčky. Když jedna svíčka zasáhne stop i cíl, počítá se stop. Poplatky si nastavíš v ozubeném kolečku, skluz se nepočítá, takže skutečnost bývá horší. Výsledky replaye nejsou důkaz, že strategie funguje.": "Market entries fill at the close of the last candle. If one candle hits both the stop and the target, the stop counts. Set commissions under the gear icon; slippage isn't modelled, so real results tend to be worse. Replay results are not proof that a strategy works.",
  "Přehraj si den svíčku po svíčce, kresli, natáhni stop a cíl a obchoduj nanečisto s rizikem v dolarech.": "Replay a day candle by candle, draw, drag your stop and target and paper trade with risk in dollars.",
- "Otevřít replay": "Open replay"
+ "Otevřít replay": "Open replay",
+ "Spotify hlasitost v přehrávači nepouští, nastav ji v počítači nebo telefonu.": "Spotify doesn't allow volume control in the embedded player; set it on your computer or phone.",
+ "Hlasitost": "Volume",
+ "Zapnout zvuk": "Unmute",
+ "Ztlumit": "Mute"
 }
