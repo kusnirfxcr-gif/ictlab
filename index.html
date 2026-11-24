@@ -2200,6 +2200,102 @@ html body .wel.lt .wel-go:not(:disabled):hover,html body .wel.lt button.primary:
 .lg-doc p{line-height:1.62;margin:0 0 9px}
 .lg-doc .lg-ph{background:color-mix(in srgb,#f5b301 22%,transparent);color:inherit;border-radius:5px;padding:1px 5px}
 .lg-foot a{white-space:nowrap}
+/* ---------- backtest & replay studio ---------- */
+.rp-card{gap:12px}
+.rp-studio{--rp-bg:#0d0d11;--rp-bd:rgba(255,255,255,.08);--rp-ch:rgba(255,255,255,.04);display:flex;flex-direction:column;gap:8px;min-width:0}
+html[data-tk="l"] .rp-studio,body.sakura .rp-studio{--rp-bg:#ffffff;--rp-bd:rgba(40,25,80,.12);--rp-ch:rgba(40,25,80,.04)}
+.rp-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap}
+.rp-ttl{display:flex;flex-direction:column;gap:3px;min-width:0}
+.rp-ttl>b{font-size:15px;letter-spacing:-.01em}
+.rp-ohlc{display:flex;gap:10px;flex-wrap:wrap;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.rp-ohlc b{font-weight:650}.rp-ohlc .up,.rp-hist .up{color:#16b67f}.rp-ohlc .dn{color:#f0475a}
+.rp-clock{font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;background:var(--rp-ch);border:1px solid var(--rp-bd);font-variant-numeric:tabular-nums}
+.rp-bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.rp-grp{display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+.rp-bar select,.rp-bar input{width:auto;padding:6px 8px;font-size:13px;border-radius:9px}
+.rp-day{max-width:140px}
+.rp-ib{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;padding:0!important;border-radius:9px!important;background:var(--rp-ch)!important;border:1px solid var(--rp-bd)!important;color:var(--ink)!important;box-shadow:none!important}
+.rp-ib svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.rp-ib:hover{background:var(--accent-soft)!important}
+.rp-ib.on{background:var(--accent)!important;color:#fff!important;border-color:transparent!important}
+.rp-play{width:40px;background:var(--accent)!important;color:#fff!important;border-color:transparent!important}
+.rp-seg{display:inline-flex;padding:3px;gap:2px;border-radius:10px;background:var(--rp-ch);border:1px solid var(--rp-bd)}
+.rp-seg button{padding:5px 10px!important;font-size:12.5px;border-radius:7px!important;border:0!important;background:transparent!important;color:var(--muted)!important;box-shadow:none!important;min-height:0}
+.rp-seg button.on{background:var(--surface)!important;color:var(--ink)!important;box-shadow:0 1px 4px rgba(0,0,0,.18)!important;font-weight:650}
+.rp-prog{height:3px;border-radius:3px;background:var(--rp-ch);overflow:hidden}.rp-prog i{display:block;height:100%;background:var(--accent);transition:width .2s}
+.rp-area{display:flex;gap:6px;min-width:0}
+.rp-tools{display:flex;flex-direction:column;gap:4px;padding:5px;border-radius:12px;background:var(--rp-ch);border:1px solid var(--rp-bd);align-self:flex-start}
+.rp-tools .rp-ib{width:32px;height:32px;background:transparent!important;border-color:transparent!important}
+.rp-tools .rp-ib.on{background:var(--accent)!important}
+.rp-sep{display:block;height:1px;background:var(--rp-bd);margin:2px 3px}
+.rp-box{position:relative;flex:1;min-width:0;height:min(540px,64vh);border-radius:14px;overflow:hidden;background:var(--rp-bg);border:1px solid var(--rp-bd)}
+.rp-box canvas{display:block;touch-action:none;cursor:crosshair}
+.rp-panel{position:absolute;top:10px;left:10px;display:flex;flex-direction:column;gap:5px;padding:6px;border-radius:13px;background:color-mix(in srgb,var(--rp-bg) 82%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid var(--rp-bd);box-shadow:0 8px 26px rgba(0,0,0,.22);z-index:3;user-select:none}
+.rp-prow2{display:flex;gap:5px;align-items:stretch}
+.rp-grip{display:flex;align-items:center;color:var(--muted);cursor:grab;touch-action:none;padding:0 1px}.rp-grip svg{width:12px;height:22px}
+.rp-grip:active{cursor:grabbing}
+.rp-sell,.rp-buy{display:flex!important;flex-direction:column;align-items:flex-start;gap:1px;min-width:86px;padding:6px 10px!important;border-radius:9px!important;border:0!important;color:#fff!important;font-size:10.5px;letter-spacing:.06em;box-shadow:none!important}
+.rp-sell{background:linear-gradient(135deg,#f0475a,#c42a3f)!important}.rp-buy{background:linear-gradient(135deg,#19c48a,#0f9a6a)!important}
+.rp-sell b,.rp-buy b{font-size:14px;letter-spacing:0;font-variant-numeric:tabular-nums}
+.rp-sell:hover,.rp-buy:hover{filter:brightness(1.08)}
+.rp-risk{font-size:11.5px!important;padding:4px 8px!important;border-radius:8px!important;background:transparent!important;border:1px dashed var(--rp-bd)!important;color:var(--muted)!important;box-shadow:none!important;min-height:0}
+.rp-conf{display:flex;flex-direction:column;gap:4px}
+.rp-ok{border:0!important;color:#fff!important;font-size:12.5px;padding:8px 10px!important;border-radius:9px!important;font-weight:700}
+.rp-ok.buy{background:#16b67f!important}.rp-ok.sell{background:#f0475a!important}
+.rp-no{font-size:12px!important;padding:5px!important;background:transparent!important;border:0!important;color:var(--muted)!important;box-shadow:none!important}
+.rp-setp{position:absolute;top:10px;left:10px;z-index:5;width:min(330px,calc(100% - 20px));max-height:calc(100% - 20px);overflow:auto;display:flex;flex-direction:column;gap:9px;padding:14px;border-radius:14px;background:var(--surface);border:1px solid var(--line);box-shadow:0 18px 50px rgba(0,0,0,.35)}
+html[data-tk="l"] .rp-setp{background:#fff}
+.rp-setp[hidden],.rp-panel[hidden],.rp-empty[hidden],.rp-conf[hidden]{display:none!important}
+.rp-f{display:flex;flex-direction:column;gap:4px;font-size:12.5px}.rp-f>span{color:var(--muted)}
+.rp-rw{display:flex;gap:6px;align-items:center}.rp-rw input{flex:1}
+.rp-empty{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:24px;z-index:4;background:radial-gradient(60% 60% at 50% 40%,var(--accent-soft),transparent)}
+.rp-empty b{font-size:18px}.rp-empty p{max-width:460px;margin:0}
+.rp-qrow{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;align-items:center}
+.rp-upb{display:inline-flex;align-items:center;padding:9px 16px;border-radius:999px;cursor:pointer;background:var(--th-pri,var(--accent));background-origin:border-box;color:#fff;font-weight:650}
+.rp-pos{display:flex;flex-direction:column;gap:6px}
+.rp-pos[hidden],.rp-quiz[hidden]{display:none!important}
+.rp-prow{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:8px 12px;border-radius:11px;background:var(--rp-ch);border:1px solid var(--rp-bd)}
+.rp-pact{display:flex;gap:6px;margin-left:auto}
+.rp-dir{font-size:11px;font-weight:800;letter-spacing:.04em;padding:3px 8px;border-radius:6px;color:#fff;text-transform:uppercase}
+.rp-dir.buy{background:#16b67f}.rp-dir.sell{background:#f0475a}
+.rp-quiz{gap:8px}.rp-quiz .rp-qrow{justify-content:flex-start}
+.rp-quiz .chip.ok{background:#16b67f;color:#fff}.rp-quiz .chip.no{background:#f0475a;color:#fff}
+.rp-lib{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.rp-up{cursor:pointer}
+.rp-sth{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:6px}.rp-sth h3{margin:0}
+.rp-stats{display:flex;flex-direction:column;gap:10px}
+.rp-tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:8px}
+.rp-tile{display:flex;flex-direction:column;gap:2px;padding:10px 12px;border-radius:12px;background:var(--rp-ch);border:1px solid var(--rp-bd)}
+.rp-tile span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}.rp-tile b{font-size:16px;font-variant-numeric:tabular-nums}
+.rp-eq{width:100%;height:110px;display:block;border-radius:12px;background:var(--rp-ch)}
+.rp-hist{display:flex;flex-direction:column;gap:4px;max-height:300px;overflow:auto}
+.rp-hrow{display:grid;grid-template-columns:auto auto 1fr auto auto;gap:10px;align-items:center;padding:6px 10px;border-radius:9px;background:var(--rp-ch)}
+.rp-studio.rp-fs{position:fixed;inset:0;z-index:9999;background:var(--bg);padding:12px;overflow:auto}
+.rp-studio.rp-fs .rp-box,.rp-studio:fullscreen .rp-box{height:calc(100vh - 170px)}
+.rp-studio:fullscreen{background:var(--bg);padding:12px;overflow:auto}
+@media (max-width:700px){
+ .rp-tools{flex-direction:row;flex-wrap:nowrap;overflow-x:auto;align-self:stretch;scrollbar-width:none;gap:2px;padding:3px}.rp-area{flex-direction:column}
+ .rp-tools .rp-sep{width:1px;height:auto;margin:3px 2px}
+ .rp-box{height:min(460px,64vh)}
+ .rp-ib{width:31px;height:31px}.rp-ib svg{width:15px;height:15px}
+ .rp-bar{gap:6px}.rp-bar select,.rp-bar input{padding:5px 6px;font-size:12.5px}.rp-day{max-width:118px}.rp-rand{padding:5px 10px!important;font-size:12.5px}
+ .rp-seg button{padding:4px 8px!important;font-size:12px}
+ .rp-ttl>b{font-size:13.5px}.rp-ohlc{font-size:11px;gap:7px}
+ .rp-panel{left:6px;top:6px;padding:4px;gap:3px;border-radius:11px}.rp-sell,.rp-buy{min-width:60px;padding:4px 7px!important;font-size:9px}.rp-sell b,.rp-buy b{font-size:12px}
+ .rp-risk{font-size:10.5px!important;padding:2px 6px!important}.rp-ok{font-size:11.5px;padding:6px 8px!important}
+ .rp-hrow{grid-template-columns:1fr auto;}
+}
+body[data-view="backtest"] .rail{display:none!important}
+@media (min-width:1180px){ body[data-view="backtest"] .app{grid-template-columns:minmax(0,1fr)} body[data-view="backtest"] .app>.wrap{max-width:1360px} }
+.rp-promo{gap:12px;overflow:hidden;position:relative}
+.rp-promo .rp-pm{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.rp-promo .rp-pmi{flex:none;width:54px;height:54px;border-radius:16px;display:grid;place-items:center;background:var(--th-pri,var(--accent));background-origin:border-box;color:#fff;box-shadow:0 10px 26px var(--accent-soft)}
+.rp-promo .rp-pmi svg{width:28px;height:28px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.rp-promo .rp-pmt{flex:1;min-width:200px;display:flex;flex-direction:column;gap:3px}
+.rp-promo .rp-pmt b{font-size:17px}
+.rp-promo .rp-pmb{display:flex;gap:8px;flex-wrap:wrap}
+#v-prehled>[data-card="replay"]{order:0}
+body[data-mode="trader"] #v-prehled>[data-card="replay"]{order:0}
 .thpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:8px}
 .thp{display:flex;flex-direction:column;gap:8px;align-items:stretch;text-align:left;padding:8px;border-radius:16px;min-height:0}
 .thp .sw{height:54px;border-radius:10px;position:relative;overflow:hidden;border:1px solid rgba(128,128,128,.25)}
@@ -2258,6 +2354,9 @@ html body .wel.lt .wel-go:not(:disabled):hover,html body .wel.lt button.primary:
       <div class="herostats" id="d-hs"></div>
       <div class="cta" id="d-cta"></div>
     </div>
+    <div class="card rp-promo" data-card="replay"><div class="rp-pm"><span class="rp-pmi"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V9M9 19V5M14 19v-8M19 19V7"/><path d="M3 21h18"/></svg></span>
+      <div class="rp-pmt"><b>Backtest a replay</b><span class="small muted" id="rp-pm-sub">Přehraj si den svíčku po svíčce, kresli, natáhni stop a cíl a obchoduj nanečisto s rizikem v dolarech.</span></div>
+      <div class="rp-pmb"><a class="abtn primary" href="#backtest" id="rp-pm-go">Otevřít replay</a></div></div></div>
     <div class="card" id="d-move" hidden></div>
     <div class="card" id="d-remind" hidden></div>
     <div class="card" data-card="hodiny"><h2>Seance</h2><div class="clkbox"></div></div>
@@ -2576,6 +2675,10 @@ html body .wel.lt .wel-go:not(:disabled):hover,html body .wel.lt button.primary:
   </section>
 
   <section class="view" id="v-backtest">
+    <div class="card rp-card"><div class="row"><h2>Backtest a replay</h2><span class="small muted">Svíčka po svíčce, s rizikem v dolarech nebo procentech</span></div>
+      <div id="rp-studio"></div>
+      <p class="small muted">Vstup za trhu je za zavírací cenu poslední svíčky. Když jedna svíčka zasáhne stop i cíl, počítá se stop. Poplatky si nastavíš v ozubeném kolečku, skluz se nepočítá, takže skutečnost bývá horší. Výsledky replaye nejsou důkaz, že strategie funguje.</p>
+    </div>
     <div class="card" id="tv-card">
       <h2>Rozbor strategie z TradingView</h2>
       <p class="small muted">V TradingView otevři Tester strategií, záložku Seznam obchodů, stáhni CSV a nahraj ho sem. Tape spočítá, jestli má strategie výhodu, kde vydělává a kde ztrácí. Soubor zůstává jen v tomto prohlížeči.</p>
@@ -2593,12 +2696,6 @@ html body .wel.lt .wel-go:not(:disabled):hover,html body .wel.lt button.primary:
       <p class="small muted">Vyber soubor vysledky.json z backtesteru. Zobrazí se jen tobě, nikam se neodesílá.</p>
       <label for="bu-file" class="small" style="cursor:pointer"><span class="pill info">Vybrat vysledky.json</span><input id="bu-file" type="file" accept="application/json,.json" hidden></label>
       <div class="list" id="bu-out"></div>
-    </div>
-    <div class="card">
-      <h2>Přehrávání trhu</h2>
-      <p class="small muted">Nahraj jednou CSV se svíčkami (soubor z Dukascopy, export z TradingView nebo data pro backtester). Tape si dny uloží do zařízení a příště je nabídne samo: náhodný den, den výzvy nebo konkrétní datum. Svíčky přibývají po jedné a obchoduješ nanečisto. Data zůstávají jen v tomto zařízení.</p>
-      <label for="rp-file" class="small" style="cursor:pointer"><span class="pill info">Vybrat CSV</span><input id="rp-file" type="file" accept=".csv,.txt,text/csv" hidden></label>
-      <div class="list" id="rp-out"></div>
     </div>
     <div class="card">
       <h2>Uložené výsledky</h2>
@@ -2880,7 +2977,7 @@ html body .wel.lt .wel-go:not(:disabled):hover,html body .wel.lt button.primary:
   const VIEWS = ["prehled","denik","kouc","laura","room","studium","moros","vice","nastroje","poznatky","model","strategie","backtest","napady","komunita","premium","nastaveni","napoveda","novinky","soukromi","pravni","uvod","lide"];
   const GROUP = {prehled: "prehled", denik: "denik", kouc: "kouc", laura: "uceni", room: "uceni", studium: "uceni", moros: "uceni"};
   const SUBNAV = {uceni: [["laura","Obrázky a lekce"],["room","Kurz 12 týdnů"],["studium","Studium ICT"],["moros","MOROS"]]};
-  const VTITLE = {lide: "Lidé a postup", premium: "Premium", komunita: "Komunita", nastroje: "Nástroje", poznatky: "Poznatky botů", model: "Model", strategie: "Pine Script", backtest: "Backtest", napady: "Nápady", nastaveni: "Nastavení", napoveda: "Nápověda", novinky: "Co je nového", soukromi: "Soukromí a data", pravni: "Právní informace", uvod: "O aplikaci"};
+  const VTITLE = {lide: "Lidé a postup", premium: "Premium", komunita: "Komunita", nastroje: "Nástroje", poznatky: "Poznatky botů", model: "Model", strategie: "Pine Script", backtest: "Backtest a replay", napady: "Nápady", nastaveni: "Nastavení", napoveda: "Nápověda", novinky: "Co je nového", soukromi: "Soukromí a data", pravni: "Právní informace", uvod: "O aplikaci"};
   function route(){
     const h = (location.hash || "").replace("#",""), v = VIEWS.includes(h) ? h : "prehled", g = GROUP[v] || "vice";
     document.body.dataset.view = v; document.body.dataset.group = g; try { pheadPaint(v, g); } catch(e){}
@@ -4184,132 +4281,8 @@ html body .wel.lt .wel-go:not(:disabled):hover,html body .wel.lt button.primary:
     rd.readAsText(f); ev.target.value = "";
   });
 
-  // ---------- market replay (user's own 1m CSV) with paper trades ----------
-  (function replay(){
-    let days = [], bars = [], pos = 0, timer = null, ui = null, tr = null;
-    function parse(text){
-      const lines = text.split(/\r?\n/), out = {}, offC = {}; let epoch = false;
-      for (let i = 0; i < lines.length; i++){
-        const c = lines[i].split(/[;,\t]/); if (c.length < 5) continue;
-        let k = 1, ts = c[0].trim();
-        if (/^\d{10,13}$/.test(ts)){   // epoch seconds or milliseconds (Dukascopy, TradingView): convert to New York wall time, keep 7:00-16:00
-          const ms = ts.length > 11 ? +ts : +ts * 1000, dk = Math.floor(ms / 864e5); if (offC[dk] === undefined) offC[dk] = tvZoneOff(ms + 432e5, "America/New_York");
-          const w = new Date(ms + offC[dk] * 6e4), mn = w.getUTCHours() * 60 + w.getUTCMinutes(), wd = w.getUTCDay(); if (mn < 420 || mn >= 960 || wd === 0 || wd === 6) continue;
-          ts = w.toISOString().slice(0, 16).replace("T", " "); epoch = true; }
-        if (/^\d{1,2}:\d{2}/.test((c[1] || "").trim())){ ts += " " + c[1].trim(); k = 2; }
-        const o = parseFloat(c[k]), h = parseFloat(c[k + 1]), l = parseFloat(c[k + 2]), cl = parseFloat(c[k + 3]);
-        if (![o, h, l, cl].every(isFinite)) continue;
-        const day = ts.slice(0, 10).replace(/[^0-9]/g, "-");
-        (out[day] = out[day] || []).push([ts, o, h, l, cl]);
-      }
-      if (epoch) tzOff = 0;
-      return Object.keys(out).filter(d => out[d].length >= (epoch ? 60 : 200) && !(epoch && new Set(out[d].map(b => b[4])).size < out[d].length / 3)).sort().map(d => ({day: d, bars: out[d]}));
-    }
-    // library on this device: parsed days are kept in IndexedDB, so the file is loaded only once
-    const idb = () => new Promise((res, rej) => { try { const r = indexedDB.open("tape-replay", 1); r.onupgradeneeded = () => r.result.createObjectStore("days", {keyPath: "day"}); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); } catch(e){ rej(e); } });
-    const libSave = ds => idb().then(db => new Promise((res, rej) => { const tx = db.transaction("days", "readwrite"), st = tx.objectStore("days"); st.clear(); ds.forEach(d => st.put(d)); tx.oncomplete = () => res(); tx.onerror = () => rej(tx.error); }));
-    const libLoad = () => idb().then(db => new Promise((res, rej) => { const r = db.transaction("days").objectStore("days").getAll(); r.onsuccess = () => res(r.result || []); r.onerror = () => rej(r.error); }));
-    const libWipe = () => idb().then(db => new Promise(res => { const tx = db.transaction("days", "readwrite"); tx.objectStore("days").clear(); tx.oncomplete = () => res(); }));
-    function libBar(){ const out = $("rp-out"); let b = $("rp-lib"); if (b) b.remove(); if (!days.length) return; b = el("div","box"); b.id = "rp-lib";
-      b.appendChild(el("p","small", "V zařízení je uloženo " + pl(days.length, "den", "dny", "dní") + " (" + days[0].day + " až " + days[days.length - 1].day + "). Příště už soubor nahrávat nemusíš."));
-      const row = el("div","chips"), mk = (t, fn) => { const x = el("button","chip", t); x.type = "button"; x.addEventListener("click", fn); row.appendChild(x); };
-      mk("Náhodný den", () => pick()); mk("Den výzvy", () => { let h = 0; const k = dayKey(); for (let q = 0; q < k.length; q++) h = (h * 31 + k.charCodeAt(q)) >>> 0; pick(days[h % days.length]); toast("Den výzvy je dnes pro všechny se stejnými daty stejný."); });
-      const dsel = el("input"); dsel.type = "date"; dsel.min = days[0].day; dsel.max = days[days.length - 1].day; dsel.setAttribute("aria-label", "Vybrat den"); dsel.style.width = "auto";
-      dsel.addEventListener("change", () => { const d = days.find(x => x.day >= dsel.value); if (d) pick(d); }); row.appendChild(dsel);
-      mk("Smazat data", () => { libWipe().then(() => { days = []; stop(); clear($("rp-out")); toast("Uložená data jsou smazaná."); }); });
-      b.appendChild(row); out.insertBefore(b, out.firstChild); }
-    function stats(){
-      const p = jr.paper || [], s = jStats(p);
-      ui.stat.textContent = p.length ? "Cvičné obchody: " + p.length + " · " + sgn(s.total) + " R · winrate " + Math.round(s.winrate) + " %" : "Zatím žádný cvičný obchod.";
-      clear(ui.tbl); const g = p.length >= 2 ? groupTable("Setup", p, t => t.setup || "Bez setupu") : null; if (g) ui.tbl.appendChild(g);
-      ui.wipe.hidden = !p.length;
-    }
-    function close(r, why){ jr.paper = jr.paper || []; jr.paper.push({ts: new Date().toISOString(), r: Math.round(r * 100) / 100, setup: tr ? tr.setup : ""}); tr = null; ui.msg.textContent = why + " Výsledek " + sgn(Math.round(r * 100) / 100) + " R."; ui.msg.className = "small " + (r >= 0 ? "pos" : "neg"); touchDay(); jStore(); stats(); }
-    function check(b){
-      if (!tr) return;
-      const stopHit = tr.dir > 0 ? b[3] <= tr.s : b[2] >= tr.s, tgtHit = tr.dir > 0 ? b[2] >= tr.t : b[3] <= tr.t;
-      if (stopHit) close(-1, "Stop zasažen."); else if (tgtHit) close(tr.rr, "Cíl zasažen.");
-    }
-    // cycle training: 90-minute session cycles in New York time, a question after each finished cycle
-    let train = false, tzOff = 0, cq = {ok: 0, n: 0};
-    const bm = i => { const t = String(bars[i][0]).slice(11, 16), m = Number(t.slice(0, 2)) * 60 + Number(t.slice(3, 5)); return isFinite(m) ? ((m + tzOff) % 1440 + 1440) % 1440 : -1; };
-    const cycOf = m => m >= 420 && m < 960 ? Math.floor((m - 420) / 90) : -1;
-    function cycRange(end){ const c = cycOf(bm(end)); if (c < 0) return null; let a = end; while (a > 0 && cycOf(bm(a - 1)) === c) a--; let hi = -Infinity, lo = Infinity; for (let i = a; i <= end; i++){ hi = Math.max(hi, bars[i][2]); lo = Math.min(lo, bars[i][3]); } return {c: c, a: a, b: end, hi: hi, lo: lo}; }
-    function prevCycle(){ if (pos < 2) return null; const cur = cycRange(pos - 1); if (!cur || cur.a === 0) return null; const pv = cycRange(cur.a - 1); return pv && pv.c === cur.c - 1 ? pv : null; }
-    function askCycle(endIdx){
-      const done = cycRange(endIdx); if (!done || done.a === 0) return false; const pv = cycRange(done.a - 1); if (!pv || pv.c !== done.c - 1) return false;
-      let iH = -1, iL = -1; for (let i = done.a; i <= done.b; i++){ if (iH < 0 && bars[i][2] > pv.hi) iH = i; if (iL < 0 && bars[i][3] < pv.lo) iL = i; }
-      const first = iH < 0 && iL < 0 ? "none" : iL < 0 || (iH >= 0 && iH < iL) ? "high" : iH < 0 || iL < iH ? "low" : "both", up = bars[done.b][4] >= bars[done.a][1];
-      const box = ui.q; clear(box); box.hidden = false; let step = 0, right = 0;
-      const qs = [["Cyklus „" + CYCN[done.c] + "“ skončil. Kterou stranu předchozího cyklu cena vybrala jako první?", [["high","High (PCH)"],["low","Low (PCL)"],["none","Žádnou"]], first === "both" ? ["high","low"] : [first], first === "none" ? "Cena zůstala uvnitř rozpětí předchozího cyklu." : first === "both" ? "Jedna svíčka vybrala obě strany." : "Jako první padlo " + (first === "high" ? "high" : "low") + " předchozího cyklu. To byla manipulace, nebo začátek distribuce."],
-        ["Kde cyklus zavřel proti své otevírací ceně?", [["up","Nad ní"],["down","Pod ní"]], [up ? "up" : "down"], "Cyklus otevřel na " + fnum(bars[done.a][1]) + " a zavřel na " + fnum(bars[done.b][4]) + "."]];
-      const show = () => { clear(box); if (step >= qs.length){ cq.n += qs.length; cq.ok += right; box.appendChild(el("span","small", "Tento cyklus " + right + " ze " + qs.length + ". Celkem " + cq.ok + " z " + cq.n + ".")); const go = el("button","primary","Pokračovat"); go.type = "button"; go.addEventListener("click", () => { box.hidden = true; draw(); }); box.appendChild(go); return; }
-        const q = qs[step]; let ans = false; box.appendChild(el("b","exq", q[0])); const btns = q[1].map(o => { const b = el("button","exo", o[1]); b.type = "button"; b.addEventListener("click", () => { if (ans) return; ans = true; const ok = q[2].indexOf(o[0]) >= 0; if (ok) right++; else b.classList.add("no"); btns.forEach((x, j) => { x.disabled = true; if (q[2].indexOf(q[1][j][0]) >= 0) x.classList.add("ok"); });
-          box.appendChild(el("span","small", q[3])); const nx = el("button","primary","Dál"); nx.type = "button"; nx.addEventListener("click", () => { step++; show(); }); box.appendChild(nx); }); box.appendChild(b); return b; }); };
-      show(); return true;
-    }
-    function adv(n){ for (let i = 0; i < n && pos < bars.length; i++){ pos++; check(bars[pos - 1]); if (train && pos >= 2 && cycOf(bm(pos - 2)) >= 0 && cycOf(bm(pos - 1)) !== cycOf(bm(pos - 2)) && askCycle(pos - 2)){ stop(); break; } } if (pos >= bars.length && tr){ const c = bars[bars.length - 1][4]; close(tr.dir * (c - tr.e) / Math.abs(tr.e - tr.s), "Konec dne."); } draw(); }
-    function draw(){
-      const W = FW, H = 230, win = bars.slice(Math.max(0, pos - 90), pos); if (!win.length) return;
-      let lo = Infinity, hi = -Infinity; win.forEach(b => { lo = Math.min(lo, b[3]); hi = Math.max(hi, b[2]); });
-      const pvc = train ? prevCycle() : null; if (pvc){ lo = Math.min(lo, pvc.lo); hi = Math.max(hi, pvc.hi); }
-      if (tr){ lo = Math.min(lo, tr.s, tr.t); hi = Math.max(hi, tr.s, tr.t); } if (hi === lo) hi = lo + 1;
-      const pad = (hi - lo) * .06; lo -= pad; hi += pad;
-      const cw = (W - 50) / 90, Y = v => 8 + (hi - v) / (hi - lo) * (H - 16); let s = "";
-      for (let g = 0; g <= 4; g++){ const v = lo + (hi - lo) * g / 4; s += '<line x1="0" y1="' + Y(v).toFixed(1) + '" x2="' + (W - 46) + '" y2="' + Y(v).toFixed(1) + '" class="gl"/><text x="' + (W - 42) + '" y="' + (Y(v) + 3.5).toFixed(1) + '" class="brv f-muted" style="font-size:9.5px;font-weight:500">' + esc(fnum(Math.round(v * 100) / 100)) + '</text>'; }
-      win.forEach((b, i) => { const x = 3 + i * cw + cw / 2, up = b[4] >= b[1], c = up ? "var(--good)" : "var(--bad)", t = Y(Math.max(b[1], b[4])), bt = Y(Math.min(b[1], b[4]));
-        s += '<line x1="' + x.toFixed(1) + '" y1="' + Y(b[2]).toFixed(1) + '" x2="' + x.toFixed(1) + '" y2="' + Y(b[3]).toFixed(1) + '" stroke="' + c + '" stroke-width="1"/><rect x="' + (x - cw * .32).toFixed(1) + '" y="' + t.toFixed(1) + '" width="' + (cw * .64).toFixed(1) + '" height="' + Math.max(1, bt - t).toFixed(1) + '" fill="' + c + '"/>'; });
-      if (pvc) [[pvc.hi, "PCH"], [pvc.lo, "PCL"]].forEach(l => { s += '<line x1="0" y1="' + Y(l[0]).toFixed(1) + '" x2="' + (W - 46) + '" y2="' + Y(l[0]).toFixed(1) + '" stroke="#c58aff" stroke-width="1" stroke-dasharray="2 4"/><text x="4" y="' + (Y(l[0]) - 4).toFixed(1) + '" class="brv" style="font-size:10px;fill:#c58aff">' + l[1] + '</text>'; });
-      if (tr) [[tr.e, "var(--ink)"], [tr.s, "var(--bad)"], [tr.t, "var(--good)"]].forEach(l => { s += '<line x1="0" y1="' + Y(l[0]).toFixed(1) + '" x2="' + (W - 46) + '" y2="' + Y(l[0]).toFixed(1) + '" stroke="' + l[1] + '" stroke-width="1" stroke-dasharray="4 3"/>'; });
-      ui.svg.innerHTML = svgWrap(H, s);
-      const cc = train ? cycOf(bm(pos - 1)) : -1;
-      ui.info.textContent = ui.day + " · " + String(win[win.length - 1][0]).slice(11, 16) + " · svíčka " + pos + " z " + bars.length + (train ? " · " + (cc >= 0 ? "cyklus " + CYCN[cc].toLowerCase() : "mimo cykly") : "");
-      ui.long.disabled = ui.short.disabled = !!tr;
-    }
-    function stop(){ if (timer){ clearInterval(timer); timer = null; } if (ui) ui.play.textContent = "Přehrát"; }
-    function pick(want){
-      stop(); tr = null; const d = want && want.bars ? want : days[Math.floor(Math.random() * days.length)]; bars = d.bars; ui.day = d.day; ui.msg.textContent = "";
-      pos = Math.min(bars.length, Math.max(60, Math.floor(bars.length * .35))); draw();
-    }
-    function enter(dir){
-      const sd = parseFloat(String(ui.sd.value).replace(",", ".")), rr = parseFloat(String(ui.rr.value).replace(",", "."));
-      if (!(sd > 0) || !(rr > 0)){ ui.msg.textContent = "Vyplň stop v bodech a cíl v R."; ui.msg.className = "small"; return; }
-      const e = bars[pos - 1][4]; tr = {dir: dir, e: e, s: e - dir * sd, t: e + dir * sd * rr, rr: rr, setup: ui.setup.value};
-      ui.msg.textContent = (dir > 0 ? "Long" : "Short") + " od " + fnum(e) + ", stop " + fnum(tr.s) + ", cíl " + fnum(tr.t) + "."; ui.msg.className = "small muted"; draw();
-    }
-    function build(){
-      const out = $("rp-out"); clear(out);
-      const fig = el("figure","fig pa-fig"), svg = el("div","pa-svg"), info = el("span","small muted"), ctl = el("div","rp-ctl"), ord = el("div","rp-ctl"), msg = el("span","small"), stat = el("span","small muted");
-      fig.appendChild(svg); out.appendChild(fig); out.appendChild(info);
-      const mk = (box, t, fn, cls) => { const b = el("button", cls || null, t); b.type = "button"; b.addEventListener("click", fn); box.appendChild(b); return b; };
-      const num = (label, val) => { const lb = el("label","rp-num", label), i = el("input"); i.value = val; i.inputMode = "decimal"; lb.appendChild(i); ord.appendChild(lb); return i; };
-      const tbl = el("div","list"), wipe = el("button","danger","Smazat cvičné obchody"); wipe.type = "button"; twoStep(wipe, "Smazat cvičné obchody", () => { jr.paper = []; jStore(); stats(); });
-      ui = {svg: svg, info: info, msg: msg, stat: stat, tbl: tbl, wipe: wipe};
-      mk(ctl, "+1", () => { stop(); adv(1); }); mk(ctl, "+5", () => { stop(); adv(5); });
-      ui.play = mk(ctl, "Přehrát", () => { if (timer){ stop(); return; } ui.play.textContent = "Pauza"; timer = setInterval(() => { if (pos >= bars.length){ stop(); return; } adv(1); }, 350); }, "primary");
-      mk(ctl, "Jiný den", pick);
-      ui.setup = sel(J_SETUPS, J_SETUPS[0]); ui.setup.setAttribute("aria-label", "Setup"); ui.setup.style.width = "auto"; ord.appendChild(ui.setup);
-      ui.sd = num("Stop (body)", "20"); ui.rr = num("Cíl (R)", "2");
-      ui.long = mk(ord, "Long", () => enter(1)); ui.short = mk(ord, "Short", () => enter(-1));
-      const tr2 = el("div","rp-ctl"), tl = el("label","chk"), tc = inp("checkbox"), tz = sel([["0","Časy v souboru: New York"],["-300","UTC, zimní čas"],["-240","UTC, letní čas"],["-360","Praha"]], String(tzOff)), q = el("div","box exam"); q.hidden = true; ui.q = q;
-      tc.checked = train; tc.addEventListener("change", () => { train = tc.checked; q.hidden = true; draw(); }); tz.style.width = "auto"; tz.setAttribute("aria-label", "Časové pásmo souboru"); tz.addEventListener("change", () => { tzOff = Number(tz.value) || 0; draw(); });
-      tl.appendChild(tc); tl.appendChild(el("span", null, "Trénink cyklů: PCH a PCL na grafu a otázky po každém cyklu")); tr2.appendChild(tl); tr2.appendChild(tz);
-      out.appendChild(ctl); out.appendChild(tr2); out.appendChild(q); out.appendChild(ord); out.appendChild(msg); out.appendChild(stat); out.appendChild(tbl); out.appendChild(wipe);
-      out.appendChild(el("p","small muted","Vstup je za zavírací cenu poslední svíčky. Když svíčka zasáhne stop i cíl zároveň, počítá se stop. Bez poplatků a skluzu, takže skutečnost bude horší."));
-      stats();
-    }
-    $("rp-file").addEventListener("change", ev => {
-      const f = ev.target.files && ev.target.files[0], out = $("rp-out"); if (!f) return; clear(out);
-      out.appendChild(el("p","small muted","Načítám…"));
-      const rd = new FileReader();
-      rd.onload = () => { days = parse(String(rd.result)); clear(out);
-        if (!days.length){ out.appendChild(el("p","small","V souboru jsem nenašel minutové svíčky (čas, open, high, low, close).")); return; }
-        build(); pick(); libBar(); libSave(days).catch(() => toast("Data se nepodařilo uložit do zařízení, zůstanou jen do zavření stránky.")); };
-      rd.readAsText(f); ev.target.value = "";
-    });
-    libLoad().then(ds => { if (!ds.length || days.length) return; days = ds.sort((a, b) => a.day.localeCompare(b.day)); tzOff = 0; clear($("rp-out")); build(); pick(); libBar(); }).catch(() => {});
-    window.addEventListener("hashchange", stop);
-  })();
+  // ---------- market replay: the studio lives in replay.js, this is its bridge into the app ----------
+  window.TapeRP = {jr: () => jr, store: () => jStore(), toast: m => toast(m), en: () => cfg.lang === "en", zoneOff: (ms, tz) => tvZoneOff(ms, tz), touchDay: () => touchDay(), sym: () => (cfg && cfg.sym) || (function(){ try { return (JSON.parse(localStorage.getItem("knot-profile") || "{}").sym) || ""; } catch(e){ return ""; } })()};
 
   // =====================================================================================
   // v6: calendar, limits, playbook, weekly review, CSV import, screenshots, path, daily goal, onboarding, offline
@@ -8001,6 +7974,7 @@ html body .wel.lt .wel-go:not(:disabled):hover,html body .wel.lt button.primary:
   start();
 })();
 </script>
+<script src="replay.js"></script>
 
 
 </body></html>

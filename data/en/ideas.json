@@ -499,8 +499,5 @@
 "Ruční zápis je hlavní důvod, proč lidé deník přestanou vést. Potřebuje vzorové soubory, sloupce nejsou ověřené.": "Manual logging is the main reason people stop keeping a journal. It needs sample files; the columns are not verified.",
 "Série dní s rezervou": "A day streak with slack",
 "Série, která počítá jen pracovní dny a odpustí jeden vynechaný den v týdnu.": "A streak that counts only weekdays and forgives one missed day a week.",
-"Ztráta dlouhé série lidi od učení odrazuje víc, než je série motivuje.": "Losing a long streak discourages people from learning more than the streak motivates them.",
-"Políčko Můj DOL v Plánu dne, předvyplněné do deníku": "A My DOL field in the Daily plan, prefilled into the journal",
-"V Plánu dne v kroku Mapa úrovní přidat výběr dnešního draw on liquidity: BSL, nebo SSL, a úroveň. Při zápisu obchodu se pak DOL v deníku předvyplní z plánu a ve statistikách jde vidět, jak často cena ranní DOL opravdu došla.": "In the Daily plan, in the Level map step, add a choice of today's draw on liquidity: BSL or SSL, and the level. When you log a trade, the DOL in the journal is then prefilled from the plan, and statistics show how often price actually reached the morning DOL.",
-"Dnešní lekce učí určit DOL před vstupem. Deník už pole DOL má, ale plán dne na něj zatím nemyslí, takže se vyplňuje až zpětně.": "Today's lesson teaches you to pick the DOL before entering. The journal already has a DOL field, but the daily plan does not ask for it yet, so it only gets filled in afterwards."
+"Ztráta dlouhé série lidi od učení odrazuje víc, než je série motivuje.": "Losing a long streak discourages people from learning more than the streak motivates them."
 }

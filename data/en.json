@@ -2301,5 +2301,10 @@
  "Tape sám žádné reklamní cookies ani analytiku nepoužívá.": "Tape itself uses no advertising cookies or analytics.",
  "Plné znění najdeš v": "The full text is in",
  "Právních informacích": "Legal",
- "Právní informace: podmínky, GDPR, cookies, rizika": "Legal: terms, GDPR, cookies, risks"
+ "Právní informace: podmínky, GDPR, cookies, rizika": "Legal: terms, GDPR, cookies, risks",
+ "Backtest a replay": "Backtest & replay",
+ "Svíčka po svíčce, s rizikem v dolarech nebo procentech": "Candle by candle, with risk in dollars or percent",
+ "Vstup za trhu je za zavírací cenu poslední svíčky. Když jedna svíčka zasáhne stop i cíl, počítá se stop. Poplatky si nastavíš v ozubeném kolečku, skluz se nepočítá, takže skutečnost bývá horší. Výsledky replaye nejsou důkaz, že strategie funguje.": "Market entries fill at the close of the last candle. If one candle hits both the stop and the target, the stop counts. Set commissions under the gear icon; slippage isn't modelled, so real results tend to be worse. Replay results are not proof that a strategy works.",
+ "Přehraj si den svíčku po svíčce, kresli, natáhni stop a cíl a obchoduj nanečisto s rizikem v dolarech.": "Replay a day candle by candle, draw, drag your stop and target and paper trade with risk in dollars.",
+ "Otevřít replay": "Open replay"
 }
