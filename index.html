@@ -2268,6 +2268,12 @@ html[data-tk="l"] .rp-cm{background:#fff}
 .rp-cmi{justify-content:flex-start!important;text-align:left;padding:8px 10px!important;border-radius:8px!important;background:transparent!important;border:0!important;color:var(--ink)!important;font-size:13px;box-shadow:none!important;min-height:0}
 .rp-cmi:hover{background:var(--accent-soft)!important}.rp-cmd{color:#f0475a!important}
 @media (max-width:700px){ .rp-otb{top:auto;bottom:34px;max-width:calc(100% - 16px)} }
+.rp-card>.row{flex-wrap:wrap;gap:8px 14px}.rp-card>.row .rp-mus{margin-left:auto}
+.rp-cgrid{display:grid;grid-template-columns:1fr 54px 54px;gap:6px 8px;align-items:center;justify-items:start}
+.rp-csw{width:44px;height:26px;padding:3px!important;border-radius:8px!important;display:grid!important;place-items:stretch;background:var(--rp-ch)!important;border:1px solid var(--line)!important;box-shadow:none!important;min-height:0}
+.rp-csw i{border-radius:5px}
+.rp-cpal{position:absolute;z-index:8;grid-template-columns:repeat(9,22px)}
+.rp-cpal .rp-sw,.rp-cpal input[type=color]{width:22px;height:22px}
 .rp-qty{display:flex;align-items:center;gap:4px}.rp-qty[hidden]{display:none!important}
 .rp-qty button{width:28px;height:28px;padding:0!important;border-radius:8px!important;font-size:15px;font-weight:700;background:var(--rp-ch)!important;border:1px solid var(--rp-bd)!important;color:var(--ink)!important;box-shadow:none!important;min-height:0}
 .rp-qty input{width:64px;padding:4px 6px;font-size:13px;text-align:center;border-radius:8px}
@@ -7929,6 +7935,7 @@ body[data-mode="trader"] #v-prehled>[data-card="replay"]{order:0}
   function musButton(){ const w = el("div","mus-btn"); [["sp","Spotify"],["yt","YouTube Music"]].forEach(x => { const b = el("button", x[0]); b.type = "button"; b.dataset.s = x[0]; const lg = el("i","lg"); lg.innerHTML = MUS_LOGO[x[0]]; b.appendChild(lg); b.appendChild(el("span", null, x[1])); b.appendChild(eqEl()); b.addEventListener("click", () => musPick(x[0])); w.appendChild(b); }); setTimeout(musSync, 0); return w; }
   { const _ph = pheadPaint; pheadPaint = function(v, g){ _ph(v, g); const h = $("phead"); if (g === "uceni" && h && !h.hidden && !h.querySelector(".mus-btn")){ const b = musButton(); b.style.marginTop = "12px"; h.appendChild(b); } }; try { pheadPaint(document.body.dataset.view, document.body.dataset.group); } catch(e){} }
   { const _rdM = renderDash; renderDash = function(){ _rdM(); try { if (!hero2.querySelector(".mus-btn")){ const b = musButton(); b.classList.add("h2-mus"); hero2.appendChild(b); } } catch(e){} }; try { renderDash(); } catch(e){} }
+  { const rc = document.querySelector(".rp-card > .row"); if (rc && !rc.querySelector(".mus-btn")){ const b = musButton(); b.classList.add("rp-mus"); rc.appendChild(b); } }
   function musLesson(lb, fb){ if (!lb || lb.querySelector(":scope > .mus-btn")) return; lb.insertBefore(musButton(), fb ? fb.nextSibling : lb.firstChild); }
   // ---------- tab icon in the colours of the chosen theme ----------
   function favPaint(){ const sak = document.body.classList.contains("sakura"), q = sak ? {bg: "#fff0f7", b: ["#ff8cc6","#ffc2e0","#c9a6ff"], c: ["#b0447f"], light: 1} : GLASS[cfg.theme] || GLASS.noc, ink = q.light ? q.c[0] : "#ffffff";

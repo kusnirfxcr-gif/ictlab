@@ -40,6 +40,8 @@
   const set = Object.assign({}, DEF, LS("tape-rp-set") || {});
   try { const s = (API().sym && API().sym()) || ""; if (!LS("tape-rp-set") && INSTR[s]) set.inst = s; } catch(e){}
   const saveSet = () => LS("tape-rp-set", set);
+  // candle style: body, border and wick, each with its own up and down colour, like TradingView
+  set.cs = Object.assign({bu: set.cup || "#16b67f", bd: set.cdn || "#f0475a", ou: set.cup || "#16b67f", od: set.cdn || "#f0475a", wu: set.cup || "#16b67f", wd: set.cdn || "#f0475a", sb: true, so: true, sw: true}, set.cs || {});
   let hist = LS("tape-rp-hist") || [];
   const saveHist = () => LS("tape-rp-hist", hist.slice(-2000));
   const drawStore = LS("tape-rp-draw") || {};
@@ -153,7 +155,7 @@
   function pal(){
     const cs = getComputedStyle(ui.wrap), v = n => (cs.getPropertyValue(n) || "").trim(), light = document.documentElement.dataset.tk === "l" || document.body.classList.contains("sakura");
     return {light: light, bg: light ? "#ffffff" : "#0d0d11", grid: light ? "rgba(30,20,60,.06)" : "rgba(255,255,255,.05)", ink: light ? "#1d1530" : "#ececf1", muted: light ? "#7a7290" : "#8b8b96",
-      up: "#16b67f", dn: "#f0475a", cu: set.cup || "#16b67f", cd: set.cdn || "#f0475a", acc: v("--accent") || "#8ab4ff", axis: light ? "rgba(30,20,60,.12)" : "rgba(255,255,255,.09)", draw: light ? "#5b3fd6" : "#a98bff"};
+      up: "#16b67f", dn: "#f0475a", cu: set.cs.bu, cd: set.cs.bd, acc: v("--accent") || "#8ab4ff", axis: light ? "rgba(30,20,60,.12)" : "rgba(255,255,255,.09)", draw: light ? "#5b3fd6" : "#a98bff"};
   }
 
   // ---------- drawing ----------
@@ -191,10 +193,12 @@
     // candles
     const bw = Math.max(1, S.bw * .7);
     c.save(); c.beginPath(); c.rect(0, 0, PW, PH); c.clip();
-    for (let k = Math.max(0, i0); k <= Math.min(a.length - 1, i1); k++){ const b = a[k], x = xOf(b.i), up = b.c >= b.o, col = up ? P.cu : P.cd; c.strokeStyle = col; c.fillStyle = col; c.lineWidth = 1;
-      const t = yOf(Math.max(b.o, b.c)), bt = yOf(Math.min(b.o, b.c)), bx = Math.round(x - bw / 2), bwp = Math.max(1, Math.round(bw)), xm = Math.round(x) + .5;
-      if (up && set.hollow && bwp > 2){ c.beginPath(); c.moveTo(xm, yOf(b.h)); c.lineTo(xm, t); c.moveTo(xm, bt); c.lineTo(xm, yOf(b.l)); c.stroke(); c.strokeRect(bx + .5, t + .5, bwp - 1, Math.max(1, bt - t - 1)); }
-      else { c.beginPath(); c.moveTo(xm, yOf(b.h)); c.lineTo(xm, yOf(b.l)); c.stroke(); c.fillRect(bx, t, bwp, Math.max(1, bt - t)); } }
+    const CS = set.cs;
+    for (let k = Math.max(0, i0); k <= Math.min(a.length - 1, i1); k++){ const b = a[k], x = xOf(b.i), up = b.c >= b.o; c.lineWidth = 1;
+      const t = yOf(Math.max(b.o, b.c)), bt = yOf(Math.min(b.o, b.c)), bx = Math.round(x - bw / 2), bwp = Math.max(1, Math.round(bw)), xm = Math.round(x) + .5, hol = up && set.hollow && bwp > 2;
+      if (CS.sw){ c.strokeStyle = up ? CS.wu : CS.wd; c.beginPath(); c.moveTo(xm, yOf(b.h)); c.lineTo(xm, hol ? t : yOf(b.l)); if (hol){ c.moveTo(xm, bt); c.lineTo(xm, yOf(b.l)); } c.stroke(); }
+      if (CS.sb && !hol){ c.fillStyle = up ? CS.bu : CS.bd; c.fillRect(bx, t, bwp, Math.max(1, bt - t)); }
+      if ((CS.so || hol) && bwp > 2){ c.strokeStyle = CS.so ? (up ? CS.ou : CS.od) : (up ? CS.bu : CS.bd); c.strokeRect(bx + .5, t + .5, bwp - 1, Math.max(1, bt - t - 1)); } }
     // drawings
     S.draws.forEach(d => drawObj(c, P, d));
     if (S.creating && S.creating.d) drawObj(c, P, S.creating.d);
@@ -502,6 +506,14 @@
     const ci = mk("input"); ci.type = "color"; ci.value = /^#[0-9a-f]{6}$/i.test(d.col || "") ? d.col : "#a98bff"; ci.title = T("Vlastní barva", "Custom colour"); ci.addEventListener("input", () => { d.col = ci.value; anchor.firstChild.style.background = ci.value; upd(); }); pp.appendChild(ci);
     ui.otb.appendChild(pp);
   }
+  function cpal(anchor, cur, set1){
+    const old = ui.box.querySelector(".rp-cpal"); if (old){ old.remove(); if (old._a === anchor) return; }
+    const pp = mk("div", "rp-pal rp-cpal"); pp._a = anchor;
+    const EXT = COLS.concat(["#089981", "#f23645", "#0ecb81", "#f6465d", "#4caf50", "#d32f2f", "#5c5c68", "#e8e8ee"]);
+    EXT.forEach(c => { const b = btn("rp-sw" + (cur === c ? " on" : ""), null, () => { set1(c); pp.remove(); }, c); b.style.background = c; pp.appendChild(b); });
+    const ci = mk("input"); ci.type = "color"; ci.value = /^#[0-9a-f]{6}$/i.test(cur) ? cur : "#16b67f"; ci.title = T("Vlastní barva", "Custom colour"); ci.addEventListener("input", () => set1(ci.value)); pp.appendChild(ci);
+    const br = ui.box.getBoundingClientRect(), ar = anchor.getBoundingClientRect(); pp.style.left = Math.min(ar.left - br.left, br.width - 240) + "px"; ui.box.appendChild(pp); const hh = pp.offsetHeight || 120; pp.style.top = (ar.bottom - br.top + 6 + hh > br.height ? Math.max(4, ar.top - br.top - hh - 6) : ar.bottom - br.top + 6) + "px";
+  }
   function clone(d){ const c = JSON.parse(JSON.stringify(d)); c.id = uid++; delete c._w; c.lock = false; const shf = t => tIdx(idxT(t) + 5); if (c.a) c.a.t = shf(c.a.t); if (c.b) c.b.t = shf(c.b.t); if (c.t1 != null){ c.t1 = shf(c.t1); c.t2 = shf(c.t2); } if (c.k === "h") c.p = rt(c.p + tick() * 8); S.draws.push(c); S.sel = c; saveDraw(); req(); }
   function planToOrder(d){
     const lb = last(); if (!lb) return; S.draws = S.draws.filter(x => x.st !== "draft"); const ot = Math.abs(d.e - lb.c) < tick() ? "mkt" : d.dir * (d.e - lb.c) < 0 ? "lim" : "stp";
@@ -592,15 +604,15 @@
     const rw = mk("div", "rp-rw"), ri = ni(set.risk, v => { if (v > 0) set.risk = v; }), ms = mk("div", "rp-seg"); ["%", "$"].forEach(m => { const b = btn(m === set.mode ? "on" : "", m, () => { set.mode = m; if (m === "$" && set.risk < 20) { set.risk = Math.round(equity() * set.risk / 100); ri.value = set.risk; } if (m === "%" && set.risk > 20){ set.risk = Math.round(100 * set.risk / equity() * 100) / 100; ri.value = set.risk; } ms.querySelectorAll("button").forEach(x => x.classList.toggle("on", x.textContent === m)); saveSet(); panelPaint(); req(); }); ms.appendChild(b); }); rw.appendChild(ri); rw.appendChild(ms); row(T("Riziko na obchod (1R)", "Risk per trade (1R)"), rw);
     row(T("Poplatek za kontrakt ($)", "Commission per contract ($)"), ni(set.comm, v => { set.comm = v >= 0 ? v : 0; }, ".1"));
     const tz = mk("select"); [["0", T("Časy v souboru: New York", "File times: New York")], ["-300", T("UTC, zimní čas", "UTC, winter time")], ["-240", T("UTC, letní čas", "UTC, summer time")], ["-360", T("Praha", "Prague")]].forEach(x => { const o = mk("option", null, x[1]); o.value = x[0]; if (+x[0] === +set.tz) o.selected = true; tz.appendChild(o); }); tz.addEventListener("change", () => { set.tz = +tz.value; saveSet(); const d = lib().find(x => x.day === S.day); if (d) loadDay(d, last() ? last().t : null); }); row(T("Časové pásmo CSV", "CSV time zone"), tz);
-    const cb = mk("div", "rp-f"); cb.appendChild(mk("span", null, T("Barvy svíček", "Candle colours"))); const pr = mk("div", "rp-cpre"), ci = mk("div", "rp-cin");
+    const cb = mk("div", "rp-f"); cb.appendChild(mk("span", null, T("Svíčky", "Candles"))); const pr = mk("div", "rp-cpre"), grid = mk("div", "rp-cgrid");
     const PRE = [[T("Klasické", "Classic"), "#16b67f", "#f0475a"], ["TradingView", "#089981", "#f23645"], [T("Modrá a oranžová", "Blue and orange"), "#2962ff", "#ff9800"], [T("Tyrkys a růžová", "Teal and pink"), "#26c6da", "#ec407a"], [T("Černobílé", "Mono"), pal().light ? "#1d1530" : "#e8e8ee", pal().light ? "#a59fb8" : "#5c5c68"]];
-    const cu = mk("input"), cd = mk("input"); cu.type = cd.type = "color"; cu.value = set.cup || "#16b67f"; cd.value = set.cdn || "#f0475a"; cu.setAttribute("aria-label", T("Rostoucí svíčka", "Up candle")); cd.setAttribute("aria-label", T("Klesající svíčka", "Down candle"));
-    const apply = () => { set.cup = cu.value; set.cdn = cd.value; saveSet(); req(); };
-    cu.addEventListener("input", apply); cd.addEventListener("input", apply);
-    PRE.forEach(x => { const b = btn("rp-cp", null, () => { cu.value = x[1]; cd.value = x[2]; apply(); }, x[0]); b.innerHTML = '<i style="background:' + x[1] + '"></i><i style="background:' + x[2] + '"></i>'; pr.appendChild(b); });
-    const l1 = mk("label", "rp-cl"); l1.appendChild(cu); l1.appendChild(mk("span", "small", T("Rostoucí", "Up"))); const l2 = mk("label", "rp-cl"); l2.appendChild(cd); l2.appendChild(mk("span", "small", T("Klesající", "Down")));
-    const hl = mk("label", "rp-cl"), hc = mk("input"); hc.type = "checkbox"; hc.checked = !!set.hollow; hc.addEventListener("change", () => { set.hollow = hc.checked; saveSet(); req(); }); hl.appendChild(hc); hl.appendChild(mk("span", "small", T("Duté rostoucí", "Hollow up")));
-    ci.appendChild(l1); ci.appendChild(l2); ci.appendChild(hl); cb.appendChild(pr); cb.appendChild(ci); pop.appendChild(cb);
+    const CS = set.cs, sws = {};
+    const swatch = key => { const b = btn("rp-csw", null, null, key); const i = mk("i"); i.style.background = CS[key]; b.appendChild(i); sws[key] = i; b.addEventListener("click", ev => { ev.stopPropagation(); cpal(b, CS[key], v => { CS[key] = v; i.style.background = v; saveSet(); req(); }); }); return b; };
+    grid.appendChild(mk("span")); grid.appendChild(mk("span", "small muted", T("Rostoucí", "Up"))); grid.appendChild(mk("span", "small muted", T("Klesající", "Down")));
+    [["sb", "bu", "bd", T("Tělo", "Body")], ["so", "ou", "od", T("Okraje", "Borders")], ["sw", "wu", "wd", T("Knoty", "Wicks")]].forEach(r => { const l = mk("label", "rp-cl"), ch = mk("input"); ch.type = "checkbox"; ch.checked = CS[r[0]] !== false; ch.addEventListener("change", () => { CS[r[0]] = ch.checked; saveSet(); req(); }); l.appendChild(ch); l.appendChild(mk("span", "small", r[3])); grid.appendChild(l); grid.appendChild(swatch(r[1])); grid.appendChild(swatch(r[2])); });
+    PRE.forEach(x => { const b = btn("rp-cp", null, () => { ["bu", "ou", "wu"].forEach(k => { CS[k] = x[1]; sws[k].style.background = x[1]; }); ["bd", "od", "wd"].forEach(k => { CS[k] = x[2]; sws[k].style.background = x[2]; }); saveSet(); req(); }, x[0]); b.innerHTML = '<i style="background:' + x[1] + '"></i><i style="background:' + x[2] + '"></i>'; pr.appendChild(b); });
+    const hl = mk("label", "rp-cl"), hc = mk("input"); hc.type = "checkbox"; hc.checked = !!set.hollow; hc.addEventListener("change", () => { set.hollow = hc.checked; saveSet(); req(); }); hl.appendChild(hc); hl.appendChild(mk("span", "small", T("Duté rostoucí svíčky", "Hollow up candles")));
+    cb.appendChild(grid); cb.appendChild(mk("span", "small muted", T("Rychlé sady", "Quick sets"))); cb.appendChild(pr); cb.appendChild(hl); pop.appendChild(cb);
     const cy = mk("label", "chk"), cc = mk("input"); cc.type = "checkbox"; cc.checked = !!set.cyc; cc.addEventListener("change", () => { set.cyc = cc.checked; saveSet(); req(); }); cy.appendChild(cc); cy.appendChild(mk("span", null, T("Trénink 90minutových cyklů: PCH, PCL a otázky", "90-minute cycle training: PCH, PCL and questions"))); pop.appendChild(cy);
     const mg = mk("label", "chk"), mc = mk("input"); mc.type = "checkbox"; mc.checked = !!set.magnet; mc.addEventListener("change", () => { set.magnet = mc.checked; saveSet(); }); mg.appendChild(mc); mg.appendChild(mk("span", null, T("Magnet: kreslení se přichytí k high a low svíček", "Magnet: drawings snap to candle highs and lows"))); pop.appendChild(mg);
     pop.appendChild(mk("p", "small muted", T("Klávesy: mezerník přehrát, → další svíčka, Shift+→ deset, ← zpět, T čára, H horizontála, R obdélník, F fibo, L long, S short, Del smazat, Esc zrušit.", "Keys: space play, → next candle, Shift+→ ten, ← back, T line, H horizontal, R rectangle, F fib, L long, S short, Del delete, Esc cancel.")));
@@ -650,7 +662,7 @@
     pConf.appendChild(pOk); pConf.appendChild(pNo); pConf.hidden = true; panel.appendChild(pr); panel.appendChild(pOT); panel.appendChild(pSize); panel.appendChild(pQty); panel.appendChild(pRisk); panel.appendChild(pConf); box.appendChild(panel);
     const setp = mk("div", "rp-setp"); setp.hidden = true; box.appendChild(setp);
     const otb = mk("div", "rp-otb"); otb.hidden = true; box.appendChild(otb); const cm = mk("div", "rp-cm"); cm.hidden = true; box.appendChild(cm);
-    document.addEventListener("pointerdown", e => { if (!cm.hidden && !cm.contains(e.target)) cm.hidden = true; const pp = otb.querySelector(".rp-pal"); if (pp && !otb.contains(e.target)) pp.remove(); }, true);
+    document.addEventListener("pointerdown", e => { if (!cm.hidden && !cm.contains(e.target)) cm.hidden = true; const pp = otb.querySelector(".rp-pal"); if (pp && !otb.contains(e.target)) pp.remove(); const cp = box.querySelector(".rp-cpal"); if (cp && !cp.contains(e.target) && !(e.target.closest && e.target.closest(".rp-csw"))) cp.remove(); }, true);
     const empty = mk("div", "rp-empty"); box.appendChild(empty);
     area.appendChild(tools); area.appendChild(box);
     const prog = mk("div", "rp-prog"), pi = mk("i"); prog.appendChild(pi);
