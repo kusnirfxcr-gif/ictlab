@@ -2463,7 +2463,8 @@ html[data-tk="l"] .thq,body.sakura .thq{background:#fff}
 .thq-more{font-size:12px;color:var(--muted);text-decoration:underline;text-underline-offset:3px}
 @media (max-width:859px){.tb-theme{width:30px;height:30px}}
 /* ---------- levels ---------- */
-.lv-emb{position:relative;display:block;flex:none;width:var(--sz,56px);height:var(--sz,56px);filter:drop-shadow(0 5px 12px var(--lvg,rgba(0,0,0,.3)))}
+.lv-emb{position:relative;display:block;flex:none;width:var(--sz,56px);height:var(--sz,56px);isolation:isolate}
+.lv-emb::before{content:"";position:absolute;left:12%;right:12%;top:30%;bottom:6%;z-index:-1;border-radius:50%;background:var(--lvg,rgba(0,0,0,.3));filter:blur(10px);opacity:.75;pointer-events:none}
 .lv-emb svg{display:block;width:100%;height:100%;overflow:visible}.lv-emb svg .off{fill:var(--ink);fill-opacity:.14}
 .lv-emb.t1{--lvb:linear-gradient(135deg,#f6cfa5,#c77f45 52%,#8a4f26);--lvg:rgba(199,127,69,.42)}
 .lv-emb.t2{--lvb:linear-gradient(135deg,#ffffff,#b9c2cf 52%,#6f7b8c);--lvg:rgba(170,185,205,.42)}
@@ -2811,6 +2812,17 @@ html body .miles{display:flex;flex-direction:column;gap:2px;margin-top:8px}
 .ms-tx{min-width:0;flex:1;display:flex;flex-direction:column;gap:3px}.ms-tx b{font-size:12.5px;font-weight:700;line-height:1.25}.ms:not(.done) .ms-tx b{color:color-mix(in srgb,var(--ink) 72%,transparent)}
 .ms-st{font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}.ms.done .ms-st{color:var(--accent)}
 .ms-bar{display:block;height:3px;border-radius:99px;background:color-mix(in srgb,var(--ink) 9%,transparent);overflow:hidden}.ms-bar>span{display:block;height:100%;border-radius:inherit;background:var(--accent)}
+/* compact learning card in the left column */
+html body .rl-learn{padding:14px 16px;gap:6px;flex:none}
+html body #rl-learn .rrow{font-size:12.5px;padding:4px 0;border-bottom:0}
+html body #rl-learn .rrow span{color:var(--muted)}html body #rl-learn .rrow b{font-size:12.5px;font-variant-numeric:tabular-nums}
+html body .rl-ms{flex:none}
+/* milestones in the theme's own colour (Noc is violet even though its links are blue) */
+.rl-ms{--ms:var(--th-glow,#a78bfa);--ms2:var(--th-glow2,#7c3aed)}
+html[data-tk="l"] .rl-ms,body.sakura .rl-ms{--ms:var(--accent);--ms2:color-mix(in srgb,var(--accent) 70%,#000)}html[data-tk="l"] .ms.done .ms-ic,body.sakura .ms.done .ms-ic{color:#fff!important}
+html body .ms.done .ms-ic{background:linear-gradient(140deg,var(--ms),var(--ms2));color:var(--th-priink,#fff);box-shadow:0 6px 16px -8px var(--ms),inset 0 1px 0 rgba(255,255,255,.35)}
+html body .ms.done .ms-st{color:var(--ms)}html body .ms-bar>span{background:linear-gradient(90deg,var(--ms2),var(--ms))}
+.ms-ic svg{stroke-width:1.7}.ms-ic svg .f{fill:currentColor;fill-opacity:.22;stroke:none}.ms.done .ms-ic svg .f{fill-opacity:.32}
 .thpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:8px}
 .thp{display:flex;flex-direction:column;gap:8px;align-items:stretch;text-align:left;padding:8px;border-radius:16px;min-height:0}
 .thp .sw{height:54px;border-radius:10px;position:relative;overflow:hidden;border:1px solid rgba(128,128,128,.25)}
@@ -2853,8 +2865,8 @@ html body .miles{display:flex;flex-direction:column;gap:2px;margin-top:8px}
     </div>
   </div>
   <div class="card rl-lv" id="rl-lv" hidden></div>
-  <div class="card"><span class="kick">Učení</span><div id="rl-learn"></div></div>
   <div class="card rl-ms"><div class="rl-msh"><span class="kick">Milníky</span><b id="rl-msn"></b></div><div class="miles" id="rl-miles"></div></div>
+  <div class="card rl-learn"><span class="kick">Učení</span><div id="rl-learn"></div></div>
 </aside>
 <div class="wrap">
   <div id="banner" role="status"></div>
@@ -4730,7 +4742,16 @@ html body .miles{display:flex;flex-direction:column;gap:2px;margin-top:8px}
   }
 
   // ---------- dashboard and rails ----------
-  const MS_IC = {book: '<svg viewBox="0 0 24 24"><path d="M4 5.5c2.500-1 5-1 8 .8 3-1.800 5.500-1.800 8-.8v13c-2.500-1-5-1-8 .8-3-1.800-5.500-1.800-8-.8zM12 6.300V19.300"/></svg>', layers: '<svg viewBox="0 0 24 24"><path d="M12 4 3.500 8.500 12 13l8.500-4.500z"/><path d="M3.500 12.500 12 17l8.500-4.500M3.500 16.500 12 21l8.500-4.500"/></svg>', target: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r=".8"/></svg>', cards: '<svg viewBox="0 0 24 24"><rect x="4" y="6" width="12" height="14" rx="2"/><path d="M8 4h10a2 2 0 0 1 2 2v12"/></svg>', award: '<svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="5"/><path d="M8.800 13 7.500 20.500 12 18l4.500 2.500L15.200 13"/></svg>', flame: '<svg viewBox="0 0 24 24"><path d="M12 3c1 3.200 4.500 5 4.500 9.200A4.500 4.500 0 0 1 12 17a4.500 4.500 0 0 1-4.500-4.800C7.500 10.500 8.600 9.600 9 8c1.200.9 1.700 1.900 1.800 3 .9-1.700 1.400-4.800 1.200-8z"/><path d="M9 21h6"/></svg>', pen: '<svg viewBox="0 0 24 24"><path d="M15.500 4.500l4 4L9 19H5v-4z"/><path d="M13.500 6.500l4 4"/></svg>', stack: '<svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="5" rx="1.500"/><rect x="4" y="10.500" width="16" height="5" rx="1.500"/><path d="M6 19h12"/></svg>'};
+  // milestone icons: 24 grid, 1.7 stroke, a tinted fill (class f) for depth
+  const MS_IC = {
+    book: '<svg viewBox="0 0 24 24"><path class="f" d="M10 6h4v11h-4z"/><path d="M12 3v3M12 17v4M10 6h4v11h-4z"/></svg>',
+    layers: '<svg viewBox="0 0 24 24"><path class="f" d="M4 9h3.500v7H4zM10.300 6h3.500v9h-3.500zM16.500 8h3.500v8h-3.500z"/><path d="M5.700 6v3M5.700 16v3M12 3v3M12 15v4M18.200 5v3M18.200 16v3M4 9h3.500v7H4zM10.300 6h3.500v9h-3.500zM16.500 8h3.500v8h-3.500z"/></svg>',
+    target: '<svg viewBox="0 0 24 24"><circle class="f" cx="12" cy="12" r="8.500"/><circle cx="12" cy="12" r="8.500"/><path d="M8.300 12.200l2.500 2.500 5-5.300"/></svg>',
+    cards: '<svg viewBox="0 0 24 24"><rect x="3.500" y="7" width="11" height="14" rx="2.200" transform="rotate(-8 9 14)"/><rect class="f" x="9.500" y="4" width="11" height="14" rx="2.200" transform="rotate(8 15 11)"/><rect x="9.500" y="4" width="11" height="14" rx="2.200" transform="rotate(8 15 11)"/></svg>',
+    award: '<svg viewBox="0 0 24 24"><path class="f" d="M2.500 9 12 4.500 21.500 9 12 13.500z"/><path d="M2.500 9 12 4.500 21.500 9 12 13.500zM6.500 11v4.500c3 2.500 8 2.500 11 0V11M21.500 9v5"/></svg>',
+    flame: '<svg viewBox="0 0 24 24"><rect x="3.500" y="5" width="17" height="15" rx="3"/><path d="M3.500 9.500h17M8 3v4M16 3v4"/><path class="f" d="M5.800 12.800h12.400v4.400H5.800z"/><path d="M7.200 15h.01M9.600 15h.01M12 15h.01M14.400 15h.01M16.800 15h.01" stroke-width="2.600"/></svg>',
+    pen: '<svg viewBox="0 0 24 24"><path class="f" d="M5 3.500h10l4 4v13H5z"/><path d="M5 3.500h10l4 4v13H5zM15 3.500v4h4M8.500 12h7M8.500 16h4.500"/></svg>',
+    stack: '<svg viewBox="0 0 24 24"><path class="f" d="M4 20V14h3.500v6zM10.300 20V10h3.500v10zM16.500 20V6H20v14z"/><path d="M4 20V14h3.500v6zM10.300 20V10h3.500v10zM16.500 20V6H20v14zM2.500 20.500h19"/></svg>'};
   function milestones(){
     const seen = Object.keys(lp.seen || {}).length, ex = Object.keys(lp.exam || {}).filter(k => lp.exam[k].best / lp.exam[k].of >= 0.8).length;
     const pb = lp.practice && lp.practice.best ? lp.practice.best : 0, fk = fcKnown(), sd = streakDays(), nt = jr.trades.length;
@@ -8667,17 +8688,22 @@ html body .miles{display:flex;flex-direction:column;gap:2px;margin-top:8px}
         body += '<path d="M' + pt(O[i]) + "L" + pt(I[i]) + "L" + pt(I[h]) + 'Z" fill="' + shade(lit((o[i][0] + q[i][0] + q[h][0]) / 3, (o[i][1] + q[i][1] + q[h][1]) / 3)) + '"/><path d="M' + pt(O[i]) + "L" + pt(O[j]) + "L" + pt(I[i]) + 'Z" fill="' + shade(lit((o[i][0] + o[j][0] + q[i][0]) / 3, (o[i][1] + o[j][1] + q[i][1]) / 3) * .9 + .05) + '"/>'; }
       body += '<path d="M' + I.map(pt).join("L") + 'Z" fill="' + shade(.22) + '"/><path d="M' + O.map(pt).join("L") + 'Z" fill="none" stroke="#fff" stroke-opacity=".4" stroke-width=".9" stroke-linejoin="round"/>'; }
     let pp = ""; if (pips !== false) for (let i = 0; i < 3; i++){ const x = 25 + i * 7, on = i < st; pp += '<rect class="' + (on ? "on" : "off") + '" x="' + (x - 2.4) + '" y="55" width="4.8" height="4.8" rx="1.2" transform="rotate(45 ' + x + ' 57.4)"' + (on ? ' fill="url(#' + id + ')"' : "") + "/>"; }
-    return '<svg viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="' + id + '" x1="0" y1="0" x2="1" y2="1">' + p.map((c, i) => '<stop offset="' + (i / (p.length - 1)).toFixed(2) + '" stop-color="' + c + '"/>').join("") + "</linearGradient></defs>" + body + pp + "</svg>"; }
+    return '<svg viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="' + id + '" x1="0" y1="0" x2="1" y2="1">' + p.map((c, i) => '<stop offset="' + (i / (p.length - 1)).toFixed(2) + '" stop-color="' + c + '"/>').join("") + "</linearGradient></defs><g class=\"gb\">" + body + "</g>" + pp + "</svg>"; }
+  // turn a drawn gem without redrawing it: bronze, silver and gold only need a rotation and a squash for the lean.
+  // The diamond turns around its upright axis, so it is redrawn, at most every other frame.
+  function gemPose(emb, n, ang, tilt, id, now){ if (lvTier(n) === 4){ if (now && emb._pt && now - emb._pt < 33) return; emb._pt = now; emb.innerHTML = gemSvg(n, true, ang, tilt, id); return; }
+    let g = emb._gb; if (!g || !g.isConnected || emb._gn !== n){ emb.innerHTML = gemSvg(n, true, 0, 0, id); g = emb._gb = emb.querySelector(".gb"); emb._gn = n; }
+    if (g) g.setAttribute("transform", "translate(32 28) scale(1 " + Math.cos(tilt * .9).toFixed(3) + ") rotate(" + (ang * 57.2958).toFixed(2) + ") translate(-32 -28)"); }
   // the gem turns: on the level screen by itself, on the home card with the page scroll. Never with effects off or reduced motion
   const gemStill = () => { try { return document.body.classList.contains("fx-off") || matchMedia("(prefers-reduced-motion: reduce)").matches; } catch(e){ return true; } };
   function gemSpin(emb, n, delay){ if (gemStill()) return; const id = "gs" + (++gemUid), t0 = performance.now() + (delay || 0); let last = 0;
-    const step = now => { if (!emb.isConnected) return; requestAnimationFrame(step); if (document.hidden || now < t0 || now - last < 30) return; last = now; const el2 = (now - t0) / 1000, k = Math.min(1, el2 / 1.1), ease = 1 - Math.pow(1 - k, 3);
-      emb.innerHTML = gemSvg(n, true, el2 * (2 * Math.PI / 8), ease * .52, id); }; requestAnimationFrame(step); }
+    const step = now => { if (!emb.isConnected) return; requestAnimationFrame(step); if (document.hidden || now < t0) return; const el2 = (now - t0) / 1000, k = Math.min(1, el2 / 1.1), ease = 1 - Math.pow(1 - k, 3);
+      gemPose(emb, n, el2 * (2 * Math.PI / 8), ease * .52, id, now); }; requestAnimationFrame(step); }
   { let vis = false, raf = 0, emb = null, n = 0; const io = window.IntersectionObserver ? new IntersectionObserver(es => { vis = es.some(e => e.isIntersecting); }) : null;
     window.gemScrollBind = (e, lv) => { if (!io) return; if (emb) io.unobserve(emb); emb = e; n = lv; io.observe(e); };
     // with a mouse the gem also turns one edge toward the pointer and leans after it; it eases there instead of jumping
     let tA = 0, tT = 0, cA = 0, cT = 0, mouse = false; const hov = () => { try { return matchMedia("(hover: hover) and (pointer: fine)").matches; } catch(e){ return false; } };
-    let lastT = 0; const draw = now => { raf = 0; if (!emb || !emb.isConnected) return; const dt = lastT ? Math.min(64, now - lastT) : 16; lastT = now; const k = 1 - Math.exp(-dt / 140); cA += (tA - cA) * k; cT += (tT - cT) * k; emb.innerHTML = gemSvg(n, true, (mouse ? 0 : (window.scrollY || 0) * .0045) + cA, cT, "gsh"); if (Math.abs(tA - cA) > .002 || Math.abs(tT - cT) > .002) raf = requestAnimationFrame(draw); else lastT = 0; };
+    let lastT = 0; const draw = now => { raf = 0; if (!emb || !emb.isConnected) return; const dt = lastT ? Math.min(64, now - lastT) : 16; lastT = now; const k = 1 - Math.exp(-dt / 140); cA += (tA - cA) * k; cT += (tT - cT) * k; gemPose(emb, n, (mouse ? 0 : (window.scrollY || 0) * .0045) + cA, cT, "gsh", now); if (Math.abs(tA - cA) > .002 || Math.abs(tT - cT) > .002) raf = requestAnimationFrame(draw); else lastT = 0; };
     const kick = () => { if (!vis || raf || !emb || !emb.isConnected || gemStill()) return; raf = requestAnimationFrame(draw); };
     addEventListener("scroll", kick, {passive: true});
     addEventListener("mousemove", ev => { if (!vis || !emb || !emb.isConnected || !hov()) return; const r = emb.getBoundingClientRect(), dx = ev.clientX - (r.left + r.width / 2), dy = ev.clientY - (r.top + r.height / 2), c = v => Math.max(-1, Math.min(1, v));
