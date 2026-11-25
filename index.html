@@ -8847,14 +8847,17 @@ svg.ia{fill:none!important;stroke:currentColor}svg.ia :is(path,rect,circle){fill
   function gemSpin(emb, n, delay){ if (gemStill()) return; const id = "gs" + (++gemUid), t0 = performance.now() + (delay || 0); let last = 0;
     const step = now => { if (!emb.isConnected) return; requestAnimationFrame(step); if (document.hidden || now < t0) return; const el2 = (now - t0) / 1000, k = Math.min(1, el2 / 1.1), ease = 1 - Math.pow(1 - k, 3);
       gemPose(emb, n, el2 * (2 * Math.PI / 8), ease * .52, id, now); }; requestAnimationFrame(step); }
-  { let vis = false, raf = 0, emb = null, n = 0; const io = window.IntersectionObserver ? new IntersectionObserver(es => { vis = es.some(e => e.isIntersecting); }) : null;
-    window.gemScrollBind = (e, lv) => { if (!io) return; if (emb) io.unobserve(emb); emb = e; n = lv; io.observe(e); };
+  { let vis = false, raf = 0, emb = null, n = 0, list = []; const seen = new Map(); const io = window.IntersectionObserver ? new IntersectionObserver(es => { es.forEach(e => seen.set(e.target, e.isIntersecting)); pick(); }) : null;
+    // several gems can be bound (rail and home card); the one on screen turns
+    const pick = () => { const v = list.filter(e => e.isConnected && e.offsetParent !== null && seen.get(e)); vis = v.length > 0; if (vis && emb !== v[0]){ emb = v[0]; } else if (!vis && !emb) emb = list[0] || null; };
+    window.gemScrollBind = (e, lv) => { if (!io) return; list.forEach(x => io.unobserve(x)); list = (Array.isArray(e) ? e : [e]).filter(Boolean); n = lv; emb = list[0] || null; list.forEach(x => io.observe(x)); };
+    addEventListener("resize", () => { pick(); }, {passive: true});
     // with a mouse the gem also turns one edge toward the pointer and leans after it; it eases there instead of jumping
     let tA = 0, tT = 0, cA = 0, cT = 0, mouse = false; const hov = () => { try { return matchMedia("(hover: hover) and (pointer: fine)").matches; } catch(e){ return false; } };
     let lastT = 0; const draw = now => { raf = 0; if (!emb || !emb.isConnected) return; const dt = lastT ? Math.min(64, now - lastT) : 16; lastT = now; const k = 1 - Math.exp(-dt / 140); cA += (tA - cA) * k; cT += (tT - cT) * k; gemPose(emb, n, (mouse ? 0 : (window.scrollY || 0) * .0045) + cA, cT, "gsh", now); if (Math.abs(tA - cA) > .002 || Math.abs(tT - cT) > .002) raf = requestAnimationFrame(draw); else lastT = 0; };
-    const kick = () => { if (!vis || raf || !emb || !emb.isConnected || gemStill()) return; raf = requestAnimationFrame(draw); };
+    const kick = () => { if (emb && emb.offsetParent === null) pick(); if (!vis || raf || !emb || !emb.isConnected || gemStill()) return; raf = requestAnimationFrame(draw); };
     addEventListener("scroll", kick, {passive: true});
-    addEventListener("mousemove", ev => { if (!vis || !emb || !emb.isConnected || !hov()) return; const r = emb.getBoundingClientRect(), dx = ev.clientX - (r.left + r.width / 2), dy = ev.clientY - (r.top + r.height / 2), c = v => Math.max(-1, Math.min(1, v));
+    addEventListener("mousemove", ev => { if (emb && emb.offsetParent === null) pick(); if (!vis || !emb || !emb.isConnected || !hov()) return; const r = emb.getBoundingClientRect(), dx = ev.clientX - (r.left + r.width / 2), dy = ev.clientY - (r.top + r.height / 2), c = v => Math.max(-1, Math.min(1, v));
       const t = lvTier(n), d = Math.hypot(dx, dy), near = Math.max(0, Math.min(1, (d - r.width * .35) / (r.width * 1.2))); mouse = true; tT = .1 + c(d / 360) * .42;
       if (near < .02){ kick(); return; } // right over the gem the direction is not defined; hold the current turn
       if (t === 4) tA = c(dx / 300) * 1.1; // the diamond turns around its upright axis toward the pointer
@@ -8881,7 +8884,7 @@ svg.ia{fill:none!important;stroke:currentColor}svg.ia :is(path,rect,circle){fill
     const ge = lvEmb(L.n, 76); lvCard.appendChild(ge); lvCard.appendChild(m); lvCard.appendChild(b);
     const rl = $("rl-lv"); let rge = null; if (rl){ rl.hidden = false; clear(rl); const bt = el("button","rl-lvb"), top = el("div","rl-lvt"), tx = el("div","rl-lvn"); bt.type = "button"; bt.setAttribute("aria-label", LT("Levely a odměny", "Levels and rewards")); bt.addEventListener("click", () => lvPanel());
       rge = lvEmb(L.n, 58); top.appendChild(rge); tx.appendChild(el("span","kick", "Level " + L.n + " · " + lvNum(lvXp) + " XP")); tx.appendChild(el("b", null, L.name)); tx.appendChild(el("span","lv-tag", lvTag())); top.appendChild(tx); bt.appendChild(top); bt.appendChild(lvBar(L)); bt.appendChild(el("span","rl-lvx", lvNextLine(L))); rl.appendChild(bt); }
-    try { const railOn = rl && rl.offsetParent !== null; window.gemScrollBind(railOn && rge ? rge : ge, L.n); } catch(e){}
+    try { window.gemScrollBind([rge, ge], L.n); } catch(e){}
   }
 
   // ----- the panel: ladder, rewards, achievements, where the XP came from -----
