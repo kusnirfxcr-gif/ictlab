@@ -2965,6 +2965,26 @@ html body #pa-chips.pt-grid .chip[aria-pressed="true"] .pt-n{background:var(--th
 .gm-s{font-size:12px;color:var(--muted);text-decoration:none;align-self:flex-start}
 .gm-s:hover{color:var(--th-glow,var(--accent));text-decoration:underline}
 .gm-ft{font-size:11.5px;color:var(--muted);opacity:.85}
+body:not(.sakura) .bdg .bdp,body:not(.sakura) .bdg .bdc{display:none}
+body.sakura .bdg .bdh{display:none}
+body:not(.sakura) .bdg{--bd1:color-mix(in srgb,var(--th-glow2,var(--accent)) 70%,#fff);--bd2:var(--th-glow,var(--accent));gap:6px}
+body:not(.sakura) .bdg svg{max-width:54px}
+body:not(.sakura) .bdg .bdh path{stroke-linejoin:round}
+body:not(.sakura) .bdg .bdh-b{fill:color-mix(in srgb,var(--ink) 4%,transparent)}
+body:not(.sakura) .bdg .bdh-f1,body:not(.sakura) .bdg .bdh-f2{fill:none}
+body:not(.sakura) .bdg .bdh-o{fill:none;stroke:color-mix(in srgb,var(--ink) 16%,transparent);stroke-width:1.3}
+body:not(.sakura) .bdg .bdh-p{fill:none}
+body:not(.sakura) .bdg .bdt{font-size:11px;font-weight:800;fill:var(--muted);font-family:var(--display,var(--body));font-variant-numeric:tabular-nums}
+body:not(.sakura) .bdg.on .bdh-f1{fill:rgba(255,255,255,.26)}
+body:not(.sakura) .bdg.on .bdh-f2{fill:rgba(10,6,30,.2)}
+body:not(.sakura) .bdg.on .bdh-o{stroke:rgba(255,255,255,.55);stroke-width:1.1}
+body:not(.sakura) .bdg.on .bdh-p{fill:rgba(10,8,24,.5);stroke:rgba(255,255,255,.3);stroke-width:.8}
+body:not(.sakura) .bdg.on .bdt{fill:#fff}
+body:not(.sakura) .bdg.on svg{filter:drop-shadow(0 5px 10px color-mix(in srgb,var(--th-glow,var(--accent)) 45%,transparent))}
+body:not(.sakura) .bdg.on span{color:var(--ink)}
+body:not(.sakura) .bdg.on.h1,body:not(.sakura) .bdg.on.h2,body:not(.sakura) .bdg.on.h3{--bd1:color-mix(in srgb,var(--th-glow2,var(--accent)) 70%,#fff)}
+html[data-tk="l"] body:not(.sakura) .bdg.on .bdh-p{fill:rgba(255,255,255,.9);stroke:rgba(0,0,0,.08)}
+html[data-tk="l"] body:not(.sakura) .bdg.on .bdt{fill:var(--ink)}
 .thpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:8px}
 .thp{display:flex;flex-direction:column;gap:8px;align-items:stretch;text-align:left;padding:8px;border-radius:16px;min-height:0}
 .thp .sw{height:54px;border-radius:10px;position:relative;overflow:hidden;border:1px solid rgba(128,128,128,.25)}
@@ -4365,7 +4385,7 @@ html body #pa-chips.pt-grid .chip[aria-pressed="true"] .pt-n{background:var(--th
     const steps = t.steps, st = steps[paStep], prev = paStep > 0 ? steps[paStep - 1] : null;
     const show = Math.max(1, Number(st.show) || 1), prevShow = prev ? Math.max(1, Number(prev.show) || 1) : 0;
     paUI.svg.innerHTML = safeChart({
-      candles: (t.candles || []).slice(0, show), n: (t.candles || []).length, lo: t.lo, hi: t.hi, h: t.h || 250, last: true,
+      candles: (t.candles || []).slice(0, show), n: (t.candles || []).length, lo: t.lo, hi: t.hi, h: t.h || 250, last: true, t0: t.t0, tf: t.tf, tday: t.tday,
       marks: paMarks(t, paStep, animate ? paStep : -1), newFrom: animate ? Math.min(prevShow, show) : show,
       focus: st.focus || null, prevFocus: animate ? (prev ? prev.focus || null : null) : (st.focus || null)
     });
@@ -4386,8 +4406,9 @@ html body #pa-chips.pt-grid .chip[aria-pressed="true"] .pt-n{background:var(--th
     if (!last){ paStep++; paDraw(true); return; }
     lp.seen = lp.seen || {};
     if (!lp.seen[t.id] && !t.check){ lp.seen[t.id] = true; persistLaura(); paChips(); }
-    if (idx < pa.length - 1 && topicLocked(idx + 1)){ toast("Odpověz na kontrolní otázku pod grafem a odemkne se další téma."); const ex = $("pa-extra"); if (ex) ex.scrollIntoView({block: "center", behavior: "smooth"}); return; }
-    if (idx === pa.length - 1){ const pc = $("pr-card"); if (pc) arriveAt(pc); return; }
+    const fullOff = () => { try { if (document.querySelector(".zm-full") && window.zmFullOff) window.zmFullOff(); } catch(e){} }; // the target sits outside the full-screen lesson
+    if (idx < pa.length - 1 && topicLocked(idx + 1)){ fullOff(); toast("Odpověz na kontrolní otázku pod grafem a odemkne se další téma."); const ex = $("pa-extra"); if (ex) setTimeout(() => ex.scrollIntoView({block: "center", behavior: "smooth"}), 60); return; }
+    if (idx === pa.length - 1){ fullOff(); const pc = $("pr-card"); if (pc) setTimeout(() => arriveAt(pc), 60); return; }
     if (idx < pa.length - 1){
       const before = paUI.next.getBoundingClientRect().top;
       paCur = pa[idx + 1].id; paStep = 0; paBuild();
@@ -6631,7 +6652,7 @@ html body #pa-chips.pt-grid .chip[aria-pressed="true"] .pt-n{background:var(--th
   const G2T = {fvg: "fvg-up", bisi: "fvg-up", imbalance: "fvg-up", ce: "fvg-up", sibi: "fvg-down", ifvg: "ifvg", "order-block": "ob-up", "mean-threshold": "ob-up", breaker: "breaker", bos: "bos-mss", mss: "bos-mss", choch: "bos-mss", displacement: "bos-mss", cisd: "cisd",
     "immediate-rebalance": "immediate-rebalance", bpr: "bpr", likvidita: "likvidita", sweep: "likvidita", bsl: "likvidita", ssl: "likvidita", "buy-stops": "likvidita", eqh: "likvidita", eql: "likvidita", "stop-hunt": "likvidita", "liquidity-pool": "likvidita", "old-high-low": "likvidita", "pdh-pdl": "likvidita", "turtle-soup": "likvidita", "judas-swing": "likvidita",
     "hh-hl": "struktura", "lh-ll": "struktura", swing: "struktura", trend: "struktura", "struktura-trhu": "struktura", "sth-stl": "struktura", premium: "premium-discount", discount: "premium-discount", equilibrium: "premium-discount", ote: "premium-discount", "dealing-range": "premium-discount", fib: "premium-discount",
-    "model-2022": "model-2022-long", "entry-model": "model-2022-long", setup: "dohromady"};
+    "model-2022": "model-2022-long", "entry-model": "model-2022-long", setup: "dohromady", killzone: "seance-cas", seance: "seance-cas", "newyorsky-cas": "seance-cas", "am-session": "seance-cas", lunch: "seance-cas", "pm-session": "seance-cas", "cash-open": "seance-cas", overnight: "seance-cas", bias: "ranni-priprava", plan: "ranni-priprava", dol: "ranni-priprava", smt: "smt", partial: "rizeni-obchodu", rr: "rizeni-obchodu", revenge: "psychologie", fomo: "psychologie", news: "spatny-den", slippage: "spatny-den", konsolidace: "spatny-den"};
   const _topicFor = topicFor;
   topicFor = g => { const id = G2T[g.id]; return (id && pa.find(t => t.id === id)) || _topicFor(g); };
   const topicLocked = i => cfg.mode === "student" && !cfg.unlock && i > 0 && !(lp.seen || {})[pa[i].id] && !(lp.seen || {})[pa[i - 1].id];
@@ -6770,7 +6791,7 @@ html body #pa-chips.pt-grid .chip[aria-pressed="true"] .pt-n{background:var(--th
     const c = el("div","card"), fig = el("figure","fig pa-fig"), svg = el("div","pa-svg"), kick = el("span","pa-kicker"), txt = el("p"), ctl = el("div","pa-ctl"), back = el("button", null, "Zpět"), next = el("button","primary","Další"); let step = 0;
     back.type = next.type = "button"; fig.appendChild(svg);
     const draw = anim => { const st = t.steps[step], prev = step > 0 ? t.steps[step - 1] : null, show = Math.max(1, Number(st.show) || 1), ps = prev ? Math.max(1, Number(prev.show) || 1) : 0;
-      svg.innerHTML = safeChart({candles: t.candles.slice(0, show), n: t.candles.length, lo: t.lo, hi: t.hi, h: t.h || 250, last: true, marks: paMarks(t, step, anim ? step : -1), newFrom: anim ? Math.min(ps, show) : show, focus: st.focus || null, prevFocus: anim ? (prev ? prev.focus || null : null) : (st.focus || null)});
+      svg.innerHTML = safeChart({candles: t.candles.slice(0, show), n: t.candles.length, lo: t.lo, hi: t.hi, h: t.h || 250, last: true, t0: t.t0, tf: t.tf, tday: t.tday, marks: paMarks(t, step, anim ? step : -1), newFrom: anim ? Math.min(ps, show) : show, focus: st.focus || null, prevFocus: anim ? (prev ? prev.focus || null : null) : (st.focus || null)});
       kick.textContent = "Krok " + (step + 1) + " z " + t.steps.length; txt.textContent = st.text; back.disabled = step === 0; next.textContent = step === t.steps.length - 1 ? "Od začátku" : "Další"; };
     back.addEventListener("click", () => { if (step > 0){ step--; draw(false); } }); next.addEventListener("click", () => { if (step === t.steps.length - 1){ step = 0; draw(false); } else { step++; draw(true); } });
     ctl.appendChild(back); ctl.appendChild(next); c.appendChild(el("h2", null, t.title)); c.appendChild(el("p","small muted", t.intro)); c.appendChild(fig); c.appendChild(kick); c.appendChild(txt); c.appendChild(ctl); c.appendChild(el("p","small muted","Zapamatuj si: " + t.remember));
@@ -7216,7 +7237,11 @@ html body #pa-chips.pt-grid .chip[aria-pressed="true"] .pt-n{background:var(--th
     p.addEventListener("click", () => palSay(palPick("tap"), "yay")); document.body.appendChild(p); palNode = p; return p; }
   function palSay(text, mood){ if (!document.body.classList.contains("sakura")) return; const p = palBuild(), s = p.querySelector(".sk-say"); s.textContent = text; p.classList.remove("yay", "oops", "talk"); void p.offsetWidth; p.classList.add("talk"); if (mood) p.classList.add(mood); clearTimeout(palTimer); palTimer = setTimeout(() => p.classList.remove("yay", "oops", "talk"), 3400); }
   function weekDone(w){ return w.lessons.every(l => done[l.id]); }
-  function badgeSvg(n, on){ const pt = [0, 72, 144, 216, 288].map(r => '<path transform="rotate(' + r + ' 24 24)" d="M24 21.5 C17 18.5 15.5 10.5 21 5.5 L24 8 L27 5.5 C32.5 10.5 31 18.5 24 21.500Z"/>').join(""); return '<svg viewBox="0 0 48 48" aria-hidden="true"><g class="bdp">' + pt + '</g><circle cx="24" cy="24" r="8.5" class="bdc"/><text x="24" y="27.6" text-anchor="middle" class="bdt">' + n + "</text></svg>"; }
+  function badgeSvg(n, on){ const pt = [0, 72, 144, 216, 288].map(r => '<path transform="rotate(' + r + ' 24 24)" d="M24 21.5 C17 18.5 15.5 10.5 21 5.5 L24 8 L27 5.5 C32.5 10.5 31 18.5 24 21.500Z"/>').join(""); const gid = "bdhg" + n + (on ? "o" : "x");
+    // two looks in one icon: petals for the sakura room, a faceted hexagon everywhere else (CSS picks one)
+    return '<svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="' + gid + '" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:var(--bd1)"/><stop offset="1" style="stop-color:var(--bd2)"/></linearGradient></defs><g class="bdp">' + pt + '</g><circle cx="24" cy="24" r="8.5" class="bdc"/>'
+      + '<g class="bdh"><path class="bdh-b" d="M24 4.500 40.900 14.250v19.500L24 43.500 7.100 33.750v-19.500z"' + (on ? ' style="fill:url(#' + gid + ')"' : "") + '/><path class="bdh-f1" d="M24 4.500 40.900 14.250 24 24 7.100 14.250z"/><path class="bdh-f2" d="M24 24l16.900-9.750v19.500L24 43.500z"/><path class="bdh-o" d="M24 4.500 40.900 14.250v19.500L24 43.500 7.100 33.750v-19.500z"/><circle class="bdh-p" cx="24" cy="24" r="9.200"/></g>'
+      + '<text x="24" y="27.6" text-anchor="middle" class="bdt">' + n + "</text></svg>"; }
   function renderBadges(){ if (!course) return; let box = $("c-badges"); if (!box){ box = el("div","card"); box.id = "c-badges"; const now = $("c-now"); now.parentNode.insertBefore(box, now.nextSibling); } clear(box);
     const got = course.weeks.filter(weekDone).length, row = el("div","row"), grid = el("div","bdgrid"); row.appendChild(el("h2", null, "Odznaky")); row.appendChild(el("span","small muted", got + " z " + course.weeks.length)); box.appendChild(row);
     course.weeks.forEach(w => { const on = weekDone(w), b = el("div","bdg" + (on ? " on" : "") + " h" + (w.n % 4)); b.innerHTML = badgeSvg(w.n, on); b.title = w.n + ". týden: " + w.title + (on ? " (hotovo)" : ""); b.appendChild(el("span", null, w.title)); grid.appendChild(b); }); box.appendChild(grid);
@@ -7494,6 +7519,14 @@ html body #pa-chips.pt-grid .chip[aria-pressed="true"] .pt-n{background:var(--th
         { const cs = chalStats(); mk(ICO.dr, "Výzva dne", cs.today ? "Dnes " + cs.today.ok + " z 8" + (cs.run > 1 ? " · " + cs.run + " dny v řadě" : "") + ". Zítra nová sada." : "Osm grafů, dnes stejných pro všechny. Počítá se první pokus.", () => openDrill(true), cs.today ? "✓" : "nová"); }
         mk(ICO.dr, "Poznej to na grafu", d.n ? "Úspěšnost " + Math.round(100 * d.ok / d.n) + " % · nejdelší série " + d.best : "Ťukni na swing, FVG, sweep nebo BOS v cvičném grafu.", () => openDrill());
         mk(ICO.wk, "Slabá místa", nW ? "Otázky, kde byla chyba. Zmizí po dvou správných odpovědích." : "Zatím žádná. Chybné odpovědi se sem ukládají samy.", openWeak, nW ? String(nW) : ""); }); }
+    // a stored question keeps the language it was answered in; show it in the app's current language from the lesson it came from
+    function weakNow(id, w){ try { const k = id.slice(0, 2), key = id.slice(2); let q, o, a, why, src;
+        if (k === "t-"){ const t = pa.find(x => x.id === key); if (t && t.check){ q = t.check.q; o = t.check.opts; a = t.check.ok; why = t.check.why; src = t.title; } }
+        else if (k === "s-"){ const x = study && study.model2022 && (study.model2022.steps || []).find(y => String(y.n) === key); if (x && x.quiz){ q = x.quiz.q; o = x.quiz.opts; a = x.quiz.ok; why = x.quiz.why; src = x.title; } }
+        else if (k === "a-"){ const x = study && study.adv && (study.adv.lessons || []).find(y => String(y.id) === key); if (x && x.quiz){ q = x.quiz.q; o = x.quiz.opts; a = x.quiz.ok; why = x.quiz.why; src = x.title; } }
+        else if (k === "c-"){ let l = null; if (course) course.weeks.forEach(wk => wk.lessons.forEach(x => { if (String(x.id) === key) l = x; })); if (l && l.q){ q = l.q.q; o = l.q.o; a = l.q.o[l.q.ok]; why = l.q.why; src = l.title; } }
+        if (q && Array.isArray(o) && o.length && a) return {q: q, o: o, a: a, why: why || "", src: src || ""};
+      } catch(e){} return w; }
     function openWeak(){ const o = overlay("drov"), ids = shuffled(Object.keys(lp.weak)).slice(0, 10); let i = 0, good = 0, gone = 0;
       const head = () => { const r = el("div","row"), x = el("button","ck-del","Zavřít"); x.type = "button"; x.addEventListener("click", o.close); r.appendChild(el("span","kick","Slabá místa")); r.appendChild(x); return r; };
       const step = () => { clear(o.card); o.card.appendChild(head());
@@ -7501,11 +7534,11 @@ html body #pa-chips.pt-grid .chip[aria-pressed="true"] .pt-n{background:var(--th
         if (i >= ids.length){ o.card.appendChild(el("p","big", good + " z " + ids.length)); o.card.appendChild(el("p","muted", gone ? "Zvládnuto a odebráno: " + gone + ". Zbývá: " + Object.keys(lp.weak).length + "." : "Otázka zmizí, až ji dvakrát po sobě dáš správně. Zbývá: " + Object.keys(lp.weak).length + ".")); const b = el("button","primary","Hotovo"); b.type = "button"; b.addEventListener("click", o.close); o.card.appendChild(b); try { if (good === ids.length) confetti(o.card, 24); } catch(e){} return; }
         const id = ids[i], w = lp.weak[id]; if (!w){ i++; return step(); }
         const bar = el("div","drbar"); ids.forEach((x, k) => bar.appendChild(el("i", k < i ? "ok" : k === i ? "cur" : null))); o.card.appendChild(bar);
-        if (w.src) o.card.appendChild(el("span","small muted", w.src)); o.card.appendChild(el("p","drq", w.q));
+        const v = weakNow(id, w); if (v.src) o.card.appendChild(el("span","small muted", v.src)); o.card.appendChild(el("p","drq", v.q));
         const box = el("div","dropts"), fb = el("p","drfb small"), nx = el("button","primary", i === ids.length - 1 ? "Výsledek" : "Další"); nx.type = "button"; nx.hidden = true; nx.addEventListener("click", () => { i++; step(); });
-        const opts = shuffled(w.o), bs = opts.map(t => { const b = el("button", null, t); b.type = "button"; b.addEventListener("click", () => { const ok = t === w.a; bs.forEach((y, k) => { y.disabled = true; if (opts[k] === w.a) y.classList.add("ok"); }); if (!ok) b.classList.add("no");
+        const opts = shuffled(v.o), bs = opts.map(t => { const b = el("button", null, t); b.type = "button"; b.addEventListener("click", () => { const ok = t === v.a; bs.forEach((y, k) => { y.disabled = true; if (opts[k] === v.a) y.classList.add("ok"); }); if (!ok) b.classList.add("no");
             if (ok){ good++; w.r = (w.r || 0) + 1; if (w.r >= 2){ delete lp.weak[id]; gone++; } } else { w.r = 0; w.w = (w.w || 0) + 1; }
-            fb.className = "drfb small " + (ok ? "pos" : "neg"); fb.textContent = (ok ? (lp.weak[id] ? "Správně. Ještě jednou a je pryč. " : "Správně, tahle je zvládnutá. ") : "Ještě ne. ") + w.why; nx.hidden = false; keep(); }); box.appendChild(b); return b; });
+            fb.className = "drfb small " + (ok ? "pos" : "neg"); fb.textContent = (ok ? (lp.weak[id] ? "Správně. Ještě jednou a je pryč. " : "Správně, tahle je zvládnutá. ") : "Ještě ne. ") + v.why; nx.hidden = false; keep(); }); box.appendChild(b); return b; });
         o.card.appendChild(box); o.card.appendChild(fb); o.card.appendChild(nx); };
       step(); }
     // chart drill: candles are generated, the detector decides what counts as correct
@@ -8501,6 +8534,7 @@ html body #pa-chips.pt-grid .chip[aria-pressed="true"] .pt-n{background:var(--th
     // the box is lifted to the end of the page while it is full, so no parent with a transform can trap it; a placeholder keeps its place
     document.addEventListener("scroll", e => { const fu = document.querySelector(".zm-full"); if (!fu) return; const hd = fu.querySelector(":scope > .zm-head"); fu.classList.toggle("zm-scrolled", !!hd && hd.getBoundingClientRect().bottom < 0); }, true);
     function cgFullOff(){ document.querySelectorAll(".zm-full").forEach(x => { x.classList.remove("zm-full"); const hd = x.querySelector(":scope > .zm-head"); if (hd) hd.remove(); if (x._ph && x._ph.parentNode){ x._ph.parentNode.insertBefore(x, x._ph); x._ph.remove(); } x._ph = null; }); document.body.classList.remove("zm-fullon"); }
+    window.zmFullOff = cgFullOff;
     function cgFull(c, f){ const box = f.closest(".zm-full") || f.closest(".lesson-body") || f, on = !box.classList.contains("zm-full"); cgFullOff();
       if (on){ box._ph = document.createComment("zm"); box.parentNode.insertBefore(box._ph, box); document.body.appendChild(box); box.classList.add("zm-full"); document.body.classList.add("zm-fullon");
         const hd = el("div","zm-head"), x = el("button","zm-x"); x.type = "button"; x.innerHTML = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"/></svg><span>Ukončit celou obrazovku</span><kbd>Esc</kbd>'; x.setAttribute("aria-label", "Ukončit celou obrazovku"); x.addEventListener("click", () => cgFull(c, f));

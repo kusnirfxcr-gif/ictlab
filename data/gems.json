@@ -198,6 +198,138 @@
 "url": "https://chaindesk.ai/tools/youtube-summarizer/ict-gems-blending-silver-bullets-and-macros-qHongB4cMpQ"
 }
 ],
+"seance-cas": [
+{
+"t": "čas",
+"te": "time",
+"cs": "Velké intradenní pohyby podle výkladu začínají kolem 8:30 a 9:30 newyorského času.",
+"en": "Big intraday moves tend to start around 8:30 and 9:30 New York time.",
+"src": "ICT Gems · 15M liquidity pools, intraday scalping",
+"url": "https://lilys.ai/de/notes/day-trading-20260304/ict-gems-15m-liquidity-scalping"
+},
+{
+"t": "Asie",
+"te": "Asia",
+"cs": "ICT bere asijskou likviditu jako celé noční rozpětí 19:00 až 5:00 newyorského času, ne jen killzónu. Londýn rámuje od 2:00 do 11:00.",
+"en": "ICT treats Asian liquidity as the whole overnight range, 19:00 to 5:00 New York time, not just the killzone. He frames London from 2:00 to 11:00.",
+"src": "ICT 2026 Lecture, 12 Jan 2026 · Recapio",
+"url": "https://recapio.com/digest/ict-2026-smart-money-concepts-lecture-january-12-2026-by-the-inner-circle-trader"
+},
+{
+"t": "Silver Bullet",
+"te": "Silver Bullet",
+"cs": "Okno 10:00 až 11:00 newyorského času ICT používá pro Silver Bullet: displacement, nový FVG, cíl v likviditě.",
+"en": "ICT uses the 10:00 to 11:00 New York window for the Silver Bullet: displacement, a new FVG, a target at liquidity.",
+"src": "ICT Gems · Blending Silver Bullets and Macros",
+"url": "https://chaindesk.ai/tools/youtube-summarizer/ict-gems-blending-silver-bullets-and-macros-qHongB4cMpQ"
+}
+],
+"ranni-priprava": [
+{
+"t": "bias",
+"te": "bias",
+"cs": "Den začíná otázkou, kam cena míří. Když trh směr nepotvrdí, bias se opouští.",
+"en": "The day starts with the question of where price is heading. If the market does not confirm the direction, the bias is dropped.",
+"src": "ICT Gems · Here is How to Trade the ICT WAY",
+"url": "https://sozai.app/transcript/ict-gems-how-to-trade-ict-way/"
+},
+{
+"t": "bez biasu",
+"te": "no bias",
+"cs": "Když směr dne nemáš, dají se ráno označit skoro stejné vrcholy a dna. Směr pak často určí ta strana, kterou cena vybere první.",
+"en": "With no daily direction, you can mark near-equal highs and lows in the morning. The side price takes first then often sets the direction.",
+"src": "ICT Gems · Trade without a Daily Bias Using Pre-Market Range",
+"url": "https://videohighlight.com/v/yxVzJZwN6EY"
+},
+{
+"t": "DOL",
+"te": "DOL",
+"cs": "Draw on liquidity nemusí cena dosáhnout, aby obchod vyšel. Je to směr, ne povinný cíl.",
+"en": "Price does not have to reach the draw on liquidity for a trade to work. It is a direction, not a required target.",
+"src": "ICT 2022 Mentorship · Episode 27",
+"url": "https://sozai.app/transcript/youtube-video-transcript-215/"
+}
+],
+"smt": [
+{
+"t": "SMT",
+"te": "SMT",
+"cs": "Zeussy podle shrnutí rozhovoru bere SMT jen jako potvrzení na menším pohybu. Samostatný důvod k obchodu to pro něj není.",
+"en": "According to a summary of the interview, Zeussy uses SMT only as confirmation on a smaller move. It is not a standalone reason for a trade.",
+"src": "Forex.in.rs · rozhovor se Zeussym (shrnutí)",
+"url": "https://www.forex.in.rs/smart-money-timing"
+},
+{
+"t": "SSMT",
+"te": "SSMT",
+"cs": "Sequential SMT je divergence mezi dvěma po sobě jdoucími devadesátiminutovými cykly: NQ udělá nové high nad high minulého cyklu, ES ne.",
+"en": "Sequential SMT is a divergence between two consecutive ninety-minute cycles: NQ makes a new high above the previous cycle's high, ES does not.",
+"src": "FX Replay · Quarterly Theory SMT",
+"url": "https://fxreplay.com/de/strategies/quarterly-theory-smt-strategy"
+}
+],
+"rizeni-obchodu": [
+{
+"t": "stop a výběr",
+"te": "stop and exits",
+"cs": "Stop patří za low sweepu. Půlka pozice se podle výkladu vybírá u nejbližšího krátkodobého vrcholu.",
+"en": "The stop goes below the sweep low. Half the position is taken at the nearest short-term high.",
+"src": "ICT Gems · Here is How to Trade the ICT WAY",
+"url": "https://sozai.app/transcript/ict-gems-how-to-trade-ict-way/"
+},
+{
+"t": "zprávy",
+"te": "news",
+"cs": "ICT má samostatný výklad k řízení obchodu kolem zpráv, například před aukcí dluhopisů ve 13:00 newyorského času.",
+"en": "ICT has a separate talk on managing a trade around news, for example ahead of the 1:00 PM New York bond auction.",
+"src": "ICT Gems · Entering Before the News | Trade Management",
+"url": "https://opentools.ai/youtube-summary/ict-gems-entering-before-the-news-or-trade-management"
+}
+],
+"psychologie": [
+{
+"t": "riziko",
+"te": "risk",
+"cs": "Zeussy podle shrnutí rozhovoru staví obchod od rizika: nejdřív určí, kolik smí ztratit. Sílu vlastního názoru do velikosti pozice nepromítá.",
+"en": "According to a summary of the interview, Zeussy builds a trade from risk: first he sets how much he may lose. He does not let the strength of his opinion into position size.",
+"src": "Forex.in.rs · rozhovor se Zeussym (shrnutí)",
+"url": "https://www.forex.in.rs/smart-money-timing"
+},
+{
+"t": "bias",
+"te": "bias",
+"cs": "Bias se drží jen dokud ho cena potvrzuje. Když ne, opouští se.",
+"en": "A bias is held only while price confirms it. If not, it is dropped.",
+"src": "ICT Gems · Here is How to Trade the ICT WAY",
+"url": "https://sozai.app/transcript/ict-gems-how-to-trade-ict-way/"
+}
+],
+"spatny-den": [
+{
+"t": "konsolidace",
+"te": "consolidation",
+"cs": "Když cena nejde pro likviditu ani vyplnit mezeru, podle výkladu konsoliduje.",
+"en": "When price goes neither for liquidity nor to fill a gap, it consolidates.",
+"src": "ICT Gems · Market Maker Model in 16 Minutes",
+"url": "https://videohighlight.com/v/Xw7HtoT2VTI"
+},
+{
+"t": "zprávy",
+"te": "news",
+"cs": "ICT v mentorship 2022 varoval před vstupy ve dnech velkých zpráv, jako je NFP.",
+"en": "In the 2022 mentorship ICT warned against entries on big news days such as NFP.",
+"src": "ICT 2022 Mentorship · Episode 37",
+"url": "https://sozai.app/transcript/youtube-video-transcript-223/"
+},
+{
+"t": "pondělí",
+"te": "Monday",
+"cs": "Podle statistiky edgeful má NQ v pondělí nejmenší rozpětí newyorské seance, takže se hůř dosahuje vzdálených cílů.",
+"en": "According to edgeful's statistics, NQ has the smallest New York session range on Mondays, so distant targets are harder to reach.",
+"src": "edgeful · Best day of week",
+"url": "https://www.edgeful.com/blog/posts/best-day-of-week-trading-strategy"
+}
+],
 "model-2022-short": [
 {
 "t": "short po MSS",
