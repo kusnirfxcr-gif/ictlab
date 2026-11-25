@@ -508,7 +508,7 @@
  "Plná": "Solid",
  "Klasická tmavá": "Classic dark",
  "Vyber stanici. Přehrávač zůstane dole v rohu a hraje dál, i když se přepneš do lekce nebo deníku.": "Pick a station. The player stays in the corner and keeps playing when you move to a lesson or the journal.",
- "Základní": "Basic",
+ "Základní": "Standard",
  "Podrobný": "Detailed",
  "Provedení": "Execution",
  "podle čeho jsi obchod bral": "what you traded",
@@ -2326,5 +2326,12 @@
  "Uhlík a limetka": "Carbon and lime",
  "Černá a zlatá": "Black and gold",
  "Karbon": "Carbon",
- "Zlato": "Gold"
+ "Zlato": "Gold",
+ "když se přihlásíš, uloží se tvůj e-mail, přezdívka, profilová fotka, deník, plány, postup v učení a nastavení u služby Supabase, aby se načetly i na jiném zařízení. Obrázky k obchodům a klíč ke kouči se neposílají.": "when you sign in, your e-mail, nickname, profile picture, journal, plans, learning progress and settings are stored with the Supabase service so they load on another device too. Trade pictures and the coach key are not sent.",
+ "S účtem: e-mail (u přihlášení přes Google i jméno a e-mail z účtu Google), přezdívka, profilová fotka, deník, plány, postup v učení a nastavení. Důvod: plnění smlouvy, tedy aby ti aplikace fungovala na více zařízeních.": "With an account: your e-mail (with Google sign-in also your Google name and e-mail), nickname, profile picture, journal, plans, learning progress and settings. Reason: performing the contract, so the app works across your devices.",
+ "Napsat plán dne": "Write the daily plan",
+ "Dopsat plán": "Finish the plan",
+ "mimo seanci": "outside the session",
+ "Upravit otázky": "Edit the questions",
+ "Druh checklistu": "Checklist type"
 }
