@@ -171,7 +171,7 @@ details.week>summary{padding:16px 18px}
 .item.gems::before{background:var(--amber)} .item.architekt::before{background:var(--good)}
 .item .item{background:var(--surface)}
 button{border-radius:12px;font-weight:600;transition:transform .15s,background .2s,border-color .2s,opacity .2s}
-button:hover:not(:disabled){border-color:color-mix(in srgb,var(--ink) 22%,transparent)}
+
 button:active:not(:disabled){transform:scale(.97)}
 button:disabled{opacity:.45;cursor:default}
 button.primary{background:var(--ink);border-color:var(--ink);color:var(--bg)}
@@ -380,7 +380,7 @@ body[data-view="prehled"] .rail{display:flex}
 .rtrade div{display:flex;flex-direction:column;min-width:0}
 .rtrade span{font-size:12px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .go{display:flex;justify-content:space-between;align-items:center;gap:12px;text-decoration:none;color:var(--ink);padding:14px 16px;border:1px solid var(--line);border-radius:16px;background:var(--surface2);transition:border-color .2s,transform .2s}
-.go:hover{border-color:#3a3a43;transform:translateY(-1px)}
+.go:hover{transform:translateY(-1px)}
 .go div{display:flex;flex-direction:column;gap:2px;min-width:0}
 .go span{font-size:13.5px;color:var(--muted)}
 .go i{font-style:normal;color:var(--muted);font-size:20px}
@@ -498,7 +498,7 @@ body.norails .rail{display:none!important}
 .toast.on{opacity:1;transform:translate(-50%,0)}
 button.danger{color:var(--bad);border-color:rgba(255,107,107,.35);background:transparent}
 button.danger.arm{background:var(--bad);color:var(--bg);border-color:var(--bad)}
-.empty{display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:18px;border:1px dashed #33333a;border-radius:16px}
+.empty{display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:18px;border:1px dashed var(--line);border-radius:16px}
 .empty span{font-size:14px;color:var(--muted)}
 .vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
 label.chk{flex-direction:row;align-items:center;gap:10px;font-size:14.5px;color:var(--ink);cursor:pointer}
@@ -1288,7 +1288,7 @@ details.lex .lxr b{color:var(--muted);font-size:12px;text-transform:uppercase;le
 .hero2 .cta>*{background:none!important;border:0!important;box-shadow:none!important;padding:4px 0!important;font-size:14px!important;font-weight:600;color:var(--muted)!important;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:4px;border-radius:0!important;min-height:0!important}
 .hero2 .cta{gap:4px 4px;margin-left:-11px}
 html body .hero2 .cta>*{padding:6px 11px!important;border-radius:999px!important;text-decoration-color:transparent;transition:background-color .2s ease,color .2s ease,transform .2s ease}
-html[data-t][data-tk] body .hero2 .cta>a.abtn.abtn:hover,html[data-t][data-tk] body .hero2 .cta>a.abtn.abtn:focus-visible,html body .hero2 .cta>*:hover,html body .hero2 .cta>*:focus-visible{background-color:color-mix(in srgb,var(--accent,#8b5cf6) 16%,transparent)!important;filter:none!important;color:var(--ink)!important;background-image:none!important;background-color:color-mix(in srgb,var(--accent,#8b5cf6) 15%,transparent)!important;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent,#8b5cf6) 28%,transparent)!important;transform:translateY(-1px)}
+html[data-t][data-tk] body .hero2 .cta>a.abtn.abtn:hover,html[data-t][data-tk] body .hero2 .cta>a.abtn.abtn:focus-visible,html body .hero2 .cta>*:hover,html body .hero2 .cta>*:focus-visible{background-color:color-mix(in srgb,var(--accent,#8b5cf6) 16%,transparent)!important;filter:none!important;color:var(--ink)!important;background-image:none!important;background-color:color-mix(in srgb,var(--accent,#8b5cf6) 15%,transparent)!important;box-shadow:none!important;transform:translateY(-1px)}
 .hero2 .h2-spark{width:100%;height:64px;display:block}.hero2 .h2-spark path.l{fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}.hero2 .h2-spark path.a{opacity:.14;stroke:none}
 .hero2 .h2-big{font-family:var(--display);font-weight:800;font-size:clamp(46px,13vw,68px);letter-spacing:-.05em;line-height:.95;font-variant-numeric:tabular-nums}
 .hero2 .h2-big small{font-size:.34em;letter-spacing:0;color:var(--muted);font-weight:700;margin-left:6px}
@@ -2719,6 +2719,78 @@ button.dtf-now{flex:none;min-height:0;padding:0 14px!important;font-size:13px;fo
 body.rp-fsbody{overflow:hidden}
 @media (max-width:859px){.rp-studio.rp-fs .rp-bar{flex-wrap:nowrap!important;overflow-x:auto;scrollbar-width:none}.rp-studio.rp-fs .rp-bar::-webkit-scrollbar{display:none}.rp-studio.rp-fs .rp-bar>*{flex:none}.rp-studio.rp-fs .rp-ohlc,.rp-studio.rp-fs .rp-ileg{display:none}}
 @media (max-width:859px){.rp-studio.rp-fs .rp-head{padding-right:0}.rp-studio.rp-fs .rp-exitfs{top:auto!important;bottom:calc(14px + env(safe-area-inset-bottom))!important;right:14px!important}}
+/* no hairline on hover: the glow is the only edge */
+@media (hover:hover){html body .cg-on,html body .cg-on:hover{border-color:transparent!important;outline:none!important}
+html body .cg-on:not(.primary):not(.h2-next):not(.tb-trade){box-shadow:none!important}}
+/* ===== motion system: one set of durations and easings for the whole app =====
+   fast = hover and press, base = things that appear (overlays, menus, details), slow = a whole page coming in */
+:root{--m-fast:.16s;--m-base:.28s;--m-slow:.46s;--e-out:cubic-bezier(.22,.8,.24,1);--e-in:cubic-bezier(.5,0,.75,.2);--e-soft:cubic-bezier(.4,.1,.2,1)}
+@keyframes m-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes m-pop{from{opacity:0;transform:translateY(8px) scale(.985)}to{opacity:1;transform:none}}
+@keyframes m-fade{from{opacity:0}to{opacity:1}}
+/* pages: content rises in a short, even cascade */
+section.view.on>*{animation:m-in var(--m-slow) var(--e-out) both}
+section.view.on>*:nth-child(2){animation-delay:40ms}section.view.on>*:nth-child(3){animation-delay:80ms}section.view.on>*:nth-child(4){animation-delay:120ms}section.view.on>*:nth-child(n+5){animation-delay:160ms}
+/* interactive things: the same short response everywhere */
+button,.abtn,.chip,a.go,.nav1 a,.bottombar a,summary,.tk,.sitem,.lv-card,.pf-lv{transition:transform var(--m-fast) var(--e-out),background-color var(--m-fast) var(--e-soft),color var(--m-fast) var(--e-soft),border-color var(--m-fast) var(--e-soft),box-shadow var(--m-base) var(--e-soft),opacity var(--m-fast) var(--e-soft)}
+@media (hover:hover){button:not(:disabled):active,.abtn:active,.chip:active,a.go:active{transform:scale(.97)!important;transition-duration:60ms}}
+/* overlays and pop-ups: backdrop fades, the card comes up a little */
+.ob{animation:m-fade var(--m-base) var(--e-soft) both}
+.ob>.card,.ob .card.ckbox,.ob .card.search{animation:m-pop var(--m-base) var(--e-out) both}
+.thq{animation:m-pop var(--m-base) var(--e-out) both}
+/* opening a section */
+details[open]>*:not(summary){animation:m-in var(--m-base) var(--e-out) both}
+.toast{transition:opacity var(--m-base) var(--e-soft),transform var(--m-base) var(--e-out)!important}
+.cg-orbit{animation-duration:var(--m-base)!important}
+@media (prefers-reduced-motion:reduce){section.view.on>*,.ob,.ob>.card,.thq,details[open]>*:not(summary){animation:none!important}}
+body.fx-off section.view.on>*,body.fx-off .ob>.card,body.fx-off details[open]>*:not(summary){animation:none!important}
+/* home as "today": today on top, your progress one level lower, everything else last */
+#v-prehled>*{order:50!important}
+#v-prehled>.herocard,#v-prehled>.hero2,#v-prehled>#d-log{order:0!important}
+#v-prehled>[data-card="zprava"]{order:5!important}#v-prehled>[data-card="vyzva"]{order:6!important}#v-prehled>[data-card="hodiny"]{order:7!important}#v-prehled>[data-card="zpravy"]{order:8!important}#v-prehled>#d-move,#v-prehled>#d-remind{order:4!important}
+#v-prehled>.h-tier[data-tier="2"]{order:20!important}
+#v-prehled>[data-card="level"]{order:21!important}#v-prehled>[data-card="obchody"]{order:22!important}#v-prehled>[data-card="vykon"]{order:23!important}#v-prehled>[data-card="kalendar"]{order:24!important}#v-prehled>[data-card="cesta"]{order:25!important}#v-prehled>[data-card="uloha"]{order:26!important}
+#v-prehled>.h-tier[data-tier="3"]{order:40!important}
+#v-prehled>[data-card="replay"]{order:41!important}#v-prehled>[data-card="dnes"]{order:42!important}
+@media (min-width:1180px){body:not(.norails) #v-prehled>[data-card="obchody"]{display:none!important}}
+.h-tier{display:flex;align-items:center;gap:12px;margin:14px 2px 0;font-size:11.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.h-tier::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
+/* lower tiers are quieter: less padding, smaller titles */
+#v-prehled>[data-card]:not([data-card="zprava"]):not([data-card="vyzva"]):not([data-card="hodiny"]):not([data-card="zpravy"]){padding-top:18px;padding-bottom:18px}
+#v-prehled>[data-card="obchody"] h2,#v-prehled>[data-card="vykon"] h2,#v-prehled>[data-card="cesta"] h2,#v-prehled>[data-card="uloha"] h2,#v-prehled>[data-card="dnes"] h2{font-size:12.5px}
+button.nw-more{align-self:flex-start;margin-top:4px;min-height:0;padding:8px 14px!important;border-radius:99px!important;font-size:13px;font-weight:700}
+/* empty states with a drawing */
+html body .empty.es{flex-direction:row;align-items:center;gap:18px;padding:20px 22px;border:0;border-radius:18px;background:color-mix(in srgb,var(--accent) 6%,transparent);flex-wrap:wrap}
+.es-art{flex:none;width:80px;height:60px;color:var(--accent)}.es-art svg{width:100%;height:100%;overflow:visible}
+.es-art .ea-p{fill:color-mix(in srgb,currentColor 12%,transparent);stroke:currentColor;stroke-width:2;stroke-linejoin:round}
+.es-art .ea-l{fill:none;stroke:currentColor;stroke-opacity:.45;stroke-width:2;stroke-linecap:round}
+.es-art .ea-a{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+.es-art .ea-d{fill:none;stroke:currentColor;stroke-opacity:.5;stroke-width:1.6;stroke-dasharray:4 4;stroke-linecap:round}
+.es-art .ea-f{fill:currentColor}.es-art .ea-f2{fill:color-mix(in srgb,currentColor 45%,transparent)}.es-art .ea-dot{fill:var(--bg)}
+.es-tx{flex:1 1 200px;min-width:0;display:flex;flex-direction:column;gap:4px}.es-tx b{font-size:15px}.es-tx span{font-size:13.5px;color:var(--muted);line-height:1.45}
+.empty.es>button{flex:none}
+@media (max-width:520px){html body .empty.es{flex-direction:column;align-items:flex-start;text-align:left}}
+/* one icon language: every small UI icon draws with the same 1.6 px rounded stroke, whatever its own size */
+@supports (vector-effect:non-scaling-stroke){.topbar svg :is(path,circle,rect,line,polyline,polygon,ellipse):not(.fig *):not(.lv-emb *):not(.rp-box *):not(.es-art *):not(.thq-pv *):not(.tb-lvl *):not(.sp *):not(.yt *):not(.gi *):not(.pa-svg *):not(.mo-fig *):not(.lv-av *),.bottombar svg :is(path,circle,rect,line,polyline,polygon,ellipse):not(.fig *):not(.lv-emb *):not(.rp-box *):not(.es-art *):not(.thq-pv *):not(.tb-lvl *):not(.sp *):not(.yt *):not(.gi *):not(.pa-svg *):not(.mo-fig *):not(.lv-av *),button svg :is(path,circle,rect,line,polyline,polygon,ellipse):not(.fig *):not(.lv-emb *):not(.rp-box *):not(.es-art *):not(.thq-pv *):not(.tb-lvl *):not(.sp *):not(.yt *):not(.gi *):not(.pa-svg *):not(.mo-fig *):not(.lv-av *),.abtn svg :is(path,circle,rect,line,polyline,polygon,ellipse):not(.fig *):not(.lv-emb *):not(.rp-box *):not(.es-art *):not(.thq-pv *):not(.tb-lvl *):not(.sp *):not(.yt *):not(.gi *):not(.pa-svg *):not(.mo-fig *):not(.lv-av *),a.go svg :is(path,circle,rect,line,polyline,polygon,ellipse):not(.fig *):not(.lv-emb *):not(.rp-box *):not(.es-art *):not(.thq-pv *):not(.tb-lvl *):not(.sp *):not(.yt *):not(.gi *):not(.pa-svg *):not(.mo-fig *):not(.lv-av *),.rr-edit svg :is(path,circle,rect,line,polyline,polygon,ellipse):not(.fig *):not(.lv-emb *):not(.rp-box *):not(.es-art *):not(.thq-pv *):not(.tb-lvl *):not(.sp *):not(.yt *):not(.gi *):not(.pa-svg *):not(.mo-fig *):not(.lv-av *),.nav1 svg :is(path,circle,rect,line,polyline,polygon,ellipse):not(.fig *):not(.lv-emb *):not(.rp-box *):not(.es-art *):not(.thq-pv *):not(.tb-lvl *):not(.sp *):not(.yt *):not(.gi *):not(.pa-svg *):not(.mo-fig *):not(.lv-av *),.chip svg :is(path,circle,rect,line,polyline,polygon,ellipse):not(.fig *):not(.lv-emb *):not(.rp-box *):not(.es-art *):not(.thq-pv *):not(.tb-lvl *):not(.sp *):not(.yt *):not(.gi *):not(.pa-svg *):not(.mo-fig *):not(.lv-av *){vector-effect:non-scaling-stroke;stroke-width:1.6px;stroke-linecap:round;stroke-linejoin:round}}
+/* lesson typography: reads like an article. Narrower line, more air, a clear title and lead */
+#l-body{--meas:66ch}
+#l-body>p,#l-body>h3,#l-body>ul,#l-body>ol{max-width:var(--meas)}
+#l-body>p{line-height:1.72;margin:0 0 .15em}
+#l-body>h3:first-of-type{font-family:var(--display,inherit);font-size:clamp(21px,2.4vw,27px);line-height:1.2;letter-spacing:-.02em;font-weight:800;margin:4px 0 6px;text-wrap:balance}
+#l-body>p.l-lead{font-size:17.5px;line-height:1.62;margin-top:6px}#l-body>p.l-p{line-height:1.72;max-width:66ch}
+#l-body>h3:not(:first-of-type){margin:22px 0 4px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:800}
+#v-room .weekbody p,#v-moros .mo-txt p,#st-body .card>p{line-height:1.68;max-width:68ch}
+#l-body p,#v-room .weekbody p{text-wrap:pretty;hyphens:manual}
+/* daily plan button in the right column: theme-coloured call to action while the plan is missing, quiet once it exists */
+html body a.rr-edit{position:relative;gap:11px;padding:11px 14px 11px 11px;border-radius:14px;border:0;background:color-mix(in srgb,var(--ink) 6%,transparent);font-weight:700;font-size:13.5px;box-shadow:none}
+html body a.rr-edit svg{width:30px;height:30px;padding:7px;box-sizing:border-box;border-radius:10px;background:color-mix(in srgb,var(--accent) 16%,transparent);stroke:var(--accent)}
+html body a.rr-edit i{font-size:17px;line-height:1}
+html body a.rr-edit:hover{background:color-mix(in srgb,var(--accent) 12%,transparent);transform:translateY(-1px)}
+html body a.rr-edit.todo{background:var(--th-pri,var(--accent));background-origin:border-box;color:var(--th-priink,#0b0b10);box-shadow:0 8px 22px -10px var(--th-glow,var(--accent))}
+html[data-tk="l"] body a.rr-edit.todo,body.sakura a.rr-edit.todo{background:var(--accent);color:#fff}
+html body a.rr-edit.todo svg{background:color-mix(in srgb,currentColor 16%,transparent);stroke:currentColor}
+html body a.rr-edit.todo i{color:currentColor;opacity:.8}
+html body a.rr-edit.todo:hover{filter:brightness(1.06);transform:translateY(-1px)}
 .thpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:8px}
 .thp{display:flex;flex-direction:column;gap:8px;align-items:stretch;text-align:left;padding:8px;border-radius:16px;min-height:0}
 .thp .sw{height:54px;border-radius:10px;position:relative;overflow:hidden;border:1px solid rgba(128,128,128,.25)}
@@ -2783,6 +2855,8 @@ body.rp-fsbody{overflow:hidden}
         <circle cx="35" cy="35" r="9" fill="#fff"/><path d="M32.6 30.9v8.2l6.6-4.1z" class="rp-pmp"/></svg></span>
       <div class="rp-pmt"><b>Backtest a replay</b><span class="small muted" id="rp-pm-sub">Přehraj si den svíčku po svíčce, kresli, natáhni stop a cíl a obchoduj nanečisto s rizikem v dolarech.</span></div>
       <div class="rp-pmb"><a class="abtn primary" href="#backtest" id="rp-pm-go">Otevřít replay</a></div></div></div>
+    <div class="h-tier" data-tier="2" aria-hidden="false"><span>Tvůj postup</span></div>
+    <div class="h-tier" data-tier="3"><span>Další</span></div>
     <div class="card" id="d-move" hidden></div>
     <div class="card" id="d-remind" hidden></div>
     <div class="card" data-card="hodiny"><h2>Seance</h2><div class="clkbox"></div></div>
@@ -4038,7 +4112,7 @@ body.rp-fsbody{overflow:hidden}
     meta.appendChild(el("span", null, fmtDate(l.date || l.ts)));
     if (l.week){ const en = cfg.lang === "en", sp = el("span", null, en ? "Builds on week " + l.week + " of the course" : "Navazuje na " + l.week + ". týden kurzu"); if (en && sp.firstChild) sp.firstChild.__en = sp.firstChild.nodeValue; meta.appendChild(sp); }
     box.appendChild(meta);
-    (Array.isArray(l.body) ? l.body : [l.body]).forEach(p => { if (p) box.appendChild(el("p", null, p)); });
+    (Array.isArray(l.body) ? l.body : [l.body]).filter(Boolean).forEach((p, i) => box.appendChild(el("p", i ? "l-p" : "l-p l-lead", p)));
     if (l.example){ const ex = el("div","box"); ex.appendChild(el("b", null, "Příklad")); ex.appendChild(el("span", null, l.example)); box.appendChild(ex); }
     if (l.remember){ const rm = el("div","box"); rm.appendChild(el("b", null, "Zapamatuj si")); rm.appendChild(el("span", null, l.remember)); box.appendChild(rm); }
     const qz = quizOf(l);
@@ -5010,6 +5084,7 @@ body.rp-fsbody{overflow:hidden}
   const folderSvg = n => '<svg viewBox="0 0 24 20" aria-hidden="true"><path class="fb" d="M1.5 4.2c0-1.2 1-2.2 2.2-2.2h5.1c.6 0 1.1.2 1.5.6l1.4 1.4h8.6c1.2 0 2.2 1 2.2 2.2v10.1c0 1.2-1 2.2-2.2 2.2H3.7c-1.2 0-2.2-1-2.2-2.2z"/><path class="ff" d="M1.5 7.6h21v8.5c0 1.2-1 2.2-2.2 2.2H3.7c-1.2 0-2.2-1-2.2-2.2z"/></svg>';
   const impEl = n => { n = Math.max(1, Math.min(3, n || 1)); const s = el("span","fold " + FOLD[n][0]); s.innerHTML = folderSvg(n); s.title = FOLD[n][1] + ": " + FOLD[n][2]; return s; };
   let nwF = 0;
+  let nwAll = false;
   function renderNews(){
     const box = $("nw"), rail = $("rr-news"); clear(box); clear(rail);
     if (!news){ box.appendChild(el("p","small muted", newsTried ? "Kalendář se nepodařilo načíst." : "Načítám…")); return; }
@@ -5019,13 +5094,15 @@ body.rp-fsbody{overflow:hidden}
     const fb = el("div","nw-folds"), cnt = k => ev.filter(e => (Number(e.impact) || 1) === k).length;
     [[0, "Vše", ev.length]].concat([3, 2, 1].map(k => [k, FOLD[k][1], cnt(k)])).forEach(x => { const b = el("button","chip nwf" + (x[0] ? " " + FOLD[x[0]][0] : "")); b.type = "button"; if (x[0]) b.innerHTML = folderSvg(x[0]); b.appendChild(el("span", null, x[1])); b.appendChild(el("em", null, String(x[2]))); b.setAttribute("aria-pressed", String(nwF === x[0])); b.addEventListener("click", () => { nwF = x[0]; renderNews(); }); fb.appendChild(b); });
     if (ev.length) box.appendChild(fb);
-    ev.filter(e => !nwF || (Number(e.impact) || 1) === nwF).forEach(e => {
+    const evs = ev.filter(e => !nwF || (Number(e.impact) || 1) === nwF), nShow = nwAll ? evs : evs.slice(0, 4);
+    nShow.forEach(e => {
       if (e.date !== last){ last = e.date; const d = new Date(e.date + "T12:00:00"); box.appendChild(el("span","kick", e.date === today ? "Dnes" : d.toLocaleDateString(LOCD, {weekday: "long", day: "numeric", month: "numeric"}))); }
       const r = el("div","nrow"), m = el("div"); r.appendChild(el("b","ntime", e.time || "")); m.appendChild(el("b", null, e.title)); if (e.note) m.appendChild(el("span", null, e.note)); r.appendChild(m); r.appendChild(impEl(Number(e.impact) || 1)); r.classList.add("f" + Math.max(1, Math.min(3, Number(e.impact) || 1))); box.appendChild(r);
     });
     if (!ev.length) box.appendChild(el("p","small muted","V nejbližších dnech není v kalendáři nic zapsaného."));
     const posts = (news.posts || []).slice().sort((a, b) => String(b.date).localeCompare(String(a.date))).slice(0, 6);
-    if (posts.length){
+    if (!nwAll && (evs.length > 4 || posts.length)){ const mb = el("button","nw-more", evs.length > 4 ? "Celý týden (" + evs.length + ") a výroky" : "Výroky, které hýbou trhem"); mb.type = "button"; mb.addEventListener("click", () => { nwAll = true; renderNews(); }); box.appendChild(mb); }
+    if (nwAll && posts.length){
       box.appendChild(el("span","kick","Výroky, které hýbou trhem"));
       posts.forEach(p => { const it = el("div","npost"), h = el("div","row"); h.appendChild(el("b", null, p.who)); h.appendChild(el("span","small muted", new Date(p.date + "T12:00:00").toLocaleDateString(LOCD, {day: "numeric", month: "numeric"}))); it.appendChild(h);
         it.appendChild(el("p","small", p.text)); if (/^https:\/\//.test(p.url || "")){ const a = el("a","small", p.source || "Zdroj"); a.href = p.url; a.target = "_blank"; a.rel = "noopener"; it.appendChild(a); } box.appendChild(it); });
@@ -5196,6 +5273,17 @@ body.rp-fsbody{overflow:hidden}
     ed.addEventListener("click", () => { editing = !editing; adding = false; draw(); }); draw(); return w; }
   const pickOn = sel => Object.keys(sel).filter(k => sel[k]), pickOf = a => { const m = {}; (Array.isArray(a) ? a : []).forEach(x => { m[x] = true; }); return m; };
 
+  // empty states: a small drawing in the theme colours, one line of title, one of help and at most one action
+  const EMPTY_ART = {
+    journal: '<rect x="14" y="8" width="52" height="46" rx="7" class="ea-p"/><path d="M40 8v46" class="ea-l"/><path d="M22 20h10M22 27h12M22 34h8" class="ea-l"/><path d="M50 18v24M58 24v14" class="ea-a"/><rect x="47" y="23" width="6" height="12" rx="1.5" class="ea-f"/><rect x="55" y="27" width="6" height="8" rx="1.5" class="ea-f2"/>',
+    chart: '<path d="M10 52h60" class="ea-l"/><path d="M20 22v26M36 14v30M52 26v18" class="ea-a"/><rect x="16" y="28" width="8" height="14" rx="2" class="ea-f"/><rect x="32" y="20" width="8" height="16" rx="2" class="ea-f2"/><rect x="48" y="30" width="8" height="10" rx="2" class="ea-f"/><path d="M10 12h60" class="ea-d"/>',
+    people: '<rect x="8" y="12" width="38" height="26" rx="9" class="ea-p"/><path d="M16 38l-2 9 10-9" class="ea-p"/><path d="M17 22h20M17 29h12" class="ea-l"/><rect x="38" y="24" width="34" height="24" rx="9" class="ea-f2"/><path d="M64 48l2 8-9-8" class="ea-f2"/><circle cx="48" cy="36" r="2" class="ea-dot"/><circle cx="55" cy="36" r="2" class="ea-dot"/><circle cx="62" cy="36" r="2" class="ea-dot"/>',
+    star: '<path d="M40 8l8 16 18 3-13 12 3 18-16-9-16 9 3-18-13-12 18-3z" class="ea-p"/><path d="M40 20l4 8 9 1.5-6.5 6 1.5 9-8-4.5-8 4.5 1.5-9-6.5-6 9-1.5z" class="ea-f"/>'};
+  function emptyState(kind, title, text, btnLabel, fn){ const e = el("div","empty es"), art = el("span","es-art"), w = el("div","es-tx");
+    art.innerHTML = '<svg viewBox="0 0 80 60" aria-hidden="true">' + (EMPTY_ART[kind] || EMPTY_ART.chart) + "</svg>"; e.appendChild(art);
+    w.appendChild(el("b", null, title)); if (text) w.appendChild(el("span", null, text)); e.appendChild(w);
+    if (btnLabel && fn){ const b = el("button","primary", btnLabel); b.type = "button"; b.addEventListener("click", fn); e.appendChild(b); } return e; }
+  window.TapeEmpty = emptyState;
   // date + time + time zone for the trade form. value is an ISO instant ("" when no time is set), so new Date(value) keeps working
   function dtZones(){ let loc = "Europe/Prague"; try { loc = Intl.DateTimeFormat().resolvedOptions().timeZone || loc; } catch(e){}
     const nm = z => z === "America/New_York" ? "New York" : z === "Europe/Prague" ? LT("Praha", "Prague") : z.split("/").pop().replace(/_/g, " "), out = [];
@@ -5439,9 +5527,7 @@ body.rp-fsbody{overflow:hidden}
   function renderTradeList(){
     const list = $("j-list"), tr = jFiltered().reverse(); clear(list);
     $("j-count").textContent = tr.length ? (jfActive() ? pl(tr.length, "obchod odpovídá", "obchody odpovídají", "obchodů odpovídá") + " filtru" : pl(tr.length, "obchod", "obchody", "obchodů")) : "";
-    if (!tr.length){ const e = el("div","empty"); e.appendChild(el("b", null, jr.trades.length ? "Filtru neodpovídá žádný obchod." : "Zatím tu není žádný obchod."));
-      e.appendChild(el("span", null, jr.trades.length ? "Zkus filtry zrušit nebo změnit období." : "Zapiš první obchod. Stačí směr, setup a výsledek v R, ostatní můžeš doplnit později."));
-      if (!jr.trades.length){ const b = el("button","primary","Zapsat první obchod"); b.type = "button"; b.addEventListener("click", () => openTradeForm()); e.appendChild(b); } list.appendChild(e); }
+    if (!tr.length){ list.appendChild(jr.trades.length ? emptyState("chart", "Filtru neodpovídá žádný obchod.", "Zkus filtry zrušit nebo změnit období.") : emptyState("journal", "Zatím tu není žádný obchod.", "Zapiš první obchod. Stačí směr, setup a výsledek v R, ostatní můžeš doplnit později.", "Zapsat první obchod", () => openTradeForm())); }
     tr.slice(0, listMax).forEach(t => list.appendChild(tradeRow(t)));
     if (tr.length > listMax){ const b = el("button", null, "Zobrazit další (" + (tr.length - listMax) + ")"); b.type = "button"; b.addEventListener("click", () => { listMax += 40; renderTradeList(); }); list.appendChild(b); }
     const ms = jr.trades.filter(t => t.missed && (cfg.acct === "all" || tAcct(t) === cfg.acct)).sort((a, b) => String(b.ts).localeCompare(String(a.ts))), mb = $("j-missed"), mc = $("j-missed-card"); clear(mb); mc.hidden = !ms.length;
@@ -5614,7 +5700,16 @@ body.rp-fsbody{overflow:hidden}
     g.textAlign = "left"; g.textBaseline = "alphabetic"; g.fillStyle = "#f5f5f6"; g.font = cardFont(800, 64); g.fillText("tape", 80, top + 132); const w = g.measureText("tape").width;
     g.fillStyle = "#3ddc97"; g.fillRect(80 + w + 12, top + 94, 11, 34); g.fillRect(80 + w + 16, top + 80, 3, 58);
     g.fillStyle = "#8e8e98"; g.font = cardFont(500, 30); g.textAlign = "right"; g.fillText(right, W - 80, top + 128); g.textAlign = "left";
+    try { cardLevel(g, 80 + w + 56, top + 70, W - 80 - g.measureText(right).width - 40); } catch(e){}
   }
+  // your level on shared cards: the gem and the level name, with the chosen title under it
+  function cardLevel(g, x, y, maxX){ const r = xpCalc(); if (!r || !r.xp) return; const L = lvOf(r.xp), tag = lvTag(), sz = 80;
+    const svg = gemSvg(L.n, false, 0, 0, "gcard"); g.save(); g.translate(x, y); g.scale(sz / 64, sz / 64);
+    svg.replace(/<path d="([^"]+)"([^>]*)\/>/g, (m, d, rest) => { const f = (rest.match(/fill="([^"]+)"/) || [])[1], fo = (rest.match(/fill-opacity="([^"]+)"/) || [])[1], st = (rest.match(/stroke="([^"]+)"/) || [])[1], so = (rest.match(/stroke-opacity="([^"]+)"/) || [])[1], sw = (rest.match(/stroke-width="([^"]+)"/) || [])[1], P = new Path2D(d);
+      if (f && f !== "none"){ g.globalAlpha = fo ? Number(fo) : 1; g.fillStyle = f; g.fill(P); } if (st){ g.globalAlpha = so ? Number(so) : 1; g.strokeStyle = st; g.lineWidth = Number(sw) || 1; g.stroke(P); } g.globalAlpha = 1; return ""; });
+    g.restore(); const tx = x + sz + 16, room = maxX - tx; if (room < 120) return;
+    g.textAlign = "left"; g.fillStyle = "#f5f5f6"; let fs = 30; g.font = cardFont(800, fs); while (g.measureText(L.name).width > room && fs > 18){ fs -= 2; g.font = cardFont(800, fs); } g.fillText(L.name, tx, y + 34);
+    g.fillStyle = "#8e8e98"; g.font = cardFont(600, 22); const sub = "Level " + L.n + (tag ? " · " + tag : ""); g.fillText(g.measureText(sub).width > room ? "Level " + L.n : sub, tx, y + 64); }
   function cardFoot(g, W, y, note){
     g.fillStyle = "#5c5c66"; g.font = cardFont(500, 22); g.textAlign = "left"; g.fillText(note, 80, y);
     g.textAlign = "right"; g.fillStyle = "#8e8e98"; g.font = cardFont(600, 22); g.fillText(siteMark(), W - 80, y); g.textAlign = "left";
@@ -6160,7 +6255,7 @@ body.rp-fsbody{overflow:hidden}
     if (document.activeElement !== pick){ const cur = pick.value; clear(pick); tr.forEach(t => { const o = el("option", null, fmtDateTime(t.ts) + " · " + (t.sym || "") + " " + (t.dir === "short" ? "short" : "long") + " · " + sgn(Number(t.r) || 0) + " R"); o.value = t.id; pick.appendChild(o); }); if (cur && tr.some(t => t.id === cur)) pick.value = cur; }
     $("cm-form").hidden = !tr.length; $("cm-empty").hidden = !!tr.length;
     if (document.activeElement !== $("cm-name") && !$("cm-name").value) $("cm-name").value = (profile && profile.name) || "";
-    if (!posts.length) box.appendChild(el("p","small muted","Zatím tu nic není. Vytvoř první příspěvek z obchodu v deníku, nebo otevři odkaz, který ti někdo poslal."));
+    if (!posts.length) box.appendChild(emptyState("people", "Zatím tu nic není.", "Vytvoř první příspěvek z obchodu v deníku, nebo otevři odkaz, který ti někdo poslal."));
     posts.forEach(p => box.appendChild(postEl(p)));
   }
   $("cm-form").addEventListener("submit", ev => {
@@ -6544,7 +6639,7 @@ body.rp-fsbody{overflow:hidden}
   function symBadge(sym){ const s = String(sym || "").toUpperCase(), nq = s === "NQ" || s === "MNQ", es = s === "ES" || s === "MES", b = el("i", "symb " + (nq ? "nq" : es ? "es" : "ot"), nq ? "100" : es ? "500" : (s.slice(0, 2) || "?")); b.setAttribute("aria-hidden","true"); b.title = nq ? "Nasdaq 100" : es ? "S&P 500" : s; return b; }
   const _tradeRowB = tradeRow; tradeRow = function(t){ const b = _tradeRowB(t), a = b.querySelector(".tinfo"); if (a){ const w = el("div","tlead"); b.insertBefore(w, a); w.appendChild(symBadge(t.sym)); w.appendChild(a); } return b; };
   function renderHomeTrades(){ const box = $("d-trades"); if (!box) return; clear(box); const tr = jSorted().filter(t => !t.missed).slice(0, 5);
-    if (!tr.length){ box.appendChild(el("p","small muted","Zatím tu není žádný obchod. První zapíšeš tlačítkem + Obchod.")); return; }
+    if (!tr.length){ box.appendChild(emptyState("journal", "Zatím tu není žádný obchod.", "První zapíšeš tlačítkem + Obchod.", "Zapsat obchod", () => openTradeForm())); return; }
     tr.forEach(t => box.appendChild(tradeRow(t))); }
   const _refreshAll8 = refreshAll;
   refreshAll = function(){ _refreshAll8(); try { renderHomeTrades(); renderAccBtn(); } catch(e){ if (window.console) console.error(e); } };
@@ -6786,9 +6881,9 @@ body.rp-fsbody{overflow:hidden}
   // hover: a soft light comes on behind the button
   let cgCur = null, cgCurG = null;
   { const calm = () => { try { return window.matchMedia("(prefers-reduced-motion: reduce)").matches || !window.matchMedia("(hover: hover)").matches; } catch(e){ return false; } };
-    const off = () => { const g = cgCurG; cgCur = null; cgCurG = null; if (g){ g.classList.add("out"); setTimeout(() => g.remove(), 220); } };
+    const off = () => { const g = cgCurG; if (cgCur) cgCur.classList.remove("cg-on"); cgCur = null; cgCurG = null; if (g){ g.classList.add("out"); setTimeout(() => g.remove(), 220); } };
     document.addEventListener("mouseover", ev => { const t = cgTarget(ev.target && ev.target.closest ? ev.target.closest(CG_SEL) : null); if (t === cgCur) return; off(); if (!t || t.disabled || calm()) return;
-      const r = t.getBoundingClientRect(); if (r.width < 8 || r.height < 8) return; cgCur = t; cgCurG = cgSpawn(t, ""); });
+      const r = t.getBoundingClientRect(); if (r.width < 8 || r.height < 8) return; cgCur = t; t.classList.add("cg-on"); cgCurG = cgSpawn(t, ""); });
     document.addEventListener("mouseout", ev => { if (cgCur && (!ev.relatedTarget || !cgCur.contains(ev.relatedTarget))) off(); });
     window.addEventListener("blur", off); window.addEventListener("hashchange", off); }
   document.addEventListener("click", ev => {
@@ -7677,7 +7772,7 @@ body.rp-fsbody{overflow:hidden}
   const EN_RULES = [[/(\d{1,2})\. (ledna|února|března|dubna|května|června|července|srpna|září|října|listopadu|prosince)/gi, (m, d, mo) => d + " " + EN_MON[mo.toLowerCase()]],
     [/(?<![A-Za-zÀ-ž])(pondělí|úterý|středa|čtvrtek|pátek|sobota|neděle)(?![A-Za-zÀ-ž])/gi, (m, w) => { const e = EN_DAY[w.toLowerCase()]; return m === m.toUpperCase() ? e.toUpperCase() : m[0] === m[0].toUpperCase() ? e : e.toLowerCase(); }],
     [/\b(leden|únor|březen|duben|květen|červen|červenec|srpen|září|říjen|listopad|prosinec) (\d{4})/gi, (m, mo, y) => EN_MON[mo.toLowerCase()] + " " + y],
-    [/Série (\d+) (?:den|dny|dní)/g, "Streak $1 d"], [/série (\d+) (?:den|dny|dní)/g, "streak $1 d"], [/(\d+) obchod(?:ů|y|u)?(?![a-zá-ž])/g, "$1 trades"], [/(\d+) lekc(?:í|e)(?![a-zá-ž])/g, "$1 lessons"], [/^Celkem /, "Total "], [/^Odebrat (.+)$/, (m, r) => "Remove " + trEn(r)], [/^(\d+) minut$/, "$1 min"], [/ · Konec dne \(/, " · End of day ("], [/(\d) b\.(?=\s|$|\))/g, "$1 pts"], [/(?<![A-Za-zÀ-ž])Lekce (\d+)/g, "Lesson $1"], [/(?<![A-Za-zÀ-ž])lekce (\d+)/g, "lesson $1"], [/^Verze (\d)/, "Version $1"], [/(\d+)m svíčky/, "$1m candles"], [/(\d+)m graf/, "$1m chart"], [/čas New York/, "New York time"], [/srovnáno na cenu vstupu/, "aligned to entry price"], [/^Vstup /, "Entry "], [/^Výstup /, "Exit "], [/^Cíl /, "Target "], [/^Nejlépe: /, "Best: "], [/^Nejhůře: /, "Worst: "], [/, tady je tvůj minulý týden\./, ", here is your last week."], [/(\d) ze (\d)/g, "$1 of $2"], [/ % z (\d)/g, " % of $1"], [/ R z (\d)/g, " R from $1"],
+    [/Série (\d+) (?:den|dny|dní)/g, "Streak $1 d"], [/série (\d+) (?:den|dny|dní)/g, "streak $1 d"], [/(\d+) obchod(?:ů|y|u)?(?![a-zá-ž])/g, "$1 trades"], [/(\d+) lekc(?:í|e)(?![a-zá-ž])/g, "$1 lessons"], [/^Celkem /, "Total "], [/^Celý týden \((\d+)\) a výroky$/, "Whole week ($1) and statements"], [/^Odebrat (.+)$/, (m, r) => "Remove " + trEn(r)], [/^(\d+) minut$/, "$1 min"], [/ · Konec dne \(/, " · End of day ("], [/(\d) b\.(?=\s|$|\))/g, "$1 pts"], [/(?<![A-Za-zÀ-ž])Lekce (\d+)/g, "Lesson $1"], [/(?<![A-Za-zÀ-ž])lekce (\d+)/g, "lesson $1"], [/^Verze (\d)/, "Version $1"], [/(\d+)m svíčky/, "$1m candles"], [/(\d+)m graf/, "$1m chart"], [/čas New York/, "New York time"], [/srovnáno na cenu vstupu/, "aligned to entry price"], [/^Vstup /, "Entry "], [/^Výstup /, "Exit "], [/^Cíl /, "Target "], [/^Nejlépe: /, "Best: "], [/^Nejhůře: /, "Worst: "], [/, tady je tvůj minulý týden\./, ", here is your last week."], [/(\d) ze (\d)/g, "$1 of $2"], [/ % z (\d)/g, " % of $1"], [/ R z (\d)/g, " R from $1"],
     [/\bKrok (\d+) z (\d+)/g, "Step $1 of $2"], [/\bLekce (\d+) z (\d+)/g, "Lesson $1 of $2"], [/(\d+) z (\d+)\b/g, "$1 of $2"], [/^Dobré ráno/, "Good morning"], [/^Dobrý večer/, "Good evening"], [/^Dobrou noc/, "Good night"], [/^Ahoj/, "Hi"],
     [/^Týden (\d)/, "Week $1"], [/^Dopad na model: /, "Impact on the model: "], [/^Pojem: (.+)$/, (m, r) => "Term: " + trEn(r)], [/^Potom: (.+)$/, (m, r) => "Next: " + trEn(r)], [/^Zapamatuj si: /, "Remember: "], [/^Red folder dnes: /, "Red folder today: "],
     [/^Navazuje na (\d+)\. týden kurzu/, "Builds on week $1 of the course"], [/, za (\d)/g, ", in $1"], [/ · mimo seanci$/, " · outside the session"], [/\b1 poznatek\b/g, "1 insight"], [/(\d+) poznatk(?:y|ů)(?![a-zá-ž])/g, "$1 insights"], [/^1 den$/, "1 day"], [/^(\d+) (?:dny|dní)$/, "$1 days"], [/\(([+−-]?\d+),(\d+) R\)/g, "($1.$2 R)"], [/\bhotovo\b/g, "done"], [/\bminut dnes\b/g, "minutes today"], [/\bTento týden\b/g, "This week"], [/\bNaposledy:/g, "Last time:"], [/\bwinrate\b/g, "win rate"], [/\bR celkem\b/g, "R total"]];
@@ -7990,7 +8085,7 @@ body.rp-fsbody{overflow:hidden}
     const mine = el("div","mo-mine"); w.appendChild(mine); w._paint = () => { clear(mine);
       const tr = jr.trades.filter(t => !t.missed && /moros/i.test(t.setup || "")).sort((a, b) => (Number(b.r) || 0) - (Number(a.r) || 0));
       mine.appendChild(el("h3", null, "Tvoje MOROS obchody z deníku"));
-      if (!tr.length){ mine.appendChild(el("p","small muted","Zatím žádný. Zapiš obchod se setupem MOROS Reversal nebo MOROS Continuation a nejlepší se objeví tady.")); }
+      if (!tr.length){ mine.appendChild(emptyState("star", "Zatím žádný.", "Zapiš obchod se setupem MOROS Reversal nebo MOROS Continuation a nejlepší se objeví tady.")); }
       else { const st = jStats(tr, "R"), s = el("div","mo-stats"); [["Obchodů", tr.length], ["Winrate", Math.round(tr.filter(t => (Number(t.r) || 0) > 0).length / tr.length * 100) + " %"], ["Celkem", sgn(Math.round(tr.reduce((a, t) => a + (Number(t.r) || 0), 0) * 100) / 100) + " R"]].forEach(x => { const d = el("div"); d.appendChild(el("span", null, x[0])); d.appendChild(el("b", null, String(x[1]))); s.appendChild(d); }); mine.appendChild(s);
         tr.slice(0, 5).forEach((t, i) => { const row = el("button","mo-row"); row.type = "button"; row.appendChild(el("span","mo-rank", "#" + (i + 1))); const a = el("div"); a.appendChild(el("b", null, (t.sym || "") + " · " + (t.setup || ""))); a.appendChild(el("span","small muted", new Date(t.ts).toLocaleDateString(LOCD, {day: "numeric", month: "long", year: "numeric"}))); row.appendChild(a); row.appendChild(el("b","mo-r " + ((Number(t.r) || 0) >= 0 ? "w" : "l"), sgn(Number(t.r) || 0) + " R")); row.addEventListener("click", () => openCard(t)); mine.appendChild(row); }); }
       const has = Object.keys(MO_SETUPS).every(k => cfg.setups.indexOf(k) >= 0);
