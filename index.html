@@ -2985,6 +2985,22 @@ body:not(.sakura) .bdg.on span{color:var(--ink)}
 body:not(.sakura) .bdg.on.h1,body:not(.sakura) .bdg.on.h2,body:not(.sakura) .bdg.on.h3{--bd1:color-mix(in srgb,var(--th-glow2,var(--accent)) 70%,#fff)}
 html[data-tk="l"] body:not(.sakura) .bdg.on .bdh-p{fill:rgba(255,255,255,.9);stroke:rgba(0,0,0,.08)}
 html[data-tk="l"] body:not(.sakura) .bdg.on .bdt{fill:var(--ink)}
+.mr-list{display:flex;flex-direction:column;gap:10px;margin-top:10px}
+.mr-it{display:flex;gap:14px;align-items:flex-start;padding:14px;border-radius:16px;border:1px solid var(--line);background:color-mix(in srgb,var(--ink) 2.5%,transparent)}
+.mr-k{flex:none;display:flex;flex-direction:column;align-items:center;justify-content:center;width:58px;height:58px;border-radius:16px;background:color-mix(in srgb,var(--bad) 12%,transparent);color:var(--bad)}
+.mr-k b{font-size:24px;line-height:1;font-weight:800;font-variant-numeric:tabular-nums}
+.mr-k span{font-size:11px;font-weight:700;opacity:.85}
+.mr-tx{min-width:0;flex:1;display:flex;flex-direction:column;gap:5px}
+.mr-h{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.mr-h h3{margin:0;font-size:15.5px}
+.mr-r{flex:none;font-size:12.5px;font-weight:700;color:var(--bad);font-variant-numeric:tabular-nums}
+.mr-tx p{margin:0;color:var(--muted)}
+.mr-go{align-self:flex-start;display:inline-flex;align-items:center;gap:6px;margin-top:4px;padding:7px 12px;border-radius:12px;border:1px solid color-mix(in srgb,var(--th-glow,var(--accent)) 40%,transparent);background:color-mix(in srgb,var(--th-glow,var(--accent)) 10%,transparent);color:var(--ink);font-size:13px;font-weight:700;text-align:left}
+.mr-go svg{width:15px;height:15px;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.mr-home .mr-it{margin-top:8px;border:0;background:none;padding:0}
+#v-prehled>[data-card="zrcadlo"]{order:9!important}
+@media (max-width:520px){.mr-k{width:50px;height:50px}.mr-k b{font-size:21px}}
+@media (hover:hover){html body .mo-gold:not(:disabled):hover,html body #v-moros .pa-ctl .primary:not(:disabled):hover,html body #v-moros .pa-chips .chip[aria-pressed="true"]:hover{background-image:radial-gradient(circle 90px at var(--mx,50%) var(--my,50%),rgba(255,255,255,calc(.4*var(--gl,1))),transparent 70%),linear-gradient(180deg,#f6dc9a,#d3a64a)!important;color:#1a1307!important}}
 .thpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:8px}
 .thp{display:flex;flex-direction:column;gap:8px;align-items:stretch;text-align:left;padding:8px;border-radius:16px;min-height:0}
 .thp .sw{height:54px;border-radius:10px;position:relative;overflow:hidden;border:1px solid rgba(128,128,128,.25)}
@@ -6346,6 +6362,7 @@ html[data-tk="l"] body:not(.sakura) .bdg.on .bdt{fill:var(--ink)}
     return null;
   };
   renderCoach = function(){
+    try { renderMirror(); } catch(e){ if (window.console) console.error(e); }
     Array.prototype.forEach.call($("co-per").children, b => b.setAttribute("aria-pressed", String(b.dataset.p === coPer)));
     const src = jSorted().filter(t => inPeriod(t, coPer)), box = $("co-find"), list = coachFindings(src), R = t => Number(t.r) || 0; clear(box);
     const mdl = src.filter(t => /MSS/.test(t.setup || "") && t.ck && t.ck.k === t.ck.n), rest = src.filter(t => mdl.indexOf(t) < 0 && t.setup !== "Import");
@@ -9131,6 +9148,45 @@ html[data-tk="l"] body:not(.sakura) .bdg.on .bdt{fill:var(--ink)}
     const pm = document.querySelector(".rp-pmi"); if (pm) put(pm, "replay");
   };
   icoA(); setTimeout(icoA, 400); window.addEventListener("hashchange", () => setTimeout(icoA, 60));
+  // ---------- mirror of mistakes: what the last losses have in common, and the lesson that covers it ----------
+  function mirrorList(){
+    const R = t => Number(t.r) || 0, all = jSorted(), det = all.filter(t => !t.quick && t.setup !== "Import"), losses = det.filter(t => R(t) < 0).slice(-10), N = losses.length, out = [];
+    if (N < 3) return {n: N, list: out};
+    const uses = f => det.filter(t => t[f] && t[f].length).length / det.length >= .3, has = (t, f, rx) => !!(t[f] && t[f].some(x => rx.test(x))), sum = a => a.reduce((q, t) => q + R(t), 0);
+    const add = (id, hit, t, d, topic) => { if (hit.length >= 2 && hit.length / N >= .4) out.push({id: id, n: hit.length, of: N, r: sum(hit), t: t, d: d, topic: topic}); };
+    if (uses("cfm")) add("cfm", losses.filter(t => !has(t, "cfm", /MSS|CISD|BOS|iFVG/i)), LT("Vstup bez potvrzení", "Entry without confirmation"), LT("U těchto ztrát chybí MSS nebo CISD. Vstup přišel dřív, než trh obrat potvrdil.", "These losses have no MSS or CISD. The entry came before the market confirmed the turn."), "bos-mss");
+    if (uses("conf")) add("sweep", losses.filter(t => !has(t, "conf", /sweep/i)), LT("Vstup bez výběru likvidity", "Entry without a liquidity sweep"), LT("Před vstupem cena nevybrala žádné stopy. Model počítá s tím, že obrat začíná sweepem.", "Price took no stops before the entry. The model expects a turn to start with a sweep."), "likvidita");
+    if (uses("conf")) add("zone", losses.filter(t => !has(t, "conf", /FVG|Order block|Breaker/i)), LT("Vstup mimo FVG nebo blok", "Entry outside an FVG or block"), LT("Chybí zóna, do které se cena vracela. Vstup uprostřed pohybu má horší poměr rizika a zisku.", "There was no zone price was returning to. An entry mid-move has a worse risk-to-reward."), "fvg-up");
+    if (uses("dol")) add("dol", losses.filter(t => !(t.dol && t.dol.length)), LT("Obchod bez cíle v likviditě", "Trade with no liquidity target"), LT("U těchto ztrát nemáš zapsané, kam měla cena dojít. Bez cíle se nedá říct, jestli měl obchod kam jít.", "These losses have no note of where price was meant to go. Without a target you cannot tell whether the trade had room to run."), "ranni-priprava");
+    add("plan", losses.filter(t => t.plan === "no"), LT("Obchod mimo plán dne", "Trade outside the daily plan"), LT("Sám sis je označil jako obchody mimo plán. Plán se píše ráno právě proto, aby rozhodoval za tebe.", "You marked these yourself as outside the plan. The plan is written in the morning precisely so that it decides for you."), "ranni-priprava");
+    add("sess", losses.filter(t => ["Lunch", "Asie", "After"].indexOf(sessOfTrade(t)) >= 0), LT("Obchody v době nízkého objemu", "Trades in low-volume hours"), LT("Tyhle ztráty vznikly v Asii, kolem oběda nebo po zavření, kdy se pohyby často nedotahují.", "These losses came in Asia, around lunch or after the close, when moves often do not follow through."), "seance-cas");
+    add("rev", losses.filter(t => { if (t.rev === true) return true; const i = all.indexOf(t), q = i > 0 ? all[i - 1] : null; return !!q && tDay(q) === tDay(t) && R(q) < 0 && Date.parse(t.ts) - Date.parse(q.tsx || q.ts) < 30 * 6e4; }), LT("Obchod hned po ztrátě", "Trade right after a loss"), LT("Do půl hodiny po ztrátě jsi šel znovu do trhu. To je typický obraz snahy ztrátu dohnat.", "Within half an hour of a loss you were back in the market. That is the typical picture of trying to win it back."), "psychologie");
+    add("big", losses.filter(t => R(t) < -1.15), LT("Ztráta větší než 1R", "Loss bigger than 1R"), LT("Stop se posunul dál od vstupu, nebo nedržel. Jedna taková ztráta smaže několik dobrých obchodů.", "The stop was moved further from the entry, or it did not hold. One such loss wipes out several good trades."), "rizeni-obchodu");
+    add("emo", losses.filter(t => (t.tags || []).some(x => /Netrpělivost|Chamtivost|Frustrace|Strach|Nervozita|Přehnaná/i.test(x)) || /Netrpělivost|Strach|Euforie/.test(t.emo || "")), LT("Emoce ve vstupu", "Emotion in the entry"), LT("U těchto ztrát sis sám zapsal netrpělivost, strach nebo chamtivost. Deník ukazuje, že tě to stojí peníze.", "For these losses you noted impatience, fear or greed yourself. The journal shows it costs you money."), "psychologie");
+    const byDay = {}; all.forEach(t => { (byDay[tDay(t)] = byDay[tDay(t)] || []).push(t); });
+    add("many", losses.filter(t => byDay[tDay(t)].length >= 3), LT("Dny se třemi a více obchody", "Days with three or more trades"), LT("Většina těchto ztrát padla ve dnech, kdy jsi obchodoval hodně. Trh bez směru se pozná právě podle pokusů, které nikam nevedou.", "Most of these losses fell on days when you traded a lot. A directionless market shows itself in attempts that lead nowhere."), "spatny-den");
+    out.sort((a, b) => b.n - a.n || a.r - b.r); const seen = {}, top = out.filter(x => { if (seen[x.topic] || !pa.some(t => t.id === x.topic)) return false; seen[x.topic] = 1; return true; }).slice(0, 3);
+    return {n: N, list: top};
+  }
+  function mirrorItem(f){ const tp = pa.find(t => t.id === f.topic), it = el("div","mr-it"), k = el("div","mr-k"), tx = el("div","mr-tx"), go = el("button","mr-go"); go.type = "button";
+    const big = el("b", null, String(f.n)), of = el("span", null, LT("z ", "of ") + f.of); k.appendChild(big); k.appendChild(of); [of].forEach(n => { if (n.firstChild) n.firstChild.__en = n.firstChild.nodeValue; });
+    const h = el("h3", null, f.t), d = el("p","small", f.d), cost = el("span","mr-r", sgn(f.r) + " R"); [h, d, cost].forEach(n => { if (n.firstChild) n.firstChild.__en = n.firstChild.nodeValue; }); const hr = el("div","mr-h"); hr.appendChild(h); hr.appendChild(cost); tx.appendChild(hr); tx.appendChild(d);
+    const gl = el("span", null, LT("Zopakovat: ", "Review: ") + (tp ? tp.title : "")); if (gl.firstChild) gl.firstChild.__en = gl.firstChild.nodeValue; go.appendChild(gl); go.insertAdjacentHTML("beforeend", '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>'); go.addEventListener("click", () => openTopic(f.topic)); tx.appendChild(go);
+    it.appendChild(k); it.appendChild(tx); return it; }
+  function renderMirror(){
+    const v = $("v-kouc"); if (!v) return; let c = $("co-mirror"); if (!c){ c = el("div","card mr-card"); c.id = "co-mirror"; const first = v.querySelector(".card"); first.parentNode.insertBefore(c, first.nextSibling); } clear(c);
+    const m = mirrorList(), hd = el("div","row"), h2 = el("h2", null, LT("Zrcadlo chyb", "Mirror of mistakes")); if (h2.firstChild) h2.firstChild.__en = h2.firstChild.nodeValue; hd.appendChild(h2);
+    if (m.n >= 3){ const pl = el("span","small muted", LT("posledních ", "last ") + m.n + LT(" ztrát", " losses")); if (pl.firstChild) pl.firstChild.__en = pl.firstChild.nodeValue; hd.appendChild(pl); } c.appendChild(hd);
+    const lead = el("p","small muted", LT("Co mají tvoje poslední ztráty společného a kterou lekci si k tomu zopakovat. Počítá se z obchodů zapsaných s detaily.", "What your latest losses have in common and which lesson to review for it. Counted from trades logged with details.")); if (lead.firstChild) lead.firstChild.__en = lead.firstChild.nodeValue; c.appendChild(lead);
+    if (m.n < 3){ c.appendChild(emptyState("journal", LT("Zatím málo ztrát k rozboru", "Not enough losses to analyse yet"), LT("Zrcadlo potřebuje aspoň tři ztrátové obchody zapsané s detaily: potvrzení, likvidita, plán.", "The mirror needs at least three losing trades logged with details: confirmation, liquidity, plan."))); }
+    else if (!m.list.length){ c.appendChild(emptyState("star", LT("Žádný opakující se vzorec", "No repeating pattern"), LT("Poslední ztráty nemají společnou chybu. Vypadají jako běžný náklad obchodování.", "Your latest losses share no common mistake. They look like the normal cost of trading."))); }
+    else { const box = el("div","mr-list"); m.list.forEach(f => box.appendChild(mirrorItem(f))); c.appendChild(box); }
+    // the strongest finding also shows on the home page
+    const home = $("v-prehled"); if (!home) return; let hc = home.querySelector('[data-card="zrcadlo"]');
+    if (!m.list.length){ if (hc) hc.remove(); return; }
+    if (!hc){ hc = el("div","card mr-card mr-home"); hc.dataset.card = "zrcadlo"; home.appendChild(hc); } clear(hc);
+    const k = el("span","kick", LT("Zrcadlo chyb", "Mirror of mistakes")); if (k.firstChild) k.firstChild.__en = k.firstChild.nodeValue; hc.appendChild(k); hc.appendChild(mirrorItem(m.list[0]));
+  }
   // ---------- moving to a new address without losing data ----------
   // data/site.json: {"move": "https://new-address", "from": ["https://old-address"]}. The old site hands the data to the new one in a window the person opens.
   let site = {move: "", from: []};
