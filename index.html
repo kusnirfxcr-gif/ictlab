@@ -2858,6 +2858,35 @@ html:not([data-t]) body:not(.sakura) #lr .lr-go{color:#4c1d95}
 /* every dark theme: the active learning tab and the continue card take the theme's own colours */
 html[data-tk="d"] body:not(.sakura)[data-group="uceni"] .subnav a[aria-current="page"]:not([href="#moros"]){background:linear-gradient(135deg,var(--th-glow),var(--th-glow2));color:var(--th-priink,#0b0b10)}
 html[data-tk="d"] body:not(.sakura) #lr .lr-go{color:color-mix(in srgb,var(--th-glow) 60%,#000)}
+/* trade detail */
+.td-hb{display:flex;align-items:center;gap:8px}
+button.td-share{display:inline-flex;align-items:center;gap:7px;white-space:nowrap;flex:none;min-height:0;padding:8px 13px!important;border-radius:99px!important;font-size:13px;font-weight:700}
+button.td-share svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+@media (max-width:520px){button.td-share span{display:none}button.td-share{padding:8px!important}}
+.td-hl{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;align-items:stretch}
+.td-grade{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-width:96px;padding:14px 16px;border-radius:18px;--gc:var(--accent);background:color-mix(in srgb,var(--gc) 13%,transparent);border:1px solid color-mix(in srgb,var(--gc) 35%,transparent)}
+.td-grade b{font-family:var(--display,inherit);font-size:40px;font-weight:800;line-height:1;letter-spacing:-.03em;color:var(--gc)}.td-grade span{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.td-grade.g5,.td-grade.g4{--gc:var(--good,#3ddc97)}.td-grade.g3{--gc:var(--amber,#f2b560)}.td-grade.g2,.td-grade.g1{--gc:var(--bad,#ff6b6b)}
+.td-ex{display:flex;flex-direction:column;gap:12px;justify-content:center;padding:14px 16px;border-radius:18px;background:color-mix(in srgb,var(--ink) 4%,transparent);border:1px solid var(--line)}
+.td-exr{display:flex;flex-direction:column;gap:6px;--xc:var(--bad,#ff6b6b)}.td-exr.good{--xc:var(--good,#3ddc97)}
+.td-exk{display:flex;justify-content:space-between;align-items:baseline;gap:10px}.td-exk b{font-size:13px;letter-spacing:.08em;color:var(--xc)}.td-exk span{font-size:15px;font-weight:800;font-variant-numeric:tabular-nums}
+.td-exb{display:block;height:6px;border-radius:99px;background:color-mix(in srgb,var(--ink) 9%,transparent);overflow:hidden}.td-exb i{display:block;height:100%;border-radius:inherit;background:var(--xc)}
+.td-exs{font-size:11.5px;color:var(--muted)}
+@media (max-width:420px){.td-hl{grid-template-columns:1fr}.td-grade{flex-direction:row;justify-content:flex-start;gap:12px}}
+.td-fig{margin:0;padding:10px 10px 8px;border-radius:18px;background:color-mix(in srgb,var(--ink) 3%,transparent);border:1px solid var(--line)}
+.td-fig svg{display:block;width:100%;height:190px}.td-fig figcaption{font-size:11px;color:var(--muted);margin-top:4px}
+.td-z.bad{fill:var(--bad,#ff6b6b);fill-opacity:.09}.td-z.good{fill:var(--good,#3ddc97);fill-opacity:.09}
+.td-l{stroke-width:1.2;vector-effect:non-scaling-stroke}.td-l.bad{stroke:var(--bad,#ff6b6b);stroke-dasharray:4 4}.td-l.good{stroke:var(--good,#3ddc97)}.td-l.acc{stroke:var(--accent)}.td-l.good:last-of-type{stroke-dasharray:none}
+.td-t{font-size:11px;font-weight:700}.td-t.bad{fill:var(--bad,#ff6b6b)}.td-t.good{fill:var(--good,#3ddc97)}.td-t.acc{fill:var(--accent)}
+.td-p{fill:none;stroke:var(--ink);stroke-opacity:.8;stroke-width:2;stroke-linejoin:round;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.td-w{stroke-width:1;vector-effect:non-scaling-stroke}.td-w.up,.td-c.up{stroke:var(--good,#3ddc97);fill:var(--good,#3ddc97)}.td-w.dn,.td-c.dn{stroke:var(--bad,#ff6b6b);fill:var(--bad,#ff6b6b)}
+.td-dot{stroke:var(--bg);stroke-width:2;vector-effect:non-scaling-stroke}.td-dot.e{fill:var(--accent)}.td-dot.x{fill:var(--ink)}
+.td-lv{display:flex;flex-wrap:wrap;gap:6px 18px;padding:2px 2px}
+.td-lv>div{display:flex;flex-direction:column;gap:1px}.td-lv span{font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.td-lv b{font-size:15px;font-weight:750;font-variant-numeric:tabular-nums}.td-lv .bad b{color:var(--bad,#ff6b6b)}.td-lv .good b{color:var(--good,#3ddc97)}
+.td-dl{display:grid;grid-template-columns:auto minmax(0,1fr);gap:0;margin:0;border-top:1px solid var(--line)}
+.td-dl dt,.td-dl dd{margin:0;padding:9px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+.td-dl dt{color:var(--muted);padding-right:16px}.td-dl dd{text-align:right;font-weight:650;font-variant-numeric:tabular-nums}
 .thpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:8px}
 .thp{display:flex;flex-direction:column;gap:8px;align-items:stretch;text-align:left;padding:8px;border-radius:16px;min-height:0}
 .thp .sw{height:54px;border-radius:10px;position:relative;overflow:hidden;border:1px solid rgba(128,128,128,.25)}
@@ -4608,7 +4637,8 @@ html[data-tk="d"] body:not(.sakura) #lr .lr-go{color:color-mix(in srgb,var(--th-
   if (!cfg.hide || typeof cfg.hide !== "object") cfg.hide = {};
   cfg.goals = Object.assign({ck: 80, plan: 90}, cfg.goals || {}); cfg.calc = cfg.calc || {};
   let J_SETUPS = cfg.setups, J_TAGS = cfg.tags;
-  function cfgStore(){ J_SETUPS = cfg.setups; J_TAGS = cfg.tags; try { localStorage.setItem(CFG_KEY, JSON.stringify(cfg)); } catch(e){} }
+  let cardLangHold = null; // the app language while a share card is drawn in its own language
+  function cfgStore(){ J_SETUPS = cfg.setups; J_TAGS = cfg.tags; try { localStorage.setItem(CFG_KEY, JSON.stringify(cardLangHold ? Object.assign({}, cfg, {lang: cardLangHold}) : cfg)); } catch(e){} }
   const pvOf = s => { s = String(s || "").toUpperCase(); return s.indexOf("MNQ") === 0 ? 2 : s.indexOf("MES") === 0 ? 5 : s.indexOf("NQ") === 0 ? 20 : s.indexOf("ES") === 0 ? 50 : 0; };
 
   let jr = {trades: [], plans: {}};
@@ -5512,32 +5542,65 @@ html[data-tk="d"] body:not(.sakura) #lr .lr-go{color:color-mix(in srgb,var(--th-
   }
 
   // ---------- trade detail ----------
+  // a drawing of the trade: real candles when Tape has price data for that day, otherwise a sketch through entry, worst point, best point and exit
+  function tdChart(t, px){ const W = 520, H = 190, P = {l: 8, r: 92, t: 14, b: 14}, e = +t.entry, x = +t.exit, st = t.stop != null ? +t.stop : null, tp = t.tp != null ? +t.tp : null, sh = t.dir === "short", sg = sh ? -1 : 1;
+    let pts = [], bars = null;
+    if (px && px.b && px.b.length){ bars = px.b; }
+    else { const mae = t.mae != null ? +t.mae : Math.abs(e - (st != null ? st : e)) * .35, mfe = t.mfe != null ? +t.mfe : Math.max(Math.abs(x - e), mae) * 1.05;
+      pts = [[0, e - sg * mae * .2], [.14, e], [.36, e - sg * mae], [.68, e + sg * mfe], [.88, x], [1, x]]; }
+    const ys = [e, x].concat(st != null ? [st] : [], tp != null ? [tp] : [], bars ? bars.reduce((a, q) => a.concat([q[2], q[3]]), []) : pts.map(p => p[1]));
+    let lo = Math.min.apply(null, ys), hi = Math.max.apply(null, ys); const pad = (hi - lo) * .08 || 1; lo -= pad; hi += pad;
+    const Y = v => P.t + (hi - v) / (hi - lo) * (H - P.t - P.b), cw = W - P.l - P.r;
+    let svg = '<svg viewBox="0 0 ' + W + " " + H + '" preserveAspectRatio="none" role="img" aria-label="Průběh obchodu">';
+    const zone = (a, b2, c) => { const y1 = Math.min(Y(a), Y(b2)), y2 = Math.max(Y(a), Y(b2)); svg += '<rect class="td-z ' + c + '" x="' + P.l + '" y="' + y1.toFixed(1) + '" width="' + cw + '" height="' + Math.max(1, y2 - y1).toFixed(1) + '"/>'; };
+    if (st != null) zone(e, st, "bad"); if (tp != null) zone(e, tp, "good");
+    const line = (v, c, lab) => { const y = Y(v).toFixed(1); svg += '<line class="td-l ' + c + '" x1="' + P.l + '" x2="' + (W - P.r + 4) + '" y1="' + y + '" y2="' + y + '"/><text class="td-t ' + c + '" x="' + (W - P.r + 10) + '" y="' + (+y + 4) + '">' + lab + "</text>"; };
+    if (bars){ const n = bars.length, bw = cw / n, iOf = mn => Math.max(0, Math.min(n - 1, bars.findIndex(q => q[0] >= mn)));
+      bars.forEach((q, i) => { const cx = P.l + (i + .5) * bw, up = q[4] >= q[1], c = up ? "up" : "dn", y1 = Y(Math.max(q[1], q[4])), y2 = Y(Math.min(q[1], q[4])); svg += '<line class="td-w ' + c + '" x1="' + cx.toFixed(1) + '" x2="' + cx.toFixed(1) + '" y1="' + Y(q[2]).toFixed(1) + '" y2="' + Y(q[3]).toFixed(1) + '"/><rect class="td-c ' + c + '" x="' + (cx - bw * .32).toFixed(1) + '" y="' + y1.toFixed(1) + '" width="' + Math.max(1, bw * .64).toFixed(1) + '" height="' + Math.max(1, y2 - y1).toFixed(1) + '"/>'; });
+      const ie = iOf(px.em), ix = px.xm != null ? iOf(px.xm) : Math.min(n - 1, ie + 3); pts = [[(ie + .5) / n, e], [(ix + .5) / n, x]]; }
+    else { const d = pts.map((p, i) => (i ? "L" : "M") + (P.l + p[0] * cw).toFixed(1) + " " + Y(p[1]).toFixed(1)).join(""); svg += '<path class="td-p" d="' + d + '"/>'; pts = [pts[1], pts[4]]; }
+    if (st != null) line(st, "bad", "Stop"); if (tp != null && Math.abs(tp - x) > (hi - lo) * .02) line(tp, "good", "Cíl"); line(e, "acc", "Vstup"); line(x, (sh ? x <= e : x >= e) ? "good" : "bad", "Výstup");
+    pts.forEach((p, i) => { svg += '<circle class="td-dot ' + (i ? "x" : "e") + '" cx="' + (P.l + p[0] * cw).toFixed(1) + '" cy="' + Y(p[1]).toFixed(1) + '" r="4.500"/>'; });
+    svg += "</svg>"; const w = el("figure","td-fig"); w.innerHTML = svg; w.appendChild(el("figcaption", null, bars ? "Svíčky z cenových dat toho dne." : "Náčrt podle vstupu, stopu, MAE, MFE a výstupu, ne skutečný průběh.")); return w; }
   function openTrade(t){
     const o = overlay("tdetail"), card = o.card, r = Number(t.r) || 0, net = tNet(t);
-    const head = el("div","row"), ttl = el("div","tdh"), xb = el("button","ck-del","Zavřít"); xb.type = "button"; xb.addEventListener("click", o.close);
+    const head = el("div","row"), ttl = el("div","tdh"), xb = el("button","ck-del","Zavřít"), hb = el("div","td-hb"); xb.type = "button"; xb.addEventListener("click", o.close);
+    if (!t.missed){ const sb = el("button","td-share"); sb.type = "button"; sb.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V4M8 8l4-4 4 4"/><path d="M5 12v6.500A1.500 1.500 0 0 0 6.500 20h11a1.500 1.500 0 0 0 1.500-1.500V12"/></svg>'; sb.appendChild(el("span", null, "Karta ke sdílení")); sb.addEventListener("click", () => openCard(t)); hb.appendChild(sb); } hb.appendChild(xb);
     ttl.appendChild(el("span","pill " + (t.dir === "short" ? "bad" : "good"), t.dir === "short" ? "Short" : "Long")); ttl.appendChild(el("h2", null, (t.sym || "") + (t.setup ? " · " + t.setup : "")));
-    head.appendChild(ttl); head.appendChild(xb); card.appendChild(head);
+    head.appendChild(ttl); head.appendChild(hb); card.appendChild(head);
     card.appendChild(el("span","small muted", new Date(t.ts).toLocaleString(LOCD, {weekday: "long", day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit"}) + (t.missed ? " · zmeškaný obchod, do výsledků se nepočítá" : "")));
     const big = el("div","tbig " + (r >= 0 ? "pos" : "neg"), sgn(r) + " R"); if (net != null) big.appendChild(el("span", null, usd(net) + (t.fee ? " po poplatcích" : ""))); card.appendChild(big);
     const gal = el("div","tgal"); card.appendChild(gal);
     shotKeys(t).forEach(k => { const w = el("div","tshot"), im = el("img"), dr = el("button", null, "Kreslit do obrázku"); im.alt = "Graf k obchodu"; dr.type = "button";
       shotGet(k).then(d => { if (d) im.src = d; else w.remove(); }); dr.addEventListener("click", () => openAnnotator(k, d => { im.src = d; })); w.appendChild(im); w.appendChild(dr); gal.appendChild(w); });
-    const g = el("div","tiles"), add = (l, x) => { if (x != null && x !== "") g.appendChild(tile(l, String(x))); }, f = x => x == null ? null : fnum(x);
-    add("Vstup", f(t.entry)); add("Stop", f(t.stop)); add("Výstup", f(t.exit)); add("Kontrakty", t.qty);
+    const f = x => x == null ? null : fnum(x), rk = t.entry != null && t.stop != null ? Math.abs(t.entry - t.stop) : 0, inR = x => rk ? Math.round(x / rk * 100) / 100 : null, tmLoc = iso => new Date(iso).toLocaleTimeString(LOCD, {hour: "2-digit", minute: "2-digit"});
+    // highlights: grade and MAE (with MFE) next to each other
+    const hl = el("div","td-hl");
+    if (t.grade){ const gn = gradeName(t.grade), gb = el("div","td-grade g" + t.grade); gb.appendChild(el("b", null, gn)); gb.appendChild(el("span", null, "Hodnocení")); hl.appendChild(gb); }
+    if (t.mae != null || t.mfe != null){ const mb = el("div","td-ex"); [["MAE", t.mae, "bad", "proti tobě"], ["MFE", t.mfe, "good", "ve tvůj prospěch"]].forEach(q => { if (q[1] == null) return; const rv = inR(q[1]), row = el("div","td-exr " + q[2]), top = el("div","td-exk"), bar = el("span","td-exb"), fill = el("i");
+        top.appendChild(el("b", null, q[0])); top.appendChild(el("span", null, fnum(q[1]) + " b." + (rv != null ? " · " + fnum(rv) + " R" : ""))); row.appendChild(top); fill.style.width = Math.max(3, Math.min(100, (rv != null ? rv / (q[0] === "MAE" ? 1 : Math.max(1, Math.abs(r), rv)) : .5) * 100)) + "%"; bar.appendChild(fill); row.appendChild(bar); row.appendChild(el("span","td-exs", q[0] === "MAE" ? (rv != null ? "Z rizika využito " + Math.round(Math.min(rv, 9.99) * 100) + " %" : "Nejhorší bod obchodu") : "Nejlepší bod obchodu")); mb.appendChild(row); }); hl.appendChild(mb); }
+    if (hl.children.length) card.appendChild(hl);
+    // what the trade looked like
+    if (t.entry != null && t.exit != null){ const ch = el("div","td-chart"); card.appendChild(ch); ch.appendChild(tdChart(t, null)); (async () => { try { const px = await cardBars(t); if (px && ch.isConnected){ clear(ch); ch.appendChild(tdChart(t, px)); } } catch(e){} })(); }
+    // levels, compact
+    const lv = el("div","td-lv"), addL = (l, x, c) => { if (x == null) return; const d = el("div", c || null); d.appendChild(el("span", null, l)); d.appendChild(el("b", null, x)); lv.appendChild(d); };
+    addL("Vstup", f(t.entry)); addL("Stop", f(t.stop), "bad"); if (t.tp != null) addL("Cíl", f(t.tp), "good"); addL("Výstup", f(t.exit));
+    if (lv.children.length) card.appendChild(lv);
+    // everything else as a quiet list
+    const g = el("dl","td-dl"), add = (l, x) => { if (x == null || x === "") return; g.appendChild(el("dt", null, l)); g.appendChild(el("dd", null, String(x))); };
+    add("Kontrakty", t.qty);
     if (t.tp1 != null && t.tp1pct != null) add("Částečný výstup", fnum(t.tp1) + " · " + t.tp1pct + " %");
     if (t.fee) add("Poplatky", "$" + fnum(t.fee));
-    if (t.tsx){ const m = Math.round((new Date(t.tsx) - new Date(t.ts)) / 60000); if (m >= 0) add("Doba držení", m < 60 ? m + " min" : Math.floor(m / 60) + " h " + (m % 60) + " min"); }
-    const rk = t.entry != null && t.stop != null ? Math.abs(t.entry - t.stop) : 0, inR = x => rk ? " (" + fnum(Math.round(x / rk * 100) / 100) + " R)" : "";
-    if (t.mae != null) add("MAE", fnum(t.mae) + " b." + inR(t.mae)); if (t.mfe != null) add("MFE", fnum(t.mfe) + " b." + inR(t.mfe));
-    if (premOn()) add("Cyklus obchodu", tradeCycle(t)); if (t.ck) add("Seznam před vstupem", t.ck.k + " z " + t.ck.n); if (t.grade) add("Hodnocení", gradeName(t.grade)); if (t.emo) add("Před vstupem", t.emo);
-    if (t.tp != null) add("Cíl", f(t.tp)); { const ss = sessOfTrade(t); if (ss) add("Seance", ss); } if (t.plan) add("Plán", t.plan === "yes" ? "Dodržen" : "Nedodržen"); if (t.rev != null) add("Po ztrátě", t.rev ? "Revenge trade" : "Čistý vstup");
+    if (t.tsx){ const m = Math.round((new Date(t.tsx) - new Date(t.ts)) / 60000); add("Doba držení", (m >= 0 ? (m < 60 ? m + " min" : Math.floor(m / 60) + " h " + (m % 60) + " min") : "–") + " · " + tmLoc(t.ts) + " → " + tmLoc(t.tsx)); }
+    if (premOn()) add("Cyklus obchodu", tradeCycle(t)); { const ss = sessOfTrade(t); if (ss) add("Seance", ss); } if (t.ck) add("Seznam před vstupem", t.ck.k + " z " + t.ck.n); if (t.emo) add("Před vstupem", t.emo);
+    if (t.plan) add("Plán", t.plan === "yes" ? "Dodržen" : "Nedodržen"); if (t.rev != null) add("Po ztrátě", t.rev ? "Revenge trade" : "Čistý vstup");
     if (cfg.accounts.length > 1){ const a = cfg.accounts.find(x => x.id === tAcct(t)); if (a) add("Účet", a.name); }
     if (g.children.length) card.appendChild(g);
     if (t.levels){ const b = el("div","box"); b.appendChild(el("b", null, "Úrovně")); b.appendChild(el("span", null, t.levels)); card.appendChild(b); }
     [["Draw on liquidity", t.dol, "info"], ["Confluence", t.conf, "info"], ["Potvrzení", t.cfm, "good"], ["Bonus", t.bonus, "warn"], ["Co pomohlo", t.epos, "good"], ["Co uškodilo", t.tags, "bad"]].forEach(q => { if (!(q[1] || []).length) return; const w = el("div","td-grp"), c = el("div","chips"); w.appendChild(el("span","td-k", q[0])); q[1].forEach(x => c.appendChild(el("span","pill " + q[2], x))); w.appendChild(c); card.appendChild(w); });
     if (t.note){ const b = el("div","box"); b.appendChild(el("b", null, "Poznámka")); b.appendChild(el("span", null, t.note)); card.appendChild(b); }
     const act = el("div","rp-ctl"), mk = (txt, fn, cls) => { const b = el("button", cls || null, txt); b.type = "button"; if (fn) b.addEventListener("click", fn); act.appendChild(b); return b; };
-    mk("Upravit", () => { o.close(); openTradeForm(t); }, "primary"); if (!t.missed) mk("Karta ke sdílení", () => openCard(t));
+    mk("Upravit", () => { o.close(); openTradeForm(t); }, "primary");
     twoStep(mk("Smazat", null, "danger"), "Smazat", () => { o.close(); deleteTrade(t); });
     card.appendChild(act);
   }
@@ -5902,7 +5965,8 @@ html[data-tk="d"] body:not(.sakura) #lr .lr-go{color:color-mix(in srgb,var(--th-
       try { if (document.fonts && document.fonts.load) await document.fonts.load("800 60px 'Plus Jakarta Sans'"); } catch(e){}
       Array.prototype.forEach.call(langBox2.children, b => b.setAttribute("aria-pressed", String(b.dataset.v === cardLang())));
       Array.prototype.forEach.call(lookBox.children, b => b.setAttribute("aria-pressed", String(b.dataset.v === (cfg.card.look || "glass"))));
-      const d0 = () => draw({fmt: cfg.card.fmt, unit: cfg.card.unit}), d1 = () => cardThemed(d0), c = cardLang() === "en" ? await cardInEnglish(d1) : await d1(); if (my !== busy) return; cv = c; clear(hold); hold.appendChild(c); };
+      // the card speaks its own language: dates, numbers and generated words follow the card's language, not the app's
+      const d0 = async () => { const L0 = LOCD, g0 = cfg.lang, cl = cardLang(); LOCD = cl === "en" ? "en-GB" : "cs-CZ"; cardLangHold = g0; cfg.lang = cl; try { return await draw({fmt: cfg.card.fmt, unit: cfg.card.unit}); } finally { LOCD = L0; cfg.lang = g0; cardLangHold = null; } }, d1 = () => cardThemed(d0), c = cardLang() === "en" ? await cardInEnglish(d1) : await d1(); if (my !== busy) return; cv = c; clear(hold); hold.appendChild(c); };
     const lookBox = el("div","chips"); [["glass","Skleněná"],["app","Plná"],["dark","Klasická tmavá"]].forEach(u => { const b = el("button","chip", u[1]); b.type = "button"; b.dataset.v = u[0]; b.addEventListener("click", () => { cfg.card.look = u[0]; cfgStore(); paint(); }); lookBox.appendChild(b); });
     [["cs","Česky"],["en","English"]].forEach(u => { const b = el("button","chip", u[1]); b.type = "button"; b.dataset.v = u[0]; b.addEventListener("click", () => { cfg.card.lang = u[0]; cfgStore(); paint(); }); langBox2.appendChild(b); });
     Object.keys(CARD_FMT).forEach(k => { const b = el("button","chip", CARD_FMT[k][2]); b.type = "button"; b.dataset.v = k; b.addEventListener("click", () => { cfg.card.fmt = k; cfgStore(); paint(); }); fmtBox.appendChild(b); });
@@ -7861,7 +7925,7 @@ html[data-tk="d"] body:not(.sakura) #lr .lr-go{color:color-mix(in srgb,var(--th-
   const EN_RULES = [[/(\d{1,2})\. (ledna|února|března|dubna|května|června|července|srpna|září|října|listopadu|prosince)/gi, (m, d, mo) => d + " " + EN_MON[mo.toLowerCase()]],
     [/(?<![A-Za-zÀ-ž])(pondělí|úterý|středa|čtvrtek|pátek|sobota|neděle)(?![A-Za-zÀ-ž])/gi, (m, w) => { const e = EN_DAY[w.toLowerCase()]; return m === m.toUpperCase() ? e.toUpperCase() : m[0] === m[0].toUpperCase() ? e : e.toLowerCase(); }],
     [/\b(leden|únor|březen|duben|květen|červen|červenec|srpen|září|říjen|listopad|prosinec) (\d{4})/gi, (m, mo, y) => EN_MON[mo.toLowerCase()] + " " + y],
-    [/Série (\d+) (?:den|dny|dní)/g, "Streak $1 d"], [/série (\d+) (?:den|dny|dní)/g, "streak $1 d"], [/(\d+) obchod(?:ů|y|u)?(?![a-zá-ž])/g, "$1 trades"], [/(\d+) lekc(?:í|e)(?![a-zá-ž])/g, "$1 lessons"], [/^Celkem /, "Total "], [/^Celý týden \((\d+)\) a výroky$/, "Whole week ($1) and statements"], [/^Odebrat (.+)$/, (m, r) => "Remove " + trEn(r)], [/^(\d+) minut$/, "$1 min"], [/ · Konec dne \(/, " · End of day ("], [/(\d) b\.(?=\s|$|\))/g, "$1 pts"], [/(?<![A-Za-zÀ-ž])Lekce (\d+)/g, "Lesson $1"], [/(?<![A-Za-zÀ-ž])lekce (\d+)/g, "lesson $1"], [/^Verze (\d)/, "Version $1"], [/(\d+)m svíčky/, "$1m candles"], [/(\d+)m graf/, "$1m chart"], [/čas New York/, "New York time"], [/srovnáno na cenu vstupu/, "aligned to entry price"], [/^Vstup /, "Entry "], [/^Výstup /, "Exit "], [/^Cíl /, "Target "], [/^Nejlépe: /, "Best: "], [/^Nejhůře: /, "Worst: "], [/, tady je tvůj minulý týden\./, ", here is your last week."], [/(\d) ze (\d)/g, "$1 of $2"], [/ % z (\d)/g, " % of $1"], [/ R z (\d)/g, " R from $1"],
+    [/Série (\d+) (?:den|dny|dní)/g, "Streak $1 d"], [/série (\d+) (?:den|dny|dní)/g, "streak $1 d"], [/(\d+) obchod(?:ů|y|u)?(?![a-zá-ž])/g, "$1 trades"], [/(\d+) lekc(?:í|e)(?![a-zá-ž])/g, "$1 lessons"], [/^Celkem /, "Total "], [/^Z rizika využito (\d+) %$/, "$1 % of the risk used"], [/^Celý týden \((\d+)\) a výroky$/, "Whole week ($1) and statements"], [/^Odebrat (.+)$/, (m, r) => "Remove " + trEn(r)], [/^(\d+) minut$/, "$1 min"], [/ · Konec dne \(/, " · End of day ("], [/(\d) b\.(?=\s|$|\))/g, "$1 pts"], [/(?<![A-Za-zÀ-ž])Lekce (\d+)/g, "Lesson $1"], [/(?<![A-Za-zÀ-ž])lekce (\d+)/g, "lesson $1"], [/^Verze (\d)/, "Version $1"], [/(\d+)m svíčky/, "$1m candles"], [/(\d+)m graf/, "$1m chart"], [/čas New York/, "New York time"], [/srovnáno na cenu vstupu/, "aligned to entry price"], [/^Vstup /, "Entry "], [/^Výstup /, "Exit "], [/^Cíl /, "Target "], [/^Nejlépe: /, "Best: "], [/^Nejhůře: /, "Worst: "], [/, tady je tvůj minulý týden\./, ", here is your last week."], [/(\d) ze (\d)/g, "$1 of $2"], [/ % z (\d)/g, " % of $1"], [/ R z (\d)/g, " R from $1"],
     [/\bKrok (\d+) z (\d+)/g, "Step $1 of $2"], [/\bLekce (\d+) z (\d+)/g, "Lesson $1 of $2"], [/(\d+) z (\d+)\b/g, "$1 of $2"], [/^Dobré ráno/, "Good morning"], [/^Dobrý večer/, "Good evening"], [/^Dobrou noc/, "Good night"], [/^Ahoj/, "Hi"],
     [/^Týden (\d)/, "Week $1"], [/^Dopad na model: /, "Impact on the model: "], [/^Pojem: (.+)$/, (m, r) => "Term: " + trEn(r)], [/^Potom: (.+)$/, (m, r) => "Next: " + trEn(r)], [/^Zapamatuj si: /, "Remember: "], [/^Red folder dnes: /, "Red folder today: "],
     [/^Navazuje na (\d+)\. týden kurzu/, "Builds on week $1 of the course"], [/, za (\d)/g, ", in $1"], [/ · mimo seanci$/, " · outside the session"], [/\b1 poznatek\b/g, "1 insight"], [/(\d+) poznatk(?:y|ů)(?![a-zá-ž])/g, "$1 insights"], [/^1 den$/, "1 day"], [/^(\d+) (?:dny|dní)$/, "$1 days"], [/\(([+−-]?\d+),(\d+) R\)/g, "($1.$2 R)"], [/\bhotovo\b/g, "done"], [/\bminut dnes\b/g, "minutes today"], [/\bTento týden\b/g, "This week"], [/\bNaposledy:/g, "Last time:"], [/\bwinrate\b/g, "win rate"], [/\bR celkem\b/g, "R total"]];

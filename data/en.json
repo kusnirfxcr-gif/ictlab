@@ -2404,5 +2404,12 @@
  "Zatím žádný.": "None yet.",
  "Zapiš obchod se setupem MOROS Reversal nebo MOROS Continuation a nejlepší se objeví tady.": "Log a trade with the MOROS Reversal or MOROS Continuation setup and the best one shows up here.",
  "Zatím ne": "Not yet",
- "Celý kalendář": "Full calendar"
+ "Celý kalendář": "Full calendar",
+ "proti tobě": "against you",
+ "ve tvůj prospěch": "in your favour",
+ "Nejhorší bod obchodu": "Worst point of the trade",
+ "Nejlepší bod obchodu": "Best point of the trade",
+ "Průběh obchodu": "Trade path",
+ "Svíčky z cenových dat toho dne.": "Candles from that day's price data.",
+ "Náčrt podle vstupu, stopu, MAE, MFE a výstupu, ne skutečný průběh.": "A sketch from entry, stop, MAE, MFE and exit, not the actual path."
 }
