@@ -2849,6 +2849,15 @@ button.rrow.nwr:hover{background:color-mix(in srgb,var(--ink) 6%,transparent)!im
 button.rrow.nwr .fold{width:24px;height:24px;border-radius:8px}button.rrow.nwr .fold svg{width:15px;height:15px}
 @keyframes nwflash{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--accent) 50%,transparent)}100%{box-shadow:0 0 0 14px transparent}}
 .nw-flash{animation:nwflash .9s var(--e-out,ease) 1}
+/* Noc is a violet theme: its own accent and glow instead of the base blue */
+html:not([data-t]) body:not(.sakura){--accent:#a78bfa;--accent-soft:rgba(167,139,250,.12);--th-glow:#8b5cf6;--th-glow2:#c084fc}
+html:not([data-t]) body:not(.sakura)[data-group="uceni"] .subnav a[aria-current="page"],html:not([data-t]) body:not(.sakura) .gtour-card button.primary{background:linear-gradient(135deg,#a78bfa,#7c3aed);color:#fff}
+html:not([data-t]) body:not(.sakura) #lr{background:linear-gradient(135deg,#4c1d95 0%,#6d28d9 55%,#a78bfa 100%);box-shadow:0 14px 34px -12px rgba(139,92,246,.6)}
+html:not([data-t]) body:not(.sakura) #lr:hover{box-shadow:0 18px 40px -12px rgba(139,92,246,.75)}
+html:not([data-t]) body:not(.sakura) #lr .lr-go{color:#4c1d95}
+/* every dark theme: the active learning tab and the continue card take the theme's own colours */
+html[data-tk="d"] body:not(.sakura)[data-group="uceni"] .subnav a[aria-current="page"]:not([href="#moros"]){background:linear-gradient(135deg,var(--th-glow),var(--th-glow2));color:var(--th-priink,#0b0b10)}
+html[data-tk="d"] body:not(.sakura) #lr .lr-go{color:color-mix(in srgb,var(--th-glow) 60%,#000)}
 .thpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:8px}
 .thp{display:flex;flex-direction:column;gap:8px;align-items:stretch;text-align:left;padding:8px;border-radius:16px;min-height:0}
 .thp .sw{height:54px;border-radius:10px;position:relative;overflow:hidden;border:1px solid rgba(128,128,128,.25)}
@@ -7111,7 +7120,7 @@ button.rrow.nwr .fold{width:24px;height:24px;border-radius:8px}button.rrow.nwr .
     const allL = () => { const a = []; if (course) course.weeks.forEach(w => w.lessons.forEach(l => a.push({w: w, l: l}))); return a; };
     const curCourse = () => { const a = allL(); let x = a.find(q => q.l.id === lnCur) || a.find(q => !done[q.l.id]); return x || null; };
     const save = o => { lr = Object.assign({ts: Date.now()}, o); try { localStorage.setItem(LRK, JSON.stringify(lr)); } catch(e){} lrRender(); };
-    const ago = ts => { if (!ts) return ""; const d = Math.floor((new Date().setHours(0,0,0,0) - new Date(ts).setHours(0,0,0,0)) / 864e5); return d <= 0 ? "dnes" : d === 1 ? "včera" : "před " + d + " dny"; };
+    const ago = ts => { if (!ts) return ""; const d = Math.floor((new Date().setHours(0,0,0,0) - new Date(ts).setHours(0,0,0,0)) / 864e5); return cfg.lang === "en" ? (d <= 0 ? "today" : d === 1 ? "yesterday" : d + " days ago") : d <= 0 ? "dnes" : d === 1 ? "včera" : "před " + d + " dny"; };
     function target(){
       const a = allL(), nd = a.filter(x => done[x.l.id]).length;
       if (lr && lr.kind === "pa"){ const t = pa.find(x => x.id === lr.id); if (t){ const n = (t.steps || []).length || 1, st = Math.min(lr.step || 0, n - 1); return {kind: "pa", id: t.id, step: st, sec: "Obrázky a lekce", title: t.title, sub: "Krok " + (st + 1) + " z " + n, pct: (st + 1) / n}; } }
@@ -7136,7 +7145,7 @@ button.rrow.nwr .fold{width:24px;height:24px;border-radius:8px}button.rrow.nwr .
       const C = 2 * Math.PI * 22, ring = el("div","lr-ring"), pct = Math.max(0, Math.min(1, t.pct || 0));
       ring.insertAdjacentHTML("afterbegin", '<svg viewBox="0 0 54 54" aria-hidden="true"><circle class="bg" cx="27" cy="27" r="22"/><circle class="fg" cx="27" cy="27" r="22" stroke-dasharray="' + C.toFixed(1) + '" stroke-dashoffset="' + C.toFixed(1) + '"/></svg>');
       ring.appendChild(el("b", null, Math.round(pct * 100) + " %")); setTimeout(() => { const f = ring.querySelector(".fg"); if (f) f.style.strokeDashoffset = (C * (1 - pct)).toFixed(1); }, 60);
-      const tx = el("div","lr-tx"), when = lr && lr.ts ? " · naposledy " + ago(lr.ts) : "";
+      const tx = el("div","lr-tx"), when = lr && lr.ts ? (cfg.lang === "en" ? " · last " : " · naposledy ") + ago(lr.ts) : "";
       tx.appendChild(el("span","lr-k", lr ? "Tady jsi skončil" : "Začni tady")); tx.appendChild(el("span","lr-t", t.title)); tx.appendChild(el("span","lr-s", t.sec + " · " + t.sub + when));
       const go = el("button","lr-go"); go.type = "button"; go.appendChild(el("span", null, lr ? "Pokračovat" : "Začít")); go.insertAdjacentHTML("beforeend", '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4l13 8-13 8z"/></svg>');
       box.appendChild(ring); box.appendChild(tx); box.appendChild(go); box.setAttribute("role","button"); box.tabIndex = 0; box.setAttribute("aria-label", (lr ? "Pokračovat: " : "Začít: ") + t.title);
@@ -7176,7 +7185,7 @@ button.rrow.nwr .fold{width:24px;height:24px;border-radius:8px}button.rrow.nwr .
     }
     async function checkAdmin(){ if (!auth){ isAdmin = false; $("pp-link").hidden = true; return; }
       try { const r = await rest("tape_admins?select=user_id&user_id=eq." + encodeURIComponent(auth.id)); isAdmin = !!(r && r.length); } catch(e){ isAdmin = false; } $("pp-link").hidden = !isAdmin; if (document.body.dataset.view === "lide") renderPeople(); }
-    const agoD = iso => { if (!iso) return "nikdy"; const d = Math.floor((new Date().setHours(0,0,0,0) - new Date(iso).setHours(0,0,0,0)) / 864e5); return d <= 0 ? "dnes" : d === 1 ? "včera" : "před " + d + " dny"; };
+    const agoD = iso => { if (!iso) return "nikdy"; const d = Math.floor((new Date().setHours(0,0,0,0) - new Date(iso).setHours(0,0,0,0)) / 864e5); return cfg.lang === "en" ? (d <= 0 ? "today" : d === 1 ? "yesterday" : d + " days ago") : d <= 0 ? "dnes" : d === 1 ? "včera" : "před " + d + " dny"; };
     const TPL = ["Dneska ještě žádná lekce. Pojď na to, stačí deset minut.", "Jedeš skvěle, drž sérii a dej dnes další lekci.", "Chybíš tu už pár dní. Vrať se, lekce na tebe čeká tam, kde jsi ji nechala.", "Dnes zkus dokončit celý týden a splnit úkol týdne."];
     async function renderPeople(){
       const list = $("pp-list"), msg = $("pp-msg"); clear(list); msg.textContent = "";
