@@ -1642,9 +1642,19 @@ body.sakura .tk{background:rgba(255,255,255,.6)}
 .zm-full>.lb-focus{display:none}
 body.sakura .lb-focus{border-color:rgba(226,69,154,.35);background:rgba(255,255,255,.7);color:#a0336c}
 .zm-head{display:flex;align-items:center;gap:14px;padding:0 0 6px;border-bottom:1px solid var(--line);margin-bottom:6px}
+.zm-full>.zm-head{position:sticky;top:0;z-index:6;padding:10px 0 8px;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.rp-studio.rp-fs .rp-head,.rp-studio:fullscreen .rp-head{padding-right:250px}
 .zm-mode{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:#c4b5fd}
 .zm-hint{font-size:12.5px;color:var(--muted);flex:1}
-.zm-x{padding:7px 14px;border-radius:999px;font-size:13px;font-weight:700}
+.zm-x{display:inline-flex!important;align-items:center;gap:8px;padding:8px 10px 8px 14px!important;border-radius:999px!important;font-size:13px;font-weight:700;background:var(--accent)!important;color:#fff!important;border:0!important;box-shadow:0 6px 18px var(--accent-soft)!important}
+.zm-x svg,.zm-exitf svg,.rp-exitfs svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round}
+.zm-x kbd,.rp-exitfs kbd{font:700 10.5px Inter,system-ui,sans-serif;padding:2px 6px;border-radius:6px;background:rgba(255,255,255,.22);color:#fff}
+.zm-x:hover,.rp-exitfs:hover{filter:brightness(1.08)}
+.zm-exitf{position:fixed;top:14px;right:16px;z-index:90;width:40px;height:40px;padding:0!important;display:grid!important;place-items:center;border-radius:50%!important;background:color-mix(in srgb,var(--surface) 85%,transparent)!important;border:1px solid var(--line)!important;color:var(--ink)!important;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 8px 24px rgba(0,0,0,.3)!important;opacity:0;pointer-events:none;transition:opacity .2s}
+.zm-exitf svg{width:16px;height:16px}
+.zm-full.zm-scrolled .zm-exitf{opacity:1;pointer-events:auto}
+.rp-exitfs{display:none!important}
+.rp-studio.rp-fs .rp-exitfs,.rp-studio:fullscreen .rp-exitfs{display:inline-flex!important;position:fixed;top:12px;right:16px;z-index:95;align-items:center;gap:8px;padding:8px 10px 8px 14px!important;border-radius:999px!important;font-size:13px;font-weight:700;background:var(--accent)!important;color:#fff!important;border:0!important;box-shadow:0 8px 24px rgba(0,0,0,.35)!important}
 @media (min-width:1000px){
   .lesson-body.zm-full{display:grid!important;grid-template-columns:minmax(0,1fr) 380px;grid-auto-rows:min-content;column-gap:28px;row-gap:12px;padding:18px 28px 24px;align-content:start}
   .lesson-body.zm-full>.zm-head{grid-column:1/-1}
@@ -2425,19 +2435,33 @@ html[data-tk="l"] body:not(.sakura) .chip:not([aria-pressed="true"]):not([aria-s
 html[data-tk="l"] body:not(.sakura) .sk-btn:not([aria-pressed="true"]){color:#b0306e;border-color:rgba(214,70,140,.45)}
 html[data-tk="l"] body:not(.sakura) .sk-btn:not([aria-pressed="true"]) svg{color:#d0448a}
 .tb-theme{flex:none;width:32px;height:32px;padding:0!important;border-radius:50%!important;display:grid!important;place-items:center;background:var(--surface)!important;border:1px solid var(--line)!important;box-shadow:none!important;min-height:0;cursor:pointer;transition:transform .2s}
-.tb-theme i{width:18px;height:18px;border-radius:50%;background:conic-gradient(var(--c) 0 33%,var(--b) 0 66%,var(--a) 0);box-shadow:0 0 0 1.5px rgba(128,128,128,.35)}
-.tb-theme:hover{transform:rotate(-20deg)}
-.thq{position:fixed;z-index:60;width:228px;padding:12px;border-radius:16px;background:var(--surface);border:1px solid var(--line);box-shadow:0 18px 50px rgba(0,0,0,.35);display:flex;flex-direction:column;gap:10px;animation:thqIn .18s ease}
+.tb-theme{position:relative;color:var(--ink)!important}
+.tb-theme svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.tb-theme i{position:absolute;right:5px;bottom:5px;width:8px;height:8px;border-radius:50%;background:var(--c);box-shadow:0 0 0 2px var(--surface)}
+.tb-theme:hover{transform:translateY(-1px)}
+.thq{position:fixed;z-index:60;width:300px;max-height:calc(100vh - 90px);overflow:auto;padding:12px;border-radius:16px;background:var(--surface);border:1px solid var(--line);box-shadow:0 18px 50px rgba(0,0,0,.35);display:flex;flex-direction:column;gap:10px;animation:thqIn .18s ease}
 html[data-tk="l"] .thq,body.sakura .thq{background:#fff}
 @keyframes thqIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
 .thq>b{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 .thq-g{display:grid;grid-template-columns:1fr 1fr;gap:4px}
-.thq-g button{display:flex!important;align-items:center;gap:8px;padding:7px 8px!important;border-radius:10px!important;background:transparent!important;border:1px solid transparent!important;color:var(--ink)!important;font-size:13px;font-weight:600;box-shadow:none!important;min-height:0;justify-content:flex-start}
+.thq-g{gap:8px!important}
+.thq-g button{display:flex!important;flex-direction:column;align-items:stretch;gap:6px;padding:5px!important;border-radius:12px!important;background:transparent!important;border:1px solid transparent!important;color:var(--ink)!important;font-size:12.5px;font-weight:650;box-shadow:none!important;min-height:0;text-align:left}
+.thq-g button>span:last-child{padding:0 3px 2px}
+.thq-pv{position:relative;display:block;height:62px;border-radius:9px;overflow:hidden;background:var(--a);box-shadow:inset 0 0 0 1px rgba(128,128,128,.28)}
+.thq-pv i{position:absolute;display:block;border-radius:4px}
+.thq-pv .t{left:6px;right:6px;top:6px;height:7px;background:var(--b);border-radius:4px;opacity:.95}
+.thq-pv .c1{left:6px;top:18px;width:58%;bottom:6px;background:var(--b);border-radius:5px}
+.thq-pv .c1 u{position:absolute;left:5px;top:6px;width:60%;height:4px;border-radius:2px;background:var(--c);opacity:.9}
+.thq-pv .c1 s{position:absolute;left:5px;top:14px;width:80%;height:3px;border-radius:2px;background:currentColor;opacity:.18;color:#888}
+.thq-pv .c2{right:6px;top:18px;width:calc(42% - 16px);height:18px;background:var(--b);border-radius:5px}
+.thq-pv .c2 u{position:absolute;left:4px;top:7px;width:55%;height:3px;border-radius:2px;background:#888;opacity:.3}
+.thq-pv .bt{right:6px;bottom:6px;width:calc(42% - 16px);height:12px;border-radius:6px;background:var(--c)}
 .thq-g button:hover{background:var(--accent-soft)!important}
 .thq-g button[aria-checked="true"]{border-color:var(--accent)!important;background:var(--accent-soft)!important}
+.thq-g button[aria-checked="true"] .thq-pv{box-shadow:inset 0 0 0 1px rgba(128,128,128,.28),0 0 0 2px var(--accent)}
 .thq-sw{flex:none;width:18px;height:18px;border-radius:50%;background:conic-gradient(var(--c) 0 33%,var(--b) 0 66%,var(--a) 0);box-shadow:0 0 0 1.5px rgba(128,128,128,.35)}
 .thq-more{font-size:12px;color:var(--muted);text-decoration:underline;text-underline-offset:3px}
-@media (max-width:859px){.tb-theme{width:30px;height:30px}.tb-theme i{width:16px;height:16px}}
+@media (max-width:859px){.tb-theme{width:30px;height:30px}}
 .thpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:8px}
 .thp{display:flex;flex-direction:column;gap:8px;align-items:stretch;text-align:left;padding:8px;border-radius:16px;min-height:0}
 .thp .sw{height:54px;border-radius:10px;position:relative;overflow:hidden;border:1px solid rgba(128,128,128,.25)}
@@ -7776,10 +7800,12 @@ html[data-tk="l"] .thq,body.sakura .thq{background:#fff}
         const q = entry(c); if (q){ if (c._s.z !== 1){ c._s.z = 1; c._t.style.transform = ""; } const fw = fwOf(c, q.e); if ((!isOne(c._s) && !q.sv.dataset.zv) || String(fw || "") !== (q.sv.dataset.fw || "")) draw(c, true); else ui(c); } else if (c._s.z > 1) apply(c); else ui(c); }).observe(c, {childList: true, subtree: true}); }
     // full window: the whole lesson (picture, text and steps) or the single picture fills the screen; Esc or the same button closes it
     // the box is lifted to the end of the page while it is full, so no parent with a transform can trap it; a placeholder keeps its place
+    document.addEventListener("scroll", e => { const fu = document.querySelector(".zm-full"); if (!fu) return; const hd = fu.querySelector(":scope > .zm-head"); fu.classList.toggle("zm-scrolled", !!hd && hd.getBoundingClientRect().bottom < 0); }, true);
     function cgFullOff(){ document.querySelectorAll(".zm-full").forEach(x => { x.classList.remove("zm-full"); const hd = x.querySelector(":scope > .zm-head"); if (hd) hd.remove(); if (x._ph && x._ph.parentNode){ x._ph.parentNode.insertBefore(x, x._ph); x._ph.remove(); } x._ph = null; }); document.body.classList.remove("zm-fullon"); }
     function cgFull(c, f){ const box = f.closest(".zm-full") || f.closest(".lesson-body") || f, on = !box.classList.contains("zm-full"); cgFullOff();
       if (on){ box._ph = document.createComment("zm"); box.parentNode.insertBefore(box._ph, box); document.body.appendChild(box); box.classList.add("zm-full"); document.body.classList.add("zm-fullon");
-        const hd = el("div","zm-head"), x = el("button","zm-x","Zavřít"); x.type = "button"; x.addEventListener("click", () => cgFull(c, f)); hd.appendChild(el("span","zm-mode","Režim učení")); hd.appendChild(el("span","zm-hint", box.querySelector(".pa-ctl") ? "← → kroky · Esc zavře · tažením za osy přiblížíš" : "Esc zavře · tažením za osy přiblížíš")); hd.appendChild(x); box.insertBefore(hd, box.firstChild); }
+        const hd = el("div","zm-head"), x = el("button","zm-x"); x.type = "button"; x.innerHTML = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"/></svg><span>Ukončit celou obrazovku</span><kbd>Esc</kbd>'; x.setAttribute("aria-label", "Ukončit celou obrazovku"); x.addEventListener("click", () => cgFull(c, f));
+        const xf = el("button","zm-exitf"); xf.type = "button"; xf.innerHTML = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"/></svg>'; xf.title = "Ukončit celou obrazovku (Esc)"; xf.setAttribute("aria-label", "Ukončit celou obrazovku"); xf.addEventListener("click", () => cgFull(c, f)); hd.appendChild(xf); hd.appendChild(el("span","zm-mode","Režim učení")); hd.appendChild(el("span","zm-hint", box.querySelector(".pa-ctl") ? "← → kroky · tažením za osy přiblížíš" : "Tažením za osy přiblížíš")); hd.appendChild(x); box.insertBefore(hd, box.firstChild); }
       requestAnimationFrame(() => box.querySelectorAll(".zm-clip").forEach(x => { const q = entry(x); if (q) draw(x); else apply(x); x._fsb && x._fsb.setAttribute("aria-pressed", String(on)); })); }
     document.addEventListener("keydown", ev => { const fu = document.querySelector(".zm-full"); if (!fu) return;
       if (ev.key === "Escape"){ const c = fu.querySelector(".zm-clip"); if (c) cgFull(c, c.closest("figure, .fig, .mo-hfig") || c); }
@@ -7885,10 +7911,10 @@ html[data-tk="l"] .thq,body.sakura .thq{background:#fff}
   // quick theme switch in the top bar: a small swatch next to the language switch
   { const lg = document.querySelector(".tb-lang"); if (lg){ const tb = el("button","tb-theme"); tb.type = "button"; tb.setAttribute("aria-label", "Vzhled aplikace"); tb.title = "Vzhled aplikace"; tb.setAttribute("aria-haspopup", "true");
       const paint = () => { const th = THEMES.find(x => x[0] === cfg.theme) || THEMES[0]; tb.style.setProperty("--a", th[3][0]); tb.style.setProperty("--b", th[3][1]); tb.style.setProperty("--c", th[3][2]); };
-      tb.innerHTML = "<i></i>"; paint(); lg.parentNode.insertBefore(tb, lg);
+      tb.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5a8.5 8.5 0 100 17c1.2 0 1.8-.8 1.8-1.7 0-.5-.2-.9-.5-1.2-.3-.3-.5-.7-.5-1.2 0-.9.8-1.6 1.7-1.6h2a4.5 4.5 0 004.5-4.5C21 6.6 17 3.5 12 3.5z"/><circle cx="7.6" cy="11" r="1.2"/><circle cx="10" cy="7.3" r="1.2"/><circle cx="14.4" cy="7.3" r="1.2"/></svg><i></i>'; paint(); lg.parentNode.insertBefore(tb, lg);
       let pop = null; const close = () => { if (pop){ pop.remove(); pop = null; tb.setAttribute("aria-expanded", "false"); } };
       tb.addEventListener("click", ev => { ev.stopPropagation(); if (pop){ close(); return; } pop = el("div","thq"); pop.setAttribute("role","menu"); pop.appendChild(el("b", null, "Vzhled aplikace"));
-        const g = el("div","thq-g"); THEMES.forEach(t => { const b = el("button", null); b.type = "button"; b.setAttribute("role","menuitemradio"); b.setAttribute("aria-checked", String(t[0] === (cfg.theme || "noc"))); const sw = el("span","thq-sw"); sw.style.setProperty("--a", t[3][0]); sw.style.setProperty("--b", t[3][1]); sw.style.setProperty("--c", t[3][2]); b.appendChild(sw); b.appendChild(el("span", null, t[1]));
+        const g = el("div","thq-g"); THEMES.forEach(t => { const b = el("button", null); b.type = "button"; b.setAttribute("role","menuitemradio"); b.setAttribute("aria-checked", String(t[0] === (cfg.theme || "noc"))); const sw = el("span","thq-pv"); sw.style.setProperty("--a", t[3][0]); sw.style.setProperty("--b", t[3][1]); sw.style.setProperty("--c", t[3][2]); sw.innerHTML = "<i class=\"t\"></i><i class=\"c1\"><u></u><s></s></i><i class=\"c2\"><u></u></i><i class=\"bt\"></i>"; b.appendChild(sw); b.appendChild(el("span", null, t[1]));
           b.addEventListener("click", () => { cfg.theme = t[0]; cfgStore(); applyTheme(); paint(); try { if (themeBox.isConnected) renderThemePick(); } catch(e){} g.querySelectorAll("button").forEach(x => x.setAttribute("aria-checked", String(x === b))); }); g.appendChild(b); });
         pop.appendChild(g); const more = el("a","thq-more","Další nastavení vzhledu"); more.href = "#nastaveni"; more.addEventListener("click", close); pop.appendChild(more);
         document.body.appendChild(pop); const r = tb.getBoundingClientRect(); pop.style.top = (r.bottom + 8) + "px"; pop.style.left = Math.max(8, Math.min(innerWidth - pop.offsetWidth - 8, r.left + r.width / 2 - pop.offsetWidth / 2)) + "px"; tb.setAttribute("aria-expanded", "true"); });

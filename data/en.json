@@ -2317,5 +2317,9 @@
  "Strach": "Fear",
  "Euforie": "Euphoria",
  "Cyklus": "Cycle",
- "Další nastavení vzhledu": "More appearance settings"
+ "Další nastavení vzhledu": "More appearance settings",
+ "Ukončit celou obrazovku": "Exit full screen",
+ "Ukončit celou obrazovku (Esc)": "Exit full screen (Esc)",
+ "← → kroky · tažením za osy přiblížíš": "← → steps · drag the axes to zoom",
+ "Tažením za osy přiblížíš": "Drag the axes to zoom"
 }
