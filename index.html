@@ -1878,8 +1878,8 @@ html[data-tk="d"] body:not(.sakura)>.cg-orbit:not(.rbw){background:linear-gradie
 html[data-tk="d"] body:not(.sakura) .tb-trade #tb-quick{background:linear-gradient(160deg,var(--th-glow2),var(--th-glow));color:var(--th-priink)}
 html[data-tk="d"] body:not(.sakura) .msg.me{background:var(--th-pri);color:var(--th-priink)}
 @supports ((-webkit-background-clip:text) or (background-clip:text)){html[data-tk="d"] body:not(.sakura) #phead h1,html[data-tk="d"] body:not(.sakura) .hero2 h1{background:var(--th-headg);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:var(--ink)}}
-:is(html[data-t="zatmeni"],html[data-t="aurora"],html[data-t="opal"]) body:not(.sakura) .card,:is(html[data-t="zatmeni"],html[data-t="aurora"],html[data-t="opal"]) body:not(.sakura) details.week,:is(html[data-t="zatmeni"],html[data-t="aurora"],html[data-t="opal"]) body:not(.sakura) .hero2{border-color:transparent;border-radius:22px}
-:is(html[data-t="zatmeni"],html[data-t="aurora"],html[data-t="opal"]) body:not(.sakura) .topbar{border-bottom-color:transparent}
+:is(html[data-t="zatmeni"],html[data-t="aurora"],html[data-t="opal"],html[data-t="karbon"],html[data-t="zlato"],html[data-t="smart"]) body:not(.sakura) .card,:is(html[data-t="zatmeni"],html[data-t="aurora"],html[data-t="opal"],html[data-t="karbon"],html[data-t="zlato"],html[data-t="smart"]) body:not(.sakura) details.week,:is(html[data-t="zatmeni"],html[data-t="aurora"],html[data-t="opal"],html[data-t="karbon"],html[data-t="zlato"],html[data-t="smart"]) body:not(.sakura) .hero2{border-color:transparent;border-radius:22px}
+:is(html[data-t="zatmeni"],html[data-t="aurora"],html[data-t="opal"],html[data-t="karbon"],html[data-t="zlato"],html[data-t="smart"]) body:not(.sakura) .topbar{border-bottom-color:transparent}
 /* every theme: accents follow the theme instead of fixed purple, so they stay readable */
 html[data-t] body:not(.sakura) .tb-ck,html[data-t] body:not(.sakura) .pl-ckb,html[data-t] body:not(.sakura) .lb-focus{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
 html[data-t] body:not(.sakura) .plan2{border-color:var(--line)!important}
@@ -2462,6 +2462,122 @@ html[data-tk="l"] .thq,body.sakura .thq{background:#fff}
 .thq-sw{flex:none;width:18px;height:18px;border-radius:50%;background:conic-gradient(var(--c) 0 33%,var(--b) 0 66%,var(--a) 0);box-shadow:0 0 0 1.5px rgba(128,128,128,.35)}
 .thq-more{font-size:12px;color:var(--muted);text-decoration:underline;text-underline-offset:3px}
 @media (max-width:859px){.tb-theme{width:30px;height:30px}}
+/* ---------- levels ---------- */
+.lv-emb{position:relative;display:grid;place-items:center;flex:none;width:var(--sz,56px);height:var(--sz,56px);filter:drop-shadow(0 6px 14px var(--lvg,rgba(0,0,0,.3)));--hex:polygon(50% 0,93.3% 25%,93.3% 75%,50% 100%,6.7% 75%,6.7% 25%)}
+.lv-emb::before{content:"";position:absolute;inset:0;clip-path:var(--hex);background:var(--lvb)}
+.lv-emb i{position:absolute;inset:8%;clip-path:var(--hex);background:radial-gradient(120% 90% at 30% 15%,#2a2b36,#0d0d12 70%);overflow:hidden}
+.lv-emb i::after{content:"";position:absolute;inset:-20% -60%;background:linear-gradient(105deg,transparent 42%,rgba(255,255,255,.34) 50%,transparent 58%);transform:translateX(-70%);animation:lvShine 4.2s ease-in-out infinite}
+.lv-emb b{position:relative;font-family:var(--display,inherit);font-weight:800;font-size:calc(var(--sz,56px)*.42);line-height:1;letter-spacing:-.03em;background:var(--lvb);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;padding:.06em .04em}
+.lv-emb.t1{--lvb:linear-gradient(135deg,#f6cfa5,#c77f45 52%,#8a4f26);--lvg:rgba(199,127,69,.42)}
+.lv-emb.t2{--lvb:linear-gradient(135deg,#ffffff,#b9c2cf 52%,#6f7b8c);--lvg:rgba(170,185,205,.42)}
+.lv-emb.t3{--lvb:linear-gradient(135deg,#fff3b8,#f5c451 52%,#a8741a);--lvg:rgba(245,196,81,.5)}
+.lv-emb.t4{--lvb:linear-gradient(120deg,#7cf7ff,#8a7bff 38%,#ff6ad5 70%,#ffd36a);--lvg:rgba(138,123,255,.6)}
+.lv-emb.t4::before,.lv-emb.t4 b{animation:lvHue 7s linear infinite}
+@keyframes lvShine{0%,55%{transform:translateX(-70%)}85%,100%{transform:translateX(70%)}}
+@keyframes lvHue{to{filter:hue-rotate(360deg)}}
+.tb-lvl{position:relative;flex:none;width:36px;height:36px;padding:0!important;border-radius:50%!important;display:grid!important;place-items:center;background:var(--surface)!important;border:0!important;box-shadow:none!important;min-height:0;cursor:pointer;color:var(--ink)!important;transition:transform .2s}
+.tb-lvl svg{position:absolute;inset:0;width:100%;height:100%;fill:none}
+.tb-lvl .tr{stroke:var(--line);stroke-width:2.6}
+.tb-lvl .pg{stroke-width:2.6;stroke-linecap:round;transition:stroke-dashoffset .9s cubic-bezier(.2,.8,.2,1)}
+.tb-lvl b{position:relative;font-size:14px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1}
+.tb-lvl:hover{transform:translateY(-1px) scale(1.05)}
+.tb-lvl.t4 .pg{animation:lvHue 7s linear infinite}
+.tb-lvl.bump{animation:lvBump .7s cubic-bezier(.3,1.6,.5,1)}
+@keyframes lvBump{0%{transform:scale(1)}35%{transform:scale(1.28)}100%{transform:scale(1)}}
+#v-prehled>[data-card="level"]{order:-1}
+.lv-card{display:flex!important;flex-direction:row!important;align-items:center;gap:18px;flex-wrap:wrap;position:relative;overflow:hidden}
+.lv-card::before{content:"";position:absolute;inset:0;background:radial-gradient(50% 120% at 0% 50%,var(--accent-soft),transparent 70%);pointer-events:none}
+.lv-card>*{position:relative}
+.lv-m{flex:1;min-width:210px;display:flex;flex-direction:column;gap:6px}
+.lv-k{display:flex;gap:10px;align-items:baseline;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;font-weight:800;color:var(--muted)}
+.lv-k b{letter-spacing:.02em;color:var(--ink);font-variant-numeric:tabular-nums;text-transform:none;font-size:12.5px}
+.lv-m h3,.lv-m h2{margin:0;font-family:var(--display,inherit);font-weight:800;letter-spacing:-.025em;line-height:1.1}
+.lv-m h3{font-size:clamp(20px,3.4vw,26px)}.lv-m h2{font-size:clamp(24px,5vw,34px)}
+.lv-bar{height:10px;border-radius:99px;background:color-mix(in srgb,var(--ink) 9%,transparent);overflow:hidden;margin:3px 0 1px}
+.lv-bar i{display:block;height:100%;border-radius:99px;background:var(--th-pri,linear-gradient(90deg,#8ab4ff,#c58aff));background-origin:border-box;position:relative;overflow:hidden;transition:width 1s cubic-bezier(.2,.8,.2,1)}
+html[data-tk="l"] .lv-bar i,body.sakura .lv-bar i{background:linear-gradient(90deg,var(--accent),color-mix(in srgb,var(--accent) 55%,#ff7fbf))}
+.lv-bar i::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.55) 50%,transparent 70%);transform:translateX(-100%);animation:lvSheen 2.8s ease-in-out infinite}
+@keyframes lvSheen{0%,40%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+.lv-ft{display:flex;gap:6px 14px;flex-wrap:wrap;align-items:center}
+.lv-unl{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:650;padding:3px 10px;border-radius:999px;background:var(--accent-soft);color:var(--ink)}
+.lv-unl svg,.lv-rs svg,.lv-ai svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.lv-open{align-self:center;border-radius:999px!important;padding:9px 16px!important;font-weight:650}
+.ob .card.lv-panel{max-width:760px;position:relative;gap:20px;padding-top:26px}
+.lv-x{position:sticky;top:0;align-self:flex-end;margin:-10px -4px -34px 0;z-index:3;width:36px;height:36px;padding:0!important;display:grid!important;place-items:center;border-radius:50%!important;background:var(--surface2,var(--surface))!important;border:1px solid var(--line)!important;color:var(--ink)!important;box-shadow:none!important;min-height:0}
+.lv-x svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round}
+.lv-hd{display:flex;gap:20px;align-items:center;flex-wrap:wrap;padding-right:40px}
+.lv-sec{display:flex;flex-direction:column;gap:10px}.lv-sec h3{margin:0;font-size:1.02rem}.lv-sec>p{margin:-4px 0 0}
+.lv-lad{display:flex;flex-direction:column;gap:6px}
+.lv-row{display:grid;grid-template-columns:auto 1fr auto auto;gap:12px;align-items:center;padding:8px 12px;border-radius:14px;border:1px solid var(--line);background:color-mix(in srgb,var(--ink) 3%,transparent)}
+.lv-row.lock{opacity:.62}.lv-row.lock .lv-emb{filter:grayscale(.75) drop-shadow(0 2px 6px rgba(0,0,0,.2))}.lv-row.lock .lv-emb i::after{animation:none;opacity:0}
+.lv-row.cur{border-color:var(--accent);background:var(--accent-soft);box-shadow:0 0 0 1px var(--accent) inset}
+.lv-rt{display:flex;flex-direction:column;gap:1px;min-width:0}.lv-rt b{font-size:14.5px}
+.lv-rx{font-size:12.5px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--muted);white-space:nowrap}
+.lv-rs{display:grid;place-items:center;min-width:22px;font-size:11px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--accent);white-space:nowrap}
+.lv-row.got .lv-rs{color:var(--good,#16b67f)}.lv-row.lock .lv-rs{color:var(--muted)}
+.lv-fl{display:flex;gap:8px;flex-wrap:wrap}
+.lv-flb{display:inline-flex!important;align-items:center;gap:8px;padding:7px 12px 7px 8px!important;border-radius:999px!important;font-size:13px;font-weight:650;min-height:0}
+.lv-flb i{width:18px;height:22px;border-radius:50% 50% 50% 50%/62% 62% 38% 38%;box-shadow:0 0 10px rgba(255,140,40,.25)}
+.lv-flb small{font-size:10.5px;color:var(--muted);font-weight:700}
+.lv-flb.on{border-color:var(--accent)!important;box-shadow:0 0 0 1px var(--accent) inset!important;background:var(--accent-soft)!important}
+.lv-flb.lock{opacity:.55}.lv-flb.lock i{filter:grayscale(.8)}
+.lv-ag{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:8px}
+.lv-ach{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:14px;border:1px solid var(--line);background:color-mix(in srgb,var(--ink) 3%,transparent)}
+.lv-ach>div{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1}.lv-ach b{font-size:13.5px}.lv-ach small{font-size:10.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.lv-ai{flex:none;width:34px;height:34px;border-radius:11px;display:grid;place-items:center;background:color-mix(in srgb,var(--ink) 8%,transparent);color:var(--muted)}
+.lv-ai svg{width:17px;height:17px}
+.lv-ach.ok{border-color:color-mix(in srgb,var(--accent) 55%,transparent);background:var(--accent-soft)}
+.lv-ach.ok .lv-ai{background:var(--th-pri,linear-gradient(135deg,#8ab4ff,#c58aff));background-origin:border-box;color:var(--th-priink,#0b0b10);box-shadow:0 6px 16px var(--accent-soft)}
+html[data-tk="l"] .lv-ach.ok .lv-ai,body.sakura .lv-ach.ok .lv-ai{background:var(--accent);color:#fff}
+.lv-ach:not(.ok) b{color:var(--muted)}
+.lv-ap{height:4px;border-radius:4px;background:color-mix(in srgb,var(--ink) 10%,transparent);overflow:hidden;margin-top:4px}.lv-ap i{display:block;height:100%;background:var(--accent);border-radius:4px}
+.lv-src{display:flex;flex-direction:column}
+.lv-sr{display:grid;grid-template-columns:1fr auto 92px;gap:10px;align-items:baseline;padding:7px 2px;border-bottom:1px solid var(--line);font-size:13.5px}
+.lv-sr:last-child{border-bottom:0}.lv-sr b{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.xpfly{position:fixed;z-index:120;transform:translate(-50%,0);padding:6px 13px;border-radius:999px;font-weight:800;font-size:14px;letter-spacing:.01em;color:#0b0b10;background:linear-gradient(135deg,#fff3b8,#f5c451);box-shadow:0 8px 26px rgba(245,196,81,.5),0 0 0 1px rgba(255,255,255,.5) inset;pointer-events:none;white-space:nowrap;animation:xpFly 1.8s cubic-bezier(.2,.8,.2,1) both}
+@keyframes xpFly{0%{opacity:0;transform:translate(-50%,8px) scale(.7)}14%{opacity:1;transform:translate(-50%,-10px) scale(1.12)}26%{transform:translate(-50%,-16px) scale(1)}75%{opacity:1}100%{opacity:0;transform:translate(-50%,-78px) scale(.96)}}
+.wel.lvup{z-index:130}
+.lvup-cv{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:2}
+.lvup-c{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;max-width:520px;padding:10px;color:var(--wi,#fff)}
+.lvup-k{margin:0;font-size:12px;letter-spacing:.34em;text-transform:uppercase;font-weight:800;color:var(--wm);animation:lvIn .6s .05s both}
+.lvup-ring{position:relative;display:grid;place-items:center;width:210px;height:210px;margin:6px 0 2px}
+.lvup-ring>i{position:absolute;inset:18px;border-radius:50%;border:2px solid var(--w1);opacity:0;animation:lvRing 2.4s .45s cubic-bezier(.2,.7,.2,1) infinite}
+.lvup-ring>i:nth-child(2){border-color:var(--w2);animation-delay:1.25s}
+.lvup-ring .lv-emb{animation:lvPop .9s .15s cubic-bezier(.2,1.5,.4,1) both}
+.lvup-n{margin:0;font-size:14px;letter-spacing:.2em;text-transform:uppercase;font-weight:800;color:var(--wm);animation:lvIn .6s .55s both}
+.lvup-c h2{margin:0;font-family:var(--display,inherit);font-size:clamp(2.2rem,9vw,3.4rem);line-height:1.08;font-weight:800;letter-spacing:-.035em;background:linear-gradient(100deg,var(--wi) 0%,var(--w1) 30%,var(--wi) 50%,var(--w2) 75%,var(--wi) 100%);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;padding:0 .08em .18em;animation:lvIn .7s .65s both,lvSlide 6s linear infinite}
+.wel.lvup.lt .lvup-c h2{background-image:linear-gradient(100deg,var(--wi) 0%,var(--wb1,var(--w1)) 35%,var(--wi) 55%,var(--wb2,var(--w2)) 80%,var(--wi) 100%)}
+.lvup-s{margin:0;max-width:440px;font-size:.98rem;line-height:1.5;color:var(--wm);animation:lvIn .6s .8s both}
+.lvup-row{display:flex;flex-direction:column;align-items:center;gap:8px;margin-top:12px;animation:lvIn .6s .95s both}
+.lvup-row .wel-go{min-width:220px}.lvup-row .wel-link{align-self:center}
+.lvup-ring::before{content:"";position:absolute;inset:-70px;border-radius:50%;background:repeating-conic-gradient(from 0deg,color-mix(in srgb,var(--w1) 34%,transparent) 0 5deg,transparent 5deg 15deg,color-mix(in srgb,var(--w2) 26%,transparent) 15deg 19deg,transparent 19deg 30deg);-webkit-mask:radial-gradient(circle,transparent 27%,#000 36%,transparent 69%);mask:radial-gradient(circle,transparent 27%,#000 36%,transparent 69%);opacity:0;animation:thturn 26s linear infinite,lvFade 1.2s .35s forwards}
+@keyframes lvFade{to{opacity:.6}}
+@keyframes lvIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes lvPop{0%{opacity:0;transform:scale(.3) rotate(-25deg)}100%{opacity:1;transform:none}}
+@keyframes lvRing{0%{opacity:.75;transform:scale(.55)}100%{opacity:0;transform:scale(1.35)}}
+@keyframes lvSlide{to{background-position:220% 0}}
+.th-locked{position:relative}
+.th-locked>.sw,.th-locked>.thq-pv{filter:saturate(.55) brightness(.8)}
+.th-locked::after{content:attr(data-lock);position:absolute;top:10px;right:10px;padding:2px 8px;border-radius:999px;font-size:10px;font-weight:800;letter-spacing:.04em;background:rgba(10,10,14,.78);color:#fff;border:1px solid rgba(255,255,255,.25)}
+@media (prefers-reduced-motion:reduce){.lv-emb i::after,.lv-bar i::after,.lvup-ring>i,.lv-emb.t4::before,.lv-emb.t4 b,.tb-lvl.t4 .pg{animation:none!important}}
+body.fx-off .lvup-ring::before{animation:lvFade 1s forwards}body.fx-off .lv-emb i::after,body.fx-off .lv-bar i::after,body.fx-off .lvup-ring>i{animation:none!important}
+@media (max-width:859px){.tb-lvl{width:32px;height:32px}.tb-lvl b{font-size:12.5px}}
+@media (max-width:600px){.lv-card{gap:12px}.lv-card .lv-emb{--sz:58px!important}.lv-open{width:100%}.lv-row{grid-template-columns:auto 1fr auto;gap:10px}.lv-row .lv-rx{display:none}.lv-hd .lv-emb{--sz:70px!important}.lvup-ring{width:170px;height:170px}.lvup-ring .lv-emb{--sz:108px!important}.lv-sr{grid-template-columns:1fr auto 78px}}
+/* ---------- themes unlocked by level: Karbon, Zlato, Smart Money ---------- */
+html[data-t="karbon"] body:not(.sakura){--bg:#0b0c0e;--surface:#141619;--surface2:#1c1f23;--ink:#f1f3f5;--muted:#8a9099;--line:rgba(255,255,255,.08);--accent:#d4ff4f;--accent-soft:rgba(212,255,79,.1);--amber:#ffd27a;--good:#5ef0b6;--bad:#ff8a8a;--th-body:#0b0c0e;--th-bar:rgba(11,12,14,.8);--th-nav:rgba(24,27,31,.9);--th-ov:rgba(4,5,6,.88);--th-pri:linear-gradient(135deg,#eaff8f,#b6f03c);--th-priink:#0d1004;--th-prish:0 0 36px -12px rgba(212,255,79,.7);--th-headg:linear-gradient(100deg,#ffffff,#d9dde2 45%,#d4ff4f);--th-fig:#0e1012;--th-pop:rgba(16,18,20,.98);--th-glow:#d4ff4f;--th-glow2:#7dd3fc}
+html[data-t="karbon"] body:not(.sakura) #thbg i:first-child{background:repeating-linear-gradient(45deg,rgba(255,255,255,.024) 0 2px,transparent 2px 7px),repeating-linear-gradient(-45deg,rgba(255,255,255,.018) 0 2px,transparent 2px 7px)}
+html[data-t="karbon"] body:not(.sakura) #thbg i:nth-child(2){background:radial-gradient(ellipse 60vw 300px at 50% -60px,rgba(212,255,79,.13),transparent 70%),radial-gradient(ellipse 40vw 300px at 100% 100%,rgba(125,211,252,.07),transparent 70%)}
+html[data-t="zlato"] body:not(.sakura){--bg:#0a0805;--surface:#15110a;--surface2:#1f190f;--ink:#fbf4e4;--muted:#a39678;--line:rgba(255,220,150,.1);--accent:#f5c451;--accent-soft:rgba(245,196,81,.11);--amber:#ffd27a;--good:#9be8b6;--bad:#ff9080;--th-body:#0a0805;--th-bar:rgba(10,8,5,.8);--th-nav:rgba(30,24,14,.9);--th-ov:rgba(5,4,2,.9);--th-pri:linear-gradient(135deg,#fff1b8,#f5c451 45%,#c98e22);--th-priink:#1a1204;--th-prish:0 0 40px -10px rgba(245,196,81,.75);--th-headg:linear-gradient(100deg,#fff6d6,#f5c451 50%,#d29a2e);--th-fig:#0e0b06;--th-pop:rgba(18,14,8,.98);--th-glow:#f5c451;--th-glow2:#fff1b8}
+html[data-t="zlato"] body:not(.sakura) #thbg i:first-child{background:radial-gradient(ellipse 70vw 340px at 50% -80px,rgba(245,196,81,.2),transparent 70%)}
+html[data-t="zlato"] body:not(.sakura) #thbg i:nth-child(2){background:linear-gradient(115deg,transparent 30%,rgba(255,225,150,.05) 45%,transparent 60%),radial-gradient(ellipse 50vw 300px at 0% 100%,rgba(201,142,34,.12),transparent 70%);animation:thpulse 7s ease-in-out infinite alternate}
+html[data-t="smart"] body:not(.sakura){--holo:linear-gradient(110deg,#7cf7ff,#8a7bff 30%,#ff6ad5 60%,#ffd36a 85%,#7cf7ff);--bg:#06070b;--surface:#10111a;--surface2:#191b28;--ink:#f5f6ff;--muted:#8f93b0;--line:rgba(160,170,255,.12);--accent:#a9b4ff;--accent-soft:rgba(140,150,255,.12);--amber:#ffd36a;--good:#7cf7d4;--bad:#ff8fb0;--th-body:#06070b;--th-bar:rgba(6,7,11,.8);--th-nav:rgba(20,22,34,.9);--th-ov:rgba(3,3,7,.9);--th-pri:var(--holo);--th-priink:#07080d;--th-prish:0 0 44px -10px rgba(138,123,255,.8);--th-headg:var(--holo);--th-fig:#0a0b12;--th-pop:rgba(12,13,20,.98);--th-glow:#7cf7ff;--th-glow2:#ff6ad5}
+html[data-t="smart"] body:not(.sakura) #thbg i:first-child{inset:auto;width:90vmin;height:90vmin;left:50%;top:-58vmin;margin-left:-45vmin;border-radius:50%;background:conic-gradient(from 0deg,#7cf7ff,#8a7bff,#ff6ad5,#ffd36a,#7cf7ff);filter:blur(80px);opacity:.42;animation:thturn 18s linear infinite}
+html[data-t="smart"] body:not(.sakura) #thbg i:nth-child(2){background:radial-gradient(ellipse 45vw 320px at 100% 100%,rgba(255,106,213,.1),transparent 70%),radial-gradient(ellipse 45vw 320px at 0% 90%,rgba(124,247,255,.08),transparent 70%)}
+html[data-t="smart"] body:not(.sakura) button.primary,html[data-t="smart"] body:not(.sakura) .abtn.primary,html[data-t="smart"] body:not(.sakura) #phead h1,html[data-t="smart"] body:not(.sakura) .hero2 h1,html[data-t="smart"] body:not(.sakura) .lv-bar i{background-size:240% 100%;animation:holoShift 9s linear infinite}
+@keyframes holoShift{to{background-position:240% 0}}
+html[data-t="karbon"] body:not(.sakura) :is(#streak,.wst).streak3:not(.s4){--stbg:#0a0c08;--stbd:rgba(212,255,79,.42);--stgl:rgba(170,240,60,.7);--sttx:#e0ff9a;--stnum:linear-gradient(0deg,#6fbf1e 0%,#b6f03c 35%,#eaff8f 65%,#fff 100%);--stsh:rgba(8,12,2,.9);--stgl2:rgba(190,255,90,.45)}
+html[data-t="zlato"] body:not(.sakura) :is(#streak,.wst).streak3:not(.s4){--stbg:#0f0b04;--stbd:rgba(245,196,81,.5);--stgl:rgba(245,180,60,.8);--sttx:#ffe6a3;--stnum:linear-gradient(0deg,#c98e22 0%,#f5c451 35%,#fff1b8 65%,#fff 100%);--stsh:rgba(20,12,0,.9);--stgl2:rgba(245,196,81,.5)}
+html[data-t="smart"] body:not(.sakura) :is(#streak,.wst).streak3:not(.s4){--stbg:#08081a;--stbd:rgba(150,160,255,.55);--stgl:rgba(138,123,255,.85);--sttx:#d8dcff;--stnum:linear-gradient(0deg,#ff6ad5 0%,#8a7bff 35%,#7cf7ff 65%,#fff 100%);--stsh:rgba(6,6,24,.9);--stgl2:rgba(138,123,255,.55)}
 .thpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:8px}
 .thp{display:flex;flex-direction:column;gap:8px;align-items:stretch;text-align:left;padding:8px;border-radius:16px;min-height:0}
 .thp .sw{height:54px;border-radius:10px;position:relative;overflow:hidden;border:1px solid rgba(128,128,128,.25)}
@@ -7167,7 +7283,7 @@ html[data-tk="l"] .thq,body.sakura .thq{background:#fff}
         THEMES.forEach(t => { const q = GLASS[t[0]] || GLASS.noc, b = el("button"), sw = el("div","sw"); b.type = "button"; b.setAttribute("aria-pressed", String(t[0] === cur));
           sw.style.background = "radial-gradient(70% 90% at 15% 10%," + q.b[0] + "cc,transparent 70%),radial-gradient(70% 90% at 95% 60%," + q.b[1] + "aa,transparent 70%),radial-gradient(60% 80% at 40% 120%," + q.b[2] + "99,transparent 70%)," + q.bg;
           b.appendChild(sw); b.appendChild(el("b", null, t[1])); b.appendChild(el("small", null, t[2]));
-          b.addEventListener("click", () => { cfg.theme = t[0]; cfgStore(); applyTheme(); welTone(ov); draw(); }); g.appendChild(b); }); };
+          thMark(t, b); b.addEventListener("click", () => { if (thGuard(t)) return; cfg.theme = t[0]; cfgStore(); applyTheme(); welTone(ov); draw(); }); g.appendChild(b); }); };
       draw(); c.appendChild(g);
       const go = el("button","wel-go","Hotovo"); go.type = "button"; go.addEventListener("click", () => { try { localStorage.setItem(THEME_ASK, "1"); } catch(e){} if (opt.only) close(); else hello(true); }); c.appendChild(go); };
     const hello = held => { clear(c); c.appendChild(top()); const nick = nickOf();
@@ -7177,6 +7293,7 @@ html[data-tk="l"] .thq,body.sakura .thq{background:#fff}
       if (!nick && !askNick){ hi.textContent = "Vítej zpátky"; title.textContent = hiWord() + "!"; sub.textContent = "Tady je, kde stojíš."; } else paint();
       const sd = streakDays(), tr = jSorted().filter(t => Date.now() - new Date(t.ts).getTime() < 7 * 864e5);
       const chip = (b, rest) => { const sp = el("span"); if (b){ sp.appendChild(el("b", null, b)); sp.appendChild(document.createTextNode(" ")); } sp.appendChild(document.createTextNode(rest)); stats.appendChild(sp); };
+      try { if (lvXp > 0 || lvNow > 1) chip("Level " + lvNow, lvName(lvNow)); } catch(e){}
       if (sd){ const lvl = sd >= 30 ? "s4" : sd >= 7 ? "s3" : sd >= 3 ? "s2" : "s1", word = (sd === 1 ? "den" : sd >= 2 && sd <= 4 ? "dny" : "dní") + " v sérii", sp = el("span","wst streak3 " + lvl);
         sp.innerHTML = '<canvas aria-hidden="true"></canvas><b>' + sd + "</b><span></span>"; sp.lastChild.textContent = word; sp.setAttribute("aria-label", sd + " " + word); stats.appendChild(sp); setTimeout(() => stFire(sp, lvl, true), 650); }
       if (tr.length){ const w = pl(tr.length, "obchod", "obchody", "obchodů").split(" "); chip(w[0], w.slice(1).join(" ") + " tento týden"); } else chip("", "Tento týden zatím bez obchodu");
@@ -7851,8 +7968,8 @@ html[data-tk="l"] .thq,body.sakura .thq{background:#fff}
   function stFire(p, lvl, own){ const cv = p.querySelector("canvas"); if (!own){ if (stF) stF.stop(); stF = null; } if (!cv || lvl === "off") return;
     try { if (matchMedia("(prefers-reduced-motion: reduce)").matches) return; } catch(e){}
     const g = cv.getContext("2d"), P = [], dpr = Math.min(2, window.devicePixelRatio || 1), k = lvl === "s1" ? .55 : lvl === "s2" ? .8 : 1.1; let W = 0, H = 0, run = true, raf = 0;
-    const ST_FIRE = {ametyst: [[255,250,255],[225,195,255],[170,115,255],[118,52,230],[60,22,120]], navy: [[235,245,255],[160,200,255],[80,140,255],[40,70,220],[20,25,90]], blossom: [[255,245,250],[255,190,225],[255,110,190],[200,60,170],[90,20,80]], zatmeni: [[255,252,235],[255,230,160],[243,195,100],[200,135,40],[90,50,10]], aurora: [[240,255,250],[160,255,225],[70,225,185],[100,95,235],[30,20,90]], opal: [[255,255,255],[255,212,240],[200,212,255],[160,250,232],[100,90,170]], bubblegum: [[255,245,250],[255,190,220],[255,120,180],[220,50,130],[110,20,60]]};
-    const pal = () => document.body.classList.contains("sakura") ? [[255,245,250],[255,190,220],[255,120,180],[220,50,130],[110,20,60]] : lvl !== "s4" && ST_FIRE[cfg.theme] ? ST_FIRE[cfg.theme] : lvl === "s4" ? [[235,245,255],[160,200,255],[80,140,255],[40,70,220],[20,25,90]] : [[255,250,220],[255,214,90],[255,140,30],[235,60,10],[120,20,5]];
+    const ST_FIRE = {karbon: [[250,255,230],[210,255,120],[150,235,60],[60,160,40],[15,50,15]], zlato: [[255,252,235],[255,232,150],[245,196,81],[200,135,30],[90,55,8]], smart: [[255,255,255],[124,247,255],[138,123,255],[255,106,213],[60,30,120]], ametyst: [[255,250,255],[225,195,255],[170,115,255],[118,52,230],[60,22,120]], navy: [[235,245,255],[160,200,255],[80,140,255],[40,70,220],[20,25,90]], blossom: [[255,245,250],[255,190,225],[255,110,190],[200,60,170],[90,20,80]], zatmeni: [[255,252,235],[255,230,160],[243,195,100],[200,135,40],[90,50,10]], aurora: [[240,255,250],[160,255,225],[70,225,185],[100,95,235],[30,20,90]], opal: [[255,255,255],[255,212,240],[200,212,255],[160,250,232],[100,90,170]], bubblegum: [[255,245,250],[255,190,220],[255,120,180],[220,50,130],[110,20,60]]};
+    const pal = () => (!document.body.classList.contains("sakura") && flamePal()) || (document.body.classList.contains("sakura") ? [[255,245,250],[255,190,220],[255,120,180],[220,50,130],[110,20,60]] : lvl !== "s4" && ST_FIRE[cfg.theme] ? ST_FIRE[cfg.theme] : lvl === "s4" ? [[235,245,255],[160,200,255],[80,140,255],[40,70,220],[20,25,90]] : [[255,250,220],[255,214,90],[255,140,30],[235,60,10],[120,20,5]]);
     const col = (pl, t, a) => { const n = pl.length - 1, i = Math.min(n - 1, Math.floor(t * n)), f = t * n - i, c = pl[i].map((v, j) => Math.round(v + (pl[i + 1][j] - v) * f)); return "rgba(" + c[0] + "," + c[1] + "," + c[2] + "," + a.toFixed(3) + ")"; };
     const size = () => { const r = cv.getBoundingClientRect(); W = r.width; H = r.height; cv.width = Math.max(1, W * dpr); cv.height = Math.max(1, H * dpr); g.setTransform(dpr, 0, 0, dpr, 0, 0); };
     size();
@@ -7901,7 +8018,8 @@ html[data-tk="l"] .thq,body.sakura .thq{background:#fff}
 
   // ---------- themes: seven looks, picked in Settings; Laura's room keeps its own pink look ----------
   const THEMES = [["noc","Noc","Tmavý, výchozí",["#09090b","#1b1b1f","#a78bfa"],"#09090b"],["ametyst","Ametyst","Bílý a fialový",["#f6f2ff","#ffffff","#7c3aed"],"#f6f2ff"],["navy","Navy","Námořní modř",["#081226","#16294f","#56c2ff"],"#081226",'Sora:wght@400;500;600;700;800'],
-    ["blossom","Blossom","Růžový soumrak",["#1a0e2b","#35204d","#ff86c8"],"#1a0e2b",'Quicksand:wght@500;600;700&family=Nunito:wght@400;600;700;800'],["zatmeni","Zatmění","Černá a koróna",["#050505","#191816","#f3d9a0"],"#050505"],["aurora","Aurora","Polární záře",["#03070b","#1c2c30","#7df0cf"],"#03070b"],["opal","Opál","Perleťový lesk",["#0a0b11","#1c1e2a","#c7d4ff"],"#0a0b11"],["bubblegum","Bubblegum","Světle růžový",["#fff3f9","#ffffff","#f0478f"],"#fff3f9"]];
+    ["blossom","Blossom","Růžový soumrak",["#1a0e2b","#35204d","#ff86c8"],"#1a0e2b",'Quicksand:wght@500;600;700&family=Nunito:wght@400;600;700;800'],["zatmeni","Zatmění","Černá a koróna",["#050505","#191816","#f3d9a0"],"#050505"],["aurora","Aurora","Polární záře",["#03070b","#1c2c30","#7df0cf"],"#03070b"],["opal","Opál","Perleťový lesk",["#0a0b11","#1c1e2a","#c7d4ff"],"#0a0b11"],["bubblegum","Bubblegum","Světle růžový",["#fff3f9","#ffffff","#f0478f"],"#fff3f9"],
+    ["karbon","Karbon","Uhlík a limetka",["#0b0c0e","#1c1f23","#d4ff4f"],"#0b0c0e",null,4],["zlato","Zlato","Černá a zlatá",["#0a0805","#1f190f","#f5c451"],"#0a0805",null,7],["smart","Smart Money","Hologram",["#06070b","#191b28","#8a7bff"],"#06070b",null,10]];
   function applyTheme(){ const th = THEMES.find(x => x[0] === cfg.theme) || THEMES[0], r = document.documentElement;
     if (th[0] === "noc"){ delete r.dataset.t; delete r.dataset.tk; } else { r.dataset.t = th[0]; r.dataset.tk = th[0] === "ametyst" || th[0] === "bubblegum" ? "l" : "d"; }
     if (th[5] && !document.getElementById("thf-" + th[0])){ const l = document.createElement("link"); l.id = "thf-" + th[0]; l.rel = "stylesheet"; l.href = "https://fonts.googleapis.com/css2?family=" + th[5] + "&display=swap"; document.head.appendChild(l); }
@@ -7915,15 +8033,15 @@ html[data-tk="l"] .thq,body.sakura .thq{background:#fff}
       let pop = null; const close = () => { if (pop){ pop.remove(); pop = null; tb.setAttribute("aria-expanded", "false"); } };
       tb.addEventListener("click", ev => { ev.stopPropagation(); if (pop){ close(); return; } pop = el("div","thq"); pop.setAttribute("role","menu"); pop.appendChild(el("b", null, "Vzhled aplikace"));
         const g = el("div","thq-g"); THEMES.forEach(t => { const b = el("button", null); b.type = "button"; b.setAttribute("role","menuitemradio"); b.setAttribute("aria-checked", String(t[0] === (cfg.theme || "noc"))); const sw = el("span","thq-pv"); sw.style.setProperty("--a", t[3][0]); sw.style.setProperty("--b", t[3][1]); sw.style.setProperty("--c", t[3][2]); sw.innerHTML = "<i class=\"t\"></i><i class=\"c1\"><u></u><s></s></i><i class=\"c2\"><u></u></i><i class=\"bt\"></i>"; b.appendChild(sw); b.appendChild(el("span", null, t[1]));
-          b.addEventListener("click", () => { cfg.theme = t[0]; cfgStore(); applyTheme(); paint(); try { if (themeBox.isConnected) renderThemePick(); } catch(e){} g.querySelectorAll("button").forEach(x => x.setAttribute("aria-checked", String(x === b))); }); g.appendChild(b); });
+          thMark(t, b); b.addEventListener("click", () => { if (thGuard(t)) return; cfg.theme = t[0]; cfgStore(); applyTheme(); paint(); try { if (themeBox.isConnected) renderThemePick(); } catch(e){} g.querySelectorAll("button").forEach(x => x.setAttribute("aria-checked", String(x === b))); }); g.appendChild(b); });
         pop.appendChild(g); const more = el("a","thq-more","Další nastavení vzhledu"); more.href = "#nastaveni"; more.addEventListener("click", close); pop.appendChild(more);
         document.body.appendChild(pop); const r = tb.getBoundingClientRect(); pop.style.top = (r.bottom + 8) + "px"; pop.style.left = Math.max(8, Math.min(innerWidth - pop.offsetWidth - 8, r.left + r.width / 2 - pop.offsetWidth / 2)) + "px"; tb.setAttribute("aria-expanded", "true"); });
       document.addEventListener("click", e => { if (pop && !pop.contains(e.target)) close(); }); document.addEventListener("keydown", e => { if (e.key === "Escape") close(); }); window.addEventListener("hashchange", close); window.addEventListener("resize", close); } }
   const themeBox = el("div","card");
-  function renderThemePick(){ clear(themeBox); themeBox.appendChild(el("h2", null, "Vzhled aplikace")); themeBox.appendChild(el("p","small muted","Osm vzhledů. Změna se projeví hned a uloží se k účtu. Lauřin room má dál svůj růžový vzhled."));
+  function renderThemePick(){ clear(themeBox); themeBox.appendChild(el("h2", null, "Vzhled aplikace")); themeBox.appendChild(el("p","small muted","Osm vzhledů a tři další, které se odemknou s levelem. Změna se projeví hned a uloží se k účtu. Lauřin room má dál svůj růžový vzhled."));
     const g = el("div","thpick"), cur = (THEMES.find(x => x[0] === cfg.theme) || THEMES[0])[0];
     THEMES.forEach(t => { const b = el("button","thp"), sw = el("div","sw"), i = el("i"), u = el("u"); b.type = "button"; b.setAttribute("aria-pressed", String(t[0] === cur)); sw.style.background = t[3][0]; i.style.background = t[3][1]; u.style.background = t[3][2]; sw.appendChild(i); sw.appendChild(u);
-      b.appendChild(sw); b.appendChild(el("b", null, t[1])); b.appendChild(el("span", null, t[2])); b.addEventListener("click", () => { cfg.theme = t[0]; cfgStore(); applyTheme(); renderThemePick(); }); g.appendChild(b); });
+      b.appendChild(sw); b.appendChild(el("b", null, t[1])); b.appendChild(el("span", null, t[2])); thMark(t, b); b.addEventListener("click", () => { if (thGuard(t)) return; cfg.theme = t[0]; cfgStore(); applyTheme(); renderThemePick(); }); g.appendChild(b); });
     themeBox.appendChild(g); }
   { const _rsT = renderSettings; renderSettings = function(){ _rsT(); const box = $("set"); if (softLock) return; renderThemePick(); if (themeBox.parentNode !== box) box.insertBefore(themeBox, heroBox.parentNode === box ? heroBox : box.firstChild); }; }
 
@@ -7954,6 +8072,9 @@ html[data-tk="l"] .thq,body.sakura .thq{background:#fff}
 
   // ---------- share cards follow the app theme: colours are remapped while the card is drawn ----------
   const CARD_PAL = {
+    karbon: ["#0b0c0e","#141619","#1c1f23","#2a2e34","#f1f3f5","#8a9099","#5d636b","#5ef0b6","#ff8a8a","#d4ff4f"],
+    zlato: ["#0a0805","#15110a","#1f190f","#30271a","#fbf4e4","#a39678","#70664f","#9be8b6","#ff9080","#f5c451"],
+    smart: ["#06070b","#10111a","#191b28","#2a2d42","#f5f6ff","#8f93b0","#5f6380","#7cf7d4","#ff8fb0","#ffd36a"],
     ametyst: ["#f7f3ff","#ffffff","#efe7ff","#e0d5fa","#2a1759","#75679f","#a99cc9","#0b8a68","#d42a52","#a86200"],
     navy: ["#081226","#0f1e3f","#16294f","#22396b","#e9f0ff","#8ea4d0","#5d72a0","#3fe0a8","#ff7a90","#ffc46b"],
     blossom: ["#1a0e2b","#2a173f","#35204d","#4a2d66","#ffeaf6","#cfa6cc","#9a7499","#7fe8d6","#ff8fa8","#ffcf8a"],
@@ -7964,6 +8085,9 @@ html[data-tk="l"] .thq,body.sakura .thq{background:#fff}
     sakura: ["#fff4fa","#ffffff","#ffeaf5","#f5c6df","#43163f","#8d5f88","#c09ab8","#0f9d77","#e23d5e","#bf7410"]};
   // glass look: soft colour glows in the theme's colours behind frosted panels
   const GLASS = {
+    karbon: {bg: "#08090a", b: ["#b6f03c","#7dd3fc","#5b6470"], c: ["#f4f6f8","#a4abb3","#6b7279","#5ef0b6","#ff8a8a","#d4ff4f"]},
+    zlato: {bg: "#070503", b: ["#f5c451","#c98e22","#8a5a12"], c: ["#fdf6e6","#b5a888","#7a6f58","#9be8b6","#ff9080","#f5c451"]},
+    smart: {bg: "#05060a", b: ["#8a7bff","#ff6ad5","#7cf7ff"], c: ["#f7f8ff","#a5a9c6","#6c7090","#7cf7d4","#ff8fb0","#ffd36a"]},
     noc: {bg: "#07070b", b: ["#a855f7","#38bdf8","#3ddc97"], c: ["#ffffff","#b9b9c6","#80808f","#5ef0b6","#ff8a8a","#ffd27a"]},
     ametyst: {bg: "#f3eeff", b: ["#b38cff","#ff9fd2","#8fd0ff"], c: ["#24124f","#6c5c96","#9a8cc0","#0b8a68","#d42a52","#a86200"], light: 1},
     navy: {bg: "#050c1c", b: ["#2f6bff","#22d3ee","#6366f1"], c: ["#eef3ff","#a3b3d8","#6f80a8","#46e6b0","#ff8399","#ffc46b"]},
@@ -8114,6 +8238,160 @@ html[data-tk="l"] .thq,body.sakura .thq{background:#fff}
     box.appendChild(c); }
   document.addEventListener("click", e => { const a = e.target.closest && e.target.closest("a[data-lt]"); if (!a) return; legalTab = a.dataset.lt; if (location.hash === "#pravni"){ e.preventDefault(); renderLegal(); window.scrollTo(0,0); } else setTimeout(renderLegal, 0); });
   try { renderLegal(); } catch(e){}
+  // ---------- levels: XP for the process (lessons, plans, journaling, replay, streak), never for profit ----------
+  const LT = (cz, en) => cfg.lang === "en" ? en : cz;
+  const LV = [[0, "Retail", "Retail"], [150, "Student", "Apprentice"], [400, "Čtenář grafu", "Chart Reader"], [800, "Lovec likvidity", "Liquidity Hunter"], [1400, "Stratég", "Strategist"], [2200, "Sniper", "Sniper"], [3300, "Risk manažer", "Risk Manager"], [4800, "Profík", "Pro"], [6800, "Mentor", "Mentor"], [9500, "Smart Money", "Smart Money"]];
+  const lvName = n => LT(LV[n - 1][1], LV[n - 1][2]);
+  const thName = t => { try { return cfg.lang === "en" ? (trEn(t[1]) || t[1]) : t[1]; } catch(e){ return t[1]; } };
+  const lvTier = n => n >= 10 ? 4 : n >= 7 ? 3 : n >= 4 ? 2 : 1;
+  const LV_TIER = [null, ["Bronzový odznak", "Bronze badge", ["#f6cfa5", "#c77f45", "#8a4f26"]], ["Stříbrný odznak", "Silver badge", ["#ffffff", "#b9c2cf", "#6f7b8c"]], ["Zlatý odznak", "Gold badge", ["#fff3b8", "#f5c451", "#a8741a"]], ["Holografický odznak", "Holographic badge", ["#7cf7ff", "#8a7bff", "#ff6ad5"]]];
+  // streak flames unlocked by level: canvas palette (hot to cold) and the pill's colours
+  const FLAMES = {
+    ice: {lv: 2, n: ["Led", "Ice"], p: [[255,255,255],[190,235,255],[90,190,255],[40,110,235],[15,35,110]], bd: "rgba(120,200,255,.5)", gl: "rgba(80,170,255,.8)", tx: "#bfe6ff", num: "linear-gradient(0deg,#2b6bff 0%,#5cc2ff 35%,#c8f1ff 65%,#fff 100%)", bg: "#060c16"},
+    toxic: {lv: 3, n: ["Jed", "Toxic"], p: [[250,255,230],[210,255,120],[120,235,60],[30,160,60],[10,60,25]], bd: "rgba(170,255,90,.45)", gl: "rgba(120,235,60,.75)", tx: "#d6ff9c", num: "linear-gradient(0deg,#1fa03c 0%,#7beb3c 35%,#d9ff7a 65%,#fff 100%)", bg: "#070d06"},
+    gold: {lv: 5, n: ["Zlatý", "Gold"], p: [[255,252,235],[255,232,150],[245,196,81],[200,135,30],[90,55,8]], bd: "rgba(245,196,81,.5)", gl: "rgba(245,180,60,.8)", tx: "#ffe6a3", num: "linear-gradient(0deg,#c98e22 0%,#f5c451 35%,#fff1b8 65%,#fff 100%)", bg: "#0f0b04"},
+    plasma: {lv: 6, n: ["Plazma", "Plasma"], p: [[255,245,255],[255,170,240],[220,80,255],[120,50,230],[45,15,110]], bd: "rgba(220,110,255,.5)", gl: "rgba(200,80,255,.8)", tx: "#f2c4ff", num: "linear-gradient(0deg,#7a32e6 0%,#dc50ff 35%,#ffaaf0 65%,#fff 100%)", bg: "#0d0614"},
+    phoenix: {lv: 8, n: ["Fénix", "Phoenix"], p: [[255,255,245],[255,225,120],[255,120,40],[215,30,40],[90,8,30]], bd: "rgba(255,110,60,.55)", gl: "rgba(255,70,40,.85)", tx: "#ffc9a8", num: "linear-gradient(0deg,#d71e28 0%,#ff7828 35%,#ffe178 65%,#fff 100%)", bg: "#120505"},
+    holo: {lv: 9, n: ["Holo", "Holo"], p: [[255,255,255],[124,247,255],[138,123,255],[255,106,213],[60,30,120]], bd: "rgba(150,160,255,.55)", gl: "rgba(138,123,255,.85)", tx: "#d8dcff", num: "linear-gradient(0deg,#ff6ad5 0%,#8a7bff 35%,#7cf7ff 65%,#fff 100%)", bg: "#08081a"}
+  };
+  let lvNow = 1, lvXp = 0, lvReady = false, lvBtn = null, lvCard = null, lvQ = [], lvPt = null, lvTm = 0;
+  try { const s0 = JSON.parse(localStorage.getItem("tape-xp") || "null"); if (s0 && s0.lv){ lvNow = s0.lv; lvXp = s0.xp || 0; } } catch(e){}
+  function flamePal(){ try { const f = FLAMES[cfg.flame]; return f && lvNow >= f.lv ? f.p : null; } catch(e){ return null; } }
+  function thLock(t){ try { return t && t[6] && lvNow < t[6] ? t[6] : 0; } catch(e){ return 0; } }
+  function thMark(t, b){ const n = thLock(t); b.classList.toggle("th-locked", !!n); if (n) b.dataset.lock = "Level " + n; else delete b.dataset.lock; }
+  function thGuard(t){ const n = thLock(t); if (n) toast(LT("Vzhled ", "The ") + thName(t) + LT(" se odemkne na levelu ", " theme unlocks at level ") + n + " · " + lvName(n) + "."); return !!n; }
+  function flameApply(){ let st = document.getElementById("flame-css"); const f = !document.body.classList.contains("sakura") && FLAMES[cfg.flame] && lvNow >= FLAMES[cfg.flame].lv ? FLAMES[cfg.flame] : null;
+    if (!f){ if (st) st.remove(); return; } if (!st){ st = document.createElement("style"); st.id = "flame-css"; document.head.appendChild(st); }
+    st.textContent = "html body :is(#streak,.wst).streak3.streak3.streak3{--stbg:" + f.bg + ";--stbd:" + f.bd + ";--stgl:" + f.gl + ";--sttx:" + f.tx + ";--stnum:" + f.num + ";--stsh:rgba(0,0,0,.85);--stgl2:" + f.gl + "}html body :is(#streak,.wst).streak3.streak3.streak3 span{color:" + f.tx + "}"; }
+
+  function streakRuns(){ const keys = Object.keys(act).filter(k => act[k]).sort(); if (!keys.length) return {hits: 0, best: 0};
+    const d = new Date(keys[0] + "T12:00:00"), today = dayKey(), used = {}, wk = x => { const m = new Date(x); m.setDate(m.getDate() - ((m.getDay() + 6) % 7)); return dayKey(m); }; let n = 0, hits = 0, best = 0, g = 0;
+    while (dayKey(d) <= today && g++ < 6000){ const k = dayKey(d), wd = d.getDay(); if (act[k]){ n++; if (n % 7 === 0) hits++; if (n > best) best = n; } else if (k === today || wd === 0 || wd === 6){} else if (!used[wk(d)]) used[wk(d)] = 1; else n = 0; d.setDate(d.getDate() + 1); }
+    return {hits: hits, best: best}; }
+  function xpCalc(){
+    const S = [], add = (cz, en, n, xp) => { if (n > 0 && xp > 0) S.push({name: LT(cz, en), n: n, xp: xp}); };
+    const c = [0, 0, 0]; let courseAll = 0, courseGot = 0; if (course) course.weeks.forEach(w => { const t = w.n <= 4 ? 0 : w.n <= 8 ? 1 : 2, g = w.lessons.filter(l => done[l.id]).length; c[t] += g; courseAll += w.lessons.length; courseGot += g; });
+    add("Kurz: základní lekce", "Course: basic lessons", c[0], c[0] * 20); add("Kurz: středně těžké lekce", "Course: intermediate lessons", c[1], c[1] * 40); add("Kurz: pokročilé lekce", "Course: advanced lessons", c[2], c[2] * 60);
+    const rd = Object.keys(lp.read || {}).filter(k => lp.read[k]).length, qz = Object.keys(lp.quiz || {}).filter(k => lp.quiz[k] && lp.quiz[k].total && lp.quiz[k].score === lp.quiz[k].total).length;
+    add("Denní lekce", "Daily lessons", rd, rd * 20); add("Kvíz bez chyby", "Flawless quiz", qz, qz * 10);
+    const seen = Object.keys(lp.seen || {}).filter(k => lp.seen[k]).length, mo = Object.keys(lp.moros || {}).filter(k => lp.moros[k]).length;
+    add("Témata price action", "Price action topics", seen, seen * 20); add("Lekce MOROS", "MOROS lessons", mo, mo * 40);
+    const prb = (lp.practice && lp.practice.best) || 0, fc = fcKnown(), ex = Object.keys(lp.exam || {}).filter(k => lp.exam[k] && lp.exam[k].of && lp.exam[k].best / lp.exam[k].of >= 0.8).length;
+    add("Procvičování: správné úlohy", "Practice: correct tasks", prb, prb * 5); add("Kartičky, které umíš", "Flashcards you know", fc, fc * 2); add("Složené zkoušky", "Exams passed", ex, ex * 100);
+    // journal: trades by day (first three detailed ones count), plans, evenings, disciplined days without a trade
+    const byDay = {}, own = (jr.trades || []).filter(t => !t.missed); own.slice().sort((a, b) => a.ts < b.ts ? -1 : 1).forEach(t => { (byDay[tDay(t)] = byDay[tDay(t)] || []).push(t); });
+    const det = t => !!t.setup && !!(t.grade || t.emo || (t.dol && t.dol.length) || (t.conf && t.conf.length) || (t.cfm && t.cfm.length) || (t.note && String(t.note).trim()));
+    let trN = 0, trPlan = 0, byPlanAll = 0, cool = 0; own.forEach(t => { if (t.plan === "yes") byPlanAll++; if (t.rev === false) cool++; });
+    Object.keys(byDay).forEach(k => byDay[k].filter(det).slice(0, 3).forEach(t => { trN++; if (t.plan === "yes") trPlan++; }));
+    add("Obchody zapsané s detaily", "Trades logged with details", trN, trN * 10); add("Obchody podle plánu", "Trades taken by the plan", trPlan, trPlan * 5);
+    let plN = 0, evN = 0, ntN = 0; Object.keys(jr.plans || {}).forEach(k => { let pp; try { pp = plProgress(jr.plans[k]); } catch(e){ return; } if (pp.pct < 50) return; plN++; if (pp.sec.eve){ evN++; if (!byDay[k]) ntN++; } });
+    add("Plány dne", "Daily plans", plN, plN * 15); add("Večerní vyhodnocení plánu", "Evening plan reviews", evN, evN * 10); add("Dny s plánem a bez obchodu", "Planned days with no trade", ntN, ntN * 15);
+    const rp = (jr.paper || []).filter(p => p.setup === "Replay"), rpDays = {}; rp.forEach(p => { try { rpDays[dayKey(new Date(p.ts))] = 1; } catch(e){} }); const rpN = Object.keys(rpDays).length;
+    add("Dny s tréninkem v replayi", "Days with replay practice", rpN, rpN * 15);
+    const sr = streakRuns(); add("Série: každý sedmý den", "Streak: every seventh day", sr.hits, sr.hits * 50);
+    const xp = S.reduce((a, s) => a + s.xp, 0);
+    return {xp: xp, S: S, m: {plN: plN, tr: own.length, byPlan: byPlanAll, cool: cool, best: sr.best, seen: seen, ex: ex, fc: fc, rpN: rpN, rpT: rp.length, cGot: courseGot, cAll: courseAll, prb: prb}};
+  }
+  function lvOf(xp){ let n = 1; for (let i = 0; i < LV.length; i++) if (xp >= LV[i][0]) n = i + 1; const cur = LV[n - 1][0], nx = n < LV.length ? LV[n][0] : null; return {n: n, name: lvName(n), cur: cur, next: nx, pct: nx ? Math.max(0, Math.min(1, (xp - cur) / (nx - cur))) : 1, left: nx ? nx - xp : 0}; }
+  function lvRewards(n){ const out = []; if (n === 1 || lvTier(n) !== lvTier(n - 1)) out.push(LT(LV_TIER[lvTier(n)][0], LV_TIER[lvTier(n)][1]));
+    THEMES.forEach(t => { if (t[6] === n) out.push(LT("vzhled ", "theme ") + thName(t)); }); Object.keys(FLAMES).forEach(k => { if (FLAMES[k].lv === n) out.push(LT("plamen série ", "streak flame ") + LT(FLAMES[k].n[0], FLAMES[k].n[1])); });
+    out.push(LT("titul ", "title ") + lvName(n)); return out; }
+  function lvAch(m){ const pal = (typeof pa !== "undefined" && pa.length) || 16, prl = (typeof pr !== "undefined" && pr.length) || 17;
+    return [["plan1", "První plán", "First plan", "Napiš plán dne aspoň z poloviny.", "Fill in at least half of a daily plan.", m.plN, 1, "ck"], ["plan10", "Deset plánů", "Ten plans", "Deset dní s plánem.", "Ten days with a plan.", m.plN, 10, "ck"],
+      ["tr1", "První obchod", "First trade", "Zapiš první obchod do deníku.", "Log your first trade.", m.tr, 1, "ch"], ["tr20", "20 obchodů v deníku", "20 trades logged", "Deník se vyplácí až s daty.", "A journal pays off once it has data.", m.tr, 20, "ch"],
+      ["bp10", "Podle plánu", "By the plan", "10 obchodů, u kterých jsi dodržel plán.", "10 trades where you kept your plan.", m.byPlan, 10, "tg"], ["cool10", "Chladná hlava", "Cool head", "10 obchodů označených jako bez revenge.", "10 trades marked as not revenge.", m.cool, 10, "tg"],
+      ["st7", "Série 7 dní", "7-day streak", "Sedm aktivních dní v řadě.", "Seven active days in a row.", m.best, 7, "fl"], ["st30", "Série 30 dní", "30-day streak", "Třicet aktivních dní v řadě.", "Thirty active days in a row.", m.best, 30, "fl"],
+      ["pa", "Čtu price action", "Price action reader", "Projdi všechna témata price action.", "Finish every price action topic.", m.seen, pal, "bk"], ["pr", "Bez chyby", "Flawless", "Procvičování bez jediné chyby.", "Practice with no mistakes.", m.prb, prl, "st"],
+      ["fc50", "50 pojmů v hlavě", "50 terms known", "Nauč se 50 kartiček.", "Learn 50 flashcards.", m.fc, 50, "bk"], ["ex1", "První zkouška", "First exam", "Slož zkoušku aspoň na 80 %.", "Pass an exam with at least 80%.", m.ex, 1, "st"],
+      ["ex12", "Všechny zkoušky", "All exams", "Slož všech 12 zkoušek.", "Pass all 12 exams.", m.ex, 12, "st"], ["course", "Celý kurz", "The whole course", "Dokonči všechny lekce kurzu.", "Finish every course lesson.", m.cGot, m.cAll || 48, "bk"],
+      ["rp5", "Trénink v replayi", "Replay practice", "Pět dní s obchodem v replayi.", "Five days with a replay trade.", m.rpN, 5, "rp"], ["rp100", "100 obchodů v replayi", "100 replay trades", "Sto zavřených obchodů v replayi.", "A hundred closed replay trades.", m.rpT, 100, "rp"]
+    ].map(a => ({id: a[0], name: LT(a[1], a[2]), desc: LT(a[3], a[4]), cur: Math.min(a[5] || 0, a[6]), goal: a[6], ok: (a[5] || 0) >= a[6], ic: a[7]})); }
+  const LV_IC = {ck: '<path d="M5 12.5l4.5 4.5L19 7.5"/>', ch: '<path d="M5 19V10M10 19V5M15 19v-7M20 19V8"/>', tg: '<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.5"/>', fl: '<path d="M12 3c1 3.500 4.500 5 4.500 9.500a4.500 4.500 0 01-9 0c0-1.800.8-3 1.800-4 .2 1.500 1 2.300 1.700 2.500C10.500 8.500 11 5.500 12 3z"/>', bk: '<path d="M5 5.500A2.500 2.500 0 017.500 3H19v15H7.500A2.500 2.500 0 005 20.500zM5 20.500A2.500 2.500 0 017.500 18H19v3H7.500"/>', st: '<path d="M12 3.500l2.600 5.400 5.900.8-4.300 4.100 1 5.800L12 16.900l-5.200 2.700 1-5.800-4.300-4.100 5.900-.8z"/>', rp: '<path d="M7 5l11 7-11 7z"/>', lock: '<rect x="6" y="11" width="12" height="9" rx="2"/><path d="M8.500 11V8a3.500 3.500 0 017 0v3"/>'};
+  const lvIc = k => '<svg viewBox="0 0 24 24" aria-hidden="true">' + LV_IC[k] + "</svg>";
+  function lvEmb(n, sz){ const e = el("span","lv-emb t" + lvTier(n)); e.style.setProperty("--sz", (sz || 56) + "px"); e.appendChild(el("i")); e.appendChild(el("b", null, String(n))); e.setAttribute("aria-hidden", "true"); return e; }
+  function lvBar(L, xp){ const w = el("div","lv-bar"), i = el("i"); i.style.width = Math.max(3, Math.round(L.pct * 100)) + "%"; w.appendChild(i); w.setAttribute("role", "progressbar"); w.setAttribute("aria-valuenow", String(Math.round(L.pct * 100))); w.setAttribute("aria-label", LT("Postup k dalšímu levelu", "Progress to the next level")); return w; }
+  const lvNum = v => Number(v).toLocaleString(cfg.lang === "en" ? "en-US" : "cs-CZ");
+  const lvNextLine = (L) => L.next ? LT("Do levelu ", "To level ") + (L.n + 1) + " · " + lvName(L.n + 1) + LT(" zbývá ", ": ") + lvNum(L.left) + " XP" + LT("", " to go") : LT("Nejvyšší level. Teď už jen držet proces.", "Top level. Now just keep the process.");
+
+  // ----- painting: top bar ring and the card on the home page -----
+  function lvPaint(){
+    const L = lvOf(lvXp), T3 = LV_TIER[lvTier(L.n)][2];
+    if (!lvBtn){ const st = $("streak"); if (st){ lvBtn = el("button","tb-lvl"); lvBtn.type = "button"; lvBtn.id = "tb-lvl"; lvBtn.innerHTML = '<svg viewBox="0 0 36 36" aria-hidden="true"><defs><linearGradient id="tblvg" x1="0" y1="0" x2="1" y2="1"><stop offset="0"/><stop offset=".5"/><stop offset="1"/></linearGradient></defs><circle class="tr" cx="18" cy="18" r="15.500"/><circle class="pg" cx="18" cy="18" r="15.500" stroke="url(#tblvg)" transform="rotate(-90 18 18)"/></svg><b></b>'; lvBtn.addEventListener("click", () => lvPanel()); st.parentNode.insertBefore(lvBtn, st); } }
+    if (lvBtn){ const C = 2 * Math.PI * 15.5, pg = lvBtn.querySelector(".pg"); pg.style.strokeDasharray = C.toFixed(2); pg.style.strokeDashoffset = (C * (1 - L.pct)).toFixed(2); lvBtn.querySelectorAll("stop").forEach((s, i) => s.setAttribute("stop-color", T3[i])); lvBtn.querySelector("b").textContent = String(L.n); lvBtn.className = "tb-lvl t" + lvTier(L.n);
+      const tt = "Level " + L.n + " · " + L.name + " · " + lvNum(lvXp) + " XP"; lvBtn.title = tt; lvBtn.setAttribute("aria-label", tt); }
+    const home = $("v-prehled"); if (!home) return;
+    if (!lvCard || !lvCard.isConnected){ lvCard = el("div","card lv-card"); lvCard.dataset.card = "level"; const promo = home.querySelector('[data-card="replay"]'); if (promo) home.insertBefore(lvCard, promo); else home.appendChild(lvCard); }
+    const sig = L.n + "|" + lvXp + "|" + cfg.lang; if (lvCard.dataset.sig === sig) return; lvCard.dataset.sig = sig; clear(lvCard);
+    const m = el("div","lv-m"), k = el("div","lv-k"); k.appendChild(el("span", null, "Level " + L.n)); k.appendChild(el("b", null, lvNum(lvXp) + " XP")); m.appendChild(k); m.appendChild(el("h3", null, L.name)); m.appendChild(lvBar(L));
+    const ft = el("div","lv-ft"); ft.appendChild(el("span","small muted", lvNextLine(L))); if (L.next){ const rw = lvRewards(L.n + 1).filter(x => x.indexOf(LT("titul ", "title ")) !== 0); if (rw.length){ const u = el("span","lv-unl"); u.innerHTML = lvIc("lock"); u.appendChild(el("span", null, LT("Odemkne: ", "Unlocks: ") + rw.join(", "))); ft.appendChild(u); } } m.appendChild(ft);
+    const b = el("button","lv-open", LT("Levely a odměny", "Levels and rewards")); b.type = "button"; b.addEventListener("click", () => lvPanel());
+    lvCard.appendChild(lvEmb(L.n, 76)); lvCard.appendChild(m); lvCard.appendChild(b);
+  }
+
+  // ----- the panel: ladder, rewards, achievements, where the XP came from -----
+  function lvPanel(){
+    const r = xpCalc(), L = lvOf(r.xp), o = overlay("lv-panel"), c = o.card; const x = el("button","lv-x"); x.type = "button"; x.setAttribute("aria-label", LT("Zavřít", "Close")); x.innerHTML = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"/></svg>'; x.addEventListener("click", o.close); c.appendChild(x);
+    const hd = el("div","lv-hd"), hm = el("div","lv-m"), k = el("div","lv-k"); k.appendChild(el("span", null, "Level " + L.n)); k.appendChild(el("b", null, lvNum(r.xp) + " XP")); hm.appendChild(k); hm.appendChild(el("h2", null, L.name)); hm.appendChild(lvBar(L)); hm.appendChild(el("span","small muted", lvNextLine(L))); hd.appendChild(lvEmb(L.n, 92)); hd.appendChild(hm); c.appendChild(hd);
+    const sec = (t, sub) => { const s = el("section","lv-sec"); s.appendChild(el("h3", null, t)); if (sub) s.appendChild(el("p","small muted", sub)); c.appendChild(s); return s; };
+    const s1 = sec(LT("Cesta levelů", "The level path"), LT("XP dostáváš za proces: učení, plán, poctivý deník a trénink. Za zisk ani za počet obchodů nic není.", "You earn XP for the process: learning, planning, an honest journal and practice. Nothing for profit or for the number of trades.")), lad = el("div","lv-lad");
+    LV.forEach((v, i) => { const n = i + 1, row = el("div","lv-row" + (n < L.n ? " got" : n === L.n ? " cur" : " lock")), tx = el("div","lv-rt"); row.appendChild(lvEmb(n, 40)); tx.appendChild(el("b", null, lvName(n))); tx.appendChild(el("span","small muted", lvRewards(n).join(" · "))); row.appendChild(tx);
+      row.appendChild(el("span","lv-rx", lvNum(v[0]) + " XP")); const stt = el("span","lv-rs"); if (n < L.n) stt.innerHTML = lvIc("ck"); else if (n === L.n) stt.textContent = LT("Tady jsi", "You are here"); else stt.innerHTML = lvIc("lock"); row.appendChild(stt); lad.appendChild(row); }); s1.appendChild(lad);
+    const s2 = sec(LT("Plamen série", "Streak flame"), LT("Vyber si barvu, kterou hoří tvoje série. Další barvy se odemykají s levelem.", "Pick the colour your streak burns in. More colours unlock as you level up.")), fl = el("div","lv-fl");
+    const flB = (key, name, lock, cols) => { const b = el("button","lv-flb" + ((cfg.flame || "") === key ? " on" : "") + (lock ? " lock" : "")); b.type = "button"; const d = el("i"); d.style.background = cols; b.appendChild(d); b.appendChild(el("span", null, name)); if (lock) b.appendChild(el("small", null, "Level " + lock));
+      b.addEventListener("click", () => { if (lock){ toast(LT("Tenhle plamen se odemkne na levelu ", "This flame unlocks at level ") + lock + "."); return; } cfg.flame = key; cfgStore(); flameApply(); try { const sp = $("streak"); sp.dataset.sig = ""; renderRails(); } catch(e){} fl.querySelectorAll(".lv-flb").forEach(z => z.classList.toggle("on", z === b)); }); fl.appendChild(b); };
+    flB("", LT("Podle motivu", "Follow the theme"), 0, "linear-gradient(0deg,#ff3a00,#ff8a1a 45%,#ffd36b)"); Object.keys(FLAMES).forEach(key => { const f = FLAMES[key], rgb = q => "rgb(" + q.join(",") + ")"; flB(key, LT(f.n[0], f.n[1]), L.n >= f.lv ? 0 : f.lv, "linear-gradient(0deg," + rgb(f.p[3]) + "," + rgb(f.p[2]) + " 45%," + rgb(f.p[1]) + ")"); }); s2.appendChild(fl);
+    const ach = lvAch(r.m), s3 = sec(LT("Achievementy", "Achievements") + " · " + ach.filter(a => a.ok).length + " / " + ach.length), ag = el("div","lv-ag");
+    ach.forEach(a => { const d = el("div","lv-ach" + (a.ok ? " ok" : "")), ic = el("span","lv-ai"), tx = el("div"); ic.innerHTML = lvIc(a.ic); tx.appendChild(el("b", null, a.name)); tx.appendChild(el("span","small muted", a.desc)); if (!a.ok){ const pb = el("div","lv-ap"), pi = el("i"); pi.style.width = Math.round(100 * a.cur / a.goal) + "%"; pb.appendChild(pi); tx.appendChild(pb); tx.appendChild(el("small", null, a.cur + " / " + a.goal)); } d.appendChild(ic); d.appendChild(tx); ag.appendChild(d); }); s3.appendChild(ag);
+    const s4 = sec(LT("Za co máš XP", "Where your XP came from")), sl = el("div","lv-src"); if (!r.S.length) sl.appendChild(el("p","small muted", LT("Zatím nic. Začni první lekcí nebo plánem dne.", "Nothing yet. Start with your first lesson or a daily plan.")));
+    r.S.slice().sort((a, b) => b.xp - a.xp).forEach(s => { const row = el("div","lv-sr"); row.appendChild(el("span", null, s.name)); row.appendChild(el("span","small muted", s.n + "×")); row.appendChild(el("b", null, "+" + lvNum(s.xp) + " XP")); sl.appendChild(row); }); s4.appendChild(sl);
+    const s5 = sec(LT("Jak se XP počítá", "How XP is counted")), rl = el("div","lv-src");
+    [[LT("Lekce kurzu podle složitosti", "Course lesson by difficulty"), "20 / 40 / 60"], [LT("Denní lekce a téma price action", "Daily lesson and price action topic"), "20"], [LT("Lekce MOROS", "MOROS lesson"), "40"], [LT("Kvíz bez chyby", "Flawless quiz"), "+10"], [LT("Složená zkouška", "Exam passed"), "100"], [LT("Kartička, kterou umíš", "Flashcard you know"), "2"], [LT("Plán dne aspoň z poloviny", "Daily plan at least half filled"), "15"], [LT("Večerní vyhodnocení plánu", "Evening plan review"), "+10"], [LT("Den s plánem, vyhodnocením a bez obchodu", "Day with a plan, a review and no trade"), "+15"], [LT("Obchod zapsaný s detaily, nejvýš 3 denně", "Trade logged with details, up to 3 a day"), "10"], [LT("Obchod podle plánu, i ztrátový", "Trade by the plan, even a losing one"), "+5"], [LT("Den s obchodem v replayi", "Day with a replay trade"), "15"], [LT("Každý sedmý den série", "Every seventh day of a streak"), "50"]].forEach(q => { const row = el("div","lv-sr"); row.appendChild(el("span", null, q[0])); row.appendChild(el("span")); row.appendChild(el("b", null, q[1] + " XP")); rl.appendChild(row); }); s5.appendChild(rl);
+    s5.appendChild(el("p","small muted", LT("XP se počítají z toho, co máš v Tape uložené, takže platí i zpětně a na všech zařízeních s tvým účtem. Odměny jsou jen kosmetické.", "XP is counted from what you have saved in Tape, so it works retroactively and on every device with your account. Rewards are cosmetic only.")));
+  }
+
+  // ----- effects: flying XP, level-up screen with confetti -----
+  document.addEventListener("pointerdown", ev => { lvPt = {x: ev.clientX, y: ev.clientY, t: Date.now()}; }, true);
+  const lvCalm = () => { try { return matchMedia("(prefers-reduced-motion: reduce)").matches || document.body.classList.contains("fx-off"); } catch(e){ return false; } };
+  function xpFly(n){ const f = el("div","xpfly", "+" + lvNum(n) + " XP"); let x, y; if (lvPt && Date.now() - lvPt.t < 8000){ x = lvPt.x; y = lvPt.y - 14; } else { const r = lvBtn ? lvBtn.getBoundingClientRect() : {left: innerWidth / 2, width: 0, bottom: 80}; x = r.left + r.width / 2; y = r.bottom + 34; }
+    f.style.left = Math.max(50, Math.min(innerWidth - 50, x)) + "px"; f.style.top = Math.max(70, y) + "px"; document.body.appendChild(f); setTimeout(() => f.remove(), 1900);
+    if (lvBtn){ lvBtn.classList.remove("bump"); void lvBtn.offsetWidth; lvBtn.classList.add("bump"); } }
+  function lvConfetti(cv, cols){ if (lvCalm()) return; const g = cv.getContext("2d"), dpr = Math.min(2, window.devicePixelRatio || 1), W = innerWidth, H = innerHeight, P = [], t0 = performance.now(); cv.width = W * dpr; cv.height = H * dpr; g.scale(dpr, dpr);
+    for (let i = 0; i < 150; i++){ const a = -Math.PI / 2 + (Math.random() - .5) * 2.2, v = 7 + Math.random() * 11; P.push({x: W / 2 + (Math.random() - .5) * 80, y: H * .42, vx: Math.cos(a) * v, vy: Math.sin(a) * v, w: 5 + Math.random() * 6, h: 8 + Math.random() * 8, r: Math.random() * 6.28, vr: (Math.random() - .5) * .4, c: cols[i % cols.length], o: Math.random() > .8}); }
+    const step = now => { if (!cv.isConnected) return; const t = now - t0; g.clearRect(0, 0, W, H); P.forEach(p => { p.vy += .22; p.vx *= .992; p.x += p.vx; p.y += p.vy; p.r += p.vr; g.save(); g.translate(p.x, p.y); g.rotate(p.r); g.globalAlpha = Math.max(0, Math.min(1, (4200 - t) / 900)); g.fillStyle = p.c; if (p.o){ g.beginPath(); g.arc(0, 0, p.w / 2, 0, 6.29); g.fill(); } else g.fillRect(-p.w / 2, -p.h / 2 * Math.abs(Math.cos(p.r * 1.7)), p.w, p.h * Math.abs(Math.cos(p.r * 1.7)) + 1); g.restore(); }); if (t < 4300) requestAnimationFrame(step); else g.clearRect(0, 0, W, H); };
+    requestAnimationFrame(step); }
+  function lvShow(q){
+    const L = lvOf(q.xp), ov = el("div","wel lvup"), cv = el("canvas","lvup-cv"), c = el("div","lvup-c"); ["b1","b2","b3"].forEach(k => ov.appendChild(el("i","wel-blob " + k))); try { welTone(ov); } catch(e){}
+    let closed = false; const close = () => { if (closed) return; closed = true; ov.classList.add("out"); setTimeout(() => { ov.remove(); if (!document.querySelector(".ob,.wel")) document.body.classList.remove("modal"); setTimeout(lvPump, 300); }, 330); };
+    const ring = el("div","lvup-ring"), emb = lvEmb(L.n, 132); ring.appendChild(el("i")); ring.appendChild(el("i")); ring.appendChild(emb);
+    c.appendChild(el("p","lvup-k", q.intro ? LT("Tvůj level", "Your level") : LT("Nový level", "Level up"))); c.appendChild(ring); c.appendChild(el("p","lvup-n", "Level " + L.n)); c.appendChild(el("h2", null, L.name));
+    const rw = q.intro ? [] : lvRewards(L.n).filter(x => x.indexOf(LT("titul ", "title ")) !== 0);
+    c.appendChild(el("p","lvup-s", q.intro ? LT("Spočítali jsme XP za všechno, co už máš v Tape hotové: ", "We counted XP for everything you have already done in Tape: ") + lvNum(q.xp) + " XP. " + lvNextLine(L) + "." : rw.length ? LT("Odemčeno: ", "Unlocked: ") + rw.join(", ") + "." : lvNextLine(L) + "."));
+    const row = el("div","lvup-row"), go = el("button","wel-go", LT("Pokračovat", "Continue")); go.type = "button"; go.addEventListener("click", close); row.appendChild(go);
+    const th = !q.intro && THEMES.find(t => t[6] === L.n); if (th && !document.body.classList.contains("sakura")){ const tb = el("button","wel-link", LT("Vyzkoušet vzhled ", "Try the theme ") + thName(th)); tb.type = "button"; tb.addEventListener("click", () => { cfg.theme = th[0]; cfgStore(); applyTheme(); try { welTone(ov); } catch(e){} }); row.appendChild(tb); }
+    const more = el("button","wel-link", LT("Levely a odměny", "Levels and rewards")); more.type = "button"; more.addEventListener("click", () => { close(); setTimeout(lvPanel, 380); }); row.appendChild(more); c.appendChild(row);
+    ov.appendChild(cv); ov.appendChild(c); ov.addEventListener("click", ev => { if (ev.target === ov || ev.target === cv || ev.target.classList.contains("wel-blob")) close(); });
+    document.addEventListener("keydown", function esc(ev){ if (ev.key === "Escape" || ev.key === "Enter"){ document.removeEventListener("keydown", esc); close(); } });
+    document.body.appendChild(ov); document.body.classList.add("modal"); const T3 = LV_TIER[lvTier(L.n)][2], G = GLASS[cardTheme()] || GLASS.noc; setTimeout(() => lvConfetti(cv, T3.concat(G.b, ["#ffffff"])), q.intro ? 250 : 520); setTimeout(() => { try { go.focus(); } catch(e){} }, 600);
+  }
+  function lvPump(){ if (!lvQ.length || document.querySelector(".lvup")) return; if (document.querySelector(".wel,.ob,.gtour,.lkbox,.lk-pick") || document.hidden){ clearTimeout(lvPump.tm); lvPump.tm = setTimeout(lvPump, 1500); return; } lvShow(lvQ.pop()); lvQ = []; }
+
+  // ----- keeping it current -----
+  function xpCheck(){
+    if (!course || typeof profile === "undefined" || !profile) return; let r; try { r = xpCalc(); } catch(e){ if (window.console) console.error(e); return; }
+    const L = lvOf(r.xp), ach = lvAch(r.m).filter(a => a.ok); let st = null; try { st = JSON.parse(localStorage.getItem("tape-xp") || "null"); } catch(e){}
+    const first = !st || typeof st.xp !== "number";
+    if (first){ if (r.xp > 0) lvQ.push({xp: r.xp, intro: 1}); }
+    else { if (r.xp > st.xp && lvReady) xpFly(r.xp - st.xp); if (L.n > (st.lv || 1)) lvQ.push({xp: r.xp});
+      const had = st.a || []; const fresh = ach.filter(a => had.indexOf(a.id) < 0); if (fresh.length && lvReady && L.n <= (st.lv || 1)) toast(LT("Achievement: ", "Achievement: ") + fresh.map(a => a.name).join(", ")); }
+    if (first || r.xp !== st.xp || L.n !== st.lv || ach.length !== (st.a || []).length){ try { localStorage.setItem("tape-xp", JSON.stringify({xp: r.xp, lv: L.n, a: ach.map(a => a.id)})); } catch(e){} }
+    const lvChanged = L.n !== lvNow; lvXp = r.xp; lvNow = L.n; lvReady = true; lvPaint(); if (lvChanged){ flameApply(); try { if (themeBox.isConnected) renderThemePick(); } catch(e){} } if (lvQ.length) lvPump();
+  }
+  function xpSoon(){ clearTimeout(lvTm); lvTm = setTimeout(xpCheck, 450); }
+  { const _pL = persist; persist = function(){ const r = _pL.apply(this, arguments); xpSoon(); return r; }; const _pLa = persistLaura; persistLaura = function(){ const r = _pLa.apply(this, arguments); xpSoon(); return r; };
+    const _raLv = refreshAll; refreshAll = function(){ const r = _raLv.apply(this, arguments); xpSoon(); return r; }; }
+  try { flameApply(); lvPaint(); } catch(e){ if (window.console) console.error(e); }
+  setTimeout(xpCheck, 1600); setInterval(() => { if (!document.hidden) xpCheck(); }, 7000);
+
   // ---------- moving to a new address without losing data ----------
   // data/site.json: {"move": "https://new-address", "from": ["https://old-address"]}. The old site hands the data to the new one in a window the person opens.
   let site = {move: "", from: []};
