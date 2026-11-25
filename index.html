@@ -2791,6 +2791,26 @@ html[data-tk="l"] body a.rr-edit.todo,body.sakura a.rr-edit.todo{background:var(
 html body a.rr-edit.todo svg{background:color-mix(in srgb,currentColor 16%,transparent);stroke:currentColor}
 html body a.rr-edit.todo i{color:currentColor;opacity:.8}
 html body a.rr-edit.todo:hover{filter:brightness(1.06);transform:translateY(-1px)}
+/* level in the left column (desktop); on phones the level card sits right under the main card */
+@media (min-width:1180px){body:not(.norails) #v-prehled>[data-card="level"]{display:none!important}}
+@media (max-width:1179px){#v-prehled>[data-card="level"]{order:1!important}}
+html body .rl-lv{padding:0;overflow:hidden;flex:none}
+button.rl-lvb{display:flex;flex-direction:column;gap:10px;width:100%;height:auto!important;flex:none;padding:16px!important;border:0!important;border-radius:inherit!important;background:radial-gradient(120% 90% at 0% 0%,color-mix(in srgb,var(--accent) 14%,transparent),transparent 60%)!important;text-align:left;color:var(--ink);box-shadow:none!important;min-height:0}
+.rl-lvt{display:flex;align-items:center;gap:12px}.rl-lvn{min-width:0;display:flex;flex-direction:column;gap:3px}.rl-lvn .kick{margin:0;font-size:10.5px}.rl-lvn b{font-size:17px;font-weight:800;letter-spacing:-.01em;line-height:1.15}
+.rl-lvn .lv-tag{align-self:flex-start;font-size:10.5px}
+.rl-lvb .lv-bar{height:6px}.rl-lvx{font-size:11.5px;color:var(--muted);line-height:1.35}
+/* milestones: an icon badge, the name, and progress for the ones still open */
+.rl-msh{display:flex;align-items:baseline;justify-content:space-between}.rl-msh .kick{margin:0}.rl-msh b{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+html body .miles{display:flex;flex-direction:column;gap:2px;margin-top:8px}
+.ms{display:flex;align-items:center;gap:11px;padding:7px 4px;border-radius:12px}
+.ms-ic{position:relative;flex:none;display:grid;place-items:center;width:34px;height:34px;border-radius:11px;background:color-mix(in srgb,var(--ink) 5%,transparent);color:var(--muted)}
+.ms-ic svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.ms.done .ms-ic{background:linear-gradient(140deg,color-mix(in srgb,var(--accent) 90%,#fff),color-mix(in srgb,var(--accent) 70%,#000));color:#fff;box-shadow:0 6px 16px -8px var(--accent),inset 0 1px 0 rgba(255,255,255,.35)}
+.ms-ck{position:absolute;right:-4px;bottom:-4px;display:grid;place-items:center;width:15px;height:15px;border-radius:50%;background:var(--good,#3ddc97);box-shadow:0 0 0 2px var(--surface,#111)}
+.ms-ck svg{width:10px;height:10px;fill:none;stroke:#06120c;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ms-tx{min-width:0;flex:1;display:flex;flex-direction:column;gap:3px}.ms-tx b{font-size:12.5px;font-weight:700;line-height:1.25}.ms:not(.done) .ms-tx b{color:color-mix(in srgb,var(--ink) 72%,transparent)}
+.ms-st{font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}.ms.done .ms-st{color:var(--accent)}
+.ms-bar{display:block;height:3px;border-radius:99px;background:color-mix(in srgb,var(--ink) 9%,transparent);overflow:hidden}.ms-bar>span{display:block;height:100%;border-radius:inherit;background:var(--accent)}
 .thpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:8px}
 .thp{display:flex;flex-direction:column;gap:8px;align-items:stretch;text-align:left;padding:8px;border-radius:16px;min-height:0}
 .thp .sw{height:54px;border-radius:10px;position:relative;overflow:hidden;border:1px solid rgba(128,128,128,.25)}
@@ -2832,8 +2852,9 @@ html body a.rr-edit.todo:hover{filter:brightness(1.06);transform:translateY(-1px
       <div><span>Poznatků</span><b id="s-cnt">…</b></div>
     </div>
   </div>
+  <div class="card rl-lv" id="rl-lv" hidden></div>
   <div class="card"><span class="kick">Učení</span><div id="rl-learn"></div></div>
-  <div class="card"><span class="kick">Milníky</span><div class="miles" id="rl-miles"></div></div>
+  <div class="card rl-ms"><div class="rl-msh"><span class="kick">Milníky</span><b id="rl-msn"></b></div><div class="miles" id="rl-miles"></div></div>
 </aside>
 <div class="wrap">
   <div id="banner" role="status"></div>
@@ -4709,10 +4730,13 @@ html body a.rr-edit.todo:hover{filter:brightness(1.06);transform:translateY(-1px
   }
 
   // ---------- dashboard and rails ----------
+  const MS_IC = {book: '<svg viewBox="0 0 24 24"><path d="M4 5.5c2.500-1 5-1 8 .8 3-1.800 5.500-1.800 8-.8v13c-2.500-1-5-1-8 .8-3-1.800-5.500-1.800-8-.8zM12 6.300V19.300"/></svg>', layers: '<svg viewBox="0 0 24 24"><path d="M12 4 3.500 8.500 12 13l8.500-4.500z"/><path d="M3.500 12.500 12 17l8.500-4.500M3.500 16.500 12 21l8.500-4.500"/></svg>', target: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r=".8"/></svg>', cards: '<svg viewBox="0 0 24 24"><rect x="4" y="6" width="12" height="14" rx="2"/><path d="M8 4h10a2 2 0 0 1 2 2v12"/></svg>', award: '<svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="5"/><path d="M8.800 13 7.500 20.500 12 18l4.500 2.500L15.200 13"/></svg>', flame: '<svg viewBox="0 0 24 24"><path d="M12 3c1 3.200 4.500 5 4.500 9.200A4.500 4.500 0 0 1 12 17a4.500 4.500 0 0 1-4.500-4.800C7.500 10.500 8.600 9.600 9 8c1.200.9 1.700 1.900 1.800 3 .9-1.700 1.400-4.800 1.200-8z"/><path d="M9 21h6"/></svg>', pen: '<svg viewBox="0 0 24 24"><path d="M15.500 4.500l4 4L9 19H5v-4z"/><path d="M13.500 6.500l4 4"/></svg>', stack: '<svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="5" rx="1.500"/><rect x="4" y="10.500" width="16" height="5" rx="1.500"/><path d="M6 19h12"/></svg>'};
   function milestones(){
     const seen = Object.keys(lp.seen || {}).length, ex = Object.keys(lp.exam || {}).filter(k => lp.exam[k].best / lp.exam[k].of >= 0.8).length;
-    return [["První téma price action", seen >= 1], ["Všechna témata price action", pa.length > 0 && seen >= pa.length], ["Procvičování bez chyby", !!(lp.practice && pr.length && lp.practice.best >= pr.length)],
-      ["50 pojmů v hlavě", fcKnown() >= 50], ["První zkouška týdne", ex >= 1], ["Série 7 dní", streakDays() >= 7], ["První obchod v deníku", jr.trades.length >= 1], ["20 obchodů v deníku", jr.trades.length >= 20]];
+    const pb = lp.practice && lp.practice.best ? lp.practice.best : 0, fk = fcKnown(), sd = streakDays(), nt = jr.trades.length;
+    // [name, done, have, need, icon]
+    return [["První téma price action", seen >= 1, Math.min(seen, 1), 1, "book"], ["Všechna témata price action", pa.length > 0 && seen >= pa.length, Math.min(seen, pa.length), pa.length || 1, "layers"], ["Procvičování bez chyby", !!(pr.length && pb >= pr.length), Math.min(pb, pr.length), pr.length || 1, "target"],
+      ["50 pojmů v hlavě", fk >= 50, Math.min(fk, 50), 50, "cards"], ["První zkouška týdne", ex >= 1, Math.min(ex, 1), 1, "award"], ["Série 7 dní", sd >= 7, Math.min(sd, 7), 7, "flame"], ["První obchod v deníku", nt >= 1, Math.min(nt, 1), 1, "pen"], ["20 obchodů v deníku", nt >= 20, Math.min(nt, 20), 20, "stack"]];
   }
   function railRow(box, label, value){ const r = el("div","rrow"); r.appendChild(el("span", null, label)); r.appendChild(el("b", null, value)); box.appendChild(r); }
   function renderRails(){
@@ -4726,7 +4750,12 @@ html body a.rr-edit.todo:hover{filter:brightness(1.06);transform:translateY(-1px
     railRow(L, "Kartičky", fcKnown() + " z " + glossary.length);
     railRow(L, "Zkoušky", Object.keys(lp.exam || {}).filter(k => lp.exam[k].best / lp.exam[k].of >= 0.8).length + " z 12");
     const M = $("rl-miles"); clear(M);
-    milestones().forEach(m => M.appendChild(el("span","pill " + (m[1] ? "good" : "off"), m[0])));
+    { const ms = milestones(); $("rl-msn").textContent = ms.filter(m => m[1]).length + " / " + ms.length;
+      ms.slice().sort((a, b) => (b[1] - a[1]) || ((b[2] / b[3]) - (a[2] / a[3]))).forEach(m => { const r = el("div","ms" + (m[1] ? " done" : "")), ic = el("i","ms-ic"), tx = el("div","ms-tx"), bar = el("span","ms-bar"), fill = el("span");
+        ic.innerHTML = MS_IC[m[4]] || MS_IC.award; if (m[1]){ const ck = el("em","ms-ck"); ck.innerHTML = '<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.8 6.3 5 8.4 9.3 3.8"/></svg>'; ic.appendChild(ck); }
+        tx.appendChild(el("b", null, m[0])); const st = el("span","ms-st", m[1] ? "Splněno" : m[3] > 1 ? m[2] + " z " + m[3] : "Zatím ne"); tx.appendChild(st);
+        if (!m[1] && m[3] > 1){ fill.style.width = Math.max(4, Math.round(m[2] / m[3] * 100)) + "%"; bar.appendChild(fill); tx.appendChild(bar); }
+        r.appendChild(ic); r.appendChild(tx); r.title = m[0]; M.appendChild(r); }); }
     const p = planToday(), P = $("rr-plan"); clear(P);
     const bias = (P_BIAS.find(o => o[0] === p.bias) || [null, null])[1];
     if (bias){ P.appendChild(el("span","pill " + (p.bias === "long" ? "good" : p.bias === "short" ? "bad" : ""), "Bias: " + bias)); if (p.levels) P.appendChild(el("p","small", p.levels)); }
@@ -8648,13 +8677,14 @@ html body a.rr-edit.todo:hover{filter:brightness(1.06);transform:translateY(-1px
     window.gemScrollBind = (e, lv) => { if (!io) return; if (emb) io.unobserve(emb); emb = e; n = lv; io.observe(e); };
     // with a mouse the gem also turns one edge toward the pointer and leans after it; it eases there instead of jumping
     let tA = 0, tT = 0, cA = 0, cT = 0, mouse = false; const hov = () => { try { return matchMedia("(hover: hover) and (pointer: fine)").matches; } catch(e){ return false; } };
-    const draw = () => { raf = 0; if (!emb || !emb.isConnected) return; cA += (tA - cA) * .16; cT += (tT - cT) * .16; emb.innerHTML = gemSvg(n, true, (mouse ? 0 : (window.scrollY || 0) * .0045) + cA, cT, "gsh"); if (Math.abs(tA - cA) > .002 || Math.abs(tT - cT) > .002) raf = requestAnimationFrame(draw); };
+    let lastT = 0; const draw = now => { raf = 0; if (!emb || !emb.isConnected) return; const dt = lastT ? Math.min(64, now - lastT) : 16; lastT = now; const k = 1 - Math.exp(-dt / 140); cA += (tA - cA) * k; cT += (tT - cT) * k; emb.innerHTML = gemSvg(n, true, (mouse ? 0 : (window.scrollY || 0) * .0045) + cA, cT, "gsh"); if (Math.abs(tA - cA) > .002 || Math.abs(tT - cT) > .002) raf = requestAnimationFrame(draw); else lastT = 0; };
     const kick = () => { if (!vis || raf || !emb || !emb.isConnected || gemStill()) return; raf = requestAnimationFrame(draw); };
     addEventListener("scroll", kick, {passive: true});
     addEventListener("mousemove", ev => { if (!vis || !emb || !emb.isConnected || !hov()) return; const r = emb.getBoundingClientRect(), dx = ev.clientX - (r.left + r.width / 2), dy = ev.clientY - (r.top + r.height / 2), c = v => Math.max(-1, Math.min(1, v));
-      const t = lvTier(n), d = Math.hypot(dx, dy); mouse = true; tT = .1 + c(d / 360) * .42;
+      const t = lvTier(n), d = Math.hypot(dx, dy), near = Math.max(0, Math.min(1, (d - r.width * .35) / (r.width * 1.2))); mouse = true; tT = .1 + c(d / 360) * .42;
+      if (near < .02){ kick(); return; } // right over the gem the direction is not defined; hold the current turn
       if (t === 4) tA = c(dx / 300) * 1.1; // the diamond turns around its upright axis toward the pointer
-      else { const N = t === 1 ? 3 : t === 2 ? 6 : 8, base = t === 1 ? Math.PI / 2 : t === 2 ? Math.PI / 6 : Math.PI / 8, step = 2 * Math.PI / N; let want = Math.atan2(dy, dx) - base; want += Math.round((cA - want) / step) * step; tA = want; } // one corner points at the pointer, by the shortest turn
+      else { const N = t === 1 ? 3 : t === 2 ? 6 : 8, base = t === 1 ? Math.PI / 2 : t === 2 ? Math.PI / 6 : Math.PI / 8, step = 2 * Math.PI / N; let want = Math.atan2(dy, dx) - base; want += Math.round((cA - want) / step) * step; tA = cA + (want - cA) * near; } // one corner points at the pointer, by the shortest turn
       kick(); }, {passive: true});
     document.addEventListener("mouseleave", () => { tA = 0; tT = 0; kick(); }); }
   function lvEmb(n, sz){ const e = el("span","lv-emb t" + lvTier(n)); e.style.setProperty("--sz", (sz || 56) + "px"); e.innerHTML = gemSvg(n); e.setAttribute("aria-hidden", "true"); return e; }
@@ -8674,7 +8704,10 @@ html body a.rr-edit.todo:hover{filter:brightness(1.06);transform:translateY(-1px
     const m = el("div","lv-m"), k = el("div","lv-k"); k.appendChild(el("span", null, "Level " + L.n)); k.appendChild(el("b", null, lvNum(lvXp) + " XP")); const nm = el("div","lv-nm"); nm.appendChild(el("h3", null, L.name)); nm.appendChild(el("span","lv-tag", lvTag())); m.appendChild(k); m.appendChild(nm); m.appendChild(lvBar(L));
     const ft = el("div","lv-ft"); ft.appendChild(el("span","small muted", lvNextLine(L))); if (L.next){ const rw = lvRewards(L.n + 1); if (rw.length){ const u = el("span","lv-unl"); u.innerHTML = lvIc("lock"); u.appendChild(el("span", null, LT("Odemkne: ", "Unlocks: ") + rw.join(", "))); ft.appendChild(u); } } m.appendChild(ft);
     const b = el("button","lv-open", LT("Levely a odměny", "Levels and rewards")); b.type = "button"; b.addEventListener("click", () => lvPanel());
-    { const ge = lvEmb(L.n, 76); lvCard.appendChild(ge); try { window.gemScrollBind(ge, L.n); } catch(e){} } lvCard.appendChild(m); lvCard.appendChild(b);
+    const ge = lvEmb(L.n, 76); lvCard.appendChild(ge); lvCard.appendChild(m); lvCard.appendChild(b);
+    const rl = $("rl-lv"); let rge = null; if (rl){ rl.hidden = false; clear(rl); const bt = el("button","rl-lvb"), top = el("div","rl-lvt"), tx = el("div","rl-lvn"); bt.type = "button"; bt.setAttribute("aria-label", LT("Levely a odměny", "Levels and rewards")); bt.addEventListener("click", () => lvPanel());
+      rge = lvEmb(L.n, 58); top.appendChild(rge); tx.appendChild(el("span","kick", "Level " + L.n + " · " + lvNum(lvXp) + " XP")); tx.appendChild(el("b", null, L.name)); tx.appendChild(el("span","lv-tag", lvTag())); top.appendChild(tx); bt.appendChild(top); bt.appendChild(lvBar(L)); bt.appendChild(el("span","rl-lvx", lvNextLine(L))); rl.appendChild(bt); }
+    try { const railOn = rl && rl.offsetParent !== null; window.gemScrollBind(railOn && rge ? rge : ge, L.n); } catch(e){}
   }
 
   // ----- the panel: ladder, rewards, achievements, where the XP came from -----

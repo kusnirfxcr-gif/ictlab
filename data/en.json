@@ -465,7 +465,7 @@
  "Přiložit obrázek": "Attach image",
  "Co se povedlo": "What went well",
  "Co zlepšit": "What to improve",
- "Splněno": "Completed",
+ "Splněno": "Done",
  "Zamčeno": "Locked",
  "Nové": "New",
  "Hledat…": "Search…",
@@ -2402,5 +2402,6 @@
  "Zatím tu nic není.": "Nothing here yet.",
  "Vytvoř první příspěvek z obchodu v deníku, nebo otevři odkaz, který ti někdo poslal.": "Create the first post from a trade in your journal, or open a link someone sent you.",
  "Zatím žádný.": "None yet.",
- "Zapiš obchod se setupem MOROS Reversal nebo MOROS Continuation a nejlepší se objeví tady.": "Log a trade with the MOROS Reversal or MOROS Continuation setup and the best one shows up here."
+ "Zapiš obchod se setupem MOROS Reversal nebo MOROS Continuation a nejlepší se objeví tady.": "Log a trade with the MOROS Reversal or MOROS Continuation setup and the best one shows up here.",
+ "Zatím ne": "Not yet"
 }
