@@ -182,7 +182,7 @@
     // time axis
     const i0 = Math.floor(iOf(0)) - 1, i1 = Math.ceil(iOf(PW)) + 1; c.textAlign = "center"; c.textBaseline = "middle";
     const steps = [1, 2, 5, 10, 15, 30, 60, 120, 240, 360, 720], mins = S.tf >= 1440 ? 0 : (steps.find(s => s / S.tf * S.bw >= 70) || 1440), gap = 64; let lastX = -1e9;
-    const dlab = t => { const d = new Date(t * 6e4); return d.getUTCDate() + ". " + (d.getUTCMonth() + 1) + "."; };
+    const dlab = t => { if (EX) return "·"; const d = new Date(t * 6e4); return d.getUTCDate() + ". " + (d.getUTCMonth() + 1) + "."; };
     for (let i = Math.max(0, i0); i <= Math.min(a.length - 1, i1); i++){ const t = a[i].t, x = Math.round(xOf(i)) + .5; if (x < 0 || x > PW) continue;
       const prev = i > 0 ? a[i - 1].t : null, newDay = prev == null || tdOf(prev) !== tdOf(t), newMon = prev != null && new Date(prev * 6e4).getUTCMonth() !== new Date(t * 6e4).getUTCMonth();
       let txt = null, bold = false;
@@ -223,7 +223,7 @@
     const lb = last(); if (lb){ const y = yOf(lb.c); if (y > 0 && y < PH){ const col = lb.c >= lb.o ? P.cu : P.cd; c.setLineDash([2, 3]); c.strokeStyle = col; c.globalAlpha = .6; c.beginPath(); c.moveTo(0, Math.round(y) + .5); c.lineTo(PW, Math.round(y) + .5); c.stroke(); c.setLineDash([]); c.globalAlpha = 1; tag(c, PW, y, num(lb.c, dec || (tick() < 1 ? 2 : 0)), col, "#fff"); } }
     // labels for open trades on the axis
     S.draws.forEach(d => { if (d.k !== "pos" || !(d.st === "open" || d.st === "draft" || d.st === "pending")) return; tag(c, PW, yOf(d.sl), num(d.sl, 2), P.dn, "#fff"); tag(c, PW, yOf(d.tp), num(d.tp, 2), P.up, "#fff"); });
-    if (m && m.x < PW && m.y < TY && m.y >= 0){ if (m.y < PH) tag(c, PW, m.y, num(rt(pOf(m.y)), 2), P.light ? "#2b2440" : "#e9e9ee", P.light ? "#fff" : "#111"); const t = tIdx(Math.round(iOf(m.x))); const tw = S.tf >= 1440 ? 62 : 92; c.fillStyle = P.light ? "#2b2440" : "#e9e9ee"; rrect(c, m.x - tw / 2, TY + 3, tw, AXH - 6, 4); c.fill(); c.fillStyle = P.light ? "#fff" : "#111"; c.textAlign = "center"; c.fillText(S.tf >= 1440 ? new Date((t + 360) * 6e4).toLocaleDateString(loc(), {day: "numeric", month: "numeric", year: "2-digit", timeZone: "UTC"}) : new Date((t + 360) * 6e4).toLocaleDateString(loc(), {day: "numeric", month: "numeric", timeZone: "UTC"}) + " " + hm(t), m.x, TY + AXH / 2); }
+    if (m && m.x < PW && m.y < TY && m.y >= 0){ if (m.y < PH) tag(c, PW, m.y, num(rt(pOf(m.y)), 2), P.light ? "#2b2440" : "#e9e9ee", P.light ? "#fff" : "#111"); const t = tIdx(Math.round(iOf(m.x))); const tw = S.tf >= 1440 ? 62 : 92; c.fillStyle = P.light ? "#2b2440" : "#e9e9ee"; rrect(c, m.x - tw / 2, TY + 3, tw, AXH - 6, 4); c.fill(); c.fillStyle = P.light ? "#fff" : "#111"; c.textAlign = "center"; c.fillText(S.tf >= 1440 ? new Date((t + 360) * 6e4).toLocaleDateString(loc(), {day: "numeric", month: "numeric", year: "2-digit", timeZone: "UTC"}) : (EX ? "" : new Date((t + 360) * 6e4).toLocaleDateString(loc(), {day: "numeric", month: "numeric", timeZone: "UTC"}) + " ") + hm(t), m.x, TY + AXH / 2); }
     legend(); indLegend();
     panelPaint(); otbPaint(); if (ui.rt) ui.rt.hidden = S.follow;
   }
@@ -463,8 +463,9 @@
   }
   function stepTF(n){ for (let k = 0; k < n; k++){ const lb = last(); if (!lb){ step1(); continue; } const g = grp(lb.t, S.tf); while (S.pos < S.B.length && grp(S.B[S.pos].t, S.tf) === g){ if (!step1()) return after(); } if (!step1()) return after(); } after(); }
   let sessT = 0;
-  function after(){ const now = Date.now(); if (now - sessT > 800){ sessT = now; saveSess(); } posList(); ctlPaint(); req(); if (S.pos >= S.B.length && !S.ended){ S.ended = true; toast(T("Konec nahraných dat. Otevřené pozice zavírám za poslední cenu.", "End of the loaded data. Closing open positions at the last price.")); S.draws.forEach(d => { if (d.k === "pos" && d.st === "open") close(d, last().c, last().t, "eod"); if (d.k === "pos" && d.st === "pending") d.st = "cancel"; }); S.draws = S.draws.filter(d => d.st !== "cancel"); req(); } }
+  function after(){ const now = Date.now(); if (now - sessT > 800){ sessT = now; saveSess(); } posList(); ctlPaint(); req(); if (EX){ examPaint(); if (S.pos >= S.B.length && !EX.done){ EX.done = 1; setTimeout(() => examFinish(true), 300); } } if (S.pos >= S.B.length && !S.ended){ S.ended = true; toast(T("Konec nahraných dat. Otevřené pozice zavírám za poslední cenu.", "End of the loaded data. Closing open positions at the last price.")); S.draws.forEach(d => { if (d.k === "pos" && d.st === "open") close(d, last().c, last().t, "eod"); if (d.k === "pos" && d.st === "pending") d.st = "cancel"; }); S.draws = S.draws.filter(d => d.st !== "cancel"); req(); } }
   function back(){
+    if (EX){ toast(T("Ve zkoušce se nedá vracet zpět.", "You cannot rewind during an exam.")); return; }
     if (S.pos <= 2) return; const b = S.B[S.pos - 1];
     if (S.draws.some(d => d.k === "pos" && (d.st === "open" || ["win", "loss", "be", "closed"].indexOf(d.st) >= 0) && (d.t1 >= b.t || (d.tx != null && d.tx >= b.t)))){ toast(T("Zpátky před vstup nebo výstup obchodu to nejde.", "You can't rewind past a trade entry or exit.")); return; }
     S.pos--; S.ended = false; after();
@@ -481,6 +482,7 @@
 
   // the chart holds the chosen day plus the days around it, so earlier days can be scrolled back and the replay runs on into the next ones
   function loadDay(d, startAt){
+    if (EX && !EX.loading && d.day !== EX.day){ EX = null; LS("tape-rp-exam", null); examPaint(); toast(T("Zkouška je zrušená, otevřel jsi jiný den.", "The exam is cancelled, you opened another day.")); }
     stop(); S.demo = d.demo || ""; const L = lib(), k = Math.max(0, L.findIndex(x => x.day === d.day)), win = L.slice(Math.max(0, k - 60), k + 16);
     const B = []; win.forEach(w => { const sh = w.ny || w.demo ? 0 : (+set.tz || 0); w.bars.forEach(x => { const ts = String(x[0]); B.push({t: dayBase(ts.slice(0, 10)) + +ts.slice(11, 13) * 60 + +ts.slice(14, 16) + sh, o: x[1], h: x[2], l: x[3], c: x[4], v: x[5] || 0}); }); });
     B.sort((a, b) => a.t - b.t); const B2 = []; S.ethData = false; B.forEach(b => { const m = modOf(b.t); if (m < 420 || m >= 960) S.ethData = true; if (set.sess === "rth" && (m < 570 || m >= 960)) return; if (!B2.length || b.t !== B2[B2.length - 1].t) B2.push(b); }); S.B = B2;
@@ -679,7 +681,7 @@
     if (!ui) return; const a = agg().a, m = S.mouse; let b = a[a.length - 1];
     if (m && m.x < PW && m.y < PH){ const k = Math.round(iOf(m.x)); b = a.find(z => z.i === k) || b; }
     const I = inst(), d = new Date(S.day + "T12:00:00"), ds = isNaN(d) ? S.day : d.toLocaleDateString(loc(), {weekday: "short", day: "numeric", month: "numeric", year: "numeric"});
-    ui.ttl.textContent = (S.demo ? (S.demo === "SIM" ? T("Ukázka (vymyšlená data)", "Demo (invented data)") : "BTCUSDT · Binance") : I.n + " · " + I.full) + " · " + (TFS.find(x => x[0] === S.tf) || [0, S.tf + "m"])[1] + " · " + ds;
+    ui.ttl.textContent = (S.demo ? (S.demo === "SIM" ? T("Ukázka (vymyšlená data)", "Demo (invented data)") : "BTCUSDT · Binance") : I.n + " · " + I.full) + " · " + (TFS.find(x => x[0] === S.tf) || [0, S.tf + "m"])[1] + " · " + (EX ? T("zkouška, den je skrytý", "exam, the day is hidden") : ds);
     if (b){ const dc = I.tick < 1 && I.tick >= .25 ? 2 : 2, ch = b.c - b.o; ui.ohlc.innerHTML = ""; [["O", b.o], ["H", b.h], ["L", b.l], ["C", b.c]].forEach(x => { const s = mk("span", null, x[0] + " "); const v = mk("b", ch >= 0 ? "up" : "dn", num(x[1], dc)); s.appendChild(v); ui.ohlc.appendChild(s); }); ui.ohlc.appendChild(mk("span", ch >= 0 ? "up" : "dn", (ch >= 0 ? "+" : "") + num(ch, 2))); if (m && m.x < PW) ui.ohlc.appendChild(mk("span", null, S.tf >= 1440 ? new Date((b.t + 360) * 6e4).toLocaleDateString(loc(), {day: "numeric", month: "numeric", year: "numeric", timeZone: "UTC"}) : new Date(b.t * 6e4).toLocaleDateString(loc(), {day: "numeric", month: "numeric", timeZone: "UTC"}) + " " + hm(b.t))); ui.clock.textContent = (last() ? new Date((last().t) * 6e4).toLocaleDateString(loc(), {day: "numeric", month: "numeric", timeZone: "UTC"}) + " " + hm(last().t) : "") + " NY"; }
   }
   // ---------- object toolbar (like TradingView): colour, width, style, fill, lock, clone, delete ----------
@@ -934,8 +936,11 @@
     // stats
     const stH = mk("div", "rp-sth"), stT = mk("h3", null, T("Výsledky replaye", "Replay results")), scope = mk("div", "rp-accts"); stH.appendChild(stT); stH.appendChild(scope);
     const stats = mk("div", "rp-stats");
-    wrap.appendChild(head); wrap.appendChild(bar); wrap.appendChild(prog); wrap.appendChild(area); wrap.appendChild(pos); wrap.appendChild(quiz); wrap.appendChild(libB); wrap.appendChild(stH); wrap.appendChild(stats);
+    const exb = mk("div", "rp-exam"); exb.hidden = true;
+    wrap.appendChild(head); wrap.appendChild(bar); wrap.appendChild(exb); wrap.appendChild(prog); wrap.appendChild(area); wrap.appendChild(pos); wrap.appendChild(quiz); wrap.appendChild(libB); wrap.appendChild(stH); wrap.appendChild(stats);
     ui = {fsb: fsb, ileg: ileg, indp: indp, helpp: helpp, rt: rtb, pickHint: pickHint, gmenu: gmenu, wrap: wrap, ttl: t1, ohlc: ohlc, clock: clock, daySel: daySel, tfs: tfs, play: playB, jt: jt, tools: tools, box: box, cv: cv, otb: otb, cm: cm, panel: panel, pSell: pSell, pBuy: pBuy, pRisk: pRisk, pOT: pOT, pSize: pSize, pQty: pQty, pQtyI: pQtyI, pQtyU: pQtyU, pConf: pConf, pOk: pOk, setp: setp, empty: empty, prog: pi, pos: pos, quiz: quiz, libInfo: libInfo, stats: stats, scope: "all"};
+    ui.exb = exb; ui.dnav = dnav; ui.libB = libB;
+    dnav.appendChild(btn("chip rp-examb", T("Zkouška", "Exam"), () => examIntro(), T("Zkušební den: náhodný den bez data a pevná pravidla. Hodnotí se proces, ne zisk.", "Exam day: a random day with no date and fixed rules. The process is graded, not the profit.")));
     acctBar(scope);
     panelDrag(grip); setTool("cur");
     cv.addEventListener("pointerdown", onDown); cv.addEventListener("pointermove", onMove); cv.addEventListener("pointerup", onUp); cv.addEventListener("pointercancel", onUp); cv.addEventListener("pointerleave", () => { S.mouse = null; req(); }); cv.addEventListener("wheel", onWheel, {passive: false}); cv.addEventListener("dblclick", onDbl);
@@ -992,9 +997,49 @@
   function mount(){
     const root = document.getElementById("rp-studio"); if (!root || !API().jr) return false; if (root.dataset.on) return true; root.dataset.on = "1";
     build(root);
-    libLoad().then(ds => { S.days = (ds || []).sort((a, b) => a.day.localeCompare(b.day)); libPaint(); const ss = LS("tape-rp-sess"), d = ss && S.days.find(x => x.day === ss.day); if (d){ if (ss.tf && TFS.some(x => x[0] === ss.tf)) S.tf = ss.tf; loadDay(d, ss.at != null ? ss.at : null); } else if (S.days.length) loadDay(S.days[S.days.length - 1]); emptyPaint(); req(); }).catch(() => { emptyPaint(); req(); });
+    libLoad().then(ds => { S.days = (ds || []).sort((a, b) => a.day.localeCompare(b.day)); libPaint(); const ss = LS("tape-rp-sess"), d = ss && S.days.find(x => x.day === ss.day); if (EX && (!d || d.day !== EX.day || EX.demo)){ EX = null; LS("tape-rp-exam", null); } if (d){ if (ss.tf && TFS.some(x => x[0] === ss.tf)) S.tf = ss.tf; if (EX) EX.loading = 1; loadDay(d, ss.at != null ? ss.at : null); if (EX){ delete EX.loading; examPaint(); legend(); } } else if (S.days.length) loadDay(S.days[S.days.length - 1]); emptyPaint(); req(); }).catch(() => { emptyPaint(); req(); });
     return true;
   }
+
+  // ---------- exam: a random day with the date hidden and fixed rules; the process is graded, not the profit ----------
+  let EX = LS("tape-rp-exam") || null;
+  const EXR = {max: 3, stop: -2, rr: 1, loss: -1.1, cool: 5, mins: 60};
+  function examTrades(){ if (!EX) return []; const g = {}; hist.filter(h => h.acct === EX.acct && h.ts >= EX.ts).forEach(h => { const k = h.id + "|" + h.t1; (g[k] = g[k] || []).push(h); });
+    return Object.keys(g).map(k => { const ps = g[k], f = ps[0]; return {t1: f.t1, tx: Math.max.apply(null, ps.map(x => x.tx)), r: Math.round(ps.reduce((a, x) => a + x.r, 0) * 100) / 100, e: f.e, sl: f.sl, tp: ps[ps.length - 1].tp}; }).sort((a, b) => a.t1 - b.t1); }
+  function examPaint(){ if (!ui || !ui.exb) return; const on = !!EX; ui.exb.hidden = !on; ui.wrap.classList.toggle("rp-inexam", on); if (ui.dnav) Array.prototype.forEach.call(ui.dnav.children, c => { c.style.display = on ? "none" : ""; }); if (ui.libB) ui.libB.style.display = on ? "none" : "";
+    if (!on) return; const tr = examTrades(), open = S.draws.filter(d => d.k === "pos" && (d.st === "open" || d.st === "pending")).length, sum = tr.reduce((a, t) => a + t.r, 0), sig = tr.length + "|" + open + "|" + sum.toFixed(2) + "|" + EN(); if (ui.exb.dataset.sig === sig) return; ui.exb.dataset.sig = sig; ui.exb.innerHTML = "";
+    const l = mk("div", "rp-exl"); l.appendChild(mk("b", null, T("Zkouška", "Exam"))); l.appendChild(mk("span", null, T("obchody ", "trades ") + (tr.length + open) + " / " + EXR.max)); l.appendChild(mk("span", sum < 0 ? "neg" : sum > 0 ? "pos" : "", (sum > 0 ? "+" : "") + num(sum, 2) + " R")); l.appendChild(mk("span", "rp-exrule", T("denní stop −2R · poměr aspoň 1:1 · stop se neposouvá dál", "daily stop −2R · at least 1:1 · the stop never moves further")));
+    ui.exb.appendChild(l); ui.exb.appendChild(btn("chip", T("Ukončit a vyhodnotit", "Finish and grade"), () => examFinish(false))); }
+  function examBox(build){ const ov = mk("div", "rp-exov"), c = mk("div", "rp-exc"); ov.appendChild(c); const close = () => ov.remove(); ov.addEventListener("mousedown", ev => { if (ev.target === ov) close(); }); build(c, close); document.body.appendChild(ov); return close; }
+  function examIntro(){ if (EX){ toast(T("Zkouška už běží.", "An exam is already running.")); return; }
+    examBox((c, close) => { c.appendChild(mk("span", "kick", T("Replay zkouška", "Replay exam"))); c.appendChild(mk("h2", null, T("Zkušební den", "Exam day")));
+      c.appendChild(mk("p", null, T("Dostaneš náhodný den ze svých dat a datum zůstane skryté. Obchoduj svůj model jako naostro. Hodnotí se jen to, jestli držíš pravidla. Zisk ani ztráta výsledek nemění.", "You get a random day from your data and the date stays hidden. Trade your model as if it were live. Only whether you keep the rules is graded. Profit or loss does not change the result.")));
+      const ul = mk("ul", "rp-exul"); [T("Nejvýš 3 obchody za den.", "At most 3 trades in the day."), T("Po −2R už žádný další obchod.", "After −2R no further trade."), T("Každý obchod má cíl aspoň tak daleko jako stop (1:1).", "Every trade has a target at least as far as the stop (1:1)."), T("Stop se neposouvá dál od vstupu, ztráta je nejvýš 1R.", "The stop never moves further from the entry; a loss is at most 1R."), T("Po ztrátě aspoň 5 minut trhu pauza.", "After a loss, a break of at least 5 market minutes."), T("Zkouška trvá aspoň hodinu trhu a potřebuje aspoň jeden obchod. Vracet zpět se nedá.", "The exam runs for at least one market hour and needs at least one trade. You cannot rewind.")].forEach(x => ul.appendChild(mk("li", null, x))); c.appendChild(ul);
+      if (!S.days.length) c.appendChild(mk("p", "small muted", T("Nemáš nahraná vlastní data, zkouška proto poběží na ukázkovém dni. Pro zkoušku na NQ nebo ES nahraj CSV s minutovými svíčkami.", "You have no data of your own uploaded, so the exam will run on a demo day. For an exam on NQ or ES, upload a CSV with 1-minute candles.")));
+      const row = mk("div", "rp-exrow"); row.appendChild(btn("", T("Zpět", "Back"), close)); row.appendChild(btn("primary", T("Začít zkoušku", "Start the exam"), () => { close(); examStart(); })); c.appendChild(row); }); }
+  async function examStart(){ let d = null;
+    if (S.days.length){ S.demo = ""; const used = {}; AH().forEach(h => { used[h.day] = 1; }); const fresh = S.days.filter(x => !used[x.day]), pool = fresh.length ? fresh : S.days; d = pool[Math.floor(Math.random() * pool.length)]; }
+    else { if (!S.demoDays || !S.demoDays.length){ toast(T("Načítám ukázková data…", "Loading demo data…")); S.demoDays = await demoDays(); } const L = S.demoDays || []; d = L[Math.floor(Math.random() * L.length)]; }
+    if (!d){ toast(T("Zkoušku se nepodařilo připravit, chybí data.", "The exam could not be prepared, there is no data.")); return; }
+    EX = {day: d.day, ts: new Date().toISOString(), acct: set.acct, demo: d.demo || "", loading: 1}; loadDay(d); delete EX.loading; EX.day = S.day; EX.t0 = last() ? last().t : 0; LS("tape-rp-exam", EX); emptyPaint(); examPaint(); legend(); req();
+    toast(T("Zkouška běží. Den je skrytý, hodně štěstí s pravidly.", "The exam is running. The day is hidden; keep to the rules.")); }
+  function examFinish(auto){ if (!EX) return; const lb = last(), ran = lb ? lb.t - (EX.t0 || 0) : 0;
+    if (!auto && ran < EXR.mins){ toast(T("Zkouška musí běžet aspoň hodinu trhu. Zatím uběhlo ", "The exam must run for at least one market hour. So far: ") + Math.max(0, Math.round(ran)) + " min."); return; }
+    stop(); S.draws.forEach(d => { if (d.k === "pos" && d.st === "open") close(d, lb.c, lb.t, "eod"); if (d.k === "pos" && d.st === "pending") d.st = "cancel"; }); S.draws = S.draws.filter(d => d.st !== "cancel");
+    const tr = examTrades(), n = tr.length, sum = Math.round(tr.reduce((a, t) => a + t.r, 0) * 100) / 100; let cum = 0, late = 0, quick = 0;
+    tr.forEach((t, i) => { const before = tr.filter(q => q.tx <= t.t1); cum = before.reduce((a, q) => a + q.r, 0); if (cum <= EXR.stop) late++; const pv = before.length ? before[before.length - 1] : null; if (pv && pv.r < 0 && t.t1 - pv.tx < EXR.cool) quick++; });
+    const rrBad = tr.filter(t => !(t.tp != null && Math.abs(t.e - t.sl) > 0 && Math.abs(t.tp - t.e) / Math.abs(t.e - t.sl) >= EXR.rr - .001)).length, big = tr.filter(t => t.r < EXR.loss).length;
+    const rules = [[n <= EXR.max, T("Nejvýš 3 obchody", "At most 3 trades"), n + T(n === 1 ? " obchod" : n >= 2 && n <= 4 ? " obchody" : " obchodů", n === 1 ? " trade" : " trades")], [late === 0, T("Denní stop −2R", "Daily stop −2R"), late ? late + T("× obchod po dosažení −2R", "× a trade after reaching −2R") : T("dodržen", "kept")],
+      [rrBad === 0, T("Cíl aspoň 1:1", "Target at least 1:1"), rrBad ? rrBad + T("× menší cíl než stop", "× a target smaller than the stop") : T("dodrženo", "kept")], [big === 0, T("Ztráta nejvýš 1R", "Loss at most 1R"), big ? big + T("× ztráta větší než 1R", "× a loss bigger than 1R") : T("dodrženo", "kept")],
+      [quick === 0, T("Pauza po ztrátě", "Break after a loss"), quick ? quick + T("× vstup do 5 minut po ztrátě", "× an entry within 5 minutes of a loss") : T("dodržena", "kept")]];
+    const kept = rules.filter(r => r[0]).length, pass = n >= 1 && kept === rules.length, day = EX.day, demo = EX.demo, rec = {ts: new Date().toISOString(), day: day, demo: demo || "", n: n, r: sum, kept: kept, of: rules.length, pass: pass};
+    try { if (API().examSave) API().examSave(rec); } catch(e){} try { API().touchDay(); } catch(e){}
+    EX = null; LS("tape-rp-exam", null); examPaint(); legend(); libPaint(); statsPaint(); req();
+    examBox((c, close) => { c.appendChild(mk("span", "kick", T("Replay zkouška", "Replay exam"))); c.appendChild(mk("h2", pass ? "pos" : "", pass ? T("Zkouška splněna", "Exam passed") : n ? T("Tentokrát ne", "Not this time") : T("Bez obchodu", "No trade")));
+      c.appendChild(mk("p", null, !n ? T("Neobchodoval jsi. Zůstat venku bývá správně, ale zkouška potřebuje aspoň jeden obchod, aby bylo co hodnotit.", "You did not trade. Staying out is often right, but the exam needs at least one trade to grade.") : pass ? T("Dodržel jsi všech pět pravidel. Přesně tohle má deník ukazovat i naostro.", "You kept all five rules. This is exactly what your journal should show live as well.") : T("Dodržel jsi ", "You kept ") + kept + T(" z ", " of ") + rules.length + T(" pravidel. Podívej se, které chybělo, a zkus to znovu na jiném dni.", " rules. See which one was missing and try again on another day.")));
+      const ul = mk("div", "rp-exres"); rules.forEach(r => { const li = mk("div", "rp-exr " + (r[0] ? "ok" : "no")); li.appendChild(mk("i", null, r[0] ? "✓" : "✕")); li.appendChild(mk("b", null, r[1])); li.appendChild(mk("span", null, r[2])); ul.appendChild(li); }); c.appendChild(ul);
+      c.appendChild(mk("p", "small muted", T("Výsledek dne: ", "Result of the day: ") + (sum > 0 ? "+" : "") + num(sum, 2) + " R · " + (demo ? T("ukázkový den", "demo day") : T("den ", "day ") + day) + T(". Do hodnocení se nepočítá.", ". It does not count towards the grade.")));
+      const row = mk("div", "rp-exrow"); row.appendChild(btn("", T("Zavřít", "Close"), close)); row.appendChild(btn("primary", T("Další zkouška", "Another exam"), () => { close(); examStart(); })); c.appendChild(row); }); }
   window.TapeReplay = {mount: mount, summary: () => { const ss = LS("tape-rp-sess"), n = hist.length, tr = hist.reduce((a, h) => a + h.r, 0), w = hist.filter(h => h.r > .02).length; return {sess: ss, n: n, r: tr, win: n ? Math.round(100 * w / n) : null, usd: hist.reduce((a, h) => a + h.usd, 0)}; }};
   if (!mount()){ let k = 0; const iv = setInterval(() => { if (mount() || ++k > 100) clearInterval(iv); }, 100); }
 })();

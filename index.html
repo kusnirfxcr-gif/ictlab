@@ -3001,6 +3001,53 @@ html[data-tk="l"] body:not(.sakura) .bdg.on .bdt{fill:var(--ink)}
 #v-prehled>[data-card="zrcadlo"]{order:9!important}
 @media (max-width:520px){.mr-k{width:50px;height:50px}.mr-k b{font-size:21px}}
 @media (hover:hover){html body .mo-gold:not(:disabled):hover,html body #v-moros .pa-ctl .primary:not(:disabled):hover,html body #v-moros .pa-chips .chip[aria-pressed="true"]:hover{background-image:radial-gradient(circle 90px at var(--mx,50%) var(--my,50%),rgba(255,255,255,calc(.4*var(--gl,1))),transparent 70%),linear-gradient(180deg,#f6dc9a,#d3a64a)!important;color:#1a1307!important}}
+#v-prehled>[data-card="uloha"]{order:3!important}
+#v-prehled>[data-card="uloha"] .dr-sn{font-weight:700;color:var(--th-glow,var(--accent))}
+.card.drd{width:min(760px,100%);max-height:calc(100dvh - 24px);overflow:auto;display:flex;flex-direction:column;gap:12px;padding:18px}
+.drd-h{display:flex;align-items:center;gap:12px}
+.drd-h .kick{flex:none}
+.drd-h .lv-x{position:static;margin-left:auto;flex:none}
+.drd-dots{display:flex;gap:6px;flex:1;max-width:220px}
+.drd-dots i{flex:1;height:5px;border-radius:99px;background:color-mix(in srgb,var(--ink) 12%,transparent)}
+.drd-dots i.ok{background:var(--good)}
+.drd-dots i.cur{background:var(--th-glow,var(--accent))}
+.drd-q{min-height:0;font-size:17px}
+.drd-fig{margin:0}
+.drd-fig .pa-svg svg{max-height:min(44vh,400px)}
+.drd-fig .hit{cursor:pointer}
+.drd-opts:empty{display:none}
+.drd-ctl{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end}
+.drd-ctl:empty{display:none}
+.drd-ctl button{padding:10px 16px;border-radius:13px}
+.drd-res{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.drd-res b{font-family:var(--display,inherit);font-size:26px;font-weight:800;font-variant-numeric:tabular-nums}
+.drd-res span:not(.pill){color:var(--muted);font-size:13.5px}
+.drd-note{margin:-4px 2px 0;font-size:11.5px;color:var(--muted)}
+@media (max-width:560px){.card.drd{padding:14px;gap:10px}.drd-q{font-size:15.5px}.drd-ctl{flex-direction:column-reverse}.drd-ctl button{width:100%}}
+.rp-exam{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:8px 12px;border-radius:14px;border:1px solid color-mix(in srgb,var(--th-glow,var(--accent)) 40%,transparent);background:color-mix(in srgb,var(--th-glow,var(--accent)) 9%,transparent)}
+.rp-exam[hidden]{display:none}
+.rp-exl{display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-size:13.5px;font-variant-numeric:tabular-nums}
+.rp-exl b{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--th-glow,var(--accent))}
+.rp-exl .neg{color:var(--bad)}.rp-exl .pos{color:var(--good)}
+.rp-exrule{color:var(--muted);font-size:12.5px}
+.rp-examb{border-color:color-mix(in srgb,var(--th-glow,var(--accent)) 45%,transparent)!important;color:var(--ink)!important}
+.rp-exov{position:fixed;inset:0;z-index:140;display:grid;place-items:center;padding:16px;background:var(--th-ov,rgba(4,5,9,.82));-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);animation:m-fade var(--m-base,.28s) both}
+.rp-exc{width:min(520px,100%);max-height:calc(100dvh - 32px);overflow:auto;display:flex;flex-direction:column;gap:12px;padding:22px;border-radius:22px;border:1px solid var(--line);background:var(--th-pop,var(--surface));color:var(--ink);box-shadow:0 30px 80px -30px rgba(0,0,0,.6);animation:m-pop var(--m-base,.28s) var(--e-out,ease) both}
+html[data-tk="l"] .rp-exc,body.sakura .rp-exc{background:#fff}
+.rp-exc h2{margin:0;font-size:1.6rem;font-family:var(--display,inherit)}.rp-exc h2.pos{color:var(--good)}
+.rp-exc p{margin:0;line-height:1.5}
+.rp-exul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;font-size:14.5px}
+.rp-exrow{display:flex;gap:8px;justify-content:flex-end;margin-top:4px}
+.rp-exrow button{padding:10px 16px;border-radius:13px}
+.rp-exres{display:flex;flex-direction:column;gap:6px}
+.rp-exr{display:grid;grid-template-columns:26px 1fr auto;align-items:center;gap:10px;padding:9px 12px;border-radius:12px;border:1px solid var(--line)}
+.rp-exr i{display:grid;place-items:center;width:24px;height:24px;border-radius:8px;font-style:normal;font-weight:800;font-size:13px}
+.rp-exr.ok i{background:color-mix(in srgb,var(--good) 16%,transparent);color:var(--good)}
+.rp-exr.no i{background:color-mix(in srgb,var(--bad) 16%,transparent);color:var(--bad)}
+.rp-exr.no{border-color:color-mix(in srgb,var(--bad) 40%,transparent)}
+.rp-exr b{font-size:14px}
+.rp-exr span{font-size:12.5px;color:var(--muted);text-align:right}
+@media (max-width:560px){.rp-exrule{display:none}.rp-exrow button{flex:1}}
 .thpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:8px}
 .thp{display:flex;flex-direction:column;gap:8px;align-items:stretch;text-align:left;padding:8px;border-radius:16px;min-height:0}
 .thp .sw{height:54px;border-radius:10px;position:relative;overflow:hidden;border:1px solid rgba(128,128,128,.25)}
@@ -3079,7 +3126,7 @@ html[data-tk="l"] body:not(.sakura) .bdg.on .bdt{fill:var(--ink)}
     <div class="card" data-card="obchody"><div class="row"><h2>Poslední obchody</h2><a class="small" href="#denik">Všechny obchody</a></div><div class="list" id="d-trades"></div></div>
     <div class="card" data-card="kalendar"><div class="calbox"></div></div>
     <div class="card" data-card="cesta"><div class="row"><h2>Tvoje cesta</h2><div id="goal"></div></div><div class="pathbox"></div></div>
-    <div class="card" data-card="uloha"><div class="row"><h2>Úloha dne</h2><span class="small muted">jedna denně</span></div><div class="list" id="d-task"></div></div>
+    <div class="card" data-card="uloha"><div class="row"><h2>Čtení grafu</h2><span class="small muted">jedna scéna denně</span></div><div class="list" id="d-task"></div></div>
     <div class="card" data-card="dnes"><h2>Rychlé odkazy</h2>
       <a class="go" href="#denik"><div><b>Plán dne a kontrola před vstupem</b><span>Bias, úrovně, limity a seznam</span></div><i>›</i></a>
       <a class="go" href="#laura"><div><b>Price action v obrázcích</b><span id="d-next">…</span></div><i>›</i></a>
@@ -3855,7 +3902,8 @@ html[data-tk="l"] body:not(.sakura) .bdg.on .bdt{fill:var(--ink)}
   var CHARTS = new Map(), chartSeq = 0;
   function chart(spec){
     const TA = spec.axis !== false && spec.time !== false && !spec.pick, H = (spec.h || 210) + (TA ? 14 : 0), padL = 8, padT = 26, padB = TA ? 34 : 20, cs = spec.candles, n = spec.n || cs.length, marks = spec.marks || [], V = spec.view || null;
-    const CW = spec.fw > FW ? spec.fw : FW, axis = spec.axis !== false, plotR = CW - (axis ? AXW : 8), step = (plotR - padL) / (V && V.nv > 0 ? V.nv : n), vx0 = V ? (V.x0 || 0) : 0;
+    const pmx = Math.max(Math.abs(Number(spec.hi) || 0), Math.abs(Number(spec.lo) || 0)), axw = pmx >= 10000 ? 48 : pmx >= 1000 ? 41 : AXW; // wider price column for real index prices
+    const CW = spec.fw > FW ? spec.fw : FW, axis = spec.axis !== false, plotR = CW - (axis ? axw : 8), step = (plotR - padL) / (V && V.nv > 0 ? V.nv : n), vx0 = V ? (V.x0 || 0) : 0;
     const stepper = spec.newFrom != null, nf = stepper ? spec.newFrom : 0, st = stepper ? 150 : 45;
     let lo = Infinity, hi = -Infinity;
     cs.forEach(c => { if (c){ hi = Math.max(hi, c[1]); lo = Math.min(lo, c[2]); } });
@@ -3952,7 +4000,7 @@ html[data-tk="l"] body:not(.sakura) .bdg.on .bdt{fill:var(--ink)}
     if (spec.last && lastC && axis){
       const y = Y(lastC[3]), cls = lastC[3] >= lastC[0] ? "good" : "bad";
       lp = '<g class="mk lp' + (fresh ? "" : " still") + '" style="--d:' + (fresh * st + 80) + '"><line x1="' + padL + '" y1="' + num(y) + '" x2="' + num(plotR) + '" y2="' + num(y) + '" class="lpl s-' + cls + '"/>' +
-        '<rect x="' + num(plotR + 1) + '" y="' + num(y - 7.5) + '" width="' + (AXW - 2) + '" height="15" rx="3" class="lpb f-' + cls + '"/><text x="' + num(plotR + 6) + '" y="' + num(y + 3.2) + '" class="lpt">' + fmtP(lastC[3]) + '</text></g>';
+        '<rect x="' + num(plotR + 1) + '" y="' + num(y - 7.5) + '" width="' + (axw - 2) + '" height="15" rx="3" class="lpb f-' + cls + '"/><text x="' + num(plotR + 6) + '" y="' + num(y + 3.2) + '" class="lpt">' + fmtP(lastC[3]) + '</text></g>';
     }
     let hits = "";
     if (spec.pick) cs.forEach((c, i) => { if (c) hits += '<rect x="' + num(X(i) - step / 2) + '" y="0" width="' + num(step) + '" height="' + H + '" class="hit" data-i="' + i + '"/>'; });
@@ -4963,13 +5011,16 @@ html[data-tk="l"] body:not(.sakura) .bdg.on .bdt{fill:var(--ink)}
     award: '<svg viewBox="0 0 24 24"><path class="f" d="M2.500 9 12 4.500 21.500 9 12 13.500z"/><path d="M2.500 9 12 4.500 21.500 9 12 13.500zM6.500 11v4.500c3 2.500 8 2.500 11 0V11M21.500 9v5"/></svg>',
     flame: '<svg viewBox="0 0 24 24"><rect x="3.500" y="5" width="17" height="15" rx="3"/><path d="M3.500 9.500h17M8 3v4M16 3v4"/><path class="f" d="M5.800 12.800h12.400v4.400H5.800z"/><path d="M7.200 15h.01M9.600 15h.01M12 15h.01M14.400 15h.01M16.800 15h.01" stroke-width="2.600"/></svg>',
     pen: '<svg viewBox="0 0 24 24"><path class="f" d="M5 3.500h10l4 4v13H5z"/><path d="M5 3.500h10l4 4v13H5zM15 3.500v4h4M8.500 12h7M8.500 16h4.500"/></svg>',
+    read: '<svg viewBox="0 0 24 24"><path class="f" d="M5 9h3.500v7H5zM11 6h3.500v8H11z"/><path d="M6.700 6v3M6.700 16v2.500M12.700 3.500V6M5 9h3.500v7H5zM11 6h3.500v8H11z"/><circle cx="17" cy="16.500" r="3.300"/><path d="M19.400 18.900 21.500 21"/></svg>',
+    exam: '<svg viewBox="0 0 24 24"><path class="f" d="M12 3.500 19 6v5.500c0 4.300-2.900 7.400-7 9-4.100-1.600-7-4.700-7-9V6z"/><path d="M12 3.500 19 6v5.500c0 4.300-2.900 7.400-7 9-4.100-1.600-7-4.700-7-9V6z"/><path d="M8.800 12.200l2.300 2.300 4.200-4.600"/></svg>',
     stack: '<svg viewBox="0 0 24 24"><path class="f" d="M4 20V14h3.500v6zM10.300 20V10h3.500v10zM16.500 20V6H20v14z"/><path d="M4 20V14h3.500v6zM10.300 20V10h3.500v10zM16.500 20V6H20v14zM2.500 20.500h19"/></svg>'};
   function milestones(){
     const seen = Object.keys(lp.seen || {}).length, ex = Object.keys(lp.exam || {}).filter(k => lp.exam[k].best / lp.exam[k].of >= 0.8).length;
-    const pb = lp.practice && lp.practice.best ? lp.practice.best : 0, fk = fcKnown(), sd = streakDays(), nt = jr.trades.length;
+    const pb = lp.practice && lp.practice.best ? lp.practice.best : 0, fk = fcKnown(), sd = streakDays(), nt = jr.trades.length, drN = Object.keys((lp.dread && lp.dread.d) || {}).length, rexP = ((lp.rex && lp.rex.runs) || []).filter(x => x && x.pass).length;
     // [name, done, have, need, icon]
     return [["První téma price action", seen >= 1, Math.min(seen, 1), 1, "book"], ["Všechna témata price action", pa.length > 0 && seen >= pa.length, Math.min(seen, pa.length), pa.length || 1, "layers"], ["Procvičování bez chyby", !!(pr.length && pb >= pr.length), Math.min(pb, pr.length), pr.length || 1, "target"],
-      ["50 pojmů v hlavě", fk >= 50, Math.min(fk, 50), 50, "cards"], ["První zkouška týdne", ex >= 1, Math.min(ex, 1), 1, "award"], ["Série 7 dní", sd >= 7, Math.min(sd, 7), 7, "flame"], ["První obchod v deníku", nt >= 1, Math.min(nt, 1), 1, "pen"], ["20 obchodů v deníku", nt >= 20, Math.min(nt, 20), 20, "stack"]];
+      ["50 pojmů v hlavě", fk >= 50, Math.min(fk, 50), 50, "cards"], ["První zkouška týdne", ex >= 1, Math.min(ex, 1), 1, "award"], ["Série 7 dní", sd >= 7, Math.min(sd, 7), 7, "flame"], ["První obchod v deníku", nt >= 1, Math.min(nt, 1), 1, "pen"], ["20 obchodů v deníku", nt >= 20, Math.min(nt, 20), 20, "stack"],
+      ["Čtení grafu: 5 dní", drN >= 5, Math.min(drN, 5), 5, "read"], ["Replay zkouška", rexP >= 1, Math.min(rexP, 1), 1, "exam"]];
   }
   function railRow(box, label, value){ const r = el("div","rrow"); r.appendChild(el("span", null, label)); r.appendChild(el("b", null, value)); box.appendChild(r); }
   function renderRails(){
@@ -5046,7 +5097,7 @@ html[data-tk="l"] body:not(.sakura) .bdg.on .bdt{fill:var(--ink)}
   });
 
   // ---------- market replay: the studio lives in replay.js, this is its bridge into the app ----------
-  window.TapeRP = {jr: () => jr, store: () => jStore(), toast: m => toast(m), en: () => cfg.lang === "en", zoneOff: (ms, tz) => tvZoneOff(ms, tz), touchDay: () => touchDay(), sym: () => (cfg && cfg.sym) || (function(){ try { return (JSON.parse(localStorage.getItem("knot-profile") || "{}").sym) || ""; } catch(e){ return ""; } })()};
+  window.TapeRP = {examSave: rec => { lp.rex = lp.rex || {runs: []}; if (!Array.isArray(lp.rex.runs)) lp.rex.runs = []; lp.rex.runs.push(rec); if (lp.rex.runs.length > 60) lp.rex.runs = lp.rex.runs.slice(-60); try { persistLaura(); } catch(e){} try { renderRails(); } catch(e){} }, jr: () => jr, store: () => jStore(), toast: m => toast(m), en: () => cfg.lang === "en", zoneOff: (ms, tz) => tvZoneOff(ms, tz), touchDay: () => touchDay(), sym: () => (cfg && cfg.sym) || (function(){ try { return (JSON.parse(localStorage.getItem("knot-profile") || "{}").sym) || ""; } catch(e){ return ""; } })()};
 
   // =====================================================================================
   // v6: calendar, limits, playbook, weekly review, CSV import, screenshots, path, daily goal, onboarding, offline
@@ -6133,7 +6184,7 @@ html[data-tk="l"] body:not(.sakura) .bdg.on .bdt{fill:var(--ink)}
   // v9: shell — search, shortcuts, modes, dashboard cards, session clock, tools, settings, backup
   // =====================================================================================
   if (!cfg.mode) cfg.mode = profile && profile.level === "start" ? "student" : "trader";
-  const DASH = [["hodiny","Seance a čas"],["cesta","Tvoje cesta"],["uloha","Úloha dne"],["zpravy","Kalendář zpráv"],["vykon","Výkon"],["kalendar","Kalendář výsledků"],["dnes","Rychlé odkazy"]];
+  const DASH = [["hodiny","Seance a čas"],["cesta","Tvoje cesta"],["uloha","Čtení grafu"],["zpravy","Kalendář zpráv"],["vykon","Výkon"],["kalendar","Kalendář výsledků"],["dnes","Rychlé odkazy"]];
   function setMode(m){ cfg.mode = m === "student" ? "student" : "trader"; cfg.hide = cfg.mode === "student" ? {vykon: 1, kalendar: 1, zpravy: 1, hodiny: 1} : {}; cfgStore(); refreshAll(); }
   function applyShell(){
     document.body.dataset.mode = cfg.mode; document.body.classList.toggle("norails", cfg.rails === false);
@@ -8929,6 +8980,9 @@ html[data-tk="l"] body:not(.sakura) .bdg.on .bdt{fill:var(--ink)}
     add("Plány dne", "Daily plans", plN, plN * 15); add("Večerní vyhodnocení plánu", "Evening plan reviews", evN, evN * 10); add("Dny s plánem a bez obchodu", "Planned days with no trade", ntN, ntN * 15);
     const rp = (jr.paper || []).filter(p => p.setup === "Replay"), rpDays = {}; rp.forEach(p => { try { rpDays[dayKey(new Date(p.ts))] = 1; } catch(e){} }); const rpN = Object.keys(rpDays).length;
     add("Dny s tréninkem v replayi", "Days with replay practice", rpN, rpN * 15);
+    const drd = (lp.dread && lp.dread.d) || {}, drN = Object.keys(drd).length, drR = Object.keys(drd).reduce((a, k) => a + (Number(drd[k] && drd[k][0]) || 0), 0);
+    add("Čtení grafu: dny", "Chart read: days", drN, drN * 10); add("Čtení grafu: správné odpovědi", "Chart read: correct answers", drR, drR * 5);
+    const rexD = {}; ((lp.rex && lp.rex.runs) || []).forEach(x => { if (x && x.pass) rexD[String(x.ts).slice(0, 10)] = 1; }); const rexP = Object.keys(rexD).length; add("Replay zkouška", "Replay exam", rexP, rexP ? 150 + (rexP - 1) * 30 : 0); // one pass a day counts
     const sr = streakRuns(); add("Série: každý sedmý den", "Streak: every seventh day", sr.hits, sr.hits * 50);
     const xp = S.reduce((a, s) => a + s.xp, 0);
     return {xp: xp, S: S, m: {plN: plN, tr: own.length, byPlan: byPlanAll, cool: cool, best: sr.best, seen: seen, ex: ex, fc: fc, rpN: rpN, rpT: rp.length, cGot: courseGot, cAll: courseAll, prb: prb}};
@@ -9187,6 +9241,113 @@ html[data-tk="l"] body:not(.sakura) .bdg.on .bdt{fill:var(--ink)}
     if (!hc){ hc = el("div","card mr-card mr-home"); hc.dataset.card = "zrcadlo"; home.appendChild(hc); } clear(hc);
     const k = el("span","kick", LT("Zrcadlo chyb", "Mirror of mistakes")); if (k.firstChild) k.firstChild.__en = k.firstChild.nodeValue; hc.appendChild(k); hc.appendChild(mirrorItem(m.list[0]));
   }
+  // ---------- chart read of the day: one generated scene, three questions, then what the market did ----------
+  // The scenes are built from the model's own patterns with a seeded generator (same scene for everyone on a given day).
+  // They are practice scenes, not a recording of the market, and the screen says so.
+  const DR = (() => {
+    const rnd = seed => { let a = seed >>> 0; return () => { a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; };
+    const hash = s => { let h = 2166136261; for (let i = 0; i < s.length; i++){ h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; };
+    function scene(key){
+      const r = rnd(hash("tape-read-" + key)), pt = r(), type = pt < .5 ? "rev" : pt < .85 ? "cont" : "chop", bear = type !== "chop" && r() < .5, fail = type !== "chop" && r() < .25;
+      const base = 20000 + Math.round(r() * 2400), unit = 6 + Math.round(r() * 8), w = () => .15 + r() * .25;
+      const f = v => Math.round(base + (bear ? -1 : 1) * (v - 8) * unit), raw = [];
+      const K = (o, c, up, dn) => { raw.push([o, Math.max(o, c) + up, Math.min(o, c) - dn, c]); return raw.length - 1; };
+      const B = (cz, en, czb, enb) => bear ? LT(czb, enb) : LT(cz, en), up = bear ? "below" : "above", dn = bear ? "above" : "below", dyU = bear ? 14 : -6, dyD = bear ? -6 : 14;
+      const line = (v, x1, x2, c, label, lv, la) => ({t: "line", y: f(v), x1: x1, x2: x2, c: c, dash: true, label: label, la: la || "start", lv: lv}), box = (x1, x2, v1, v2, c, label) => ({t: "box", x1: x1, x2: x2, y1: Math.min(f(v1), f(v2)), y2: Math.max(f(v1), f(v2)), c: c, label: label, la: "end", lv: bear ? "above" : "below"});
+      const text = (x, v, s, c, dy) => ({t: "text", x: x, y: f(v), s: s, c: c, a: "middle", dy: dy});
+      const stages = []; let end = {}, topic = "dohromady";
+      if (type === "rev"){ topic = "likvidita";
+        K(10, 11.3, .5, w()); K(11.3, 10.9, .6, w()); K(10.9, 9.6, w(), w()); K(9.6, 8.3, w(), w()); const a = K(8.3, 6.6, w(), .6); K(6.6, 7.6, w(), .1); K(7.6, 8.6, .3, w()); K(8.6, 7.5, .1, w()); const b = K(7.5, 6.5, w(), .42);
+        let o = 6.5; if (r() < .5){ K(6.5, 7, .2, .1); o = 7; }
+        const s = K(o, 6.7, .2, Math.min(o, 6.7) - 5.1); K(6.7, 8.4, .1, .1); const m = K(8.4, 10.4, .2, .1); K(10.4, 9.9, .3, .6); const q = raw.length; K(9.9, 9.5, .1, .6);
+        if (!fail){ K(9.5, 10.6, w(), .1); K(10.6, 11.5, w(), w()); K(11.5, 12.3, .25, w()); } else { K(9.5, 8.2, .1, .2); K(8.2, 6.8, w(), w()); K(6.8, 5.2, w(), .4); }
+        stages.push({show: s, kind: "pick", ans: [a, b], topic: "likvidita",
+          q: B("Trh ráno klesá a dvakrát se zastaví skoro na stejné ceně. Klepni na jedno z těch dvou den.", "The market falls in the morning and stops twice at almost the same price. Tap one of those two lows.", "Trh ráno roste a dvakrát se zastaví skoro na stejné ceně. Klepni na jeden z těch dvou vrcholů.", "The market rises in the morning and stops twice at almost the same price. Tap one of those two highs."),
+          why: B("Pod stejně hlubokými dny (equal lows) leží stopy kupujících. Tomu se říká sell-side likvidita a cena si pro ni často dojde.", "Below equal lows rest the buyers' stops. That is sell-side liquidity, and price often comes for it.", "Nad stejně vysokými vrcholy (equal highs) leží stopy prodávajících. Tomu se říká buy-side likvidita a cena si pro ni často dojde.", "Above equal highs rest the sellers' stops. That is buy-side liquidity, and price often comes for it."),
+          reveal: [line(6.04, a - .4, s - .6, "amber", B("equal lows · likvidita", "equal lows · liquidity", "equal highs · likvidita", "equal highs · liquidity"), dn)]});
+        stages.push({show: q, kind: "pick", ans: [s], topic: "likvidita",
+          q: B("Která svíčka likviditu pod dny vybrala? Klepni na sweep.", "Which candle took the liquidity below the lows? Tap the sweep.", "Která svíčka likviditu nad vrcholy vybrala? Klepni na sweep.", "Which candle took the liquidity above the highs? Tap the sweep."),
+          why: B("Knot prošel pod obě dna a svíčka zavřela zpátky nad nimi. To je sweep, ne průraz.", "The wick went below both lows and the candle closed back above them. That is a sweep, not a breakout.", "Knot prošel nad oba vrcholy a svíčka zavřela zpátky pod nimi. To je sweep, ne průraz.", "The wick went above both highs and the candle closed back below them. That is a sweep, not a breakout."),
+          reveal: [text(s, 5.1, "sweep", "bad", dyD)]});
+        stages.push({show: q, kind: "pick", ans: [m], topic: bear ? "fvg-down" : "fvg-up",
+          q: B("Po sweepu přišel prudký pohyb nahoru. Klepni na prostřední svíčku fair value gapu.", "After the sweep came a sharp move up. Tap the middle candle of the fair value gap.", "Po sweepu přišel prudký pohyb dolů. Klepni na prostřední svíčku fair value gapu.", "After the sweep came a sharp move down. Tap the middle candle of the fair value gap."),
+          why: B("Mezi high svíčky před ní a low svíčky po ní zůstala mezera. Stejná svíčka zavřela nad posledním vrcholem, to je MSS.", "A gap was left between the high of the candle before it and the low of the candle after it. The same candle closed above the last high, which is the MSS.", "Mezi low svíčky před ní a high svíčky po ní zůstala mezera. Stejná svíčka zavřela pod posledním dnem, to je MSS.", "A gap was left between the low of the candle before it and the high of the candle after it. The same candle closed below the last low, which is the MSS."),
+          reveal: [box(m - 1, raw.length - .6, 8.5, 9.3, "accent", "FVG"), {t: "line", y: f(8.9), x1: 5.6, x2: m + .4, c: "muted", dash: false, label: "MSS", la: "start", lv: up}]});
+        end = fail ? {marks: [line(5.1, s - .4, raw.length - .6, "bad", "stop", dn, "end")], ok: false, text: B("Tentokrát to nevyšlo. Cena mezeru prorazila a stop pod sweepem by vzal 1R. I takový den patří do statistiky.", "This time it did not work. Price broke through the gap and the stop below the sweep would have taken 1R. Such a day belongs in the statistics too.", "Tentokrát to nevyšlo. Cena mezeru prorazila a stop nad sweepem by vzal 1R. I takový den patří do statistiky.", "This time it did not work. Price broke through the gap and the stop above the sweep would have taken 1R. Such a day belongs in the statistics too.")}
+          : {marks: [line(11.9, 0, raw.length - .6, "good", B("cíl · ranní high", "target · morning high", "cíl · ranní low", "target · morning low"), up, "end")], ok: true, text: B("Cena se vrátila do FVG a došla až k rannímu high. Tak vypadá model, když vyjde.", "Price returned into the FVG and ran to the morning high. This is what the model looks like when it works.", "Cena se vrátila do FVG a došla až k rannímu low. Tak vypadá model, když vyjde.", "Price returned into the FVG and ran to the morning low. This is what the model looks like when it works.")};
+      } else if (type === "cont"){ topic = "bos-mss";
+        K(2.6, 3.6, w(), w()); K(3.6, 4.7, .2, w()); K(4.7, 4.1, w(), .2); K(4.1, 5.2, w(), .1); K(5.2, 6.6, w(), w()); const ph = K(6.6, 8, .3, .15); K(8, 7.3, .1, .2); const hl = K(7.3, 6.6, w(), .4); K(6.6, 7.2, .2, .1); K(7.2, 8.1, .1, .1);
+        const n1 = raw.length, bo = K(8.1, 9.9, .1, .1); K(9.9, 10.4, .2, .9); const n2 = raw.length; K(10.4, 9.4, .1, .7); const n3 = raw.length;
+        if (!fail){ K(9.4, 10.5, w(), .1); K(10.5, 11.6, w(), w()); K(11.6, 12.4, .25, w()); } else { K(9.4, 8, .1, .2); K(8, 6.9, w(), w()); K(6.9, 5.9, w(), .2); }
+        stages.push({show: n1, kind: "pick", ans: [hl], topic: "struktura",
+          q: B("Trend míří nahoru: vyšší vrcholy, vyšší dna. Klepni na poslední vyšší low, které trend drží.", "The trend points up: higher highs, higher lows. Tap the last higher low that holds the trend.", "Trend míří dolů: nižší vrcholy, nižší dna. Klepni na poslední nižší high, které trend drží.", "The trend points down: lower highs, lower lows. Tap the last lower high that holds the trend."),
+          why: B("Dokud cena nezavře pod tímhle dnem, struktura míří nahoru.", "As long as price does not close below this low, structure points up.", "Dokud cena nezavře nad tímhle vrcholem, struktura míří dolů.", "As long as price does not close above this high, structure points down."),
+          reveal: [line(6.2, hl - .4, n1 - .6, "good", B("vyšší low", "higher low", "nižší high", "lower high"), dn)]});
+        stages.push({show: n2, kind: "pick", ans: [bo], topic: "bos-mss",
+          q: B("Která svíčka potvrdila pokračování trendu? Hledej první zavření nad předchozím vrcholem.", "Which candle confirmed the trend continues? Look for the first close above the previous high.", "Která svíčka potvrdila pokračování trendu? Hledej první zavření pod předchozím dnem.", "Which candle confirmed the trend continues? Look for the first close below the previous low."),
+          why: B("Zavření nad starým vrcholem je BOS. Přišel s displacementem a nechal za sebou fair value gap.", "A close above the old high is a BOS. It came with displacement and left a fair value gap behind.", "Zavření pod starým dnem je BOS. Přišel s displacementem a nechal za sebou fair value gap.", "A close below the old low is a BOS. It came with displacement and left a fair value gap behind."),
+          reveal: [{t: "line", y: f(8.3), x1: ph - .4, x2: bo + .4, c: "muted", dash: false, label: "BOS", la: "start", lv: up}, box(bo - 1, raw.length - .6, 8.2, 9, "accent", "FVG")]});
+        const oOk = B("Pod poslední vyšší low", "Below the last higher low", "Nad poslední nižší high", "Above the last lower high");
+        stages.push({show: n3, kind: "choice", ok: oOk, topic: "rizeni-obchodu", opts: [oOk, B("Těsně pod FVG", "Just below the FVG", "Těsně nad FVG", "Just above the FVG"), LT("Stop tady není potřeba", "No stop is needed here")],
+          q: LT("Cena se vrátila do fair value gapu. Kam podle modelu patří stop?", "Price has returned into the fair value gap. Where does the model put the stop?"),
+          why: B("Stop patří za strukturu, která obchod drží. Když cena zavře pod vyšším low, trend už neplatí.", "The stop goes beyond the structure that holds the trade. If price closes below the higher low, the trend no longer holds.", "Stop patří za strukturu, která obchod drží. Když cena zavře nad nižším high, trend už neplatí.", "The stop goes beyond the structure that holds the trade. If price closes above the lower high, the trend no longer holds."),
+          reveal: [line(6.05, hl - .4, raw.length - .6, "bad", "stop", dn, "end")]});
+        end = fail ? {marks: [], ok: false, text: B("Tentokrát trend nevydržel. Cena prorazila FVG i vyšší low a stop by vzal 1R. Struktura se otočila.", "This time the trend did not hold. Price broke the FVG and the higher low, and the stop would have taken 1R. Structure has turned.", "Tentokrát trend nevydržel. Cena prorazila FVG i nižší high a stop by vzal 1R. Struktura se otočila.", "This time the trend did not hold. Price broke the FVG and the lower high, and the stop would have taken 1R. Structure has turned.")}
+          : {marks: [], ok: true, text: B("Cena z FVG pokračovala na nové high. Trend platí, dokud drží vyšší low.", "From the FVG price continued to a new high. The trend holds as long as the higher low holds.", "Cena z FVG pokračovala na nové low. Trend platí, dokud drží nižší high.", "From the FVG price continued to a new low. The trend holds as long as the lower high holds.")};
+      } else { topic = "spatny-den";
+        K(9, 9.6, .2, w()); K(9.6, 8.6, w(), .3); K(8.6, 9.4, w(), w()); K(9.4, 9.9, .1, w()); K(9.9, 8.9, w(), w()); K(8.9, 8.3, w(), .3); K(8.3, 9.1, w(), w()); K(9.1, 9.7, .15, w());
+        const su = K(9.7, 9.5, .8, .1); K(9.5, 8.8, w(), w()); K(8.8, 8.4, w(), .2); const sd = K(8.4, 8.7, .1, .9); K(8.7, 9.3, w(), w()); K(9.3, 9, w(), w()); const n1 = raw.length; K(9, 9.5, w(), w()); K(9.5, 8.9, w(), w()); K(8.9, 9.2, w(), w());
+        stages.push({show: n1, kind: "pick", ans: [su], topic: "likvidita", q: LT("Cena se drží v pásmu. Klepni na svíčku, která vybrala likviditu nad jeho horní hranou.", "Price is holding in a band. Tap the candle that took the liquidity above its upper edge."), why: LT("Knot vyjel nad dosavadní vrcholy a svíčka zavřela zpátky uvnitř pásma.", "The wick ran above the earlier highs and the candle closed back inside the band."), reveal: [box(-.4, raw.length - .6, 8, 10, "muted", "range"), text(su, 10.5, LT("sweep nahoru", "sweep up"), "amber", -6)]});
+        stages.push({show: n1, kind: "pick", ans: [sd], topic: "likvidita", q: LT("A teď na tu, která vybrala likviditu pod dolní hranou.", "And now the one that took the liquidity below the lower edge."), why: LT("Stejný obraz na druhé straně: knot pod dosavadní dna a zavření zpátky uvnitř.", "The same picture on the other side: a wick below the earlier lows and a close back inside."), reveal: [text(sd, 7.5, LT("sweep dolů", "sweep down"), "amber", 14)]});
+        const oOk = LT("Ne, svíčky se překrývají", "No, the candles overlap");
+        stages.push({show: n1, kind: "choice", ok: oOk, topic: "spatny-den", opts: [oOk, LT("Ano, po výběru nahoře", "Yes, after the sweep above"), LT("Ano, po výběru dole", "Yes, after the sweep below")], q: LT("Přišel po některém z těch výběrů displacement s fair value gapem?", "Did displacement with a fair value gap follow either of those sweeps?"), why: LT("Po obou sweepech se cena jen vrátila do pásma. Bez displacementu není FVG ani zlom struktury.", "After both sweeps price simply returned into the band. Without displacement there is no FVG and no structure shift."), reveal: []});
+        end = {marks: [], ok: null, text: LT("Trh zůstal v pásmu. Nejlepší obchod takového dne je žádný.", "The market stayed in the band. The best trade of such a day is no trade.")};
+      }
+      const cs = raw.map(c => { const o = f(c[0]), cl = f(c[3]), a = f(c[1]), b = f(c[2]); return [o, Math.max(a, b), Math.min(a, b), cl]; }), all = cs.reduce((x, c) => x.concat([c[1], c[2]]), []), mn = Math.min.apply(null, all), mx = Math.max.apply(null, all), pad = (mx - mn) * .09;
+      return {key: key, type: type, bear: bear, candles: cs, lo: mn - pad, hi: mx + pad, stages: stages, end: end, topic: topic};
+    }
+    const store = () => { lp.dread = lp.dread || {d: {}}; if (!lp.dread.d) lp.dread.d = {}; return lp.dread; };
+    const doneOf = key => store().d[key] || null;
+    function streak(){ const d = store().d, x = new Date(); let n = 0; if (!d[dayKey(x)]) x.setDate(x.getDate() - 1); for (let i = 0; i < 500; i++){ if (d[dayKey(x)]) n++; else if (x.getDay() !== 0 && x.getDay() !== 6) break; x.setDate(x.getDate() - 1); } return n; }
+    const stats = () => { const d = store().d, ks = Object.keys(d); return {days: ks.length, right: ks.reduce((a, k) => a + (Number(d[k][0]) || 0), 0)}; };
+    function open(key, free){
+      const sc = scene(key), o = overlay("drd"), c = o.card, was = free ? null : doneOf(key), marks = []; let i = 0, score = 0, firstMiss = null;
+      const head = el("div","drd-h"), kick = el("span","kick", free ? LT("Trénink · scéna navíc", "Practice · extra scene") : LT("Čtení grafu · ", "Chart read · ") + new Date(key + "T12:00:00").toLocaleDateString(LOCD, {day: "numeric", month: "numeric"})), x = el("button","lv-x"); x.type = "button"; x.setAttribute("aria-label", LT("Zavřít", "Close")); x.innerHTML = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"/></svg>'; x.addEventListener("click", o.close);
+      if (kick.firstChild) kick.firstChild.__en = kick.firstChild.nodeValue; head.appendChild(kick); const dots = el("div","drd-dots"); for (let k = 0; k < sc.stages.length + 1; k++) dots.appendChild(el("i")); head.appendChild(dots); head.appendChild(x); c.appendChild(head);
+      const q = el("p","pr-q drd-q"), fig = el("figure","fig pa-fig drd-fig"), bar = el("div","pa-bar"), kk = el("span","pa-kicker", LT("Cvičná scéna", "Practice scene")), note = el("p","drd-note", LT("Scéna je sestavená podle modelu. Není to záznam skutečného trhu.", "The scene is built from the model. It is not a recording of the real market.")), sv = el("div","pa-svg"), opts = el("div","dropts drd-opts"), fb = el("div","pr-fb"), ctl = el("div","drd-ctl");
+      if (kk.firstChild) kk.firstChild.__en = kk.firstChild.nodeValue; bar.appendChild(kk); fig.appendChild(bar); fig.appendChild(sv); if (note.firstChild) note.firstChild.__en = note.firstChild.nodeValue; [q, fig, note, opts, fb, ctl].forEach(n => c.appendChild(n));
+      const en = n => { if (n && n.firstChild) n.firstChild.__en = n.firstChild.nodeValue; return n; };
+      const chart = (show, pick, extra, from, axis) => { sv.innerHTML = safeChart({candles: sc.candles.slice(0, show), n: sc.candles.length, lo: sc.lo, hi: sc.hi, h: 290, pick: !!pick, time: axis ? undefined : false, t0: 570, tf: 5, last: !!axis, marks: marks.concat(extra || []), newFrom: from == null ? show : from, focus: null, prevFocus: null}); };
+      const paintDots = () => Array.prototype.forEach.call(dots.children, (d, k) => { d.className = k < i ? "ok" : k === i ? "cur" : ""; });
+      const answer = (ok, st, pickedI) => { if (ok) score++; else if (!firstMiss) firstMiss = st.topic; const fresh = st.reveal.map(m => Object.assign({}, m, {fresh: true})), hiOf = k => sc.candles[k][1];
+        if (pickedI != null){ fresh.push({t: "badge", x: pickedI, y: hiOf(pickedI), s: ok ? "✓" : "✕", c: ok ? "good" : "bad", fresh: true}); if (!ok) fresh.push({t: "badge", x: st.ans[0], y: hiOf(st.ans[0]), s: "✓", c: "good", fresh: true}); }
+        chart(st.show, false, fresh); st.reveal.forEach(m => marks.push(m)); clear(fb); fb.appendChild(en(el("span","pill " + (ok ? "good" : "bad"), ok ? LT("Správně", "Correct") : LT("Tohle to není", "Not this one")))); fb.appendChild(en(el("p", null, st.why))); fb.classList.add("on");
+        clear(ctl); const nx = en(el("button","primary", i === sc.stages.length - 1 ? LT("Co udělal trh", "What the market did") : LT("Další otázka", "Next question"))); nx.type = "button"; nx.addEventListener("click", () => { i++; step(); }); ctl.appendChild(nx); try { nx.focus({preventScroll: true}); } catch(e){} };
+      function step(){ paintDots(); clear(opts); clear(ctl); fb.classList.remove("on"); clear(fb);
+        if (i >= sc.stages.length) return finish(); const st = sc.stages[i], prev = i ? sc.stages[i - 1].show : st.show; q.textContent = st.q; en(q);
+        if (st.kind === "pick"){ chart(st.show, true, null, prev); sv.onclick = ev => { const v = ev.target && ev.target.getAttribute ? ev.target.getAttribute("data-i") : null; if (v == null) return; sv.onclick = null; const k = Number(v); answer(st.ans.indexOf(k) >= 0, st, k); }; }
+        else { sv.onclick = null; chart(st.show, false, null, prev); const os = shuffled(st.opts), bs = os.map(t => { const b = en(el("button", null, t)); b.type = "button"; b.addEventListener("click", () => { const ok = t === st.ok; bs.forEach((y, k) => { y.disabled = true; if (os[k] === st.ok) y.classList.add("ok"); }); if (!ok) b.classList.add("no"); answer(ok, st, null); }); opts.appendChild(b); return b; }); } }
+      function finish(){ sv.onclick = null; const prev = sc.stages[sc.stages.length - 1].show; chart(sc.candles.length, false, (sc.end.marks || []).map(m => Object.assign({}, m, {fresh: true})), prev, true);
+        q.textContent = LT("Co udělal trh", "What the market did"); en(q); clear(fb); const n = sc.stages.length;
+        fb.appendChild(en(el("span","pill " + (sc.end.ok === false ? "warn" : "good"), sc.end.ok === false ? LT("Model tentokrát nevyšel", "The model did not work this time") : sc.end.ok ? LT("Model vyšel", "The model worked") : LT("Den bez obchodu", "A no-trade day")))); fb.appendChild(en(el("p", null, sc.end.text)));
+        const res = el("div","drd-res"); res.appendChild(el("b", null, score + " / " + n)); res.appendChild(en(el("span", null, was ? LT("Opakování. Do série se počítá první pokus: ", "A repeat. The first attempt counts for the streak: ") + was[0] + " / " + was[1] : free ? LT("Trénink se do série nepočítá.", "Practice does not count for the streak.") : LT("správných odpovědí", "correct answers")))); fb.appendChild(res); fb.classList.add("on");
+        if (!free && !was){ store().d[key] = [score, n]; try { persistLaura(); } catch(e){} try { touchDay(); } catch(e){} try { renderDaily(); renderRails(); } catch(e){} try { if (score === n) confetti(c, 22); } catch(e){} }
+        if (!free && !was){ const sn = streak(); if (sn > 1) res.appendChild(en(el("span","pill good", LT("Série ", "Streak ") + sn + LT(sn < 5 ? " dny" : " dní", " days")))); }
+        clear(ctl); if (firstMiss){ const tp = pa.find(t => t.id === firstMiss); if (tp){ const rb = en(el("button", null, LT("Zopakovat: ", "Review: ") + tp.title)); rb.type = "button"; rb.addEventListener("click", () => { o.close(); openTopic(firstMiss); }); ctl.appendChild(rb); } }
+        const more = en(el("button", null, LT("Další scéna na trénink", "Another scene to practise"))); more.type = "button"; more.addEventListener("click", () => { o.close(); open("free-" + Date.now().toString(36), true); }); ctl.appendChild(more);
+        const ok = en(el("button","primary", LT("Hotovo", "Done"))); ok.type = "button"; ok.addEventListener("click", o.close); ctl.appendChild(ok); }
+      step();
+    }
+    return {scene: scene, open: open, streak: streak, done: doneOf, stats: stats};
+  })();
+  window.TapeDR = DR;
+  renderDaily = function(){ const b = $("d-task"); if (!b) return; clear(b); const key = dayKey(), was = DR.done(key), sn = DR.streak(), card = b.closest(".card");
+    if (card){ const sm = card.querySelector(".row .small"); if (sm){ sm.textContent = sn ? LT("série ", "streak ") + sn + LT(sn === 1 ? " den" : sn < 5 ? " dny" : " dní", sn === 1 ? " day" : " days") : LT("jedna scéna denně", "one scene a day"); if (sm.firstChild) sm.firstChild.__en = sm.firstChild.nodeValue; sm.className = "small " + (sn ? "dr-sn" : "muted"); } }
+    const p = el("p", null, was ? LT("Dnešní scéna je hotová: ", "Today's scene is done: ") + was[0] + " / " + was[1] + LT(". Další přijde zítra.", ". The next one comes tomorrow.") : LT("Jeden graf, tři otázky. Najdi likviditu, sweep a fair value gap a pak se podívej, co trh udělal.", "One chart, three questions. Find the liquidity, the sweep and the fair value gap, then see what the market did.")); if (p.firstChild) p.firstChild.__en = p.firstChild.nodeValue; b.appendChild(p);
+    const row = el("div","rp-ctl"), go = el("button", was ? "" : "primary", was ? LT("Projít znovu", "Go through it again") : LT("Začít dnešní scénu", "Start today's scene")); go.type = "button"; if (go.firstChild) go.firstChild.__en = go.firstChild.nodeValue; go.addEventListener("click", () => DR.open(key, false)); row.appendChild(go);
+    if (was){ const m = el("button", null, LT("Scéna na trénink", "Practice scene")); m.type = "button"; if (m.firstChild) m.firstChild.__en = m.firstChild.nodeValue; m.addEventListener("click", () => DR.open("free-" + Date.now().toString(36), true)); row.appendChild(m); }
+    b.appendChild(row); };
+  try { renderDaily(); } catch(e){ if (window.console) console.error(e); }
   // ---------- moving to a new address without losing data ----------
   // data/site.json: {"move": "https://new-address", "from": ["https://old-address"]}. The old site hands the data to the new one in a window the person opens.
   let site = {move: "", from: []};
