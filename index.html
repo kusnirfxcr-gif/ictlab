@@ -2887,6 +2887,28 @@ button.td-share svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-
 .td-dl{display:grid;grid-template-columns:auto minmax(0,1fr);gap:0;margin:0;border-top:1px solid var(--line)}
 .td-dl dt,.td-dl dd{margin:0;padding:9px 0;border-bottom:1px solid var(--line);font-size:13.5px}
 .td-dl dt{color:var(--muted);padding-right:16px}.td-dl dd{text-align:right;font-weight:650;font-variant-numeric:tabular-nums}
+/* community */
+.cm-shh{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}.cm-shh h2{margin:0 0 4px}.cm-shh p{margin:0}
+.cm-note{flex:none;font-size:11px;font-weight:700;letter-spacing:.06em;padding:5px 10px;border-radius:99px;color:var(--muted);background:color-mix(in srgb,var(--ink) 6%,transparent)}
+.cm-picks{display:flex;gap:10px;overflow-x:auto;padding:4px 2px 8px;scroll-snap-type:x proximity;scrollbar-width:thin}
+button.cm-pk{flex:none;scroll-snap-align:start;display:flex;flex-direction:column;align-items:flex-start;gap:6px;width:150px;min-height:0;padding:12px 14px!important;border-radius:16px!important;text-align:left;border:1px solid var(--line)!important;background:color-mix(in srgb,var(--ink) 3%,transparent)!important;color:var(--ink)}
+button.cm-pk.on{border-color:transparent!important;background:color-mix(in srgb,var(--accent) 14%,transparent)!important;box-shadow:inset 0 0 0 2px color-mix(in srgb,var(--accent) 70%,transparent)!important}
+.cm-pkt{display:flex;align-items:center;gap:7px}.cm-pkt b{font-size:14px}.cm-pkt .pill{font-size:10.5px;padding:2px 7px}
+button.cm-pk strong{font-family:var(--display,inherit);font-size:22px;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums}button.cm-pk strong.pos{color:var(--good,#3ddc97)}button.cm-pk strong.neg{color:var(--bad,#ff6b6b)}
+.cm-pkd{font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.cm-form{padding-top:6px;border-top:1px solid var(--line)}.cm-opts{display:flex;flex-wrap:wrap;gap:6px 18px}
+.cm-feedh{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:8px 2px 0;flex-wrap:wrap}.cm-feedh h2{margin:0;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.cm-side>.card:has(#wc:empty){display:none}
+.cm-side{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;align-items:start}
+details.cm-rules>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between}details.cm-rules>summary::-webkit-details-marker{display:none}details.cm-rules>summary h2{margin:0}
+details.cm-rules>summary::after{content:"›";font-size:20px;color:var(--muted);transition:transform var(--m-fast,.16s)}details.cm-rules[open]>summary::after{transform:rotate(90deg)}
+.post{gap:14px}.post>.row:first-child{flex-wrap:nowrap;align-items:flex-start}.post>.row:first-child>.pill{flex:none}.post .tdh{gap:12px;flex-wrap:nowrap;min-width:0;flex:1}.post .tinfo{display:flex;flex-direction:column;gap:2px;min-width:0}.post .tinfo>span{font-size:12.5px;color:var(--muted)}
+.post-nm{display:flex;align-items:center;gap:7px;flex-wrap:wrap}.post-nm b{font-size:15px}.post-lv{display:inline-block;width:18px;height:18px}.post-lv svg{width:100%;height:100%;display:block;overflow:visible}.post-nm .lv-tag{font-size:10.5px}
+.post .pavatar,.post .av{flex:none;width:42px;height:42px}
+.post .tbig{font-size:44px}
+.post-fig svg{height:130px!important}
+.post .box{background:none;border:0;border-left:2px solid color-mix(in srgb,var(--accent) 45%,transparent);border-radius:0;padding:2px 0 2px 14px;display:flex;flex-direction:column;gap:4px}
+.post .box b{font-size:10.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}.post .box span{font-size:14.5px;line-height:1.6}
 .thpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:8px}
 .thp{display:flex;flex-direction:column;gap:8px;align-items:stretch;text-align:left;padding:8px;border-radius:16px;min-height:0}
 .thp .sw{height:54px;border-radius:10px;position:relative;overflow:hidden;border:1px solid rgba(128,128,128,.25)}
@@ -3023,26 +3045,27 @@ button.td-share svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-
   <section class="view" id="v-premium"><div class="list" id="prem"></div></section>
 
   <section class="view" id="v-komunita">
-    <div class="card"><div class="row"><h2>Komunita</h2><span class="pill warn">První verze</span></div>
-      <p class="muted">Ukaž, jak jsi obchod vzal: analýza, úrovně, vstup, výstup a výsledek. Příspěvek vytvoříš z obchodu v deníku a pošleš odkazem. Kdo ho otevře, uvidí ho v Tape a může si ho uložit.</p>
-      <p class="small muted">Společný feed, kde se příspěvky zobrazí všem, potřebuje server a účty. Do té doby se sdílí odkazem a příspěvky jsou uložené jen u tebe.</p></div>
-    <div class="card"><h2>Nový příspěvek</h2>
+    <div class="card cm-share">
+      <div class="cm-shh"><div><h2>Sdílej obchod</h2><p class="small muted">Vyber obchod z deníku, napiš, jak jsi ho vzal, a pošli ho odkazem.</p></div><span class="cm-note">Sdílení odkazem</span></div>
       <p class="small muted" id="cm-empty">Nejdřív zapiš obchod do deníku. Příspěvek se tvoří z něj.</p>
-      <form id="cm-form" class="fgrid">
-        <label for="cm-trade" class="wide">Obchod z deníku<select id="cm-trade"></select></label>
-        <label for="cm-name" class="wide">Jméno nebo přezdívka<input id="cm-name" maxlength="30" placeholder="Jak se má příspěvek podepsat"></label>
+      <div class="cm-picks" id="cm-picks" role="listbox" aria-label="Obchod z deníku"></div>
+      <form id="cm-form" class="fgrid cm-form" hidden>
+        <select id="cm-trade" hidden aria-hidden="true" tabindex="-1"></select>
         <label for="cm-bias" class="wide">Analýza před obchodem<textarea id="cm-bias" rows="2" maxlength="300" placeholder="Směr dne, kde ležela likvidita, co jsem čekal"></textarea></label>
         <label for="cm-why" class="wide">Jak jsem obchod vzal<textarea id="cm-why" rows="3" maxlength="600" placeholder="Sweep, MSS, FVG, kde byl vstup a stop. Když necháš prázdné, použije se poznámka z deníku."></textarea></label>
         <label for="cm-lesson" class="wide">Co si z toho beru<textarea id="cm-lesson" rows="2" maxlength="300"></textarea></label>
-        <label class="wide chk"><input type="checkbox" id="cm-usd"><span>Ukázat i výsledek v dolarech</span></label>
-        <label class="wide chk"><input type="checkbox" id="cm-score"><span>Přidat moje skóre disciplíny</span></label>
+        <div class="wide cm-opts"><label class="chk"><input type="checkbox" id="cm-usd"><span>Ukázat i výsledek v dolarech</span></label><label class="chk"><input type="checkbox" id="cm-score"><span>Přidat moje skóre disciplíny</span></label></div>
+        <label for="cm-name" class="wide cm-sign">Podepsat jako<input id="cm-name" maxlength="30" placeholder="Jméno nebo přezdívka"></label>
         <div class="row wide"><button class="primary" type="submit">Vytvořit příspěvek</button><span class="small muted" id="cm-msg"></span></div>
       </form>
     </div>
-    <div class="list" id="cm-feed"></div>
-    <div class="card"><h2>Výzva týdne</h2><div class="list" id="wc"></div></div>
-    <div class="card"><h2>Skóre disciplíny</h2><div class="dscore"></div></div>
-    <div class="card"><h2>Pravidla komunity</h2>
+    <div class="cm-feedh"><h2>Feed</h2><div class="chips" id="cm-flt"><button class="chip" type="button" data-f="all" aria-pressed="true">Vše</button><button class="chip" type="button" data-f="mine" aria-pressed="false">Moje</button><button class="chip" type="button" data-f="saved" aria-pressed="false">Uložené</button></div></div>
+    <div class="list cm-feed" id="cm-feed"></div>
+    <div class="cm-side">
+      <div class="card"><h2>Výzva týdne</h2><div class="list" id="wc"></div></div>
+      <div class="card"><h2>Skóre disciplíny</h2><div class="dscore"></div></div>
+    </div>
+    <details class="card cm-rules"><summary><h2>Pravidla komunity</h2></summary>
       <ul class="stl">
         <li>Sdílej jen vlastní obchody a skutečné výsledky.</li>
         <li>Žádné signály, výzvy ke kopírování obchodů ani sliby zisku.</li>
@@ -3050,8 +3073,8 @@ button.td-share svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-
         <li>Kritizuj obchod, ne člověka.</li>
         <li>Příspěvek ukazuje, odkud obchod je: z importu od brokera, nebo z ručního zápisu. Ani jedno není ověření třetí stranou.</li>
       </ul>
-      <p class="small muted">Nahlašování a moderace přijdou se společným feedem. Do té doby vidíš jen příspěvky, které si sám uložíš, a kterýkoli můžeš smazat.</p>
-    </div>
+      <p class="small muted">Společný feed, kde příspěvky uvidí všichni, přijde s účty, nahlašováním a moderací. Do té doby se příspěvky posílají odkazem a ukládají jen u tebe.</p>
+    </details>
     <p class="small muted">Sdílej jen vlastní obchody. Výsledky nikdo neověřuje a příspěvky nejsou doporučení k obchodu.</p>
   </section>
 
@@ -6389,35 +6412,49 @@ button.td-share svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-
     return {id: "s" + Date.now().toString(36), author: s(v.a, 30) || "Bez jména", ts: s(v.t, 30), sym: s(v.s, 12), dir: v.d === "short" ? "short" : "long", setup: s(v.u, 40), entry: n(v.e), stop: n(v.o), exit: n(v.x), r: Number(v.r), usd: n(v.m), levels: s(v.l, 160), bias: s(v.b, 300), why: s(v.w, 600), lesson: s(v.n, 300), saved: 1};
   }
   function postEl(p, opts){
-    const c = el("div","card post"), head = el("div","row"), who = el("div","tdh"), r = Number(p.r) || 0, big = el("div","tbig " + (r >= 0 ? "pos" : "neg"), sgn(r) + " R");
-    who.appendChild(el("span","pavatar", (p.author || "?").trim().charAt(0).toUpperCase())); const nm = el("div","tinfo"); nm.appendChild(el("b", null, p.author || "Bez jména"));
+    const c = el("div","card post"), head = el("div","row"), who = el("div","tdh"), r = Number(p.r) || 0, big = el("div","tbig " + (r >= 0 ? "pos" : "neg"), sgn(r) + " R"), mine = !p.saved;
+    const av = mine && profile && profile.avatar ? avEl(42) : el("span","pavatar", (p.author || "?").trim().charAt(0).toUpperCase()); who.appendChild(av);
+    const nm = el("div","tinfo"), nr = el("div","post-nm"); nr.appendChild(el("b", null, p.author || "Bez jména")); if (mine){ try { const L = lvOf(xpCalc().xp), ge = el("span","post-lv"); ge.innerHTML = gemSvg(L.n, false); ge.title = "Level " + L.n + " · " + L.name; nr.appendChild(ge); nr.appendChild(el("span","lv-tag", lvTag())); } catch(e){} } nm.appendChild(nr);
     nm.appendChild(el("span", null, (p.sym || "") + " · " + (p.dir === "short" ? "Short" : "Long") + (p.setup ? " · " + p.setup : "") + (p.ts && !isNaN(new Date(p.ts)) ? " · " + fmtDateTime(p.ts) : ""))); who.appendChild(nm);
     head.appendChild(who); head.appendChild(el("span","pill " + (p.saved ? "info" : "good"), p.saved ? "Uložený" : "Můj")); c.appendChild(head);
     if (p.usd != null) big.appendChild(el("span", null, usd(p.usd))); c.appendChild(big);
-    const g = el("div","tiles"), f = x => x == null ? null : fnum(x); [["Vstup", f(p.entry)], ["Stop", f(p.stop)], ["Výstup", f(p.exit)]].forEach(x => { if (x[1] != null) g.appendChild(tile(x[0], x[1])); }); if (g.children.length) c.appendChild(g);
+    if (p.entry != null && p.exit != null){ const fig = tdChart({entry: p.entry, exit: p.exit, stop: p.stop, dir: p.dir}, null); fig.classList.add("post-fig"); const cap = fig.querySelector("figcaption"); if (cap) cap.remove(); c.appendChild(fig); }
+    const lv = el("div","td-lv"), f = x => x == null ? null : fnum(x); [["Vstup", f(p.entry), ""], ["Stop", f(p.stop), "bad"], ["Výstup", f(p.exit), ""]].forEach(x => { if (x[1] == null) return; const d = el("div", x[2] || null); d.appendChild(el("span", null, x[0])); d.appendChild(el("b", null, x[1])); lv.appendChild(d); }); if (lv.children.length) c.appendChild(lv);
     [["Úrovně", p.levels], ["Analýza před obchodem", p.bias], ["Jak jsem obchod vzal", p.why], ["Co si z toho beru", p.lesson]].forEach(x => { if (x[1]){ const b = el("div","box"); b.appendChild(el("b", null, x[0])); b.appendChild(el("span", null, x[1])); c.appendChild(b); } });
     const act = el("div","rp-ctl"), mk = (t, fn, cls) => { const b = el("button", cls || null, t); b.type = "button"; if (fn) b.addEventListener("click", fn); act.appendChild(b); return b; };
     if (opts && opts.incoming) mk("Uložit do mého feedu", opts.onSave, "primary");
     else { mk("Sdílet odkazem", async () => { const url = postLink(p); try { if (navigator.share) await navigator.share({title: "Obchod v Tape", url: url}); else { await navigator.clipboard.writeText(url); toast("Odkaz zkopírován."); } } catch(e){ try { await navigator.clipboard.writeText(url); toast("Odkaz zkopírován."); } catch(e2){} } }, "primary");
+      mk("Karta jako obrázek", () => openCard({id: p.id, ts: p.ts || new Date().toISOString(), sym: p.sym, dir: p.dir, setup: p.setup, entry: p.entry, stop: p.stop, exit: p.exit, r: p.r, usd: p.usd, levels: p.levels}));
       twoStep(mk("Smazat", null, "danger"), "Smazat", () => { posts = posts.filter(x => x.id !== p.id); postsStore(); renderCommunity(); }); }
-    mk("Karta jako obrázek", () => openCard({id: p.id, ts: p.ts || new Date().toISOString(), sym: p.sym, dir: p.dir, setup: p.setup, entry: p.entry, stop: p.stop, exit: p.exit, r: p.r, usd: p.usd, levels: p.levels}));
+    if (opts && opts.incoming) mk("Karta jako obrázek", () => openCard({id: p.id, ts: p.ts || new Date().toISOString(), sym: p.sym, dir: p.dir, setup: p.setup, entry: p.entry, stop: p.stop, exit: p.exit, r: p.r, usd: p.usd, levels: p.levels}));
     c.appendChild(act); return c;
   }
+  let cmF = "all", cmPick = "";
   function renderCommunity(){
-    const box = $("cm-feed"), pick = $("cm-trade"), tr = jSorted().reverse().slice(0, 60); clear(box);
+    const box = $("cm-feed"), pick = $("cm-trade"), tr = jSorted().reverse().slice(0, 60), pk = $("cm-picks"); clear(box);
     if (document.activeElement !== pick){ const cur = pick.value; clear(pick); tr.forEach(t => { const o = el("option", null, fmtDateTime(t.ts) + " · " + (t.sym || "") + " " + (t.dir === "short" ? "short" : "long") + " · " + sgn(Number(t.r) || 0) + " R"); o.value = t.id; pick.appendChild(o); }); if (cur && tr.some(t => t.id === cur)) pick.value = cur; }
-    $("cm-form").hidden = !tr.length; $("cm-empty").hidden = !!tr.length;
+    $("cm-empty").hidden = !!tr.length;
+    // recent trades as cards to pick from; the form opens for the picked one
+    if (pk && !pk.contains(document.activeElement)){ clear(pk); tr.slice(0, 8).forEach(t => { const b = el("button","cm-pk" + (t.id === cmPick ? " on" : "")), rr = Number(t.r) || 0; b.type = "button"; b.setAttribute("role","option"); b.setAttribute("aria-selected", String(t.id === cmPick));
+        const top = el("span","cm-pkt"); top.appendChild(el("b", null, t.sym || "")); top.appendChild(el("span","pill " + (t.dir === "short" ? "bad" : "good"), t.dir === "short" ? "Short" : "Long")); b.appendChild(top);
+        b.appendChild(el("strong", rr >= 0 ? "pos" : "neg", sgn(rr) + " R")); b.appendChild(el("span","cm-pkd", new Date(t.ts).toLocaleDateString(LOCD, {day: "numeric", month: "numeric"}) + (t.setup ? " · " + t.setup : "")));
+        b.addEventListener("click", () => { cmPick = cmPick === t.id ? "" : t.id; pick.value = cmPick; renderCommunity(); if (cmPick) setTimeout(() => { try { $("cm-bias").focus({preventScroll: true}); } catch(e){} }, 60); }); pk.appendChild(b); }); }
+    $("cm-form").hidden = !cmPick || !tr.some(t => t.id === cmPick); if (cmPick) pick.value = cmPick;
+    Array.prototype.forEach.call($("cm-flt").children, b => b.setAttribute("aria-pressed", String(b.dataset.f === cmF)));
     if (document.activeElement !== $("cm-name") && !$("cm-name").value) $("cm-name").value = (profile && profile.name) || "";
     if (!posts.length) box.appendChild(emptyState("people", "Zatím tu nic není.", "Vytvoř první příspěvek z obchodu v deníku, nebo otevři odkaz, který ti někdo poslal."));
-    posts.forEach(p => box.appendChild(postEl(p)));
+    const shown = posts.filter(p => cmF === "all" || (cmF === "mine" ? !p.saved : !!p.saved));
+    if (posts.length && !shown.length) box.appendChild(emptyState("people", cmF === "mine" ? "Zatím žádný tvůj příspěvek." : "Zatím žádný uložený příspěvek.", cmF === "mine" ? "Vyber obchod nahoře a napiš k němu pár vět." : "Když ti někdo pošle odkaz na příspěvek, ulož si ho a objeví se tady."));
+    shown.forEach(p => box.appendChild(postEl(p)));
   }
+  $("cm-flt").addEventListener("click", ev => { const b = ev.target.closest("button[data-f]"); if (!b) return; cmF = b.dataset.f; renderCommunity(); });
   $("cm-form").addEventListener("submit", ev => {
     ev.preventDefault(); const t = jr.trades.find(x => x.id === $("cm-trade").value), name = $("cm-name").value.trim().slice(0, 30);
     if (!t){ $("cm-msg").textContent = "Vyber obchod z deníku."; return; } if (!name){ $("cm-msg").textContent = "Doplň jméno nebo přezdívku."; $("cm-name").focus(); return; }
     const net = tNet(t), pf = profile || {}; pf.name = name; profile = pf; try { localStorage.setItem("knot-profile", JSON.stringify(pf)); } catch(e){}
     posts.unshift({id: "p" + Date.now().toString(36), author: name, ts: t.ts, sym: t.sym, dir: t.dir, setup: t.setup, entry: t.entry, stop: t.stop, exit: t.exit, r: Number(t.r) || 0, usd: $("cm-usd").checked && net != null ? Math.round(net) : null, levels: t.levels || "",
       bias: $("cm-bias").value.trim().slice(0, 300), why: ($("cm-why").value.trim() || t.note || "").slice(0, 600), lesson: $("cm-lesson").value.trim().slice(0, 300)});
-    postsStore(); ["cm-bias","cm-why","cm-lesson"].forEach(id => { $(id).value = ""; }); $("cm-msg").textContent = ""; toast("Příspěvek vytvořen. Pošli ho odkazem."); renderCommunity();
+    postsStore(); ["cm-bias","cm-why","cm-lesson"].forEach(id => { $(id).value = ""; }); $("cm-msg").textContent = ""; cmPick = ""; toast("Příspěvek vytvořen. Pošli ho odkazem."); renderCommunity();
   });
   function checkShared(){
     const m = /^#post=([A-Za-z0-9_-]+)$/.exec(location.hash || ""); if (!m) return;
@@ -6448,7 +6485,7 @@ button.td-share svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-
   function renderScore(){
     document.querySelectorAll(".dscore").forEach(box => { clear(box); const d = disciplineScore();
       if (!d){ box.appendChild(el("p","small muted","Skóre se spočítá, až bude za posledních 30 dní aspoň pět obchodů.")); return; }
-      const top = el("div","tbig " + (d.score >= 70 ? "pos" : d.score >= 40 ? "" : "neg"), d.score + " / 100"); top.appendChild(el("span", null, "z " + pl(d.n, "obchodu", "obchodů", "obchodů") + " za 30 dní")); box.appendChild(top);
+      const top = el("div","tbig " + (d.score >= 70 ? "pos" : d.score >= 40 ? "" : "neg"), d.score + " / 100"); { const tx = cfg.lang === "en" ? "from " + d.n + (d.n === 1 ? " trade" : " trades") + " in 30 days" : "z " + pl(d.n, "obchodu", "obchodů", "obchodů") + " za 30 dní", sp = el("span", null, tx); if (sp.firstChild) sp.firstChild.__en = tx; top.appendChild(sp); } box.appendChild(top);
       d.parts.forEach(p => { const r = el("div","rrow"); r.appendChild(el("span", null, p[0])); r.appendChild(el("b", null, Math.round(p[1] * p[2]) + " z " + p[2])); box.appendChild(r); });
       box.appendChild(el("p","small muted","Skóre měří, jak dodržuješ vlastní pravidla, ne kolik vyděláváš.")); });
   }
@@ -7864,7 +7901,7 @@ button.td-share svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-
 
   // ---------- page header shared by the main sections ----------
   const PHEAD = {denik: ["Deník", "Plán, obchody a čísla na jednom místě."], uceni: ["Učení", "Lekce, kurz a trénink. Každý den kousek."], kouc: ["Kouč", "Čte tvůj deník a hlídá proces, ne trh."], vice: ["Více", "Všechno ostatní, co Tape umí."]};
-  function pheadPaint(v, g){ const h = $("phead"), p = PHEAD[g]; if (!h) return; if (!p || v === "moros" || (g === "vice" && v !== "vice")){ h.hidden = true; return; }
+  function pheadPaint(v, g){ const h = $("phead"), p = v === "komunita" ? ["Komunita", "Obchody, ze kterých se učíme. Bez signálů a slibů zisku."] : PHEAD[g]; if (!h) return; if (!p || v === "moros" || (g === "vice" && v !== "vice" && v !== "komunita")){ h.hidden = true; return; }
     h.hidden = false; clear(h); const k = el("div","h2-kick"); k.appendChild(el("span", null, new Date().toLocaleDateString(LOCD, {weekday: "long", day: "numeric", month: "long"}))); const sd = streakDays(); k.appendChild(el("b", null, sd ? "série " + pl(sd, "den", "dny", "dní") : ""));
     h.appendChild(k); const t = el("h1"); t.appendChild(document.createTextNode(p[0])); t.appendChild(el("em", null, ".")); h.appendChild(t); h.appendChild(el("p", null, p[1])); }
   try { pheadPaint(document.body.dataset.view, document.body.dataset.group); } catch(e){}

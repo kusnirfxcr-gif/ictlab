@@ -2411,5 +2411,18 @@
  "Nejlepší bod obchodu": "Best point of the trade",
  "Průběh obchodu": "Trade path",
  "Svíčky z cenových dat toho dne.": "Candles from that day's price data.",
- "Náčrt podle vstupu, stopu, MAE, MFE a výstupu, ne skutečný průběh.": "A sketch from entry, stop, MAE, MFE and exit, not the actual path."
+ "Náčrt podle vstupu, stopu, MAE, MFE a výstupu, ne skutečný průběh.": "A sketch from entry, stop, MAE, MFE and exit, not the actual path.",
+ "Sdílej obchod": "Share a trade",
+ "Vyber obchod z deníku, napiš, jak jsi ho vzal, a pošli ho odkazem.": "Pick a trade from your journal, write how you took it and send it as a link.",
+ "Sdílení odkazem": "Shared by link",
+ "Podepsat jako": "Sign as",
+ "Feed": "Feed",
+ "Moje": "Mine",
+ "Uložené": "Saved",
+ "Obchody, ze kterých se učíme. Bez signálů a slibů zisku.": "Trades we learn from. No signals, no promises of profit.",
+ "Společný feed, kde příspěvky uvidí všichni, přijde s účty, nahlašováním a moderací. Do té doby se příspěvky posílají odkazem a ukládají jen u tebe.": "A shared feed where everyone sees the posts will come with accounts, reporting and moderation. Until then posts are sent as links and stored only with you.",
+ "Zatím žádný tvůj příspěvek.": "No post of yours yet.",
+ "Vyber obchod nahoře a napiš k němu pár vět.": "Pick a trade above and write a few sentences about it.",
+ "Zatím žádný uložený příspěvek.": "No saved posts yet.",
+ "Když ti někdo pošle odkaz na příspěvek, ulož si ho a objeví se tady.": "When someone sends you a link to a post, save it and it shows up here."
 }
