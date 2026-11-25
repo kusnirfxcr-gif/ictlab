@@ -2424,6 +2424,20 @@ html[data-tk="l"] body:not(.sakura) .hero2 .h2-next{text-shadow:0 1px 2px rgba(6
 html[data-tk="l"] body:not(.sakura) .chip:not([aria-pressed="true"]):not([aria-selected="true"]):not(.on):hover,body.sakura .chip:not([aria-pressed="true"]):not([aria-selected="true"]):not(.on):hover{color:var(--ink)!important}
 html[data-tk="l"] body:not(.sakura) .sk-btn:not([aria-pressed="true"]){color:#b0306e;border-color:rgba(214,70,140,.45)}
 html[data-tk="l"] body:not(.sakura) .sk-btn:not([aria-pressed="true"]) svg{color:#d0448a}
+.tb-theme{flex:none;width:32px;height:32px;padding:0!important;border-radius:50%!important;display:grid!important;place-items:center;background:var(--surface)!important;border:1px solid var(--line)!important;box-shadow:none!important;min-height:0;cursor:pointer;transition:transform .2s}
+.tb-theme i{width:18px;height:18px;border-radius:50%;background:conic-gradient(var(--c) 0 33%,var(--b) 0 66%,var(--a) 0);box-shadow:0 0 0 1.5px rgba(128,128,128,.35)}
+.tb-theme:hover{transform:rotate(-20deg)}
+.thq{position:fixed;z-index:60;width:228px;padding:12px;border-radius:16px;background:var(--surface);border:1px solid var(--line);box-shadow:0 18px 50px rgba(0,0,0,.35);display:flex;flex-direction:column;gap:10px;animation:thqIn .18s ease}
+html[data-tk="l"] .thq,body.sakura .thq{background:#fff}
+@keyframes thqIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.thq>b{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.thq-g{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.thq-g button{display:flex!important;align-items:center;gap:8px;padding:7px 8px!important;border-radius:10px!important;background:transparent!important;border:1px solid transparent!important;color:var(--ink)!important;font-size:13px;font-weight:600;box-shadow:none!important;min-height:0;justify-content:flex-start}
+.thq-g button:hover{background:var(--accent-soft)!important}
+.thq-g button[aria-checked="true"]{border-color:var(--accent)!important;background:var(--accent-soft)!important}
+.thq-sw{flex:none;width:18px;height:18px;border-radius:50%;background:conic-gradient(var(--c) 0 33%,var(--b) 0 66%,var(--a) 0);box-shadow:0 0 0 1.5px rgba(128,128,128,.35)}
+.thq-more{font-size:12px;color:var(--muted);text-decoration:underline;text-underline-offset:3px}
+@media (max-width:859px){.tb-theme{width:30px;height:30px}.tb-theme i{width:16px;height:16px}}
 .thpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:8px}
 .thp{display:flex;flex-direction:column;gap:8px;align-items:stretch;text-align:left;padding:8px;border-radius:16px;min-height:0}
 .thp .sw{height:54px;border-radius:10px;position:relative;overflow:hidden;border:1px solid rgba(128,128,128,.25)}
@@ -7868,6 +7882,17 @@ html[data-tk="l"] body:not(.sakura) .sk-btn:not([aria-pressed="true"]) svg{color
     if (!$("thbg")){ const d = el("div"); d.id = "thbg"; d.setAttribute("aria-hidden","true"); d.appendChild(el("i")); d.appendChild(el("i")); document.body.insertBefore(d, document.body.firstChild); }
     const m = document.querySelector('meta[name="theme-color"]'); if (m) m.setAttribute("content", document.body.classList.contains("sakura") ? "#fde6f3" : th[4]); try { _mf = null; } catch(e){} try { favPaint(); } catch(e){} }
   applyTheme();
+  // quick theme switch in the top bar: a small swatch next to the language switch
+  { const lg = document.querySelector(".tb-lang"); if (lg){ const tb = el("button","tb-theme"); tb.type = "button"; tb.setAttribute("aria-label", "Vzhled aplikace"); tb.title = "Vzhled aplikace"; tb.setAttribute("aria-haspopup", "true");
+      const paint = () => { const th = THEMES.find(x => x[0] === cfg.theme) || THEMES[0]; tb.style.setProperty("--a", th[3][0]); tb.style.setProperty("--b", th[3][1]); tb.style.setProperty("--c", th[3][2]); };
+      tb.innerHTML = "<i></i>"; paint(); lg.parentNode.insertBefore(tb, lg);
+      let pop = null; const close = () => { if (pop){ pop.remove(); pop = null; tb.setAttribute("aria-expanded", "false"); } };
+      tb.addEventListener("click", ev => { ev.stopPropagation(); if (pop){ close(); return; } pop = el("div","thq"); pop.setAttribute("role","menu"); pop.appendChild(el("b", null, "Vzhled aplikace"));
+        const g = el("div","thq-g"); THEMES.forEach(t => { const b = el("button", null); b.type = "button"; b.setAttribute("role","menuitemradio"); b.setAttribute("aria-checked", String(t[0] === (cfg.theme || "noc"))); const sw = el("span","thq-sw"); sw.style.setProperty("--a", t[3][0]); sw.style.setProperty("--b", t[3][1]); sw.style.setProperty("--c", t[3][2]); b.appendChild(sw); b.appendChild(el("span", null, t[1]));
+          b.addEventListener("click", () => { cfg.theme = t[0]; cfgStore(); applyTheme(); paint(); try { if (themeBox.isConnected) renderThemePick(); } catch(e){} g.querySelectorAll("button").forEach(x => x.setAttribute("aria-checked", String(x === b))); }); g.appendChild(b); });
+        pop.appendChild(g); const more = el("a","thq-more","Další nastavení vzhledu"); more.href = "#nastaveni"; more.addEventListener("click", close); pop.appendChild(more);
+        document.body.appendChild(pop); const r = tb.getBoundingClientRect(); pop.style.top = (r.bottom + 8) + "px"; pop.style.left = Math.max(8, Math.min(innerWidth - pop.offsetWidth - 8, r.left + r.width / 2 - pop.offsetWidth / 2)) + "px"; tb.setAttribute("aria-expanded", "true"); });
+      document.addEventListener("click", e => { if (pop && !pop.contains(e.target)) close(); }); document.addEventListener("keydown", e => { if (e.key === "Escape") close(); }); window.addEventListener("hashchange", close); window.addEventListener("resize", close); } }
   const themeBox = el("div","card");
   function renderThemePick(){ clear(themeBox); themeBox.appendChild(el("h2", null, "Vzhled aplikace")); themeBox.appendChild(el("p","small muted","Osm vzhledů. Změna se projeví hned a uloží se k účtu. Lauřin room má dál svůj růžový vzhled."));
     const g = el("div","thpick"), cur = (THEMES.find(x => x[0] === cfg.theme) || THEMES[0])[0];
