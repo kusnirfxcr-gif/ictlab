@@ -2911,6 +2911,20 @@ details.cm-rules>summary::after{content:"›";font-size:20px;color:var(--muted);
 .post .box b{font-size:10.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}.post .box span{font-size:14.5px;line-height:1.6}
 svg.ia{fill:none!important;stroke:currentColor}svg.ia :is(path,rect,circle){fill:none;stroke:currentColor;stroke-width:1.7px;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke}svg.ia .df{fill:currentColor}
 .rp-promo .rp-pmi svg.ia{width:34px;height:34px;color:var(--th-priink,#fff);filter:none}.rp-promo .rp-pmi svg.ia :is(path,rect,circle){stroke-width:2px}
+html body details.co-set{margin:10px 0 8px;padding:0;border:0;background:none}
+html body details.co-set>summary{list-style:none;display:flex;align-items:center;gap:10px;width:100%;box-sizing:border-box;padding:10px 12px;border-radius:14px;border:1px solid var(--line);background:color-mix(in srgb,var(--ink) 3%,transparent);color:var(--ink)!important;font-size:13.5px;font-weight:600;cursor:pointer;transition:background var(--m-fast,.16s),border-color var(--m-fast,.16s)}
+html body details.co-set>summary::-webkit-details-marker{display:none}
+html body details.co-set>summary::marker{content:""}
+html body details.co-set>summary svg{width:17px;height:17px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+html body details.co-set>summary svg.ia{color:var(--th-glow,var(--accent))}
+html body details.co-set>summary span{flex:1}
+html body details.co-set>summary .cs-ch{color:var(--muted);transition:transform var(--m-base,.28s) var(--e-out,ease)}
+html body details.co-set[open]>summary .cs-ch{transform:rotate(90deg)}
+html body details.co-set[open]>summary{border-bottom-left-radius:4px;border-bottom-right-radius:4px}
+@media (hover:hover){html body details.co-set>summary:hover{background:color-mix(in srgb,var(--th-glow,var(--accent)) 8%,transparent);border-color:color-mix(in srgb,var(--th-glow,var(--accent)) 30%,transparent)}}
+html body details.co-set[open]>:not(summary){margin-left:2px;margin-right:2px}
+html body details.co-set[open]{padding-bottom:6px}
+html body details.co-set>p{margin:10px 4px 8px}
 .thpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:8px}
 .thp{display:flex;flex-direction:column;gap:8px;align-items:stretch;text-align:left;padding:8px;border-radius:16px;min-height:0}
 .thp .sw{height:54px;border-radius:10px;position:relative;overflow:hidden;border:1px solid rgba(128,128,128,.25)}
@@ -3016,7 +3030,7 @@ svg.ia{fill:none!important;stroke:currentColor}svg.ia :is(path,rect,circle){fill
       <div class="chat" id="co-log"></div>
       <div class="askrow"><textarea id="co-box" rows="2" placeholder="Třeba: Zhodnoť moje obchody z tohoto týdne"></textarea><button class="primary" id="co-send" type="button">Odeslat</button></div>
       <div class="row"><button type="button" id="co-copy">Zkopírovat podklady pro Claude</button><span class="small muted" id="co-msg"></span></div>
-      <details class="ans"><summary>Nastavení AI</summary>
+      <details class="ans co-set"><summary><svg class="ia" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2.3"/><circle cx="9" cy="17" r="2.3"/></svg><span>Nastavení AI</span><svg class="cs-ch" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></summary>
         <p class="small muted">Aby kouč odpovídal přímo tady, potřebuje API klíč od Anthropic. Platí se podle spotřeby. Klíč se uloží jen v tomto prohlížeči a posílá se jen na api.anthropic.com spolu s daty z deníku. Rozhovor si kouč pamatuje v tomto prohlížeči.</p>
         <form class="inline" onsubmit="return false"><input id="co-key" type="password" autocomplete="off" placeholder="sk-ant-…" aria-label="API klíč"><button type="button" id="co-key-save">Uložit</button><button type="button" id="co-key-del">Smazat</button></form>
         <span class="small muted" id="co-key-state"></span>
