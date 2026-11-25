@@ -1702,20 +1702,20 @@ body.sakura .copop::before{background:conic-gradient(from var(--ra),#ff5fa2,#ffc
 @media (prefers-reduced-motion:reduce){.orb{animation:none}}
 /* ---------- news folders ---------- */
 .fold{flex:none;display:inline-grid;place-items:center;width:26px;height:22px}
-.fold svg{width:100%;height:100%}.fold .fb{opacity:.55}
-.fold.red{color:#ff4d4d}.fold.orange{color:#ff9a3c}.fold.yellow{color:#f5d142}
-.fold path{fill:currentColor}.fold .ff{filter:drop-shadow(0 1px 0 rgba(0,0,0,.25))}
+
+
+
 .nw-folds{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 10px}
-.chip.nwf{display:inline-flex;align-items:center;gap:6px}.chip.nwf svg{width:18px;height:15px}.chip.nwf svg path{fill:currentColor}.chip.nwf svg .fb{opacity:.55}
+
 .chip.nwf em{font-style:normal;font-size:11px;opacity:.7;background:rgba(255,255,255,.08);border-radius:99px;padding:1px 7px}
-.chip.nwf.red svg{color:#ff4d4d}.chip.nwf.orange svg{color:#ff9a3c}.chip.nwf.yellow svg{color:#f5d142}
-.chip.nwf.red[aria-pressed="true"]{background:rgba(255,77,77,.16);border-color:rgba(255,77,77,.5);color:#ffb3b3}
-.chip.nwf.orange[aria-pressed="true"]{background:rgba(255,154,60,.16);border-color:rgba(255,154,60,.5);color:#ffd0a6}
-.chip.nwf.yellow[aria-pressed="true"]{background:rgba(245,209,66,.14);border-color:rgba(245,209,66,.5);color:#fbe9a4}
+
+
+
+
 .nrow{border-left:3px solid transparent;padding-left:10px;border-radius:4px}
-.nrow.f3{border-left-color:#ff4d4d;background:linear-gradient(90deg,rgba(255,77,77,.08),transparent 60%)}
-.nrow.f2{border-left-color:#ff9a3c;background:linear-gradient(90deg,rgba(255,154,60,.06),transparent 60%)}
-.nrow.f1{border-left-color:#f5d142}
+
+
+
 .rrow{display:flex;gap:8px;align-items:flex-start}.rrow .fold{width:20px;height:17px;margin-top:1px}
 /* ---------- daily plan ---------- */
 .plan2{padding:0!important;overflow:hidden;border-color:rgba(168,85,247,.25)!important}
@@ -2823,6 +2823,32 @@ html[data-tk="l"] .rl-ms,body.sakura .rl-ms{--ms:var(--accent);--ms2:color-mix(i
 html body .ms.done .ms-ic{background:linear-gradient(140deg,var(--ms),var(--ms2));color:var(--th-priink,#fff);box-shadow:0 6px 16px -8px var(--ms),inset 0 1px 0 rgba(255,255,255,.35)}
 html body .ms.done .ms-st{color:var(--ms)}html body .ms-bar>span{background:linear-gradient(90deg,var(--ms2),var(--ms))}
 .ms-ic svg{stroke-width:1.7}.ms-ic svg .f{fill:currentColor;fill-opacity:.22;stroke:none}.ms.done .ms-ic svg .f{fill-opacity:.32}
+/* news folders: one line icon, impact in the theme's own red, amber and a muted gold */
+.fold,.chip.nwf,.nrow,.nwr{--fo:var(--muted)}
+html body :is(.fold.red,.chip.nwf.red,.nrow.f3,.nwr.f3){--fo:var(--bad,#ff6b6b)}html body :is(.fold.orange,.chip.nwf.orange,.nrow.f2,.nwr.f2){--fo:var(--amber,#f2b560)}html body :is(.fold.yellow,.chip.nwf.yellow,.nrow.f1,.nwr.f1){--fo:color-mix(in srgb,var(--amber,#f2b560) 82%,var(--ink))}
+html body :is(.nwr,.nrow) .fold{--fo:inherit}
+html body .fold{flex:none;display:inline-grid;place-items:center;width:28px;height:28px;border-radius:9px;background:color-mix(in srgb,var(--fo) 13%,transparent);color:var(--fo)}
+.fold svg,.chip.nwf svg{width:18px;height:18px;overflow:visible}
+.fold .fo-b,.chip.nwf .fo-b{fill:currentColor;fill-opacity:.16;stroke:none}
+.fold .fo-l,.chip.nwf .fo-l{fill:none;stroke:currentColor;stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round}
+.fold .fo-i,.chip.nwf .fo-i{fill:currentColor;fill-opacity:.28}.fold .fo-i.on,.chip.nwf .fo-i.on{fill-opacity:1}
+html body .chip.nwf{display:inline-flex;align-items:center;gap:7px}
+html body .chip.nwf svg{color:var(--fo)}
+html body .chip.nwf em{font-style:normal;font-size:11px;font-weight:700;opacity:.75;background:color-mix(in srgb,var(--ink) 8%,transparent);border-radius:99px;padding:1px 7px}
+html body .chip.nwf.red[aria-pressed="true"],html body .chip.nwf.orange[aria-pressed="true"],html body .chip.nwf.yellow[aria-pressed="true"]{background:color-mix(in srgb,var(--fo) 14%,transparent)!important;border-color:color-mix(in srgb,var(--fo) 45%,transparent)!important;color:var(--ink)!important}
+html body .nrow{border:1px solid var(--line);border-left:0;border-radius:14px;background:var(--surface2);position:relative;overflow:hidden;padding-left:14px}
+html body .nrow::before{content:"";position:absolute;left:0;top:10px;bottom:10px;width:3px;border-radius:0 3px 3px 0;background:var(--fo)}
+html body .nrow>.fold{width:30px;height:30px}
+/* right column: the calendar opens the full list */
+.rr-calh{display:flex;align-items:baseline;justify-content:space-between;gap:8px}.rr-calh .kick{margin:0}
+a.rr-calall{font-size:12px;font-weight:700;color:var(--muted);text-decoration:none;white-space:nowrap}a.rr-calall:hover{color:var(--ink)}a.rr-calall i{font-style:normal}
+html body button.rrow.nwr{display:grid;grid-template-columns:24px auto minmax(0,1fr);column-gap:9px;align-items:start;width:calc(100% + 12px);min-height:0;padding:7px 6px!important;margin:0 -6px;border:0!important;border-radius:10px!important;background:none!important;box-shadow:none!important;text-align:left;color:var(--ink);font:inherit}
+html body button.rrow.nwr>span:not(.fold){font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums;padding-top:4px}
+html body button.rrow.nwr>b{font-size:13px;font-weight:650;line-height:1.35;padding-top:3px}
+button.rrow.nwr:hover{background:color-mix(in srgb,var(--ink) 6%,transparent)!important}
+button.rrow.nwr .fold{width:24px;height:24px;border-radius:8px}button.rrow.nwr .fold svg{width:15px;height:15px}
+@keyframes nwflash{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--accent) 50%,transparent)}100%{box-shadow:0 0 0 14px transparent}}
+.nw-flash{animation:nwflash .9s var(--e-out,ease) 1}
 .thpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:8px}
 .thp{display:flex;flex-direction:column;gap:8px;align-items:stretch;text-align:left;padding:8px;border-radius:16px;min-height:0}
 .thp .sw{height:54px;border-radius:10px;position:relative;overflow:hidden;border:1px solid rgba(128,128,128,.25)}
@@ -3438,7 +3464,7 @@ html body .ms.done .ms-st{color:var(--ms)}html body .ms-bar>span{background:line
   <p class="small muted lg-foot">Vzdělávací nástroj, žádné investiční doporučení. Obchodování futures je rizikové a žádný model nezaručuje zisk. <a href="#pravni" data-lt="rizika">Rizika</a> · <a href="#pravni" data-lt="podminky">Podmínky</a> · <a href="#pravni" data-lt="gdpr">Ochrana osobních údajů</a> · <a href="#pravni" data-lt="cookies">Cookies</a> · <a href="#uvod">O aplikaci</a></p>
 </div>
 <aside class="rail" aria-label="Dnešek">
-  <div class="card"><span class="kick">V kalendáři</span><div id="rr-news"></div></div>
+  <div class="card rr-cal"><div class="rr-calh"><span class="kick">V kalendáři</span><a href="#prehled" class="rr-calall" id="rr-calall">Celý kalendář <i>›</i></a></div><div id="rr-news"></div></div>
   <div class="card"><div class="row"><span class="kick">Plán dne</span><b id="rr-date"></b></div><div class="list" id="rr-plan"></div><a class="rr-edit" id="rr-edit" href="#denik"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16v4zM13.500 6.500l4 4"/></svg><span>Upravit plán</span><i aria-hidden="true">→</i></a></div>
   <div class="card"><span class="kick">Poslední obchody</span><div class="list" id="rr-trades"></div></div>
 </aside>
@@ -5131,10 +5157,14 @@ html body .ms.done .ms-st{color:var(--ms)}html body .ms-bar>span{background:line
   // ---------- news calendar (data/news.json, refreshed by the bots) ----------
   let news = null, newsTried = false;
   const FOLD = {3: ["red", "Red folder", "velký dopad"], 2: ["orange", "Orange folder", "střední dopad"], 1: ["yellow", "Yellow folder", "malý dopad"]};
-  const folderSvg = n => '<svg viewBox="0 0 24 20" aria-hidden="true"><path class="fb" d="M1.5 4.2c0-1.2 1-2.2 2.2-2.2h5.1c.6 0 1.1.2 1.5.6l1.4 1.4h8.6c1.2 0 2.2 1 2.2 2.2v10.1c0 1.2-1 2.2-2.2 2.2H3.7c-1.2 0-2.2-1-2.2-2.2z"/><path class="ff" d="M1.5 7.6h21v8.5c0 1.2-1 2.2-2.2 2.2H3.7c-1.2 0-2.2-1-2.2-2.2z"/></svg>';
+  // folder glyph: a line folder with a tinted body, one bar per level of impact on its front
+  const folderSvg = n => '<svg viewBox="0 0 24 24" aria-hidden="true"><path class="fo-b" d="M3.500 7.200c0-1.100.9-2 2-2h3.800c.5 0 1 .2 1.400.6l1.300 1.300h6.500c1.100 0 2 .9 2 2v8.700c0 1.100-.9 2-2 2h-13c-1.100 0-2-.9-2-2z"/><path class="fo-l" d="M3.500 7.200c0-1.100.9-2 2-2h3.800c.5 0 1 .2 1.400.6l1.300 1.300h6.500c1.100 0 2 .9 2 2v8.700c0 1.100-.9 2-2 2h-13c-1.100 0-2-.9-2-2zM3.500 10h17"/>' + [0, 1, 2].map(i => '<rect class="fo-i' + (i < n ? " on" : "") + '" x="' + (8.200 + i * 2.800) + '" y="' + (15.600 - i * 1.300) + '" width="1.800" height="' + (1.800 + i * 1.300) + '" rx=".9"/>').join("") + "</svg>";
   const impEl = n => { n = Math.max(1, Math.min(3, n || 1)); const s = el("span","fold " + FOLD[n][0]); s.innerHTML = folderSvg(n); s.title = FOLD[n][1] + ": " + FOLD[n][2]; return s; };
   let nwF = 0;
   let nwAll = false;
+  function openNewsCal(){ nwAll = true; const go = () => { renderNews(); const c = document.querySelector('#v-prehled [data-card="zpravy"]'); if (c){ c.hidden = false; c.scrollIntoView({behavior: "smooth", block: "start"}); c.classList.remove("nw-flash"); void c.offsetWidth; c.classList.add("nw-flash"); } };
+    if (location.hash !== "#prehled" && location.hash !== "" && location.hash !== "#"){ location.hash = "#prehled"; setTimeout(go, 360); } else go(); }
+  document.addEventListener("click", ev => { const a = ev.target.closest && ev.target.closest("#rr-calall"); if (a){ ev.preventDefault(); openNewsCal(); } });
   function renderNews(){
     const box = $("nw"), rail = $("rr-news"); clear(box); clear(rail);
     if (!news){ box.appendChild(el("p","small muted", newsTried ? "Kalendář se nepodařilo načíst." : "Načítám…")); return; }
@@ -5160,7 +5190,7 @@ html body .ms.done .ms-st{color:var(--ms)}html body .ms-bar>span{background:line
     $("nw-upd").textContent = news.updated ? "Aktualizováno " + fmtDateTime(news.updated) : "";
     const td = ev.filter(e => e.date === today), nx = td.length ? td : ev.slice(0, 1);
     if (!nx.length) rail.appendChild(el("p","small muted","Nic důležitého."));
-    nx.forEach(e => { const r = el("div","rrow f" + Math.max(1, Math.min(3, Number(e.impact) || 1))); r.appendChild(impEl(Number(e.impact) || 1)); r.appendChild(el("span", null, (td.length ? "" : new Date(e.date + "T12:00:00").toLocaleDateString(LOCD, {day: "numeric", month: "numeric"}) + " ") + (e.time || ""))); r.appendChild(el("b", null, e.title)); rail.appendChild(r); });
+    nx.forEach(e => { const r = el("button","rrow nwr f" + Math.max(1, Math.min(3, Number(e.impact) || 1))); r.type = "button"; r.addEventListener("click", openNewsCal); r.appendChild(impEl(Number(e.impact) || 1)); r.appendChild(el("span", null, (td.length ? "" : new Date(e.date + "T12:00:00").toLocaleDateString(LOCD, {day: "numeric", month: "numeric"}) + " ") + (e.time || ""))); r.appendChild(el("b", null, e.title)); rail.appendChild(r); });
   }
   fetch("data/news.json", {cache: "no-store"}).then(r => { if (!r.ok) throw 0; return r.json(); }).then(v => { news = v; }).catch(() => {}).then(() => { newsTried = true; renderNews(); });
 
@@ -8691,9 +8721,15 @@ html body .ms.done .ms-st{color:var(--ms)}html body .ms-bar>span{background:line
     return '<svg viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="' + id + '" x1="0" y1="0" x2="1" y2="1">' + p.map((c, i) => '<stop offset="' + (i / (p.length - 1)).toFixed(2) + '" stop-color="' + c + '"/>').join("") + "</linearGradient></defs><g class=\"gb\">" + body + "</g>" + pp + "</svg>"; }
   // turn a drawn gem without redrawing it: bronze, silver and gold only need a rotation and a squash for the lean.
   // The diamond turns around its upright axis, so it is redrawn, at most every other frame.
-  function gemPose(emb, n, ang, tilt, id, now){ if (lvTier(n) === 4){ if (now && emb._pt && now - emb._pt < 33) return; emb._pt = now; emb.innerHTML = gemSvg(n, true, ang, tilt, id); return; }
-    let g = emb._gb; if (!g || !g.isConnected || emb._gn !== n){ emb.innerHTML = gemSvg(n, true, 0, 0, id); g = emb._gb = emb.querySelector(".gb"); emb._gn = n; }
-    if (g) g.setAttribute("transform", "translate(32 28) scale(1 " + Math.cos(tilt * .9).toFixed(3) + ") rotate(" + (ang * 57.2958).toFixed(2) + ") translate(-32 -28)"); }
+  // turn a drawn gem: the faces are recomputed in 3D, but the existing shapes are updated in place (no new SVG is parsed)
+  const GEM_RX = /<path d="([^"]*)" fill="([^"]*)"(?: fill-opacity="([^"]*)")?/g;
+  function gemPose(emb, n, ang, tilt, id){ const str = gemSvg(n, true, ang, tilt, id), faces = []; let m; GEM_RX.lastIndex = 0; while ((m = GEM_RX.exec(str))) if (m[2] !== "none") faces.push(m);
+    let ps = emb._ps; if (!ps || emb._gn !== n || ps.length < faces.length || !ps[0].isConnected){ emb.innerHTML = gemSvg(n, true, ang, tilt, id); emb._ol = null; const g = emb.querySelector(".gb"); ps = emb._ps = g ? Array.prototype.slice.call(g.querySelectorAll('path[fill]:not([fill="none"])')) : []; emb._gn = n;
+      // spare shapes for the diamond, whose number of visible faces changes as it turns
+      if (g && lvTier(n) === 4) for (let i = ps.length; i < 20; i++){ const p = document.createElementNS("http://www.w3.org/2000/svg", "path"); p.setAttribute("stroke", "#fff"); p.setAttribute("stroke-opacity", ".3"); p.setAttribute("stroke-width", ".55"); p.setAttribute("stroke-linejoin", "round"); g.insertBefore(p, g.lastChild); ps.push(p); }
+      return; }
+    for (let i = 0; i < ps.length; i++){ const p = ps[i], f = faces[i]; if (f){ if (p.getAttribute("d") !== f[1]) p.setAttribute("d", f[1]); p.setAttribute("fill", f[2]); if (f[3]) p.setAttribute("fill-opacity", f[3]); else p.removeAttribute("fill-opacity"); } else p.setAttribute("d", ""); }
+    const outl = emb._ol || (emb._ol = emb.querySelector('.gb > path[fill="none"]')), om = str.match(/<path d="([^"]*)" fill="none"/); if (outl && om) outl.setAttribute("d", om[1]); }
   // the gem turns: on the level screen by itself, on the home card with the page scroll. Never with effects off or reduced motion
   const gemStill = () => { try { return document.body.classList.contains("fx-off") || matchMedia("(prefers-reduced-motion: reduce)").matches; } catch(e){ return true; } };
   function gemSpin(emb, n, delay){ if (gemStill()) return; const id = "gs" + (++gemUid), t0 = performance.now() + (delay || 0); let last = 0;
