@@ -168,9 +168,9 @@
   // ---------- drawing ----------
   function req(){ if (!raf) raf = requestAnimationFrame(() => { raf = 0; paint(); }); }
   function paint(){
-    if (!ui) return; const cv = ui.cv, dpr = window.devicePixelRatio || 1, r = ui.box.getBoundingClientRect();
-    W = Math.max(280, Math.floor(r.width)); H = Math.max(260, Math.floor(r.height)); PW = W - AXW; TY = H - AXH; const PN = panes(), PNH = Math.round(clamp(H * .16, 64, 110)); PH = TY - PN.length * PNH;
-    if (cv.width !== W * dpr || cv.height !== H * dpr){ cv.width = W * dpr; cv.height = H * dpr; cv.style.width = W + "px"; cv.style.height = H + "px"; }
+    if (!ui) return; const cv = ui.cv, dpr = window.devicePixelRatio || 1, bx = ui.box;
+    W = Math.max(280, bx.clientWidth); H = Math.max(260, bx.clientHeight); PW = W - AXW; TY = H - AXH; const PN = panes(), PNH = Math.round(clamp(H * .16, 64, 110)); PH = TY - PN.length * PNH;
+    const cw = Math.round(W * dpr), ch = Math.round(H * dpr); if (cv.width !== cw || cv.height !== ch){ cv.width = cw; cv.height = ch; cv.style.width = W + "px"; cv.style.height = H + "px"; }
     const c = cv.getContext("2d"), P = pal(), A = agg(), a = A.a; c.setTransform(dpr, 0, 0, dpr, 0, 0);
     c.fillStyle = P.bg; c.fillRect(0, 0, W, H);
     if (!S.B.length){ c.fillStyle = P.muted; c.font = "500 14px Inter,system-ui,sans-serif"; c.textAlign = "center"; c.fillText(T("Nahraj data nebo spusť ukázku", "Load data or start the demo"), W / 2, H / 2); return; }

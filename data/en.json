@@ -2333,5 +2333,7 @@
  "Dopsat plán": "Finish the plan",
  "mimo seanci": "outside the session",
  "Upravit otázky": "Edit the questions",
- "Druh checklistu": "Checklist type"
+ "Druh checklistu": "Checklist type",
+ "když se přihlásíš, uloží se tvůj e-mail, přezdívka, profilová fotka, deník, plány, postup v učení a nastavení u služby Supabase, aby se načetly i na jiném zařízení. Jméno, příjmení a telefon jsou nepovinné; když je vyplníš, uloží se stejně a kdykoli je v profilu smažeš. Obrázky k obchodům a klíč ke kouči se neposílají.": "when you sign in, your e-mail, nickname, profile picture, journal, plans, learning progress and settings are stored with the Supabase service so they load on another device too. First name, last name and phone are optional; if you fill them in they are stored the same way and you can delete them in your profile at any time. Trade pictures and the coach key are not sent.",
+ "S účtem: e-mail (u přihlášení přes Google i jméno a e-mail z účtu Google), přezdívka, profilová fotka, deník, plány, postup v učení a nastavení. Nepovinně jméno, příjmení a telefon, pokud je sám vyplníš v profilu. Důvod: plnění smlouvy, tedy aby ti aplikace fungovala na více zařízeních.": "With an account: your e-mail (with Google sign-in also your Google name and e-mail), nickname, profile picture, journal, plans, learning progress and settings. Optionally your first name, last name and phone, if you fill them in yourself in the profile. Reason: performing the contract, so the app works across your devices."
 }
