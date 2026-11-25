@@ -171,7 +171,7 @@ details.week>summary{padding:16px 18px}
 .item.gems::before{background:var(--amber)} .item.architekt::before{background:var(--good)}
 .item .item{background:var(--surface)}
 button{border-radius:12px;font-weight:600;transition:transform .15s,background .2s,border-color .2s,opacity .2s}
-button:hover:not(:disabled){border-color:#3f3f48}
+button:hover:not(:disabled){border-color:color-mix(in srgb,var(--ink) 22%,transparent)}
 button:active:not(:disabled){transform:scale(.97)}
 button:disabled{opacity:.45;cursor:default}
 button.primary{background:var(--ink);border-color:var(--ink);color:var(--bg)}
@@ -2387,7 +2387,7 @@ html[data-tk="l"] .rp-setp{background:#fff}
 .rp-hist{display:flex;flex-direction:column;gap:4px;max-height:300px;overflow:auto}
 .rp-hrow{display:grid;grid-template-columns:auto auto 1fr auto auto;gap:10px;align-items:center;padding:6px 10px;border-radius:9px;background:var(--rp-ch)}
 .rp-studio.rp-fs{position:fixed;inset:0;z-index:9999;background:var(--bg);padding:12px;overflow:auto}
-.rp-studio.rp-fs .rp-box,.rp-studio:fullscreen .rp-box{height:calc(100vh - 170px)}
+
 .rp-studio:fullscreen{background:var(--bg);padding:12px;overflow:auto}
 @media (max-width:700px){
  .rp-tools{flex-direction:row;flex-wrap:nowrap;overflow-x:auto;align-self:stretch;scrollbar-width:none;gap:2px;padding:3px}.rp-area{flex-direction:column}
@@ -2692,6 +2692,33 @@ html[data-t] body.fx-lite:not(.sakura) .topbar,html[data-t] body.fx-lite:not(.sa
 :is(html[data-t="ametyst"] body:not(.sakura),html[data-t="bubblegum"] body:not(.sakura),body.sakura) .fig text.f-good{fill:#0a7a64}:is(html[data-t="ametyst"] body:not(.sakura),html[data-t="bubblegum"] body:not(.sakura),body.sakura) .fig text.f-amber{fill:#9c5506}:is(html[data-t="ametyst"] body:not(.sakura),html[data-t="bubblegum"] body:not(.sakura),body.sakura) .fig text.f-bad{fill:#c2255c}:is(html[data-t="ametyst"] body:not(.sakura),html[data-t="bubblegum"] body:not(.sakura),body.sakura) .fig text.f-accent{fill:#6841d9}
 html[data-t="ametyst"] body:not(.sakura) .fig text.f-bad{fill:#7b35d6}
 :is(html[data-t="ametyst"] body:not(.sakura),html[data-t="bubblegum"] body:not(.sakura),body.sakura) .fig text.lpt,:is(html[data-t="ametyst"] body:not(.sakura),html[data-t="bubblegum"] body:not(.sakura),body.sakura) .fig text.tl.in{fill:#12101a}
+/* hover glow v2: an outer shadow only, painted outside the element, so no line appears on its edge */
+html body .cg-orbit,html body .cg-orbit.rbw,html body .cg-orbit.pink,html body .cg-orbit.pink.rbw{--cgc:#a855f7;background:none!important;filter:none!important;clip-path:none!important;box-shadow:0 0 22px -4px var(--cgc),0 0 8px -3px var(--cgc)}
+html[data-tk="d"] body:not(.sakura) .cg-orbit{--cgc:var(--th-glow,var(--accent))}
+html[data-tk="l"] body:not(.sakura) .cg-orbit{--cgc:color-mix(in srgb,var(--accent) 70%,transparent)}
+body.sakura .cg-orbit{--cgc:#ff8fc5}
+html body .cg-orbit.rbw{animation:cgin .22s ease forwards}html body .cg-orbit.rbw.out{animation:cgout .2s ease forwards}html body .cg-orbit.rbw.hit{animation:cgflash .55s ease forwards}html body .cg-orbit.rbw.cg-glow.hit{animation:cgtap .6s ease forwards}
+@keyframes cgin{to{opacity:.85}}@keyframes cgout{from{opacity:.85}to{opacity:0}}@keyframes cgflash{0%{opacity:.85}30%{opacity:1}100%{opacity:.85}}@keyframes cgtap{0%{opacity:0}30%{opacity:1}100%{opacity:0}}
+/* trade form: date, time and time zone */
+.dtf-box{display:flex;flex-direction:column;gap:6px;min-width:0}
+.dtf-row{display:flex;gap:8px;flex-wrap:wrap;align-items:stretch}
+.dtf{display:flex;gap:8px;flex:1 1 260px;min-width:0}
+.dtf input[type=date]{flex:1 1 140px;min-width:0}.dtf input[type=time]{flex:0 1 130px;min-width:116px}
+.dtf-row>.dtf-zone{flex:0 1 150px;min-width:120px}
+button.dtf-now{flex:none;min-height:0;padding:0 14px!important;font-size:13px;font-weight:700}
+.dtf-alt{font-size:12px;color:var(--muted);min-height:15px;font-weight:500}
+/* replay: the tool column never makes the chart row taller than the chart */
+.rp-area>.rp-tools{max-height:var(--rp-h,none);overflow-y:auto;scrollbar-width:none}.rp-area>.rp-tools::-webkit-scrollbar{display:none}
+/* replay full screen: only the chart and its controls, the chart takes all the room that is left */
+.rp-studio.rp-fs,.rp-studio:fullscreen{position:fixed;inset:0;z-index:9999;display:flex!important;flex-direction:column;gap:6px;height:100vh;height:100dvh;box-sizing:border-box;padding:10px 12px calc(10px + env(safe-area-inset-bottom));overflow:hidden;background:var(--bg);border-radius:0!important;margin:0!important;max-width:none!important}
+.rp-studio.rp-fs>.rp-lib,.rp-studio.rp-fs>.rp-sth,.rp-studio.rp-fs>.rp-stats{display:none!important}
+.rp-studio.rp-fs>.rp-area{flex:1 1 auto;min-height:0}
+.rp-studio.rp-fs .rp-box{height:auto!important;flex:1 1 auto;align-self:stretch}
+.rp-studio.rp-fs .rp-tools{max-height:100%;overflow-y:auto}
+.rp-studio.rp-fs .rp-head{padding-right:230px}
+body.rp-fsbody{overflow:hidden}
+@media (max-width:859px){.rp-studio.rp-fs .rp-bar{flex-wrap:nowrap!important;overflow-x:auto;scrollbar-width:none}.rp-studio.rp-fs .rp-bar::-webkit-scrollbar{display:none}.rp-studio.rp-fs .rp-bar>*{flex:none}.rp-studio.rp-fs .rp-ohlc,.rp-studio.rp-fs .rp-ileg{display:none}}
+@media (max-width:859px){.rp-studio.rp-fs .rp-head{padding-right:0}.rp-studio.rp-fs .rp-exitfs{top:auto!important;bottom:calc(14px + env(safe-area-inset-bottom))!important;right:14px!important}}
 .thpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:8px}
 .thp{display:flex;flex-direction:column;gap:8px;align-items:stretch;text-align:left;padding:8px;border-radius:16px;min-height:0}
 .thp .sw{height:54px;border-radius:10px;position:relative;overflow:hidden;border:1px solid rgba(128,128,128,.25)}
@@ -5169,6 +5196,20 @@ html[data-t="ametyst"] body:not(.sakura) .fig text.f-bad{fill:#7b35d6}
     ed.addEventListener("click", () => { editing = !editing; adding = false; draw(); }); draw(); return w; }
   const pickOn = sel => Object.keys(sel).filter(k => sel[k]), pickOf = a => { const m = {}; (Array.isArray(a) ? a : []).forEach(x => { m[x] = true; }); return m; };
 
+  // date + time + time zone for the trade form. value is an ISO instant ("" when no time is set), so new Date(value) keeps working
+  function dtZones(){ let loc = "Europe/Prague"; try { loc = Intl.DateTimeFormat().resolvedOptions().timeZone || loc; } catch(e){}
+    const nm = z => z === "America/New_York" ? "New York" : z === "Europe/Prague" ? LT("Praha", "Prague") : z.split("/").pop().replace(/_/g, " "), out = [];
+    [loc, "Europe/Prague", "America/New_York"].forEach(z => { if (!out.some(q => q[0] === z)) out.push([z, nm(z)]); }); return out; }
+  function dtWall(ms, tz){ const p = {}; try { new Intl.DateTimeFormat("en-CA", {timeZone: tz, year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hourCycle: "h23"}).formatToParts(new Date(ms)).forEach(x => { p[x.type] = x.value; }); } catch(e){ return null; }
+    return {d: p.year + "-" + p.month + "-" + p.day, t: p.hour + ":" + p.minute}; }
+  function dtUtc(d, t, tz){ const a = String(d).split("-").map(Number), b = String(t).split(":").map(Number); if (a.length < 3 || b.length < 2 || a.some(isNaN) || b.some(isNaN)) return NaN; const w = Date.UTC(a[0], a[1] - 1, a[2], b[0], b[1]), g = w - tvZoneOff(w, tz) * 60000; return w - tvZoneOff(g, tz) * 60000; }
+  function dtField(iso, zone, opt){ opt = opt || {}; const w = el("div","dtf"), d = el("input"), tm = el("input"); d.type = "date"; tm.type = "time"; tm.step = 60; d.setAttribute("aria-label", LT("Datum", "Date")); tm.setAttribute("aria-label", LT("Čas", "Time"));
+    const put = ms => { const p = dtWall(ms, zone.value); if (p){ d.value = p.d; tm.value = p.t; } };
+    if (iso && !isNaN(new Date(iso))) put(new Date(iso).getTime()); else if (!opt.empty) put(Date.now());
+    w.appendChild(d); w.appendChild(tm);
+    if (opt.now){ const b = el("button","dtf-now", LT("Teď", "Now")); b.type = "button"; b.addEventListener("click", () => { put(Date.now()); w.dispatchEvent(new Event("change", {bubbles: true})); }); w.appendChild(b); }
+    Object.defineProperty(w, "value", {get(){ if (!tm.value) return ""; const dv = d.value || (opt.base ? opt.base() : ""); if (!dv) return ""; const ms = dtUtc(dv, tm.value, zone.value); return isFinite(ms) ? new Date(ms).toISOString() : ""; }});
+    w.dateIn = d; w.timeIn = tm; return w; }
   function openTradeForm(src, preset){
     const editing = !!(src && src.id);
     const t = Object.assign({ts: new Date().toISOString(), sym: (profile && profile.sym) || "NQ", dir: "long", setup: J_SETUPS[0], acct: cfg.acct === "all" ? cfg.accounts[0].id : cfg.acct, qty: 1, tags: []}, src || {}, preset || {});
@@ -5187,19 +5228,24 @@ html[data-t="ametyst"] body:not(.sakura) .fig text.f-bad{fill:#7b35d6}
 
     // 1 · the trade
     const s1 = sec("Obchod"), g = el("div","fgrid"); s1.appendChild(g);
-    const fTs = inp("datetime-local", toLocalInput(t.ts));
+    const fZone = el("select","dtf-zone"), ZS = dtZones(); fZone.setAttribute("aria-label", LT("Časové pásmo", "Time zone"));
+    ZS.forEach(z => { const o = el("option", null, z[1]); o.value = z[0]; if (o.firstChild) o.firstChild.__en = z[1]; fZone.appendChild(o); }); fZone.value = ZS.some(z => z[0] === cfg.tradeTz) ? cfg.tradeTz : ZS[0][0];
+    const fTs = dtField(t.ts || "", fZone, {now: true}), fTsAlt = el("span","dtf-alt"), tsBox = el("div","dtf-box");
+    const tsRow = el("div","dtf-row"); tsRow.appendChild(fTs); tsRow.appendChild(fZone); tsBox.appendChild(tsRow); tsBox.appendChild(fTsAlt);
+    const paintAlt = () => { const v = fTs.value, oz = fZone.value === "America/New_York" ? (ZS.find(z => z[0] !== "America/New_York") || ZS[0]) : ZS.find(z => z[0] === "America/New_York"); if (!v || !oz || oz[0] === fZone.value){ fTsAlt.textContent = ""; return; } const p = dtWall(new Date(v).getTime(), oz[0]); fTsAlt.textContent = p ? "= " + p.t.replace(/^0/, "") + " " + oz[1] + (p.d !== fTs.dateIn.value ? " (" + new Date(p.d + "T12:00").toLocaleDateString(LOCD, {day: "numeric", month: "numeric"}) + ")" : "") : ""; if (fTsAlt.firstChild) fTsAlt.firstChild.__en = fTsAlt.textContent; };
+    tsBox.addEventListener("input", paintAlt); tsBox.addEventListener("change", ev => { if (ev.target === fZone){ cfg.tradeTz = fZone.value; cfgStore(); } paintAlt(); }); setTimeout(paintAlt, 0);
     const mine = ((profile && profile.syms) || []).filter(k => PV[k]), syms = mine.concat(Object.keys(PV).filter(k => mine.indexOf(k) < 0)); if (t.sym && syms.indexOf(t.sym) < 0) syms.push(t.sym);
     const fSym = sel(syms, t.sym), fAcct = sel(cfg.accounts.map(a => [a.id, a.name]), cfg.accounts.some(a => a.id === t.acct) ? t.acct : cfg.accounts[0].id);
     const seg = el("div","seg"), segWrap = el("div","flab wide");
     [["long","Long"],["short","Short"]].forEach(x => { const b = el("button", null, x[1]); b.type = "button"; b.dataset.v = x[0]; b.insertAdjacentHTML("afterbegin", '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="' + (x[0] === "long" ? "M8 13V3M4 7l4-4 4 4" : "M8 3v10M4 9l4 4 4-4") + '"/></svg>'); b.addEventListener("click", () => { dir = x[0]; paintSeg(); calc(); warn(); }); seg.appendChild(b); });
     const paintSeg = () => Array.prototype.forEach.call(seg.children, b => b.setAttribute("aria-pressed", String(b.dataset.v === dir)));
     segWrap.appendChild(el("span", null, "Směr")); segWrap.appendChild(seg);
-    g.appendChild(lab("Trh", fSym)); g.appendChild(lab("Kdy", fTs)); g.appendChild(segWrap); if (cfg.accounts.length > 1) g.appendChild(lab("Účet", fAcct, "wide"));
+    g.appendChild(lab("Trh", fSym)); g.appendChild(lab("Kdy", tsBox, "wide")); g.appendChild(segWrap); if (cfg.accounts.length > 1) g.appendChild(lab("Účet", fAcct, "wide"));
     const seBox = el("div","chips"), seW = el("div","flab wide adv"), seHint = el("p","tf-hint");
     const sessAuto = () => { const d = new Date(fTs.value); return isNaN(d) ? "" : tkSession(d.toISOString()); };
     const paintSess = () => { const au = sessAuto(), cur = sess || au; Array.prototype.forEach.call(seBox.children, b => b.setAttribute("aria-pressed", String(b.dataset.v === cur))); seHint.textContent = sess && sess !== au ? "Vybráno ručně. Podle času vstupu by to byla seance " + (au || "neznámá") + "." : au ? "Podle času vstupu v New Yorku. Jiná seance jde vybrat ručně." : ""; };
     TF_SESS.forEach(x => { const b = el("button","chip", x); b.type = "button"; b.dataset.v = x; b.addEventListener("click", () => { sess = x === sessAuto() ? "" : x; paintSess(); }); seBox.appendChild(b); });
-    seW.appendChild(el("span", null, "Seance")); seW.appendChild(seBox); seW.appendChild(seHint); g.appendChild(seW); fTs.addEventListener("change", () => { paintSess(); paintRev(); });
+    seW.appendChild(el("span", null, "Seance")); seW.appendChild(seBox); seW.appendChild(seHint); g.appendChild(seW); tsBox.addEventListener("change", () => { paintSess(); paintRev(); });
     g.appendChild(duo("Dodržel jsem plán", [["yes","Ano","good"],["no","Ne","bad"]], () => plan, v => { plan = v; }, "wide"));
     const missed = inp("checkbox"), ml = el("label","wide chk adv"); missed.checked = !!t.missed; ml.appendChild(missed); ml.appendChild(el("span", null, "Obchod jsem nevzal (zmeškaný). Do výsledků se nepočítá.")); g.appendChild(ml);
 
@@ -5210,7 +5256,7 @@ html[data-t="ametyst"] body:not(.sakura) .fig text.f-bad{fill:#7b35d6}
     const fR = inp(null, nv(t.r), "například 2 nebo -1"), fUsd = inp(null, nv(t.usd), "dopočítá se z cen");
     g2.appendChild(lab("Výsledek v R", fR)); g2.appendChild(lab("Výsledek v $", fUsd));
     const rrLine = el("p","tf-rr wide adv"); g2.appendChild(rrLine);
-    const fTsx = inp("datetime-local", t.tsx ? toLocalInput(t.tsx) : ""), fTp1 = inp(null, nv(t.tp1), "", "decimal"), fTp1p = inp(null, nv(t.tp1pct), "například 50", "numeric"), fFee = inp(null, nv(t.fee), "0", "decimal"), fMae = inp(null, nv(t.mae), "", "decimal"), fMfe = inp(null, nv(t.mfe), "", "decimal");
+    const fTsx = dtField(t.tsx || "", fZone, {empty: true, base: () => fTs.dateIn.value}), fTp1 = inp(null, nv(t.tp1), "", "decimal"), fTp1p = inp(null, nv(t.tp1pct), "například 50", "numeric"), fFee = inp(null, nv(t.fee), "0", "decimal"), fMae = inp(null, nv(t.mae), "", "decimal"), fMfe = inp(null, nv(t.mfe), "", "decimal");
     g2.appendChild(lab("Čas výstupu", fTsx, "wide adv")); g2.appendChild(lab("Částečný výstup: cena", fTp1, "adv")); g2.appendChild(lab("Kolik procent pozice", fTp1p, "adv"));
     g2.appendChild(lab("Poplatky celkem ($)", fFee, "wide adv")); g2.appendChild(lab("MAE: nejvíc proti (body)", fMae, "adv")); g2.appendChild(lab("MFE: nejvíc pro (body)", fMfe, "adv"));
     const fLev = inp(null, t.levels || "", "PDL 21310, FVG 21345, PDH 21480"); fLev.maxLength = 160; g2.appendChild(lab("Úrovně do grafu na kartě", fLev, "wide adv"));
@@ -6727,14 +6773,14 @@ html[data-t="ametyst"] body:not(.sakura) .fig text.f-bad{fill:#7b35d6}
   const cgKind = t => document.body.classList.contains("sakura") ? (t.matches(".primary,.prem-btn,.tb-trade,.logrow") ? " pink rbw" : " pink") : (t.matches(".primary,.prem-btn,.mo-gold,.tb-trade,.logrow") ? " rbw" : "");
   const cgStar = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5 14.2 9.8 22.5 12l-8.3 2.2L12 22.5l-2.2-8.3L1.5 12l8.3-2.2z"/></svg>';
   let cgTop = null;
-  function cgSpawn(t, cls){ const g = el("span","cg-orbit" + cls + cgKind(t)), P = 4; g.setAttribute("aria-hidden","true"); let last = "";
+  function cgSpawn(t, cls){ const g = el("span","cg-orbit" + cls + cgKind(t)), P = 0; g.setAttribute("aria-hidden","true"); let last = "";
     const geo = t.tagName === "SUMMARY" && t.parentElement && t.parentElement.tagName === "DETAILS" ? t.parentElement : t; // a summary has square corners; the rounded box is its <details>
     const place = () => { if (!g.isConnected) return; if (!t.isConnected){ g.remove(); return; } const r = geo.getBoundingClientRect(), w = r.width, h = r.height; if (w < 8 || h < 8){ g.remove(); return; }
       const tb = cgTop || (cgTop = document.querySelector(".topbar")), under = tb && !tb.contains(t) && !t.closest(".ob,#musdock,.modal,.copop,#accpop") && r.top - P < tb.getBoundingClientRect().bottom; g.style.visibility = under ? "hidden" : "";
       const key = r.left.toFixed(1) + "," + r.top.toFixed(1) + "," + w.toFixed(1) + "," + h.toFixed(1);
       if (key !== last){ last = key; const cs = getComputedStyle(geo), m = Math.min(w, h) / 2, R = k => Math.max(0, Math.min(parseFloat(cs[k]) || 0, m)), a = R("borderTopLeftRadius"), b = R("borderTopRightRadius"), c = R("borderBottomRightRadius"), d = R("borderBottomLeftRadius"), x = P, y = P, W = w + 2 * P, H = h + 2 * P;
         g.style.left = (r.left - P) + "px"; g.style.top = (r.top - P) + "px"; g.style.width = W + "px"; g.style.height = H + "px"; g.style.borderRadius = (a + P) + "px " + (b + P) + "px " + (c + P) + "px " + (d + P) + "px";
-        g.style.clipPath = 'path(evenodd, "M-40 -40H' + (W + 40) + 'V' + (H + 40) + 'H-40Z M' + (x + a) + ' ' + y + 'H' + (x + w - b) + 'A' + b + ' ' + b + ' 0 0 1 ' + (x + w) + ' ' + (y + b) + 'V' + (y + h - c) + 'A' + c + ' ' + c + ' 0 0 1 ' + (x + w - c) + ' ' + (y + h) + 'H' + (x + d) + 'A' + d + ' ' + d + ' 0 0 1 ' + x + ' ' + (y + h - d) + 'V' + (y + a) + 'A' + a + ' ' + a + ' 0 0 1 ' + (x + a) + ' ' + y + 'Z")'; }
+      }
       requestAnimationFrame(place); };
     document.body.appendChild(g); place(); return g; }
   // hover: a soft light comes on behind the button
@@ -7513,7 +7559,7 @@ html[data-t="ametyst"] body:not(.sakura) .fig text.f-bad{fill:#7b35d6}
   function weekReportEl(w, onHide){
     const c = el("div","card wrep"), row = el("div","row"), d1 = w.a.toLocaleDateString(LOCD, {day: "numeric", month: "numeric"}), e = new Date(w.b); e.setDate(e.getDate() - 1);
     row.appendChild(el("h2", null, "Zpráva od kouče")); row.appendChild(el("span","small muted", d1 + " – " + e.toLocaleDateString(LOCD, {day: "numeric", month: "numeric"}))); c.appendChild(row);
-    const n = nickOf(); c.appendChild(el("p", null, (n ? n + ", tady" : "Tady") + " je tvůj minulý týden."));
+    const n = nickOf(); { const tx = cfg.lang === "en" ? (n ? n + ", here" : "Here") + " is your last week." : (n ? n + ", tady" : "Tady") + " je tvůj minulý týden.", pe = el("p", null, tx); if (pe.firstChild) pe.firstChild.__en = tx; c.appendChild(pe); }
     const g = el("div","tiles");
     g.appendChild(tile("Obchody", w.tr.length ? sgn(Math.round(w.st.total * 100) / 100) + " R" : "žádné", w.tr.length ? (w.st.total >= 0 ? "pos" : "neg") : null));
     if (w.tr.length) g.appendChild(tile("Úspěšnost", Math.round(w.st.winrate) + " % z " + w.tr.length));
@@ -7631,7 +7677,7 @@ html[data-t="ametyst"] body:not(.sakura) .fig text.f-bad{fill:#7b35d6}
   const EN_RULES = [[/(\d{1,2})\. (ledna|února|března|dubna|května|června|července|srpna|září|října|listopadu|prosince)/gi, (m, d, mo) => d + " " + EN_MON[mo.toLowerCase()]],
     [/(?<![A-Za-zÀ-ž])(pondělí|úterý|středa|čtvrtek|pátek|sobota|neděle)(?![A-Za-zÀ-ž])/gi, (m, w) => { const e = EN_DAY[w.toLowerCase()]; return m === m.toUpperCase() ? e.toUpperCase() : m[0] === m[0].toUpperCase() ? e : e.toLowerCase(); }],
     [/\b(leden|únor|březen|duben|květen|červen|červenec|srpen|září|říjen|listopad|prosinec) (\d{4})/gi, (m, mo, y) => EN_MON[mo.toLowerCase()] + " " + y],
-    [/Série (\d+) (?:den|dny|dní)/g, "Streak $1 d"], [/série (\d+) (?:den|dny|dní)/g, "streak $1 d"], [/(\d+) obchod(?:ů|y|u)?(?![a-zá-ž])/g, "$1 trades"], [/(\d+) lekc(?:í|e)(?![a-zá-ž])/g, "$1 lessons"], [/^Celkem /, "Total "], [/(\d) b\.(?=\s|$|\))/g, "$1 pts"], [/(?<![A-Za-zÀ-ž])Lekce (\d+)/g, "Lesson $1"], [/(?<![A-Za-zÀ-ž])lekce (\d+)/g, "lesson $1"], [/^Verze (\d)/, "Version $1"], [/(\d+)m svíčky/, "$1m candles"], [/(\d+)m graf/, "$1m chart"], [/čas New York/, "New York time"], [/srovnáno na cenu vstupu/, "aligned to entry price"], [/^Vstup /, "Entry "], [/^Výstup /, "Exit "], [/^Cíl /, "Target "], [/^Nejlépe: /, "Best: "], [/^Nejhůře: /, "Worst: "], [/, tady je tvůj minulý týden\./, ", here is your last week."], [/(\d) ze (\d)/g, "$1 of $2"], [/ % z (\d)/g, " % of $1"], [/ R z (\d)/g, " R from $1"],
+    [/Série (\d+) (?:den|dny|dní)/g, "Streak $1 d"], [/série (\d+) (?:den|dny|dní)/g, "streak $1 d"], [/(\d+) obchod(?:ů|y|u)?(?![a-zá-ž])/g, "$1 trades"], [/(\d+) lekc(?:í|e)(?![a-zá-ž])/g, "$1 lessons"], [/^Celkem /, "Total "], [/^Odebrat (.+)$/, (m, r) => "Remove " + trEn(r)], [/^(\d+) minut$/, "$1 min"], [/ · Konec dne \(/, " · End of day ("], [/(\d) b\.(?=\s|$|\))/g, "$1 pts"], [/(?<![A-Za-zÀ-ž])Lekce (\d+)/g, "Lesson $1"], [/(?<![A-Za-zÀ-ž])lekce (\d+)/g, "lesson $1"], [/^Verze (\d)/, "Version $1"], [/(\d+)m svíčky/, "$1m candles"], [/(\d+)m graf/, "$1m chart"], [/čas New York/, "New York time"], [/srovnáno na cenu vstupu/, "aligned to entry price"], [/^Vstup /, "Entry "], [/^Výstup /, "Exit "], [/^Cíl /, "Target "], [/^Nejlépe: /, "Best: "], [/^Nejhůře: /, "Worst: "], [/, tady je tvůj minulý týden\./, ", here is your last week."], [/(\d) ze (\d)/g, "$1 of $2"], [/ % z (\d)/g, " % of $1"], [/ R z (\d)/g, " R from $1"],
     [/\bKrok (\d+) z (\d+)/g, "Step $1 of $2"], [/\bLekce (\d+) z (\d+)/g, "Lesson $1 of $2"], [/(\d+) z (\d+)\b/g, "$1 of $2"], [/^Dobré ráno/, "Good morning"], [/^Dobrý večer/, "Good evening"], [/^Dobrou noc/, "Good night"], [/^Ahoj/, "Hi"],
     [/^Týden (\d)/, "Week $1"], [/^Dopad na model: /, "Impact on the model: "], [/^Pojem: (.+)$/, (m, r) => "Term: " + trEn(r)], [/^Potom: (.+)$/, (m, r) => "Next: " + trEn(r)], [/^Zapamatuj si: /, "Remember: "], [/^Red folder dnes: /, "Red folder today: "],
     [/^Navazuje na (\d+)\. týden kurzu/, "Builds on week $1 of the course"], [/, za (\d)/g, ", in $1"], [/ · mimo seanci$/, " · outside the session"], [/\b1 poznatek\b/g, "1 insight"], [/(\d+) poznatk(?:y|ů)(?![a-zá-ž])/g, "$1 insights"], [/^1 den$/, "1 day"], [/^(\d+) (?:dny|dní)$/, "$1 days"], [/\(([+−-]?\d+),(\d+) R\)/g, "($1.$2 R)"], [/\bhotovo\b/g, "done"], [/\bminut dnes\b/g, "minutes today"], [/\bTento týden\b/g, "This week"], [/\bNaposledy:/g, "Last time:"], [/\bwinrate\b/g, "win rate"], [/\bR celkem\b/g, "R total"]];
@@ -8505,7 +8551,17 @@ html[data-t="ametyst"] body:not(.sakura) .fig text.f-bad{fill:#7b35d6}
       emb.innerHTML = gemSvg(n, true, el2 * (2 * Math.PI / 8), ease * .52, id); }; requestAnimationFrame(step); }
   { let vis = false, raf = 0, emb = null, n = 0; const io = window.IntersectionObserver ? new IntersectionObserver(es => { vis = es.some(e => e.isIntersecting); }) : null;
     window.gemScrollBind = (e, lv) => { if (!io) return; if (emb) io.unobserve(emb); emb = e; n = lv; io.observe(e); };
-    addEventListener("scroll", () => { if (!vis || raf || !emb || !emb.isConnected || gemStill()) return; raf = requestAnimationFrame(() => { raf = 0; if (emb && emb.isConnected) emb.innerHTML = gemSvg(n, true, (window.scrollY || 0) * .0045, 0, "gsh"); }); }, {passive: true}); }
+    // with a mouse the gem also turns one edge toward the pointer and leans after it; it eases there instead of jumping
+    let tA = 0, tT = 0, cA = 0, cT = 0, mouse = false; const hov = () => { try { return matchMedia("(hover: hover) and (pointer: fine)").matches; } catch(e){ return false; } };
+    const draw = () => { raf = 0; if (!emb || !emb.isConnected) return; cA += (tA - cA) * .16; cT += (tT - cT) * .16; emb.innerHTML = gemSvg(n, true, (mouse ? 0 : (window.scrollY || 0) * .0045) + cA, cT, "gsh"); if (Math.abs(tA - cA) > .002 || Math.abs(tT - cT) > .002) raf = requestAnimationFrame(draw); };
+    const kick = () => { if (!vis || raf || !emb || !emb.isConnected || gemStill()) return; raf = requestAnimationFrame(draw); };
+    addEventListener("scroll", kick, {passive: true});
+    addEventListener("mousemove", ev => { if (!vis || !emb || !emb.isConnected || !hov()) return; const r = emb.getBoundingClientRect(), dx = ev.clientX - (r.left + r.width / 2), dy = ev.clientY - (r.top + r.height / 2), c = v => Math.max(-1, Math.min(1, v));
+      const t = lvTier(n), d = Math.hypot(dx, dy); mouse = true; tT = .1 + c(d / 360) * .42;
+      if (t === 4) tA = c(dx / 300) * 1.1; // the diamond turns around its upright axis toward the pointer
+      else { const N = t === 1 ? 3 : t === 2 ? 6 : 8, base = t === 1 ? Math.PI / 2 : t === 2 ? Math.PI / 6 : Math.PI / 8, step = 2 * Math.PI / N; let want = Math.atan2(dy, dx) - base; want += Math.round((cA - want) / step) * step; tA = want; } // one corner points at the pointer, by the shortest turn
+      kick(); }, {passive: true});
+    document.addEventListener("mouseleave", () => { tA = 0; tT = 0; kick(); }); }
   function lvEmb(n, sz){ const e = el("span","lv-emb t" + lvTier(n)); e.style.setProperty("--sz", (sz || 56) + "px"); e.innerHTML = gemSvg(n); e.setAttribute("aria-hidden", "true"); return e; }
   function lvBar(L, xp){ const w = el("div","lv-bar"), i = el("i"); i.style.width = Math.max(3, Math.round(L.pct * 100)) + "%"; w.appendChild(i); w.setAttribute("role", "progressbar"); w.setAttribute("aria-valuenow", String(Math.round(L.pct * 100))); w.setAttribute("aria-label", LT("Postup k dalšímu levelu", "Progress to the next level")); return w; }
   const lvNum = v => Number(v).toLocaleString(cfg.lang === "en" ? "en-US" : "cs-CZ");

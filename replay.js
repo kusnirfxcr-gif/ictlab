@@ -634,7 +634,7 @@
     if ((ev.ctrlKey || ev.metaKey) && (ev.key === "y" || ev.key === "Y")){ ev.preventDefault(); redo(); return; }
     if (ev.key === "?"){ helpPop(); return; }
     if (ev.key === " "){ ev.preventDefault(); play(); } else if (ev.key === "ArrowRight"){ ev.preventDefault(); stop(); stepTF(ev.shiftKey ? 10 : 1); } else if (ev.key === "ArrowLeft"){ ev.preventDefault(); stop(); back(); }
-    else if (ev.key === "Delete" || ev.key === "Backspace"){ if (S.sel){ ev.preventDefault(); delSel(); } } else if (ev.key === "Escape"){ if (ui.wrap.classList.contains("rp-fs") && !document.fullscreenElement){ ui.wrap.classList.remove("rp-fs"); fsIcon(); req(); } S.pick = false; if (ui.pickHint) ui.pickHint.hidden = true; S.meas = null; setTool("cur"); S.sel = null; S.draws = S.draws.filter(d => d.st !== "draft"); posList(); req(); }
+    else if (ev.key === "Delete" || ev.key === "Backspace"){ if (S.sel){ ev.preventDefault(); delSel(); } } else if (ev.key === "Escape"){ if (ui.wrap.classList.contains("rp-fs") && !document.fullscreenElement) fsFake(false); S.pick = false; if (ui.pickHint) ui.pickHint.hidden = true; S.meas = null; setTool("cur"); S.sel = null; S.draws = S.draws.filter(d => d.st !== "draft"); posList(); req(); }
     else if (!ev.ctrlKey && !ev.metaKey && !ev.altKey){ const m = {t: "line", h: "h", r: "rect", f: "fib", x: "txt", l: "long", s: "short", m: "meas", v: "cur"}[ev.key.toLowerCase()]; if (m) setTool(m); }
   }
 
@@ -941,9 +941,12 @@
     cv.addEventListener("pointerdown", onDown); cv.addEventListener("pointermove", onMove); cv.addEventListener("pointerup", onUp); cv.addEventListener("pointercancel", onUp); cv.addEventListener("pointerleave", () => { S.mouse = null; req(); }); cv.addEventListener("wheel", onWheel, {passive: false}); cv.addEventListener("dblclick", onDbl);
     cv.addEventListener("contextmenu", ctxMenu);
     if (window.ResizeObserver) new ResizeObserver(() => { placePanel(); req(); }).observe(box); else window.addEventListener("resize", req);
+    window.addEventListener("resize", fitBox); setTimeout(fitBox, 0); setTimeout(fitBox, 400);
+    if (window.ResizeObserver){ const ro = new ResizeObserver(() => fitBox()); Array.prototype.forEach.call(wrap.children, c => { if (c !== area && c.offsetParent !== undefined) ro.observe(c); }); if (wrap.parentElement) Array.prototype.forEach.call(wrap.parentElement.children, c => { if (c !== wrap) ro.observe(c); }); }
     document.addEventListener("keydown", key);
     const exitFs = btn("rp-exitfs", null, () => fullscreen(), T("Ukončit celou obrazovku", "Exit full screen")); exitFs.innerHTML = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"/></svg><span>' + T("Ukončit celou obrazovku", "Exit full screen") + "</span><kbd>Esc</kbd>"; wrap.appendChild(exitFs);
-    document.addEventListener("fullscreenchange", () => { wrap.classList.toggle("rp-fs", !!document.fullscreenElement); fsIcon(); setTimeout(() => { placePanel(); req(); }, 60); });
+    document.addEventListener("fullscreenchange", () => { wrap.classList.toggle("rp-fs", !!document.fullscreenElement); fsIcon(); fitBox(); setTimeout(() => { placePanel(); req(); }, 60); });
+    window.addEventListener("hashchange", () => setTimeout(fitBox, 80));
     window.addEventListener("hashchange", stop);
     ctlPaint(); libPaint(); statsPaint(); emptyPaint(); setTimeout(placePanel, 30);
   }
@@ -953,7 +956,17 @@
     if (ss && ss.day){ const b = S.day === ss.day && last() ? hm(last().t) : ""; sub.textContent = T("Rozehraný den ", "Session in progress: ") + ss.day + (b ? " · " + b : "") + (n ? " · " + n + T(" obchodů · ", " trades · ") + rr(tr) : "") + "."; if (go) go.textContent = T("Pokračovat v replayi", "Continue replay"); }
   }
   function fsIcon(){ const b = ui && ui.fsb; if (!b) return; const on = ui.wrap.classList.contains("rp-fs"); b.innerHTML = svgI(on ? "unfull" : "full"); b.title = on ? T("Ukončit celou obrazovku (Esc)", "Exit full screen (Esc)") : T("Celá obrazovka", "Full screen"); b.setAttribute("aria-label", b.title); }
-  function fullscreen(){ const w = ui.wrap; if (document.fullscreenElement){ document.exitFullscreen(); return; } if (w.classList.contains("rp-fs")){ w.classList.remove("rp-fs"); fsIcon(); req(); return; } if (w.requestFullscreen) w.requestFullscreen().catch(() => { w.classList.add("rp-fs"); fsIcon(); req(); }); else { w.classList.add("rp-fs"); fsIcon(); req(); } }
+  // the chart fills the window below its controls, so it is whole on screen without scrolling
+  function fitBox(){ if (!ui || !ui.box) return; const box = ui.box, area = box.parentElement, fs = ui.wrap.classList.contains("rp-fs");
+    if (fs || window.innerWidth < 860 || !ui.wrap.offsetParent){ box.style.height = ""; if (area) area.style.removeProperty("--rp-h"); return; }
+    const top = box.getBoundingClientRect().top + (window.scrollY || 0), h = Math.round(Math.max(380, Math.min(1100, window.innerHeight - top - 16)));
+    box.style.height = h + "px"; if (area) area.style.setProperty("--rp-h", h + "px"); }
+  // full screen without the Fullscreen API (iPhone): the studio moves to <body> for the time, so no parent box can hold it in
+  let fsHome = null;
+  function fsFake(on){ const w = ui.wrap; if (on){ if (!fsHome){ fsHome = document.createComment("rp"); w.parentNode.insertBefore(fsHome, w); document.body.appendChild(w); } w.classList.add("rp-fs"); document.body.classList.add("rp-fsbody"); }
+    else { w.classList.remove("rp-fs"); document.body.classList.remove("rp-fsbody"); if (fsHome && fsHome.parentNode){ fsHome.parentNode.insertBefore(w, fsHome); fsHome.remove(); } fsHome = null; }
+    fsIcon(); fitBox(); setTimeout(() => { placePanel(); req(); }, 60); }
+  function fullscreen(){ const w = ui.wrap; if (document.fullscreenElement){ document.exitFullscreen(); return; } if (w.classList.contains("rp-fs")){ fsFake(false); return; } if (w.requestFullscreen) w.requestFullscreen().catch(() => fsFake(true)); else fsFake(true); }
   function emptyPaint(){
     const e = ui.empty; e.innerHTML = ""; e.hidden = !!S.B.length; ui.panel.hidden = !S.B.length; if (S.B.length) return;
     e.appendChild(mk("b", null, T("Backtest na skutečných svíčkách", "Backtest on real candles")));
