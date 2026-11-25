@@ -2666,6 +2666,28 @@ button.sitem.act{outline:2px solid color-mix(in srgb,var(--accent) 70%,transpare
 button.sitem .sr-ic{flex:none;display:grid;place-items:center;width:22px;height:22px;margin-top:1px;color:var(--muted)}button.sitem .sr-ic svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 .sr-foot{font-size:11.5px;color:var(--muted);text-align:center}
 @media (hover:none){.sr-foot{display:none}}
+/* light mode has no blur behind the bars, so they must be solid or the page shows through */
+html[data-t] body.fx-lite:not(.sakura) .topbar,html[data-t] body.fx-lite:not(.sakura) .bottombar{background:var(--bg)!important}
+/* phone top bar: one aligned row. Logo, a small pill with Backtest, Tools and Community, then search, checklist, level, streak and account */
+@media (max-width:859px){
+  .topbar{display:flex!important;align-items:center;gap:clamp(4px,1.4vw,10px);padding:8px 12px!important;min-height:54px;box-sizing:border-box}
+  .topbar>.brand{flex:none;margin-right:auto;font-size:23px}
+  .topbar nav.nav1{display:flex!important;flex:none;align-items:center;gap:0;width:auto;min-width:0;height:34px;box-sizing:border-box;padding:3px;margin:0;border-radius:999px;border:1px solid var(--line);background:color-mix(in srgb,var(--ink) 5%,transparent);overflow:hidden}
+  .topbar nav.nav1 a{flex:none;width:28px;height:26px;border-radius:999px}
+  .topbar nav.nav1 a svg{width:17px;height:17px}
+  .topbar nav.nav1 a[data-g],.topbar nav.nav1 a.brand,.topbar nav.nav1 a[data-v="premium"]{display:none!important}
+  body:not(.in-acc)[data-view="prehled"] .topbar nav.nav1,body:not(.in-acc)[data-view="nastaveni"] .topbar nav.nav1{display:none!important}
+  .topbar .tb-act{flex:none;display:flex;align-items:center;gap:clamp(4px,1.4vw,10px);margin:0}
+  .topbar #tb-search,.topbar .tb-ck,.topbar .tb-lvl,.topbar #tb-acc.in{flex:none;width:34px;height:34px;min-height:0}
+  .topbar #streak{flex:none;height:34px}
+  .topbar .tb-theme{display:none!important}
+}
+@media (max-width:389px){.topbar nav.nav1 a[data-v="komunita"]{display:none!important}}
+@media (max-width:349px){.topbar nav.nav1,.topbar #tb-search{display:none!important}}
+.pf-th{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line);font-size:13px;font-weight:600;color:var(--muted)}
+.pf-th+.lang-row{margin-top:12px;padding-top:0;border-top:0}
+.pf-th button{display:inline-flex;align-items:center;gap:7px;min-height:0;padding:7px 13px!important;border-radius:999px!important;font-size:12.5px;font-weight:700}
+.pf-th button svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 .thpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:8px}
 .thp{display:flex;flex-direction:column;gap:8px;align-items:stretch;text-align:left;padding:8px;border-radius:16px;min-height:0}
 .thp .sw{height:54px;border-radius:10px;position:relative;overflow:hidden;border:1px solid rgba(128,128,128,.25)}
@@ -3512,6 +3534,7 @@ button.sitem .sr-ic{flex:none;display:grid;place-items:center;width:22px;height:
     return '<rect x="' + x0.toFixed(1) + '" y="' + y0.toFixed(1) + '" width="' + w.toFixed(1) + '" height="' + h + '" rx="5.5" class="tgb' + (c ? " s-" + c : "") + '"/>' +
       '<text x="' + (x0 + w / 2).toFixed(1) + '" y="' + (y0 + 12).toFixed(1) + '" text-anchor="middle" class="tgt' + (c ? " f-" + c : "") + '">' + s + '</text>';
   }
+  function DAYS7(){ let en = false; try { en = cfg.lang === "en"; } catch(e){} return en ? ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"] : ["Po","Út","St","Čt","Pá","So","Ne"]; }
   var CHARTS = new Map(), chartSeq = 0;
   function chart(spec){
     const TA = spec.axis !== false && spec.time !== false && !spec.pick, H = (spec.h || 210) + (TA ? 14 : 0), padL = 8, padT = 26, padB = TA ? 34 : 20, cs = spec.candles, n = spec.n || cs.length, marks = spec.marks || [], V = spec.view || null;
@@ -3544,7 +3567,7 @@ button.sitem .sr-ic{flex:none;display:grid;place-items:center;width:22px;height:
       grid += '<line x1="' + num(plotR) + '" y1="8" x2="' + num(plotR) + '" y2="' + (H - (TA ? 22 : 8)) + '" class="gl"/>';
     }
     if (TA){   // time scale under the chart; the lessons are schemes, so the clock is illustrative
-      const yb = H - 22, t0 = typeof spec.t0 === "number" ? spec.t0 : 570, tf = spec.tf || 5, DN = ["Po","Út","St","Čt","Pá"], nv = V && V.nv > 0 ? V.nv : n;
+      const yb = H - 22, t0 = typeof spec.t0 === "number" ? spec.t0 : 570, tf = spec.tf || 5, DN = DAYS7().slice(0, 5), nv = V && V.nv > 0 ? V.nv : n;
       const lab = i => spec.tday ? DN[((i % 5) + 5) % 5] : (m => Math.floor(((m % 1440) + 1440) % 1440 / 60) + ":" + String((((m % 60) + 60) % 60)).padStart(2, "0"))(t0 + i * tf);
       const st2 = [1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30, 60].find(k => nv / k <= Math.max(3, Math.floor((plotR - padL) / 52))) || 60;
       grid += '<line x1="' + padL + '" y1="' + yb + '" x2="' + num(plotR) + '" y2="' + yb + '" class="gl"/>';
@@ -3982,7 +4005,7 @@ button.sitem .sr-ic{flex:none;display:grid;place-items:center;width:22px;height:
     box.appendChild(el("h3", null, (l.n ? "Lekce " + l.n + ": " : "") + (l.title || "")));
     const meta = el("div","meta");
     meta.appendChild(el("span", null, fmtDate(l.date || l.ts)));
-    if (l.week) meta.appendChild(el("span", null, "Navazuje na " + l.week + ". týden kurzu"));
+    if (l.week){ const en = cfg.lang === "en", sp = el("span", null, en ? "Builds on week " + l.week + " of the course" : "Navazuje na " + l.week + ". týden kurzu"); if (en && sp.firstChild) sp.firstChild.__en = sp.firstChild.nodeValue; meta.appendChild(sp); }
     box.appendChild(meta);
     (Array.isArray(l.body) ? l.body : [l.body]).forEach(p => { if (p) box.appendChild(el("p", null, p)); });
     if (l.example){ const ex = el("div","box"); ex.appendChild(el("b", null, "Příklad")); ex.appendChild(el("span", null, l.example)); box.appendChild(ex); }
@@ -4695,7 +4718,7 @@ button.sitem .sr-ic{flex:none;display:grid;place-items:center;width:22px;height:
       [["‹", -1], ["›", 1]].forEach(o => { const b = el("button","calb", o[0]); b.type = "button"; b.setAttribute("aria-label", o[1] < 0 ? "Předchozí měsíc" : "Další měsíc"); b.addEventListener("click", () => { calM.setMonth(calM.getMonth() + o[1]); renderCal(); }); nav.appendChild(b); });
       head.appendChild(ttl); head.appendChild(nav); box.appendChild(head);
       box.appendChild(el("span","small " + (cnt ? (tot >= 0 ? "pos" : "neg") : "muted"), cnt ? "Měsíc: " + sgn(tot) + " R z " + cnt + " obchodů" : "V tomto měsíci žádný obchod."));
-      const g = el("div","cal"); ["Po","Út","St","Čt","Pá","So","Ne"].forEach(d => g.appendChild(el("span","dh", d)));
+      const g = el("div","cal"); DAYS7().forEach(d => g.appendChild(el("span","dh", d)));
       for (let i = 0; i < first; i++) g.appendChild(el("span"));
       for (let d = 1; d <= days; d++){
         const k = dayKey(new Date(y, m, d)), a = byDay[k], c = el("div","dc" + (k === dayKey() ? " today" : ""));
@@ -5474,7 +5497,7 @@ button.sitem .sr-ic{flex:none;display:grid;place-items:center;width:22px;height:
       tb.appendChild(bd); wrap.appendChild(tb); cmp.appendChild(wrap); }
     const hb = $("j-hist"); clear(hb); if (tr.length >= 3) hb.appendChild(histFig(tr)); else hb.appendChild(el("p","small muted","Rozdělení se ukáže od tří obchodů."));
     const tb = $("j-tables"); clear(tb);
-    if (tr.length){ const D = ["Po","Út","St","Čt","Pá","So","Ne"], hold = t => { if (!t.tsx) return null; const m = (new Date(t.tsx) - new Date(t.ts)) / 60000; return m < 0 ? null : m < 5 ? "do 5 min" : m < 15 ? "5–15 min" : m < 60 ? "15–60 min" : "přes hodinu"; };
+    if (tr.length){ const D = DAYS7(), hold = t => { if (!t.tsx) return null; const m = (new Date(t.tsx) - new Date(t.ts)) / 60000; return m < 0 ? null : m < 5 ? "do 5 min" : m < 15 ? "5–15 min" : m < 60 ? "15–60 min" : "přes hodinu"; };
       const bias = t => { const p = jr.plans[tDay(t)]; if (!p || !p.bias || p.bias === "none") return "Bez plánu"; return (p.bias === "long") === (t.dir !== "short") ? "Ve směru plánu" : "Proti plánu"; };
       [groupTable("Setup", tr, t => t.setup || "Jiný", null, unit), symsOf(tr) > 1 ? groupTable("Trh", tr, t => t.sym || "–", null, unit) : null, groupTable("Den", tr, t => D[(new Date(t.ts).getDay() + 6) % 7], D, unit),
        groupTable("Hodina", tr, t => { const h = new Date(t.ts).getHours(); return isNaN(h) ? null : String(h).padStart(2, "0") + ":00"; }, Array.from({length: 24}, (x, i) => String(i).padStart(2, "0") + ":00"), unit),
@@ -5614,7 +5637,7 @@ button.sitem .sr-ic{flex:none;display:grid;place-items:center;width:22px;height:
     const footY = H - 72 - (opt.fmt === "story" ? 150 : 0), cellsY = footY - 178, cx = 80, cy = bigY + (sq ? 48 : 70), cw = W - 160, ch = cellsY - 30 - cy;
     g.fillStyle = "#101014"; rr(g, cx, cy, cw, ch, 30); g.fill(); g.strokeStyle = "#26262c"; g.lineWidth = 2; g.stroke();
     if (kind === "week" || kind === "day"){
-      let names = ["Po","Út","St","Čt","Pá","So","Ne"], days = [], nd;
+      let names = cardLang() === "en" ? ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"] : ["Po","Út","St","Čt","Pá","So","Ne"], days = [], nd;
       if (kind === "day"){ const vs = tr.map(t => [new Date(t.ts).toLocaleTimeString(LOCD, {hour: "2-digit", minute: "2-digit"}), val(t)]).filter(x => x[1] != null).slice(-8); names = vs.map(x => x[0]); days = vs.map(x => x[1]); nd = Math.max(1, vs.length); }
       else { for (let i = 0; i < 7; i++){ const d = new Date(rg.a); d.setDate(d.getDate() + i); days.push(byDay[dayKey(d)]); } nd = days[5] != null || days[6] != null ? 7 : 5; }
       const mx = Math.max.apply(null, days.slice(0, nd).map(v => Math.abs(v || 0)).concat([0])) || 1, bw = (cw - 80) / nd, mid = cy + ch / 2, half = ch / 2 - 74;
@@ -6439,7 +6462,7 @@ button.sitem .sr-ic{flex:none;display:grid;place-items:center;width:22px;height:
       if (accMode !== "in") sw("Mám účet, přihlásit se", "in"); if (accMode !== "up") sw("Založit účet", "up"); if (accMode === "in") sw("Zapomenuté heslo", "reset"); accBox.appendChild(links);
     }
     if (accMsg){ msg.textContent = accMsg; msg.setAttribute("role","status"); accBox.appendChild(msg); }
-    try { accBox.appendChild(langRow()); } catch(e){}
+    try { accBox.appendChild(themeRow()); accBox.appendChild(langRow()); } catch(e){}
     try { renderAccLink(); } catch(e){}
   }
   function renderAccLink(){ const c = $("d-cta"); if (!c) return; let a = $("d-acc"); if (!a){ a = el("a","small muted"); a.id = "d-acc"; a.href = "#nastaveni"; c.parentNode.insertBefore(a, c.nextSibling); } a.textContent = auth ? "Přihlášen: " + (auth.email || "účet") : "Přihlásit se nebo založit účet"; }
@@ -7156,7 +7179,7 @@ button.sitem .sr-ic{flex:none;display:grid;place-items:center;width:22px;height:
         else { const st = el("div","calst"), w = ds.filter(d => d.s > 0).length, l = ds.filter(d => d.s < 0).length, best = ds.reduce((p, d) => d.s > p.s ? d : p, ds[0]), worst = ds.reduce((p, d) => d.s < p.s ? d : p, ds[0]);
           const tile = (a, b, cls) => { const t = el("div"); t.appendChild(el("span", null, a)); t.appendChild(el("b", cls || null, b)); st.appendChild(t); };
           tile("Měsíc", fmt(tot), tot >= 0 ? "pos" : "neg"); tile("Dny", w + " zelených · " + l + " červených"); tile("Nejlepší den", fmt(best.s), best.s >= 0 ? "pos" : "neg"); tile("Nejhorší den", fmt(worst.s), worst.s >= 0 ? "pos" : "neg"); box.appendChild(st); }
-        const g = el("div","cal c8"); ["Po","Út","St","Čt","Pá","So","Ne","Týden"].forEach(d => g.appendChild(el("span","dh", d)));
+        const g = el("div","cal c8"); DAYS7().concat(["Týden"]).forEach(d => g.appendChild(el("span","dh", d)));
         let col = 0, wS = 0, wN = 0; const endWeek = () => { const c = el("div","wk"); c.appendChild(el("span", null, wN ? wN + "×" : "")); if (wN) c.appendChild(el("b", wS >= 0 ? "pos" : "neg", fmt(wS))); g.appendChild(c); wS = 0; wN = 0; col = 0; };
         for (let i = 0; i < first; i++){ g.appendChild(el("span")); col++; }
         for (let d = 1; d <= days; d++){ const k = dayKey(new Date(y, m, d)), a = byDay[k], c = el(a ? "button" : "div","dc" + (k === dayKey() ? " today" : "") + (k === calSel ? " sel" : "")); c.appendChild(el("span", null, d));
@@ -7193,7 +7216,7 @@ button.sitem .sr-ic{flex:none;display:grid;place-items:center;width:22px;height:
       const bar = el("div","gbar"), bi = el("i"); bi.style.width = Math.round(100 * got / 3) + "%"; bar.appendChild(bi); c.appendChild(bar);
       const gl = el("div","gl"); items.forEach(x => { const b = el("button","gi" + (x.ok ? " done" : "")), ck = el("span","ck"), tx = el("div"); b.type = "button"; ck.innerHTML = CK; tx.appendChild(el("b", null, x.t)); tx.appendChild(el("span", null, x.s)); b.appendChild(ck); b.appendChild(tx); b.appendChild(el("em", null, x.v)); b.addEventListener("click", x.go); gl.appendChild(b); }); c.appendChild(gl);
       if (got === 3){ c.appendChild(el("div","gwin","Dnešek je splněný. Zítra další malý krok.")); if (!first && !lp.day.won){ lp.day.won = 1; store(); try { confetti(c, 30); } catch(e){} try { palSay("Dnešní úkol je hotový!", "yay"); } catch(e){} } else if (!lp.day.won){ lp.day.won = 1; store(); } }
-      const wk = el("div","gwk"), mon = new Date(); mon.setDate(mon.getDate() - ((mon.getDay() + 6) % 7)); ["Po","Út","St","Čt","Pá","So","Ne"].forEach((n, ix) => { const d = new Date(mon); d.setDate(mon.getDate() + ix); const kk = dayKey(d), i2 = el("i", (lp.goal[kk] ? "on" : act[kk] ? "act" : "") + (kk === k ? " td" : "") + (ix > 4 ? " we" : ""), n); i2.title = lp.goal[kk] ? "Úkol splněný" : act[kk] ? "Učení proběhlo" : "Zatím nic"; wk.appendChild(i2); }); c.appendChild(wk);
+      const wk = el("div","gwk"), mon = new Date(); mon.setDate(mon.getDate() - ((mon.getDay() + 6) % 7)); DAYS7().forEach((n, ix) => { const d = new Date(mon); d.setDate(mon.getDate() + ix); const kk = dayKey(d), i2 = el("i", (lp.goal[kk] ? "on" : act[kk] ? "act" : "") + (kk === k ? " td" : "") + (ix > 4 ? " we" : ""), n); i2.title = lp.goal[kk] ? "Úkol splněný" : act[kk] ? "Učení proběhlo" : "Zatím nic"; wk.appendChild(i2); }); c.appendChild(wk);
       c.appendChild(el("span","small muted","Série " + si.n + (si.n === 1 ? " den" : si.n >= 2 && si.n <= 4 ? " dny" : " dní") + ". Víkendy sérii nepřeruší a jeden všední den v týdnu se odpouští. Rezerva na tento týden je " + (si.spare ? "volná." : "už využitá.")));
     }
     const _rcGoal = renderCourse; renderCourse = function(){ const r = _rcGoal.apply(this, arguments); try { goalRender(); } catch(e){} return r; };
@@ -7349,7 +7372,7 @@ button.sitem .sr-ic{flex:none;display:grid;place-items:center;width:22px;height:
     const ps = f.trades.map(t => { const w = tvWall(t.t, tvSt.tz); return {usd: t.net, dir: t.dir, w: w, sig: t.sig, qty: t.qty, bars: t.bars}; });
     const eq = equityFig(ps, "$"); if (eq) out.appendChild(eq);
     const tvMon = t => t.w ? t.w.y + "-" + String(t.w.m).padStart(2, "0") : null;
-    const D = ["Po","Út","St","Čt","Pá","So","Ne"], H = Array.from({length: 24}, (x, i) => String(i).padStart(2, "0") + ":00");
+    const D = DAYS7(), H = Array.from({length: 24}, (x, i) => String(i).padStart(2, "0") + ":00");
     [groupTable("Směr", ps, t => t.dir === "short" ? "Short" : "Long", ["Long", "Short"], "$"),
      groupTable("Seance (New York)", ps, t => t.w ? tvSes(t.w.mn) : null, TV_SES, "$"),
      groupTable("Hodina vstupu (New York)", ps, t => t.w ? H[Math.floor(t.w.mn / 60)] : null, H, "$"),
@@ -7606,7 +7629,8 @@ button.sitem .sr-ic{flex:none;display:grid;place-items:center;width:22px;height:
     [/\b(leden|únor|březen|duben|květen|červen|červenec|srpen|září|říjen|listopad|prosinec) (\d{4})/gi, (m, mo, y) => EN_MON[mo.toLowerCase()] + " " + y],
     [/Série (\d+) (?:den|dny|dní)/g, "Streak $1 d"], [/série (\d+) (?:den|dny|dní)/g, "streak $1 d"], [/(\d+) obchod(?:ů|y|u)?(?![a-zá-ž])/g, "$1 trades"], [/(\d+) lekc(?:í|e)(?![a-zá-ž])/g, "$1 lessons"], [/^Celkem /, "Total "], [/(\d) b\.(?=\s|$|\))/g, "$1 pts"], [/(?<![A-Za-zÀ-ž])Lekce (\d+)/g, "Lesson $1"], [/(?<![A-Za-zÀ-ž])lekce (\d+)/g, "lesson $1"], [/^Verze (\d)/, "Version $1"], [/(\d+)m svíčky/, "$1m candles"], [/(\d+)m graf/, "$1m chart"], [/čas New York/, "New York time"], [/srovnáno na cenu vstupu/, "aligned to entry price"], [/^Vstup /, "Entry "], [/^Výstup /, "Exit "], [/^Cíl /, "Target "], [/^Nejlépe: /, "Best: "], [/^Nejhůře: /, "Worst: "], [/, tady je tvůj minulý týden\./, ", here is your last week."], [/(\d) ze (\d)/g, "$1 of $2"], [/ % z (\d)/g, " % of $1"], [/ R z (\d)/g, " R from $1"],
     [/\bKrok (\d+) z (\d+)/g, "Step $1 of $2"], [/\bLekce (\d+) z (\d+)/g, "Lesson $1 of $2"], [/(\d+) z (\d+)\b/g, "$1 of $2"], [/^Dobré ráno/, "Good morning"], [/^Dobrý večer/, "Good evening"], [/^Dobrou noc/, "Good night"], [/^Ahoj/, "Hi"],
-    [/^Týden (\d)/, "Week $1"], [/\bhotovo\b/g, "done"], [/\bminut dnes\b/g, "minutes today"], [/\bTento týden\b/g, "This week"], [/\bNaposledy:/g, "Last time:"], [/\bwinrate\b/g, "win rate"], [/\bR celkem\b/g, "R total"]];
+    [/^Týden (\d)/, "Week $1"], [/^Dopad na model: /, "Impact on the model: "], [/^Pojem: (.+)$/, (m, r) => "Term: " + trEn(r)], [/^Potom: (.+)$/, (m, r) => "Next: " + trEn(r)], [/^Zapamatuj si: /, "Remember: "], [/^Red folder dnes: /, "Red folder today: "],
+    [/^Navazuje na (\d+)\. týden kurzu/, "Builds on week $1 of the course"], [/, za (\d)/g, ", in $1"], [/ · mimo seanci$/, " · outside the session"], [/\b1 poznatek\b/g, "1 insight"], [/(\d+) poznatk(?:y|ů)(?![a-zá-ž])/g, "$1 insights"], [/^1 den$/, "1 day"], [/^(\d+) (?:dny|dní)$/, "$1 days"], [/\(([+−-]?\d+),(\d+) R\)/g, "($1.$2 R)"], [/\bhotovo\b/g, "done"], [/\bminut dnes\b/g, "minutes today"], [/\bTento týden\b/g, "This week"], [/\bNaposledy:/g, "Last time:"], [/\bwinrate\b/g, "win rate"], [/\bR celkem\b/g, "R total"]];
   const EN_CZ = /[ěščřžýáíéúůňťďóĚŠČŘŽÝÁÍÉÚŮŇŤĎÓ]/, enMemo = new Map(); let enFrag = null;
   const enW = (w, to) => [new RegExp("(\\d+) (?:" + w + ")(?![A-Za-zÀ-ž])", "g"), "$1 " + to];
   const EN_RULES2 = [[/(\d+)\. týden kurzu/g, "week $1 of the course"], [/(\d+)\. týdne/g, "week $1"], [/(\d+)\. týden/g, "week $1"], [/(\d+)\. měsíc/g, "month $1"], [/(\d+)\. měsíce/g, "month $1"],
@@ -8170,7 +8194,7 @@ button.sitem .sr-ic{flex:none;display:grid;place-items:center;width:22px;height:
         const g = el("div","thq-g"); THEMES.forEach(t => { const b = el("button", null); b.type = "button"; b.setAttribute("role","menuitemradio"); b.setAttribute("aria-checked", String(t[0] === (cfg.theme || "noc"))); const sw = el("span","thq-pv"); sw.style.setProperty("--a", t[3][0]); sw.style.setProperty("--b", t[3][1]); sw.style.setProperty("--c", t[3][2]); sw.innerHTML = "<i class=\"t\"></i><i class=\"c1\"><u></u><s></s></i><i class=\"c2\"><u></u></i><i class=\"bt\"></i>"; b.appendChild(sw); b.appendChild(el("span", null, t[1]));
           thMark(t, b); b.addEventListener("click", () => { if (thGuard(t)) return; cfg.theme = t[0]; cfgStore(); applyTheme(); paint(); try { if (themeBox.isConnected) renderThemePick(); } catch(e){} g.querySelectorAll("button").forEach(x => x.setAttribute("aria-checked", String(x === b))); }); g.appendChild(b); });
         pop.appendChild(g); try { pop.appendChild(langRow()); } catch(e){} const more = el("a","thq-more","Další nastavení vzhledu"); more.href = "#nastaveni"; more.addEventListener("click", close); pop.appendChild(more);
-        document.body.appendChild(pop); const r = tb.getBoundingClientRect(); pop.style.top = (r.bottom + 8) + "px"; pop.style.left = Math.max(8, Math.min(innerWidth - pop.offsetWidth - 8, r.left + r.width / 2 - pop.offsetWidth / 2)) + "px"; tb.setAttribute("aria-expanded", "true"); });
+        document.body.appendChild(pop); const r0 = tb.getBoundingClientRect(), r = r0.width ? r0 : ($("tb-acc") || tb).getBoundingClientRect(); pop.style.top = (r.bottom + 8) + "px"; pop.style.left = Math.max(8, Math.min(innerWidth - pop.offsetWidth - 8, r.left + r.width / 2 - pop.offsetWidth / 2)) + "px"; tb.setAttribute("aria-expanded", "true"); });
       document.addEventListener("click", e => { if (pop && !pop.contains(e.target)) close(); }); document.addEventListener("keydown", e => { if (e.key === "Escape") close(); }); window.addEventListener("hashchange", close); window.addEventListener("resize", close); } }
   const themeBox = el("div","card");
   function renderThemePick(){ clear(themeBox); themeBox.appendChild(el("h2", null, "Vzhled aplikace")); themeBox.appendChild(el("p","small muted","Osm vzhledů a tři další, které se odemknou s levelem. Změna se projeví hned a uloží se k účtu. Lauřin room má dál svůj růžový vzhled."));
@@ -8560,6 +8584,9 @@ button.sitem .sr-ic{flex:none;display:grid;place-items:center;width:22px;height:
   // ---------- account panel: profile (picture, nickname, optional name and phone), level, password, language ----------
   function langRow(){ const w = el("div","lang-row"), sg = el("div","lang-seg"); w.appendChild(el("span", null, LT("Jazyk", "Language"))); sg.setAttribute("role","group"); sg.setAttribute("aria-label","Jazyk / Language");
     [["cs","Čeština"],["en","English"]].forEach(o => { const b = el("button", null, o[1]); b.type = "button"; if (b.firstChild) b.firstChild.__en = o[1]; b.lang = o[0]; b.setAttribute("aria-pressed", String((cfg.lang || "cs") === o[0])); b.addEventListener("click", ev => { ev.stopPropagation(); if ((cfg.lang || "cs") === o[0]) return; cfg.lang = o[0]; cfgStore(); location.reload(); }); sg.appendChild(b); }); w.appendChild(sg); return w; }
+  function themeRow(){ const w = el("div","pf-th"), b = el("button"); b.type = "button"; w.appendChild(el("span", null, LT("Vzhled aplikace", "App theme")));
+    b.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18c1.500 0 2-1 2-2s-.5-1.500-.5-2.500S14.500 15 16 15h2a3 3 0 0 0 3-3c0-5-4-9-9-9z"/><circle cx="8" cy="11" r="1"/><circle cx="12" cy="7.500" r="1"/><circle cx="16" cy="10" r="1"/></svg>'; b.appendChild(el("span", null, LT("Změnit", "Change")));
+    b.addEventListener("click", () => { const sh = document.querySelector(".accshade"); if (sh && !sh.hidden) sh.click(); setTimeout(() => { const t = document.querySelector(".tb-theme"); if (t) t.click(); else location.hash = "#nastaveni"; }, 240); }); w.appendChild(b); return w; }
   function accProfile(box){ const pf = profile || (profile = {}), r = xpCalc(), L = lvOf(r.xp);
     const hd = el("div","pf-hd"), avb = el("button","lv-av"), tx = el("div","pf-id"), nmEl = el("b", null, nickOf() || String(auth.email || "").split("@")[0]), again = () => { try { renderAccBtn(); } catch(e){} try { if (lvCard) lvCard.dataset.sig = ""; lvPaint(); } catch(e){} };
     avb.type = "button"; avb.title = LT("Změnit profilovou fotku", "Change profile picture"); avb.setAttribute("aria-label", avb.title);
