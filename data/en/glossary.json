@@ -174,7 +174,7 @@
 "Jiný název pro bearish FVG: mezera vzniklá při silném poklesu.": "Another name for a bearish FVG: a gap formed during a strong drop.",
 "Setup vázaný na tři hodinová okna newyorského času: 3:00 až 4:00, 10:00 až 11:00 a 14:00 až 15:00. Hledá se FVG po výběru likvidity.": "A setup tied to three one-hour windows of New York time: 3:00 to 4:00, 10:00 to 11:00 and 14:00 to 15:00. You look for an FVG after a liquidity grab.",
 "Skluz": "Slippage",
-"Rozdíl mezi cenou, kterou jsi chtěla, a cenou, za kterou se příkaz provedl. Nejvíc se projeví u stopů a při zprávách.": "The difference between the price you wanted and the price the order was executed at. It shows most on stops and during news.",
+"Rozdíl mezi cenou, kterou jsi chtěl, a cenou, za kterou se příkaz provedl. Nejvíc se projeví u stopů a při zprávách.": "The difference between the price you wanted and the price the order was executed at. It shows most on stops and during news.",
 "Velcí hráči, banky a fondy. ICT vychází z představy, že právě oni hýbou cenou k likviditě drobných obchodníků.": "The big players, banks and funds. ICT starts from the idea that they are the ones moving price to the liquidity of small traders.",
 "Bod obratu v market maker modelu: výběr likvidity na zóně z vyššího timeframu následovaný změnou struktury.": "The turning point in the market maker model: a liquidity grab at a higher-timeframe zone followed by a structure shift.",
 "Příbuzný směr, který vychází z ICT a používá částečně jiné názvy, například CHoCH, inducement nebo POI.": "A related school that grew out of ICT and uses partly different names, for example CHoCH, inducement or POI.",

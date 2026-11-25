@@ -7355,7 +7355,7 @@ html body #pa-chips.pt-grid .chip[aria-pressed="true"] .pt-n{background:var(--th
     async function checkAdmin(){ if (!auth){ isAdmin = false; $("pp-link").hidden = true; return; }
       try { const r = await rest("tape_admins?select=user_id&user_id=eq." + encodeURIComponent(auth.id)); isAdmin = !!(r && r.length); } catch(e){ isAdmin = false; } $("pp-link").hidden = !isAdmin; if (document.body.dataset.view === "lide") renderPeople(); }
     const agoD = iso => { if (!iso) return "nikdy"; const d = Math.floor((new Date().setHours(0,0,0,0) - new Date(iso).setHours(0,0,0,0)) / 864e5); return cfg.lang === "en" ? (d <= 0 ? "today" : d === 1 ? "yesterday" : d + " days ago") : d <= 0 ? "dnes" : d === 1 ? "včera" : "před " + d + " dny"; };
-    const TPL = ["Dneska ještě žádná lekce. Pojď na to, stačí deset minut.", "Jedeš skvěle, drž sérii a dej dnes další lekci.", "Chybíš tu už pár dní. Vrať se, lekce na tebe čeká tam, kde jsi ji nechala.", "Dnes zkus dokončit celý týden a splnit úkol týdne."];
+    const TPL = ["Dneska ještě žádná lekce. Pojď na to, stačí deset minut.", "Jedeš skvěle, drž sérii a dej dnes další lekci.", "Chybíš tu už pár dní. Vrať se, lekce na tebe čeká tam, kde jsi ji nechal.", "Dnes zkus dokončit celý týden a splnit úkol týdne."];
     async function renderPeople(){
       const list = $("pp-list"), msg = $("pp-msg"); clear(list); msg.textContent = "";
       if (!auth){ msg.textContent = "Nejdřív se přihlas."; return; } if (!isAdmin){ msg.textContent = "Tahle část je jen pro správce."; return; }

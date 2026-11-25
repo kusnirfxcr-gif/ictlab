@@ -187,7 +187,7 @@
 "Platí jen na denním grafu": "It applies only on the daily chart",
 "MSS potřebuje průraz swingu. CISD stačí zavření přes open série svíček.": "An MSS needs a break of a swing. For a CISD a close through the open of a series of candles is enough.",
 "Někdy po velké svíčce žádná mezera nezůstane. I to něco říká.": "Sometimes no gap remains after a large candle. That says something too.",
-"Velká rostoucí svíčka. U FVG bys teď čekala, že mezi knotem první a třetí svíčky zůstane mezera.": "A large up candle. With an FVG you would now expect a gap to remain between the wicks of the first and third candles.",
+"Velká rostoucí svíčka. U FVG bys teď čekal, že mezi knotem první a třetí svíčky zůstane mezera.": "A large up candle. With an FVG you would now expect a gap to remain between the wicks of the first and third candles.",
 "Třetí svíčka se ale knotem vrátí přesně k high první svíčky. Knoty se dotknou, takže žádný FVG nevznikl.": "But the third candle's wick returns exactly to the high of the first candle. The wicks touch, so no FVG formed.",
 "dotek, žádná mezera": "touch, no gap",
 "Tomu se říká immediate rebalance. Nerovnováha po velké svíčce se srovnala okamžitě, hned v další svíčce.": "That is called an immediate rebalance. The imbalance after the large candle was evened out immediately, in the very next candle.",
