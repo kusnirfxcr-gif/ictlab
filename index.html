@@ -2611,6 +2611,16 @@ html[data-tk="l"] body .ck-ict .mo-ckb.on i,body.sakura .ck-ict .mo-ckb.on i{bac
 html[data-tk="l"] .ob .card.ckbox.ck-moros>.row h2,body.sakura .ob .card.ckbox.ck-moros>.row h2{color:#8a6410}
 .ckbox.ck-moros .mo-ckb.on span{color:#f6dc9a}
 html[data-tk="l"] .ckbox.ck-moros .mo-ckb.on span,body.sakura .ckbox.ck-moros .mo-ckb.on span{color:var(--ink)}
+/* slow colour flow in headings and theme buttons (multi-hue themes only) */
+@keyframes thflow1{to{background-position:300% 50%}}@keyframes thflow2{to{background-position:0 0,300% 50%}}
+@media (prefers-reduced-motion:no-preference){
+html[data-t="opal"] body:not(.sakura):not(.fx-off){--fl-pri:linear-gradient(90deg,#ffd3f3,#c7d4ff 25%,#b6fff0 50%,#fff1c2 75%,#ffd3f3);--fl-head:var(--fl-pri)}
+html[data-t="smart"] body:not(.sakura):not(.fx-off){--fl-pri:linear-gradient(90deg,#7cf7ff,#8a7bff 25%,#ff6ad5 50%,#ffd36a 75%,#7cf7ff);--fl-head:var(--fl-pri)}
+html[data-t="aurora"] body:not(.sakura):not(.fx-off){--fl-pri:linear-gradient(90deg,#7df0cf,#a99bff 50%,#7df0cf);--fl-head:linear-gradient(90deg,#f2fffb,#7df0cf 33%,#a99bff 66%,#f2fffb)}
+html[data-t="blossom"] body:not(.sakura):not(.fx-off){--fl-pri:linear-gradient(90deg,#ff86c8,#c7a6ff 50%,#ff86c8);--fl-head:linear-gradient(90deg,#ffd9ee,#ff86c8 33%,#c2adff 66%,#ffd9ee)}
+html:is([data-t="opal"],[data-t="smart"],[data-t="aurora"],[data-t="blossom"]) body:not(.sakura):not(.fx-off) button.primary,html:is([data-t="opal"],[data-t="smart"],[data-t="aurora"],[data-t="blossom"]) body:not(.sakura):not(.fx-off) .abtn.primary,html:is([data-t="opal"],[data-t="smart"],[data-t="aurora"],[data-t="blossom"]) body:not(.sakura):not(.fx-off) .subnav a[aria-current="page"]:not([href="#moros"]),html:is([data-t="opal"],[data-t="smart"],[data-t="aurora"],[data-t="blossom"]) body:not(.sakura):not(.fx-off) .hero2:not([data-h="b"]) .h2-next,html:is([data-t="opal"],[data-t="smart"],[data-t="aurora"],[data-t="blossom"]) body:not(.sakura):not(.fx-off) .copop #co-send{--th-pri:var(--fl-pri);background-image:none,var(--fl-pri);background-size:auto,150% 100%;background-position:0 0,0% 50%;background-repeat:repeat;animation:thflow2 26s linear infinite}
+@supports ((-webkit-background-clip:text) or (background-clip:text)){html:is([data-t="opal"],[data-t="smart"],[data-t="aurora"],[data-t="blossom"]) body:not(.sakura):not(.fx-off) #phead h1,html:is([data-t="opal"],[data-t="smart"],[data-t="aurora"],[data-t="blossom"]) body:not(.sakura):not(.fx-off) .hero2 h1{background-image:var(--fl-head);background-size:150% 100%;background-position:0% 50%;background-repeat:repeat;animation:thflow1 26s linear infinite}}
+}
 .thpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:8px}
 .thp{display:flex;flex-direction:column;gap:8px;align-items:stretch;text-align:left;padding:8px;border-radius:16px;min-height:0}
 .thp .sw{height:54px;border-radius:10px;position:relative;overflow:hidden;border:1px solid rgba(128,128,128,.25)}
