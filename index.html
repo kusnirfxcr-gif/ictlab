@@ -2648,6 +2648,24 @@ body.fx-lite .zm-ctl{-webkit-backdrop-filter:none!important;backdrop-filter:none
 .lang-seg button{min-height:0;padding:6px 12px!important;border:0!important;border-radius:999px!important;background:transparent!important;color:var(--muted)!important;font-size:12.5px;font-weight:700;box-shadow:none!important}
 .lang-seg button[aria-pressed="true"]{background:var(--ink)!important;color:var(--bg)!important}
 .thq .lang-row{margin-top:10px;padding-top:10px}
+/* search: suggestions, recent and frequent */
+.sr-in{position:relative;display:flex;align-items:center}
+.sr-in>svg{position:absolute;left:14px;width:18px;height:18px;fill:none;stroke:var(--muted);stroke-width:1.8;stroke-linecap:round;pointer-events:none}
+.sr-in input{width:100%;padding-left:42px!important;padding-right:42px!important;font-size:16px}
+.sr-in input::-webkit-search-cancel-button{display:none}
+.sr-clr{position:absolute;right:6px;display:grid;place-items:center;width:32px;height:32px;min-height:0;padding:0!important;border:0!important;border-radius:50%!important;background:none!important;box-shadow:none!important;color:var(--muted)}
+.sr-clr svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
+.sr-sug{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:2px 0}.sr-sug::-webkit-scrollbar{display:none}.sr-sug[hidden]{display:none}
+.sr-chips{display:flex;flex-wrap:wrap;gap:8px}
+button.sr-chip{flex:none;min-height:0;padding:8px 13px!important;border-radius:99px!important;border:1px solid var(--line)!important;background:color-mix(in srgb,var(--ink) 5%,transparent)!important;color:var(--ink)!important;font-size:13.5px;font-weight:600;box-shadow:none!important;white-space:nowrap}
+button.sr-chip.ghost{background:none!important;color:var(--muted)!important}
+button.sr-chip:hover,button.sr-chip:focus-visible{border-color:color-mix(in srgb,var(--accent) 65%,transparent)!important;color:var(--ink)!important}
+.sr-h{margin:10px 0 2px;font-size:11.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}.sr-h:first-child{margin-top:2px}
+.sres mark,.sr-chip mark{background:none;color:var(--accent);font-weight:800}
+button.sitem.act{outline:2px solid color-mix(in srgb,var(--accent) 70%,transparent);outline-offset:-2px}
+button.sitem .sr-ic{flex:none;display:grid;place-items:center;width:22px;height:22px;margin-top:1px;color:var(--muted)}button.sitem .sr-ic svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.sr-foot{font-size:11.5px;color:var(--muted);text-align:center}
+@media (hover:none){.sr-foot{display:none}}
 .thpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:8px}
 .thp{display:flex;flex-direction:column;gap:8px;align-items:stretch;text-align:left;padding:8px;border-radius:16px;min-height:0}
 .thp .sw{height:54px;border-radius:10px;position:relative;overflow:hidden;border:1px solid rgba(128,128,128,.25)}
@@ -5656,11 +5674,18 @@ body.fx-lite .zm-ctl{-webkit-backdrop-filter:none!important;backdrop-filter:none
   }
 
   // ---------- search across the whole app ----------
+  // suggestions as you type, what you opened last and what you use most; matching ignores diacritics and letter case
+  const SR_KEY = "tape-search", srNorm = x => String(x || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+  function srUse(){ try { const v = JSON.parse(localStorage.getItem(SR_KEY) || "null"); if (v && v.c && Array.isArray(v.r)) return v; } catch(e){} return {c: {}, r: []}; }
   function openSearch(){
     if (document.querySelector(".ob .search")) return;
-    const o = overlay("search"), card = o.card, q = inp("search", "", "Hledat pojem, téma, lekci, obchod nebo sekci"), res = el("div","list sres"), idx = [];
-    q.setAttribute("aria-label", "Hledat"); card.appendChild(q); card.appendChild(res);
-    const add = (kind, title, sub, fn) => idx.push({kind: kind, title: String(title || ""), sub: String(sub || ""), key: (title + " " + (sub || "")).toLowerCase(), fn: fn});
+    const en = cfg.lang === "en", L2 = (cz, e) => en ? e : cz, sh = x => { try { return en ? trEn(x) : x; } catch(e){ return x; } }, keep = (node, txt) => { if (node.firstChild && node.firstChild.nodeType === 3) node.firstChild.__en = txt; return node; };
+    const o = overlay("search"), card = o.card, box = el("div","sr-in"), q = inp("search", "", L2("Hledat pojem, téma, lekci, obchod nebo sekci", "Search a term, topic, lesson, trade or section")), clr = el("button","sr-clr"), sug = el("div","sr-sug"), res = el("div","list sres"), foot = el("div","sr-foot"), idx = [], use = srUse();
+    q.setAttribute("aria-label", L2("Hledat", "Search")); q.autocomplete = "off"; q.setAttribute("autocapitalize","off"); q.setAttribute("spellcheck","false"); q.setAttribute("role","combobox"); q.setAttribute("aria-expanded","true"); q.setAttribute("aria-controls","sr-res"); res.id = "sr-res"; res.setAttribute("role","listbox");
+    box.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>'; box.appendChild(q); clr.type = "button"; clr.hidden = true; clr.setAttribute("aria-label", L2("Smazat", "Clear")); clr.innerHTML = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"/></svg>'; box.appendChild(clr);
+    card.appendChild(box); card.appendChild(sug); card.appendChild(res); foot.textContent = L2("↑ ↓ vybrat · Enter otevřít · Tab doplnit · Esc zavřít", "↑ ↓ select · Enter open · Tab complete · Esc close"); keep(foot, foot.textContent); card.appendChild(foot);
+    const add = (kind, title, sub, fn) => { const t = String(title || ""), su = String(sub || ""), shown = sh(t); idx.push({kind: kind, title: t, shown: shown, sub: su, id: kind + "|" + t, nt: srNorm(shown), key: srNorm(t + " " + shown + " " + su), fn: fn}); };
+    [["Zapsat obchod", () => openTradeForm()], ["Checklist před vstupem", () => openChecklist()], ["Napsat plán dne", () => { location.hash = "#denik"; }], ["Levely a odměny", () => lvPanel()]].forEach(a => add("Akce", a[0], "", a[1]));
     [["prehled","Přehled"],["denik","Deník"],["kouc","Kouč"],["laura","Obrázky a lekce"],["room","Kurz 12 týdnů"],["studium","Studium ICT: Model 2022 a core content"],["nastroje","Nástroje: kalkulačka pozice a hodiny seancí"],["poznatky","Poznatky botů"],["model","Model"],["strategie","Pine Script"],["backtest","Backtest a přehrávání trhu"],["napady","Nápady"],["nastaveni","Nastavení"],["napoveda","Nápověda"],["novinky","Co je nového"],["soukromi","Soukromí a data"],["pravni","Právní informace: podmínky, GDPR, cookies, rizika"]]
       .forEach(s => add("Sekce", s[1], "", () => { location.hash = "#" + s[0]; }));
     glossary.forEach(gl => add("Pojem", gl.term || gl.id, (gl.en && gl.en !== gl.term ? gl.en + " · " : "") + (gl.def || ""), () => { location.hash = "#laura"; gCat = "all"; $("g-q").value = gl.term || ""; renderGlossary(); setTimeout(() => $("g-q").scrollIntoView({block: "center"}), 90); }));
@@ -5670,14 +5695,37 @@ body.fx-lite .zm-ctl{-webkit-backdrop-filter:none!important;backdrop-filter:none
     if (study){ study.model2022.steps.forEach(s => add("Model 2022", s.n + ". " + s.title, "", () => { stTab = "model2022"; location.hash = "#studium"; renderStudy(); }));
       study.core.months.forEach(m => add("Core content", m.n + ". měsíc: " + m.title, m.points.join(" "), () => { stTab = "core"; location.hash = "#studium"; renderStudy(); })); }
     jr.trades.forEach(t => add("Obchod", (t.sym || "") + " " + (t.dir === "short" ? "short" : "long") + " " + sgn(Number(t.r) || 0) + " R", [fmtDateTime(t.ts), t.setup, t.note, t.levels, (t.tags || []).join(" ")].filter(Boolean).join(" · "), () => openTrade(t)));
-    const rank = (x, s) => { const i = x.title.toLowerCase().indexOf(s); return i === 0 ? 0 : i > 0 ? 1 : 2; };
-    const draw = () => { clear(res); const s = q.value.trim().toLowerCase(); if (s.length < 2){ res.appendChild(el("p","small muted","Napiš aspoň dvě písmena.")); return; }
+    const byId = {}; idx.forEach(x => { if (!byId[x.id]) byId[x.id] = x; });
+    let act = -1, shownItems = [];
+    const pick = h => { if (h.kind !== "Obchod"){ use.c[h.id] = (use.c[h.id] || 0) + 1; use.r = [h.id].concat(use.r.filter(x => x !== h.id)).slice(0, 8); const ks = Object.keys(use.c); if (ks.length > 200) ks.sort((x, y) => use.c[x] - use.c[y]).slice(0, ks.length - 200).forEach(k => delete use.c[k]); try { localStorage.setItem(SR_KEY, JSON.stringify(use)); } catch(e){} } o.close(); h.fn(); };
+    const mark = (txt, s) => { const f = document.createDocumentFragment(), n = srNorm(txt), i = s && n.length === txt.length ? n.indexOf(s) : -1; if (i < 0){ f.appendChild(document.createTextNode(txt)); } else { f.appendChild(document.createTextNode(txt.slice(0, i))); const m = el("mark", null, txt.slice(i, i + s.length)); f.appendChild(m); f.appendChild(document.createTextNode(txt.slice(i + s.length))); } Array.prototype.forEach.call(f.childNodes, c => { if (c.nodeType === 3) c.__en = c.nodeValue; else if (c.firstChild) c.firstChild.__en = c.firstChild.nodeValue; }); return f; };
+    const row = (h, s, icon) => { const b = el("button","sitem"), d = el("div"), t = el("b"); b.type = "button"; b.setAttribute("role","option"); t.appendChild(mark(h.shown, s)); d.appendChild(t); if (h.sub) d.appendChild(el("span", null, h.sub.length > 120 ? h.sub.slice(0, 120) + "…" : h.sub));
+      if (icon){ const ic = el("i","sr-ic"); ic.innerHTML = icon; b.appendChild(ic); } else { const kn = en ? (KIND_EN[h.kind] || h.kind) : h.kind; b.appendChild(keep(el("span","pill", kn), kn)); } b.appendChild(d); b.addEventListener("click", () => pick(h)); shownItems.push(b); return b; };
+    const setAct = i => { act = shownItems.length ? (i + shownItems.length) % shownItems.length : -1; shownItems.forEach((b, k) => { b.classList.toggle("act", k === act); b.setAttribute("aria-selected", String(k === act)); }); if (act >= 0) shownItems[act].scrollIntoView({block: "nearest"}); };
+    const head = t => res.appendChild(keep(el("div","sr-h", t), t));
+    const KIND_EN = {"Akce": "Action", "Sekce": "Section", "Pojem": "Term", "Téma v obrázcích": "Picture topic", "Lekce": "Lesson", "Poznatek": "Insight", "Obchod": "Trade"};
+    const CLOCK = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 7.500V12l3 2"/></svg>';
+    const POP = [["Akce","Zapsat obchod"],["Sekce","Deník"],["Sekce","Backtest a přehrávání trhu"],["Akce","Checklist před vstupem"],["Sekce","Kurz 12 týdnů"],["Sekce","Nástroje: kalkulačka pozice a hodiny seancí"]];
+    const score = (x, s) => { const i = x.nt.indexOf(s); let r = i === 0 ? 0 : i > 0 && /[^a-z0-9]/.test(x.nt.charAt(i - 1)) ? 1 : i > 0 ? 2 : 3; return r - Math.min(.9, (use.c[x.id] || 0) * .15) + (x.kind === "Obchod" ? .5 : 0); };
+    const complete = s => { const out = [], seen = {}; idx.forEach(x => { if (x.kind === "Obchod") return; const n = x.nt; let i = n.indexOf(s); while (i > 0 && /[a-z0-9]/.test(n.charAt(i - 1))) i = n.indexOf(s, i + 1); if (i < 0 || n.length !== x.shown.length) return;
+        let e = i + s.length; while (e < n.length && /[^\s:·,()\/]/.test(n.charAt(e))) e++; let w = x.shown.slice(i, e); const rest = x.shown.slice(e).match(/^\s+[^\s:·,()\/]+/); if (rest && w.length < 14 && rest[0].trim().length > 3) w += rest[0]; w = w.replace(/[.:,]+$/, ""); const k = srNorm(w), stem = k.indexOf(" ") < 0 ? k.slice(0, Math.max(4, Math.min(7, k.length - 1))) : k; if (k === s || k.length < 2 || seen[k] || seen["~" + stem]) return; seen[k] = 1; seen["~" + stem] = 1; out.push({w: w, r: (i === 0 ? 0 : 1) - Math.min(.9, (use.c[x.id] || 0) * .2), l: w.length}); });
+      return out.sort((a2, b2) => a2.r - b2.r || a2.l - b2.l).slice(0, 6).map(x => x.w); };
+    let tips = [];
+    const draw = () => { clear(res); clear(sug); shownItems = []; act = -1; const raw = q.value.trim(), s = srNorm(raw); clr.hidden = !q.value; tips = [];
+      if (!s){ sug.hidden = true;
+        const rec = use.r.map(id => byId[id]).filter(Boolean).slice(0, 5); if (rec.length){ head(L2("Naposledy otevřené", "Recently opened")); rec.forEach(h => res.appendChild(row(h, "", CLOCK))); }
+        const top = Object.keys(use.c).filter(id => byId[id] && use.c[id] >= 2).sort((x, y) => use.c[y] - use.c[x]).map(id => byId[id]), fill = POP.map(pp => byId[pp[0] + "|" + pp[1]]).filter(Boolean), list = []; top.concat(fill).forEach(h => { if (list.length < 8 && list.indexOf(h) < 0 && rec.indexOf(h) < 0) list.push(h); });
+        if (list.length){ head(top.length ? L2("Často používané", "Frequently used") : L2("Rychlé odkazy", "Quick links")); const g = el("div","sr-chips"); list.forEach(h => { const c = keep(el("button","sr-chip", h.shown), h.shown); c.type = "button"; c.addEventListener("click", () => pick(h)); g.appendChild(c); }); res.appendChild(g); }
+        const terms = ["FVG","Order block","Likvidita","MSS","Killzone","Displacement"].filter(t => idx.some(x => x.key.indexOf(srNorm(t)) >= 0)); if (terms.length){ head(L2("Zkus hledat", "Try searching")); const g2 = el("div","sr-chips"); terms.forEach(t => { const c = keep(el("button","sr-chip ghost", t), t); c.type = "button"; c.addEventListener("click", () => { q.value = t; draw(); try { q.focus(); } catch(e){} }); g2.appendChild(c); }); res.appendChild(g2); }
+        return; }
+      tips = complete(s); sug.hidden = !tips.length; tips.forEach(w => { const c = el("button","sr-chip"); c.type = "button"; c.appendChild(mark(w, s)); c.addEventListener("click", () => { q.value = w; draw(); try { q.focus(); } catch(e){} }); sug.appendChild(c); });
       const per = {}; let n = 0;
-      idx.filter(x => x.key.indexOf(s) >= 0).sort((a, b) => rank(a, s) - rank(b, s)).forEach(h => { per[h.kind] = (per[h.kind] || 0) + 1; if (per[h.kind] > 6 || n >= 30) return; n++;
-        const b = el("button","sitem"), d = el("div"); b.type = "button"; d.appendChild(el("b", null, h.title)); if (h.sub) d.appendChild(el("span", null, h.sub.length > 120 ? h.sub.slice(0, 120) + "…" : h.sub));
-        b.appendChild(el("span","pill", h.kind)); b.appendChild(d); b.addEventListener("click", () => { o.close(); h.fn(); }); res.appendChild(b); });
-      if (!n) res.appendChild(el("p","small muted","Nic jsem nenašel.")); };
-    q.addEventListener("input", draw); q.addEventListener("keydown", ev => { if (ev.key === "Enter"){ const f = res.querySelector(".sitem"); if (f) f.click(); } });
+      idx.filter(x => x.key.indexOf(s) >= 0).map(x => [score(x, s), x]).sort((a2, b2) => a2[0] - b2[0]).forEach(pr => { const h = pr[1]; per[h.kind] = (per[h.kind] || 0) + 1; if (per[h.kind] > 6 || n >= 30) return; n++; res.appendChild(row(h, s)); });
+      if (!n){ res.appendChild(el("p","small muted", L2("Nic jsem nenašel. Zkus kratší slovo nebo jiný výraz.", "Nothing found. Try a shorter word or another term."))); } else setAct(0); };
+    q.addEventListener("input", draw); clr.addEventListener("click", () => { q.value = ""; draw(); try { q.focus(); } catch(e){} });
+    q.addEventListener("keydown", ev => { if (ev.key === "ArrowDown"){ ev.preventDefault(); setAct(act + 1); } else if (ev.key === "ArrowUp"){ ev.preventDefault(); setAct(act - 1); }
+      else if (ev.key === "Enter"){ ev.preventDefault(); const f = shownItems[act >= 0 ? act : 0]; if (f) f.click(); }
+      else if (ev.key === "Tab" && !ev.shiftKey && tips.length && srNorm(q.value.trim()) !== srNorm(tips[0])){ ev.preventDefault(); q.value = tips[0]; draw(); } });
     draw(); setTimeout(() => { try { q.focus(); } catch(e){} }, 50);
   }
   $("tb-search").addEventListener("click", openSearch);
@@ -6648,7 +6696,7 @@ body.fx-lite .zm-ctl{-webkit-backdrop-filter:none!important;backdrop-filter:none
     document.body.appendChild(h); setTimeout(() => h.remove(), 1100); } }
   const CG_SEL = "button,.abtn,.chip,a.go,.tb-acc,.prem-btn,.subnav a,.nav1 a,.bottombar a,.vgrid a,summary";
   // the light lives in a layer above the page, so no container can crop it; it is cut out where the button is, so it only shows around it, as if it came from behind
-  const cgTarget = t => t && t.matches(".lv-av,.lv-lnk") ? null : ((t && t.closest(".tb-trade,.logrow")) || t);
+  const cgTarget = t => t && t.matches(".lv-av,.lv-lnk,.sr-clr") ? null : ((t && t.closest(".tb-trade,.logrow")) || t);
   const cgKind = t => document.body.classList.contains("sakura") ? (t.matches(".primary,.prem-btn,.tb-trade,.logrow") ? " pink rbw" : " pink") : (t.matches(".primary,.prem-btn,.mo-gold,.tb-trade,.logrow") ? " rbw" : "");
   const cgStar = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1.5 14.2 9.8 22.5 12l-8.3 2.2L12 22.5l-2.2-8.3L1.5 12l8.3-2.2z"/></svg>';
   let cgTop = null;
