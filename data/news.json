@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-24T05:55:00Z",
+  "updated": "2026-11-25T05:55:00Z",
   "events": [
     {
       "date": "2026-11-25",
@@ -77,6 +77,13 @@
       "title": "Výrobní ceny PPI, listopad",
       "impact": 2,
       "note": "Inflace na úrovni výrobců, termín podle kalendáře BLS."
+    },
+    {
+      "date": "2026-12-16",
+      "time": "14:30",
+      "title": "Maloobchodní tržby (USA), listopad",
+      "impact": 2,
+      "note": "První odhad útraty domácností. Termín podle přehledu oficiálních kalendářů, přímo u Census Bureau neověřeno."
     }
   ],
   "posts": [

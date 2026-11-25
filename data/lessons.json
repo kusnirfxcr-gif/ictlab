@@ -1,5 +1,62 @@
 [
   {
+    "id": "20261125-L16",
+    "ts": "2026-11-25T05:55:00Z",
+    "date": "2026-11-25",
+    "n": 16,
+    "week": 5,
+    "title": "Displacement: pohyb, který ukáže, kdo má navrch",
+    "body": [
+      "Minulý týden jsme hledali likviditu a cíl, ke kterému cena míří. Tento týden se díváme na to, jak se k němu cena rozběhne. Začínáme pojmem displacement.",
+      "Displacement je rychlý pohyb jedním směrem. Tvoří ho několik velkých svíček za sebou, které mají velká těla a jen malé knoty.",
+      "Velké tělo znamená, že cena od otevření do zavření svíčky ušla velký kus. Malý knot znamená, že ji druhá strana skoro nevrátila. Jedna strana tedy trh na chvíli úplně ovládla.",
+      "V ICT je displacement důkaz, že za pohybem stojí skutečný zájem, a ne jen šum. Proto se po sweepu čeká právě na něj: sweep ukáže, kde se vybrala likvidita, displacement ukáže, že se cena opravdu otočila.",
+      "Jak ho poznáš od běžného pohybu? Porovnej svíčky s těmi před nimi. Při displacementu jsou zřetelně větší než okolní a jdou jedním směrem bez zaváhání.",
+      "Do samotného displacementu se nenaskakuje. Když ho vidíš, cena je už daleko a stop by musel být široký. Čeká se na návrat do mezery, kterou pohyb nechal. Té mezeře se říká fair value gap a je to téma zítřejší lekce.",
+      "Když se cena vrátí celým pohybem zpátky tam, kde začal, síla byla jen zdánlivá. Takový pohyb jako displacement neber."
+    ],
+    "example": "NQ v 9:44 newyorského času vybere noční low 21 010 a vrátí se nad něj. Do té doby měly pětiminutové svíčky rozpětí kolem 12 bodů. Další tři svíčky jdou nahoru, každá má od otevření po zavření 30 až 40 bodů a knoty jen pár bodů. Za čtvrt hodiny je cena na 21 115. To je displacement. Na 21 115 nekupuješ. Vyznačíš si mezeru, kterou pohyb nechal mezi první a třetí svíčkou, a čekáš, jestli se do ní cena vrátí.",
+    "remember": "Displacement je rychlý pohyb jedním směrem velkými svíčkami s malými knoty. Ukazuje, že jedna strana trh ovládla. Nenaskakuje se do něj, čeká se na návrat do mezery, kterou nechal.",
+    "terms": [
+      "displacement",
+      "telo",
+      "knot",
+      "fvg"
+    ],
+    "quiz": [
+      {
+        "q": "Jak vypadá displacement?",
+        "options": [
+          "Malé svíčky s dlouhými knoty",
+          "Několik velkých svíček jedním směrem s malými knoty",
+          "Střídání rostoucích a klesajících svíček"
+        ],
+        "correct": 1,
+        "why": "Velká těla a malé knoty ukazují, že jedna strana trh ovládla."
+      },
+      {
+        "q": "Vidíš tři velké svíčky nahoru. Co uděláš?",
+        "options": [
+          "Hned koupím, dokud to jede",
+          "Počkám na návrat do mezery, kterou pohyb nechal",
+          "Prodám, protože cena je moc vysoko"
+        ],
+        "correct": 1,
+        "why": "Do displacementu se nenaskakuje. Vstup se hledá až v návratu."
+      },
+      {
+        "q": "Cena se po silném pohybu vrátila celou cestu zpátky na začátek. Co to znamená?",
+        "options": [
+          "Displacement se potvrdil",
+          "Síla byla jen zdánlivá a pohyb jako displacement neberu",
+          "Nic, na tom nezáleží"
+        ],
+        "correct": 1,
+        "why": "Skutečný displacement cenu posune a ta se nevrací celým pohybem zpátky."
+      }
+    ]
+  },
+  {
     "id": "20261124-L15",
     "ts": "2026-11-24T05:55:00Z",
     "date": "2026-11-24",

@@ -1,9 +1,9 @@
 {
   "state": {
-    "lastRun": "2026-11-24T05:55:00Z",
+    "lastRun": "2026-11-25T05:55:00Z",
     "modelVersion": "1.0",
-    "runCount": 15,
-    "lastReport": "Skaut nenašel nový doložený poznatek o Zeussym ani jiný nový zdroj, proto dnes žádný poznatek nepřibyl. Učitel napsal lekci 15 o draw on liquidity. Vizionář navrhl políčko Můj DOL v Plánu dne, které se předvyplní do deníku. Zpravodaj odstranil minulé události, podle kalendáře BLS potvrdil CPI ve čtvrtek 10. 12. a NFP v pátek 4. 12. a přidal PPI na 15. 12. Gems a Architekt beze změny."
+    "runCount": 16,
+    "lastReport": "Skaut přidal poznatek, že Zeussy dělí každý devadesátiminutový cyklus na tři půlhodinové. Učitel napsal lekci 16 o displacementu. Vizionář navrhl půlhodinové dělení cyklů v sekci Premium. Zpravodaj potvrdil zasedání Fedu 8.–9. 12. s rozhodnutím 9. 12. a přidal maloobchodní tržby na 16. 12. Gems a Architekt beze změny."
   },
   "model": {
     "version": "1.0",
@@ -86,8 +86,8 @@
       "order": 1,
       "name": "Skaut",
       "role": "hledá nový ICT obsah",
-      "lastRun": "2026-11-24T05:55:00Z",
-      "lastReport": "Žádný nový doložený poznatek o Zeussym ani z jiného veřejného zdroje."
+      "lastRun": "2026-11-25T05:55:00Z",
+      "lastReport": "Nový poznatek: Zeussy dělí devadesátiminutový cyklus na tři půlhodinové."
     },
     {
       "id": "gems",
@@ -110,16 +110,16 @@
       "order": 4,
       "name": "Učitel",
       "role": "připravuje denní lekce pro Lauru",
-      "lastRun": "2026-11-24T05:55:00Z",
-      "lastReport": "Lekce 15: draw on liquidity, kam cena nejspíš míří."
+      "lastRun": "2026-11-25T05:55:00Z",
+      "lastReport": "Lekce 16: displacement, pohyb, který ukáže, kdo má navrch."
     },
     {
       "id": "vizionar",
       "order": 5,
       "name": "Vizionář",
       "role": "navrhuje vylepšení aplikace",
-      "lastRun": "2026-11-24T05:55:00Z",
-      "lastReport": "Nápad: políčko Můj DOL v Plánu dne předvyplněné do deníku."
+      "lastRun": "2026-11-25T05:55:00Z",
+      "lastReport": "Nápad: půlhodinové dělení uvnitř cyklu v sekci Premium."
     }
   ],
   "versions": [

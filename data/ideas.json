@@ -1,5 +1,17 @@
 [
   {
+    "id": "premium-pulhodiny-v-cyklu",
+    "ts": "2026-11-25T05:55:00Z",
+    "date": "2026-11-25",
+    "title": "Premium: půlhodinové dělení uvnitř cyklu",
+    "area": "produkt",
+    "value": 2,
+    "effort": 2,
+    "status": "new",
+    "what": "V sekci Premium u cyklů přidat přepínač, který každý devadesátiminutový cyklus rozdělí na tři půlhodiny (například 8:30–9:00, 9:00–9:30, 9:30–10:00) a u každé ukáže její high a low. V deníku by šlo u obchodu zapsat, ve které půlhodině cyklu vstup padl.",
+    "why": "Dnešní poznatek říká, že Zeussy půlhodiny používá k načasování vstupu uvnitř cyklu. Premium teď končí u devadesáti minut, takže nejde ověřit, jestli tvoje vstupy padají do stejné části cyklu."
+  },
+  {
     "id": "dol-v-planu-dne",
     "ts": "2026-11-24T05:55:00Z",
     "date": "2026-11-24",
