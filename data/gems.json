@@ -1,0 +1,398 @@
+{
+"pa": {
+"struktura": [
+{
+"t": "trend",
+"te": "trend",
+"cs": "Den začíná otázkou, kam cena míří. Když trh směr nepotvrdí, bias se opouští, nedrží se z principu.",
+"en": "The day starts with the question of where price is heading. If the market does not confirm the direction, the bias is dropped, not held on principle.",
+"src": "ICT Gems · Here is How to Trade the ICT WAY",
+"url": "https://sozai.app/transcript/ict-gems-how-to-trade-ict-way/"
+}
+],
+"bos-mss": [
+{
+"t": "MSS",
+"te": "MSS",
+"cs": "Po medvědím MSS se podle ICT čeká, až se cena vrátí nahoru do FVG, který při zlomu vznikl. Teprve tam se hledá short, ne hned po zlomu.",
+"en": "After a bearish MSS, ICT waits for price to return up into the FVG created by the break. That is where a short is looked for, not right after the break.",
+"src": "ICT 2022 Mentorship · Episode 4",
+"url": "https://sozai.app/transcript/2022-ict-mentorship-episode-4/"
+}
+],
+"likvidita": [
+{
+"t": "sweep",
+"te": "sweep",
+"cs": "Turtle soup: cena vybere stopy nad nedávným vrcholem a otočí se. ICT to bere jako jeden ze znaků, že se mění směr doručování ceny.",
+"en": "Turtle soup: price takes the stops above a recent high and turns. ICT treats it as one sign that the direction of delivery is changing.",
+"src": "ICT Gems · Two types of Turtle Soup",
+"url": "https://videohighlight.com/v/eo1FZGX7Ozw"
+},
+{
+"t": "equal highs/lows",
+"te": "equal highs/lows",
+"cs": "Dvojice skoro stejných vrcholů nebo den je likvidita. Podle výkladu často rozhodne ta strana, kterou cena vybere jako první.",
+"en": "A pair of almost equal highs or lows is liquidity. In this view, the side price takes first often decides the direction.",
+"src": "ICT Gems · Trade without a Daily Bias Using Pre-Market Range",
+"url": "https://videohighlight.com/v/yxVzJZwN6EY"
+}
+],
+"fvg-up": [
+{
+"t": "CE",
+"te": "CE",
+"cs": "FVG se dělí na čtvrtiny. Nejdůležitější je polovina mezery, consequent encroachment (CE).",
+"en": "An FVG is split into quarters. The key level is the middle of the gap, consequent encroachment (CE).",
+"src": "ICT Gems · ICT Teaches the Anatomy of the FVG",
+"url": "https://chaindesk.ai/tools/youtube-summarizer/ict-gems-ict-teaches-the-anatomy-of-the-fvg-Y5-VLankimY"
+},
+{
+"t": "kvalita FVG",
+"te": "FVG quality",
+"cs": "FVG pro long je kvalitnější, když leží v levné polovině posledního pohybu a na cestě k likviditě. Samotný dotyk nestačí, čeká se na reakci.",
+"en": "An FVG for a long is better when it sits in the cheap half of the last move, on the way to liquidity. A touch alone is not enough; wait for a reaction.",
+"src": "ICT Gems · How to Select Quality FVGs and OBs",
+"url": "https://videohighlight.com/v/NXXanWVgauY"
+}
+],
+"fvg-down": [
+{
+"t": "zneplatnění",
+"te": "invalidation",
+"cs": "Mezera přestává platit, když tělo svíčky zavře přes její polovinu (CE). Knot přes CE ještě nic neruší.",
+"en": "A gap stops holding when a candle body closes through its middle (CE). A wick through CE does not cancel it yet.",
+"src": "TTrades · Understanding Fair Value Gaps (ICT Concepts)",
+"url": "https://sozai.app/transcript/understanding-fair-value-gaps-fvg-ict-concepts/"
+}
+],
+"ifvg": [
+{
+"t": "inverze",
+"te": "inversion",
+"cs": "Inverze nastane až po zavření těla svíčky přes celou mezeru. Pak mezera funguje opačně a vstup se hledá kolem její poloviny.",
+"en": "An inversion happens only after a candle body closes through the whole gap. Then the gap works the other way, and the entry is looked for near its middle.",
+"src": "TTrades · Inversion Fair Value Gaps (ICT Concepts)",
+"url": "https://sozai.app/transcript/inversion-fair-value-gaps-ifvg-ict-concepts/"
+}
+],
+"ob-up": [
+{
+"t": "mean threshold",
+"te": "mean threshold",
+"cs": "Mean threshold je polovina těla OB svíčky, bez knotů. Když ji cena drží, OB spíš platí; zavření těla přes ni je varování.",
+"en": "The mean threshold is the middle of the order block candle's body, wicks excluded. If price holds it, the block is more likely to work; a body close through it is a warning.",
+"src": "TTrades · Order Blocks Simplified (ICT Concepts)",
+"url": "https://chaindesk.ai/tools/youtube-summarizer/order-blocks-simplified-ict-concepts-DMUiDBnTYc8"
+}
+],
+"ob-down": [
+{
+"t": "prémie",
+"te": "premium",
+"cs": "Video ukazuje long: kvalitní blok leží v diskontu, pod polovinou posledního pohybu. Pro short platí zrcadlově prémie, tedy horní polovina.",
+"en": "The video shows the long side: a quality block sits in discount, below the middle of the last move. For a short the mirror applies: premium, the upper half.",
+"src": "ICT Gems · How to Select Quality FVGs and OBs",
+"url": "https://videohighlight.com/v/NXXanWVgauY"
+}
+],
+"breaker": [
+{
+"t": "breaker",
+"te": "breaker",
+"cs": "Breaker je OB, přes který cena zavřela a později ho testuje z druhé strany. Medvědí breaker je rozbitý býčí OB. Spolehlivá statistika úspěšnosti neexistuje.",
+"en": "A breaker is an order block price closed through and later retests from the other side. A bearish breaker is a broken bullish block. There is no reliable published success rate.",
+"src": "The Right Trader · Breaker block",
+"url": "https://therighttrader.com/learn/smart-money-concepts/breaker-block"
+}
+],
+"premium-discount": [
+{
+"t": "equilibrium",
+"te": "equilibrium",
+"cs": "Ve vzestupném trhu může jako diskont stačit už samotné equilibrium (50 %); v klesajícím je to naopak prémie.",
+"en": "In a rising market, equilibrium (50%) itself can already act as discount; in a falling market it acts as premium.",
+"src": "ICT Gems · How to Trade the Right OB and IFVG in a Market Maker Model",
+"url": "https://chaindesk.ai/tools/youtube-summarizer/ict-gems-how-to-trade-the-right-ob-and-ifvg-in-a-market-maker-model-Xz8m6k3eNbk"
+},
+{
+"t": "kvadranty",
+"te": "quadrants",
+"cs": "Obchody se dají třídit podle čtvrtin rozsahu: spodní kvadrant, horní kvadrant a high.",
+"en": "Trades can be sorted by quarters of the range: lower quadrant, upper quadrant and high.",
+"src": "ICT Gems · When to Buy a Premium and Sell a Discount?",
+"url": "https://chaindesk.ai/tools/youtube-summarizer/ict-gems-when-to-buy-a-premium-and-sell-a-discount-bRFg5tMSKA0"
+}
+],
+"dohromady": [
+{
+"t": "draw on liquidity",
+"te": "draw on liquidity",
+"cs": "Cena jde buď pro stopy za starými vrcholy a dny, nebo vyplnit mezeru. Jinak konsoliduje. Vstup je na návratu do FVG po výběru likvidity.",
+"en": "Price either goes for stops beyond old highs and lows or to fill a gap. Otherwise it consolidates. The entry is on the return into an FVG after liquidity is taken.",
+"src": "ICT Gems · Market Maker Model in 16 Minutes",
+"url": "https://videohighlight.com/v/Xw7HtoT2VTI"
+},
+{
+"t": "čas",
+"te": "time",
+"cs": "Velké intradenní pohyby podle výkladu začínají kolem 8:30 a 9:30 newyorského času. Nejdřív se ptej, ke kterým stopům cena míří.",
+"en": "Big intraday moves tend to start around 8:30 and 9:30 New York time. First ask which stops price is heading for.",
+"src": "ICT Gems · 15M liquidity pools, intraday scalping",
+"url": "https://lilys.ai/de/notes/day-trading-20260304/ict-gems-15m-liquidity-scalping"
+}
+],
+"cisd": [
+{
+"t": "CISD",
+"te": "CISD",
+"cs": "CISD poznáš podle zavření svíčky přes otevírací cenu série svíček, které cenu do extrému dovezly. Přichází dřív než MSS.",
+"en": "You spot a CISD by a candle closing through the opening price of the run of candles that delivered price into the extreme. It comes before an MSS.",
+"src": "innercircletrader.net · ICT CISD",
+"url": "https://innercircletrader.net/tutorials/ict-change-in-the-state-of-delivery/"
+},
+{
+"t": "turtle soup",
+"te": "turtle soup",
+"cs": "Turtle soup, výběr stop nad vrcholem a návrat, je podle ICT jeden z mechanismů, kterým se stav doručování mění.",
+"en": "Turtle soup, a run on stops above a high followed by a return, is one of the mechanisms through which the state of delivery changes, per ICT.",
+"src": "ICT Gems · Two types of Turtle Soup",
+"url": "https://videohighlight.com/v/eo1FZGX7Ozw"
+}
+],
+"immediate-rebalance": [
+{
+"t": "pokračování",
+"te": "follow-through",
+"cs": "Po immediate rebalance se čekají zhruba dvě svíčky pokračování ve stejném směru. Když nepřijdou, rebalance se bere jako nepovedená.",
+"en": "After an immediate rebalance, about two continuation candles in the same direction are expected. If they do not come, the rebalance is treated as failed.",
+"src": "LuxAlgo · ICT Immediate Rebalance",
+"url": "https://www.tradingview.com/script/AexStENC-ICT-Immediate-Rebalance-LuxAlgo"
+}
+],
+"bpr": [
+{
+"t": "BPR",
+"te": "BPR",
+"cs": "BPR je překryv medvědí a býčí mezery ve stejném pásmu. Extrémní BPR, prudký pád a rychlý návrat nahoru, ukazuje chycené shortaře.",
+"en": "A BPR is the overlap of a bearish and a bullish gap in the same band. An extreme BPR, a sharp drop and a quick rip back up, shows trapped shorts.",
+"src": "ICT Gems · How Balanced Price Ranges Trap Traders",
+"url": "https://chaindesk.ai/ru/tools/youtube-summarizer/ict-gems-how-balanced-price-ranges-trap-traders-island-reversal-WxYZtWefDIo"
+}
+],
+"model-2022-long": [
+{
+"t": "stop a výběr",
+"te": "stop and exits",
+"cs": "Stop patří za low sweepu. Půlka pozice se podle výkladu vybírá u nejbližšího krátkodobého vrcholu, 15m graf slouží jako vodítko.",
+"en": "The stop goes below the sweep low. Half the position is taken at the nearest short-term high; the 15m chart is the guide.",
+"src": "ICT Gems · Here is How to Trade the ICT WAY",
+"url": "https://sozai.app/transcript/ict-gems-how-to-trade-ict-way/"
+},
+{
+"t": "Silver Bullet",
+"te": "Silver Bullet",
+"cs": "Silver Bullet se hledá mezi 10:00 a 11:00 newyorského času: čeká se na displacement a nový FVG, cíl je likvidita.",
+"en": "The Silver Bullet is looked for between 10:00 and 11:00 New York time: wait for displacement and a new FVG, the target is liquidity.",
+"src": "ICT Gems · Blending Silver Bullets and Macros",
+"url": "https://chaindesk.ai/tools/youtube-summarizer/ict-gems-blending-silver-bullets-and-macros-qHongB4cMpQ"
+}
+],
+"model-2022-short": [
+{
+"t": "short po MSS",
+"te": "short after MSS",
+"cs": "Po medvědím zlomu struktury se short podle ICT bere až na návratu do FVG z tohoto zlomu.",
+"en": "After a bearish structure break, ICT takes the short only on the return into the FVG from that break.",
+"src": "ICT 2022 Mentorship · Episode 4",
+"url": "https://sozai.app/transcript/2022-ict-mentorship-episode-4/"
+}
+]
+},
+"lesson": {
+"20261111-L01": [
+{
+"t": "ES a NQ",
+"te": "ES and NQ",
+"cs": "ICT v mentorship 2022 rozebíral hlavně ES a NQ. Před vstupy ve dnech velkých zpráv, jako je NFP, varoval.",
+"en": "In the 2022 mentorship ICT worked mostly with ES and NQ. He warned against entries on big news days such as NFP.",
+"src": "ICT 2022 Mentorship · Episode 37",
+"url": "https://sozai.app/transcript/youtube-video-transcript-223/"
+}
+],
+"20261111-L02": [
+{
+"t": "svíčka",
+"te": "candle",
+"cs": "V ICT se o platnosti úrovně rozhoduje podle zavření těla svíčky. Knot přes úroveň ji ještě neruší.",
+"en": "In ICT a level's validity is decided by where the candle body closes. A wick through the level does not cancel it.",
+"src": "TTrades · Understanding Fair Value Gaps (ICT Concepts)",
+"url": "https://sozai.app/transcript/understanding-fair-value-gaps-fvg-ict-concepts/"
+}
+],
+"20261112-L03": [
+{
+"t": "seance",
+"te": "session",
+"cs": "Velké pohyby podle výkladu začínají kolem 8:30 a 9:30 newyorského času.",
+"en": "Big moves tend to start around 8:30 and 9:30 New York time.",
+"src": "ICT Gems · 15M liquidity pools, intraday scalping",
+"url": "https://lilys.ai/de/notes/day-trading-20260304/ict-gems-15m-liquidity-scalping"
+},
+{
+"t": "Silver Bullet",
+"te": "Silver Bullet",
+"cs": "Okno 10:00 až 11:00 newyorského času ICT používá pro Silver Bullet.",
+"en": "ICT uses the 10:00 to 11:00 New York window for the Silver Bullet.",
+"src": "ICT Gems · Blending Silver Bullets and Macros",
+"url": "https://chaindesk.ai/tools/youtube-summarizer/ict-gems-blending-silver-bullets-and-macros-qHongB4cMpQ"
+}
+],
+"20261113-L04": [
+{
+"t": "swing low",
+"te": "swing low",
+"cs": "Swing low, který cena právě vybrala, je u longu místo pro stop.",
+"en": "The swing low price has just taken is where the stop goes on a long.",
+"src": "ICT Gems · Here is How to Trade the ICT WAY",
+"url": "https://sozai.app/transcript/ict-gems-how-to-trade-ict-way/"
+}
+],
+"20261114-L05": [
+{
+"t": "trend",
+"te": "trend",
+"cs": "Bias se drží jen dokud ho cena potvrzuje. Když ne, opouští se.",
+"en": "A bias is held only while price confirms it. If not, it is dropped.",
+"src": "ICT Gems · Here is How to Trade the ICT WAY",
+"url": "https://sozai.app/transcript/ict-gems-how-to-trade-ict-way/"
+}
+],
+"20261115-L06": [
+{
+"t": "konsolidace",
+"te": "consolidation",
+"cs": "Když cena nejde pro likviditu ani vyplnit mezeru, podle výkladu konsoliduje.",
+"en": "When price goes neither for liquidity nor to fill a gap, it consolidates.",
+"src": "ICT Gems · Market Maker Model in 16 Minutes",
+"url": "https://videohighlight.com/v/Xw7HtoT2VTI"
+}
+],
+"20261116-L07": [
+{
+"t": "impuls",
+"te": "impulse",
+"cs": "Po výběru likvidity ICT čeká na prudký pohyb, displacement, a FVG na nižším timeframu. Až z něj hledá vstup.",
+"en": "After liquidity is taken, ICT waits for a sharp move, displacement, and an FVG on a lower timeframe. Only then does he look for an entry.",
+"src": "ICT 2022 Mentorship · Episode 27",
+"url": "https://sozai.app/transcript/youtube-video-transcript-215/"
+}
+],
+"20261117-L08": [
+{
+"t": "trend",
+"te": "trend",
+"cs": "15m graf slouží jako vodítko, exekuce probíhá na nižším timeframu.",
+"en": "The 15m chart is the guide, execution happens on a lower timeframe.",
+"src": "ICT Gems · Here is How to Trade the ICT WAY",
+"url": "https://sozai.app/transcript/ict-gems-how-to-trade-ict-way/"
+}
+],
+"20261118-L09": [
+{
+"t": "MSS",
+"te": "MSS",
+"cs": "Po MSS se nevstupuje hned. ICT čeká na návrat do FVG, který při zlomu vznikl.",
+"en": "After an MSS there is no immediate entry. ICT waits for the return into the FVG created by the break.",
+"src": "ICT 2022 Mentorship · Episode 4",
+"url": "https://sozai.app/transcript/2022-ict-mentorship-episode-4/"
+}
+],
+"20261119-L10": [
+{
+"t": "displacement",
+"te": "displacement",
+"cs": "Silný zlom je ten s displacementem, který nechá FVG. Ten pak ICT používá jako místo pro vstup.",
+"en": "A strong break is one with displacement that leaves an FVG. ICT then uses that gap as the entry area.",
+"src": "ICT 2022 Mentorship · Episode 27",
+"url": "https://sozai.app/transcript/youtube-video-transcript-215/"
+}
+],
+"20261120-L11": [
+{
+"t": "top-down",
+"te": "top-down",
+"cs": "Vyšší timeframe ukazuje cíl a FVG, nižší potvrzuje změnu struktury. ICT vede přes 15m a vstupuje níž.",
+"en": "The higher timeframe shows the target and the FVG, the lower one confirms the structure shift. ICT leads with the 15m and enters lower.",
+"src": "ICT Gems · Here is How to Trade the ICT WAY",
+"url": "https://sozai.app/transcript/ict-gems-how-to-trade-ict-way/"
+}
+],
+"20261121-L12": [
+{
+"t": "BSL a SSL",
+"te": "BSL and SSL",
+"cs": "Cena podle výkladu míří buď k likviditě za starými vrcholy a dny, nebo k nevyplněným mezerám.",
+"en": "In this view, price heads either for liquidity beyond old highs and lows or for unfilled gaps.",
+"src": "ICT Gems · Market Maker Model in 16 Minutes",
+"url": "https://videohighlight.com/v/Xw7HtoT2VTI"
+}
+],
+"20261122-L13": [
+{
+"t": "overnight",
+"te": "overnight",
+"cs": "ICT bere asijskou likviditu jako celé noční rozpětí 19:00 až 5:00 newyorského času, ne jen killzónu.",
+"en": "ICT treats Asian liquidity as the whole overnight range, 19:00 to 5:00 New York time, not just the killzone.",
+"src": "ICT 2026 Lecture, 12 Jan 2026 · Recapio",
+"url": "https://recapio.com/digest/ict-2026-smart-money-concepts-lecture-january-12-2026-by-the-inner-circle-trader"
+},
+{
+"t": "equal highs",
+"te": "equal highs",
+"cs": "Skoro stejné vrcholy a dna v půlhodinách po 7:00, 8:00 a 9:00 NY jsou likvidita; směr dne často určí ta strana, kterou cena vybere první.",
+"en": "Almost equal highs and lows in the half hours after 7:00, 8:00 and 9:00 NY are liquidity; the side price takes first often sets the day's direction.",
+"src": "ICT Gems · Trade without a Daily Bias Using Pre-Market Range",
+"url": "https://videohighlight.com/v/yxVzJZwN6EY"
+}
+],
+"20261123-L14": [
+{
+"t": "sweep",
+"te": "sweep",
+"cs": "Turtle soup: cena vybere stopy nad vrcholem a vrátí se zpět. Teprve návrat dělá ze sweepu obrat, ne samotný výpad.",
+"en": "Turtle soup: price takes the stops above a high and comes back. It is the return that makes a sweep a reversal, not the spike itself.",
+"src": "ICT Gems · Two types of Turtle Soup",
+"url": "https://videohighlight.com/v/eo1FZGX7Ozw"
+}
+],
+"20261124-L15": [
+{
+"t": "DOL",
+"te": "DOL",
+"cs": "Draw on liquidity nemusí cena dosáhnout, aby obchod vyšel. Slouží jako směr, ne jako povinný cíl.",
+"en": "Price does not have to reach the draw on liquidity for a trade to work. It is a direction, not a required target.",
+"src": "ICT 2022 Mentorship · Episode 27",
+"url": "https://sozai.app/transcript/youtube-video-transcript-215/"
+},
+{
+"t": "DOL",
+"te": "DOL",
+"cs": "Nejdřív se zeptej, ke kterým stopům cena míří. Teprve pak hledej vstup.",
+"en": "First ask which stops price is heading for. Only then look for an entry.",
+"src": "ICT Gems · 15M liquidity pools, intraday scalping",
+"url": "https://lilys.ai/de/notes/day-trading-20260304/ict-gems-15m-liquidity-scalping"
+}
+],
+"20261125-L16": [
+{
+"t": "displacement",
+"te": "displacement",
+"cs": "U Silver Bulletu se čeká právě na displacement a nový FVG. Bez něj setup nevzniká.",
+"en": "The Silver Bullet waits precisely for displacement and a new FVG. Without it there is no setup.",
+"src": "ICT Gems · Blending Silver Bullets and Macros",
+"url": "https://chaindesk.ai/tools/youtube-summarizer/ict-gems-blending-silver-bullets-and-macros-qHongB4cMpQ"
+}
+]
+}
+}
