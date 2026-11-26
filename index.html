@@ -3412,8 +3412,50 @@ a.brand:hover .cd{height:.43em;margin-top:.05em}
   html body .lesson-body.zm-full>*:not(figure):not(.zm-head){margin:0 0 12px calc(100% - 380px)!important;width:auto}
   html body .lesson-body.zm-full>.pa-title{margin-top:4px!important}
   html body #pa-body.zm-full>.pa-title{display:block}
-  html body .lesson-body.zm-full>figure .zm-clip svg{max-height:calc(100vh - 200px)!important;width:100%}
+  html body .lesson-body.zm-full>figure .zm-clip svg{max-height:calc(100vh - 260px)!important;width:100%}
 }
+
+/* lesson chart extras */
+.fig .cd.gh{opacity:.34}
+.fig .sb{fill:var(--accent);fill-opacity:.055}
+.fig .sb.sb2{fill:#f2c14e;fill-opacity:.07}
+.fig text.sbt{font-size:7.5px;font-weight:700;letter-spacing:.08em;fill:var(--muted);text-transform:uppercase}
+.fig .ol{stroke:var(--muted);stroke-width:1;stroke-dasharray:2 3;stroke-opacity:.55}
+.fig .lvl{stroke:var(--muted);stroke-width:1;stroke-dasharray:1 3.5;stroke-opacity:.6}
+.fig text.lvt{font-size:7.5px;font-weight:700;letter-spacing:.04em;fill:var(--muted)}
+.fig text.lvo{paint-order:stroke;stroke:var(--bg);stroke-width:3px;stroke-linejoin:round}
+.fig .vb{opacity:.38;stroke:none}.fig .vb.gh{opacity:.16}
+.fig .exl{fill:none;stroke:var(--accent);stroke-width:1.6;stroke-dasharray:4 3.5;stroke-linecap:round}
+.fig .exh{fill:var(--accent)}
+.fig .mk.exp{animation:fade .5s ease both;animation-delay:calc(var(--d,0)*1ms)}
+.fig .exp .exl{animation:exDash 1.4s linear infinite}
+@keyframes exDash{to{stroke-dashoffset:-15}}
+@media (prefers-reduced-motion:reduce){.fig .exp .exl{animation:none}}
+.pa-leg{display:flex;flex-wrap:wrap;gap:6px 14px;padding:8px 14px 12px;font-size:12px;color:var(--muted);border-top:1px solid var(--line)}
+.pa-leg span{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.pa-leg i{display:inline-block;width:14px;height:10px;border-radius:3px;flex:none}
+.pa-leg i.ln{height:0;border-top:2px dashed currentColor;border-radius:0}
+.pa-leg i.c-accent{background:color-mix(in srgb,var(--accent) 30%,transparent);border:1px solid var(--accent)}
+.pa-leg i.c-amber{background:color-mix(in srgb,var(--amber) 30%,transparent);border:1px solid var(--amber)}
+.pa-leg i.c-good{background:color-mix(in srgb,var(--good) 30%,transparent);border:1px solid var(--good)}
+.pa-leg i.c-bad{background:color-mix(in srgb,var(--bad) 30%,transparent);border:1px solid var(--bad)}
+.pa-leg i.c-muted{background:color-mix(in srgb,var(--muted) 25%,transparent);border:1px solid var(--muted)}
+.pa-leg i.ln.c-accent,.pa-leg i.ln.c-amber,.pa-leg i.ln.c-good,.pa-leg i.ln.c-bad,.pa-leg i.ln.c-muted{background:none;border-left:0;border-right:0;border-bottom:0}
+.pa-leg i.ln.c-accent{color:var(--accent)}.pa-leg i.ln.c-amber{color:var(--amber)}.pa-leg i.ln.c-good{color:var(--good)}.pa-leg i.ln.c-bad{color:var(--bad)}.pa-leg i.ln.c-muted{color:var(--muted)}
+.pa-leg i.gh{background:var(--good);opacity:.35;width:6px;height:12px}
+.pa-leg i.sb{background:color-mix(in srgb,var(--accent) 16%,transparent)}
+.pa-leg i.vb{width:10px;height:9px;background:linear-gradient(90deg,var(--good) 0 30%,transparent 30% 40%,var(--bad) 40% 70%,transparent 70% 80%,var(--good) 80%);opacity:.5;border-radius:1px}
+.pa-leg i.ex{height:0;border-top:2px dashed var(--accent)}
+.pa-leg i.ln{border:0!important;border-top:2px dashed currentColor!important;background:none!important;height:0!important;border-radius:0!important}
+.pa-quiz{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:0 14px 12px;padding:10px 12px;border:1px dashed color-mix(in srgb,var(--accent) 55%,var(--line));border-radius:14px;background:color-mix(in srgb,var(--accent) 7%,transparent);font-size:13.5px}
+.pa-quiz b{color:var(--ink)}
+.pa-quiz .pq-t{flex:1 1 200px;color:var(--muted)}
+.pa-quiz button{width:auto!important;min-height:0;padding:7px 13px;font-size:13px}
+.pa-quiz.ok{border-style:solid;border-color:var(--good);background:color-mix(in srgb,var(--good) 9%,transparent)}
+.pa-quiz.bad{border-style:solid;border-color:var(--bad)}
+.pa-fig.picking .pa-svg{cursor:crosshair}
+.pa-fig.picking .hit{fill:transparent;cursor:pointer}
+.pa-fig.picking .hit:hover{fill:var(--accent);fill-opacity:.1}
 </style>
 </head>
 <body>
@@ -4266,7 +4308,8 @@ a.brand:hover .cd{height:.43em;margin-top:.05em}
   function DAYS7(){ let en = false; try { en = cfg.lang === "en"; } catch(e){} return en ? ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"] : ["Po","Út","St","Čt","Pá","So","Ne"]; }
   var CHARTS = new Map(), chartSeq = 0;
   function chart(spec){
-    const TA = spec.axis !== false && spec.time !== false && !spec.pick, H = (spec.h || 210) + (TA ? 14 : 0), padL = 8, padT = 26, padB = TA ? 34 : 20, cs = spec.candles, n = spec.n || cs.length, marks = spec.marks || [], V = spec.view || null;
+    const RV = spec.rich || null, VOLH = RV && RV.vol ? 30 : 0, GH = RV && RV.ghost > 0 ? RV.ghost : 0;
+    const TA = spec.axis !== false && spec.time !== false && !spec.pick, H = (spec.h || 210) + (TA ? 14 : 0) + VOLH, padL = 8, padT = 26, padB = (TA ? 34 : 20) + VOLH, cs = spec.candles, n = spec.n || cs.length, marks = spec.marks || [], V = spec.view || null;
     const pmx = Math.max(Math.abs(Number(spec.hi) || 0), Math.abs(Number(spec.lo) || 0)), axw = pmx >= 10000 ? 48 : pmx >= 1000 ? 41 : AXW; // wider price column for real index prices
     const CW = spec.fw > FW ? spec.fw : FW, axis = spec.axis !== false, plotR = CW - (axis ? axw : 8), step = (plotR - padL) / (V && V.nv > 0 ? V.nv : n), vx0 = V ? (V.x0 || 0) : 0;
     const stepper = spec.newFrom != null, nf = stepper ? spec.newFrom : 0, st = stepper ? 150 : 45;
@@ -4305,6 +4348,20 @@ a.brand:hover .cd{height:.43em;margin-top:.05em}
     }
 
     let zones = "", lines = "", top = "";
+    if (RV){   // lesson extras: sessions, the 9:30 open, reference levels, an expected move and volume
+      const PB = H - padB, t0r = typeof spec.t0 === "number" ? spec.t0 : 570, tfr = spec.tf || 5, nv = V && V.nv > 0 ? V.nv : n, mm = i => (((t0r + i * tfr) % 1440) + 1440) % 1440;
+      let bands = "";
+      if (RV.sess && !spec.tday){
+        (RV.sess || []).forEach(w => { let a = -1, b = -1; for (let i = 0; i < n; i++){ const m = mm(i); const inW = w[0] < w[1] ? (m >= w[0] && m < w[1]) : (m >= w[0] || m < w[1]); if (inW){ if (a < 0) a = i; b = i; } }
+          if (a < 0 || (b - a + 1) / n > 0.72 || b - a < 1) return; const xa = X(a) - step / 2, xb = X(b) + step / 2;
+          bands += '<rect x="' + num(xa) + '" y="8" width="' + num(xb - xa) + '" height="' + num(PB - 8) + '" class="sb ' + (w[3] || "") + '"/><text x="' + num(xa + 4) + '" y="18" class="sbt">' + esc(w[2]) + '</text>'; });
+        for (let i = 1; i < n; i++) if (mm(i) === 570){ const x = X(i) - step / 2; bands += '<line x1="' + num(x) + '" y1="8" x2="' + num(x) + '" y2="' + num(PB) + '" class="ol"/><text x="' + num(x + 3) + '" y="' + num(PB - 4) + '" class="sbt">' + esc(RV.openLab || "9:30") + '</text>'; }
+      }
+      grid = bands + grid;
+      const used = []; (RV.lv || []).forEach(q => { let y = Y(q.y); if (y < padT - 4 || y > PB) return; const yl = used.some(u => Math.abs(u - y) < 11) ? y + 10 : y - 3; used.push(y); zones += '<line x1="' + padL + '" y1="' + num(y) + '" x2="' + num(plotR) + '" y2="' + num(y) + '" class="lvl"/>'; top += '<text x="' + num(padL + 3) + '" y="' + num(yl) + '" class="lvt lvo">' + esc(q.s) + '</text>'; });
+      if (RV.exp){ const e = RV.exp, x1 = X(e.x), y1 = Y(e.y1), x2 = X(Math.min(e.x + 3, nv + vx0 - 0.6)), y2 = Math.max(padT, Math.min(PB - 20, Y(e.y2))), a = Math.atan2(y2 - y1, x2 - x1), q = d => num(x2 - 8 * Math.cos(a + d)) + "," + num(y2 - 8 * Math.sin(a + d));
+        top += '<g class="mk exp" style="--d:' + (base + 400) + '"><path d="M' + num(x1) + " " + num(y1) + " L" + num(x2) + " " + num(y2) + '" class="exl"/><polygon points="' + num(x2) + "," + num(y2) + " " + q(0.45) + " " + q(-0.45) + '" class="exh"/>' + (e.s ? tag(x2 + (x2 > x1 ? 4 : -4), y2 + (y2 > y1 ? 12 : -12), esc(e.s), "accent", "middle", H, plotR) : "") + "</g>"; }
+    }
     marks.forEach((m, i) => {
       if (m.t === "box"){
         const xa = X(m.x1) - step / 2, xb = X(m.x2) + step / 2, ya = Y(m.y2), yb = Y(m.y1), c = m.c || "accent";
@@ -4352,15 +4409,20 @@ a.brand:hover .cd{height:.43em;margin-top:.05em}
     cs.forEach((c, i) => {
       if (!c) return;
       lastC = c;
-      const cls = c[3] >= c[0] ? "up" : "dn", x = X(i), still = stepper && i < nf;
+      const cls = c[3] >= c[0] ? "up" : "dn", x = X(i), still = (stepper && i < nf) || i < GH;
       const nowDim = foc && !foc.includes(i), wasDim = still && pfoc && !pfoc.includes(i);
       const dc = nowDim ? ((still && !wasDim) ? " dimA" : " dim") : (wasDim ? " undimA" : "");
-      cnd += '<g class="cd' + (still ? " still" : "") + dc + '" style="--i:' + (stepper ? i - nf : i) + '">' +
+      cnd += '<g class="cd' + (still ? " still" : "") + (i < GH ? " gh" : "") + dc + '" style="--i:' + (stepper ? i - nf : i) + '">' +
         '<line x1="' + num(x) + '" y1="' + num(Y(c[1])) + '" x2="' + num(x) + '" y2="' + num(Y(c[2])) + '" class="wk ' + cls + '"/>' +
         '<rect x="' + num(x - bw / 2) + '" y="' + num(Y(Math.max(c[0], c[3]))) + '" width="' + num(bw) + '" height="' + num(Math.max(Math.abs(Y(c[0]) - Y(c[3])), 1.6)) + '" rx="2.4" class="bd ' + cls + '"/>' +
         '<rect x="' + num(x - bw / 2 + bw * 0.14) + '" y="' + num(Y(Math.max(c[0], c[3])) + 1) + '" width="' + num(bw * 0.26) + '" height="' + num(Math.max(Math.abs(Y(c[0]) - Y(c[3])) - 2, 0.4)) + '" rx="1" class="bd bh"/></g>';
     });
 
+    if (RV && RV.vol){ const PB = H - padB, vmax = Math.max.apply(null, cs.map((c, i) => c ? (RV.vol[i] || 0) : 0).concat([1e-9])), vh = VOLH - 8;
+      let vb = '<text x="' + num(padL + 2) + '" y="' + num(PB + 10) + '" class="lvt">' + esc(RV.volLab || "objem") + '</text>';
+      cs.forEach((c, i) => { if (!c) return; const v = (RV.vol[i] || 0) / vmax, h = Math.max(1.5, v * vh), x = X(i), w = Math.max(2, Math.min(step * 0.62, CW > FW ? 26 : 16)) * 0.8;
+        vb += '<rect x="' + num(x - w / 2) + '" y="' + num(PB + VOLH + 3 - h) + '" width="' + num(w) + '" height="' + num(h) + '" rx="1" class="vb ' + (c[3] >= c[0] ? "up" : "dn") + (i < GH ? " gh" : "") + '"/>'; });
+      cnd += '<g class="vol">' + vb + '</g>'; }
     let lp = "";
     if (spec.last && lastC && axis){
       const y = Y(lastC[3]), cls = lastC[3] >= lastC[0] ? "good" : "bad";
@@ -4530,6 +4592,13 @@ a.brand:hover .cd{height:.43em;margin-top:.05em}
       if (spec.newFrom != null && isFinite(Number(spec.newFrom))) out.newFrom = Number(spec.newFrom);
       if (spec.last) out.last = true;
       if (spec.pick) out.pick = true;
+      if (spec.rich && typeof spec.rich === "object"){ const r = spec.rich, o = {};
+        if (Number.isInteger(r.ghost) && r.ghost > 0 && r.ghost < 20) o.ghost = r.ghost;
+        if (Array.isArray(r.vol)) o.vol = r.vol.slice(0, 44).map(v => Math.max(0, Number(v) || 0));
+        if (Array.isArray(r.sess)) o.sess = r.sess.slice(0, 8).filter(w => Array.isArray(w)).map(w => [N(w[0]), N(w[1]), String(w[2] || "").slice(0, 24), w[3] === "sb2" ? "sb2" : ""]);
+        if (Array.isArray(r.lv)) o.lv = r.lv.slice(0, 6).map(q => ({y: N(q.y), s: String(q.s || "").slice(0, 24)}));
+        if (r.exp) o.exp = {x: N(r.exp.x), y1: N(r.exp.y1), y2: N(r.exp.y2), s: String(r.exp.s || "").slice(0, 24)};
+        o.openLab = String(r.openLab || "").slice(0, 16); o.volLab = String(r.volLab || "").slice(0, 16); out.rich = o; }
       out.focus = ints(spec.focus); out.prevFocus = ints(spec.prevFocus);
       if (typeof spec.t0 === "number" && isFinite(spec.t0)) out.t0 = spec.t0; if (spec.tf > 0 && spec.tf <= 1440) out.tf = Number(spec.tf); if (spec.tday) out.tday = true; if (spec.time === false) out.time = false;
       return chart(out);
@@ -4809,15 +4878,75 @@ a.brand:hover .cd{height:.43em;margin-top:.05em}
     }));
     return out;
   }
+  // Lesson chart extras: a few faint candles before the setup, sessions, reference levels, volume and an expected move.
+  // Everything is derived from the topic itself, so the 22 topics need no extra data.
+  const PA_SESS = () => [[120, 300, LT("Londýn", "London")], [510, 600, LT("NY killzóna", "NY killzone")], [600, 660, "Silver Bullet", "sb2"], [1200, 1440, LT("Asie", "Asia")]];
+  function paHist(t){ const cs = (t.candles || []).filter(Boolean); if (t.tday || !cs.length || (t.candles || []).length >= 18) return [];
+    let seed = 0; String(t.id).split("").forEach(ch => { seed = (seed * 31 + ch.charCodeAt(0)) >>> 0; }); const rnd = () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; };
+    const lo = Number(t.lo), hi = Number(t.hi), span = (hi - lo) || 10, k = 6, w = new Array(k + 1); w[k] = cs[0][0];
+    const loB = lo + span * 0.12, hiB = hi - span * 0.12;
+    for (let j = k - 1; j >= 0; j--) w[j] = Math.max(loB, Math.min(hiB, w[j + 1] + (rnd() - 0.5) * span * 0.14));
+    const out = []; for (let j = 0; j < k; j++){ const o = w[j], c = w[j + 1], r = span * 0.035; out.push([o, Math.max(o, c) + rnd() * r + span * 0.01, Math.min(o, c) - rnd() * r - span * 0.01, c]); } return out; }
+  function paShift(m, k){ const o = Object.assign({}, m); ["x", "x1", "x2"].forEach(f => { if (typeof o[f] === "number") o[f] += k; }); if (Array.isArray(o.pts)) o.pts = o.pts.map(q => [q[0] + k, q[1]]); return o; }
+  function paRich(t, step, show){
+    const hist = paHist(t), k = hist.length, cs = hist.concat((t.candles || []).slice(0, show)), tf = t.tf || 5, t0 = (typeof t.t0 === "number" ? t.t0 : 570) - k * tf;
+    const vol = cs.map((c, i) => { if (!c) return 0; const body = Math.abs(c[3] - c[0]), rng = c[1] - c[2]; return (body * 1.4 + rng * 0.6) * (i < k ? 0.7 : 1); });
+    const real = cs.filter(Boolean), dHi = Math.max.apply(null, real.map(c => c[1])), dLo = Math.min.apply(null, real.map(c => c[2]));
+    const all = paMarks(t, t.steps.length - 1, -1), txt = all.map(m => String(m.s || m.label || "")).join(" "), lv = [];
+    if (!/50|equilibri|EQ\b/i.test(txt) && dHi - dLo > 0) lv.push({y: (dHi + dLo) / 2, s: LT("EQ 50 % dne", "EQ 50% of day")});
+    if (k && !t.tday && typeof t.t0 !== "number") lv.push({y: (t.candles || []).find(Boolean)[0], s: LT("open 9:30", "9:30 open")});
+    const st = t.steps[step], tx = String(st.text || ""), last = show - 1 + k, lc = cs[last];
+    let exp = null;
+    const em = step < t.steps.length - 1 && lc ? /(čeká|očekáv|měl[ao]? by|odraz|expect|bounce|should|likely)/i.exec(tx) : null;
+    if (em){ const tl = tx.slice(em.index), dn = /(dolů|pokles|short|down|lower)/i.test(tl), upw = /(nahoru|růst|long|\bup\b|higher)/i.test(tl);
+      if (dn !== upw){ const span = (Number(t.hi) - Number(t.lo)) || 10; exp = {x: last, y1: lc[3], y2: lc[3] + (dn ? -1 : 1) * span * 0.16, s: LT("očekávání", "expected")}; } }
+    return {k: k, cs: cs, t0: t0, rich: {ghost: k, vol: vol, sess: /(Asie|Asia|Londýn|London)/i.test(txt) ? null : PA_SESS(), lv: lv, exp: exp, openLab: "NY open", volLab: LT("objem", "volume")}};
+  }
+  function paLegend(t, R){ const fig = paUI && paUI.svg && paUI.svg.closest("figure"); if (!fig) return; let lg = fig.querySelector(":scope > .pa-leg"); const lng = (() => { try { return cfg.lang || "cs"; } catch(e){ return "cs"; } })(); if (lg && lg.dataset.id === t.id + lng) return; if (lg) lg.remove();
+    lg = el("div", "pa-leg"); lg.dataset.id = t.id + lng; const seen = {}, add = (cls, s, own) => { if (!s || seen[s] || (own && lg.children.length >= 5)) return; seen[s] = 1; const sp = el("span"); sp.appendChild(el("i", cls)); sp.appendChild(document.createTextNode(s)); if (sp.lastChild) sp.lastChild.__en = s; lg.appendChild(sp); };
+    paMarks(t, t.steps.length - 1, -1).forEach(m => { if (m.t === "box" && m.label) add("c-" + (m.c || "accent"), m.label, 1); else if (m.t === "line" && m.label) add("ln c-" + (m.c || "muted"), m.label, 1); });
+    paMarks(t, t.steps.length - 1, -1).forEach(m => { if (m.t === "text" && m.c && m.c !== "muted" && m.s) add("c-" + m.c, m.s, 1); });
+    if (R.k) add("gh", LT("slabé svíčky: dění před setupem", "faint candles: what came before"));
+    if (!t.tday && R.rich.sess) add("sb", LT("pásy: seance a killzóny", "bands: sessions and killzones"));
+    add("vb", LT("dole: objem (schéma)", "bottom: volume (schematic)"));
+    add("ln c-muted", LT("tečkovaně: EQ dne a open", "dotted: day EQ and open"));
+    if (t.steps.some(x => /(čeká|očekáv|měl[ao]? by|odraz|expect|bounce|should|likely)/i.test(String(x.text || "")))) add("ex", LT("čárkovaná šipka: očekávaný pohyb", "dashed arrow: expected move"));
+    const after = fig.querySelector(":scope > .zm-clip") || paUI.svg; after.parentNode.insertBefore(lg, after.nextSibling); }
+  // the last step offers a short test: click the candle that the topic named
+  function paQuizQ(t){ const out = []; t.steps.forEach(x => { const f = Array.isArray(x.focus) ? x.focus : null, tm = (Array.isArray(x.add) ? x.add : []).find(m => m.t === "text" && m.s && String(m.s).length < 30);
+      if (f && f.length && f.length <= 2 && tm && f.every(i => i < (Number(x.show) || 0) || true)) out.push({s: String(tm.s), ans: f.slice()}); }); return out; }
+  let paQz = null, paFocusOv = null;
+  function paQuizPaint(t){ const fig = paUI && paUI.svg && paUI.svg.closest("figure"); if (!fig) return; let q = fig.querySelector(":scope > .pa-quiz"); const last = paStep === t.steps.length - 1, qs = paQuizQ(t);
+    if (!last || !qs.length){ if (q) q.remove(); if (paQz){ paQz = null; fig.classList.remove("picking"); } return; }
+    if (q && q.dataset.id === t.id) return; if (q) q.remove();
+    q = el("div", "pa-quiz"); q.dataset.id = t.id; const tx = el("span", "pq-t"), b = gT2("button", "primary", "Vyzkoušej se", "Test yourself"); b.type = "button";
+    tx.appendChild(gT2("b", null, "Najdeš to sám? ", "Can you find it? ")); tx.appendChild(gT2("span", null, "Graf se vyčistí a ty klikneš na správnou svíčku.", "The chart clears and you click the right candle."));
+    q.appendChild(tx); q.appendChild(b); b.addEventListener("click", () => paQuizStart(t)); const lg = fig.querySelector(":scope > .pa-leg"); fig.insertBefore(q, lg || null); }
+  function gT2(tag, cls, cz, en){ const n = el(tag, cls, LT(cz, en)); if (n.firstChild) n.firstChild.__en = n.firstChild.nodeValue; return n; }
+  function paQuizStart(t){ const qs = paQuizQ(t); if (!qs.length) return; const pick = qs[Math.floor(Math.random() * qs.length)], fig = paUI.svg.closest("figure"), q = fig.querySelector(":scope > .pa-quiz"); if (!q) return;
+    const R = paRich(t, t.steps.length - 1, (t.candles || []).length); paQz = {t: t, ans: pick.ans, tries: 0, k: R.k};
+    paUI.svg.innerHTML = safeChart({candles: R.cs, n: (t.candles || []).length + R.k, lo: t.lo, hi: t.hi, h: t.h || 250, pick: true, t0: R.t0, tf: t.tf, tday: t.tday, marks: [], rich: {ghost: R.k}});
+    fig.classList.add("picking"); q.className = "pa-quiz"; clear(q); const tx = el("span", "pq-t"); tx.appendChild(gT2("b", null, "Klikni na svíčku: ", "Click the candle: ")); const nm = el("span", null, pick.s); tx.appendChild(nm); q.appendChild(tx);
+    const cx = gT2("button", null, "Zrušit", "Cancel"); cx.type = "button"; cx.addEventListener("click", () => paQuizEnd(null)); q.appendChild(cx); }
+  function paQuizEnd(ok){ const z = paQz; if (!z) return; paQz = null; const fig = paUI.svg.closest("figure"), q = fig && fig.querySelector(":scope > .pa-quiz"); if (fig) fig.classList.remove("picking"); if (q) q.remove(); if (ok === false) paFocusOv = z.ans; paDraw(false);
+    if (!q || ok == null) return;
+    fig.insertBefore(q, fig.querySelector(":scope > .pa-leg")); const q2 = fig.querySelectorAll(":scope > .pa-quiz"); if (q2.length > 1) q2[0] === q ? q2[1].remove() : q2[0].remove();
+    clear(q); q.className = "pa-quiz " + (ok ? "ok" : "bad"); const tx = el("span", "pq-t"); tx.appendChild(ok ? gT2("b", null, "Správně. ", "Correct. ") : gT2("b", null, "Tentokrát ne. ", "Not this time. ")); tx.appendChild(ok ? gT2("span", null, "Tohle místo poznáš i na skutečném grafu.", "You will spot this on a real chart too.") : gT2("span", null, "Správná svíčka je teď zvýrazněná.", "The right candle is highlighted now.")); q.appendChild(tx);
+    const again = gT2("button", null, "Znovu", "Again"); again.type = "button"; again.addEventListener("click", () => paQuizStart(z.t)); q.appendChild(again); }
+  document.addEventListener("click", ev => { if (!paQz || !paUI) return; const h = ev.target.closest && ev.target.closest(".pa-fig.picking .hit"); if (!h) return; const i = Number(h.dataset.i) - paQz.k;
+    if (paQz.ans.includes(i)) paQuizEnd(true); else { paQz.tries++; h.style.fill = "var(--bad)"; h.style.fillOpacity = ".18"; if (paQz.tries >= 2) paQuizEnd(false); else toast(LT("Ještě jednou. Podívej se na text kroků.", "Try once more. Think back to the steps.")); } });
   function paDraw(animate){
     const t = paTopic(); if (!t || !paUI) return;
     const steps = t.steps, st = steps[paStep], prev = paStep > 0 ? steps[paStep - 1] : null;
     const show = Math.max(1, Number(st.show) || 1), prevShow = prev ? Math.max(1, Number(prev.show) || 1) : 0;
+    if (paQz){ paQz = null; const f0 = paUI.svg.closest("figure"), q0 = f0 && f0.querySelector(":scope > .pa-quiz"); if (f0) f0.classList.remove("picking"); if (q0) q0.remove(); }
+    const R = paRich(t, paStep, show), K = R.k, sh = a => a ? a.map(i => i + K) : null, fo = paFocusOv; paFocusOv = null;
     paUI.svg.innerHTML = safeChart({
-      candles: (t.candles || []).slice(0, show), n: (t.candles || []).length, lo: t.lo, hi: t.hi, h: t.h || 250, last: true, t0: t.t0, tf: t.tf, tday: t.tday,
-      marks: paMarks(t, paStep, animate ? paStep : -1), newFrom: animate ? Math.min(prevShow, show) : show,
-      focus: st.focus || null, prevFocus: animate ? (prev ? prev.focus || null : null) : (st.focus || null)
+      candles: R.cs, n: (t.candles || []).length + K, lo: t.lo, hi: t.hi, h: t.h || 250, last: true, t0: R.t0, tf: t.tf, tday: t.tday,
+      marks: paMarks(t, paStep, animate ? paStep : -1).map(m => paShift(m, K)), newFrom: (animate ? Math.min(prevShow, show) : show) + K,
+      focus: fo ? sh(fo) : sh(st.focus), prevFocus: fo ? sh(st.focus) : animate ? (prev ? sh(prev.focus) : null) : sh(st.focus), rich: R.rich
     });
+    try { paLegend(t, R); paQuizPaint(t); } catch(e){ if (window.console) console.error(e); }
     const last = paStep === steps.length - 1, idx = pa.indexOf(t);
     paUI.step.textContent = "Krok " + (paStep + 1) + " z " + steps.length;
     paUI.texts.forEach((p, i) => p.classList.toggle("on", i === paStep));
