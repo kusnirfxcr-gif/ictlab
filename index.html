@@ -428,8 +428,6 @@ button.exo.ok{border-color:var(--good);color:var(--good)} button.exo.no{border-c
 }
 
 /* ---------- v6 ---------- */
-.brand .cd{display:block;flex:none;position:relative;width:.22em;height:.34em;margin:.13em 0 0 .13em;border-radius:.055em;background:#3ddc97;box-shadow:0 0 14px rgba(61,220,151,.4)}
-.brand .cd::before{content:"";position:absolute;left:50%;width:.075em;margin-left:-.0375em;top:-.17em;bottom:-.17em;background:#3ddc97;opacity:.55;border-radius:1em;z-index:-1}.brand .cd{isolation:isolate}
 .card{scroll-margin-top:124px} details.week{scroll-margin-top:124px}
 .cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}
 .cal .dh{font-size:10.5px;text-align:center;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
@@ -3138,6 +3136,12 @@ details.week.wk-lock>summary .cnt{font-weight:800;color:var(--accent)}
 .gate-head{grid-area:head;align-self:end;animation:gateUp .6s .05s cubic-bezier(.2,.8,.2,1) both}
 .gate-more{grid-area:more;align-self:start;animation:gateUp .6s .2s cubic-bezier(.2,.8,.2,1) both}
 .gate-card{grid-area:card;align-self:center;animation:gateUp .6s .12s cubic-bezier(.2,.8,.2,1) both}
+/* the Tape mark: one wordmark and one candle everywhere (top bar, intro, plans); colours follow the theme */
+.brand .cd{display:block;flex:none;position:relative;isolation:isolate;width:.2em;height:.4em;margin:.09em 0 0 .1em;border-radius:.065em;background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 55%,#fff) 0%,var(--accent) 55%,color-mix(in srgb,var(--accent) 80%,#000) 100%);box-shadow:0 0 .5em color-mix(in srgb,var(--accent) 50%,transparent),inset 0 .025em 0 rgba(255,255,255,.45);transition:height .35s cubic-bezier(.2,.8,.2,1),margin .35s cubic-bezier(.2,.8,.2,1)}
+.brand .cd::before{content:"";position:absolute;left:50%;width:.062em;margin-left:-.031em;top:-.15em;bottom:-.11em;border-radius:1em;background:var(--accent);opacity:.5;z-index:-1}
+a.brand:hover .cd{height:.43em;margin-top:.05em}
+.brand.gl{font-size:30px;padding:0;text-decoration:none}
+.plans-hd .brand.gl{display:inline-flex;font-size:26px}
 .gate-logo{display:inline-flex;align-items:center;gap:8px;font-weight:800;font-size:1.3rem;letter-spacing:-.02em;color:var(--ink)}
 .gate-logo i{display:block;width:6px;height:18px;border-radius:2px;background:linear-gradient(var(--w3,#3ddc97),var(--w2,#38bdf8));position:relative}
 .gate-logo i::before{content:"";position:absolute;left:2px;top:-6px;width:2px;height:30px;border-radius:1px;background:inherit}
@@ -9645,7 +9649,7 @@ details.week.wk-lock>summary .cnt{font-weight:800;color:var(--accent)}
   function gateBuild(){
     const g = el("div", "gate"), inn = el("div", "gate-in"), head = el("div", "gate-head"), more = el("div", "gate-more"), card = el("div", "gate-card"), slot = el("div", "gate-slot");
     ["b1", "b2", "b3"].forEach(k => g.appendChild(el("i", "gate-blob " + k))); try { welTone(g); } catch(e){}
-    const lg = el("span", "gate-logo"); lg.appendChild(document.createTextNode("tape")); lg.appendChild(el("i")); if (lg.firstChild) lg.firstChild.__en = "tape"; head.appendChild(lg);
+    const lg = el("span", "brand gl"), lw = el("span", null, "tape"); lw.firstChild.__en = "tape"; lg.setAttribute("aria-label", "Tape"); lg.appendChild(lw); lg.appendChild(el("i", "cd")); head.appendChild(lg);
     head.appendChild(gT("span", "gate-kick", "ICT price action · NQ · ES", "ICT price action · NQ · ES"));
     const h1 = el("h1"); h1.appendChild(document.createTextNode(LT("Nauč se číst graf. ", "Learn to read the chart. "))); h1.appendChild(el("em", null, LT("Poznej svoje chyby.", "Know your mistakes."))); h1.firstChild.__en = h1.firstChild.nodeValue; h1.lastChild.firstChild.__en = h1.lastChild.textContent; head.appendChild(h1);
     head.appendChild(gT("p", "gate-sub", "Česká škola ICT price action a obchodní deník v jedné aplikaci. Lekce, každodenní trénink, replay a poctivý pohled na vlastní obchody.", "An ICT price action school and a trading journal in one app. Lessons, daily practice, replay and an honest look at your own trades."));
@@ -9687,7 +9691,7 @@ details.week.wk-lock>summary .cnt{font-weight:800;color:var(--accent)}
     const on = planLockOn(), act = on ? planNow() : "", ov = el("div", "plans"), inn = el("div", "plans-in"), hd = el("div", "plans-hd"), grid = el("div", "plans-grid"), pick = planGet(), okL = v => /^https:\/\//.test(v || "") ? v : "", np = need && planOf(need);
     ["b1", "b2", "b3"].forEach(k => ov.appendChild(el("i", "gate-blob " + k))); try { welTone(ov); } catch(e){}
     const close = () => { ov.classList.add("out"); setTimeout(() => { ov.remove(); gateModalOff(); }, 300); document.removeEventListener("keydown", esc); try { accRender(); } catch(e){} }, esc = ev => { if (ev.key === "Escape" && canClose) close(); };
-    const lg = el("span", "gate-logo"); lg.appendChild(document.createTextNode("tape")); lg.appendChild(el("i")); lg.firstChild.__en = "tape"; hd.appendChild(lg);
+    const lg = el("span", "brand gl"), lw = el("span", null, "tape"); lw.firstChild.__en = "tape"; lg.setAttribute("aria-label", "Tape"); lg.appendChild(lw); lg.appendChild(el("i", "cd")); hd.appendChild(lg);
     const h2 = el("h2", null, np ? LT("Tohle je v plánu ", "This is in the ") + np.name + LT("", " plan") : LT("Vyber si plán", "Choose your plan")); h2.firstChild.__en = h2.textContent; hd.appendChild(h2);
     hd.appendChild(on ? gT("p", null, "Beginner je zdarma napořád. Placený plán zrušíš kdykoli a první platbu ti do 14 dnů na požádání vrátíme.", "Beginner is free forever. You can cancel a paid plan at any time and we refund the first payment within 14 days on request.") : gT("p", null, "Tape spouštíme postupně. Teď máš odemčené všechno, ať vybereš cokoli. Výběrem nám řekneš, o co máš zájem.", "Tape is launching step by step. Right now everything is unlocked whatever you choose. Your choice tells us what you are interested in."));
     let anyLink = false;
