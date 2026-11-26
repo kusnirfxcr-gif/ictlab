@@ -980,7 +980,7 @@
     r.appendChild(up); r.appendChild(btn("chip", T("Spustit ukázku", "Start the demo"), () => runDemo())); e.appendChild(r);
   }
   async function upload(files){
-    if (!files || !files.length) return; let got = [], epoch = false;
+    if (!files || !files.length) return; if (window.TapePlan && !window.TapePlan.need("pro")) return; let got = [], epoch = false;
     for (const f of files){ const txt = await f.text(); const r = parseCSV(txt); got = got.concat(r.days); epoch = epoch || r.epoch; }
     if (!got.length){ toast(T("V souboru jsem nenašel minutové svíčky (čas, open, high, low, close).", "No 1-minute candles found (time, open, high, low, close).")); return; }
     if (epoch){ set.tz = 0; saveSet(); }
@@ -1011,7 +1011,7 @@
     const l = mk("div", "rp-exl"); l.appendChild(mk("b", null, T("Zkouška", "Exam"))); l.appendChild(mk("span", null, T("obchody ", "trades ") + (tr.length + open) + " / " + EXR.max)); l.appendChild(mk("span", sum < 0 ? "neg" : sum > 0 ? "pos" : "", (sum > 0 ? "+" : "") + num(sum, 2) + " R")); l.appendChild(mk("span", "rp-exrule", T("denní stop −2R · poměr aspoň 1:1 · stop se neposouvá dál", "daily stop −2R · at least 1:1 · the stop never moves further")));
     ui.exb.appendChild(l); ui.exb.appendChild(btn("chip", T("Ukončit a vyhodnotit", "Finish and grade"), () => examFinish(false))); }
   function examBox(build){ const ov = mk("div", "rp-exov"), c = mk("div", "rp-exc"); ov.appendChild(c); const close = () => ov.remove(); ov.addEventListener("mousedown", ev => { if (ev.target === ov) close(); }); build(c, close); document.body.appendChild(ov); return close; }
-  function examIntro(){ if (EX){ toast(T("Zkouška už běží.", "An exam is already running.")); return; }
+  function examIntro(){ if (window.TapePlan && !window.TapePlan.need("pro")) return; if (EX){ toast(T("Zkouška už běží.", "An exam is already running.")); return; }
     examBox((c, close) => { c.appendChild(mk("span", "kick", T("Replay zkouška", "Replay exam"))); c.appendChild(mk("h2", null, T("Zkušební den", "Exam day")));
       c.appendChild(mk("p", null, T("Dostaneš náhodný den ze svých dat a datum zůstane skryté. Obchoduj svůj model jako naostro. Hodnotí se jen to, jestli držíš pravidla. Zisk ani ztráta výsledek nemění.", "You get a random day from your data and the date stays hidden. Trade your model as if it were live. Only whether you keep the rules is graded. Profit or loss does not change the result.")));
       const ul = mk("ul", "rp-exul"); [T("Nejvýš 3 obchody za den.", "At most 3 trades in the day."), T("Po −2R už žádný další obchod.", "After −2R no further trade."), T("Každý obchod má cíl aspoň tak daleko jako stop (1:1).", "Every trade has a target at least as far as the stop (1:1)."), T("Stop se neposouvá dál od vstupu, ztráta je nejvýš 1R.", "The stop never moves further from the entry; a loss is at most 1R."), T("Po ztrátě aspoň 5 minut trhu pauza.", "After a loss, a break of at least 5 market minutes."), T("Zkouška trvá aspoň hodinu trhu a potřebuje aspoň jeden obchod. Vracet zpět se nedá.", "The exam runs for at least one market hour and needs at least one trade. You cannot rewind.")].forEach(x => ul.appendChild(mk("li", null, x))); c.appendChild(ul);
