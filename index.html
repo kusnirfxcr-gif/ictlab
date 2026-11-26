@@ -3286,6 +3286,15 @@ a.brand:hover .cd{height:.43em;margin-top:.05em}
 .gate.is-up .gate-slot form button.primary{background:linear-gradient(135deg,var(--accent),color-mix(in srgb,var(--accent) 78%,#fff))!important;color:var(--bg)!important;border-color:transparent!important}
 .gate.is-up .gate-card{border-color:color-mix(in srgb,var(--accent) 55%,var(--line));box-shadow:0 0 0 1px color-mix(in srgb,var(--accent) 30%,transparent),0 34px 90px -46px var(--accent)}
 .gate-slot .rp-ctl [data-m="up"],.gate-slot .rp-ctl [data-m="in"]{display:none}
+/* audit fixes: close button no longer covers the first line; bigger touch targets on phones */
+.drd-h .lv-x,.tvi-h .lv-x{margin:0!important}
+@media (pointer:coarse){
+  .zm-ctl button{width:34px;height:34px}
+  .zm-ctl.inbar{padding:2px}
+  button.ck-del{min-height:34px;padding-left:10px;padding-right:10px}
+  #v-backtest .rp-tfs button,#v-backtest .rp-tf button,#v-backtest .rp-tfb,#v-backtest .rp-seg button{min-height:36px;min-width:36px}
+  #v-backtest .rp-tools button{width:32px!important;min-height:34px!important}
+}
 </style>
 </head>
 <body>
