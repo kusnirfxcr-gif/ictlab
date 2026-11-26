@@ -3219,6 +3219,36 @@ a.brand:hover .cd{height:.43em;margin-top:.05em}
   body.tb-hide .tb-tools{max-height:0;opacity:0;padding-top:0;padding-bottom:0;margin-top:0;pointer-events:none}
   body.modal .tb-tools,body.gated .tb-tools{display:none}
 }
+/* learning on a phone: the lesson comes first; tabs are one swipeable row like the journal tabs */
+@media (max-width:699px){
+  html body[data-group="uceni"] .subnav{display:flex!important;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;gap:6px;padding:0 16px 2px;margin:0 -16px;border:0;background:none;border-radius:0;-webkit-overflow-scrolling:touch}
+  html body[data-group="uceni"] .subnav::-webkit-scrollbar{display:none}
+  html body[data-group="uceni"] .subnav a,html body[data-group="uceni"] .subnav .sk-btn{flex:none;display:inline-flex;align-items:center;min-height:40px;padding:0 15px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-size:14px;white-space:nowrap;margin:0}
+  html body[data-group="uceni"] .subnav a[aria-current]{border-color:transparent}
+  body[data-group="uceni"] .phead p,body[data-group="uceni"] .phead .h2-kick{display:none}
+  body[data-group="uceni"] .phead h1{font-size:30px}
+  #lr{padding:11px 14px;gap:12px;border-radius:18px}
+  #lr .lr-ring,#lr .lr-ring svg{width:42px;height:42px}
+  #pa-card>p.small.muted,#v-laura>.card.lr-stats>p.muted{display:none}
+  #v-laura #pa-card{scroll-margin-top:150px}
+  body[data-group="uceni"] #phead .mus-btn,body[data-view="laura"] #lr{display:none!important}
+  html body .lesson-body>.lb-focus{display:inline-flex!important;width:auto!important;vertical-align:middle;margin:0 6px 12px 0!important;min-height:40px;padding:0 14px!important;font-size:14px}
+  html body .lesson-body>.lb-focus~.mus-btn{display:inline-flex!important;width:auto!important;vertical-align:middle;margin:0 0 12px!important;gap:6px}
+  html body .lesson-body>.lb-focus~.mus-btn button{min-height:40px;padding:0 12px;font-size:14px}
+  html body .lesson-body>.lb-focus~.mus-btn button span{display:none}
+  html body .lesson-body>.lb-focus span{display:none}
+  html body #pa-body.lesson-body,html body #pr-body.lesson-body{flex-direction:row;flex-wrap:wrap;column-gap:8px}
+  html body #pa-body.lesson-body>*,html body #pr-body.lesson-body>*{flex:1 1 100%;min-width:0}
+  html body #pa-body.lesson-body>.lb-focus,html body #pa-body.lesson-body>.mus-btn,html body #pr-body.lesson-body>.lb-focus,html body #pr-body.lesson-body>.mus-btn{flex:0 0 auto}
+  html body .lesson-body>.lb-focus::after{content:"Celá obrazovka"}html[lang="en"] body .lesson-body>.lb-focus::after{content:"Full screen"}
+  html body #pa-nav .pt-cur *{white-space:normal!important;overflow:visible!important;text-overflow:clip!important;-webkit-line-clamp:2}
+  html body #pa-nav.pt-nav{display:grid!important;grid-template-columns:44px minmax(0,1fr) 44px 74px;gap:6px;align-items:stretch}
+  html body #pa-nav .pt-cur{grid-column:2;grid-row:1;min-height:56px;padding:8px 12px}
+  html body #pa-nav .pt-arr.pv{grid-column:1;grid-row:1}html body #pa-nav .pt-arr.nx{grid-column:3;grid-row:1}
+  html body #pa-nav .pt-arr{width:auto;min-height:56px;padding:0}
+  html body #pa-nav .pt-all{grid-column:4;grid-row:1;min-height:56px;padding:4px 6px;font-size:12px;line-height:1.15;white-space:normal;text-align:center}
+  html body #pa-nav>:not(.pt-arr):not(.pt-cur):not(.pt-all){grid-column:1/-1}
+}
 </style>
 </head>
 <body>
@@ -9794,6 +9824,13 @@ a.brand:hover .cd{height:.43em;margin-top:.05em}
       let lastY = window.scrollY, tick = false;
       window.addEventListener("scroll", () => { if (tick) return; tick = true; requestAnimationFrame(() => { tick = false; const y = window.scrollY; if (y < 60) document.body.classList.remove("tb-hide"); else if (y > lastY + 6) document.body.classList.add("tb-hide"); else if (y < lastY - 6) document.body.classList.remove("tb-hide"); lastY = y; }); }, {passive: true});
     } }
+
+  // ---------- learning: the picture lesson is the first thing on the page, overview cards go below ----------
+  { const v = $("v-laura"), pc = $("pa-card");
+    if (v && pc){ const cards = Array.prototype.filter.call(v.children, n => n.classList && n.classList.contains("card")), stats = cards[0] && !cards[0].id ? cards[0] : null, path = cards.find(c => c.querySelector(".pathbox")), train = cards.find(c => c.classList.contains("train"));
+      if (stats) stats.classList.add("lr-stats");
+      v.insertBefore(pc, v.firstChild); if (path) v.insertBefore(path, pc.nextSibling);
+      if (stats){ const after = train || path || pc; after.parentNode.insertBefore(stats, after.nextSibling); } } }
 
   // ---------- moving to a new address without losing data ----------
   // data/site.json: {"move": "https://new-address", "from": ["https://old-address"]}. The old site hands the data to the new one in a window the person opens.
