@@ -3199,6 +3199,26 @@ a.brand:hover .cd{height:.43em;margin-top:.05em}
 .thp .sw i{position:absolute;left:8px;right:26px;bottom:8px;height:14px;border-radius:5px}.thp .sw u{position:absolute;right:8px;bottom:8px;width:14px;height:14px;border-radius:50%}
 .thp b{font-size:14px}.thp span{font-size:12px;color:var(--muted);line-height:1.3}
 .thp[aria-pressed="true"]{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)}
+/* mobile top bar (proposal B): logo, level, streak and account on top, tools with labels in a row below */
+.tb-tools{display:none}
+@media (max-width:859px){
+  html body .topbar{flex-wrap:wrap!important;row-gap:0;padding-bottom:0!important}
+  html body .topbar.topbar nav.nav1.nav1,html body .topbar.topbar #tb-search,html body .topbar.topbar .tb-ck.tb-ck{display:none!important}
+  html body .topbar>.brand{font-size:27px;padding:4px 2px}
+  html body .topbar .tb-act{gap:8px}
+  html body .topbar .tb-lvl,html body .topbar #tb-acc.in{width:40px;height:40px}
+  html body .topbar #streak{height:40px}
+  .tb-tools{flex:0 0 calc(100% + 24px);display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;margin:6px -12px 0;padding:2px 12px 9px;max-height:86px;box-sizing:border-box;transition:max-height .28s ease,opacity .2s ease,padding .28s ease,margin .28s ease}
+  .tb-tools::-webkit-scrollbar{display:none}
+  .tb-tools a{flex:1 0 58px;display:flex;flex-direction:column;align-items:center;gap:4px;padding:0 1px;text-decoration:none;color:var(--muted);font-size:11.5px;font-weight:700;letter-spacing:-.01em;-webkit-tap-highlight-color:transparent;white-space:nowrap}
+  .tb-tools a i{display:grid;place-items:center;width:46px;height:46px;border-radius:15px;background:var(--surface);border:1px solid var(--line);color:var(--ink);transition:transform .15s ease,background .2s ease,border-color .2s ease}
+  .tb-tools a i svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .tb-tools a:active i{transform:scale(.93)}
+  .tb-tools a.on{color:var(--accent)}.tb-tools a.on i{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+  .tb-tools a.ck i{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+  body.tb-hide .tb-tools{max-height:0;opacity:0;padding-top:0;padding-bottom:0;margin-top:0;pointer-events:none}
+  body.modal .tb-tools,body.gated .tb-tools{display:none}
+}
 </style>
 </head>
 <body>
@@ -9755,6 +9775,25 @@ a.brand:hover .cd{height:.43em;margin-top:.05em}
   { const _rm2 = renderMirror; renderMirror = function(){ _rm2(); try { if (planHas("pro")) return; const c = $("co-mirror"); if (!c) return; const h = c.querySelector("h2"); clear(c); if (h) c.appendChild(h); c.appendChild(planVeilEl("pro", "Zrcadlo chyb ukáže, co mají tvoje poslední ztráty společného a kterou lekci si k tomu zopakovat.", "The Mirror of mistakes shows what your latest losses have in common and which lesson to review for it.")); c.classList.add("pl-lock2"); } catch(e){} }; }
   { const _accR = accRender; accRender = function(){ _accR(); try { planRow(); gateSync(); } catch(e){ if (window.console) console.error(e); } }; }
   try { gateSync(); planRow(); planApply(); } catch(e){ if (window.console) console.error(e); }
+
+  // ---------- mobile top bar: tools with labels under the logo row ----------
+  { const tb = document.querySelector(".topbar");
+    if (tb && !tb.querySelector(".tb-tools")){
+      const row = el("div", "tb-tools"); row.setAttribute("role", "navigation"); row.setAttribute("aria-label", LT("Nástroje", "Tools"));
+      const IC = {search: '<circle cx="11" cy="11" r="6.3"/><path d="M16 16l4.3 4.3"/>', ck: '<rect x="4" y="4" width="16" height="16" rx="4.5"/><path d="M8.5 12.4l2.4 2.4 4.8-5.3"/>', replay: '<path d="M6 4v16M12 6.5v11M18 4.5v15"/><rect x="4.5" y="8" width="3" height="6.5" rx=".8"/><rect x="10.5" y="9.5" width="3" height="4.5" rx=".8"/><rect x="16.5" y="7" width="3" height="7" rx=".8"/>', calc: '<rect x="5" y="3.5" width="14" height="17" rx="2.5"/><path d="M8.5 7.5h7M8.7 12h.01M12 12h.01M15.3 12h.01M8.7 15.8h.01M12 15.8h.01M15.3 15.8h.01"/>', ppl: '<circle cx="9" cy="9" r="3"/><circle cx="16.6" cy="9.6" r="2.4"/><path d="M3.5 19c.8-3 3-4.5 5.5-4.5s4.7 1.5 5.5 4.5M15 14.8c2.4-.2 4.4 1 5.3 3.4"/>', star: '<path d="M12 3.8l2.5 5.1 5.6.8-4.1 4 1 5.6-5-2.6-5 2.6 1-5.6-4.1-4 5.6-.8z"/>'};
+      const T = [["search", "Hledat", "Search", null, () => { const b = $("tb-search"); if (b) b.click(); }],
+        ["ck", "Checklist", "Checklist", null, () => { const b = tb.querySelector(".tb-ck"); if (b) b.click(); }, "ck"],
+        ["replay", "Replay", "Replay", "#backtest"], ["calc", "Kalkulačka", "Calculator", "#nastroje"], ["ppl", "Komunita", "Community", "#komunita"], ["star", "Premium", "Premium", "#premium"]];
+      T.forEach(t => { const a = el("a", t[5] || null), i = el("i"), sp = el("span", null, LT(t[1], t[2])); if (sp.firstChild) sp.firstChild.__en = sp.textContent; i.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true">' + IC[t[0]] + "</svg>"; a.appendChild(i); a.appendChild(sp);
+        if (t[3]){ a.href = t[3]; a.dataset.v = t[3].slice(1); } else { a.href = "#"; a.setAttribute("role", "button"); a.addEventListener("click", ev => { ev.preventDefault(); t[4](); }); }
+        row.appendChild(a); });
+      tb.appendChild(row);
+      const paint = () => { const v = document.body.dataset.view; Array.prototype.forEach.call(row.children, a => a.classList.toggle("on", !!a.dataset.v && a.dataset.v === v)); };
+      window.addEventListener("hashchange", () => setTimeout(paint, 0)); paint();
+      // the row folds away while scrolling down and comes back when scrolling up
+      let lastY = window.scrollY, tick = false;
+      window.addEventListener("scroll", () => { if (tick) return; tick = true; requestAnimationFrame(() => { tick = false; const y = window.scrollY; if (y < 60) document.body.classList.remove("tb-hide"); else if (y > lastY + 6) document.body.classList.add("tb-hide"); else if (y < lastY - 6) document.body.classList.remove("tb-hide"); lastY = y; }); }, {passive: true});
+    } }
 
   // ---------- moving to a new address without losing data ----------
   // data/site.json: {"move": "https://new-address", "from": ["https://old-address"]}. The old site hands the data to the new one in a window the person opens.
