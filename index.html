@@ -3331,6 +3331,22 @@ a.brand:hover .cd{height:.43em;margin-top:.05em}
 }
 @media (max-width:420px){html body .topbar .tb-up{font-size:12px;padding:0 9px 0 7px}}
 @media (max-width:349px){html body .topbar .tb-up span{display:none}html body .topbar .tb-up{width:34px!important;padding:0;justify-content:center}}
+
+/* Smart Money: the top plan gets gold that moves */
+.pl-chip.smart,.pf-plan .pl-name.smart,.tb-acc.pl-smart .pl-b{position:relative;overflow:hidden;background:linear-gradient(110deg,#e0a43a 0%,#f7d774 30%,#fff3c4 45%,#f7d774 60%,#e0a43a 100%)!important;background-size:250% 100%!important;animation:smGold 3.4s ease-in-out infinite,smGlow 2.6s ease-in-out infinite}
+.pl-chip.smart::before,.pf-plan .pl-name.smart::before{content:"";display:inline-block;width:11px;height:11px;margin-right:5px;background:currentColor;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z'/%3E%3C/svg%3E") center/contain no-repeat}
+.tb-acc.pl-smart{animation:smRing 2.6s ease-in-out infinite}
+.pf-plan.pf-plan-top.is-smart{position:relative;isolation:isolate;border:0;background:transparent;overflow:hidden}
+.pf-plan.pf-plan-top.is-smart::before{content:"";position:absolute;inset:0;z-index:-2;border-radius:inherit;background:conic-gradient(from var(--ua),#e0a43a,#fff3c4,#f7d774,#c58aff,#e0a43a);animation:upSpin 4s linear infinite}
+.pf-plan.pf-plan-top.is-smart::after{content:"";position:absolute;inset:1.5px;z-index:-1;border-radius:15px;background:linear-gradient(120deg,rgba(247,215,116,.16),transparent 55%),var(--surface)}
+.pf-plan .pl-plans{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 14px!important;border-radius:999px;border:0!important;font-weight:800;color:#1a1205!important;background:linear-gradient(135deg,#f7d774,#e0a43a)!important;box-shadow:0 4px 16px -4px rgba(224,164,58,.6);transition:transform .15s ease,box-shadow .2s ease}
+.pf-plan .pl-plans:hover{transform:translateY(-1px);box-shadow:0 6px 20px -4px rgba(224,164,58,.8)}
+.pf-plan .pl-plans svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.pf-plan .pl-name,.pf-plan .pl-until,.pl-chip{white-space:nowrap}.pf-plan .pl-name{flex:none}
+@keyframes smGold{0%,100%{background-position:100% 0}50%{background-position:0 0}}
+@keyframes smGlow{0%,100%{box-shadow:0 0 0 0 rgba(242,193,78,0)}50%{box-shadow:0 0 14px 1px rgba(242,193,78,.55)}}
+@keyframes smRing{0%,100%{box-shadow:0 0 0 2px var(--bg),0 0 0 3.5px #f2c14e,0 0 8px rgba(242,193,78,.3)}50%{box-shadow:0 0 0 2px var(--bg),0 0 0 3.5px #ffe08a,0 0 20px rgba(242,193,78,.7)}}
+@media (prefers-reduced-motion:reduce){.pl-chip.smart,.pf-plan .pl-name.smart,.tb-acc.pl-smart,.tb-acc.pl-smart .pl-b,.pf-plan.is-smart::before{animation:none!important}}
 </style>
 </head>
 <body>
@@ -9940,7 +9956,7 @@ a.brand:hover .cd{height:.43em;margin-top:.05em}
     const p = planShown(), r = el("div", "pf-plan"), nm = el("b", "pl-name " + p.id, p.name); if (nm.firstChild) nm.firstChild.__en = nm.textContent;
     r.appendChild(gT("span", null, "Plán", "Plan")); r.appendChild(nm);
     if (p.id !== "beginner" && accRow && accRow.until){ const d = new Date(accRow.until); if (!isNaN(d)){ const u = el("span", "pl-until", LT("do ", "until ") + d.toLocaleDateString(LT("cs-CZ", "en-GB"))); if (u.firstChild) u.firstChild.__en = u.textContent; r.appendChild(u); } }
-    if (p.id !== "smart") r.appendChild(upBtn()); else { const b = gT("button", null, "Plány", "Plans"); b.type = "button"; b.addEventListener("click", () => planOpen(true)); r.appendChild(b); }
+    if (p.id !== "smart") r.appendChild(upBtn()); else { r.classList.add("is-smart"); const b = el("button", "pl-plans"); b.type = "button"; b.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg>'; b.appendChild(gT("span", null, "Plány", "Plans")); b.addEventListener("click", () => planOpen(true)); r.appendChild(b); }
     { const nmRow = accBox.querySelector(".pf-nm"); if (nmRow){ const o = nmRow.querySelector(".pl-chip"); if (o) o.remove(); const c = el("span", "pl-chip " + p.id, p.id === "smart" ? "Smart Money" : p.name); if (c.firstChild) c.firstChild.__en = c.textContent; nmRow.appendChild(c); } }
     const lv = accBox.querySelector(".pf-lv"); if (lv && lv.parentNode === accBox){ accBox.insertBefore(r, lv.nextSibling); r.classList.add("pf-plan-top"); return; }
     const th = accBox.querySelector(".pf-th") || accBox.querySelector(".lang-row"); if (th) accBox.insertBefore(r, th); else accBox.appendChild(r); };
