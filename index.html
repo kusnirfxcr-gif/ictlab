@@ -3403,6 +3403,17 @@ a.brand:hover .cd{height:.43em;margin-top:.05em}
   html body #pa-body.lesson-body>*{flex:1 1 100%;min-width:0}
   html body #pa-body.lesson-body>.lb-focus,html body #pa-body.lesson-body>.mus-btn{flex:0 0 auto}
 }
+
+/* full-screen lesson on a computer: fits the window, no empty scroll below */
+@media (min-width:1000px){
+  html body .lesson-body.zm-full{display:block!important;overflow-y:auto}
+  html body .lesson-body.zm-full>.zm-head{margin-bottom:14px}
+  html body .lesson-body.zm-full>figure{float:left;width:calc(100% - 408px);margin:0!important}
+  html body .lesson-body.zm-full>*:not(figure):not(.zm-head){margin:0 0 12px calc(100% - 380px)!important;width:auto}
+  html body .lesson-body.zm-full>.pa-title{margin-top:4px!important}
+  html body #pa-body.zm-full>.pa-title{display:block}
+  html body .lesson-body.zm-full>figure .zm-clip svg{max-height:calc(100vh - 200px)!important;width:100%}
+}
 </style>
 </head>
 <body>
@@ -10003,6 +10014,11 @@ a.brand:hover .cd{height:.43em;margin-top:.05em}
       if (fr.bottom <= room) return; window.scrollTo({top: Math.max(0, pc.getBoundingClientRect().top + window.scrollY - top - 10), behavior: "instant"}); };
     window.addEventListener("hashchange", () => { const v = document.body.dataset.view; setTimeout(() => { if (v === "laura" && was !== "laura") land(); was = document.body.dataset.view; }, 80); });
     if (was === "laura") setTimeout(land, 400); }
+  // full-screen lesson on a computer: the picture moves to the top of the left column, and back when closed
+  { const fix = () => { document.querySelectorAll(".lesson-body").forEach(b => { const f = b.querySelector(":scope > figure"); if (!f) return;
+      if (b.classList.contains("zm-full") && innerWidth >= 1000){ const hd = b.querySelector(":scope > .zm-head"); if (!f._home){ f._home = document.createComment("fig"); b.insertBefore(f._home, f); } if (hd && hd.nextSibling !== f) b.insertBefore(f, hd.nextSibling); }
+      else if (f._home && f._home.parentNode){ f._home.parentNode.insertBefore(f, f._home); f._home.remove(); f._home = null; } }); };
+    new MutationObserver(fix).observe(document.body, {attributes: true, attributeFilter: ["class"]}); }
   // ---------- plan on the profile button, and an upgrade button while a higher plan exists ----------
   const UP_IC = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V6M6 11.5L12 5.5l6 6"/></svg>';
   function planShown(){ return planOf(planNow()) || PLANS[0]; }
