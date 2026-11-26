@@ -1,0 +1,6 @@
+{
+  // Static site: Cloudflare serves the files in this folder as they are.
+  "name": "ictlab",
+  "compatibility_date": "2026-11-26",
+  "assets": { "directory": "./" }
+}
