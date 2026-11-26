@@ -1,9 +1,9 @@
 {
   "state": {
-    "lastRun": "2026-11-25T05:55:00Z",
+    "lastRun": "2026-11-26T05:58:00Z",
     "modelVersion": "1.0",
-    "runCount": 16,
-    "lastReport": "Skaut přidal poznatek, že Zeussy dělí každý devadesátiminutový cyklus na tři půlhodinové. Učitel napsal lekci 16 o displacementu. Vizionář navrhl půlhodinové dělení cyklů v sekci Premium. Zpravodaj potvrdil zasedání Fedu 8.–9. 12. s rozhodnutím 9. 12. a přidal maloobchodní tržby na 16. 12. Gems a Architekt beze změny."
+    "runCount": 17,
+    "lastReport": "Skaut přidal poznatek z rozboru Zeussyho obchodu: obědový cyklus míří k high předchozího cyklu a u něj se vybírá část zisku. Učitel napsal lekci 17 o fair value gapu a přidal k ní dva poznatky z ICT Gems. Vizionář navrhl rozbor jednoho dne podle cyklů v sekci Premium. Zpravodaj potvrdil maloobchodní tržby 16. 12. přímo u Census Bureau. Gems a Architekt beze změny."
   },
   "model": {
     "version": "1.0",
@@ -86,8 +86,8 @@
       "order": 1,
       "name": "Skaut",
       "role": "hledá nový ICT obsah",
-      "lastRun": "2026-11-25T05:55:00Z",
-      "lastReport": "Nový poznatek: Zeussy dělí devadesátiminutový cyklus na tři půlhodinové."
+      "lastRun": "2026-11-26T05:58:00Z",
+      "lastReport": "Nový poznatek: podle Zeussyho míří obědový cyklus k high předchozího cyklu a u něj se vybírá část zisku."
     },
     {
       "id": "gems",
@@ -110,16 +110,16 @@
       "order": 4,
       "name": "Učitel",
       "role": "připravuje denní lekce pro Lauru",
-      "lastRun": "2026-11-25T05:55:00Z",
-      "lastReport": "Lekce 16: displacement, pohyb, který ukáže, kdo má navrch."
+      "lastRun": "2026-11-26T05:58:00Z",
+      "lastReport": "Lekce 17: fair value gap, mezera, kterou za sebou nechá rychlý pohyb."
     },
     {
       "id": "vizionar",
       "order": 5,
       "name": "Vizionář",
       "role": "navrhuje vylepšení aplikace",
-      "lastRun": "2026-11-25T05:55:00Z",
-      "lastReport": "Nápad: půlhodinové dělení uvnitř cyklu v sekci Premium."
+      "lastRun": "2026-11-26T05:58:00Z",
+      "lastReport": "Nápad: jeden den rozebraný podle cyklů v sekci Premium."
     }
   ],
   "versions": [

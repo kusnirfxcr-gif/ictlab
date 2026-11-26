@@ -1,5 +1,61 @@
 [
   {
+    "id": "20261126-L17",
+    "ts": "2026-11-26T05:58:00Z",
+    "date": "2026-11-26",
+    "n": 17,
+    "week": 5,
+    "title": "Fair value gap: mezera, kterou za sebou nechá rychlý pohyb",
+    "body": [
+      "Včera jsme skončili u toho, že se do displacementu nenaskakuje a čeká se na návrat do mezery. Dnes se na tu mezeru podíváme zblízka. Jmenuje se fair value gap, zkráceně FVG.",
+      "FVG tvoří tři svíčky jdoucí po sobě. Prostřední je velká a cena v ní uletí tak rychle, že se knot první a knot třetí svíčky vůbec nepotkají. Mezi nimi zůstane prázdné pásmo.",
+      "Při růstu leží mezera mezi high první svíčky a low třetí svíčky. Při poklesu je to obráceně, mezi low první svíčky a high třetí svíčky. Tělo prostřední svíčky tím pásmem prochází, ale první a třetí svíčka do něj nezasahují.",
+      "Proč na tom záleží? V tom pásmu se obchodovalo skoro jen jedním směrem. Při růstu brali kupující všechno, co bylo na prodej, a druhá strana nestíhala reagovat. ICT tomu říká nevyváženost, anglicky imbalance, a čeká, že se cena do takového místa vrátí.",
+      "Jak mezeru najdeš: vezmi tři svíčky po sobě a dívej se jen na první a třetí. Když se jejich knoty překrývají, mezera tam není, i kdyby prostřední svíčka byla sebevětší. Když se nepřekrývají, označ si pásmo mezi nimi obdélníkem.",
+      "Mezera sama není důvod k obchodu. Vzniká jich hodně a ne každá se vyplní, v silném trendu cena často odjede bez návratu. Váhu má ta, která vznikla po sweepu při displacementu, tedy tam, kde se změnila struktura. Jak se do ní vstupuje a kdy přestává platit, je téma zítřejší lekce."
+    ],
+    "example": "NQ po výběru nočního low 21 010 vystřelí nahoru třemi pětiminutovými svíčkami. První má high 21 048. Druhá je velká a zavře na 21 090. Třetí má low 21 071. Knot první svíčky končí na 21 048 a knot třetí začíná až na 21 071, takže se nepotkají. Mezi 21 048 a 21 071 je fair value gap vysoký 23 bodů. Označíš si ho obdélníkem a čekáš, jestli se do něj cena vrátí.",
+    "remember": "FVG je mezera mezi knotem první a třetí svíčky, kterou nechá velká prostřední svíčka. Hledej ji po sweepu a displacementu. Sama o sobě signál není.",
+    "terms": [
+      "fvg",
+      "knot",
+      "displacement",
+      "imbalance"
+    ],
+    "quiz": [
+      {
+        "q": "Které svíčky určují hranice FVG?",
+        "options": [
+          "První a třetí",
+          "Jen prostřední",
+          "Druhá a třetí"
+        ],
+        "correct": 0,
+        "why": "Mezera leží mezi knotem první a knotem třetí svíčky. Prostřední jí jen prochází."
+      },
+      {
+        "q": "Trh roste. První svíčka má high 21 048, třetí má low 21 040. Je tam FVG?",
+        "options": [
+          "Ano, vysoký 8 bodů",
+          "Ne, knoty se překrývají",
+          "Ano, ale jen poloviční"
+        ],
+        "correct": 1,
+        "why": "Low třetí svíčky je pod high první. Knoty se potkaly a žádná mezera nezůstala."
+      },
+      {
+        "q": "Která mezera má největší váhu?",
+        "options": [
+          "Každá, kterou na grafu najdeš",
+          "Ta, která vznikla po sweepu při displacementu",
+          "Ta nejmenší"
+        ],
+        "correct": 1,
+        "why": "Mezer vzniká hodně. Smysl má ta, která vznikla tam, kde se změnila struktura."
+      }
+    ]
+  },
+  {
     "id": "20261125-L16",
     "ts": "2026-11-25T05:55:00Z",
     "date": "2026-11-25",

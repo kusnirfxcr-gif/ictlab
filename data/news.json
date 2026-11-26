@@ -1,20 +1,6 @@
 {
-  "updated": "2026-11-25T05:55:00Z",
+  "updated": "2026-11-26T05:58:00Z",
   "events": [
-    {
-      "date": "2026-11-25",
-      "time": "14:30",
-      "title": "HDP USA (2. odhad), inflace PCE, zboží dlouhodobé spotřeby a žádosti o podporu",
-      "impact": 3,
-      "note": "Čtyři zprávy najednou. Žádosti o podporu vycházejí kvůli svátku o den dřív. PCE je měřítko inflace, které sleduje Fed."
-    },
-    {
-      "date": "2026-11-25",
-      "time": "20:00",
-      "title": "Béžová kniha Fedu",
-      "impact": 1,
-      "note": "Popis stavu ekonomiky z jednotlivých regionů."
-    },
     {
       "date": "2026-11-26",
       "time": "",
@@ -83,7 +69,7 @@
       "time": "14:30",
       "title": "Maloobchodní tržby (USA), listopad",
       "impact": 2,
-      "note": "První odhad útraty domácností. Termín podle přehledu oficiálních kalendářů, přímo u Census Bureau neověřeno."
+      "note": "První odhad útraty domácností. Termín potvrzen v kalendáři Census Bureau."
     }
   ],
   "posts": [

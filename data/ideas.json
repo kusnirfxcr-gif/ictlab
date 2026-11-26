@@ -1,5 +1,17 @@
 [
   {
+    "id": "premium-rozbor-dne-podle-cyklu",
+    "ts": "2026-11-26T05:58:00Z",
+    "date": "2026-11-26",
+    "title": "Premium: jeden den rozebraný podle cyklů",
+    "area": "produkt",
+    "value": 2,
+    "effort": 2,
+    "status": "new",
+    "what": "V sekci Premium přidat ukázkový den krok za krokem na vlastním schématu: dno před obědovým cyklem, displacement, cíl na high předchozího cyklu a částečný výběr ve chvíli, kdy začíná nová půlhodina.",
+    "why": "Dnešní poznatek popisuje, jak Zeussy cykly čte za sebou v jednom obchodu. Z tabulky časů se to chápe těžko, jeden rozebraný den to ukáže."
+  },
+  {
     "id": "premium-pulhodiny-v-cyklu",
     "ts": "2026-11-25T05:55:00Z",
     "date": "2026-11-25",

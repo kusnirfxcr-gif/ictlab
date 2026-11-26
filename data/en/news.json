@@ -27,5 +27,6 @@
 "Výrobní ceny PPI, listopad": "PPI producer prices, November",
 "Inflace na úrovni výrobců, termín podle kalendáře BLS.": "Producer-level inflation, date per the BLS calendar.",
 "Maloobchodní tržby (USA), listopad": "Retail sales (USA), November",
-"První odhad útraty domácností. Termín podle přehledu oficiálních kalendářů, přímo u Census Bureau neověřeno.": "First estimate of household spending. Date per an overview of official calendars, not verified directly with the Census Bureau."
+"První odhad útraty domácností. Termín podle přehledu oficiálních kalendářů, přímo u Census Bureau neověřeno.": "First estimate of household spending. Date per an overview of official calendars, not verified directly with the Census Bureau.",
+"První odhad útraty domácností. Termín potvrzen v kalendáři Census Bureau.": "A first estimate of household spending. Date confirmed in the Census Bureau calendar."
 }
