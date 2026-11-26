@@ -1049,7 +1049,7 @@ body.sakura .lkey.trap::before{background:linear-gradient(180deg,#ffb347,#ff7a59
 #j-costs .rrow span{flex:1;min-width:0;color:var(--muted);font-size:14px}
 /* learning: its own look and a resume card */
 body[data-group="uceni"]:not(.sakura){--accent:#b7a1ff;--accent-soft:rgba(183,161,255,.14)}
-body[data-group="uceni"]:not(.sakura) .app>.wrap{background:radial-gradient(900px 340px at 50% -60px,rgba(150,120,255,.16),transparent 70%)}
+body[data-group="uceni"]:not(.sakura) .app>.wrap{background:radial-gradient(50% 340px at 50% -60px,rgba(150,120,255,.14),transparent 85%)}
 body[data-group="uceni"] .subnav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;padding:4px;border-radius:16px;border:1px solid var(--line);background:var(--surface)}
 body[data-group="uceni"] .subnav a{border:0;background:none;text-align:center;padding:9px 6px;border-radius:12px;font-size:13.5px;line-height:1.2}
 body[data-group="uceni"]:not(.sakura) .subnav a[aria-current="page"]{background:linear-gradient(135deg,#8f7bff,#5aa2ff);color:#fff}
@@ -3389,7 +3389,7 @@ a.brand:hover .cd{height:.43em;margin-top:.05em}
 
 /* learning on a computer: a slim header, then straight to the lesson picture */
 @media (min-width:700px){
-  body[data-view="laura"] #phead{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:16px;row-gap:2px;padding-top:6px;padding-bottom:6px}
+  body[data-view="laura"] #phead{display:flex;flex-direction:row;flex-wrap:wrap;align-items:baseline;column-gap:16px;row-gap:2px;padding-top:6px;padding-bottom:6px}
   body[data-view="laura"] #phead .h2-kick,body[data-view="laura"] #phead>.mus-btn,body[data-view="laura"] #lr{display:none!important}
   body[data-view="laura"] #phead h1{font-size:clamp(30px,3vw,40px);margin:0;flex:none}
   body[data-view="laura"] #phead p{margin:0;flex:1 1 260px}
