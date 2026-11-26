@@ -3106,6 +3106,7 @@ html[data-tk="l"] .tvi-t th,body.sakura .tvi-t th{background:#fff}
 #j-imp-card .rp-ctl{margin:8px 0}
 .tvi-other{margin-top:6px}
 @media (max-width:560px){.card.tvi{padding:14px}.tvi-f{flex-direction:column-reverse}.tvi-f button{width:100%}.tvi-set{grid-template-columns:1fr 1fr}}
+body.gated{overflow:hidden}
 /* plans: locked parts */
 .pl-lock>:not(.pl-veil){display:none!important}
 .pl-veil{display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:20px 18px;border:1px dashed var(--line);border-radius:18px;background:var(--surface);color:var(--ink)}
@@ -7134,7 +7135,7 @@ details.week.wk-lock>summary .cnt{font-weight:800;color:var(--accent)}
     try { history.replaceState(null, "", location.pathname + "#nastaveni"); } catch(e){ location.hash = "#nastaveni"; } route(); accPending = true;
     if (q.access_token){ try { const u = await sbAuth("user", null, q.access_token, "GET"); authSave(sessOf({access_token: q.access_token, refresh_token: q.refresh_token, expires_in: q.expires_in, user: u})); if (q.type === "recovery") accMode = "newpass"; else { accMsg = "Jsi přihlášen."; let oa = false; try { oa = localStorage.getItem("tape-oauth") === "1"; localStorage.removeItem("tape-oauth"); } catch(e){} if (oa){ try { history.replaceState(null, "", location.pathname + "#prehled"); } catch(e){ location.hash = "#prehled"; } route(); toast("Jsi přihlášen přes Google."); } } } catch(e){ accMsg = "Odkaz už neplatí. Přihlas se nebo si nech poslat nový."; } }
     else accMsg = /expired|invalid/i.test(q.error_description || "") ? "Odkaz už neplatí. Nech si poslat nový." : "Přihlášení přes odkaz se nepovedlo.";
-    accPending = false; refreshAll();
+    accPending = false; refreshAll(); try { gateAfterLink(); } catch(e){}
   }
   { const st = syncState(); if (st && auth && st.uid === auth.id) accLast = st.at; }
   accRender(); accFromHash().then(() => { accRender(); syncNow(); });
@@ -7719,8 +7720,8 @@ details.week.wk-lock>summary .cnt{font-weight:800;color:var(--accent)}
         if (turn) glide(null, 200, () => { if (my !== seq || !tv) return; location.hash = "#" + st.h; setTimeout(go, 150); }); else setTimeout(go, first ? 30 : 130); };
       paint(null); addEventListener("resize", sync); addEventListener("scroll", sync, true); ov.addEventListener("keydown", ev => { if (ev.key === "Escape"){ ev.stopPropagation(); end(true); } }); show(); }
     $("tour-start").addEventListener("click", tourStart);
-    let tries = 0, calm = 0; const auto = setInterval(() => { let seen = "1"; try { seen = localStorage.getItem(TK); } catch(e){} if (seen || ++tries > 300){ clearInterval(auto); return; }
-      if (!profile || document.querySelector(".ob, .cmsg, .copop:not([hidden])") || document.body.classList.contains("modal")){ calm = 0; return; } if (++calm < 3) return; clearInterval(auto); tourStart(); }, 1200);
+    let tries = 0, calm = 0; const auto = setInterval(() => { let seen = "1"; try { seen = localStorage.getItem(TK); } catch(e){} if (seen || (profile && !document.querySelector(".gate, .plans, .ob") && ++tries > 300)){ clearInterval(auto); return; }
+      if (!profile || document.querySelector(".ob, .cmsg, .copop:not([hidden]), .gate, .plans") || document.body.classList.contains("modal")){ calm = 0; return; } if (++calm < 3) return; clearInterval(auto); tourStart(); }, 1200);
   }
 
   // ---------- training: weak spots, chart drill ----------
@@ -9629,9 +9630,9 @@ details.week.wk-lock>summary .cnt{font-weight:800;color:var(--accent)}
   function planTrim(list){ try { if (planHas("pro")) return list; const from = Date.now() - 30 * 864e5; return list.filter(t => new Date(t.ts).getTime() >= from); } catch(e){ return list; } }
   window.TapePlan = {has: planHas, need: planNeed};
   let gateEl = null, gatePeek = false, gateInert = [], gateBackBtn = null, planSeen = "", planBusy = false;
-  const gateModalOff = () => { if (!document.querySelector(".ob,.wel,.plans,.gate:not([hidden])")) document.body.classList.remove("modal"); };
+  const gateModalOff = () => { if (!document.querySelector(".plans,.gate:not([hidden])")) document.body.classList.remove("gated"); };
   function gateLock(on){
-    if (on){ document.body.classList.add("modal"); Array.prototype.forEach.call(document.body.children, n => { if (n !== gateEl && n.id !== "toast" && n.tagName !== "SCRIPT" && !n.inert){ n.inert = true; gateInert.push(n); } }); }
+    if (on){ document.body.classList.add("gated"); Array.prototype.forEach.call(document.body.children, n => { if (n !== gateEl && n.id !== "toast" && n.tagName !== "SCRIPT" && !n.inert){ n.inert = true; gateInert.push(n); } }); }
     else { gateInert.forEach(n => { n.inert = false; }); gateInert = []; gateModalOff(); } }
   function gatePaint(){ if (!gateEl) return; const h = gateEl._h, s = gateEl._s, m = accMode;
     h.textContent = m === "up" ? LT("Založ si účet", "Create your account") : m === "reset" ? LT("Obnova hesla", "Reset your password") : LT("Přihlas se a pokračuj", "Sign in to continue");
@@ -9666,6 +9667,7 @@ details.week.wk-lock>summary .cnt{font-weight:800;color:var(--accent)}
     const box = $("set"); if (box && accBox.parentNode !== box) box.insertBefore(accBox, box.firstChild);
     g.classList.add("out"); setTimeout(() => { g.remove(); gateLock(false); }, 320);
     if (location.hash === "#pravni" || location.hash === "#nastaveni"){ try { history.replaceState(null, "", location.pathname + "#prehled"); } catch(e){ location.hash = "#prehled"; } try { route(); } catch(e){} } }
+  function gateAfterLink(){ if (GATE_OFF || !auth || accMode === "newpass" || location.hash !== "#nastaveni") return; try { history.replaceState(null, "", location.pathname + "#prehled"); } catch(e){ location.hash = "#prehled"; } try { route(); } catch(e){} }
   function gateSync(){
     if (!GATE_OFF && !auth && !accPending){ planSeen = ""; const pl = document.querySelector(".plans"); if (pl) pl.remove();
       if (!gateEl) gateEl = gateBuild(); if (accBox.parentNode !== gateEl._slot) gateEl._slot.appendChild(accBox); gatePaint(); if (!gatePeek){ gateEl.hidden = false; gateLock(true); } }
@@ -9712,7 +9714,7 @@ details.week.wk-lock>summary .cnt{font-weight:800;color:var(--accent)}
       inn.appendChild(a); }
     inn.appendChild(gT("p", "plans-ft", "Plán můžeš kdykoli změnit v účtu. Tape je vzdělávací aplikace, ne investiční poradenství, a neslibuje zisk.", "You can change the plan in your account at any time. Tape is an educational app, not investment advice, and promises no profit."));
     if (canClose){ const x = el("button", "plans-x"); x.type = "button"; x.setAttribute("aria-label", LT("Zavřít", "Close")); x.innerHTML = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"/></svg>'; x.addEventListener("click", close); ov.appendChild(x); document.addEventListener("keydown", esc); }
-    ov.appendChild(inn); ov.setAttribute("role", "dialog"); ov.setAttribute("aria-modal", "true"); ov.setAttribute("aria-label", LT("Výběr plánu", "Choose a plan")); document.body.appendChild(ov); document.body.classList.add("modal");
+    ov.appendChild(inn); ov.setAttribute("role", "dialog"); ov.setAttribute("aria-modal", "true"); ov.setAttribute("aria-label", LT("Výběr plánu", "Choose a plan")); document.body.appendChild(ov); document.body.classList.add("gated");
     const sh = document.querySelector(".accshade"); if (sh && !sh.hidden) sh.click();
   }
   function planRow(){ const old = accBox.querySelector(".pf-plan"); if (old) old.remove(); if (!auth || GATE_OFF || accMode === "newpass") return;
