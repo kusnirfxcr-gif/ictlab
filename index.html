@@ -3458,6 +3458,9 @@ a.brand:hover .cd{height:.43em;margin-top:.05em}
 .pa-fig.picking .hit:hover{fill:var(--accent);fill-opacity:.1}
 
 @media (max-width:699px){.pa-leg{font-size:11px;gap:3px 10px;padding:7px 10px 9px}.pa-leg i{width:11px;height:8px}.pa-quiz{margin:0 10px 10px;font-size:13px}}
+
+.trv .trv-fig{margin:0}.trv .trv-fig .pa-svg svg{max-height:min(48vh,380px)}
+.trv .drq b{color:var(--accent)}
 </style>
 </head>
 <body>
@@ -4917,7 +4920,7 @@ a.brand:hover .cd{height:.43em;margin-top:.05em}
     const after = fig.querySelector(":scope > .zm-clip") || paUI.svg; after.parentNode.insertBefore(lg, after.nextSibling); }
   // the last step offers a short test: click the candle that the topic named
   function paQuizQ(t){ const out = []; t.steps.forEach(x => { const f = Array.isArray(x.focus) ? x.focus : null, tm = (Array.isArray(x.add) ? x.add : []).find(m => m.t === "text" && m.s && String(m.s).length < 30);
-      if (f && f.length && f.length <= 2 && tm && f.every(i => i < (Number(x.show) || 0) || true)) out.push({s: String(tm.s), ans: f.slice()}); }); return out; }
+      if (f && f.length && f.length <= 2 && tm) out.push({s: String(tm.s), ans: f.slice(), m: tm}); }); return out; }
   let paQz = null, paFocusOv = null;
   function paQuizPaint(t){ const fig = paUI && paUI.svg && paUI.svg.closest("figure"); if (!fig) return; let q = fig.querySelector(":scope > .pa-quiz"); const last = paStep === t.steps.length - 1, qs = paQuizQ(t);
     if (!last || !qs.length){ if (q) q.remove(); if (paQz){ paQz = null; fig.classList.remove("picking"); } return; }
@@ -8086,6 +8089,7 @@ a.brand:hover .cd{height:.43em;margin-top:.05em}
         const mk = (ico, title, sub, fn, cnt) => { const b = el("button","tt"); b.type = "button"; b.insertAdjacentHTML("afterbegin", ico); b.appendChild(el("b", null, title)); if (cnt) b.appendChild(el("i","cnt", cnt)); b.appendChild(el("span", null, sub)); b.addEventListener("click", fn); c.appendChild(b); };
         const d = lp.drill, nW = Object.keys(lp.weak).length;
         { const cs = chalStats(); mk(ICO.dr, "Výzva dne", cs.today ? "Dnes " + cs.today.ok + " z 8" + (cs.run > 1 ? " · " + cs.run + " dny v řadě" : "") + ". Zítra nová sada." : "Osm grafů, dnes stejných pro všechny. Počítá se první pokus.", () => openDrill(true), cs.today ? "✓" : "nová"); }
+        { const L = (c, e) => { try { return LT(c, e); } catch(x){ return c; } }, tv = lp.trev || {}, td = tv.d && tv.d[dayKey()]; mk(ICO.wk, L("Opakování témat", "Topic review"), td ? L("Dnes " + td.ok + " z " + td.n + ". Chyby se vrátí v dalších dnech.", "Today " + td.ok + " of " + td.n + ". Mistakes come back on later days.") : L("Deset otázek z probraných témat: klikni na správnou svíčku.", "Ten questions from the topics you covered: click the right candle."), () => openTopicReview(), td ? "✓" : L("10 dnes", "10 today")); }
         mk(ICO.dr, "Poznej to na grafu", d.n ? "Úspěšnost " + Math.round(100 * d.ok / d.n) + " % · nejdelší série " + d.best : "Ťukni na swing, FVG, sweep nebo BOS v cvičném grafu.", () => openDrill());
         mk(ICO.wk, "Slabá místa", nW ? "Otázky, kde byla chyba. Zmizí po dvou správných odpovědích." : "Zatím žádná. Chybné odpovědi se sem ukládají samy.", openWeak, nW ? String(nW) : ""); }); }
     // a stored question keeps the language it was answered in; show it in the app's current language from the lesson it came from
@@ -8148,6 +8152,37 @@ a.brand:hover .cd{height:.43em;margin-top:.05em}
     const KINDS = [["all","Všechno"],["swing","Swingy"],["fvg","FVG"],["disp","Displacement"],["sweep","Sweep"],["bos","BOS"]];
     const chalKey = () => dayKey(), chalSeed = k => { let h = 2166136261; for (let q = 0; q < k.length; q++){ h ^= k.charCodeAt(q); h = Math.imul(h, 16777619); } let a = h >>> 0; return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; };
     function chalStats(){ lp.chal = lp.chal || {}; const ks = Object.keys(lp.chal).sort(), avg = ks.length ? ks.reduce((a, k) => a + lp.chal[k].ok, 0) / ks.length : 0; let run = 0; const d = new Date(); if (!lp.chal[dayKey(d)]) d.setDate(d.getDate() - 1); while (lp.chal[dayKey(d)]){ run++; d.setDate(d.getDate() - 1); } return {n: ks.length, avg: avg, run: run, today: lp.chal[chalKey()] || null}; }
+    // topic review: ten "click the candle" questions a day from the picture topics already covered; misses come back first
+    function openTopicReview(){ const o = overlay("drov trv"), tv = lp.trev = lp.trev || {d: {}, miss: {}, okAll: 0}; tv.d = tv.d || {}; tv.miss = tv.miss || {};
+      const seen = pa.filter(t => lp.seen && lp.seen[t.id]), pool0 = (seen.length >= 3 ? seen : pa.slice(0, Math.max(3, seen.length + 2))), pool = [];
+      pool0.forEach(t => paQuizQ(t).forEach((q, j) => pool.push({t: t, q: q, key: t.id + ":" + j})));
+      const today = dayKey(), first = !tv.d[today], picks = [], used = {};
+      pool.filter(x => tv.miss[x.key]).sort((a, b) => tv.miss[b.key] - tv.miss[a.key]).forEach(x => { if (picks.length < 4 && !used[x.key]){ picks.push(x); used[x.key] = 1; } });
+      shuffled(pool).forEach(x => { if (picks.length < 10 && !used[x.key]){ picks.push(x); used[x.key] = 1; } });
+      let i = 0, ok = 0, res = [], done = false;
+      const head = () => { const h = el("div","row"), x = el("button","ck-del", LT("Zavřít", "Close")); x.type = "button"; x.addEventListener("click", o.close); h.appendChild(el("span","kick", LT("Opakování témat", "Topic review"))); h.appendChild(x); return h; };
+      const bar = () => { const b = el("div","drbar"); picks.forEach((x, k) => b.appendChild(el("i", k < res.length ? (res[k] ? "ok" : "no") : ""))); return b; };
+      const draw = (it, focus, mark) => { const R = paRich(it.t, it.t.steps.length - 1, (it.t.candles || []).length), K = R.k;
+        return safeChart({candles: R.cs, n: (it.t.candles || []).length + K, lo: it.t.lo, hi: it.t.hi, h: it.t.h || 250, pick: !focus, t0: R.t0, tf: it.t.tf, tday: it.t.tday, marks: mark ? [paShift(Object.assign({}, mark, {fresh: false}), K)] : [], focus: focus ? focus.map(v => v + K) : null, rich: {ghost: K}}); };
+      const view = () => { const it = picks[i]; clear(o.card); o.card.appendChild(head()); o.card.appendChild(bar());
+        const tk = el("p","small muted", LT("Téma: ", "Topic: ") + it.t.title); o.card.appendChild(tk);
+        const q = el("p","drq"); q.appendChild(document.createTextNode(LT("Klikni na svíčku: ", "Click the candle: "))); q.appendChild(el("b", null, it.q.s)); o.card.appendChild(q);
+        const fig = el("figure","fig pa-fig picking trv-fig"), sv = el("div","pa-svg"); sv.innerHTML = draw(it); fig.appendChild(sv); o.card.appendChild(fig);
+        const fb = el("p","drfb"), nx = el("button","primary", LT("Další", "Next")); nx.type = "button"; nx.hidden = true; o.card.appendChild(fb); o.card.appendChild(nx);
+        let tries = 0, over = false;
+        const end = good => { over = true; res.push(good); if (good){ ok++; delete tv.miss[it.key]; } else tv.miss[it.key] = (tv.miss[it.key] || 0) + 1;
+          fig.classList.remove("picking"); sv.innerHTML = draw(it, it.q.ans, it.q.m); clear(fb); fb.appendChild(el("b", null, good ? LT("Správně. ", "Correct. ") : LT("Tady to je. ", "Here it is. "))); fb.appendChild(document.createTextNode(good ? LT("Tohle místo poznáš i na skutečném grafu.", "You will spot this on a real chart too.") : LT("Vrátí se ti to v dalších dnech.", "It will come back on later days.")));
+          const b2 = o.card.querySelector(".drbar"); if (b2) b2.replaceWith(bar()); nx.hidden = false; nx.textContent = i >= picks.length - 1 ? LT("Výsledek", "Result") : LT("Další", "Next"); try { nx.focus({preventScroll: true}); } catch(e){} };
+        sv.addEventListener("click", ev => { if (over) return; const h = ev.target.closest && ev.target.closest(".hit"); if (!h) return; const K = paHist(it.t).length, idx = Number(h.dataset.i) - K;
+          if (it.q.ans.includes(idx)) end(true); else { tries++; h.style.fill = "var(--bad)"; h.style.fillOpacity = ".18"; if (tries >= 2) end(false); else { clear(fb); fb.appendChild(document.createTextNode(LT("Ještě jednou. Vzpomeň si na kroky tématu.", "Once more. Think back to the topic's steps."))); } } });
+        nx.addEventListener("click", () => { i++; if (i >= picks.length) finish(); else view(); }); };
+      const finish = () => { if (!done){ done = true; if (first){ tv.d[today] = {n: picks.length, ok: ok}; tv.okAll = (tv.okAll || 0) + ok; } const ks = Object.keys(tv.d).sort(); ks.slice(0, Math.max(0, ks.length - 60)).forEach(k => delete tv.d[k]); keep(); try { if (window.TapeXP) window.TapeXP(); } catch(e){} }
+        clear(o.card); o.card.appendChild(head()); o.card.appendChild(bar());
+        o.card.appendChild(el("p","drq", LT("Výsledek: " + ok + " z " + picks.length, "Result: " + ok + " of " + picks.length)));
+        o.card.appendChild(el("p","muted", first ? LT("Za každou správnou odpověď máš 3 XP. Chyby se ti vrátí v dalších dnech jako první.", "Each correct answer gives you 3 XP. Mistakes come back first on later days.") : LT("Dnešní výsledek už je zapsaný. Tohle kolo bylo jen na trénink.", "Today's result is already recorded. This round was practice only.")));
+        const again = el("button", null, LT("Další kolo", "Another round")); again.type = "button"; again.addEventListener("click", () => { o.close(); openTopicReview(); }); o.card.appendChild(again); };
+      if (!picks.length){ clear(o.card); o.card.appendChild(head()); o.card.appendChild(el("p","muted", LT("Nejdřív projdi aspoň jedno obrázkové téma v Učení.", "First go through at least one picture topic in Learning."))); return; }
+      view(); }
     function openDrill(chal){ chal = chal === true; const o = overlay("drov"), ROUNDS = 8; let mode = "all", i = 0, res = [], run = 0, r = null, sel = null, shown = false, t0 = 0;
       const head = () => { const h = el("div","row"), x = el("button","ck-del","Zavřít"); x.type = "button"; x.addEventListener("click", () => { drSeed = null; o.close(); }); h.appendChild(el("span","kick", chal ? "Výzva dne" : "Poznej to na grafu")); h.appendChild(x); return h; };
       const start = () => { i = 0; res = []; t0 = Date.now(); if (chal) drSeed = chalSeed("tape-chal-" + chalKey()); next(); };
@@ -9480,9 +9515,12 @@ a.brand:hover .cd{height:.43em;margin-top:.05em}
     // journal: trades by day (first three detailed ones count), plans, evenings, disciplined days without a trade
     const byDay = {}, own = (jr.trades || []).filter(t => !t.missed); own.slice().sort((a, b) => a.ts < b.ts ? -1 : 1).forEach(t => { (byDay[tDay(t)] = byDay[tDay(t)] || []).push(t); });
     const det = t => !!t.setup && !!(t.grade || t.emo || (t.dol && t.dol.length) || (t.conf && t.conf.length) || (t.cfm && t.cfm.length) || (t.note && String(t.note).trim()));
-    let trN = 0, trPlan = 0, byPlanAll = 0, cool = 0; own.forEach(t => { if (t.plan === "yes") byPlanAll++; if (t.rev === false) cool++; });
-    Object.keys(byDay).forEach(k => byDay[k].filter(det).slice(0, 3).forEach(t => { trN++; if (t.plan === "yes") trPlan++; }));
-    add("Obchody zapsané s detaily", "Trades logged with details", trN, trN * 10); add("Obchody podle plánu", "Trades taken by the plan", trPlan, trPlan * 5);
+    // XP rewards reviewing the day, never the number of trades: a day counts once when every trade in it has a setup and a review
+    let revD = 0, byPlanAll = 0, cool = 0; own.forEach(t => { if (t.plan === "yes") byPlanAll++; if (t.rev === false) cool++; });
+    Object.keys(byDay).forEach(k => { if (byDay[k].length && byDay[k].every(det)) revD++; });
+    add("Dny s vyhodnocenými obchody", "Days with every trade reviewed", revD, revD * 25);
+    const drOk = (lp.drill && lp.drill.ok) || 0, trOk = (lp.trev && lp.trev.okAll) || 0;
+    add("Dril na grafu: správné odpovědi", "Chart drill: correct answers", drOk, drOk * 2); add("Opakování témat: správné odpovědi", "Topic review: correct answers", trOk, trOk * 3);
     let plN = 0, evN = 0, ntN = 0; Object.keys(jr.plans || {}).forEach(k => { let pp; try { pp = plProgress(jr.plans[k]); } catch(e){ return; } if (pp.pct < 50) return; plN++; if (pp.sec.eve){ evN++; if (!byDay[k]) ntN++; } });
     add("Plány dne", "Daily plans", plN, plN * 15); add("Večerní vyhodnocení plánu", "Evening plan reviews", evN, evN * 10); add("Dny s plánem a bez obchodu", "Planned days with no trade", ntN, ntN * 15);
     const rp = (jr.paper || []).filter(p => p.setup === "Replay"), rpDays = {}; rp.forEach(p => { try { rpDays[dayKey(new Date(p.ts))] = 1; } catch(e){} }); const rpN = Object.keys(rpDays).length;
@@ -9612,7 +9650,7 @@ a.brand:hover .cd{height:.43em;margin-top:.05em}
     const s4 = sec(LT("Za co máš XP", "Where your XP came from")), sl = el("div","lv-src"); if (!r.S.length) sl.appendChild(el("p","small muted", LT("Zatím nic. Začni první lekcí nebo plánem dne.", "Nothing yet. Start with your first lesson or a daily plan.")));
     r.S.slice().sort((a, b) => b.xp - a.xp).forEach(s => { const row = el("div","lv-sr"); row.appendChild(el("span", null, s.name)); row.appendChild(el("span","small muted", s.n + "×")); row.appendChild(el("b", null, "+" + lvNum(s.xp) + " XP")); sl.appendChild(row); }); s4.appendChild(sl);
     const s5 = sec(LT("Jak se XP počítá", "How XP is counted")), rl = el("div","lv-src");
-    [[LT("Lekce kurzu podle složitosti", "Course lesson by difficulty"), "20 / 40 / 60"], [LT("Denní lekce a téma price action", "Daily lesson and price action topic"), "20"], [LT("Lekce MOROS", "MOROS lesson"), "40"], [LT("Kvíz bez chyby", "Flawless quiz"), "+10"], [LT("Složená zkouška", "Exam passed"), "100"], [LT("Kartička, kterou umíš", "Flashcard you know"), "2"], [LT("Plán dne aspoň z poloviny", "Daily plan at least half filled"), "15"], [LT("Večerní vyhodnocení plánu", "Evening plan review"), "+10"], [LT("Den s plánem, vyhodnocením a bez obchodu", "Day with a plan, a review and no trade"), "+15"], [LT("Obchod zapsaný s detaily, nejvýš 3 denně", "Trade logged with details, up to 3 a day"), "10"], [LT("Obchod podle plánu, i ztrátový", "Trade by the plan, even a losing one"), "+5"], [LT("Den s obchodem v replayi", "Day with a replay trade"), "15"], [LT("Každý sedmý den série", "Every seventh day of a streak"), "50"]].forEach(q => { const row = el("div","lv-sr"); row.appendChild(el("span", null, q[0])); row.appendChild(el("span")); row.appendChild(el("b", null, q[1] + " XP")); rl.appendChild(row); }); s5.appendChild(rl);
+    [[LT("Lekce kurzu podle složitosti", "Course lesson by difficulty"), "20 / 40 / 60"], [LT("Denní lekce a téma price action", "Daily lesson and price action topic"), "20"], [LT("Lekce MOROS", "MOROS lesson"), "40"], [LT("Kvíz bez chyby", "Flawless quiz"), "+10"], [LT("Složená zkouška", "Exam passed"), "100"], [LT("Kartička, kterou umíš", "Flashcard you know"), "2"], [LT("Plán dne aspoň z poloviny", "Daily plan at least half filled"), "15"], [LT("Večerní vyhodnocení plánu", "Evening plan review"), "+10"], [LT("Den s plánem, vyhodnocením a bez obchodu", "Day with a plan, a review and no trade"), "+15"], [LT("Den, kdy má každý obchod setup a vyhodnocení", "Day when every trade has a setup and a review"), "25"], [LT("Opakování témat: správná odpověď", "Topic review: correct answer"), "3"], [LT("Dril na grafu: správná odpověď", "Chart drill: correct answer"), "2"], [LT("Den s obchodem v replayi", "Day with a replay trade"), "15"], [LT("Každý sedmý den série", "Every seventh day of a streak"), "50"]].forEach(q => { const row = el("div","lv-sr"); row.appendChild(el("span", null, q[0])); row.appendChild(el("span")); row.appendChild(el("b", null, q[1] + " XP")); rl.appendChild(row); }); s5.appendChild(rl);
     s5.appendChild(el("p","small muted", LT("XP se počítají z toho, co máš v Tape uložené, takže platí i zpětně a na všech zařízeních s tvým účtem. Odměny jsou jen kosmetické.", "XP is counted from what you have saved in Tape, so it works retroactively and on every device with your account. Rewards are cosmetic only.")));
   }
 
