@@ -3347,6 +3347,41 @@ a.brand:hover .cd{height:.43em;margin-top:.05em}
 @keyframes smGlow{0%,100%{box-shadow:0 0 0 0 rgba(242,193,78,0)}50%{box-shadow:0 0 14px 1px rgba(242,193,78,.55)}}
 @keyframes smRing{0%,100%{box-shadow:0 0 0 2px var(--bg),0 0 0 3.5px #f2c14e,0 0 8px rgba(242,193,78,.3)}50%{box-shadow:0 0 0 2px var(--bg),0 0 0 3.5px #ffe08a,0 0 20px rgba(242,193,78,.7)}}
 @media (prefers-reduced-motion:reduce){.pl-chip.smart,.pf-plan .pl-name.smart,.tb-acc.pl-smart,.tb-acc.pl-smart .pl-b,.pf-plan.is-smart::before{animation:none!important}}
+
+/* plan cards: hover life, and Smart Money as the top plan */
+.plan{transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s ease,border-color .3s ease;will-change:transform}
+.plan li{transition:transform .3s ease}
+.plan li svg{transition:transform .35s cubic-bezier(.3,1.6,.5,1)}
+.plan>button.primary{position:relative;overflow:hidden}
+.plan>button.primary::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.4) 50%,transparent 65%) -150% 0/250% 100% no-repeat;pointer-events:none}
+@media (hover:hover){
+  .plan:hover{transform:translateY(-6px);box-shadow:0 30px 70px -38px color-mix(in srgb,var(--accent) 70%,transparent),0 0 0 1px color-mix(in srgb,var(--accent) 50%,transparent)}
+  .plan:hover li{transform:translateX(3px)}
+  .plan:hover li svg{transform:scale(1.2)}
+  .plan:hover li:nth-child(2){transition-delay:.04s}.plan:hover li:nth-child(3){transition-delay:.08s}.plan:hover li:nth-child(4){transition-delay:.12s}
+  .plan:hover>button.primary::after{animation:plShine .9s ease}
+  .plan.pl-smart:hover{transform:translateY(-10px) scale(1.015)}
+}
+@keyframes plShine{to{background-position:250% 0}}
+.plan.pl-pro{border-color:color-mix(in srgb,var(--accent) 45%,var(--line))}
+.plan.pl-smart{isolation:isolate;border:0!important;background:transparent;box-shadow:0 30px 80px -40px rgba(224,164,58,.75)}
+.plan.pl-smart::before{content:"";position:absolute;inset:0;z-index:-2;border-radius:inherit;background:conic-gradient(from var(--ua),#e0a43a,#fff3c4,#f7d774,#c58aff,#8ab4ff,#e0a43a);animation:upSpin 5s linear infinite}
+.plan.pl-smart::after{content:"";position:absolute;inset:2px;z-index:-1;border-radius:20px;background:radial-gradient(120% 70% at 85% 0%,rgba(247,215,116,.22),transparent 60%),radial-gradient(90% 60% at 0% 100%,rgba(197,138,255,.14),transparent 60%),var(--surface)}
+.plan.pl-smart .pl-glow{position:absolute;inset:-14px;z-index:-3;border-radius:30px;background:radial-gradient(closest-side,rgba(242,193,78,.4),transparent);filter:blur(18px);opacity:.55;animation:smPulse 3.2s ease-in-out infinite;pointer-events:none}
+.plan.pl-smart:hover .pl-glow{opacity:1}
+.plan.pl-smart .pl-badge{background:linear-gradient(110deg,#e0a43a,#f7d774 35%,#fff3c4 50%,#f7d774 65%,#e0a43a);background-size:250% 100%;color:#1a1205;animation:smGold 3s ease-in-out infinite,smGlow 2.6s ease-in-out infinite;left:auto;right:20px}
+.plan.pl-smart.cur .pl-badge{left:20px;right:auto}
+.plan.pl-smart h3{display:flex;align-items:center;gap:8px}
+.plan.pl-smart h3::before{content:"";width:22px;height:22px;flex:none;background:linear-gradient(135deg,#f7d774,#e0a43a);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z'/%3E%3C/svg%3E") center/contain no-repeat;animation:upHop 2.4s ease-in-out infinite}
+.plan.pl-smart .pl-price b{background:linear-gradient(110deg,#c98a1f,#f2c14e 40%,#ffe9a8 50%,#f2c14e 60%,#c98a1f);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:smGold 3.4s ease-in-out infinite}
+.plan.pl-smart li svg{stroke:#e0a43a}
+.plan.pl-smart>button.primary{background:linear-gradient(135deg,#f7d774,#e0a43a)!important;color:#1a1205!important;border:0!important;box-shadow:0 10px 28px -10px rgba(224,164,58,.85)}
+.plan.pl-smart>button.primary::after{animation:plShine 3s ease-in-out infinite}
+.plan.pl-smart .pl-spk{position:absolute;width:10px;height:10px;z-index:1;pointer-events:none;background:#f7d774;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 0l2.5 9.5L24 12l-9.5 2.5L12 24l-2.5-9.5L0 12l9.5-2.5z'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 0l2.5 9.5L24 12l-9.5 2.5L12 24l-2.5-9.5L0 12l9.5-2.5z'/%3E%3C/svg%3E") center/contain no-repeat;animation:smSpark 2.8s ease-in-out infinite;opacity:0}
+.plan.pl-smart .s1{top:18px;right:58%;animation-delay:0s}.plan.pl-smart .s2{top:64px;right:22px;width:14px;height:14px;animation-delay:.9s}.plan.pl-smart .s3{bottom:86px;right:16px;width:8px;height:8px;animation-delay:1.6s}.plan.pl-smart .s4{top:40%;left:12px;width:9px;height:9px;animation-delay:2.2s}
+@keyframes smSpark{0%,100%{opacity:0;transform:scale(.3) rotate(0)}40%{opacity:1;transform:scale(1) rotate(45deg)}70%{opacity:0;transform:scale(.4) rotate(90deg)}}
+@keyframes smPulse{0%,100%{opacity:.4}50%{opacity:.8}}
+@media (prefers-reduced-motion:reduce){.plan,.plan *,.plan::before,.plan::after{animation:none!important;transition:none!important}.plan.pl-smart .pl-spk{display:none}}
 </style>
 </head>
 <body>
@@ -9766,8 +9801,8 @@ a.brand:hover .cd{height:.43em;margin-top:.05em}
   const gT = (tag, cls, cz, en) => { const n = el(tag, cls, LT(cz, en)); if (n.firstChild) n.firstChild.__en = n.firstChild.nodeValue; return n; };
   const PLANS = [
     {id: "beginner", name: "Beginner", price: 0, year: 0, tag: ["Na rozjezd, zdarma napořád", "To get started, free forever"], items: [["První 4 týdny kurzu a prvních 6 obrázkových témat", "The first 4 weeks of the course and the first 6 picture topics"], ["Čtení grafu každý den", "Daily chart read"], ["Deník bez limitu obchodů, statistiky za 30 dní", "Journal with no trade limit, statistics for 30 days"], ["Replay na cvičných datech", "Replay on practice data"]]},
-    {id: "pro", name: "Pro", price: 390, year: 3900, best: true, tag: ["Pro každodenní práci", "For daily work"], items: [["Celý kurz, všechna témata a Studium ICT s Modelem 2022", "The whole course, all topics and ICT Study with Model 2022"], ["Statistiky za celou historii a import z Tradovate", "Statistics for your whole history and Tradovate import"], ["Zrcadlo chyb z tvých obchodů", "Mirror of mistakes from your trades"], ["Replay s vlastními daty a Replay zkouška", "Replay with your own data and the Replay exam"]]},
-    {id: "smart", name: "Smart Money", price: 790, year: 7900, tag: ["Všechno, co Tape umí", "Everything Tape can do"], items: [["Všechno z plánu Pro", "Everything in Pro"], ["Premium: pokročilé rozbory a modely", "Premium: advanced breakdowns and models"], ["AI kouč nad tvým deníkem (s vlastním klíčem)", "AI coach over your journal (with your own key)"], ["Novinky jako první", "New features first"]]}];
+    {id: "pro", name: "Pro", price: 390, year: 3900, tag: ["Pro každodenní práci", "For daily work"], items: [["Celý kurz, všechna témata a Studium ICT s Modelem 2022", "The whole course, all topics and ICT Study with Model 2022"], ["Statistiky za celou historii a import z Tradovate", "Statistics for your whole history and Tradovate import"], ["Zrcadlo chyb z tvých obchodů", "Mirror of mistakes from your trades"], ["Replay s vlastními daty a Replay zkouška", "Replay with your own data and the Replay exam"]]},
+    {id: "smart", name: "Smart Money", price: 790, year: 7900, best: true, tag: ["Všechno, co Tape umí", "Everything Tape can do"], items: [["Všechno z plánu Pro", "Everything in Pro"], ["Premium: pokročilé rozbory a modely", "Premium: advanced breakdowns and models"], ["AI kouč nad tvým deníkem (s vlastním klíčem)", "AI coach over your journal (with your own key)"], ["Novinky jako první", "New features first"]]}];
   const planOf = id => PLANS.find(p => p.id === id) || null;
   function planGet(){ try { const v = JSON.parse(localStorage.getItem(PLAN_KEY) || "null"); return v && auth && v.uid === auth.id && planOf(v.id) ? v : null; } catch(e){ return null; } }
   function planSet(id){ if (!auth || !planOf(id)) return; const at = new Date().toISOString(); try { localStorage.setItem(PLAN_KEY, JSON.stringify({id: id, at: at, uid: auth.id})); } catch(e){}
@@ -9852,9 +9887,10 @@ a.brand:hover .cd{height:.43em;margin-top:.05em}
     const h2 = el("h2", null, np ? LT("Tohle je v plánu ", "This is in the ") + np.name + LT("", " plan") : LT("Vyber si plán", "Choose your plan")); h2.firstChild.__en = h2.textContent; hd.appendChild(h2);
     hd.appendChild(on ? gT("p", null, "Beginner je zdarma napořád. Placený plán zrušíš kdykoli a první platbu ti do 14 dnů na požádání vrátíme.", "Beginner is free forever. You can cancel a paid plan at any time and we refund the first payment within 14 days on request.") : gT("p", null, "Tape spouštíme postupně. Teď máš odemčené všechno, ať vybereš cokoli. Výběrem nám řekneš, o co máš zájem.", "Tape is launching step by step. Right now everything is unlocked whatever you choose. Your choice tells us what you are interested in."));
     let anyLink = false;
-    PLANS.forEach(p => { const mine = on ? act === p.id : !!(pick && pick.id === p.id), c = el("div", "plan" + (p.best ? " best" : "") + (mine ? " cur" : "")), pr = el("div", "pl-price"), ul = el("ul"), b = el("button", p.best ? "primary" : null), link = okL(pay[p.id]), yl = okL(pay[p.id + "_year"]);
+    PLANS.forEach(p => { const mine = on ? act === p.id : !!(pick && pick.id === p.id), c = el("div", "plan pl-" + p.id + (p.best ? " best" : "") + (mine ? " cur" : "")), pr = el("div", "pl-price"), ul = el("ul"), b = el("button", p.price ? "primary" : null), link = okL(pay[p.id]), yl = okL(pay[p.id + "_year"]);
       if (link || yl) anyLink = true;
       if (mine) c.appendChild(on ? gT("span", "pl-badge", "Tvůj plán", "Your plan") : gT("span", "pl-badge", "Tvůj výběr", "Your choice")); else if (p.best) c.appendChild(gT("span", "pl-badge", "Doporučujeme", "Recommended"));
+      if (p.id === "smart"){ c.appendChild(el("i", "pl-glow")); ["s1", "s2", "s3", "s4"].forEach(k => c.appendChild(el("i", "pl-spk " + k))); }
       const nm = el("h3", null, p.name); nm.firstChild.__en = p.name; c.appendChild(nm); c.appendChild(gT("p", "pl-tag", p.tag[0], p.tag[1]));
       if (p.price){ const pb = el("b", null, p.price + LT(" Kč", " CZK")); pb.firstChild.__en = pb.textContent; pr.appendChild(pb); pr.appendChild(gT("span", null, "měsíčně", "a month")); } else pr.appendChild(gT("b", null, "Zdarma", "Free"));
       c.appendChild(pr);
