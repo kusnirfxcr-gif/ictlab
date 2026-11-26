@@ -2434,5 +2434,7 @@
  "Vrátit poslední import": "Undo the last import",
  "Jiný broker: obecné CSV": "Another broker: generic CSV",
  "CSV s uzavřenými obchody a sloupcem se ziskem (NinjaTrader a podobné). V exportu není stop, R se proto počítá ze zisku v dolarech.": "A CSV with closed trades and a profit column (NinjaTrader and similar). The export has no stop, so R is computed from the profit in dollars.",
- "Import": "Import"
+ "Import": "Import",
+ "Aplikace se používá s účtem. Při jeho založení odpovídáš za správnost údajů a za to, že přístup nikomu nepředáš.": "The app is used with an account. When you create it, you are responsible for accurate details and for not sharing your access with anyone.",
+ "Aplikace se používá s účtem. Deník, plány, postup v učení a nastavení si navíc ukládá i ve tvém prohlížeči, aby fungovala bez připojení.": "The app is used with an account. It also keeps your journal, plans, learning progress and settings in your browser so that it works offline."
 }
