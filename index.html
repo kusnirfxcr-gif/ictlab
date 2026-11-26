@@ -3274,6 +3274,18 @@ a.brand:hover .cd{height:.43em;margin-top:.05em}
 .zm-fsb button svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
 .zm-fsb button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 6px 18px var(--accent-soft)}
 .lesson-body>.zm-head,.zm-full>.zm-head{order:-10}
+/* gate: new visitors see "New account" first; a clear switch between creating an account and signing in */
+.gate-seg{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:5px;margin:0 0 18px;border-radius:16px;background:color-mix(in srgb,var(--ink) 6%,transparent);border:1px solid var(--line)}
+.gate-seg[hidden]{display:none}
+.gate-seg button{min-height:48px;border:0;border-radius:12px;background:none;color:var(--muted);display:flex;align-items:center;justify-content:center;gap:6px;font-size:15px;padding:0 6px;white-space:nowrap;box-shadow:none;transition:background .2s ease,color .2s ease}
+.gate-seg button b{font-weight:800}
+.gate-seg button small{font-size:9.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:2px 6px;border-radius:999px;background:var(--accent-soft);color:var(--accent)}
+.gate-seg button.on{background:var(--surface2);color:var(--ink);box-shadow:0 6px 16px -10px rgba(0,0,0,.6)}
+.gate-seg button[data-m="up"].on{background:linear-gradient(135deg,var(--accent),color-mix(in srgb,var(--accent) 78%,#fff));color:var(--bg);box-shadow:0 10px 26px -12px var(--accent)}
+.gate-seg button[data-m="up"].on small{background:color-mix(in srgb,var(--bg) 22%,transparent);color:var(--bg)}
+.gate.is-up .gate-slot form button.primary{background:linear-gradient(135deg,var(--accent),color-mix(in srgb,var(--accent) 78%,#fff))!important;color:var(--bg)!important;border-color:transparent!important}
+.gate.is-up .gate-card{border-color:color-mix(in srgb,var(--accent) 55%,var(--line));box-shadow:0 0 0 1px color-mix(in srgb,var(--accent) 30%,transparent),0 34px 90px -46px var(--accent)}
+.gate-slot .rp-ctl [data-m="up"],.gate-slot .rp-ctl [data-m="in"]{display:none}
 </style>
 </head>
 <body>
@@ -7197,7 +7209,7 @@ a.brand:hover .cd{height:.43em;margin-top:.05em}
           try { localStorage.setItem("tape-oauth", "1"); } catch(e){} location.href = SB.url + "/auth/v1/authorize?provider=google&redirect_to=" + encodeURIComponent(accBack()); await new Promise(() => {}); });
         or.appendChild(el("span", null, "nebo e-mailem")); accBox.appendChild(g); accBox.appendChild(or); }
       accBox.appendChild(f);
-      const sw = (text, m) => { const a = btn("ck-del", text); a.addEventListener("click", () => { accMode = m; accMsg = ""; accRender(); }); links.appendChild(a); };
+      const sw = (text, m) => { const a = btn("ck-del", text); a.dataset.m = m; a.addEventListener("click", () => { accMode = m; accMsg = ""; accRender(); }); links.appendChild(a); };
       if (accMode !== "in") sw("Mám účet, přihlásit se", "in"); if (accMode !== "up") sw("Založit účet", "up"); if (accMode === "in") sw("Zapomenuté heslo", "reset"); accBox.appendChild(links);
     }
     if (accMsg){ msg.textContent = accMsg; msg.setAttribute("role","status"); accBox.appendChild(msg); }
@@ -9715,6 +9727,8 @@ a.brand:hover .cd{height:.43em;margin-top:.05em}
     if (on){ document.body.classList.add("gated"); Array.prototype.forEach.call(document.body.children, n => { if (n !== gateEl && n.id !== "toast" && n.tagName !== "SCRIPT" && !n.inert){ n.inert = true; gateInert.push(n); } }); }
     else { gateInert.forEach(n => { n.inert = false; }); gateInert = []; gateModalOff(); } }
   function gatePaint(){ if (!gateEl) return; const h = gateEl._h, s = gateEl._s, m = accMode;
+    if (gateEl._seg){ gateEl._seg.hidden = m === "reset" || m === "newpass"; Array.prototype.forEach.call(gateEl._seg.children, b => { const on = b.dataset.m === m; b.classList.toggle("on", on); b.setAttribute("aria-selected", String(on)); }); }
+    gateEl.classList.toggle("is-up", m === "up"); { const sb = gateEl._slot.querySelector("form button.primary"); if (sb && m === "up"){ sb.textContent = LT("Založit účet zdarma", "Create a free account"); if (sb.firstChild) sb.firstChild.__en = sb.textContent; } }
     h.textContent = m === "up" ? LT("Založ si účet", "Create your account") : m === "reset" ? LT("Obnova hesla", "Reset your password") : LT("Přihlas se a pokračuj", "Sign in to continue");
     s.textContent = m === "up" ? LT("Stačí e-mail a heslo. Deník a postup v učení se uloží k účtu a načtou se na telefonu i počítači.", "An e-mail and a password are enough. Your journal and progress are saved to the account and load on phone and computer.") : m === "reset" ? LT("Napiš e-mail účtu. Pošleme ti odkaz, přes který si nastavíš nové heslo.", "Enter the account e-mail. We will send you a link to set a new password.") : LT("Tape se používá s účtem. Tvoje data jsou pak na všech zařízeních.", "Tape is used with an account. Your data is then on all your devices.");
     [h, s].forEach(n => { if (n.firstChild) n.firstChild.__en = n.firstChild.nodeValue; }); }
@@ -9723,6 +9737,7 @@ a.brand:hover .cd{height:.43em;margin-top:.05em}
   function gateUnpeek(){ if (!gatePeek) return; gatePeek = false; if (gateBackBtn) gateBackBtn.remove(); if (gateEl){ gateEl.hidden = false; gateLock(true); gateEl.scrollTop = 0; } }
   window.addEventListener("hashchange", () => { if (gateEl && gatePeek && location.hash !== "#pravni") gateUnpeek(); });
   function gateBuild(){
+    try { if (accMode === "in" && !localStorage.getItem("tape-had-acct") && !localStorage.getItem("tape-last-email")) accMode = "up"; } catch(e){}
     const g = el("div", "gate"), inn = el("div", "gate-in"), head = el("div", "gate-head"), more = el("div", "gate-more"), card = el("div", "gate-card"), slot = el("div", "gate-slot");
     ["b1", "b2", "b3"].forEach(k => g.appendChild(el("i", "gate-blob " + k))); try { welTone(g); } catch(e){}
     const lg = el("span", "brand gl"), lw = el("span", null, "tape"); lw.firstChild.__en = "tape"; lg.setAttribute("aria-label", "Tape"); lg.appendChild(lw); lg.appendChild(el("i", "cd")); head.appendChild(lg);
@@ -9739,6 +9754,10 @@ a.brand:hover .cd{height:.43em;margin-top:.05em}
     const note = el("p", "gate-note"), lk = (cz, en, tab) => { const a = gT("a", null, cz, en); a.setAttribute("role", "button"); a.tabIndex = 0; const go = ev => { ev.preventDefault(); gateLegal(tab); }; a.addEventListener("click", go); a.addEventListener("keydown", ev => { if (ev.key === "Enter") go(ev); }); return a; };
     const nt = document.createTextNode(LT("Tape je vzdělávací aplikace. Není to investiční poradenství a neslibuje zisk. Obchodování futures je rizikové. ", "Tape is an educational app. It is not investment advice and promises no profit. Trading futures is risky. ")); nt.__en = nt.nodeValue; note.appendChild(nt);
     note.appendChild(lk("Rizika", "Risks", "rizika")); note.appendChild(document.createTextNode(" · ")); note.appendChild(lk("Podmínky", "Terms", "podminky")); note.appendChild(document.createTextNode(" · ")); note.appendChild(lk("Soukromí", "Privacy", "gdpr")); more.appendChild(note);
+    const seg = el("div", "gate-seg"); seg.setAttribute("role", "tablist");
+    [["up", "Nový účet", "New account", "zdarma", "free"], ["in", "Mám účet", "I have an account", "", ""]].forEach(o => { const b = el("button"), t = el("b", null, LT(o[1], o[2])); b.type = "button"; b.dataset.m = o[0]; b.setAttribute("role", "tab"); if (t.firstChild) t.firstChild.__en = t.textContent; b.appendChild(t); if (o[3]){ const sm = el("small", null, LT(o[3], o[4])); if (sm.firstChild) sm.firstChild.__en = sm.textContent; b.appendChild(sm); }
+      b.addEventListener("click", () => { if (accMode === o[0]) return; accMode = o[0]; accMsg = ""; accRender(); }); seg.appendChild(b); });
+    g._seg = seg; card.appendChild(seg);
     g._h = el("h2"); g._s = el("p", "gate-cs"); g._slot = slot; card.appendChild(g._h); card.appendChild(g._s); card.appendChild(slot);
     inn.appendChild(head); inn.appendChild(card); inn.appendChild(more); g.appendChild(inn); g.setAttribute("role", "dialog"); g.setAttribute("aria-modal", "true"); g.setAttribute("aria-label", LT("Přihlášení do Tape", "Sign in to Tape"));
     document.body.appendChild(g); return g;
@@ -9752,6 +9771,7 @@ a.brand:hover .cd{height:.43em;margin-top:.05em}
     if (!GATE_OFF && !auth && !accPending){ planSeen = ""; const pl = document.querySelector(".plans"); if (pl) pl.remove();
       if (!gateEl) gateEl = gateBuild(); if (accBox.parentNode !== gateEl._slot) gateEl._slot.appendChild(accBox); gatePaint(); if (!gatePeek){ gateEl.hidden = false; gateLock(true); } }
     else if (gateEl && (auth || GATE_OFF)) gateClose();
+    if (auth){ try { localStorage.setItem("tape-had-acct", "1"); } catch(e){} }
     if (auth && !GATE_OFF && accMode !== "newpass"){ planCheck(); accessLoad(); }
   }
   // the plan a person picked: kept in this browser and in the account, so it follows them to another device
