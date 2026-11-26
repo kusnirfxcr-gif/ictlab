@@ -3237,6 +3237,12 @@ a.brand:hover .cd{height:.43em;margin-top:.05em}
   html body .lesson-body>.lb-focus~.mus-btn button{min-height:40px;padding:0 12px;font-size:14px}
   html body .lesson-body>.lb-focus~.mus-btn button span{display:none}
   html body .lesson-body>.lb-focus span{display:none}
+  body[data-group="uceni"] #phead{display:none!important}
+  #pa-card>.row:first-child{display:none}
+  html body #pa-body>.pa-title{display:none}
+  html body #pa-body>.pa-title+p.muted{font-size:14px;line-height:1.4;margin:0;order:-3}
+  html body #pa-body>figure.pa-fig{order:-2}
+  html body #pa-body>figure.pa-fig~*{order:-1}
   html body #pa-body.lesson-body,html body #pr-body.lesson-body{flex-direction:row;flex-wrap:wrap;column-gap:8px}
   html body #pa-body.lesson-body>*,html body #pr-body.lesson-body>*{flex:1 1 100%;min-width:0}
   html body #pa-body.lesson-body>.lb-focus,html body #pa-body.lesson-body>.mus-btn,html body #pr-body.lesson-body>.lb-focus,html body #pr-body.lesson-body>.mus-btn{flex:0 0 auto}
@@ -3248,6 +3254,18 @@ a.brand:hover .cd{height:.43em;margin-top:.05em}
   html body #pa-nav .pt-arr{width:auto;min-height:56px;padding:0}
   html body #pa-nav .pt-all{grid-column:4;grid-row:1;min-height:56px;padding:4px 6px;font-size:12px;line-height:1.15;white-space:normal;text-align:center}
   html body #pa-nav>:not(.pt-arr):not(.pt-cur):not(.pt-all){grid-column:1/-1}
+}
+/* full-screen lesson on a phone: one clear close bar on top, the open button is hidden inside */
+@media (max-width:699px){
+  html body .zm-full{padding:0 14px 18px!important}
+  html body .zm-full>.zm-head{position:sticky;top:0;margin:0 -14px 4px!important;padding:calc(10px + env(safe-area-inset-top)) 14px 10px!important;gap:10px;justify-content:space-between}
+  html body .zm-full>.zm-head .zm-hint,html body .zm-full>.zm-head .zm-exitf,html body .zm-full>.zm-head kbd{display:none!important}
+  html body .zm-full>.zm-head .zm-mode{font-size:12px;letter-spacing:.14em}
+  html body .zm-full>.zm-head .zm-x{min-height:44px;padding:0 18px 0 14px!important;font-size:15px}
+  html body .zm-full>.zm-head .zm-x svg{width:16px;height:16px}
+  html body .zm-full>.zm-head .zm-x span{font-size:0}html body .zm-full>.zm-head .zm-x span::after{content:"Zavřít";font-size:15px}
+  html[lang="en"] body .zm-full>.zm-head .zm-x span::after{content:"Close"}
+  html body .zm-full>.lb-focus{display:none!important}
 }
 </style>
 </head>
