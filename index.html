@@ -3295,6 +3295,42 @@ a.brand:hover .cd{height:.43em;margin-top:.05em}
   #v-backtest .rp-tfs button,#v-backtest .rp-tf button,#v-backtest .rp-tfb,#v-backtest .rp-seg button{min-height:36px;min-width:36px}
   #v-backtest .rp-tools button{width:32px!important;min-height:34px!important}
 }
+
+/* plan on the profile, and the upgrade button */
+@property --ua{syntax:"<angle>";inherits:false;initial-value:0deg}
+.tb-acc{position:relative;overflow:visible!important}
+.tb-acc.pic img{border-radius:999px}
+.tb-acc .pl-b{position:absolute;left:50%;bottom:-7px;transform:translateX(-50%);padding:1.5px 5px;border-radius:999px;font-size:8.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;line-height:1.2;white-space:nowrap;background:var(--surface);color:var(--muted);border:1px solid var(--line);pointer-events:none}
+.tb-acc.pl-pro{box-shadow:0 0 0 2px var(--bg),0 0 0 3.5px var(--accent)}
+.tb-acc.pl-pro .pl-b{background:var(--accent);color:var(--bg);border-color:transparent}
+.tb-acc.pl-smart{box-shadow:0 0 0 2px var(--bg),0 0 0 3.5px #f2c14e,0 0 14px rgba(242,193,78,.45)}
+.tb-acc.pl-smart .pl-b{background:linear-gradient(135deg,#f7d774,#e0a43a);color:#1a1205;border-color:transparent}
+.tb-up{position:relative;isolation:isolate;display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px 0 11px;border-radius:999px;border:0!important;background:transparent!important;color:var(--ink)!important;font-size:13.5px;font-weight:800;letter-spacing:-.01em;cursor:pointer;white-space:nowrap;overflow:hidden;flex:none;width:auto!important;min-height:0!important;animation:upGlow 2.8s ease-in-out infinite}
+.tb-up::before{content:"";position:absolute;inset:0;z-index:-2;border-radius:inherit;background:conic-gradient(from var(--ua),var(--accent),#f2c14e,#c58aff,var(--accent));animation:upSpin 3.2s linear infinite}
+.tb-up::after{content:"";position:absolute;inset:1.5px;z-index:-1;border-radius:inherit;background:linear-gradient(105deg,transparent 30%,rgba(255,255,255,.28) 46%,transparent 62%) -160% 0/250% 100% no-repeat,linear-gradient(color-mix(in srgb,var(--accent) 16%,var(--surface)),color-mix(in srgb,var(--accent) 16%,var(--surface)));animation:upShine 3.6s ease-in-out infinite}
+.tb-up svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;color:var(--accent);animation:upHop 1.8s ease-in-out infinite}
+.tb-up:hover{transform:translateY(-1px)}
+.tb-up:active{transform:scale(.97)}
+@keyframes upSpin{to{--ua:360deg}}
+@keyframes upShine{0%,55%{background-position:-160% 0,0 0}85%,100%{background-position:260% 0,0 0}}
+@keyframes upHop{0%,60%,100%{transform:translateY(0)}75%{transform:translateY(-3px)}}
+@keyframes upGlow{0%,100%{box-shadow:0 0 0 0 transparent}50%{box-shadow:0 0 18px -2px color-mix(in srgb,var(--accent) 60%,transparent)}}
+@media (prefers-reduced-motion:reduce){.tb-up,.tb-up::before,.tb-up::after,.tb-up svg{animation:none!important}}
+.pf-plan .pl-name{display:inline-flex;align-items:center;padding:3px 9px;border-radius:999px;font-size:12px;font-weight:800;border:1px solid var(--line);color:var(--ink);margin-right:auto}
+.pf-plan .pl-name.pro{background:var(--accent);color:var(--bg);border-color:transparent}
+.pf-plan .pl-name.smart{background:linear-gradient(135deg,#f7d774,#e0a43a);color:#1a1205;border-color:transparent}
+.pf-plan .pl-until{font-size:12px;font-weight:600;color:var(--muted)}
+.pf-plan .tb-up{height:32px;font-size:13px}
+.pf-plan.pf-plan-top{margin-top:12px;padding:10px 12px 10px 14px;border:1px solid var(--line);border-radius:16px;background:var(--surface)}
+.pf-nm{flex-wrap:wrap}
+.pl-chip{display:inline-flex;align-items:center;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:800;border:1px solid var(--line);color:var(--muted)}
+.pl-chip.pro{background:var(--accent);color:var(--bg);border-color:transparent}
+.pl-chip.smart{background:linear-gradient(135deg,#f7d774,#e0a43a);color:#1a1205;border-color:transparent}
+@media (max-width:859px){
+  html body .topbar .tb-up{height:34px;padding:0 10px 0 8px;font-size:12.5px;gap:4px}
+}
+@media (max-width:420px){html body .topbar .tb-up{font-size:12px;padding:0 9px 0 7px}}
+@media (max-width:349px){html body .topbar .tb-up span{display:none}html body .topbar .tb-up{width:34px!important;padding:0;justify-content:center}}
 </style>
 </head>
 <body>
@@ -9887,6 +9923,28 @@ a.brand:hover .cd{height:.43em;margin-top:.05em}
       v.insertBefore(pc, v.firstChild); if (path) v.insertBefore(path, pc.nextSibling);
       if (stats){ const after = train || path || pc; after.parentNode.insertBefore(stats, after.nextSibling); } } }
 
+  // ---------- plan on the profile button, and an upgrade button while a higher plan exists ----------
+  const UP_IC = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V6M6 11.5L12 5.5l6 6"/></svg>';
+  function planShown(){ return planOf(planNow()) || PLANS[0]; }
+  function upBtn(){ const cur = planNow(), to = cur === "beginner" ? "pro" : "smart", b = el("button", "tb-up"); b.type = "button"; b.innerHTML = UP_IC;
+    const t = el("span", null, "Upgrade"); t.firstChild.__en = "Upgrade"; b.appendChild(t);
+    b.setAttribute("aria-label", LT("Upgrade na plán ", "Upgrade to the ") + planOf(to).name + LT("", " plan")); b.title = b.getAttribute("aria-label");
+    b.addEventListener("click", ev => { ev.preventDefault(); ev.stopPropagation(); planOpen(true, to); }); return b; }
+  function tbPlanPaint(){ const a = $("tb-acc"); if (!a) return; const old = a.querySelector(".pl-b"); if (old) old.remove(); a.classList.remove("pl-beginner", "pl-pro", "pl-smart");
+    const act = a.parentNode, ub = act && act.querySelector(":scope > .tb-up"); if (ub) ub.remove();
+    if (!auth || GATE_OFF) return; const p = planShown(), b = el("i", "pl-b", p.id === "beginner" ? LT("Free", "Free") : p.id === "pro" ? "Pro" : "Smart"); b.setAttribute("aria-hidden", "true"); if (b.firstChild) b.firstChild.__en = b.textContent;
+    a.classList.add("pl-" + p.id); a.appendChild(b); a.setAttribute("aria-label", LT("Účet, plán ", "Account, plan ") + p.name); a.title = a.getAttribute("aria-label");
+    if (p.id !== "smart" && act) act.insertBefore(upBtn(), a); }
+  { const _rab2 = renderAccBtn; renderAccBtn = function(){ _rab2(); try { tbPlanPaint(); } catch(e){ if (window.console) console.error(e); } }; }
+  planRow = function(){ const old = accBox.querySelector(".pf-plan"); if (old) old.remove(); try { tbPlanPaint(); } catch(e){} if (!auth || GATE_OFF || accMode === "newpass") return;
+    const p = planShown(), r = el("div", "pf-plan"), nm = el("b", "pl-name " + p.id, p.name); if (nm.firstChild) nm.firstChild.__en = nm.textContent;
+    r.appendChild(gT("span", null, "Plán", "Plan")); r.appendChild(nm);
+    if (p.id !== "beginner" && accRow && accRow.until){ const d = new Date(accRow.until); if (!isNaN(d)){ const u = el("span", "pl-until", LT("do ", "until ") + d.toLocaleDateString(LT("cs-CZ", "en-GB"))); if (u.firstChild) u.firstChild.__en = u.textContent; r.appendChild(u); } }
+    if (p.id !== "smart") r.appendChild(upBtn()); else { const b = gT("button", null, "Plány", "Plans"); b.type = "button"; b.addEventListener("click", () => planOpen(true)); r.appendChild(b); }
+    { const nmRow = accBox.querySelector(".pf-nm"); if (nmRow){ const o = nmRow.querySelector(".pl-chip"); if (o) o.remove(); const c = el("span", "pl-chip " + p.id, p.id === "smart" ? "Smart Money" : p.name); if (c.firstChild) c.firstChild.__en = c.textContent; nmRow.appendChild(c); } }
+    const lv = accBox.querySelector(".pf-lv"); if (lv && lv.parentNode === accBox){ accBox.insertBefore(r, lv.nextSibling); r.classList.add("pf-plan-top"); return; }
+    const th = accBox.querySelector(".pf-th") || accBox.querySelector(".lang-row"); if (th) accBox.insertBefore(r, th); else accBox.appendChild(r); };
+  try { planRow(); } catch(e){}
   // ---------- moving to a new address without losing data ----------
   // data/site.json: {"move": "https://new-address", "from": ["https://old-address"]}. The old site hands the data to the new one in a window the person opens.
   let site = {move: "", from: []};
