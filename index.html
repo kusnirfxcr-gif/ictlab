@@ -3267,6 +3267,13 @@ a.brand:hover .cd{height:.43em;margin-top:.05em}
   html[lang="en"] body .zm-full>.zm-head .zm-x span::after{content:"Close"}
   html body .zm-full>.lb-focus{display:none!important}
 }
+/* chart bar: zoom group, replay, and the full-screen switch always at the right edge (it turns into Close when full) */
+.zm-fsb{flex:none;display:flex;margin-left:auto}
+.pa-bar>.zm-ctl.inbar+.pa-replay{margin-left:0}
+.zm-fsb button{width:36px;height:36px;min-height:0;padding:0;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.zm-fsb button svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.zm-fsb button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 6px 18px var(--accent-soft)}
+.lesson-body>.zm-head,.zm-full>.zm-head{order:-10}
 </style>
 </head>
 <body>
@@ -8812,22 +8819,23 @@ a.brand:hover .cd{height:.43em;margin-top:.05em}
       t.parentNode.insertBefore(c, t); c.appendChild(t); c._t = t; c._s = {z: 1, x: 0, y: 0, zx: 1, zy: 1, px: 0, py: 0};
       const lb = f.closest(".lesson-body"); if (lb && !lb.querySelector(":scope > .lb-focus")){ const fb = el("button","lb-focus"); fb.type = "button"; fb.innerHTML = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 6V2.5H6M10 2.5h3.5V6M13.5 10v3.5H10M6 13.5H2.5V10"/></svg><span>Učit se na celou obrazovku</span>'; fb.addEventListener("click", () => cgFull(c, f)); lb.insertBefore(fb, lb.firstChild); try { musLesson(lb, fb); } catch(e){} }
       c._out = mk('<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8h9"/></svg>', "Oddálit (užší svíčky)", () => entry(c) ? zoomX(c, 1 / 1.35) : magAt(c, c._s.z / 1.4)); c._pct = el("span", null, "100 %"); ctl.appendChild(c._pct); c._in = mk('<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8h9M8 3.5v9"/></svg>', "Přiblížit (širší svíčky)", () => entry(c) ? zoomX(c, 1.35) : magAt(c, c._s.z * 1.4));
-      const fs = mk('<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 6V2.5H6M10 2.5h3.5V6M13.5 10v3.5H10M6 13.5H2.5V10"/></svg>', "Celá obrazovka", () => cgFull(c, f)); c._fsb = fs;
+      const fsBox = bar ? el("div","zm-fsb") : null, fs = mk(FS_IC[0], LT("Celá obrazovka", "Full screen"), () => cgFull(c, f), fsBox); c._fsb = fs;
       c._rs = mk('<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.2 6.2A5 5 0 1 1 3.4 10"/><path d="M2.8 2.8v3.6h3.6"/></svg>', "Původní zobrazení", () => reset(c));
-      if (bar){ const rp = bar.querySelector(".pa-replay"); bar.insertBefore(ctl, rp || null); } else c.appendChild(ctl); ui(c); if (entry(c) && fwOf(c, entry(c).e)) draw(c, true);
+      if (bar){ const rp = bar.querySelector(".pa-replay"); bar.insertBefore(ctl, rp || null); bar.appendChild(fsBox); } else c.appendChild(ctl); ui(c); if (entry(c) && fwOf(c, entry(c).e)) draw(c, true);
       // a new step of the lesson redraws the picture: keep the current view and let the step animate
       new MutationObserver(ms => { if (c._lock || ms.every(m => ctl.contains(m.target))) return; const now = performance.now(); if (now - (c._mt || 0) < 400){ if (++c._mn > 6) return; } else { c._mt = now; c._mn = 0; } if (!c._t.isConnected){ const n = c.querySelector(".pa-svg") || c.querySelector("svg"); if (n) c._t = n; }
         const q = entry(c); if (q){ if (c._s.z !== 1){ c._s.z = 1; c._t.style.transform = ""; } const fw = fwOf(c, q.e); if ((!isOne(c._s) && !q.sv.dataset.zv) || String(fw || "") !== (q.sv.dataset.fw || "")) draw(c, true); else ui(c); } else if (c._s.z > 1) apply(c); else ui(c); }).observe(c, {childList: true, subtree: true}); }
     // full window: the whole lesson (picture, text and steps) or the single picture fills the screen; Esc or the same button closes it
     // the box is lifted to the end of the page while it is full, so no parent with a transform can trap it; a placeholder keeps its place
     document.addEventListener("scroll", e => { const fu = document.querySelector(".zm-full"); if (!fu) return; const hd = fu.querySelector(":scope > .zm-head"); fu.classList.toggle("zm-scrolled", !!hd && hd.getBoundingClientRect().bottom < 0); }, true);
-    function cgFullOff(){ document.querySelectorAll(".zm-full").forEach(x => { x.classList.remove("zm-full"); const hd = x.querySelector(":scope > .zm-head"); if (hd) hd.remove(); if (x._ph && x._ph.parentNode){ x._ph.parentNode.insertBefore(x, x._ph); x._ph.remove(); } x._ph = null; }); document.body.classList.remove("zm-fullon"); }
+    const FS_IC = ['<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 6V2.5H6M10 2.5h3.5V6M13.5 10v3.5H10M6 13.5H2.5V10"/></svg>', '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"/></svg>'];
+    function cgFullOff(){ document.querySelectorAll(".zm-full").forEach(x => { x.querySelectorAll(".zm-fsb button").forEach(b => { b.innerHTML = FS_IC[0]; b.setAttribute("aria-pressed", "false"); const lb = LT("Celá obrazovka", "Full screen"); b.setAttribute("aria-label", lb); b.title = lb; }); x.classList.remove("zm-full"); const hd = x.querySelector(":scope > .zm-head"); if (hd) hd.remove(); if (x._ph && x._ph.parentNode){ x._ph.parentNode.insertBefore(x, x._ph); x._ph.remove(); } x._ph = null; }); document.body.classList.remove("zm-fullon"); }
     window.zmFullOff = cgFullOff;
     function cgFull(c, f){ const box = f.closest(".zm-full") || f.closest(".lesson-body") || f, on = !box.classList.contains("zm-full"); cgFullOff();
       if (on){ box._ph = document.createComment("zm"); box.parentNode.insertBefore(box._ph, box); document.body.appendChild(box); box.classList.add("zm-full"); document.body.classList.add("zm-fullon");
         const hd = el("div","zm-head"), x = el("button","zm-x"); x.type = "button"; x.innerHTML = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"/></svg><span>Ukončit celou obrazovku</span><kbd>Esc</kbd>'; x.setAttribute("aria-label", "Ukončit celou obrazovku"); x.addEventListener("click", () => cgFull(c, f));
         const xf = el("button","zm-exitf"); xf.type = "button"; xf.innerHTML = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"/></svg>'; xf.title = "Ukončit celou obrazovku (Esc)"; xf.setAttribute("aria-label", "Ukončit celou obrazovku"); xf.addEventListener("click", () => cgFull(c, f)); hd.appendChild(xf); hd.appendChild(el("span","zm-mode","Režim učení")); hd.appendChild(el("span","zm-hint", box.querySelector(".pa-ctl") ? "← → kroky · tažením za osy přiblížíš" : "Tažením za osy přiblížíš")); hd.appendChild(x); box.insertBefore(hd, box.firstChild); }
-      requestAnimationFrame(() => box.querySelectorAll(".zm-clip").forEach(x => { const q = entry(x); if (q) draw(x); else apply(x); x._fsb && x._fsb.setAttribute("aria-pressed", String(on)); })); }
+      requestAnimationFrame(() => box.querySelectorAll(".zm-clip").forEach(x => { const q = entry(x); if (q) draw(x); else apply(x); if (x._fsb){ x._fsb.setAttribute("aria-pressed", String(on)); x._fsb.innerHTML = FS_IC[on ? 1 : 0]; const lb = on ? LT("Zavřít celou obrazovku", "Close full screen") : LT("Celá obrazovka", "Full screen"); x._fsb.setAttribute("aria-label", lb); x._fsb.title = lb; } })); }
     document.addEventListener("keydown", ev => { const fu = document.querySelector(".zm-full"); if (!fu) return;
       if (ev.key === "Escape"){ const c = fu.querySelector(".zm-clip"); if (c) cgFull(c, c.closest("figure, .fig, .mo-hfig") || c); }
       else if (ev.key === "ArrowRight" || ev.key === "ArrowLeft"){ const b = fu.querySelectorAll(".pa-ctl button"); if (b.length){ (ev.key === "ArrowRight" ? b[b.length - 1] : b[0]).click(); ev.preventDefault(); } } });
