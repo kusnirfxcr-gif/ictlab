@@ -9067,9 +9067,9 @@ a.brand:hover .cd{height:.43em;margin-top:.05em}
     const zmH = e => (e.spec.h || 210) + 14 + (e.spec.rich && e.spec.rich.vol ? 30 : 0);   // full drawn height, volume pane included
     // on a computer the chart fills the width of the window: the virtual canvas gets wider, the height stays
     const fullOf = c => c.closest(".zm-full");
-    const fwOf = (c, e) => { const fu = fullOf(c), w = fu ? (fu.querySelector(":scope > figure, :scope figure") || fu).clientWidth || c.clientWidth : c.clientWidth; if (w < 640 && !fu) return 0; const side = fu && fu.classList.contains("lesson-body") && window.innerWidth >= 1000, h = fu ? Math.max(260, window.innerHeight - (fu.classList.contains("lesson-body") && !side ? 330 : 150)) : Math.min(window.innerHeight * .46, 400), k = h / zmH(e); c._k = k; const cap = fu ? 1400 : Math.max(FW, e.n * 24 + 70); return Math.round(Math.max(FW, Math.min(cap, w / k))); };
+    const fwOf = (c, e) => { const fu = fullOf(c), w = fu ? (fu.querySelector(":scope > figure, :scope figure") || fu).clientWidth || c.clientWidth : c.clientWidth; if (w < 640 && !fu) return 0; const side = fu && fu.classList.contains("lesson-body") && window.innerWidth >= 1000, h = fu ? Math.max(260, window.innerHeight - (fu.classList.contains("lesson-body") ? (side ? 260 : 330) : 150)) : Math.min(window.innerHeight * .46, 400), k = h / zmH(e); c._k = k; const cap = fu ? 1400 : Math.max(FW, e.n * 24 + 70); return Math.round(Math.max(FW, Math.min(cap, w / k))); };
     function draw(c, keepAnim){ const q = entry(c); if (!q) return; const st = c._s, e = q.e, fw = fwOf(c, e), still = {newFrom: e.spec.candles.length, marks: (e.spec.marks || []).map(m => Object.assign({}, m, {fresh: false}))}, nv = e.n / st.zx, rng = (e.hi - e.lo) / st.zy, mid = (e.hi + e.lo) / 2 + st.py;
-      st.px = Math.max(-nv * .8, Math.min(e.n - nv * .2, st.px)); c._lock = true;
+      const g0 = e.spec.rich && e.spec.rich.ghost > 0 ? e.spec.rich.ghost : 0; st.px = Math.max(-nv * .8, Math.min(e.n - nv * .2, e.spec.rich ? g0 + 0.2 : Infinity, st.px)); c._lock = true;
       const put = () => { const ns = c.querySelector("svg[data-cid]"); if (ns && fw) ns.style.width = Math.round(fw * c._k) + "px"; };
       q.sv.outerHTML = chart(Object.assign({}, e.spec, {fw: fw}, isOne(st) ? {} : {view: {x0: st.px, nv: nv, lo: mid - rng / 2, hi: mid + rng / 2}}, keepAnim ? {} : still)); put();
       queueMicrotask(() => { c._lock = false; }); ui(c); }
@@ -9083,7 +9083,11 @@ a.brand:hover .cd{height:.43em;margin-top:.05em}
       t.style.transformOrigin = "0 0"; t.style.transform = st.z === 1 ? "" : "translate(" + st.x.toFixed(1) + "px," + st.y.toFixed(1) + "px) scale(" + st.z.toFixed(3) + ")"; ui(c); };
     const magAt = (c, z, px, py) => { const st = c._s, r = c.getBoundingClientRect(), cx = px == null ? r.width / 2 : px - r.left, cy = py == null ? r.height / 2 : py - r.top, nz = Math.max(1, Math.min(MAXZ, z)), k = nz / st.z; st.x = cx - (cx - st.x) * k; st.y = cy - (cy - st.y) * k; st.z = nz; apply(c); };
     // chart geometry in screen pixels
-    const geo = c => { const q = entry(c); if (!q) return null; const r = q.sv.getBoundingClientRect(), vb = q.sv.viewBox && q.sv.viewBox.baseVal, k = r.width / (vb && vb.width ? vb.width : FW); return {q: q, left: r.left + q.e.padL * k, plotW: q.e.plot * k, right: r.left + (q.e.padL + q.e.plot) * k, plotH: q.e.pv * k, r: r}; };
+    // the drawing can sit inside a wider or taller box (it keeps its proportions), so map through the real screen transform
+    const geo = c => { const q = entry(c); if (!q) return null; const b = q.sv.getBoundingClientRect(), vb = q.sv.viewBox && q.sv.viewBox.baseVal, vw = vb && vb.width ? vb.width : FW, vh = vb && vb.height ? vb.height : b.height;
+      let k = b.width / vw, ox = b.left, oy = b.top; try { const m = q.sv.getScreenCTM(); if (m && m.a > 0){ k = m.a; ox = m.e; oy = m.f; } } catch(e){}
+      const r = {left: ox, top: oy, width: vw * k, height: vh * k, right: ox + vw * k, bottom: oy + vh * k};
+      return {q: q, left: ox + q.e.padL * k, plotW: q.e.plot * k, right: ox + (q.e.padL + q.e.plot) * k, plotH: q.e.pv * k, r: r}; };
     function zoomX(c, f, clientX){ const g = geo(c); if (!g) return; const st = c._s, e = g.q.e, nv = e.n / st.zx, fx = clientX == null ? .5 : Math.max(0, Math.min(1, (clientX - g.left) / g.plotW)), at = st.px + fx * nv, nz = Math.max(.4, Math.min(10, st.zx * f)); st.zx = Math.abs(nz - 1) < .04 ? 1 : nz; st.px = at - fx * (e.n / st.zx); if (st.zx === 1 && Math.abs(st.px) < .3) st.px = 0; sched(c); }
     function zoomY(c, f){ const st = c._s, nz = Math.max(.3, Math.min(8, st.zy * f)); st.zy = Math.abs(nz - 1) < .04 ? 1 : nz; if (st.zy === 1 && Math.abs(st.py) < 1e-6) st.py = 0; sched(c); }
     function reset(c){ c._s = {z: 1, x: 0, y: 0, zx: 1, zy: 1, px: 0, py: 0}; if (entry(c)) draw(c); else apply(c); }
