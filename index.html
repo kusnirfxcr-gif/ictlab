@@ -3048,6 +3048,45 @@ html[data-tk="l"] .rp-exc,body.sakura .rp-exc{background:#fff}
 .rp-exr b{font-size:14px}
 .rp-exr span{font-size:12.5px;color:var(--muted);text-align:right}
 @media (max-width:560px){.rp-exrule{display:none}.rp-exrow button{flex:1}}
+.card.tvi{width:min(860px,100%);max-height:calc(100dvh - 24px);overflow:hidden;display:flex;flex-direction:column;gap:12px;padding:18px}
+.tvi-h{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.tvi-h h2{margin:2px 0 0;font-size:1.35rem}
+.tvi-h .lv-x{position:static;flex:none}
+.tvi-b{display:flex;flex-direction:column;gap:12px;overflow:auto;min-height:0;padding:2px}
+.tvi-drop{display:flex;flex-direction:column;align-items:center;gap:6px;padding:28px 16px;border-radius:18px;border:1.5px dashed color-mix(in srgb,var(--th-glow,var(--accent)) 45%,var(--line));background:color-mix(in srgb,var(--th-glow,var(--accent)) 5%,transparent);text-align:center;cursor:pointer;transition:background var(--m-fast,.16s),border-color var(--m-fast,.16s)}
+.tvi-drop svg{width:30px;height:30px;fill:none;stroke:var(--th-glow,var(--accent));stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.tvi-drop b{font-size:16px}
+.tvi-drop span{font-size:13px;color:var(--muted)}
+.tvi-drop.over,.tvi-drop:hover{background:color-mix(in srgb,var(--th-glow,var(--accent)) 11%,transparent);border-color:var(--th-glow,var(--accent))}
+.tvi-err{margin:0;padding:10px 12px;border-radius:12px;background:color-mix(in srgb,var(--bad) 10%,transparent);border:1px solid color-mix(in srgb,var(--bad) 35%,transparent);font-size:13.5px}
+.tvi-how{padding:14px 16px;border-radius:16px;border:1px solid var(--line)}
+.tvi-how ol{margin:8px 0;padding-left:20px;display:flex;flex-direction:column;gap:4px;font-size:14px}
+.tvi-how p{margin:0}
+.tvi-file{margin:0}
+.tvi-set{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px}
+.tvi-set label{display:flex;flex-direction:column;gap:5px;font-size:12.5px;color:var(--muted);margin:0}
+.tvi-set input,.tvi-set select{width:100%}
+.tvi-opt{display:flex;flex-direction:column;gap:6px}
+html[data-tk="l"] input[type=checkbox]:not(:checked),body.sakura input[type=checkbox]:not(:checked){background:#fff;border-color:color-mix(in srgb,var(--ink) 32%,transparent)}
+.ob>.card.tvi{max-width:860px}
+.ob>.card.drd{max-width:760px}
+.card.tvi label.tvi-ck{display:flex;flex-direction:row;align-items:flex-start;gap:10px;font-size:13.5px;margin:0;cursor:pointer;color:var(--ink)}
+.card.tvi label.tvi-ck input{margin:0;flex:none;width:22px}
+.card.tvi label.tvi-ck span{padding-top:2px}
+.tvi-sum{display:flex;flex-wrap:wrap;gap:6px}
+.tvi-tw{overflow:auto;border:1px solid var(--line);border-radius:14px;min-height:90px;max-height:38vh}
+.tvi-t{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
+.tvi-t th{position:sticky;top:0;background:var(--th-pop,var(--surface));text-align:left;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:8px 10px;white-space:nowrap}
+.tvi-t td{padding:7px 10px;border-top:1px solid var(--line);white-space:nowrap}
+.tvi-t td.pos{color:var(--good)}.tvi-t td.neg{color:var(--bad)}
+.tvi-t td.st{color:var(--muted);font-size:12px}
+.tvi-t tr.off td{opacity:.45}
+.tvi-f{display:flex;justify-content:flex-end;gap:8px;flex:none}
+.tvi-f button{padding:10px 16px;border-radius:13px}
+html[data-tk="l"] .tvi-t th,body.sakura .tvi-t th{background:#fff}
+#j-imp-card .rp-ctl{margin:8px 0}
+.tvi-other{margin-top:6px}
+@media (max-width:560px){.card.tvi{padding:14px}.tvi-f{flex-direction:column-reverse}.tvi-f button{width:100%}.tvi-set{grid-template-columns:1fr 1fr}}
 .thpick{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:8px}
 .thp{display:flex;flex-direction:column;gap:8px;align-items:stretch;text-align:left;padding:8px;border-radius:16px;min-height:0}
 .thp .sw{height:54px;border-radius:10px;position:relative;overflow:hidden;border:1px solid rgba(128,128,128,.25)}
@@ -3556,12 +3595,16 @@ html[data-tk="l"] .rp-exc,body.sakura .rp-exc{background:#fff}
     </div>
 
     <div class="jtab" data-tab="obchody" hidden>
-      <div class="card"><div class="row"><h2>Obchody</h2><span class="small muted" id="j-count"></span></div><div class="list" id="j-list"></div></div>
+      <div class="card"><div class="row"><h2>Obchody</h2><span class="row" style="gap:10px;flex:none"><span class="small muted" id="j-count"></span><button type="button" class="chip" id="j-imp-top">Import</button></span></div><div class="list" id="j-list"></div></div>
       <div class="card" id="j-missed-card" hidden><div class="row"><h2>Zmeškané obchody</h2><button type="button" id="j-miss">Zapsat zmeškaný</button></div><div class="list" id="j-missed"></div></div>
-      <div class="card"><h2>Import z brokera</h2>
-        <p class="small muted">Nahraj CSV s uzavřenými obchody (Tradovate, NinjaTrader a podobné). Protože v exportu není stop, R se počítá ze zisku v dolarech.</p>
-        <label for="j-risk">Kolik dolarů je u tebe 1 R<input id="j-risk" inputmode="decimal" placeholder="například 100"></label>
-        <div class="row"><label for="j-csv" class="small" style="cursor:pointer"><span class="pill info">Vybrat CSV</span><input id="j-csv" type="file" accept=".csv,text/csv" hidden></label><span class="small muted" id="j-imp-msg"></span></div>
+      <div class="card" id="j-imp-card"><div class="row"><h2>Import z brokera</h2><span class="small muted" id="j-imp-last"></span></div>
+        <p class="small muted">Nahraj export z Tradovate. Tape z něj poskládá obchody od vstupu po výstup a před uložením ti je ukáže. Soubor se zpracuje jen v tomto prohlížeči.</p>
+        <div class="rp-ctl"><button type="button" class="primary" id="j-imp-open">Importovat z Tradovate</button><button type="button" id="j-imp-undo" hidden>Vrátit poslední import</button></div>
+        <details class="ans tvi-other"><summary>Jiný broker: obecné CSV</summary>
+          <p class="small muted">CSV s uzavřenými obchody a sloupcem se ziskem (NinjaTrader a podobné). V exportu není stop, R se proto počítá ze zisku v dolarech.</p>
+          <label for="j-risk">Kolik dolarů je u tebe 1 R<input id="j-risk" inputmode="decimal" placeholder="například 100"></label>
+          <div class="row"><label for="j-csv" class="small" style="cursor:pointer"><span class="pill info">Vybrat CSV</span><input id="j-csv" type="file" accept=".csv,text/csv" hidden></label><span class="small muted" id="j-imp-msg"></span></div>
+        </details>
       </div>
       <div class="card"><h2>Záloha</h2><p class="small muted">Deník je uložený jen v tomto prohlížeči. Zálohu včetně obrázků najdeš v <a href="#nastaveni">Nastavení</a>.</p></div>
     </div>
@@ -9348,6 +9391,116 @@ html[data-tk="l"] .rp-exc,body.sakura .rp-exc{background:#fff}
     if (was){ const m = el("button", null, LT("Scéna na trénink", "Practice scene")); m.type = "button"; if (m.firstChild) m.firstChild.__en = m.firstChild.nodeValue; m.addEventListener("click", () => DR.open("free-" + Date.now().toString(36), true)); row.appendChild(m); }
     b.appendChild(row); };
   try { renderDaily(); } catch(e){ if (window.console) console.error(e); }
+  // ---------- import from Tradovate: an Orders or Performance export becomes flat-to-flat trades, shown in a preview before saving ----------
+  // The file is read in the browser only. Orders export: orderId, Account, B/S, Contract, Product, Fill Time, Status, Type, Stop Price, Filled Qty, Avg Fill Price.
+  // Performance export: symbol, qty, buyPrice, sellPrice, pnl, boughtTimestamp, soldTimestamp.
+  const TV_PV = {NQ: 20, MNQ: 2, ES: 50, MES: 5, YM: 5, MYM: .5, RTY: 50, M2K: 5, CL: 1000, MCL: 100, GC: 100, MGC: 10, SI: 5000, SIL: 1000, HG: 25000, NG: 10000, ZB: 1000, ZN: 1000, ZF: 1000, "6E": 125000, M6E: 12500, NKD: 5, MBT: .1, MET: .1};
+  const tvRoot = s => { const v = String(s || "").trim().toUpperCase(), m = /^([A-Z0-9]+?)([FGHJKMNQUVXZ])(\d{1,2})$/.exec(v); return m ? m[1] : v; };
+  const tvHash = s => { let h = 0; for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0; return (h >>> 0).toString(36); };
+  function tvTime(s, dmy){ s = String(s || "").trim(); if (!s) return null; let m;
+    if (/^\d{4}-\d\d-\d\d[T ]/.test(s) && /([zZ]|[+-]\d\d:?\d\d)$/.test(s)){ const ms = Date.parse(s.replace(" ", "T")); return isFinite(ms) ? {abs: ms} : null; }
+    m = /^(\d{4})-(\d{1,2})-(\d{1,2})[T ](\d{1,2}):(\d{2})(?::(\d{2}))?/.exec(s); if (m) return {y: +m[1], mo: +m[2], d: +m[3], h: +m[4], mi: +m[5], se: +(m[6] || 0)};
+    m = /^(\d{1,2})[\/.](\d{1,2})[\/.](\d{2,4}),?\s+(\d{1,2}):(\d{2})(?::(\d{2}))?\s*([AaPp][Mm])?/.exec(s); if (!m) return null;
+    let y = +m[3], h = +m[4]; if (y < 100) y += 2000; if (m[7]){ const pm = /p/i.test(m[7]); if (pm && h < 12) h += 12; if (!pm && h === 12) h = 0; }
+    const eu = dmy || /^\d{1,2}\./.test(s); return {y: y, mo: eu ? +m[2] : +m[1], d: eu ? +m[1] : +m[2], h: h, mi: +m[5], se: +(m[6] || 0)}; }
+  function tvMs(p, tz){ if (!p) return NaN; if (p.abs != null) return p.abs; if (tz === "device") return new Date(p.y, p.mo - 1, p.d, p.h, p.mi, p.se).getTime(); const w = Date.UTC(p.y, p.mo - 1, p.d, p.h, p.mi, p.se), g = w - tvZoneOff(w, tz) * 60000; return w - tvZoneOff(g, tz) * 60000; }
+  function tvParse(text){
+    const rows = csvRows(text); if (rows.length < 2) return {err: LT("V souboru nejsou žádné řádky.", "The file has no rows.")};
+    const hd = rows[0].map(h => String(h).replace(/^﻿/, "").trim().toLowerCase()), col = function(){ for (let k = 0; k < arguments.length; k++){ const i = hd.indexOf(arguments[k]); if (i >= 0) return i; } return -1; }, body = rows.slice(1), cell = (r, i) => i >= 0 && r[i] != null ? String(r[i]).trim() : "";
+    const dmyOf = idx => body.some(r => { const m = /^(\d{1,2})\/(\d{1,2})\//.exec(cell(r, idx)); return m && +m[1] > 12; });
+    const O = {bs: col("b/s"), con: col("contract"), prod: col("product"), fill: col("fill time"), ts: col("timestamp"), status: col("status"), fq: col("filled qty", "filledqty"), oq: col("quantity"), px: col("avg fill price", "avgprice"), acct: col("account"), type: col("type"), stop: col("stop price")};
+    if (O.bs >= 0 && O.con >= 0 && O.px >= 0 && (O.fill >= 0 || O.ts >= 0)){ const dmy = dmyOf(O.fill >= 0 ? O.fill : O.ts), fills = [], stops = [], accts = [];
+      body.forEach((r, i) => { const bs = cell(r, O.bs), side = /^b/i.test(bs) ? 1 : /^s/i.test(bs) ? -1 : 0, con = cell(r, O.con).toUpperCase(); if (!side || !con) return; const acct = cell(r, O.acct), root = (cell(r, O.prod) || tvRoot(con)).toUpperCase(), tRaw = cell(r, O.fill) || cell(r, O.ts);
+        const sp = Math.abs(money(cell(r, O.stop))); if (/stop/i.test(cell(r, O.type)) && sp > 0) stops.push({acct: acct, con: con, side: side, price: sp, tp: tvTime(cell(r, O.ts) || tRaw, dmy)});
+        const q = Math.abs(money(cell(r, O.fq >= 0 ? O.fq : O.oq))), p = Math.abs(money(cell(r, O.px))), filled = O.status < 0 || /fill/i.test(cell(r, O.status)) || O.fq >= 0; if (!filled || !(q > 0) || !(p > 0)) return;
+        const tp = tvTime(tRaw, dmy); if (!tp) return; if (acct && accts.indexOf(acct) < 0) accts.push(acct); fills.push({acct: acct, con: con, root: root, side: side, q: q, p: p, tp: tp, raw: tRaw, i: i}); });
+      return fills.length ? {kind: "orders", fills: fills, stops: stops, accts: accts} : {err: LT("V exportu nejsou žádné vyplněné příkazy. Zkontroluj rozsah dat v Tradovate.", "The export has no filled orders. Check the date range in Tradovate.")}; }
+    const P = {sym: col("symbol"), qty: col("qty"), buy: col("buyprice"), sell: col("sellprice"), pnl: col("pnl"), bt: col("boughttimestamp"), st: col("soldtimestamp")};
+    if (P.buy >= 0 && P.sell >= 0 && P.bt >= 0 && P.st >= 0 && P.pnl >= 0){ const dmy = dmyOf(P.bt) || dmyOf(P.st), pairs = [];
+      body.forEach((r, i) => { const b = tvTime(cell(r, P.bt), dmy), s = tvTime(cell(r, P.st), dmy), pnl = money(cell(r, P.pnl)), q = Math.abs(money(cell(r, P.qty))) || 1; if (!b || !s || !isFinite(pnl)) return; pairs.push({con: cell(r, P.sym).toUpperCase(), q: q, buy: Math.abs(money(cell(r, P.buy))), sell: Math.abs(money(cell(r, P.sell))), pnl: pnl, bt: b, st: s, bRaw: cell(r, P.bt), sRaw: cell(r, P.st), i: i}); });
+      return pairs.length ? {kind: "perf", pairs: pairs, accts: []} : {err: LT("V exportu nejsou žádné uzavřené obchody.", "The export has no closed trades.")}; }
+    return {kind: "other"};
+  }
+  function tvBuild(P, o){ // o: {tz, bacct, fee, risk, useStop, acct}
+    const raw = [], skip = {open: 0, unknown: {}}, wavg = a => { const q = a.reduce((s, x) => s + x[1], 0); return q ? a.reduce((s, x) => s + x[0] * x[1], 0) / q : NaN; };
+    if (P.kind === "orders"){ const by = {};
+      P.fills.filter(f => !o.bacct || f.acct === o.bacct).map(f => Object.assign({}, f, {t: tvMs(f.tp, o.tz)})).filter(f => isFinite(f.t)).sort((a, b) => a.t - b.t || a.i - b.i).forEach(f => { (by[f.acct + "|" + f.con] = by[f.acct + "|" + f.con] || []).push(f); });
+      Object.keys(by).forEach(k => { let cur = null, pos = 0;
+        by[k].forEach(f => { let q = f.q; while (q > 1e-9){ if (!cur){ cur = {bacct: f.acct, con: f.con, root: f.root, dir: f.side, t1: f.t, raw: f.raw, op: [], cl: []}; pos = 0; }
+          if (f.side === cur.dir){ cur.op.push([f.p, q]); pos += q; q = 0; } else { const u = Math.min(q, pos); cur.cl.push([f.p, u]); pos -= u; q -= u; cur.tx = f.t; if (pos <= 1e-9){ raw.push(cur); cur = null; } } } });
+        if (cur) skip.open++; });
+      raw.forEach(t => { t.qty = t.op.reduce((s, x) => s + x[1], 0); t.entry = wavg(t.op); t.exit = wavg(t.cl); const pv = TV_PV[t.root]; t.gross = pv != null ? (t.exit - t.entry) * t.dir * t.qty * pv : null;
+        const cand = P.stops.filter(s => s.acct === t.bacct && s.con === t.con && s.side === -t.dir && (t.dir > 0 ? s.price < t.entry : s.price > t.entry)).map(s => Object.assign({t: tvMs(s.tp, o.tz)}, s)).filter(s => isFinite(s.t) && s.t >= t.t1 - 5000 && s.t <= t.tx + 5000);
+        t.stopX = cand.length ? cand.reduce((a, s) => Math.abs(s.price - t.entry) > Math.abs(a.price - t.entry) ? s : a).price : null; });
+    } else { const g = {};
+      P.pairs.forEach(p => { const b = tvMs(p.bt, o.tz), s = tvMs(p.st, o.tz); if (!isFinite(b) || !isFinite(s)) return; const dir = b <= s ? 1 : -1, k = p.con + "|" + dir + "|" + (dir > 0 ? p.bRaw : p.sRaw);
+        const t = g[k] = g[k] || {bacct: "", con: p.con, root: tvRoot(p.con), dir: dir, t1: Math.min(b, s), tx: Math.max(b, s), raw: dir > 0 ? p.bRaw : p.sRaw, op: [], cl: [], gross: 0}; t.op.push([dir > 0 ? p.buy : p.sell, p.q]); t.cl.push([dir > 0 ? p.sell : p.buy, p.q]); t.gross += p.pnl; t.tx = Math.max(t.tx, b, s); });
+      Object.keys(g).forEach(k => { const t = g[k]; t.qty = t.op.reduce((s, x) => s + x[1], 0); t.entry = wavg(t.op); t.exit = wavg(t.cl); t.stopX = null; raw.push(t); }); }
+    const have = {}; jr.trades.forEach(t => { have[t.id] = 1; }); const manual = jr.trades.filter(t => t.setup !== "Import" && !t.missed), imported = jr.trades.filter(t => t.setup === "Import"), r4 = v => Math.round(v * 10000) / 10000, r2 = v => Math.round(v * 100) / 100, list = [];
+    raw.sort((a, b) => a.t1 - b.t1).forEach(t => { if (t.gross == null){ skip.unknown[t.root] = (skip.unknown[t.root] || 0) + 1; return; }
+      const fee = isFinite(o.fee) && o.fee > 0 ? o.fee * t.qty : 0, net = t.gross - fee, stop = o.useStop && t.stopX != null ? t.stopX : null, pv = TV_PV[t.root];
+      const riskUsd = stop != null && pv != null ? Math.abs(t.entry - stop) * t.qty * pv + fee : o.risk, dirS = t.dir > 0 ? "long" : "short", id = "tv" + tvHash([t.bacct || "", t.con, t.dir, t.raw, t.qty].join("|"));
+      // the same trade from the other export (Performance has no account) counts as already imported
+      const twin = imported.some(m => m.sym === t.root && m.dir === dirS && Number(m.qty) === t.qty && Math.abs(Date.parse(m.ts) - t.t1) <= 2000 && (!t.bacct || !m.bacct || m.bacct === t.bacct));
+      const st = have[id] || twin ? "dup" : manual.some(m => m.sym === t.root && m.dir === (t.dir > 0 ? "long" : "short") && Math.abs(Date.parse(m.ts) - t.t1) < 3 * 6e4) ? "manual" : "new"; have[id] = have[id] || 2;
+      list.push({id: id, st: st, t1: t.t1, tx: t.tx, root: t.root, con: t.con, bacct: t.bacct, dir: t.dir > 0 ? "long" : "short", qty: t.qty, entry: r4(t.entry), exit: r4(t.exit), stop: stop, hasStop: t.stopX != null, fee: r2(fee), net: r2(net), r: riskUsd > 0 ? r2(net / riskUsd) : null}); });
+    return {list: list, skip: skip};
+  }
+  function tvUndoPaint(){ const b = $("j-imp-undo"), l = $("j-imp-last"); if (!b || !l) return; const last = (jr.imports || []).slice(-1)[0], n = last ? jr.trades.filter(t => t.imp === last.id).length : 0; b.hidden = !n;
+    l.textContent = n ? LT("Poslední import: ", "Last import: ") + new Date(last.ts).toLocaleDateString(LOCD, {day: "numeric", month: "numeric"}) + " · " + n + " " + LT(n === 1 ? "obchod" : n < 5 ? "obchody" : "obchodů", n === 1 ? "trade" : "trades") : ""; if (l.firstChild) l.firstChild.__en = l.firstChild.nodeValue; }
+  function tvOpen(file){
+    const o = overlay("tvi"), c = o.card, en = n => { if (n && n.firstChild && n.firstChild.nodeType === 3) n.firstChild.__en = n.firstChild.nodeValue; return n; }, T2 = (cz, e2) => LT(cz, e2);
+    const head = el("div","tvi-h"), x = el("button","lv-x"); x.type = "button"; x.setAttribute("aria-label", T2("Zavřít", "Close")); x.innerHTML = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"/></svg>'; x.addEventListener("click", o.close);
+    const ht = el("div"); ht.appendChild(en(el("span","kick", T2("Import z brokera", "Broker import")))); ht.appendChild(en(el("h2", null, T2("Obchody z Tradovate", "Trades from Tradovate")))); head.appendChild(ht); head.appendChild(x); c.appendChild(head); const body = el("div","tvi-b"); c.appendChild(body);
+    const read = f => { const rd = new FileReader(); rd.onload = () => { let P; try { P = tvParse(String(rd.result)); } catch(e){ P = {err: T2("Soubor se nepodařilo přečíst.", "The file could not be read.")}; } if (P.err) return start(P.err); if (P.kind === "other") return start(T2("Tohle nevypadá jako export z Tradovate. Čekám soubor ze záložky Orders nebo Performance. Jiné CSV nahraj přes „Jiný broker“ pod tlačítkem importu.", "This does not look like a Tradovate export. I expect the file from the Orders or Performance tab. Upload any other CSV via “Another broker” below the import button.")); preview(P, f.name); }; rd.onerror = () => start(T2("Soubor se nepodařilo přečíst.", "The file could not be read.")); rd.readAsText(f); };
+    function start(err){ clear(body);
+      const dz = el("label","tvi-drop"), inp = el("input"); inp.type = "file"; inp.accept = ".csv,text/csv,text/plain"; inp.hidden = true; dz.appendChild(inp);
+      dz.insertAdjacentHTML("beforeend", '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15.500V4.500M7.500 9 12 4.500 16.500 9"/><path d="M5 14.500v3A1.500 1.500 0 0 0 6.500 19h11a1.500 1.500 0 0 0 1.500-1.500v-3"/></svg>'); dz.appendChild(en(el("b", null, T2("Přetáhni sem export z Tradovate", "Drop your Tradovate export here")))); dz.appendChild(en(el("span", null, T2("nebo klikni a vyber soubor Orders.csv či Performance.csv", "or click and pick Orders.csv or Performance.csv"))));
+      inp.addEventListener("change", () => { if (inp.files && inp.files[0]) read(inp.files[0]); });
+      ["dragenter", "dragover"].forEach(k => dz.addEventListener(k, ev => { ev.preventDefault(); dz.classList.add("over"); })); ["dragleave", "drop"].forEach(k => dz.addEventListener(k, ev => { ev.preventDefault(); dz.classList.remove("over"); })); dz.addEventListener("drop", ev => { const f = ev.dataTransfer && ev.dataTransfer.files && ev.dataTransfer.files[0]; if (f) read(f); });
+      body.appendChild(dz); if (err) body.appendChild(en(el("p","tvi-err", err)));
+      const how = el("div","tvi-how"); how.appendChild(en(el("b", null, T2("Kde export v Tradovate najdeš", "Where to find the export in Tradovate")))); const ol = el("ol");
+      [T2("Otevři záložku Account a vyber účet.", "Open the Account tab and pick the account."), T2("Klikni na ozubené kolečko u účtu.", "Click the gear icon next to the account."), T2("Přepni na Orders, nastav rozsah dat a dej Go.", "Switch to Orders, set the date range and press Go."), T2("Stáhni report jako CSV a nahraj ho sem.", "Download the report as CSV and upload it here.")].forEach(s => ol.appendChild(en(el("li", null, s)))); how.appendChild(ol);
+      how.appendChild(en(el("p","small muted", T2("Orders je lepší volba: Tape z něj pozná účet, dílčí výstupy i stop. Performance funguje taky, jen bez stopu. Soubor se zpracuje jen v tomto prohlížeči a nikam se neposílá.", "Orders is the better choice: Tape reads the account, partial exits and the stop from it. Performance works too, just without the stop. The file is processed only in this browser and is not sent anywhere.")))); body.appendChild(how); }
+    function preview(P, name){ clear(body);
+      const o2 = {tz: "device", bacct: P.accts.length > 1 ? P.accts[0] : "", fee: num(cfg.fee), risk: Number(jr.risk) || NaN, useStop: false, acct: cfg.acct === "all" ? cfg.accounts[0].id : cfg.acct, withManual: false};
+      const set = el("div","tvi-set"), sum = el("div","tvi-sum"), wrap = el("div","tvi-tw"), foot = el("div","tvi-f"), fld = (label, node) => { const l = el("label"); l.appendChild(en(el("span", null, label))); l.appendChild(node); set.appendChild(l); return node; };
+      const mkSel = (opts, val) => { const s = el("select"); opts.forEach(p => { const op = el("option", null, p[1]); op.value = p[0]; if (op.firstChild) op.firstChild.__en = p[1]; s.appendChild(op); }); s.value = val; return s; };
+      const fRisk = el("input"); fRisk.inputMode = "decimal"; fRisk.placeholder = T2("například 100", "for example 100"); fRisk.value = isFinite(o2.risk) ? nv(o2.risk) : ""; fld(T2("Kolik dolarů je 1 R", "How many dollars is 1 R"), fRisk);
+      let fB = null; if (P.accts.length > 1) fB = fld(T2("Účet v souboru", "Account in the file"), mkSel([["", T2("Všechny účty", "All accounts")]].concat(P.accts.map(a => [a, a])), o2.bacct));
+      let fA = null; if (cfg.accounts.length > 1) fA = fld(T2("Uložit do účtu", "Save to account"), mkSel(cfg.accounts.map(a => [a.id, a.name]), o2.acct));
+      let devTz = "Europe/Prague"; try { devTz = Intl.DateTimeFormat().resolvedOptions().timeZone || devTz; } catch(e){}
+      const fTz = fld(T2("Časy v souboru jsou v", "Times in the file are in"), mkSel([["device", T2("čase tohoto zařízení", "this device's time") + " (" + devTz.split("/").pop().replace(/_/g, " ") + ")"], ["America/New_York", "New York"], ["America/Chicago", "Chicago"], ["UTC", "UTC"]], "device"));
+      const fFee = el("input"); fFee.inputMode = "decimal"; fFee.placeholder = T2("nepovinné", "optional"); fFee.value = isFinite(o2.fee) && o2.fee > 0 ? nv(o2.fee) : ""; fld(T2("Poplatek za kontrakt (celý obchod), $", "Fee per contract (round trip), $"), fFee);
+      const ck = (text, on) => { const l = el("label","tvi-ck"), i = el("input"); i.type = "checkbox"; i.checked = !!on; l.appendChild(i); l.appendChild(en(el("span", null, text))); return {l: l, i: i}; };
+      const cStop = P.kind === "orders" && P.stops.length ? ck(T2("Počítat R ze stopu v exportu, kde je. Posunutý stop výsledek zkreslí.", "Compute R from the stop in the export where there is one. A moved stop distorts the result."), false) : null, cMan = ck(T2("Importovat i obchody, které už vypadají jako ručně zapsané", "Also import trades that look as if they were already logged by hand"), false);
+      const opt = el("div","tvi-opt"); if (cStop) opt.appendChild(cStop.l); opt.appendChild(cMan.l);
+      body.appendChild(en(el("p","small muted tvi-file", name + " · " + (P.kind === "orders" ? T2("export Orders", "Orders export") : T2("export Performance", "Performance export"))))); body.appendChild(set); body.appendChild(opt); body.appendChild(sum); body.appendChild(wrap); c.appendChild(foot);
+      const back = en(el("button", null, T2("Jiný soubor", "Another file"))), go = el("button","primary"); back.type = go.type = "button"; back.addEventListener("click", () => { foot.remove(); start(); }); foot.appendChild(back); foot.appendChild(go);
+      let res = null;
+      const paint = () => { o2.risk = num(fRisk.value); o2.fee = num(fFee.value); o2.tz = fTz.value; if (fB) o2.bacct = fB.value; if (fA) o2.acct = fA.value; o2.useStop = !!(cStop && cStop.i.checked); o2.withManual = cMan.i.checked;
+        res = tvBuild(P, Object.assign({}, o2, {risk: isFinite(o2.risk) && o2.risk > 0 ? o2.risk : NaN})); const L = res.list, nNew = L.filter(t => t.st === "new").length, nDup = L.filter(t => t.st === "dup").length, nMan = L.filter(t => t.st === "manual").length, take = L.filter(t => t.st === "new" || (o2.withManual && t.st === "manual")), okRisk = isFinite(o2.risk) && o2.risk > 0;
+        clear(sum); const chip = (txt, cls) => sum.appendChild(en(el("span","pill " + (cls || ""), txt)));
+        chip(L.length + " " + T2(L.length === 1 ? "obchod v souboru" : L.length >= 2 && L.length <= 4 ? "obchody v souboru" : "obchodů v souboru", L.length === 1 ? "trade in the file" : "trades in the file")); chip(nNew + " " + T2(nNew === 1 ? "nový" : nNew >= 2 && nNew <= 4 ? "nové" : "nových", "new"), "good"); if (nDup) chip(nDup + " " + T2("už v deníku", "already in the journal")); if (nMan) chip(nMan + " " + T2("nejspíš zapsané ručně", "probably logged by hand"), "warn");
+        if (res.skip.open) chip(res.skip.open + " " + T2("otevřená pozice na konci souboru, přeskočena", "open position at the end of the file, skipped"), "warn"); const unk = Object.keys(res.skip.unknown); if (unk.length) chip(T2("neznámý kontrakt: ", "unknown contract: ") + unk.join(", "), "warn");
+        if (okRisk && take.length){ const tr = take.reduce((s, t) => s + (t.r || 0), 0), tu = take.reduce((s, t) => s + t.net, 0); chip(T2("celkem ", "total ") + sgn(tr) + " R · " + usd(tu), tr >= 0 ? "good" : "bad"); }
+        clear(wrap); const tb = el("table","tvi-t"), hr = el("tr"); [T2("Kdy", "When"), T2("Trh", "Market"), T2("Směr", "Side"), T2("Ks", "Qty"), T2("Vstup", "Entry"), T2("Výstup", "Exit"), "P&L", "R", ""].forEach(h => hr.appendChild(en(el("th", null, h)))); tb.appendChild(hr);
+        L.slice(0, 200).forEach(t => { const r = el("tr", t.st === "new" ? "" : t.st === "manual" && o2.withManual ? "" : "off"), td = (v, cls) => r.appendChild(en(el("td", cls || null, v)));
+          td(new Date(t.t1).toLocaleString(LOCD, {day: "numeric", month: "numeric", hour: "2-digit", minute: "2-digit"})); td(t.root); td(t.dir === "long" ? "Long" : "Short", t.dir === "long" ? "pos" : "neg"); td(String(t.qty)); td(fnum(t.entry)); td(fnum(t.exit)); td(usd(t.net), t.net >= 0 ? "pos" : "neg"); td(okRisk && t.r != null ? sgn(t.r) : "–", t.net >= 0 ? "pos" : "neg");
+          td(t.st === "dup" ? T2("už v deníku", "in the journal") : t.st === "manual" ? T2("ručně?", "by hand?") : o2.useStop && t.stop != null ? T2("se stopem", "with stop") : "", "st"); tb.appendChild(r); }); wrap.appendChild(tb);
+        if (L.length > 200) wrap.appendChild(en(el("p","small muted", T2("Náhled ukazuje prvních 200 obchodů. Importují se všechny.", "The preview shows the first 200 trades. All of them are imported."))));
+        go.disabled = !okRisk || !take.length; go.textContent = !okRisk ? T2("Vyplň, kolik dolarů je 1 R", "Fill in how many dollars 1 R is") : take.length ? T2("Importovat ", "Import ") + take.length + " " + T2(take.length === 1 ? "obchod" : take.length <= 4 ? "obchody" : "obchodů", take.length === 1 ? "trade" : "trades") : T2("Nic nového k importu", "Nothing new to import"); en(go); };
+      [fRisk, fFee].forEach(i => i.addEventListener("input", paint)); [fTz, fB, fA].forEach(s => { if (s) s.addEventListener("change", paint); }); [cStop, cMan].forEach(k => { if (k) k.i.addEventListener("change", paint); });
+      go.addEventListener("click", () => { if (!res) return; const take = res.list.filter(t => t.st === "new" || (o2.withManual && t.st === "manual")); if (!take.length || !(o2.risk > 0)) return; const batch = "b" + Date.now().toString(36);
+        take.forEach(t => { jr.trades.push({id: t.id, ts: new Date(t.t1).toISOString(), tsx: new Date(t.tx).toISOString(), sym: t.root, dir: t.dir, setup: "Import", acct: o2.acct, qty: t.qty, entry: t.entry, stop: t.stop, exit: t.exit, r: t.r, usd: t.net, fee: t.fee || null, tags: [], note: "", ck: null, src: "Tradovate", con: t.con, bacct: t.bacct || null, imp: batch}); });
+        jr.risk = o2.risk; jr.imports = (jr.imports || []).concat([{id: batch, ts: new Date().toISOString(), n: take.length, src: "Tradovate"}]).slice(-5); try { touchDay(); } catch(e){} jStore(); tvUndoPaint(); o.close();
+        toast(T2("Importováno: ", "Imported: ") + take.length + " " + T2(take.length === 1 ? "obchod" : take.length <= 4 ? "obchody" : "obchodů", take.length === 1 ? "trade" : "trades") + T2(". Doplň k nim setup a poznámku.", ". Add a setup and a note to them.")); });
+      paint(); }
+    if (file) read(file); else start();
+  }
+  { const ob = $("j-imp-open"), tb = $("j-imp-top"), ub = $("j-imp-undo"); if (ob) ob.addEventListener("click", () => tvOpen()); if (tb) tb.addEventListener("click", () => tvOpen());
+    if (ub) ub.addEventListener("click", () => { const last = (jr.imports || []).slice(-1)[0]; if (!last) return; const n = jr.trades.filter(t => t.imp === last.id).length; if (!n || !window.confirm(LT("Opravdu smazat " + n + " obchodů z posledního importu?", "Really delete the " + n + " trades from the last import?"))) return; jr.trades = jr.trades.filter(t => t.imp !== last.id); jr.imports = (jr.imports || []).filter(b => b.id !== last.id); jStore(); tvUndoPaint(); toast(LT("Import je vrácený.", "The import has been undone.")); });
+    tvUndoPaint(); }
   // ---------- moving to a new address without losing data ----------
   // data/site.json: {"move": "https://new-address", "from": ["https://old-address"]}. The old site hands the data to the new one in a window the person opens.
   let site = {move: "", from: []};

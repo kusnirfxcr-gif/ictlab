@@ -120,7 +120,7 @@
  "Dnešní obchody": "Today's trades",
  "Zmeškané obchody": "Missed trades",
  "Zapsat zmeškaný": "Log a missed trade",
- "Import z brokera": "Import from broker",
+ "Import z brokera": "Broker import",
  "Tento měsíc proti minulému": "This month vs last month",
  "Rozdělení výsledků": "Distribution of results",
  "Rozpady": "Breakdowns",
@@ -2428,5 +2428,11 @@
  "Čtení grafu": "Chart read",
  "jedna scéna denně": "one scene a day",
  "Čtení grafu: 5 dní": "Chart read: 5 days",
- "Replay zkouška": "Replay exam"
+ "Replay zkouška": "Replay exam",
+ "Nahraj export z Tradovate. Tape z něj poskládá obchody od vstupu po výstup a před uložením ti je ukáže. Soubor se zpracuje jen v tomto prohlížeči.": "Upload your Tradovate export. Tape builds trades from entry to exit out of it and shows them to you before saving. The file is processed only in this browser.",
+ "Importovat z Tradovate": "Import from Tradovate",
+ "Vrátit poslední import": "Undo the last import",
+ "Jiný broker: obecné CSV": "Another broker: generic CSV",
+ "CSV s uzavřenými obchody a sloupcem se ziskem (NinjaTrader a podobné). V exportu není stop, R se proto počítá ze zisku v dolarech.": "A CSV with closed trades and a profit column (NinjaTrader and similar). The export has no stop, so R is computed from the profit in dollars.",
+ "Import": "Import"
 }
