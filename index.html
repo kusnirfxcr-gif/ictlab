@@ -3386,6 +3386,23 @@ a.brand:hover .cd{height:.43em;margin-top:.05em}
 @keyframes smSpark{0%,100%{opacity:0;transform:scale(.3) rotate(0)}40%{opacity:1;transform:scale(1) rotate(45deg)}70%{opacity:0;transform:scale(.4) rotate(90deg)}}
 @keyframes smPulse{0%,100%{opacity:.4}50%{opacity:.8}}
 @media (prefers-reduced-motion:reduce){.plan,.plan *,.plan::before,.plan::after{animation:none!important;transition:none!important}.plan.pl-smart .pl-spk{display:none}}
+
+/* learning on a computer: a slim header, then straight to the lesson picture */
+@media (min-width:700px){
+  body[data-view="laura"] #phead{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:16px;row-gap:2px;padding-top:6px;padding-bottom:6px}
+  body[data-view="laura"] #phead .h2-kick,body[data-view="laura"] #phead>.mus-btn,body[data-view="laura"] #lr{display:none!important}
+  body[data-view="laura"] #phead h1{font-size:clamp(30px,3vw,40px);margin:0;flex:none}
+  body[data-view="laura"] #phead p{margin:0;flex:1 1 260px}
+  #v-laura #pa-card>.row:first-child,#v-laura #pa-card>p.small.muted{display:none}
+  #v-laura #pa-card{padding-top:16px}
+  html body #pa-body>.pa-title{display:none}
+  html body #pa-body>.pa-title+p.muted{margin:0;order:-3}
+  html body #pa-body>figure.pa-fig{order:-2}
+  html body #pa-body>figure.pa-fig~*{order:-1}
+  html body #pa-body.lesson-body{flex-direction:row;flex-wrap:wrap;column-gap:8px}
+  html body #pa-body.lesson-body>*{flex:1 1 100%;min-width:0}
+  html body #pa-body.lesson-body>.lb-focus,html body #pa-body.lesson-body>.mus-btn{flex:0 0 auto}
+}
 </style>
 </head>
 <body>
@@ -9979,6 +9996,13 @@ a.brand:hover .cd{height:.43em;margin-top:.05em}
       v.insertBefore(pc, v.firstChild); if (path) v.insertBefore(path, pc.nextSibling);
       if (stats){ const after = train || path || pc; after.parentNode.insertBefore(stats, after.nextSibling); } } }
 
+  // learning on a computer: opening it lands on the lesson picture; the header stays just above
+  { let was = document.body.dataset.view;
+    const land = () => { if (innerWidth < 700 || document.body.dataset.view !== "laura") return; const pc = $("pa-card"), f = pc && pc.querySelector("figure.pa-fig"); if (!pc || !f) return;
+      const tb = document.querySelector(".topbar"), top = tb ? tb.getBoundingClientRect().bottom : 64, fr = f.getBoundingClientRect(), bar = document.querySelector(".pa-bar2,.lesson-nav.sticky"), room = innerHeight - 90;
+      if (fr.bottom <= room) return; window.scrollTo({top: Math.max(0, pc.getBoundingClientRect().top + window.scrollY - top - 10), behavior: "instant"}); };
+    window.addEventListener("hashchange", () => { const v = document.body.dataset.view; setTimeout(() => { if (v === "laura" && was !== "laura") land(); was = document.body.dataset.view; }, 80); });
+    if (was === "laura") setTimeout(land, 400); }
   // ---------- plan on the profile button, and an upgrade button while a higher plan exists ----------
   const UP_IC = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V6M6 11.5L12 5.5l6 6"/></svg>';
   function planShown(){ return planOf(planNow()) || PLANS[0]; }
