@@ -3300,11 +3300,15 @@ a.brand:hover .cd{height:.43em;margin-top:.05em}
 @property --ua{syntax:"<angle>";inherits:false;initial-value:0deg}
 .tb-acc{position:relative;overflow:visible!important}
 .tb-acc.pic img{border-radius:999px}
-.tb-acc .pl-b{position:absolute;left:50%;bottom:-7px;transform:translateX(-50%);padding:1.5px 5px;border-radius:999px;font-size:8.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;line-height:1.2;white-space:nowrap;background:var(--surface);color:var(--muted);border:1px solid var(--line);pointer-events:none}
+.tb-acc .pl-b{position:absolute;right:-3px;bottom:-3px;width:16px;height:16px;border-radius:50%;display:grid;place-items:center;font-size:0!important;line-height:0;padding:0;box-sizing:border-box;border:2px solid var(--bg);background:var(--surface);pointer-events:none;z-index:1}
+.tb-acc .pl-b::before{content:"";width:9px;height:9px;background:currentColor;-webkit-mask:var(--pl-ic) center/contain no-repeat;mask:var(--pl-ic) center/contain no-repeat}
+.tb-acc.pl-beginner .pl-b{display:none}
+.tb-acc.pl-pro .pl-b{--pl-ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M13 2L4 14h7l-1 8 9-12h-7z'/%3E%3C/svg%3E")}
+.tb-acc.pl-smart .pl-b{--pl-ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M2 8l5 4.5L12 4l5 8.5L22 8l-2.5 12h-15z'/%3E%3C/svg%3E")}
 .tb-acc.pl-pro{box-shadow:0 0 0 2px var(--bg),0 0 0 3.5px var(--accent)}
-.tb-acc.pl-pro .pl-b{background:var(--accent);color:var(--bg);border-color:transparent}
+.tb-acc.pl-pro .pl-b{background:var(--accent);color:var(--bg)}
 .tb-acc.pl-smart{box-shadow:0 0 0 2px var(--bg),0 0 0 3.5px #f2c14e,0 0 14px rgba(242,193,78,.45)}
-.tb-acc.pl-smart .pl-b{background:linear-gradient(135deg,#f7d774,#e0a43a);color:#1a1205;border-color:transparent}
+.tb-acc.pl-smart .pl-b{background:linear-gradient(135deg,#f7d774,#e0a43a);color:#1a1205}
 .tb-up{position:relative;isolation:isolate;display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px 0 11px;border-radius:999px;border:0!important;background:transparent!important;color:var(--ink)!important;font-size:13.5px;font-weight:800;letter-spacing:-.01em;cursor:pointer;white-space:nowrap;overflow:hidden;flex:none;width:auto!important;min-height:0!important;animation:upGlow 2.8s ease-in-out infinite}
 .tb-up::before{content:"";position:absolute;inset:0;z-index:-2;border-radius:inherit;background:conic-gradient(from var(--ua),var(--accent),#f2c14e,#c58aff,var(--accent));animation:upSpin 3.2s linear infinite}
 .tb-up::after{content:"";position:absolute;inset:1.5px;z-index:-1;border-radius:inherit;background:linear-gradient(105deg,transparent 30%,rgba(255,255,255,.28) 46%,transparent 62%) -160% 0/250% 100% no-repeat,linear-gradient(color-mix(in srgb,var(--accent) 16%,var(--surface)),color-mix(in srgb,var(--accent) 16%,var(--surface)));animation:upShine 3.6s ease-in-out infinite}
@@ -3333,7 +3337,7 @@ a.brand:hover .cd{height:.43em;margin-top:.05em}
 @media (max-width:349px){html body .topbar .tb-up span{display:none}html body .topbar .tb-up{width:34px!important;padding:0;justify-content:center}}
 
 /* Smart Money: the top plan gets gold that moves */
-.pl-chip.smart,.pf-plan .pl-name.smart,.tb-acc.pl-smart .pl-b{position:relative;overflow:hidden;background:linear-gradient(110deg,#e0a43a 0%,#f7d774 30%,#fff3c4 45%,#f7d774 60%,#e0a43a 100%)!important;background-size:250% 100%!important;animation:smGold 3.4s ease-in-out infinite,smGlow 2.6s ease-in-out infinite}
+.pl-chip.smart,.pf-plan .pl-name.smart{position:relative;overflow:hidden;background:linear-gradient(110deg,#e0a43a 0%,#f7d774 30%,#fff3c4 45%,#f7d774 60%,#e0a43a 100%)!important;background-size:250% 100%!important;animation:smGold 3.4s ease-in-out infinite,smGlow 2.6s ease-in-out infinite}
 .pl-chip.smart::before,.pf-plan .pl-name.smart::before{content:"";display:inline-block;width:11px;height:11px;margin-right:5px;background:currentColor;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z'/%3E%3C/svg%3E") center/contain no-repeat}
 .tb-acc.pl-smart{animation:smRing 2.6s ease-in-out infinite}
 .pf-plan.pf-plan-top.is-smart{position:relative;isolation:isolate;border:0;background:transparent;overflow:hidden}
@@ -3346,7 +3350,7 @@ a.brand:hover .cd{height:.43em;margin-top:.05em}
 @keyframes smGold{0%,100%{background-position:100% 0}50%{background-position:0 0}}
 @keyframes smGlow{0%,100%{box-shadow:0 0 0 0 rgba(242,193,78,0)}50%{box-shadow:0 0 14px 1px rgba(242,193,78,.55)}}
 @keyframes smRing{0%,100%{box-shadow:0 0 0 2px var(--bg),0 0 0 3.5px #f2c14e,0 0 8px rgba(242,193,78,.3)}50%{box-shadow:0 0 0 2px var(--bg),0 0 0 3.5px #ffe08a,0 0 20px rgba(242,193,78,.7)}}
-@media (prefers-reduced-motion:reduce){.pl-chip.smart,.pf-plan .pl-name.smart,.tb-acc.pl-smart,.tb-acc.pl-smart .pl-b,.pf-plan.is-smart::before{animation:none!important}}
+@media (prefers-reduced-motion:reduce){.pl-chip.smart,.pf-plan .pl-name.smart,.tb-acc.pl-smart,.pf-plan.is-smart::before{animation:none!important}}
 
 /* plan cards: hover life, and Smart Money as the top plan */
 .plan{transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s ease,border-color .3s ease;will-change:transform}
