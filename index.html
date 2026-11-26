@@ -4357,7 +4357,7 @@ a.brand:hover .cd{height:.43em;margin-top:.05em}
           bands += '<rect x="' + num(xa) + '" y="8" width="' + num(xb - xa) + '" height="' + num(PB - 8) + '" class="sb ' + (w[3] || "") + '"/><text x="' + num(xa + 4) + '" y="18" class="sbt">' + esc(w[2]) + '</text>'; });
         for (let i = 1; i < n; i++) if (mm(i) === 570){ const x = X(i) - step / 2; bands += '<line x1="' + num(x) + '" y1="8" x2="' + num(x) + '" y2="' + num(PB) + '" class="ol"/><text x="' + num(x + 3) + '" y="' + num(PB - 4) + '" class="sbt">' + esc(RV.openLab || "9:30") + '</text>'; }
       }
-      grid = bands + grid;
+      zones = bands + zones;
       const used = []; (RV.lv || []).forEach(q => { let y = Y(q.y); if (y < padT - 4 || y > PB) return; const yl = used.some(u => Math.abs(u - y) < 11) ? y + 10 : y - 3; used.push(y); zones += '<line x1="' + padL + '" y1="' + num(y) + '" x2="' + num(plotR) + '" y2="' + num(y) + '" class="lvl"/>'; top += '<text x="' + num(padL + 3) + '" y="' + num(yl) + '" class="lvt lvo">' + esc(q.s) + '</text>'; });
       if (RV.exp){ const e = RV.exp, x1 = X(e.x), y1 = Y(e.y1), x2 = X(Math.min(e.x + 3, nv + vx0 - 0.6)), y2 = Math.max(padT, Math.min(PB - 20, Y(e.y2))), a = Math.atan2(y2 - y1, x2 - x1), q = d => num(x2 - 8 * Math.cos(a + d)) + "," + num(y2 - 8 * Math.sin(a + d));
         top += '<g class="mk exp" style="--d:' + (base + 400) + '"><path d="M' + num(x1) + " " + num(y1) + " L" + num(x2) + " " + num(y2) + '" class="exl"/><polygon points="' + num(x2) + "," + num(y2) + " " + q(0.45) + " " + q(-0.45) + '" class="exh"/>' + (e.s ? tag(x2 + (x2 > x1 ? 4 : -4), y2 + (y2 > y1 ? 12 : -12), esc(e.s), "accent", "middle", H, plotR) : "") + "</g>"; }
@@ -4418,13 +4418,14 @@ a.brand:hover .cd{height:.43em;margin-top:.05em}
         '<rect x="' + num(x - bw / 2 + bw * 0.14) + '" y="' + num(Y(Math.max(c[0], c[3])) + 1) + '" width="' + num(bw * 0.26) + '" height="' + num(Math.max(Math.abs(Y(c[0]) - Y(c[3])) - 2, 0.4)) + '" rx="1" class="bd bh"/></g>';
     });
 
+    let volG = "";
     if (RV && RV.vol){ const PB = H - padB, vmax = Math.max.apply(null, cs.map((c, i) => c ? (RV.vol[i] || 0) : 0).concat([1e-9])), vh = VOLH - 8;
       let vb = '<text x="' + num(padL + 2) + '" y="' + num(PB + 10) + '" class="lvt">' + esc(RV.volLab || "objem") + '</text>';
       cs.forEach((c, i) => { if (!c) return; const v = (RV.vol[i] || 0) / vmax, h = Math.max(1.5, v * vh), x = X(i), w = Math.max(2, Math.min(step * 0.62, CW > FW ? 26 : 16)) * 0.8;
         vb += '<rect x="' + num(x - w / 2) + '" y="' + num(PB + VOLH + 3 - h) + '" width="' + num(w) + '" height="' + num(h) + '" rx="1" class="vb ' + (c[3] >= c[0] ? "up" : "dn") + (i < GH ? " gh" : "") + '"/>'; });
-      cnd += '<g class="vol">' + vb + '</g>'; }
+      volG = '<g class="vol">' + vb + '</g>'; }
     let lp = "";
-    if (spec.last && lastC && axis){
+    if (spec.last && lastC && axis && Y(lastC[3]) >= padT - 8 && Y(lastC[3]) <= H - padB + 2){
       const y = Y(lastC[3]), cls = lastC[3] >= lastC[0] ? "good" : "bad";
       lp = '<g class="mk lp' + (fresh ? "" : " still") + '" style="--d:' + (fresh * st + 80) + '"><line x1="' + padL + '" y1="' + num(y) + '" x2="' + num(plotR) + '" y2="' + num(y) + '" class="lpl s-' + cls + '"/>' +
         '<rect x="' + num(plotR + 1) + '" y="' + num(y - 7.5) + '" width="' + (axw - 2) + '" height="15" rx="3" class="lpb f-' + cls + '"/><text x="' + num(plotR + 6) + '" y="' + num(y + 3.2) + '" class="lpt">' + fmtP(lastC[3]) + '</text></g>';
@@ -4432,7 +4433,7 @@ a.brand:hover .cd{height:.43em;margin-top:.05em}
     let hits = "";
     if (spec.pick) cs.forEach((c, i) => { if (c) hits += '<rect x="' + num(X(i) - step / 2) + '" y="0" width="' + num(step) + '" height="' + H + '" class="hit" data-i="' + i + '"/>'; });
     const id = ++chartSeq, bspec = Object.assign({}, spec); delete bspec.view; delete bspec.fw; CHARTS.set(id, {spec: bspec, lo: lo0, hi: hi0, n: n, plot: plotR - padL, padL: padL, pv: H - padT - padB}); if (CHARTS.size > 500) CHARTS.delete(CHARTS.keys().next().value);
-    const body = V ? '<defs><clipPath id="cv' + id + '"><rect x="0" y="0" width="' + num(plotR) + '" height="' + H + '"/></clipPath></defs>' + grid + lp + '<g clip-path="url(#cv' + id + ')">' + zones + cnd + lines + top + hits + '</g>' : grid + zones + lp + cnd + lines + top + hits;
+    const PBc = VOLH ? H - padB + 1 : H, body = V ? '<defs><clipPath id="cv' + id + '"><rect x="0" y="0" width="' + num(plotR) + '" height="' + num(PBc) + '"/></clipPath><clipPath id="cw' + id + '"><rect x="0" y="0" width="' + num(plotR) + '" height="' + H + '"/></clipPath></defs>' + grid + lp + '<g clip-path="url(#cv' + id + ')">' + zones + cnd + lines + top + hits + '</g>' + (volG ? '<g clip-path="url(#cw' + id + ')">' + volG + '</g>' : "") : grid + zones + lp + cnd + volG + lines + top + hits;
     return svgWrap(H, body, "--st:" + st + "ms").replace("<svg ", '<svg data-cid="' + id + '"' + (V ? ' data-zv="1"' : "") + (CW > FW ? ' data-fw="' + Math.round(CW) + '"' : "") + " ").replace('viewBox="0 0 ' + FW + " ", 'viewBox="0 0 ' + num(CW) + " ");
   }
   function figOhlc(){
@@ -9117,7 +9118,7 @@ a.brand:hover .cd{height:.43em;margin-top:.05em}
     new MutationObserver(() => { if (!raf) raf = requestAnimationFrame(() => { raf = 0; scan(); }); }).observe(document.body, {childList: true, subtree: true}); scan();
     const clipOf = ev => ev.target && ev.target.closest ? ev.target.closest(".zm-clip") : null;
     document.addEventListener("wheel", ev => { const c = clipOf(ev); if (!c) return;
-      if (!(ev.ctrlKey || ev.metaKey || ev.shiftKey)){ const g = geo(c); if (!g) return; const onP = ev.clientX > g.right && ev.clientX < g.r.right, onT = ev.clientY > g.r.top + g.r.height * (1 - 30 / zmH(g.q.e)) && ev.clientY < g.r.bottom; if (!onP && !onT) return;
+      if (!(ev.ctrlKey || ev.metaKey || ev.shiftKey)){ if (!fullOf(c)) return; const g = geo(c); if (!g) return; const onP = ev.clientX > g.right && ev.clientX < g.r.right, onT = ev.clientY > g.r.top + g.r.height * (1 - 30 / zmH(g.q.e)) && ev.clientY < g.r.bottom; if (!onP && !onT) return;
         ev.preventDefault(); const f = Math.exp(-ev.deltaY * .004); if (onP) zoomY(c, f); else zoomX(c, f, ev.clientX); return; } ev.preventDefault(); const f = Math.exp(-(ev.deltaY || ev.deltaX) * .01);
       if (entry(c)){ if (ev.shiftKey && !ev.ctrlKey) zoomY(c, f); else zoomX(c, f, ev.clientX); } else magAt(c, c._s.z * f, ev.clientX, ev.clientY); }, {passive: false});
     document.addEventListener("dblclick", ev => { const c = clipOf(ev); if (!c || ev.target.closest(".zm-ctl")) return; if (entry(c)){ if (isOne(c._s)) zoomX(c, 2, ev.clientX); else reset(c); } else if (c._s.z > 1){ c._s.z = 1; apply(c); } else magAt(c, 2.2, ev.clientX, ev.clientY); });
