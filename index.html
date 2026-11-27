@@ -2699,7 +2699,7 @@ html[data-t] body.fx-lite:not(.sakura) .topbar,html[data-t] body.fx-lite:not(.sa
   .topbar .tb-act{flex:none;display:flex;align-items:center;gap:clamp(4px,1.4vw,10px);margin:0}
   .topbar #tb-search,.topbar .tb-ck,.topbar .tb-lvl,.topbar #tb-acc.in{flex:none;width:34px;height:34px;min-height:0}
   .topbar #streak{flex:none;height:34px}
-  .topbar .tb-theme{display:none!important}
+  .topbar .tb-theme{display:grid!important;flex:none;width:34px!important;height:34px!important}
 }
 @media (max-width:389px){.topbar nav.nav1 a[data-v="komunita"]{display:none!important}}
 @media (max-width:349px){.topbar nav.nav1,.topbar #tb-search{display:none!important}}
@@ -3344,7 +3344,7 @@ a.brand:hover .cd{height:.43em;margin-top:.05em}
   html body .topbar .tb-up{height:34px;padding:0 10px 0 8px;font-size:12.5px;gap:4px}
 }
 @media (max-width:420px){html body .topbar .tb-up{font-size:12px;padding:0 9px 0 7px}}
-@media (max-width:349px){html body .topbar .tb-up span{display:none}html body .topbar .tb-up{width:34px!important;padding:0;justify-content:center}}
+@media (max-width:389px){html body .topbar .tb-up span{display:none}html body .topbar .tb-up{width:34px!important;padding:0;justify-content:center}}
 
 /* Smart Money: the top plan gets gold that moves */
 .pl-chip.smart,.pf-plan .pl-name.smart{position:relative;overflow:hidden;background:linear-gradient(110deg,#e0a43a 0%,#f7d774 30%,#fff3c4 45%,#f7d774 60%,#e0a43a 100%)!important;background-size:250% 100%!important;animation:smGold 3.4s ease-in-out infinite,smGlow 2.6s ease-in-out infinite}
@@ -10536,6 +10536,12 @@ html[data-t="noc"] .fib-sf circle,html:not([data-t]) .fib-sf circle{fill:#f2b33d
       if (b.classList.contains("zm-full") && innerWidth >= 1000){ const hd = b.querySelector(":scope > .zm-head"); if (!f._home){ f._home = document.createComment("fig"); b.insertBefore(f._home, f); } if (hd && hd.nextSibling !== f) b.insertBefore(f, hd.nextSibling); }
       else if (f._home && f._home.parentNode){ f._home.parentNode.insertBefore(f, f._home); f._home.remove(); f._home = null; } }); };
     new MutationObserver(fix).observe(document.body, {attributes: true, attributeFilter: ["class"]}); window.__zmFigFix = fix; }
+  // phones: the theme button sits right next to the level in the top bar; on a computer it goes back beside the language switch
+  { const mq = matchMedia("(max-width: 859px)"); let home = null;
+    const place = () => { const tb = document.querySelector(".topbar .tb-theme"), lv = document.querySelector(".topbar .tb-lvl"); if (!tb || !lv) return;
+      if (!home){ home = document.createComment("tb-theme"); tb.parentNode.insertBefore(home, tb); }
+      if (mq.matches){ if (tb.nextSibling !== lv) lv.parentNode.insertBefore(tb, lv); } else if (home.parentNode && home.nextSibling !== tb) home.parentNode.insertBefore(tb, home.nextSibling); };
+    place(); setTimeout(place, 600); try { mq.addEventListener("change", place); } catch(e){ mq.addListener(place); } }
   // ---------- plan on the profile button, and an upgrade button while a higher plan exists ----------
   const UP_IC = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V6M6 11.5L12 5.5l6 6"/></svg>';
   function planShown(){ return planOf(planNow()) || PLANS[0]; }
