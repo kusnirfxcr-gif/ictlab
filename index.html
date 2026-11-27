@@ -3601,6 +3601,21 @@ html body .pf-xp .lv-emb{flex:none;--sz:22px!important}html body .rw-mini .pf-xp
 .rw-t .bt-theme{background:radial-gradient(70% 140% at 100% 0%,color-mix(in srgb,var(--accent) 40%,transparent),transparent 62%),linear-gradient(135deg,color-mix(in srgb,var(--accent) 8%,var(--surface)),var(--surface));border:1px solid var(--line)}
 .rw-t .rw-fr.ft-theme{border:1.5px solid var(--accent);box-shadow:0 0 10px color-mix(in srgb,var(--accent) 40%,transparent)}
 @media (prefers-reduced-motion:reduce){.bnr.bfx-theme>.bfr{animation:none}}
+/* glossary terms inside picture topics: tap a term to see what it means */
+.glt{display:inline;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;letter-spacing:inherit;text-align:inherit;cursor:help;text-decoration:underline dotted;text-decoration-color:color-mix(in srgb,var(--accent) 75%,transparent);text-decoration-thickness:1.5px;text-underline-offset:3px;border-radius:3px;-webkit-tap-highlight-color:transparent}
+.glt:hover,.glt[aria-expanded="true"]{color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,transparent)}
+.glpop{position:fixed;z-index:300;width:min(340px,calc(100vw - 24px));box-sizing:border-box;padding:14px 16px 12px;border-radius:14px;border:1px solid var(--line);background:var(--surface);color:var(--ink);box-shadow:0 14px 40px rgba(0,0,0,.45);display:flex;flex-direction:column;gap:8px;font-size:14.5px;line-height:1.5;animation:glpopIn .16s ease both}
+@keyframes glpopIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.glpop .glp-h{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;padding-right:30px}
+.glpop .glp-h b{font-size:16px}
+.glpop .glp-h span{color:var(--muted);font-size:13px}
+.glpop p{margin:0}
+.glpop .glp-x{position:absolute;top:6px;right:6px;width:36px;height:36px;border:0;border-radius:10px;background:none;color:var(--muted);font-size:20px;line-height:1;cursor:pointer}
+.glpop .glp-x:hover{color:var(--ink);background:var(--surface2,rgba(255,255,255,.06))}
+.glpop .glp-a{display:flex;flex-wrap:wrap;gap:8px;margin-top:2px}
+.glpop .glp-a button{min-height:40px;padding:8px 12px;border-radius:10px;border:1px solid var(--line);background:none;color:var(--ink);font:inherit;font-size:13.5px;font-weight:600;cursor:pointer}
+.glpop .glp-a button:hover{border-color:var(--accent);color:var(--accent)}
+@media (prefers-reduced-motion:reduce){.glpop{animation:none}}
 </style>
 </head>
 <body>
@@ -10336,6 +10351,57 @@ html body .pf-xp .lv-emb{flex:none;--sz:22px!important}html body .rw-mini .pf-xp
   const paLocked = () => { const i = pa.findIndex(x => x.id === paCur); return i >= FREE_PA && !planHas("pro"); };
   { const _pb = paBuild; paBuild = function(){ _pb(); try { const lk = paLocked(), cd = $("pa-card"); if (cd) cd.classList.toggle("pa-locked", lk); if (lk){ const box = $("pa-body"); clear(box); box.appendChild(planVeilEl("pro", "Prvních 6 obrázkových témat je zdarma. Ostatní jsou v plánu Pro.", "The first 6 picture topics are free. The rest are in the Pro plan.")); clear($("pa-extra")); } } catch(e){} }; }
   { const _pe = renderPaExtra; renderPaExtra = function(){ _pe(); try { if (paLocked()) clear($("pa-extra")); } catch(e){} }; }
+  // picture topics: glossary terms in the text are tappable and show their meaning in place, with a way to the glossary and the topic that explains them
+  const GL_SKIP = {svicka: 1, ohlc: 1, bod: 1, setup: 1, long: 1, short: 1, range: 1, objem: 1, "time-and-price": 1};
+  let glIdx = null, glIdxN = -1, glIdxL = "", glPop = null, glFrom = null, glAt = 0;
+  function glIndex(){
+    const lang = cfg.lang === "en" ? "en" : "cs"; if (glIdx && glIdxN === glossary.length && glIdxL === lang) return glIdx;
+    const caps = x => /[A-Z]/.test(x) && x === x.toUpperCase(), one = x => !/\s/.test(x);
+    const split = (v, alias) => { const out = []; String(v || "").split(alias ? /,|\// : /,/).forEach(part => { part = part.trim(); if (!part) return;
+        const ab = part.split(/\s+(?:a|and)\s+/); if (ab.length === 2 && (ab.every(x => caps(x) && x.length <= 4) || ab.every(x => !one(x)))) ab.forEach(x => out.push(x.trim())); else out.push(part); });
+      return out.filter(x => x.length >= 2 && /[A-Za-zÀ-ž]/.test(x) && (caps(x) || x.length >= 3) && !(alias && one(x) && x.length <= 4 && !caps(x))); };
+    const list = [], taken = {}, add = (nm, g) => { const k = nm.toLowerCase(); if (taken[k]) return; taken[k] = 1; list.push({nm: nm, g: g}); };
+    const pool = glossary.filter(g => g && g.id && !GL_SKIP[g.id] && g.def);
+    pool.forEach(g => split(g.term).forEach(nm => add(nm, g))); pool.forEach(g => split(g.en, true).forEach(nm => add(nm, g)));
+    list.sort((a, b) => b.nm.length - a.nm.length);
+    const esc = x => x.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), W = "A-Za-z0-9À-ž";
+    glIdx = list.map(x => { const c = caps(x.nm); let stem = x.nm, tail = "";
+      if (!c){ if (lang === "cs"){ if (x.nm.length >= 5 && /[aeiouyáéěíóúůý]$/i.test(x.nm)) stem = x.nm.slice(0, -1); tail = "[a-zá-ž]{0,3}"; } else tail = "(?:s|es)?"; }
+      return {g: x.g, re: new RegExp("(^|[^" + W + "])(" + esc(stem) + tail + ")(?![" + W + "])", c ? "" : "i")}; });
+    glIdxN = glossary.length; glIdxL = lang; return glIdx; }
+  function glLink(nodes, used){
+    if (!glossary.length) return; const idx = glIndex(), en = cfg.lang === "en"; used = used || {};
+    nodes.forEach(node => { if (!node || node.__gl) return; node.__gl = 1; const tn = node.firstChild; if (!tn || tn.nodeType !== 3 || tn.nextSibling) return;
+      let txt = tn.nodeValue; try { if (en) txt = trEn(txt); } catch(e){}
+      const hits = []; idx.forEach(x => { if (used[x.g.id]) return; const m = x.re.exec(txt); if (!m) return; const a = m.index + m[1].length, b = a + m[2].length; if (hits.some(h => a < h.b && b > h.a)) return; hits.push({a: a, b: b, g: x.g}); used[x.g.id] = 1; });
+      if (!hits.length) return; hits.sort((p, q) => p.a - q.a); const f = document.createDocumentFragment(); let at = 0;
+      const tx = v => { const t = document.createTextNode(v); t.__en = v; return t; };
+      hits.forEach(h => { if (h.a > at) f.appendChild(tx(txt.slice(at, h.a))); const bt = el("button", "glt"); bt.type = "button"; bt.appendChild(tx(txt.slice(h.a, h.b))); bt.dataset.g = h.g.id; bt.setAttribute("aria-haspopup", "dialog"); bt.setAttribute("aria-expanded", "false"); bt.title = LT("Co to znamená?", "What does it mean?"); f.appendChild(bt); at = h.b; });
+      if (at < txt.length) f.appendChild(tx(txt.slice(at))); node.replaceChild(f, tn); }); }
+  function glClose(back){ if (!glPop) return; glPop.remove(); glPop = null; if (glFrom){ glFrom.setAttribute("aria-expanded", "false"); if (back) try { glFrom.focus(); } catch(e){} } glFrom = null; }
+  function glOpen(bt){
+    const g = glossary.find(x => x.id === bt.dataset.g); if (!g) return; const same = glFrom === bt; glClose(false); if (same) return;
+    const p = el("div", "glpop"), h = el("div", "glp-h"), x = el("button", "glp-x", "×"), act = el("div", "glp-a"), keep = n => { if (n.firstChild && n.firstChild.nodeType === 3) n.firstChild.__en = n.firstChild.nodeValue; return n; };
+    p.setAttribute("role", "dialog"); p.setAttribute("aria-label", g.term || g.id); x.type = "button"; x.setAttribute("aria-label", LT("Zavřít", "Close")); x.addEventListener("click", () => glClose(true));
+    h.appendChild(keep(el("b", null, g.term || g.id))); if (g.en && String(g.en).toLowerCase() !== String(g.term).toLowerCase()) h.appendChild(keep(el("span", null, g.en)));
+    p.appendChild(x); p.appendChild(h); p.appendChild(keep(el("p", null, g.def)));
+    let tp = null; try { tp = topicFor(g); } catch(e){}
+    if (tp && tp.id !== paCur){ const b = keep(el("button", null, LT("Téma: ", "Topic: ") + tp.title)); b.type = "button"; b.addEventListener("click", () => { glClose(false); openTopic(tp.id); }); act.appendChild(b); }
+    const gb = keep(el("button", null, LT("Ve slovníčku", "In the glossary"))); gb.type = "button";
+    gb.addEventListener("click", () => { glClose(false); try { if (document.querySelector(".zm-full") && window.zmFullOff) window.zmFullOff(); } catch(e){} location.hash = "#laura"; gCat = "all"; $("g-q").value = g.term || ""; renderGlossary(); setTimeout(() => { try { $("g-q").scrollIntoView({block: "center"}); } catch(e){} }, 90); });
+    act.appendChild(gb); p.appendChild(act); document.body.appendChild(p); glPop = p; glFrom = bt; bt.setAttribute("aria-expanded", "true");
+    const r = bt.getBoundingClientRect(); glAt = r.top; const pw = p.offsetWidth, ph = p.offsetHeight, vw = document.documentElement.clientWidth, vh = window.innerHeight;
+    p.style.left = Math.max(12, Math.min(vw - pw - 12, r.left + r.width / 2 - pw / 2)) + "px"; p.style.top = (r.bottom + 8 + ph <= vh - 8 || r.top - 8 - ph < 8 ? Math.min(r.bottom + 8, vh - ph - 8) : r.top - 8 - ph) + "px";
+    try { x.focus({preventScroll: true}); } catch(e){} }
+  document.addEventListener("click", ev => { const bt = ev.target.closest && ev.target.closest(".glt"); if (bt){ ev.preventDefault(); ev.stopPropagation(); glOpen(bt); return; } if (glPop && !glPop.contains(ev.target)) glClose(false); }, true);
+  document.addEventListener("keydown", ev => { if (ev.key === "Escape" && glPop){ ev.stopPropagation(); glClose(true); } }, true);
+  window.addEventListener("scroll", () => { if (glFrom && Math.abs(glFrom.getBoundingClientRect().top - glAt) > 24) glClose(false); }, {passive: true, capture: true}); window.addEventListener("resize", () => glClose(false)); window.addEventListener("hashchange", () => glClose(false));
+  function glLinkPa(){ try { const body = $("pa-body"), ex = $("pa-extra"); if (!body || body.querySelector(".plan-veil, .pl-veil")) return; const ns = [];
+      const intro = body.querySelector(":scope > .pa-title + p.muted"); if (intro) ns.push(intro); body.querySelectorAll(".pa-texts .pa-t").forEach(n => ns.push(n)); const rm = body.querySelector(".pa-rem > span"); if (rm) ns.push(rm);
+      if (ex) ex.querySelectorAll(":scope > ul.stl > li").forEach(n => ns.push(n)); const used = {}; [body, ex].forEach(c => c && c.querySelectorAll(".glt").forEach(b => { used[b.dataset.g] = 1; })); glLink(ns, used); } catch(e){ if (window.console) console.error(e); } }
+  { const _pbGl = paBuild; paBuild = function(){ glClose(false); _pbGl(); glLinkPa(); }; }
+  { const _peGl = renderPaExtra; renderPaExtra = function(){ _peGl(); glLinkPa(); }; }
+  { const _raGl = refreshAll; refreshAll = function(){ _raGl(); try { if (glossary.length && glIdxN !== glossary.length && $("pa-body") && !$("pa-body").querySelector(".glt")){ $("pa-body").querySelectorAll(".pa-t, p.muted, .pa-rem > span").forEach(n => { n.__gl = 0; }); glLinkPa(); } } catch(e){} }; }
   { const _rl = renderLesson; renderLesson = function(){ _rl(); try { const l = lessons.find(x => x.id === curLesson); if (l && +l.week > FREE_WEEKS && !planHas("pro")){ const box = $("l-body"); clear(box); box.appendChild(planVeilEl("pro", "Tahle lekce navazuje na " + l.week + ". týden kurzu. Lekce k týdnům 5 až 12 jsou v plánu Pro.", "This lesson builds on week " + l.week + " of the course. Lessons for weeks 5 to 12 are in the Pro plan.")); } } catch(e){} }; }
   { const _rs2 = renderStats; renderStats = function(){ _rs2(); try { if (planHas("pro") || !jr.trades.length) return; const box = $("j-stats"), n = el("div", "pl-note"), b = gT("button", null, "Zobrazit plány", "See the plans"); b.type = "button"; b.addEventListener("click", () => planOpen(true, "pro")); n.appendChild(gT("span", null, "Plán Beginner počítá statistiky z posledních 30 dní. Celá historie je v plánu Pro.", "The Beginner plan counts statistics from the last 30 days. Your whole history is in the Pro plan.")); n.appendChild(b); box.insertBefore(n, box.firstChild); } catch(e){} }; }
   { const _rn = renderNow; renderNow = function(){ _rn(); try { if (planHas("pro") || !course) return; const box = $("c-now"); if (!box) return; const all = []; course.weeks.forEach(w => w.lessons.forEach(l => all.push({w: w, l: l})));
