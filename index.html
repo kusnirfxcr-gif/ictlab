@@ -3781,6 +3781,18 @@ body[data-view="akcie"] #subnav,body[data-view="krypto"] #subnav,body[data-view=
 .bgp-note{grid-column:1/-1;margin:2px 0 0}
 @media(min-width:560px){.bgp-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
 .bgp-up svg{inset:0 0 34% 0!important;height:30%!important}.bgp-up .bgp-cap{font-size:10.5px;line-height:1.25}
+/* trade detail matches the share card */
+.td-conf{display:flex;flex-wrap:wrap;gap:6px;margin:2px 0 4px}
+.td-conf .cf{display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border-radius:999px;font-size:12.5px;font-weight:650;border:1px solid var(--line);background:color-mix(in srgb,var(--text) 5%,transparent);color:var(--text);white-space:nowrap}
+.td-conf .cf-setup{font-weight:800;background:color-mix(in srgb,var(--text) 11%,transparent);border-color:color-mix(in srgb,var(--text) 20%,transparent)}
+.td-conf .cf-sess{color:var(--muted)}
+.td-conf .cf-planok{color:var(--good);background:color-mix(in srgb,var(--good) 12%,transparent);border-color:color-mix(in srgb,var(--good) 30%,transparent)}
+.td-conf .cf-planno{color:var(--bad);background:color-mix(in srgb,var(--bad) 12%,transparent);border-color:color-mix(in srgb,var(--bad) 30%,transparent)}
+.td-conf .cf-planok::before,.td-conf .cf-planno::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.td-conf .cf-dol{color:#f2b560;background:rgba(242,181,96,.12);border-color:rgba(242,181,96,.3)}
+.td-conf .cf-cfm{color:var(--good);background:color-mix(in srgb,var(--good) 12%,transparent);border-color:color-mix(in srgb,var(--good) 30%,transparent)}
+.td-conf .cf-dol::before,.td-conf .cf-cfm::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.td-chart.td-cv{padding:0!important;overflow:hidden}.td-pxc{display:block;width:100%;height:auto}.td-cvn{margin:0;padding:8px 14px 12px}
 </style>
 </head>
 <body>
@@ -6671,6 +6683,11 @@ body[data-view="akcie"] #subnav,body[data-view="krypto"] #subnav,body[data-view=
     if (st != null) line(st, "bad", "Stop"); if (tp != null && Math.abs(tp - x) > (hi - lo) * .02) line(tp, "good", "Cíl"); line(e, "acc", "Vstup"); line(x, (sh ? x <= e : x >= e) ? "good" : "bad", "Výstup");
     pts.forEach((p, i) => { svg += '<circle class="td-dot ' + (i ? "x" : "e") + '" cx="' + (P.l + p[0] * cw).toFixed(1) + '" cy="' + Y(p[1]).toFixed(1) + '" r="4.500"/>'; });
     svg += "</svg>"; const w = el("figure","td-fig"); w.innerHTML = svg; w.appendChild(el("figcaption", null, bars ? "Svíčky z cenových dat toho dne." : "Náčrt podle vstupu, stopu, MAE, MFE a výstupu, ne skutečný průběh.")); return w; }
+  // the trade's real chart drawn exactly like on the share card, in the app's own colours
+  async function tdPxCanvas(t, px, wCss){ const dpr = Math.min(2, window.devicePixelRatio || 1), W = Math.round(Math.max(560, Math.min(1400, wCss * 2))), H = Math.round(W * .66), r = Number(t.r) || 0, col = r >= 0 ? "#3ddc97" : "#ff6b6b", fm = v => v == null || !isFinite(v) ? "–" : v.toLocaleString(LOCD, {maximumFractionDigits: 2});
+    cfg.card = cfg.card || {}; const prev = cfg.card.look; cfg.card.look = "app"; let note = "";
+    try { const c = await cardThemed(async () => { const cv = document.createElement("canvas"); cv.width = W; cv.height = H; const g = cv.getContext("2d"); note = pxChart(g, t, px, -2, -2, W + 4, H + 4, (cfg.card.chart === "cara") ? "line" : "candles", col, fm); return cv; }); c.className = "td-pxc"; return {c: c, note: note}; }
+    finally { cfg.card.look = prev; } }
   function openTrade(t){
     const o = overlay("tdetail"), card = o.card, r = Number(t.r) || 0, net = tNet(t);
     const head = el("div","row"), ttl = el("div","tdh"), xb = el("button","ck-del","Zavřít"), hb = el("div","td-hb"); xb.type = "button"; xb.addEventListener("click", o.close);
@@ -6679,6 +6696,7 @@ body[data-view="akcie"] #subnav,body[data-view="krypto"] #subnav,body[data-view=
     head.appendChild(ttl); head.appendChild(hb); card.appendChild(head);
     card.appendChild(el("span","small muted", new Date(t.ts).toLocaleString(LOCD, {weekday: "long", day: "numeric", month: "long", year: "numeric", hour: "2-digit", minute: "2-digit"}) + (t.missed ? " · zmeškaný obchod, do výsledků se nepočítá" : "")));
     const big = el("div","tbig " + (r >= 0 ? "pos" : "neg"), sgn(r) + " R"); if (net != null) big.appendChild(el("span", null, usd(net) + (t.fee ? " po poplatcích" : ""))); card.appendChild(big);
+    try { const cf = cardConf([t], 12, true).filter(x => x.k !== "grade"); if (cf.length){ const row = el("div","td-conf"); cf.forEach(it => row.appendChild(el("span","cf cf-" + it.k, it.t))); card.appendChild(row); } } catch(e){}
     const gal = el("div","tgal"); card.appendChild(gal);
     shotKeys(t).forEach(k => { const w = el("div","tshot"), im = el("img"), dr = el("button", null, "Kreslit do obrázku"); im.alt = "Graf k obchodu"; dr.type = "button";
       shotGet(k).then(d => { if (d) im.src = d; else w.remove(); }); dr.addEventListener("click", () => openAnnotator(k, d => { im.src = d; })); w.appendChild(im); w.appendChild(dr); gal.appendChild(w); });
@@ -6690,7 +6708,7 @@ body[data-view="akcie"] #subnav,body[data-view="krypto"] #subnav,body[data-view=
         top.appendChild(el("b", null, q[0])); top.appendChild(el("span", null, fnum(q[1]) + " b." + (rv != null ? " · " + fnum(rv) + " R" : ""))); row.appendChild(top); fill.style.width = Math.max(3, Math.min(100, (rv != null ? rv / (q[0] === "MAE" ? 1 : Math.max(1, Math.abs(r), rv)) : .5) * 100)) + "%"; bar.appendChild(fill); row.appendChild(bar); row.appendChild(el("span","td-exs", q[0] === "MAE" ? (rv != null ? "Z rizika využito " + Math.round(Math.min(rv, 9.99) * 100) + " %" : "Nejhorší bod obchodu") : "Nejlepší bod obchodu")); mb.appendChild(row); }); hl.appendChild(mb); }
     if (hl.children.length) card.appendChild(hl);
     // what the trade looked like
-    if (t.entry != null && t.exit != null){ const ch = el("div","td-chart"); card.appendChild(ch); ch.appendChild(tdChart(t, null)); (async () => { try { const px = await cardBars(t); if (px && ch.isConnected){ clear(ch); ch.appendChild(tdChart(t, px)); } } catch(e){} })(); }
+    if (t.entry != null && t.exit != null){ const ch = el("div","td-chart"); card.appendChild(ch); ch.appendChild(tdChart(t, null)); (async () => { try { const px = await cardBars(t); if (px && ch.isConnected){ let cv = null; try { cv = await tdPxCanvas(t, px, ch.clientWidth || 340); } catch(e){ if (window.console) console.error(e); } clear(ch); if (cv){ ch.classList.add("td-cv"); ch.appendChild(cv.c); ch.appendChild(el("p","small muted td-cvn", cv.note)); } else ch.appendChild(tdChart(t, px)); } } catch(e){} })(); }
     // levels, compact
     const lv = el("div","td-lv"), addL = (l, x, c) => { if (x == null) return; const d = el("div", c || null); d.appendChild(el("span", null, l)); d.appendChild(el("b", null, x)); lv.appendChild(d); };
     addL("Vstup", f(t.entry)); addL("Stop", f(t.stop), "bad"); if (t.tp != null) addL("Cíl", f(t.tp), "good"); addL("Výstup", f(t.exit));
@@ -6701,12 +6719,12 @@ body[data-view="akcie"] #subnav,body[data-view="krypto"] #subnav,body[data-view=
     if (t.tp1 != null && t.tp1pct != null) add("Částečný výstup", fnum(t.tp1) + " · " + t.tp1pct + " %");
     if (t.fee) add("Poplatky", "$" + fnum(t.fee));
     if (t.tsx){ const m = Math.round((new Date(t.tsx) - new Date(t.ts)) / 60000); add("Doba držení", (m >= 0 ? (m < 60 ? m + " min" : Math.floor(m / 60) + " h " + (m % 60) + " min") : "–") + " · " + tmLoc(t.ts) + " → " + tmLoc(t.tsx)); }
-    if (premOn()) add("Cyklus obchodu", tradeCycle(t)); { const ss = sessOfTrade(t); if (ss) add("Seance", ss); } if (t.ck) add("Seznam před vstupem", t.ck.k + " z " + t.ck.n); if (t.emo) add("Před vstupem", t.emo);
-    if (t.plan) add("Plán", t.plan === "yes" ? "Dodržen" : "Nedodržen"); if (t.rev != null) add("Po ztrátě", t.rev ? "Revenge trade" : "Čistý vstup");
+    if (premOn()) add("Cyklus obchodu", tradeCycle(t));  if (t.ck) add("Seznam před vstupem", t.ck.k + " z " + t.ck.n); if (t.emo) add("Před vstupem", t.emo);
+    if (t.rev != null) add("Po ztrátě", t.rev ? "Revenge trade" : "Čistý vstup");
     if (cfg.accounts.length > 1){ const a = cfg.accounts.find(x => x.id === tAcct(t)); if (a) add("Účet", a.name); }
     if (g.children.length) card.appendChild(g);
     if (t.levels){ const b = el("div","box"); b.appendChild(el("b", null, "Úrovně")); b.appendChild(el("span", null, t.levels)); card.appendChild(b); }
-    [["Draw on liquidity", t.dol, "info"], ["Confluence", t.conf, "info"], ["Potvrzení", t.cfm, "good"], ["Bonus", t.bonus, "warn"], ["Co pomohlo", t.epos, "good"], ["Co uškodilo", t.tags, "bad"]].forEach(q => { if (!(q[1] || []).length) return; const w = el("div","td-grp"), c = el("div","chips"); w.appendChild(el("span","td-k", q[0])); q[1].forEach(x => c.appendChild(el("span","pill " + q[2], x))); w.appendChild(c); card.appendChild(w); });
+    [["Bonus", t.bonus, "warn"], ["Co pomohlo", t.epos, "good"], ["Co uškodilo", t.tags, "bad"]].forEach(q => { if (!(q[1] || []).length) return; const w = el("div","td-grp"), c = el("div","chips"); w.appendChild(el("span","td-k", q[0])); q[1].forEach(x => c.appendChild(el("span","pill " + q[2], x))); w.appendChild(c); card.appendChild(w); });
     if (t.note){ const b = el("div","box"); b.appendChild(el("b", null, "Poznámka")); b.appendChild(el("span", null, t.note)); card.appendChild(b); }
     const act = el("div","rp-ctl"), mk = (txt, fn, cls) => { const b = el("button", cls || null, txt); b.type = "button"; if (fn) b.addEventListener("click", fn); act.appendChild(b); return b; };
     mk("Upravit", () => { o.close(); openTradeForm(t); }, "primary");
@@ -6999,7 +7017,7 @@ body[data-view="akcie"] #subnav,body[data-view="krypto"] #subnav,body[data-view=
     g.fillStyle = "#f5f5f6"; g.font = F(800, 44); g.fillText(t.sym || "", L0 + 72, top + 233); const symW = g.measureText(t.sym || "").width;
     const side = t.dir === "short" ? "SHORT" : "LONG"; g.font = F(700, 26); const sw = g.measureText(side).width + 40;
     g.fillStyle = t.dir === "short" ? "rgba(255,107,107,.16)" : "rgba(61,220,151,.16)"; rr(g, L0 + 72 + symW + 20, top + 194, sw, 50, 25); g.fill(); g.fillStyle = t.dir === "short" ? "#ff6b6b" : "#3ddc97"; g.fillText(side, L0 + 72 + symW + 40, top + 228);
-    { const chips = cardConf([t], 7); if (chips.length) cardChips(g, L0, top + 262, W - 2 * L0 - (opt.unit === "both" && net != null ? 230 : 0), chips); else { g.fillStyle = "#8e8e98"; g.font = F(500, 30); g.fillText(t.setup || "", L0, top + 292); } }
+    { const chips = cardConf([t], 8, true); if (chips.length) cardChips(g, L0, top + 262, W - 2 * L0 - (opt.unit === "both" && net != null ? 230 : 0), chips); else { g.fillStyle = "#8e8e98"; g.font = F(500, 30); g.fillText(t.setup || "", L0, top + 292); } }
     if (opt.unit === "both" && net != null){ g.textAlign = "right"; g.fillStyle = col; g.font = F(700, 40); g.fillText(usd(net), W - L0, top + 292); g.textAlign = "left"; }
     g.fillStyle = col; g.shadowColor = col; g.shadowBlur = 50; fitText(g, useUsd ? usd(net) : sgn(r) + " R", L0 - 6, bigY, 800, sq ? 150 : 190, W - 2 * L0); g.shadowBlur = 0;
     const footY = H - 72 - (opt.fmt === "story" ? 150 : 0), cellsY = footY - 178, cx = 80, cy = bigY + (gl ? (sq ? 54 : 70) : (sq ? 48 : 70)), cw = W - 160, ch = cellsY - 30 - cy;
@@ -7038,18 +7056,19 @@ body[data-view="akcie"] #subnav,body[data-view="krypto"] #subnav,body[data-view=
     return {a: a, b: b, title: nm.charAt(0).toUpperCase() + nm.slice(1)};
   }
   // ---------- what the journal says about a trade, as calm pills on the shared card ----------
-  function cardConf(trs, max){ const seen = {}, out = [], add = (t, k) => { const v = String(t || "").trim(); if (!v || seen[v.toLowerCase()]) return; seen[v.toLowerCase()] = 1; out.push({t: v, k: k}); };
+  function cardConf(trs, max, extra){ const seen = {}, out = [], add = (t, k) => { const v = String(t || "").trim(); if (!v || seen[v.toLowerCase()]) return; seen[v.toLowerCase()] = 1; out.push({t: v, k: k}); };
     const cnt = (f) => { const m = {}; trs.forEach(t => (f(t) || []).forEach(v => { m[v] = (m[v] || 0) + 1; })); return Object.keys(m).sort((a, b) => m[b] - m[a]); };
+    if (extra && trs.length === 1){ const t0 = trs[0]; if (t0.grade) add(gradeName(t0.grade), "grade"); if (t0.plan) add(t0.plan === "yes" ? (cfg.lang === "en" ? "By plan" : "Podle plánu") : (cfg.lang === "en" ? "Off plan" : "Mimo plán"), t0.plan === "yes" ? "planok" : "planno"); }
     cnt(t => t.setup ? [t.setup] : []).forEach(v => add(v, "setup")); cnt(t => { const s2 = t.sess || (typeof tkSession === "function" ? tkSession(t.ts) : null); return s2 ? [s2] : []; }).forEach(v => add(v, "sess"));
     cnt(t => t.dol).forEach(v => add((cfg.lang === "en" ? "Target " : "Cíl ") + v, "dol")); cnt(t => t.conf).forEach(v => add(v, "conf")); cnt(t => t.cfm).forEach(v => add(v, "cfm"));
     return out.slice(0, max || 7); }
   function cardChips(g, x, y, maxW, items){ const F = cardFont, H = 46, gap = 10; let cx = x, shown = 0; g.textBaseline = "middle";
     for (let i = 0; i < items.length; i++){ const it = items[i], label = it.t.length > 26 ? it.t.slice(0, 25) + "…" : it.t; g.font = F(it.k === "setup" ? 800 : 650, 23); const w = g.measureText(label).width + 40;
       const restW = i < items.length - 1 ? 74 : 0; if (cx + w > x + maxW - (shown < items.length - 1 ? restW : 0) && shown){ const more = "+" + (items.length - shown); g.font = F(700, 23); const mw = g.measureText(more).width + 34; if (cx + mw <= x + maxW){ g.fillStyle = "rgba(255,255,255,.06)"; rr(g, cx, y, mw, H, H / 2); g.fill(); g.fillStyle = "#8e8e98"; g.fillText(more, cx + 17, y + H / 2 + 1); } break; }
-      const col = it.k === "setup" ? "#f5f5f6" : it.k === "cfm" ? "#3ddc97" : it.k === "dol" ? "#f2b560" : it.k === "sess" ? "#8e8e98" : "#e9e9ee";
-      g.fillStyle = it.k === "setup" ? "rgba(255,255,255,.14)" : it.k === "cfm" ? "rgba(61,220,151,.13)" : it.k === "dol" ? "rgba(242,181,96,.14)" : "rgba(255,255,255,.07)"; rr(g, cx, y, w, H, H / 2); g.fill();
+      const col = it.k === "setup" ? "#f5f5f6" : it.k === "cfm" || it.k === "planok" ? "#3ddc97" : it.k === "dol" || it.k === "grade" ? "#f2b560" : it.k === "planno" ? "#ff6b6b" : it.k === "sess" ? "#8e8e98" : "#e9e9ee";
+      g.fillStyle = it.k === "setup" ? "rgba(255,255,255,.14)" : it.k === "cfm" || it.k === "planok" ? "rgba(61,220,151,.13)" : it.k === "dol" || it.k === "grade" ? "rgba(242,181,96,.14)" : it.k === "planno" ? "rgba(255,107,107,.13)" : "rgba(255,255,255,.07)"; rr(g, cx, y, w, H, H / 2); g.fill();
       g.strokeStyle = it.k === "setup" ? "rgba(255,255,255,.22)" : "rgba(255,255,255,.08)"; g.lineWidth = 1.5; g.stroke();
-      if (it.k === "cfm" || it.k === "dol"){ g.fillStyle = col; g.beginPath(); g.arc(cx + 18, y + H / 2, 4, 0, 6.3); g.fill(); g.fillStyle = col; g.fillText(label, cx + 30, y + H / 2 + 1); cx += w + 10 + gap; shown++; continue; }
+      if (it.k === "cfm" || it.k === "dol" || it.k === "planok" || it.k === "planno"){ g.fillStyle = col; g.beginPath(); g.arc(cx + 18, y + H / 2, 4, 0, 6.3); g.fill(); g.fillStyle = col; g.fillText(label, cx + 30, y + H / 2 + 1); cx += w + 10 + gap; shown++; continue; }
       g.fillStyle = col; g.fillText(label, cx + 20, y + H / 2 + 1); cx += w + gap; shown++; }
     g.textBaseline = "alphabetic"; return H; }
   // the whole day on one chart: real candles from your bar data with every trade marked; without bar data an honest running total in R
@@ -7124,7 +7143,7 @@ body[data-view="akcie"] #subnav,body[data-view="krypto"] #subnav,body[data-view=
   }
   function fitText2(g, text, x, y, size, maxW){ let s = size; g.font = cardFont(700, s); while (g.measureText(text).width > maxW && s > 12){ s -= 2; g.font = cardFont(700, s); } g.fillText(text, x, y); }
   // ---------- backgrounds for share cards: a built-in library for everyone, plus your own pictures and videos on this device ----------
-  let cardMedia = false, bgLoop = 0, bgLib = null; const bgEls = {}, bgUrls = {};
+  let cardMedia = false, bgLoop = 0, bgLib = null, cardShot = null; const bgEls = {}, bgUrls = {};
   function bgDim(){ const v = Number(cfg.card && cfg.card.dim); return isFinite(v) ? Math.max(0, Math.min(.8, v)) : .35; }
   function bgPresets(){ return bgLib || (bgLib = fetch("data/bg.json", {cache: "no-store"}).then(r => r.json()).then(v => Array.isArray(v.items) ? v.items : []).catch(() => [])); }
   function bgDb(){ return new Promise((res, rej) => { if (!window.indexedDB) return rej(new Error("no idb")); const q = indexedDB.open("tape-bg", 1); q.onupgradeneeded = () => { q.result.createObjectStore("files", {keyPath: "id"}); }; q.onsuccess = () => res(q.result); q.onerror = () => rej(q.error); }); }
@@ -7139,11 +7158,16 @@ body[data-view="akcie"] #subnav,body[data-view="krypto"] #subnav,body[data-view=
     bgEls[src] = p; p.catch(() => { delete bgEls[src]; }); return p; }
   async function bgMedia(sel){ if (!sel || sel === "none") return null; let kind, src;
     if (sel.indexOf("p:") === 0){ const it = (await bgPresets()).find(x => x.id === sel.slice(2)); if (!it) return null; kind = it.kind; src = it.src; }
+    else if (sel === "s:mine"){ if (!cardShot) return null; const d = await shotGet(cardShot); if (!d) return null; const m0 = await bgLoad("img", d); return {kind: "img", el: m0.el, blur: true}; }
     else if (sel.indexOf("u:") === 0){ const it = (await bgOwnAll()).find(x => x.id === sel.slice(2)); if (!it) return null; kind = /^video\//.test(it.type) ? "video" : "img"; src = bgOwnUrl(it); }
     else return null;
     const m = await bgLoad(kind, src); if (m.kind === "video"){ try { const pl = m.el.play(); if (pl && pl.catch) pl.catch(() => {}); } catch(e){} } return m; }
   function bgCompose(out, layer, m, dim){ const g = out.getContext("2d"), W = out.width, H = out.height, e = m.el, iw = m.kind === "video" ? e.videoWidth : e.naturalWidth, ih = m.kind === "video" ? e.videoHeight : e.naturalHeight;
-    g.fillStyle = "#000"; g.fillRect(0, 0, W, H); if (iw && ih){ const k = Math.max(W / iw, H / ih), dw = iw * k, dh = ih * k; try { g.drawImage(e, (W - dw) / 2, (H - dh) / 2, dw, dh); } catch(x){} }
+    g.fillStyle = "#000"; g.fillRect(0, 0, W, H); if (iw && ih){ const k = Math.max(W / iw, H / ih), dw = iw * k, dh = ih * k;
+      if (m.blur){ // soft blur that works in every browser: shrink, then stretch back with smoothing
+        if (!m.small){ const sw = Math.max(12, Math.round(W / 30)), sh = Math.max(12, Math.round(H / 30)), sc = document.createElement("canvas"); sc.width = sw; sc.height = sh; const sg = sc.getContext("2d"); sg.imageSmoothingEnabled = true; sg.imageSmoothingQuality = "high"; const k2 = Math.max(sw / iw, sh / ih); sg.drawImage(e, (sw - iw * k2) / 2, (sh - ih * k2) / 2, iw * k2, ih * k2); m.small = sc; }
+        g.imageSmoothingEnabled = true; g.imageSmoothingQuality = "high"; g.drawImage(m.small, -W * .04, -H * .04, W * 1.08, H * 1.08); }
+      else try { g.drawImage(e, (W - dw) / 2, (H - dh) / 2, dw, dh); } catch(x){} }
     g.fillStyle = "rgba(0,0,0," + dim + ")"; g.fillRect(0, 0, W, H);
     const gr = g.createLinearGradient(0, 0, 0, H); gr.addColorStop(0, "rgba(0,0,0,.28)"); gr.addColorStop(.42, "rgba(0,0,0,0)"); gr.addColorStop(1, "rgba(0,0,0,.55)"); g.fillStyle = gr; g.fillRect(0, 0, W, H);
     g.drawImage(layer, 0, 0); }
@@ -7173,6 +7197,7 @@ body[data-view="akcie"] #subnav,body[data-view="krypto"] #subnav,body[data-view=
       return b; };
     const none = () => { const t = el("span","bgp-none"); t.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M6.5 17.5l11-11"/></svg>'; return tile("none", "Bez pozadí", t); };
     let dseq = 0; const draw = async () => { const my = ++dseq; Array.prototype.forEach.call(tabs.children, b => b.setAttribute("aria-pressed", String(b.dataset.t === tab))); const lib = tab === "lib" ? await bgPresets() : null, own = tab === "own" ? await bgOwnAll() : null; if (my !== dseq) return; clear(grid); grid.appendChild(none());
+      if (tab === "lib" && cardShot){ const d = await shotGet(cardShot); if (my !== dseq) return; if (d){ const im = el("img"); im.src = d; im.alt = ""; im.style.filter = "blur(6px) brightness(.8)"; im.style.transform = "scale(1.15)"; grid.appendChild(tile("s:mine", "Můj graf", im)); } }
       if (tab === "lib"){ lib.forEach(it => { const im = el("img"); im.src = it.thumb; im.alt = ""; im.loading = "lazy"; const t = tile("p:" + it.id, it.name, im); if (it.kind === "video") t.appendChild(el("i","bgp-play")); grid.appendChild(t); }); }
       else { const up = el("button","bgp-it bgp-up"); up.type = "button"; up.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V5M7.5 9.5L12 5l4.5 4.5M5 19h14"/></svg>'; up.appendChild(el("span","bgp-cap", "Nahrát obrázek, GIF nebo video")); up.addEventListener("click", () => file.click()); grid.insertBefore(up, grid.firstChild);
         own.forEach(it => { let th; if (/^video\//.test(it.type)){ th = el("video"); th.muted = true; th.playsInline = true; th.setAttribute("playsinline", ""); th.preload = "metadata"; th.src = bgOwnUrl(it) + "#t=0.5"; grid.appendChild(Object.assign(tile("u:" + it.id, it.name, th, it.id), {})); grid.lastChild.appendChild(el("i","bgp-play")); } else { th = el("img"); th.src = bgOwnUrl(it); th.alt = ""; grid.appendChild(tile("u:" + it.id, it.name, th, it.id)); } });
@@ -7211,8 +7236,8 @@ body[data-view="akcie"] #subnav,body[data-view="krypto"] #subnav,body[data-view=
     card.appendChild(ctl); card.appendChild(el("p","small muted","Na telefonu tlačítko Sdílet otevře nabídku s Instagramem a dalšími aplikacemi. Na počítači se obrázek stáhne."));
     paint();
   }
-  function openCard(t){ brandImgOk(); const net = tNet(t); cardDialog("Karta obchodu", opt => drawCard(t, opt), "tape-" + String(t.ts).slice(0, 10) + ".png", net != null ? ["R", "$", "both"] : ["R"], (card, repaint) => pxControls(t, card, repaint)); }
-  function openPeriodCard(kind){ const has = jSorted().some(t => tNet(t) != null); cardDialog(kind === "day" ? "Karta dne" : kind === "week" ? "Karta týdne" : "Karta měsíce", opt => drawPeriodCard(kind, opt), "tape-" + (kind === "day" ? "den" : kind === "week" ? "tyden" : "mesic") + "-" + dayKey() + ".png", has ? ["R", "$"] : ["R"]); }
+  function openCard(t){ brandImgOk(); const net = tNet(t); cardShot = (shotKeys(t) || [])[0] || null; cardDialog("Karta obchodu", opt => drawCard(t, opt), "tape-" + String(t.ts).slice(0, 10) + ".png", net != null ? ["R", "$", "both"] : ["R"], (card, repaint) => pxControls(t, card, repaint)); }
+  function openPeriodCard(kind){ cardShot = null; const has = jSorted().some(t => tNet(t) != null); cardDialog(kind === "day" ? "Karta dne" : kind === "week" ? "Karta týdne" : "Karta měsíce", opt => drawPeriodCard(kind, opt), "tape-" + (kind === "day" ? "den" : kind === "week" ? "tyden" : "mesic") + "-" + dayKey() + ".png", has ? ["R", "$"] : ["R"]); }
 
   // =====================================================================================
   // v9: shell — search, shortcuts, modes, dashboard cards, session clock, tools, settings, backup
