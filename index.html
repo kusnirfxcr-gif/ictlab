@@ -3734,6 +3734,35 @@ body[data-pg="inv"] #v-prehled .logrow{display:none}
 @media(max-width:560px){.pth3{grid-template-columns:1fr}.pth3 .pth-opt{flex-direction:row;align-items:center;padding:11px 12px}.pth3 .pth-tx>span{display:none}.pth3 .pth-opt[aria-checked="true"] .pth-tx>span{display:block}.pth-seg button{padding:8px}.pth-seg button span{font-size:11px}}
 body[data-view="akcie"] #subnav,body[data-view="krypto"] #subnav,body[data-view="akcie"] #lr,body[data-view="krypto"] #lr{display:none!important}
 @media(max-width:699px){.tk-opt{min-height:50px;align-items:center}.tk-tx b{white-space:normal;line-height:1.15;font-size:13px}.tk-tx small{font-size:9px}}
+/* count-up numbers and small rings */
+.hero2 .h2-stats div{position:relative}.hero2 .h2-stats div:has(.cu-ring){display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;column-gap:8px;align-items:center}
+.hero2 .h2-stats div:has(.cu-ring)>span{grid-column:1/-1}.hero2 .h2-stats div:has(.cu-ring)>b{grid-column:2}
+.cu-ring{display:block;width:22px;height:22px;flex:none}.cu-ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.cu-ring .bg{fill:none;stroke:var(--line);stroke-width:3}.cu-ring .fg{fill:none;stroke:var(--accent);stroke-width:3;stroke-linecap:round}
+@keyframes cuDash{from{stroke-dashoffset:var(--o0)}to{stroke-dashoffset:var(--o1)}}@keyframes cuW{from{width:var(--w0)}to{width:var(--w1)}}
+.cu-on{font-variant-numeric:tabular-nums}
+@media (prefers-reduced-motion:reduce){.cu-ring .fg,.h2-bar>i,.h2-ring .fg{animation:none!important}}
+/* share card backgrounds */
+.bgpick{display:grid;gap:10px;padding:12px;border:1px solid var(--line);border-radius:16px;background:var(--bg)}
+.bgp-hd{display:flex;align-items:center;justify-content:space-between;gap:10px}.bgp-hd b{font-size:14px}
+.bgp-tabs{display:inline-flex;gap:2px;padding:3px;border-radius:11px;border:1px solid var(--line)}
+.bgp-tabs button{width:auto!important;min-height:0!important;padding:5px 12px!important;border:0!important;border-radius:8px!important;background:none!important;color:var(--muted)!important;font-size:12.5px!important;box-shadow:none!important}
+.bgp-tabs button[aria-pressed="true"]{background:color-mix(in srgb,var(--accent) 16%,transparent)!important;color:var(--text)!important}
+.bgp-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;max-height:300px;overflow:auto;padding:2px}
+.bgp-it{position:relative;display:block;width:100%;aspect-ratio:4/5;min-height:0!important;padding:0!important;border-radius:12px!important;overflow:hidden;border:1px solid var(--line)!important;background:#0c0c0f!important;cursor:pointer;box-shadow:none!important;transition:transform .2s,border-color .2s}
+.bgp-it:hover{transform:translateY(-1px)}.bgp-it img,.bgp-it video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.bgp-cap{position:absolute;left:0;right:0;bottom:0;padding:16px 8px 6px;font-size:11px;font-weight:700;color:#fff;text-align:left;background:linear-gradient(transparent,rgba(0,0,0,.7));white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bgp-it.on{border-color:var(--accent)!important;box-shadow:0 0 0 2px var(--accent)!important}
+.bgp-it.on::after{content:"";position:absolute;top:6px;right:6px;width:18px;height:18px;border-radius:50%;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.6 8.4 6.6 11.3 12.4 4.9' fill='none' stroke='%23111' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/12px no-repeat}
+.bgp-none,.bgp-up svg{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted)}.bgp-none svg,.bgp-up svg{width:34%;height:34%;margin:auto;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round}
+.bgp-up{background:color-mix(in srgb,var(--accent) 8%,var(--bg))!important;border-style:dashed!important}.bgp-up .bgp-cap{background:none;color:var(--text);white-space:normal;text-align:center}
+.bgp-play{position:absolute;top:6px;left:6px;width:18px;height:18px;border-radius:50%;background:rgba(0,0,0,.55) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M6 4.5v7l5.5-3.5z' fill='%23fff'/%3E%3C/svg%3E") center/12px no-repeat}
+.bgp-del{position:absolute;top:5px;right:5px;z-index:2;width:22px;height:22px;display:grid;place-items:center;border-radius:50%;background:rgba(0,0,0,.6);color:#fff;font-style:normal;font-size:14px;line-height:1}
+.bgp-it.on .bgp-del{right:28px}
+.bgp-adj{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:10px;font-size:12.5px;color:var(--muted)}.bgp-adj input{accent-color:var(--accent)}
+.bgp-note{grid-column:1/-1;margin:2px 0 0}
+@media(min-width:560px){.bgp-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.bgp-up svg{inset:0 0 34% 0!important;height:30%!important}.bgp-up .bgp-cap{font-size:10.5px;line-height:1.25}
 </style>
 </head>
 <body>
@@ -6902,6 +6931,7 @@ body[data-view="akcie"] #subnav,body[data-view="krypto"] #subnav,body[data-view=
     return {pts: pts, iE: n1 - 1, iX: n1 + n2 - 1};
   }
   function cardBase(g, W, H, good){
+    if (cardMedia){ g.clearRect(0, 0, W, H); g.strokeStyle = "rgba(255,255,255,.16)"; g.lineWidth = 2; rr(g, 30, 30, W - 60, H - 60, 44); g.stroke(); return; }
     if (cardGl) return glassBg(g, W, H);
     g.fillStyle = "#09090b"; g.fillRect(0, 0, W, H);
     const gl = g.createRadialGradient(W / 2, H * .26, 20, W / 2, H * .26, W * .62); gl.addColorStop(0, good ? "rgba(61,220,151,.20)" : "rgba(255,107,107,.18)"); gl.addColorStop(1, "rgba(9,9,11,0)"); g.fillStyle = gl; g.fillRect(0, 0, W, H);
@@ -6994,7 +7024,7 @@ body[data-view="akcie"] #subnav,body[data-view="krypto"] #subnav,body[data-view=
     const footY = H - 72 - (opt.fmt === "story" ? 150 : 0), cellsY = footY - 178, cx = 80, cy = bigY + (sq ? 48 : 70), cw = W - 160, ch = cellsY - 30 - cy;
     g.fillStyle = "#101014"; rr(g, cx, cy, cw, ch, 30); g.fill(); g.strokeStyle = "#26262c"; g.lineWidth = 2; g.stroke();
     if (kind === "week" || kind === "day"){
-      let names = cardLang() === "en" ? ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"] : ["Po","Út","St","Čt","Pá","So","Ne"], days = [], nd;
+      let names = cfg.lang === "en" ? ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"] : ["Po","Út","St","Čt","Pá","So","Ne"], days = [], nd;
       if (kind === "day"){ const vs = tr.map(t => [new Date(t.ts).toLocaleTimeString(LOCD, {hour: "2-digit", minute: "2-digit"}), val(t)]).filter(x => x[1] != null).slice(-8); names = vs.map(x => x[0]); days = vs.map(x => x[1]); nd = Math.max(1, vs.length); }
       else { for (let i = 0; i < 7; i++){ const d = new Date(rg.a); d.setDate(d.getDate() + i); days.push(byDay[dayKey(d)]); } nd = days[5] != null || days[6] != null ? 7 : 5; }
       const mx = Math.max.apply(null, days.slice(0, nd).map(v => Math.abs(v || 0)).concat([0])) || 1, bw = (cw - 80) / nd, mid = cy + ch / 2, half = ch / 2 - 74;
@@ -7015,8 +7045,66 @@ body[data-view="akcie"] #subnav,body[data-view="krypto"] #subnav,body[data-view=
     return c;
   }
   function fitText2(g, text, x, y, size, maxW){ let s = size; g.font = cardFont(700, s); while (g.measureText(text).width > maxW && s > 12){ s -= 2; g.font = cardFont(700, s); } g.fillText(text, x, y); }
+  // ---------- backgrounds for share cards: a built-in library for everyone, plus your own pictures and videos on this device ----------
+  let cardMedia = false, bgLoop = 0, bgLib = null; const bgEls = {}, bgUrls = {};
+  function bgDim(){ const v = Number(cfg.card && cfg.card.dim); return isFinite(v) ? Math.max(0, Math.min(.8, v)) : .35; }
+  function bgPresets(){ return bgLib || (bgLib = fetch("data/bg.json", {cache: "no-store"}).then(r => r.json()).then(v => Array.isArray(v.items) ? v.items : []).catch(() => [])); }
+  function bgDb(){ return new Promise((res, rej) => { if (!window.indexedDB) return rej(new Error("no idb")); const q = indexedDB.open("tape-bg", 1); q.onupgradeneeded = () => { q.result.createObjectStore("files", {keyPath: "id"}); }; q.onsuccess = () => res(q.result); q.onerror = () => rej(q.error); }); }
+  async function bgOwnAll(){ try { const db = await bgDb(); return await new Promise(res => { const r = db.transaction("files").objectStore("files").getAll(); r.onsuccess = () => res((r.result || []).sort((a, b) => b.ts - a.ts)); r.onerror = () => res([]); }); } catch(e){ return []; } }
+  async function bgOwnPut(rec){ const db = await bgDb(); return new Promise((res, rej) => { const tx = db.transaction("files", "readwrite"); tx.objectStore("files").put(rec); tx.oncomplete = () => res(); tx.onerror = () => rej(tx.error); }); }
+  async function bgOwnDel(id){ const db = await bgDb(); return new Promise(res => { const tx = db.transaction("files", "readwrite"); tx.objectStore("files").delete(id); tx.oncomplete = () => res(); tx.onerror = () => res(); }); }
+  const bgOwnUrl = it => bgUrls[it.id] || (bgUrls[it.id] = URL.createObjectURL(it.blob));
+  function bgLoad(kind, src){ if (bgEls[src]) return bgEls[src]; const p = new Promise((res, rej) => {
+      if (kind === "video"){ const v = document.createElement("video"); v.muted = true; v.loop = true; v.playsInline = true; v.setAttribute("playsinline", ""); v.setAttribute("muted", ""); v.preload = "auto"; v.crossOrigin = "anonymous";
+        const tm = setTimeout(() => rej(new Error("video timeout")), 15000); v.addEventListener("loadeddata", () => { clearTimeout(tm); const pl = v.play(); if (pl && pl.catch) pl.catch(() => {}); res({kind: "video", el: v}); }, {once: true}); v.addEventListener("error", () => { clearTimeout(tm); rej(v.error); }, {once: true}); v.src = src; v.load(); }
+      else { const i = new Image(); i.decoding = "async"; i.onload = () => res({kind: "img", el: i}); i.onerror = rej; i.src = src; } });
+    bgEls[src] = p; p.catch(() => { delete bgEls[src]; }); return p; }
+  async function bgMedia(sel){ if (!sel || sel === "none") return null; let kind, src;
+    if (sel.indexOf("p:") === 0){ const it = (await bgPresets()).find(x => x.id === sel.slice(2)); if (!it) return null; kind = it.kind; src = it.src; }
+    else if (sel.indexOf("u:") === 0){ const it = (await bgOwnAll()).find(x => x.id === sel.slice(2)); if (!it) return null; kind = /^video\//.test(it.type) ? "video" : "img"; src = bgOwnUrl(it); }
+    else return null;
+    const m = await bgLoad(kind, src); if (m.kind === "video"){ try { const pl = m.el.play(); if (pl && pl.catch) pl.catch(() => {}); } catch(e){} } return m; }
+  function bgCompose(out, layer, m, dim){ const g = out.getContext("2d"), W = out.width, H = out.height, e = m.el, iw = m.kind === "video" ? e.videoWidth : e.naturalWidth, ih = m.kind === "video" ? e.videoHeight : e.naturalHeight;
+    g.fillStyle = "#000"; g.fillRect(0, 0, W, H); if (iw && ih){ const k = Math.max(W / iw, H / ih), dw = iw * k, dh = ih * k; try { g.drawImage(e, (W - dw) / 2, (H - dh) / 2, dw, dh); } catch(x){} }
+    g.fillStyle = "rgba(0,0,0," + dim + ")"; g.fillRect(0, 0, W, H);
+    const gr = g.createLinearGradient(0, 0, 0, H); gr.addColorStop(0, "rgba(0,0,0,.28)"); gr.addColorStop(.42, "rgba(0,0,0,0)"); gr.addColorStop(1, "rgba(0,0,0,.55)"); g.fillStyle = gr; g.fillRect(0, 0, W, H);
+    g.drawImage(layer, 0, 0); }
+  function bgAnimate(out, draw){ let id = 0; const step = () => { if (!out.isConnected && id > 3){ return; } draw(); id = requestAnimationFrame(step); bgLoop = id; }; id = requestAnimationFrame(step); return id; }
+  function bgStop(){ if (bgLoop) cancelAnimationFrame(bgLoop); bgLoop = 0; }
+  function bgCanRecord(){ try { return !!(window.MediaRecorder && HTMLCanvasElement.prototype.captureStream); } catch(e){ return false; } }
+  // records the card with its moving background straight from the canvas; mp4 where the browser can, otherwise webm
+  async function bgRecord(cv, m, tick, base){ const types = ["video/mp4;codecs=avc1", "video/mp4", "video/webm;codecs=vp9", "video/webm"], type = types.find(t => { try { return MediaRecorder.isTypeSupported(t); } catch(e){ return false; } }); if (!type) return null;
+    const v = m.el, dur = Math.max(3, Math.min(10, isFinite(v.duration) && v.duration > 0 ? v.duration : 6)), st = cv.captureStream(30), rec = new MediaRecorder(st, {mimeType: type, videoBitsPerSecond: 6e6}), parts = [];
+    try { v.currentTime = 0; } catch(e){} rec.ondataavailable = ev => { if (ev.data && ev.data.size) parts.push(ev.data); };
+    const done = new Promise(res => { rec.onstop = res; }); rec.start(250); const t0 = performance.now();
+    await new Promise(res => { const iv = setInterval(() => { const s2 = (performance.now() - t0) / 1000; tick(Math.max(1, Math.ceil(dur - s2))); if (s2 >= dur){ clearInterval(iv); res(); } }, 200); });
+    rec.stop(); await done; st.getTracks().forEach(t => t.stop()); const ext = type.indexOf("mp4") >= 0 ? "mp4" : "webm";
+    return new File(parts, base + "." + ext, {type: type.split(";")[0]}); }
+  function bgPicker(card, repaint){ const box = el("div","bgpick"), hd = el("div","bgp-hd"), tabs = el("div","bgp-tabs"), grid = el("div","bgp-grid"), adj = el("label","bgp-adj"), rng = el("input"), file = el("input"); let tab = String((cfg.card && cfg.card.bg) || "").indexOf("u:") === 0 ? "own" : "lib";
+    hd.appendChild(el("b", null, "Pozadí")); hd.appendChild(tabs); box.appendChild(hd);
+    [["lib", "Nabídka"], ["own", "Moje"]].forEach(t => { const b = el("button", null, t[1]); b.type = "button"; b.dataset.t = t[0]; b.addEventListener("click", () => { tab = t[0]; draw(); }); tabs.appendChild(b); });
+    rng.type = "range"; rng.min = "0"; rng.max = "0.8"; rng.step = "0.05"; rng.value = String(bgDim()); rng.setAttribute("aria-label", "Ztmavení pozadí"); adj.appendChild(el("span", null, "Ztmavení")); adj.appendChild(rng);
+    let rt = 0; rng.addEventListener("input", () => { cfg.card.dim = Number(rng.value); clearTimeout(rt); rt = setTimeout(() => { cfgStore(); repaint(); }, 120); });
+    file.type = "file"; file.accept = "image/*,video/*"; file.hidden = true;
+    file.addEventListener("change", async () => { const f = file.files && file.files[0]; file.value = ""; if (!f) return; const vid = /^video\//.test(f.type);
+      if (!vid && !/^image\//.test(f.type)){ toast("Vyber obrázek, GIF nebo video."); return; } if (f.size > (vid ? 80 : 20) * 1048576){ toast(vid ? "Video je moc velké. Zkus kratší, do 80 MB." : "Obrázek je moc velký, max. 20 MB."); return; }
+      const id = "b" + Date.now().toString(36); try { await bgOwnPut({id: id, name: f.name.replace(/\.[^.]+$/, "").slice(0, 30) || "Moje", type: f.type, blob: f, ts: Date.now()}); cfg.card.bg = "u:" + id; cfgStore(); tab = "own"; repaint(); } catch(e){ toast("Soubor se nepodařilo uložit. Prohlížeč možná nemá místo."); } });
+    const tile = (sel, label, thumb, del) => { const b = el("button","bgp-it" + (((cfg.card && cfg.card.bg) || "none") === sel ? " on" : "")), cap = el("span","bgp-cap", label); b.type = "button"; b.title = label; if (thumb) b.appendChild(thumb); b.appendChild(cap);
+      b.addEventListener("click", () => { cfg.card.bg = sel; cfgStore(); repaint(); });
+      if (del){ const x = el("i","bgp-del", "×"); x.setAttribute("role", "button"); x.setAttribute("aria-label", "Smazat"); x.addEventListener("click", async ev => { ev.stopPropagation(); await bgOwnDel(del); if (bgUrls[del]){ try { URL.revokeObjectURL(bgUrls[del]); } catch(e){} delete bgUrls[del]; } if (cfg.card.bg === "u:" + del) cfg.card.bg = "none"; cfgStore(); repaint(); }); b.appendChild(x); }
+      return b; };
+    const none = () => { const t = el("span","bgp-none"); t.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M6.5 17.5l11-11"/></svg>'; return tile("none", "Bez pozadí", t); };
+    let dseq = 0; const draw = async () => { const my = ++dseq; Array.prototype.forEach.call(tabs.children, b => b.setAttribute("aria-pressed", String(b.dataset.t === tab))); const lib = tab === "lib" ? await bgPresets() : null, own = tab === "own" ? await bgOwnAll() : null; if (my !== dseq) return; clear(grid); grid.appendChild(none());
+      if (tab === "lib"){ lib.forEach(it => { const im = el("img"); im.src = it.thumb; im.alt = ""; im.loading = "lazy"; const t = tile("p:" + it.id, it.name, im); if (it.kind === "video") t.appendChild(el("i","bgp-play")); grid.appendChild(t); }); }
+      else { const up = el("button","bgp-it bgp-up"); up.type = "button"; up.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V5M7.5 9.5L12 5l4.5 4.5M5 19h14"/></svg>'; up.appendChild(el("span","bgp-cap", "Nahrát obrázek, GIF nebo video")); up.addEventListener("click", () => file.click()); grid.insertBefore(up, grid.firstChild);
+        own.forEach(it => { let th; if (/^video\//.test(it.type)){ th = el("video"); th.muted = true; th.playsInline = true; th.setAttribute("playsinline", ""); th.preload = "metadata"; th.src = bgOwnUrl(it) + "#t=0.5"; grid.appendChild(Object.assign(tile("u:" + it.id, it.name, th, it.id), {})); grid.lastChild.appendChild(el("i","bgp-play")); } else { th = el("img"); th.src = bgOwnUrl(it); th.alt = ""; grid.appendChild(tile("u:" + it.id, it.name, th, it.id)); } });
+        if (grid.children.length <= 2) grid.appendChild(el("p","small muted bgp-note", "Tvoje pozadí zůstávají jen v tomhle zařízení. Na kartu dej jen to, co smíš sdílet."));
+      } };
+    box.appendChild(grid); box.appendChild(adj); box.appendChild(file); card.appendChild(box); draw();
+    return () => { adj.hidden = !((cfg.card && cfg.card.bg) && cfg.card.bg !== "none"); Array.prototype.forEach.call(grid.querySelectorAll(".bgp-it"), b => b.classList.remove("on")); draw(); }; }
   function cardDialog(title, draw, name, units, extra){
-    const o = overlay("cardbox"), card = o.card, hold = el("div","cardprev"), fmtBox = el("div","chips"), unitBox = el("div","chips"), ctl = el("div","rp-ctl"); let cv = null, busy = 0;
+    const o = overlay("cardbox"), card = o.card, hold = el("div","cardprev"), fmtBox = el("div","chips"), unitBox = el("div","chips"), ctl = el("div","rp-ctl"); let cv = null, busy = 0, media = null; const vidBtn = el("button", null, "Video"); vidBtn.type = "button"; vidBtn.hidden = true;
+    o.ov.onclose = (f => () => { bgStop(); if (f) f(); })(o.ov.onclose);
     const langBox2 = el("div","chips"), cardLang = () => cfg.card.lang || cfg.lang || "cs";
     cfg.card = cfg.card || {fmt: "portrait", unit: "R"}; if (units.indexOf(cfg.card.unit) < 0) cfg.card.unit = "R";
     const head = el("div","row"), xb = el("button","ck-del","Zavřít"); xb.type = "button"; xb.addEventListener("click", o.close); head.appendChild(el("h2", null, title)); head.appendChild(xb); card.appendChild(head);
@@ -7026,16 +7114,22 @@ body[data-view="akcie"] #subnav,body[data-view="krypto"] #subnav,body[data-view=
       Array.prototype.forEach.call(langBox2.children, b => b.setAttribute("aria-pressed", String(b.dataset.v === cardLang())));
       Array.prototype.forEach.call(lookBox.children, b => b.setAttribute("aria-pressed", String(b.dataset.v === (cfg.card.look || "glass"))));
       // the card speaks its own language: dates, numbers and generated words follow the card's language, not the app's
-      const d0 = async () => { const L0 = LOCD, g0 = cfg.lang, cl = cardLang(); LOCD = cl === "en" ? "en-GB" : "cs-CZ"; cardLangHold = g0; cfg.lang = cl; try { return await draw({fmt: cfg.card.fmt, unit: cfg.card.unit}); } finally { LOCD = L0; cfg.lang = g0; cardLangHold = null; } }, d1 = () => cardThemed(d0), c = cardLang() === "en" ? await cardInEnglish(d1) : await d1(); if (my !== busy) return; cv = c; clear(hold); hold.appendChild(c); };
+      const d0 = async () => { const L0 = LOCD, g0 = cfg.lang, cl = cardLang(); LOCD = cl === "en" ? "en-GB" : "cs-CZ"; cardLangHold = g0; cfg.lang = cl; try { return await draw({fmt: cfg.card.fmt, unit: cfg.card.unit}); } finally { LOCD = L0; cfg.lang = g0; cardLangHold = null; } }, d1 = () => cardThemed(d0); media = null; try { media = await bgMedia(cfg.card.bg); } catch(e){ media = null; } if (my !== busy) return; cardMedia = !!media; let c;
+      try { c = cardLang() === "en" ? await cardInEnglish(d1) : await d1(); } finally { cardMedia = false; } if (my !== busy) return;
+      bgStop(); if (media){ const md = media, out = document.createElement("canvas"); out.width = c.width; out.height = c.height; const layer = c, once = () => bgCompose(out, layer, md, bgDim()); once(); c = out; if (md.kind === "video") bgLoop = bgAnimate(out, once); }
+      cv = c; clear(hold); hold.appendChild(c); vidBtn.hidden = !(media && media.kind === "video" && bgCanRecord()); bgPaintPick(); };
     const lookBox = el("div","chips"); [["glass","Skleněná"],["app","Plná"],["dark","Klasická tmavá"]].forEach(u => { const b = el("button","chip", u[1]); b.type = "button"; b.dataset.v = u[0]; b.addEventListener("click", () => { cfg.card.look = u[0]; cfgStore(); paint(); }); lookBox.appendChild(b); });
     [["cs","Česky"],["en","English"]].forEach(u => { const b = el("button","chip", u[1]); b.type = "button"; b.dataset.v = u[0]; b.addEventListener("click", () => { cfg.card.lang = u[0]; cfgStore(); paint(); }); langBox2.appendChild(b); });
     Object.keys(CARD_FMT).forEach(k => { const b = el("button","chip", CARD_FMT[k][2]); b.type = "button"; b.dataset.v = k; b.addEventListener("click", () => { cfg.card.fmt = k; cfgStore(); paint(); }); fmtBox.appendChild(b); });
     [["R","Jen R"],["$","Jen dolary"],["both","R i dolary"]].filter(u => units.indexOf(u[0]) >= 0).forEach(u => { const b = el("button","chip", u[1]); b.type = "button"; b.dataset.v = u[0]; b.addEventListener("click", () => { cfg.card.unit = u[0]; cfgStore(); paint(); }); unitBox.appendChild(b); });
-    card.appendChild(fmtBox); if (unitBox.children.length > 1) card.appendChild(unitBox); card.appendChild(langBox2); card.appendChild(lookBox); if (extra) extra(card, () => paint()); card.appendChild(hold); hold.appendChild(el("p","small muted","Kreslím…"));
+    card.appendChild(fmtBox); if (unitBox.children.length > 1) card.appendChild(unitBox); card.appendChild(langBox2); card.appendChild(lookBox); if (extra) extra(card, () => paint()); card.appendChild(hold); hold.appendChild(el("p","small muted","Kreslím…")); const bgPaintPick = bgPicker(card, () => paint());
     const blob = () => new Promise(res => cv.toBlob(res, "image/png")), save = async () => { const a = document.createElement("a"); a.href = URL.createObjectURL(await blob()); a.download = name; document.body.appendChild(a); a.click(); a.remove(); };
     const mk = (txt, fn, cls) => { const b = el("button", cls || null, txt); b.type = "button"; b.addEventListener("click", () => { if (cv) fn(); }); ctl.appendChild(b); };
     mk("Sdílet", async () => { const f = new File([await blob()], name, {type: "image/png"}); if (navigator.canShare && navigator.canShare({files: [f]})){ try { await navigator.share({files: [f]}); } catch(e){} } else save(); }, "primary");
     mk("Stáhnout", save);
+    vidBtn.addEventListener("click", async () => { if (!cv || !media || media.kind !== "video") return; vidBtn.disabled = true; const t0 = vidBtn.textContent; try { const f = await bgRecord(cv, media, n => { vidBtn.textContent = LT("Nahrávám ", "Recording ") + n + " s"; }, name.replace(/\.png$/, "")); if (!f) return;
+        if (navigator.canShare && navigator.canShare({files: [f]})){ try { await navigator.share({files: [f]}); } catch(e){} } else { const a = document.createElement("a"); a.href = URL.createObjectURL(f); a.download = f.name; document.body.appendChild(a); a.click(); a.remove(); } } catch(e){ toast(LT("Video se nepodařilo nahrát. Zkus obrázek.", "The video could not be recorded. Try the image.")); } finally { vidBtn.disabled = false; vidBtn.textContent = t0; } });
+    ctl.appendChild(vidBtn);
     card.appendChild(ctl); card.appendChild(el("p","small muted","Na telefonu tlačítko Sdílet otevře nabídku s Instagramem a dalšími aplikacemi. Na počítači se obrázek stáhne."));
     paint();
   }
@@ -9058,6 +9152,24 @@ body[data-view="akcie"] #subnav,body[data-view="krypto"] #subnav,body[data-view=
     const X = i => 2 + i / (p.length - 1) * (W - 4), Y = v => 6 + (hi - v) / (hi - lo) * (H - 12), d = p.map((v, i) => (i ? "L" : "M") + X(i).toFixed(1) + " " + Y(v).toFixed(1)).join(" "), c = p[p.length - 1] >= 0 ? "var(--good)" : "var(--bad)";
     return '<svg class="h2-spark" viewBox="0 0 ' + W + " " + H + '" preserveAspectRatio="none" aria-hidden="true"><path class="a" fill="' + c + '" d="' + d + " L" + (W - 2) + " " + H + " L2 " + H + ' Z"/><path class="l" stroke="' + c + '" d="' + d + '"/></svg>';
   }
+  // ---------- numbers that count up and rings that fill, only when the value really changes ----------
+  const cuSeen = {}, cuSt = {}; let cuReady = document.readyState === "complete" ? 0 : Infinity;
+  if (cuReady) window.addEventListener("load", () => { cuReady = performance.now() + 250; Object.keys(cuSt).forEach(k => { const o = cuSt[k]; if (o.t0 === Infinity) o.t0 = cuReady; }); });
+  function cuCalm(){ try { return document.body.classList.contains("fx-off") || window.matchMedia("(prefers-reduced-motion: reduce)").matches; } catch(e){ return false; } }
+  const cuEase = p => 1 - Math.pow(1 - p, 3);
+  // one animation per value: if the card is redrawn mid-way, the new copy carries on from the same moment
+  function cuPlan(key, to, ms){ const now = performance.now(), o = cuSt[key]; if (o && o.to === to) return o;
+    let from = 0; if (o){ const p = o.ms ? Math.min(1, (now - o.t0) / o.ms) : 1; from = o.from + (o.to - o.from) * cuEase(p); }
+    const st = {from: from, to: to, t0: o ? now : Math.max(now, cuReady), ms: cuCalm() || from === to ? 0 : (o ? 700 : ms || 1100)}; cuSt[key] = st; return st; }
+  const cuAt = st => { const p = st.ms ? Math.max(0, Math.min(1, (performance.now() - st.t0) / st.ms)) : 1; return {p: p, v: st.from + (st.to - st.from) * cuEase(p)}; };
+  function cuRun(node, key, to, fmt){ if (!node || !isFinite(to)) return; const st = cuPlan(key, to); let a = cuAt(st); node.textContent = fmt(a.p >= 1 ? to : a.v); if (a.p >= 1) return;
+    const step = () => { if (!node.isConnected) return; a = cuAt(st); node.textContent = fmt(a.p >= 1 ? to : a.v); if (a.p < 1) requestAnimationFrame(step); }; requestAnimationFrame(step); }
+  function cuRing(key, pct){ const C = 2 * Math.PI * 9, p = Math.max(0, Math.min(1, pct || 0)), st = cuPlan(key + ":r", p), w = el("i","cu-ring"), el2 = performance.now() - st.t0;
+    w.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle class="bg" cx="12" cy="12" r="9"/><circle class="fg" cx="12" cy="12" r="9" stroke-dasharray="' + C.toFixed(2) + '"/></svg>';
+    const fg = w.querySelector(".fg"); fg.style.setProperty("--o0", (C * (1 - st.from)).toFixed(2)); fg.style.setProperty("--o1", (C * (1 - p)).toFixed(2)); fg.style.strokeDashoffset = (C * (1 - p)).toFixed(2);
+    if (st.ms && el2 < st.ms){ fg.style.animation = "cuDash " + st.ms + "ms cubic-bezier(.33,1,.68,1) " + (isFinite(el2) ? -el2 : 400).toFixed(0) + "ms both"; } return w; }
+  function cuWidth(node, key, pc){ const st = cuPlan(key, pc), el2 = performance.now() - st.t0; node.style.width = pc + "%"; node.style.setProperty("--w0", st.from + "%"); node.style.setProperty("--w1", pc + "%");
+    if (st.ms && el2 < st.ms) node.style.animation = "cuW " + st.ms + "ms cubic-bezier(.33,1,.68,1) " + (isFinite(el2) ? -el2 : 400).toFixed(0) + "ms both"; }
   function heroPaint(){
     const home = $("v-prehled"), old = home.querySelector(".herocard"), cta = $("d-cta"); if (!old) return;
     if (hero2.parentNode !== home) home.insertBefore(hero2, old);
@@ -9072,9 +9184,10 @@ body[data-view="akcie"] #subnav,body[data-view="krypto"] #subnav,body[data-view=
     else { ns.appendChild(el("small", null, "Další krok")); ns.appendChild(el("b", null, cur.title)); next.addEventListener("click", () => goStep(cur)); }
     next.appendChild(ns); next.appendChild(el("i", null, "→"));
     const stat = (l, v, cls) => { const x = el("div"); x.appendChild(el("span", null, l)); x.appendChild(el("b", cls || null, v)); return x; }, stats = el("div","h2-stats");
-    stats.appendChild(stat("Týden", tr.length ? sgn(Math.round(wk.total * 10) / 10) + " R" : "–", wk.total > 0 ? "pos" : wk.total < 0 ? "neg" : null));
-    stats.appendChild(stat("Úspěšnost", tr.length ? Math.round(st.winrate) + " %" : "–")); stats.appendChild(stat("Učení (min)", m + "/" + g));
-    const bar = el("div","h2-bar"), bi = el("i"); bi.style.width = Math.round(pct * 100) + "%"; bar.appendChild(bi);
+    { const s1 = stat("Týden", tr.length ? sgn(Math.round(wk.total * 10) / 10) + " R" : "–", wk.total > 0 ? "pos" : wk.total < 0 ? "neg" : null); if (tr.length) cuRun(s1.lastChild, "h-wk", Math.round(wk.total * 10) / 10, v => sgn(Math.round(v * 10) / 10) + " R"); stats.appendChild(s1);
+      const s2 = stat("Úspěšnost", tr.length ? Math.round(st.winrate) + " %" : "–"); if (tr.length){ s2.insertBefore(cuRing("h-wr", st.winrate / 100), s2.lastChild); cuRun(s2.lastChild, "h-wr", Math.round(st.winrate), v => Math.round(v) + " %"); } stats.appendChild(s2);
+      const s3 = stat("Učení (min)", m + "/" + g); s3.insertBefore(cuRing("h-mn", pct), s3.lastChild); cuRun(s3.lastChild, "h-mn", m, v => Math.round(v) + "/" + g); stats.appendChild(s3); }
+    const bar = el("div","h2-bar"), bi = el("i"); cuWidth(bi, "h-bar", Math.round(pct * 100)); bar.appendChild(bi);
     const sub = el("p","h2-sub", tr.length ? "Celkem " + sgn(Math.round(st.total * 10) / 10) + " R z " + pl(tr.length, "obchodu", "obchodů", "obchodů") + "." : "Čti graf, veď deník a každý den o kousek líp.");
     if (kind === "b"){
       hero2.appendChild(h); const big = el("div","h2-big", tr.length ? sgn(Math.round(st.total * 10) / 10) : "0"); big.appendChild(el("small", null, "R celkem")); if (tr.length) big.style.color = st.total >= 0 ? "var(--good)" : "var(--bad)"; hero2.appendChild(big);
@@ -9082,8 +9195,8 @@ body[data-view="akcie"] #subnav,body[data-view="krypto"] #subnav,body[data-view=
       hero2.appendChild(stats); hero2.appendChild(next);
     } else if (kind === "c"){
       hero2.appendChild(h); const rw = el("div","h2-ringw"), C = 2 * Math.PI * 52;
-      rw.innerHTML = '<svg class="h2-ring" viewBox="0 0 118 118" aria-hidden="true"><circle class="bg" cx="59" cy="59" r="52"/><circle class="fg" cx="59" cy="59" r="52" stroke-dasharray="' + C.toFixed(1) + '" stroke-dashoffset="' + (C * (1 - pct)).toFixed(1) + '"/></svg>';
-      const mid = el("div"); mid.appendChild(el("b", null, m + "/" + g)); mid.appendChild(el("span", null, "minut dnes")); rw.appendChild(mid); hero2.appendChild(rw);
+      rw.innerHTML = '<svg class="h2-ring" viewBox="0 0 118 118" aria-hidden="true"><circle class="bg" cx="59" cy="59" r="52"/><circle class="fg" cx="59" cy="59" r="52" stroke-dasharray="' + C.toFixed(1) + '" stroke-dashoffset="' + (C * (1 - pct)).toFixed(1) + '"/></svg>'; { const fg = rw.querySelector(".fg"), st = cuPlan("h-ring", pct), e2 = performance.now() - st.t0; fg.style.setProperty("--o0", (C * (1 - st.from)).toFixed(1)); fg.style.setProperty("--o1", (C * (1 - pct)).toFixed(1)); if (st.ms && e2 < st.ms) fg.style.animation = "cuDash " + st.ms + "ms cubic-bezier(.33,1,.68,1) " + (isFinite(e2) ? -e2 : 400).toFixed(0) + "ms both"; }
+      const mid = el("div"), mb = el("b", null, m + "/" + g); cuRun(mb, "h-mn2", m, v => Math.round(v) + "/" + g); mid.appendChild(mb); mid.appendChild(el("span", null, "minut dnes")); rw.appendChild(mid); hero2.appendChild(rw);
       hero2.appendChild(el("p","h2-sub", pct >= 1 ? "Dnešní cíl je splněný. Cokoli navíc je bonus." : "Do dnešního cíle zbývá " + pl(Math.max(1, g - m), "minuta", "minuty", "minut") + ".")); hero2.appendChild(next);
     } else { hero2.appendChild(h); hero2.appendChild(sub); hero2.appendChild(next); hero2.appendChild(stats); hero2.appendChild(bar); }
     hero2.appendChild(cta);
@@ -9742,7 +9855,7 @@ body[data-view="akcie"] #subnav,body[data-view="krypto"] #subnav,body[data-view=
     bubblegum: {bg: "#fff0f7", b: ["#ff7fbf","#c39aff","#7fe3c8"], c: ["#4a1d40","#94688a","#c095b4","#0e9470","#e0365e","#b86a00"], light: 1},
     sakura: {bg: "#fff2f8", b: ["#ff8fc4","#ffbf98","#cfa8ff"], c: ["#43163f","#8d5f88","#c09ab8","#0f9d77","#e23d5e","#bf7410"], light: 1}};
   let cardGl = null;
-  function glassBg(g, W, H){ const q = cardGl, h2r = h => [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)];
+  function glassBg(g, W, H){ if (cardMedia){ g.clearRect(0, 0, W, H); g.strokeStyle = "rgba(255,255,255,.16)"; g.lineWidth = 2; rr(g, 30, 30, W - 60, H - 60, 44); g.stroke(); return; } const q = cardGl, h2r = h => [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)];
     g.fillStyle = q.bg; g.fillRect(0, 0, W, H);
     [[.12, .06, .85, q.light ? .62 : .58], [.98, .44, .7, q.light ? .5 : .42], [.3, 1.02, .9, q.light ? .48 : .38]].forEach((s, i) => { const c = h2r(q.b[i]), x = W * s[0], y = H * s[1], r = Math.max(W, H) * s[2] * .62, gr = g.createRadialGradient(x, y, 0, x, y, r);
       gr.addColorStop(0, "rgba(" + c + "," + s[3] + ")"); gr.addColorStop(.55, "rgba(" + c + "," + (s[3] * .35).toFixed(3) + ")"); gr.addColorStop(1, "rgba(" + c + ",0)"); g.fillStyle = gr; g.fillRect(0, 0, W, H); });
@@ -9750,7 +9863,7 @@ body[data-view="akcie"] #subnav,body[data-view="krypto"] #subnav,body[data-view=
     g.strokeStyle = q.light ? "rgba(255,255,254,.9)" : "rgba(255,255,254,.12)"; g.lineWidth = 2; rr(g, 30, 30, W - 60, H - 60, 44); g.stroke(); }
   function cardTheme(){ return document.body.classList.contains("sakura") ? (document.body.classList.contains("bubble") ? "bubblegum" : "sakura") : (cfg.theme || "noc"); }
   function cardPal(){ const look = (cfg.card && cfg.card.look) || "glass"; if (look === "dark") return null;
-    if (look === "glass"){ const q = GLASS[cardTheme()] || GLASS.noc, L = q.light; cardGl = q;
+    if (look === "glass"){ let q = GLASS[cardTheme()] || GLASS.noc; if (cardMedia && q.light) q = GLASS.noc; const L = q.light; cardGl = q;
       return {glass: 1, light: L, p: [q.bg, L ? "rgba(255,255,255,.56)" : "rgba(255,255,255,.075)", L ? "rgba(255,255,255,.4)" : "rgba(255,255,255,.045)", L ? "rgba(255,255,255,.95)" : "rgba(255,255,255,.16)"].concat(q.c)}; }
     const p = CARD_PAL[cardTheme()]; return p ? {p: p, light: parseInt(p[0].slice(1, 3), 16) > 200} : null; }
   async function cardThemed(draw){ const P0 = cardPal(); if (!P0){ cardGl = null; return draw(); } const p = P0.p;

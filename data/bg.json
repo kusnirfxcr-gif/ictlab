@@ -1,0 +1,60 @@
+{
+ "items": [
+  {
+   "id": "mlha-v",
+   "name": "Mlha v pohybu",
+   "kind": "video",
+   "src": "assets/bg/mlha-v.mp4",
+   "thumb": "assets/bg/t-mlha-v.webp"
+  },
+  {
+   "id": "zare-v",
+   "name": "Záře v pohybu",
+   "kind": "video",
+   "src": "assets/bg/zare-v.mp4",
+   "thumb": "assets/bg/t-zare-v.webp"
+  },
+  {
+   "id": "krivka-v",
+   "name": "Křivka se kreslí",
+   "kind": "video",
+   "src": "assets/bg/krivka-v.mp4",
+   "thumb": "assets/bg/t-krivka-v.webp"
+  },
+  {
+   "id": "mlha",
+   "name": "Mlha",
+   "kind": "img",
+   "src": "assets/bg/mlha.webp",
+   "thumb": "assets/bg/t-mlha.webp"
+  },
+  {
+   "id": "nocni-hreben",
+   "name": "Noční hřeben",
+   "kind": "img",
+   "src": "assets/bg/nocni-hreben.webp",
+   "thumb": "assets/bg/t-nocni-hreben.webp"
+  },
+  {
+   "id": "polarni-zare",
+   "name": "Polární záře",
+   "kind": "img",
+   "src": "assets/bg/polarni-zare.webp",
+   "thumb": "assets/bg/t-polarni-zare.webp"
+  },
+  {
+   "id": "krivka",
+   "name": "Křivka",
+   "kind": "img",
+   "src": "assets/bg/krivka.webp",
+   "thumb": "assets/bg/t-krivka.webp"
+  },
+  {
+   "id": "grafit",
+   "name": "Grafit",
+   "kind": "img",
+   "src": "assets/bg/grafit.webp",
+   "thumb": "assets/bg/t-grafit.webp"
+  }
+ ]
+}
