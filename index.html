@@ -5537,6 +5537,19 @@ html body .pf-xp .lv-emb{flex:none;--sz:22px!important}html body .rw-mini .pf-xp
     tb.appendChild(bd); wrap.appendChild(tb); return wrap;
   }
 
+  // trade number within the day: does the result fade after the first trades?
+  function rankTable(tr, unit){
+    const rk = new Map(), cnt = {}; jSorted().forEach(t => { const d = tDay(t); cnt[d] = (cnt[d] || 0) + 1; rk.set(t, cnt[d]); });
+    if (!tr.some(t => (rk.get(t) || 0) > 1)) return null;
+    const L = [LT("1. obchod", "1st trade"), LT("2. obchod", "2nd trade"), LT("3. obchod", "3rd trade"), LT("4. a další", "4th and later")];
+    const lab = t => { const r = rk.get(t); return r ? L[Math.min(r, 4) - 1] : null; }, box = groupTable(LT("Pořadí v dni", "Trade # in day"), tr, lab, L, unit); if (!box) return null;
+    const first = tr.filter(t => rk.get(t) === 1), late = tr.filter(t => (rk.get(t) || 0) >= 3), sf = jStats(first, unit), sl = jStats(late, unit);
+    if (sf.n >= 5 && sl.n >= 5 && sl.avg < sf.avg) box.appendChild(el("p","small muted", LT("Od třetího obchodu dne máš průměr " + fmtU(sl.avg, unit) + ", u prvního obchodu " + fmtU(sf.avg, unit) + ". Výsledek se během dne zhoršuje, pomoct může denní limit počtu obchodů.", "From the third trade of the day your average is " + fmtU(sl.avg, unit) + ", on the first trade " + fmtU(sf.avg, unit) + ". Results fade as the day goes on, a daily limit on the number of trades can help.")));
+    else if (sf.n >= 5 && sl.n >= 5) box.appendChild(el("p","small muted", LT("Pozdější obchody dne si zatím vedou stejně nebo lépe než první.", "Later trades of the day are doing as well as or better than the first one so far.")));
+    const note = box.querySelector("p"); if (note) note.style.marginTop = "8px";
+    return box;
+  }
+
   // ---------- daily plan ----------
   const P_BIAS = [["long","Long"],["short","Short"],["none","Nevím"]], P_ACT = [["up","Nahoru"],["down","Dolů"],["flat","Do strany"]];
   function planToday(){ const k = dayKey(); return jr.plans[k] || (jr.plans[k] = {bias: null, levels: "", note: "", actual: null}); }
@@ -6639,7 +6652,7 @@ html body .pf-xp .lv-emb{flex:none;--sz:22px!important}html body .rw-mini .pf-xp
     if (tr.length){ const D = DAYS7(), hold = t => { if (!t.tsx) return null; const m = (new Date(t.tsx) - new Date(t.ts)) / 60000; return m < 0 ? null : m < 5 ? "do 5 min" : m < 15 ? "5–15 min" : m < 60 ? "15–60 min" : "přes hodinu"; };
       const bias = t => { const p = jr.plans[tDay(t)]; if (!p || !p.bias || p.bias === "none") return "Bez plánu"; return (p.bias === "long") === (t.dir !== "short") ? "Ve směru plánu" : "Proti plánu"; };
       [groupTable("Setup", tr, t => t.setup || "Jiný", null, unit), symsOf(tr) > 1 ? groupTable("Trh", tr, t => t.sym || "–", null, unit) : null, groupTable("Den", tr, t => D[(new Date(t.ts).getDay() + 6) % 7], D, unit),
-       groupTable("Hodina", tr, t => { const h = new Date(t.ts).getHours(); return isNaN(h) ? null : String(h).padStart(2, "0") + ":00"; }, Array.from({length: 24}, (x, i) => String(i).padStart(2, "0") + ":00"), unit),
+       groupTable("Hodina", tr, t => { const h = new Date(t.ts).getHours(); return isNaN(h) ? null : String(h).padStart(2, "0") + ":00"; }, Array.from({length: 24}, (x, i) => String(i).padStart(2, "0") + ":00"), unit), rankTable(tr, unit),
        premOn() ? groupTable("Cyklus (New York)", tr, tradeCycle, CYCN.concat(["Londýn", "Asie", "Mimo cykly"]), unit) : null, groupTable("Směr", tr, t => t.dir === "short" ? "Short" : "Long", null, unit), groupTable("Plán dne", tr, bias, ["Ve směru plánu","Proti plánu","Bez plánu"], unit),
        groupTable("Seznam", tr, t => t.ck ? (t.ck.k === t.ck.n ? "Splněný" : "Nesplněný") : null, null, unit), groupTable("Chyba", tr, t => (t.tags && t.tags.length) ? t.tags : null, null, unit),
        groupTable("Před vstupem", tr, t => t.emo || null, EMO, unit), groupTable("Hodnocení", tr, t => t.grade ? gradeName(t.grade) : null, GRADES.map(x => x[1]), unit),
