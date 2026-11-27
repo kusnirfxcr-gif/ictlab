@@ -3668,6 +3668,41 @@ html[data-t="noc"] .fib-sf circle,html:not([data-t]) .fib-sf circle{fill:#f2b33d
 .inv-kv{display:grid;gap:2px;padding:9px 11px;border-radius:12px;border:1px solid var(--line)}.inv-kv span{font-size:11.5px;color:var(--muted)}.inv-kv b{font-size:15px;font-variant-numeric:tabular-nums}
 .inv-kv.t{border-color:color-mix(in srgb,var(--accent) 50%,var(--line));background:color-mix(in srgb,var(--accent) 7%,transparent)}.inv-kv.g b{color:var(--accent)}
 body.sync-wait .ob-first{visibility:hidden}
+/* rail profile card: the moving line runs round the whole card, so the rounded corners never cut it */
+#rl-lv:has(>.rw-mini.bfx-theme){position:relative}
+#rl-lv>.rw-mini.bfx-theme{border-color:transparent}#rl-lv>.rw-mini.bfx-theme>.bfr{display:none}
+#rl-lv:has(>.rw-mini.bfx-theme)::after{content:"";position:absolute;inset:0;z-index:4;pointer-events:none;border-radius:19px;padding:1.5px;background:conic-gradient(from var(--ua),transparent 0 62%,color-mix(in srgb,var(--accent) 40%,transparent) 72%,var(--accent) 82%,#fff 85%,var(--accent) 88%,transparent 96%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);animation:upSpin 5s linear infinite}
+@media (prefers-reduced-motion:reduce){#rl-lv:has(>.rw-mini.bfx-theme)::after{animation:none}}
+/* masterclass badges and exam */
+.mc-bdg{--sz:40px;position:relative;display:grid;place-items:center;flex:none;width:var(--sz);height:var(--sz);border-radius:50%;color:var(--muted);background:radial-gradient(circle at 30% 25%,color-mix(in srgb,var(--text) 10%,transparent),transparent 60%),var(--bg);border:1px dashed color-mix(in srgb,var(--muted) 55%,transparent)}
+.mc-bdg svg{width:52%;height:52%;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.mc-bdg.on{border:0;color:#fff;box-shadow:0 0 0 1px rgba(255,255,255,.14) inset,0 6px 18px -8px var(--mc1)}
+.mc-bdg.on::before{content:"";position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 210deg,var(--mc2),var(--mc1) 28%,#fff 44%,var(--mc1) 58%,var(--mc2) 82%,var(--mc1));z-index:0}
+.mc-bdg.on::after{content:"";position:absolute;inset:calc(var(--sz)*.075);border-radius:50%;background:radial-gradient(circle at 32% 24%,color-mix(in srgb,var(--mc1) 80%,#fff),var(--mc2) 72%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.22),inset 0 -6px 10px rgba(0,0,0,.25)}
+.mc-bdg.on svg{position:relative;z-index:1;filter:drop-shadow(0 1px 1px rgba(0,0,0,.35))}
+.mc-invest{--mc1:#36c98f;--mc2:#12664b}.mc-crypto{--mc1:#f0b24a;--mc2:#8a5713}
+.mc-bdgs{display:flex;gap:8px;margin-left:auto}.mc-bb{all:unset;cursor:pointer;border-radius:50%;display:grid;transition:transform .2s}.mc-bb:hover{transform:translateY(-1px) scale(1.05)}.mc-bb:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.mcx-card{flex-direction:row!important;align-items:center;gap:16px!important}.mcx-card.on{border-color:color-mix(in srgb,var(--accent) 45%,var(--line))}
+.mcx-tx{display:grid;gap:6px;min-width:0;flex:1}.mcx-tx h3{margin:0}.mcx-tx p{margin:0}.mcx-tx button{justify-self:start;width:auto;margin-top:4px}
+.ob .card.mcx{max-width:600px}.mcx-end{display:grid;justify-items:center;text-align:center;gap:10px;padding:8px 0}.mcx-end h2{font-size:34px;margin:4px 0 0}.mcx-end p{margin:0;max-width:44ch}.mcx-end .row{justify-content:center;gap:10px}.mcx-end .row button{width:auto}
+@media(max-width:520px){.mcx-card{align-items:flex-start}.mcx-card>.mc-bdg{--sz:44px!important}}
+/* investor: plan and journal */
+.inv-home{gap:14px}.inv-big{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}.inv-big b{font-size:30px;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums}.inv-big span{color:var(--muted);font-size:14px}
+.inv-st{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;border:1px solid var(--line);font-size:13.5px;color:var(--muted)}
+.inv-st svg{flex:none;width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.inv-st.ok{color:var(--text);border-color:color-mix(in srgb,#36c98f 45%,var(--line));background:color-mix(in srgb,#36c98f 8%,transparent)}.inv-st.ok svg{color:#36c98f}
+.inv-st.due{color:var(--text);border-color:color-mix(in srgb,#f0b24a 50%,var(--line));background:color-mix(in srgb,#f0b24a 8%,transparent)}.inv-st.due svg{color:#f0b24a}
+.inv-act{display:flex;gap:10px;flex-wrap:wrap}.inv-act button{flex:1 1 160px}
+.inv-f{display:grid;gap:6px;font-size:13px;color:var(--muted)}.inv-f input,.inv-f select{width:100%}
+.inv-two{display:grid;grid-template-columns:1fr 110px;gap:10px}
+.ob .card.inv-dlg{max-width:460px}.ob .card.inv-dlg .row{justify-content:flex-end;gap:10px}.ob .card.inv-dlg .row button{width:auto}.ob .card.inv-jr{max-width:640px}
+.inv-list{display:grid;gap:8px}.inv-row{display:flex;align-items:center;gap:12px;padding:11px 12px;border:1px solid var(--line);border-radius:12px}
+.inv-row>div:first-child{display:grid;gap:2px;min-width:0;flex:1}.inv-row b{font-size:14.5px;overflow-wrap:anywhere}.inv-row span{font-size:12px;color:var(--muted)}
+.inv-r{display:grid;gap:2px;justify-items:end;text-align:right;flex:none;max-width:52%}.inv-r b{font-variant-numeric:tabular-nums}.inv-r span.ok{color:#36c98f}
+.inv-del{all:unset;cursor:pointer;flex:none;min-width:26px;height:26px;display:grid;place-items:center;border-radius:8px;color:var(--muted);font-size:16px;padding:0 4px}.inv-del:hover{color:var(--text);background:color-mix(in srgb,var(--text) 8%,transparent)}.inv-del.arm{font-size:12px;color:#ff6b6b;padding:0 8px}
+body[data-path="investor"] #v-prehled .logrow{display:none}
+.pf-bdg{align-items:center}
+#v-prehled>#inv-home{order:0!important}
 </style>
 </head>
 <body>
@@ -3740,6 +3775,7 @@ body.sync-wait .ob-first{visibility:hidden}
     <div class="card" data-card="vykon" id="d-perf-card"><div class="row"><h2>Výkon</h2><a class="small" href="#denik">Otevřít deník</a></div><div class="list" id="d-perf"></div></div>
     <div class="card" data-card="obchody"><div class="row"><h2>Poslední obchody</h2><a class="small" href="#denik">Všechny obchody</a></div><div class="list" id="d-trades"></div></div>
     <div class="card" data-card="kalendar"><div class="calbox"></div></div>
+    <div class="card inv-home" id="inv-home" hidden></div>
     <div class="card" data-card="cesta"><div class="row"><h2>Tvoje cesta</h2><div id="goal"></div></div><div class="pathbox"></div></div>
     <div class="card" data-card="uloha"><div class="row"><h2>Čtení grafu</h2><span class="small muted">jedna scéna denně</span></div><div class="list" id="d-task"></div></div>
     <div class="card" data-card="dnes"><h2>Rychlé odkazy</h2>
@@ -3753,7 +3789,7 @@ body.sync-wait .ob-first{visibility:hidden}
 
   <section class="view" id="v-studium">
     <div class="card"><h2>Studium ICT</h2><p class="muted">Model 2022 krok za krokem s kvízem, shrnutí dvanácti měsíců core contentu ze soukromého mentorshipu, jeden obchodní den od přípravy po večerní kontrolu a časté omyly. K tomu dvě masterclass: dlouhodobé investování a krypto.</p>
-      <div class="chips" id="st-tabs"><button class="chip" type="button" data-t="model2022" aria-pressed="true">Model 2022</button><button class="chip" type="button" data-t="core" aria-pressed="false">Core content</button><button class="chip" type="button" data-t="adv" aria-pressed="false">Pokročilé</button><button class="chip" type="button" data-t="day" aria-pressed="false">Den obchodníka</button><button class="chip" type="button" data-t="myths" aria-pressed="false">Časté omyly</button><button class="chip" type="button" data-t="invest" aria-pressed="false">Investování</button><button class="chip" type="button" data-t="crypto" aria-pressed="false">Krypto</button></div></div>
+      <div class="chips" id="st-tabs"><button class="chip" type="button" data-t="start" aria-pressed="false">Než začneš</button><button class="chip" type="button" data-t="model2022" aria-pressed="true">Model 2022</button><button class="chip" type="button" data-t="core" aria-pressed="false">Core content</button><button class="chip" type="button" data-t="adv" aria-pressed="false">Pokročilé</button><button class="chip" type="button" data-t="day" aria-pressed="false">Den obchodníka</button><button class="chip" type="button" data-t="myths" aria-pressed="false">Časté omyly</button><button class="chip" type="button" data-t="invest" aria-pressed="false">Investování</button><button class="chip" type="button" data-t="crypto" aria-pressed="false">Krypto</button></div></div>
     <div class="list" id="st-body"></div>
   </section>
 
@@ -5998,7 +6034,7 @@ body.sync-wait .ob-first{visibility:hidden}
   function pathEn(){ return cfg.lang === "en"; }
   function pathIc(k){ const i = el("i","pth-ic"); i.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true">' + PATHS[k].ic + '</svg>'; return i; }
   function pathSet(k){ if (!PATHS[k]) return; if (!profile) profile = {level: cfg.mode === "student" ? "start" : "trade", sym: "NQ", syms: ["NQ"], goal: 10};
-    profile.path = k; try { localStorage.setItem("knot-profile", JSON.stringify(profile)); } catch(e){} try { if (k === "investor") stTab = "invest"; else if (stTab === "invest" || stTab === "crypto") stTab = "model2022"; renderStudy(); } catch(e){} refreshAll(); }
+    profile.path = k; try { document.body.dataset.path = k; } catch(e){} try { localStorage.setItem("knot-profile", JSON.stringify(profile)); } catch(e){} try { if (k === "investor") stTab = "invest"; else if (stTab === "invest" || stTab === "crypto") stTab = "model2022"; renderStudy(); } catch(e){} refreshAll(); }
   function pathOpts(cur, onPick){ const g = el("div","pth-grid"); g.setAttribute("role", "radiogroup");
     PATH_KEYS.forEach(k => { const p = PATHS[k], b = el("button","pth-opt"), w = el("span","pth-tx"); b.type = "button"; b.setAttribute("role", "radio"); b.setAttribute("aria-checked", String(k === cur)); b.dataset.k = k;
       b.appendChild(pathIc(k)); w.appendChild(el("b", null, pathEn() ? p.en : p.cz)); w.appendChild(el("span", null, pathEn() ? p.den : p.dcz)); b.appendChild(w);
@@ -6016,7 +6052,10 @@ body.sync-wait .ob-first{visibility:hidden}
     const P = PATHS[pathOf()], seen = lp.seen || {}, sq = lp.sq || {}, s = [], used = {};
     const paS = id => { const t = pa.find(x => x.id === id); if (t && !used[id]){ used[id] = 1; s.push({kind: "pa", id: t.id, title: t.title, done: !!seen[t.id]}); } };
     const stS = (tab, x) => s.push({kind: "st", tab: tab, id: x.id, title: x.title, done: !!sq["a-" + x.id]});
-    if (P.only){ if (!sd) return []; ["invest", "crypto"].forEach(k => ((sd[k] || {}).lessons || []).forEach(x => stS(k, x))); (P.first || []).forEach(paS); return s; }
+    const mcDone = k => { const b = (lp.mc || {})[k]; return !!(b && b.of && b.best / b.of >= 0.8); };
+    if (P.only){ if (!sd) return []; ["invest", "crypto"].forEach(k => { ((sd[k] || {}).lessons || []).forEach(x => stS(k, x)); if ((sd[k] || {}).exam) s.push({kind: "mx", tab: k, title: (cfg.lang === "en" ? "Exam: " : "Zkouška: ") + sd[k].title, done: mcDone(k)}); }); (P.first || []).forEach(paS); return s; }
+    // traders read the honest numbers first; whoever is already well into the path is not sent back
+    { const far = Object.keys(seen).length >= 3; ((sd && sd.start && sd.start.lessons) || []).forEach(x => s.push({kind: "st", tab: "start", id: x.id, title: x.title, done: far || !!sq["a-" + x.id]})); }
     (P.first || []).forEach(paS);
     (P.st || []).forEach(a => { const x = sd && ((sd[a[0]] || {}).lessons || []).find(y => y.id === a[1]); if (x) stS(a[0], x); });
     pa.forEach(t => paS(t.id));
@@ -6030,6 +6069,7 @@ body.sync-wait .ob-first{visibility:hidden}
   function goStep(st){
     if (st.kind === "pa") openTopic(st.id);
     else if (st.kind === "st"){ stTab = st.tab; stAdvOpen = st.id; location.hash = "#studium"; renderStudy(); setTimeout(() => { const d = document.querySelector('#st-body details[data-lid="' + st.id + '"]'); if (d){ d.open = true; arriveAt(d); } }, 120); }
+    else if (st.kind === "mx"){ stTab = st.tab; location.hash = "#studium"; renderStudy(); setTimeout(() => { const d = document.querySelector("#st-body .mcx-card"); if (d) arriveAt(d); }, 120); }
     else if (st.kind === "pr"){ location.hash = "#laura"; setTimeout(() => arriveAt($("pr-card")), 80); }
     else { location.hash = "#room"; openWeek = st.n; renderCourse(); setTimeout(() => { const r = courseRefs[st.n]; if (r) arriveAt(r.d); }, 80); }
   }
@@ -7096,7 +7136,7 @@ body.sync-wait .ob-first{visibility:hidden}
   ["calc-acct","calc-pct","calc-stop"].forEach(id => { const k = id.slice(5); if (cfg.calc[k] != null) $(id).value = cfg.calc[k]; $(id).addEventListener("input", () => { cfg.calc[k] = $(id).value; cfgStore(); renderCalc(); }); });
 
   // ---------- backup, restore, wipe ----------
-  const LS_KEYS = ["tape-posts","knot-journal","knot-checklist","ictlab-laura","ictlab-course-done","knot-activity","knot-profile","knot-minutes","tape-settings","tape-learn-last","tape-coach-chat","tape-music-mine"];
+  const LS_KEYS = ["tape-posts","knot-journal","knot-checklist","ictlab-laura","ictlab-course-done","knot-activity","knot-profile","knot-minutes","tape-settings","tape-learn-last","tape-coach-chat","tape-music-mine","tape-invest"];
   function download(blob, name){ const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); a.remove(); }
   async function exportAll(){
     const ls = {}; LS_KEYS.forEach(k => { let v = null; try { v = localStorage.getItem(k); } catch(e){} if (v != null) ls[k] = v; });
@@ -8113,11 +8153,11 @@ body.sync-wait .ob-first{visibility:hidden}
         const sp = $("streak"), n = parseInt((sp.textContent.match(/\d+/) || ["0"])[0], 10); if (streakN != null && n > streakN){ sp.classList.remove("bump"); void sp.offsetWidth; sp.classList.add("bump"); confetti(sp, 14); } streakN = n; } catch(e){ if (window.console) console.error(e); } }; }
 
   // ---------- study: advanced lessons tab ----------
-  { const _renderStudyAdv = renderStudy; renderStudy = function(){ if ((stTab !== "adv" && stTab !== "invest" && stTab !== "crypto") || !study || !study[stTab]) return _renderStudyAdv();
+  { const _renderStudyAdv = renderStudy; renderStudy = function(){ if ((stTab !== "adv" && stTab !== "invest" && stTab !== "crypto" && stTab !== "start") || !study || !study[stTab]) return _renderStudyAdv();
       const box = $("st-body"), m = study[stTab], head = el("div","card"); clear(box); lp.sq = lp.sq || {};
       Array.prototype.forEach.call($("st-tabs").children, b => b.setAttribute("aria-pressed", String(b.dataset.t === stTab)));
       const okN = m.lessons.filter(x => lp.sq["a-" + x.id]).length, bar = el("div","bar"), bi = el("i"); bi.style.width = Math.round(100 * okN / m.lessons.length) + "%"; bar.appendChild(bi);
-      head.appendChild(el("span","kick", stTab === "adv" ? "Úroveň: pokročilá" : "Masterclass")); head.appendChild(el("h2", null, m.title)); head.appendChild(el("p", null, m.intro)); head.appendChild(el("span","small muted","Ověřeno kvízem: " + okN + " z " + m.lessons.length)); head.appendChild(bar); box.appendChild(head);
+      head.appendChild(el("span","kick", stTab === "adv" ? "Úroveň: pokročilá" : stTab === "start" ? "Poctivá čísla" : "Masterclass")); head.appendChild(el("h2", null, m.title)); head.appendChild(el("p", null, m.intro)); head.appendChild(el("span","small muted","Ověřeno kvízem: " + okN + " z " + m.lessons.length)); head.appendChild(bar); box.appendChild(head);
       let advG = null;
       m.lessons.forEach((x, i) => { if (x.group && x.group !== advG){ advG = x.group; box.appendChild(el("span","kick advg", advG)); } const d = el("details","week" + (lp.sq["a-" + x.id] ? " done" : "")), sm = el("summary"), body = el("div","weekbody"), steps = el("ol","lsteps"), use = el("ul","stl ok"), trap = el("div","lkey trap"), cnt = el("span","cnt", lp.sq["a-" + x.id] ? "hotovo" : "lekce " + (i + 1));
         sm.appendChild(el("h3", null, x.title)); sm.appendChild(cnt); d.appendChild(sm); d.dataset.lid = x.id; if (stAdvOpen === x.id) d.open = true; d.addEventListener("toggle", () => { if (d.open) stAdvOpen = x.id; });
@@ -8127,6 +8167,7 @@ body.sync-wait .ob-first{visibility:hidden}
         const opts = shuffled(x.quiz.opts), btns = opts.map(o => { const b = el("button","exo", o); b.type = "button"; b.addEventListener("click", () => { if (answered) return; answered = true; const ok = o === x.quiz.ok; weakNote("a-" + x.id, x.quiz.q, x.quiz.opts, x.quiz.ok, x.quiz.why, x.title, ok); btns.forEach((y, j) => { y.disabled = true; if (opts[j] === x.quiz.ok) y.classList.add("ok"); }); if (!ok) b.classList.add("no");
             qb.appendChild(el("span","small", (ok ? "Správně. " : "Tohle ne. ") + x.quiz.why)); if (ok && !lp.sq["a-" + x.id]){ lp.sq["a-" + x.id] = 1; persistLaura(); d.classList.add("done"); cnt.textContent = "hotovo"; confetti(b, 14); } }); qb.appendChild(b); return b; });
         q.appendChild(qb); body.appendChild(q); d.appendChild(body); box.appendChild(d); });
+      if (m.exam && m.exam.length) try { box.appendChild(mcExamCard(stTab, m)); } catch(e){ if (window.console) console.error(e); }
       box.appendChild(stSources(m.sources)); }; }
   // interactive figures for the Fibonacci lessons
   function stFig(kind){ const w = el("div","fibw");
@@ -8421,7 +8462,7 @@ body.sync-wait .ob-first{visibility:hidden}
     function weakNow(id, w){ try { const k = id.slice(0, 2), key = id.slice(2); let q, o, a, why, src;
         if (k === "t-"){ const t = pa.find(x => x.id === key); if (t && t.check){ q = t.check.q; o = t.check.opts; a = t.check.ok; why = t.check.why; src = t.title; } }
         else if (k === "s-"){ const x = study && study.model2022 && (study.model2022.steps || []).find(y => String(y.n) === key); if (x && x.quiz){ q = x.quiz.q; o = x.quiz.opts; a = x.quiz.ok; why = x.quiz.why; src = x.title; } }
-        else if (k === "a-"){ const x = study && [].concat((study.adv || {}).lessons || [], (study.invest || {}).lessons || [], (study.crypto || {}).lessons || []).find(y => String(y.id) === key); if (x && x.quiz){ q = x.quiz.q; o = x.quiz.opts; a = x.quiz.ok; why = x.quiz.why; src = x.title; } }
+        else if (k === "a-"){ const x = study && [].concat((study.adv || {}).lessons || [], (study.invest || {}).lessons || [], (study.crypto || {}).lessons || [], (study.start || {}).lessons || []).find(y => String(y.id) === key); if (x && x.quiz){ q = x.quiz.q; o = x.quiz.opts; a = x.quiz.ok; why = x.quiz.why; src = x.title; } }
         else if (k === "c-"){ let l = null; if (course) course.weeks.forEach(wk => wk.lessons.forEach(x => { if (String(x.id) === key) l = x; })); if (l && l.q){ q = l.q.q; o = l.q.o; a = l.q.o[l.q.ok]; why = l.q.why; src = l.title; } }
         if (q && Array.isArray(o) && o.length && a) return {q: q, o: o, a: a, why: why || "", src: src || ""};
       } catch(e){} return w; }
@@ -9878,6 +9919,7 @@ body.sync-wait .ob-first{visibility:hidden}
     add("Témata price action", "Price action topics", seen, seen * 20); add("Lekce MOROS", "MOROS lessons", mo, mo * 40);
     const prb = (lp.practice && lp.practice.best) || 0, fc = fcKnown(), ex = Object.keys(lp.exam || {}).filter(k => lp.exam[k] && lp.exam[k].of && lp.exam[k].best / lp.exam[k].of >= 0.8).length;
     add("Procvičování: správné úlohy", "Practice: correct tasks", prb, prb * 5); add("Kartičky, které umíš", "Flashcards you know", fc, fc * 2); add("Složené zkoušky", "Exams passed", ex, ex * 100);
+    { const mcN = Object.keys(lp.mc || {}).filter(k => lp.mc[k] && lp.mc[k].of && lp.mc[k].best / lp.mc[k].of >= 0.8).length; add("Zkoušky masterclass", "Masterclass exams", mcN, mcN * 100); }
     // journal: trades by day (first three detailed ones count), plans, evenings, disciplined days without a trade
     const byDay = {}, own = (jr.trades || []).filter(t => !t.missed); own.slice().sort((a, b) => a.ts < b.ts ? -1 : 1).forEach(t => { (byDay[tDay(t)] = byDay[tDay(t)] || []).push(t); });
     const det = t => !!t.setup && !!(t.grade || t.emo || (t.dol && t.dol.length) || (t.conf && t.conf.length) || (t.cfm && t.cfm.length) || (t.note && String(t.note).trim()));
@@ -10076,7 +10118,7 @@ body.sync-wait .ob-first{visibility:hidden}
     const drawAv = () => { clear(avb); avb.appendChild(avEl(78)); const cam = el("i"); cam.innerHTML = AV_CAM; avb.appendChild(cam); }; drawAv(); avb.addEventListener("click", () => avPick(() => { drawAv(); again(); }));
     const top = el("div","pf-nm"); top.appendChild(nmEl); top.appendChild(el("span","lv-tag", lvTag())); tx.appendChild(top); tx.appendChild(el("span","small muted", auth.email || "")); hd.appendChild(avb); hd.appendChild(tx); box.appendChild(hd); rwFrameEl(hd);
     try { hd.appendChild(rwStrip(r.xp, L)); } catch(e){ if (window.console) console.error(e); }
-    try { const pk = pathOf(), pr2 = el("div","pf-path"), pl = el("span", null, LT("Cesta", "Path")), pn = el("span","pth-chip"), pb = el("button","pth-ch", LT("Změnit", "Change")); pn.appendChild(pathIc(pk)); pn.appendChild(el("b", null, LT(PATHS[pk].cz, PATHS[pk].en))); pb.type = "button"; pb.addEventListener("click", pathPick); pr2.appendChild(pl); pr2.appendChild(pn); pr2.appendChild(pb); box.appendChild(pr2); } catch(e){ if (window.console) console.error(e); }
+    try { const pk = pathOf(), pr2 = el("div","pf-path"), pl = el("span", null, LT("Cesta", "Path")), pn = el("span","pth-chip"), pb = el("button","pth-ch", LT("Změnit", "Change")); pn.appendChild(pathIc(pk)); pn.appendChild(el("b", null, LT(PATHS[pk].cz, PATHS[pk].en))); pb.type = "button"; pb.addEventListener("click", pathPick); pr2.appendChild(pl); pr2.appendChild(pn); pr2.appendChild(pb); box.appendChild(pr2); box.appendChild(mcBadgeRow()); } catch(e){ if (window.console) console.error(e); }
     try { const row = el("div","pf-look"), eb = el("button"), lk = el("div","pf-lookbox"); eb.type = "button"; eb.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l4-1 11-11-3-3L5 16z"/><path d="M14 7l3 3"/></svg>'; { const sp = el("span", null, LT("Banner a rámeček", "Banner and frame")); if (sp.firstChild) sp.firstChild.__en = sp.textContent; eb.appendChild(sp); } lk.hidden = !rwLookOpen; eb.setAttribute("aria-expanded", String(rwLookOpen));
       eb.addEventListener("click", () => { rwLookOpen = !rwLookOpen; lk.hidden = !rwLookOpen; eb.setAttribute("aria-expanded", String(rwLookOpen)); });
       const sec2 = (t, sub) => { const w = el("div"); w.style.display = "contents"; lk.appendChild(el("h3", null, t)); if (sub) lk.appendChild(el("p","small muted", sub)); lk.appendChild(w); return w; };
@@ -10641,6 +10683,105 @@ body.sync-wait .ob-first{visibility:hidden}
       if (!home){ home = document.createComment("tb-theme"); tb.parentNode.insertBefore(home, tb); }
       if (mq.matches){ if (tb.nextSibling !== lv) lv.parentNode.insertBefore(tb, lv); } else if (home.parentNode && home.nextSibling !== tb) home.parentNode.insertBefore(tb, home.nextSibling); };
     place(); setTimeout(place, 600); try { mq.addEventListener("change", place); } catch(e){ mq.addListener(place); } }
+  // ---------- masterclass exams and badges ----------
+  function mcDef(){ return {invest: {cz: "Investing masterclass", en: "Investing masterclass", ic: '<path d="M6 17V11M10.5 17V7M15 17v-4M19 17H4.5"/>'}, crypto: {cz: "Crypto masterclass", en: "Crypto masterclass", ic: '<path d="M12 5.5l5.6 3.2v6.6L12 18.5l-5.6-3.2V8.7z"/><path d="M12 5.5v13M6.4 8.7L12 12l5.6-3.3"/>'}}; }
+  function mcOk(k){ const b = (lp.mc || {})[k]; return !!(b && b.of && b.best / b.of >= 0.8); }
+  function mcBadge(k, sz){ const i = el("i","mc-bdg mc-" + k + (mcOk(k) ? " on" : "")); i.style.setProperty("--sz", (sz || 40) + "px"); i.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true">' + mcDef()[k].ic + '</svg>'; i.title = LT(mcDef()[k].cz, mcDef()[k].en) + (mcOk(k) ? LT(": zkouška složena", ": exam passed") : LT(": zatím nesloženo", ": not passed yet")); return i; }
+  function mcBadgeRow(){ const r = el("div","pf-path pf-bdg"), w = el("div","mc-bdgs"); r.appendChild(el("span", null, LT("Odznaky", "Badges")));
+    Object.keys(mcDef()).forEach(k => { const b = el("button","mc-bb"); b.type = "button"; b.setAttribute("aria-label", LT(mcDef()[k].cz, mcDef()[k].en)); b.appendChild(mcBadge(k, 34)); b.addEventListener("click", () => { stTab = k; location.hash = "#studium"; try { renderStudy(); } catch(e){} }); w.appendChild(b); });
+    r.appendChild(w); return r; }
+  function mcExamCard(tab, m){ const c = el("div","card mcx-card" + (mcOk(tab) ? " on" : "")), tx = el("div","mcx-tx"), b = el("button","primary"), okN = m.lessons.filter(x => (lp.sq || {})["a-" + x.id]).length, open = okN >= m.lessons.length, best = (lp.mc || {})[tab];
+      c.appendChild(mcBadge(tab, 56)); tx.appendChild(el("span","kick", LT("Závěrečná zkouška", "Final exam"))); tx.appendChild(el("h3", null, mcOk(tab) ? LT("Složeno. Odznak máš v profilu.", "Passed. The badge is in your profile.") : LT("Deset otázek z celé masterclass", "Ten questions from the whole masterclass")));
+      tx.appendChild(el("p","small muted", !open ? LT("Odemkne se, až ověříš kvízem všechny lekce. Hotovo ", "Unlocks once you have passed the quiz in every lesson. Done ") + okN + LT(" z ", " of ") + m.lessons.length + "." : best ? LT("Nejlepší výsledek ", "Best result ") + best.best + LT(" z ", " of ") + best.of + LT(". Složeno je od osmi správných.", ". Eight correct answers pass.") : LT("Složeno je od osmi správných. Za složení je odznak a 100 XP.", "Eight correct answers pass. Passing earns a badge and 100 XP.")));
+      b.type = "button"; b.textContent = best ? LT("Zkusit znovu", "Try again") : LT("Spustit zkoušku", "Start the exam"); b.disabled = !open; b.addEventListener("click", () => mcExamRun(tab, m)); tx.appendChild(b); c.appendChild(tx); return c; }
+  function mcExamRun(tab, m){ const o = overlay("mcx"), qs = shuffled(m.exam.slice()), res = []; let i = 0;
+    const head = () => { const h = el("div","row"), x = el("button","ck-del", LT("Zavřít", "Close")); x.type = "button"; x.addEventListener("click", o.close); h.appendChild(el("span","kick", m.title + " · " + LT("zkouška", "exam"))); h.appendChild(x); return h; };
+    const bar = () => { const b = el("div","drbar"); qs.forEach((x, k) => b.appendChild(el("i", k < res.length ? (res[k] ? "ok" : "no") : ""))); return b; };
+    const view = () => { const q = qs[i], opts = shuffled(q.opts.slice()), qb = el("div","exbody"); let done = false; clear(o.card); o.card.appendChild(head()); o.card.appendChild(bar());
+      o.card.appendChild(el("span","small muted", LT("Otázka ", "Question ") + (i + 1) + LT(" z ", " of ") + qs.length)); qb.appendChild(el("b","exq", q.q));
+      const btns = opts.map(t => { const b = el("button","exo", t); b.type = "button"; b.addEventListener("click", () => { if (done) return; done = true; const ok = t === q.ok; res.push(ok); btns.forEach((y, j) => { y.disabled = true; if (opts[j] === q.ok) y.classList.add("ok"); }); if (!ok) b.classList.add("no");
+          qb.appendChild(el("span","small", (ok ? LT("Správně. ", "Correct. ") : LT("Tohle ne. ", "Not this one. ")) + q.why)); const nx = el("button","primary", i === qs.length - 1 ? LT("Vyhodnotit", "See the result") : LT("Další otázka", "Next question")); nx.type = "button"; nx.addEventListener("click", () => { i++; if (i < qs.length) view(); else end(); }); qb.appendChild(nx); try { nx.focus({preventScroll: true}); } catch(e){}
+          const nb = bar(), ob = o.card.querySelector(".drbar"); if (ob) ob.replaceWith(nb); }); qb.appendChild(b); return b; });
+      const bx = el("div","box exam"); bx.appendChild(qb); o.card.appendChild(bx); };
+    const end = () => { const right = res.filter(Boolean).length, pass = right / qs.length >= 0.8, was = mcOk(tab); lp.mc = lp.mc || {}; const prev = lp.mc[tab]; if (!prev || right > prev.best) lp.mc[tab] = {best: right, of: qs.length, d: dayKey()}; try { persistLaura(); } catch(e){} try { xpSoon(); } catch(e){}
+      clear(o.card); o.card.appendChild(head()); o.card.appendChild(bar()); const w = el("div","mcx-end"); w.appendChild(mcBadge(tab, 84)); w.appendChild(el("h2", null, right + LT(" z ", " of ") + qs.length));
+      w.appendChild(el("p", null, pass ? (was ? LT("Znovu složeno.", "Passed again.") : LT("Složeno. Odznak najdeš v profilu a přibylo ti 100 XP.", "Passed. The badge is in your profile and you earned 100 XP.")) : LT("Tentokrát to nevyšlo. Složeno je od osmi správných, projdi si lekce u otázek, které nesedly, a zkus to znovu.", "Not this time. Eight correct answers pass; go back to the lessons behind the questions you missed and try again.")));
+      const r = el("div","row"), a = el("button", null, LT("Zavřít", "Close")), b2 = el("button","primary", LT("Zkusit znovu", "Try again")); a.type = b2.type = "button"; a.addEventListener("click", o.close); b2.addEventListener("click", () => { o.close(); mcExamRun(tab, m); }); r.appendChild(a); if (!pass) r.appendChild(b2); w.appendChild(r); o.card.appendChild(w);
+      if (pass && !was) try { confetti(w, 26); } catch(e){} try { renderStudy(); renderPath(); } catch(e){} };
+    view(); }
+
+  // ---------- investor: plan of regular purchases and a purchase journal ----------
+  const INV_KEY = "tape-invest"; let inv = {plan: null, buys: []};
+  try { const v = JSON.parse(localStorage.getItem(INV_KEY) || "null"); if (v && typeof v === "object"){ inv.plan = v.plan || null; inv.buys = Array.isArray(v.buys) ? v.buys : []; } } catch(e){}
+  function invSave(){ try { localStorage.setItem(INV_KEY, JSON.stringify(inv)); } catch(e){ toast(LT("Nepodařilo se uložit.", "Could not save.")); } }
+  const invLoc = () => LT("cs-CZ", "en-US"), invNum = (v, d) => Number(v).toLocaleString(invLoc(), {minimumFractionDigits: 0, maximumFractionDigits: d == null ? 0 : d});
+  const invMoney = (v, cur) => invNum(v, Math.abs(v) < 100 && v % 1 ? 2 : 0) + " " + (cur === "CZK" || !cur ? "Kč" : cur);
+  const invDate = k => { const p = String(k).split("-"); return new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2]) || 1); };
+  const invDay = k => invDate(k).toLocaleDateString(invLoc(), {day: "numeric", month: "numeric", year: "numeric"});
+  const invMon = d => d.toLocaleDateString(invLoc(), {month: "long"});
+  const invKinds = () => [["etf", "ETF"], ["stock", LT("Akcie", "Stock")], ["crypto", LT("Krypto", "Crypto")], ["other", LT("Jiné", "Other")]];
+  function invTotals(){ const by = {}; inv.buys.forEach(b => { by[b.cur || "CZK"] = (by[b.cur || "CZK"] || 0) + (Number(b.amt) || 0); }); return by; }
+  function invStreak(){ const have = {}; inv.buys.forEach(b => { have[String(b.d).slice(0, 7)] = 1; }); const d = new Date(); let n = 0; const key = x => x.getFullYear() + "-" + String(x.getMonth() + 1).padStart(2, "0"); if (!have[key(d)]) d.setMonth(d.getMonth() - 1, 1); else d.setDate(1);
+    while (have[key(d)]){ n++; d.setMonth(d.getMonth() - 1, 1); } return n; }
+  // Czech holding test for individuals: income from a sale is exempt once more than three years have passed since the purchase
+  function invTest(b){ const d = invDate(b.d), free = new Date(d.getFullYear() + 3, d.getMonth(), d.getDate() + 1), now = new Date(); now.setHours(0, 0, 0, 0); if (now >= free) return {ok: true, free: free};
+    let mo = (free.getFullYear() - now.getFullYear()) * 12 + free.getMonth() - now.getMonth(); if (free.getDate() < now.getDate()) mo--; mo = Math.max(0, mo); return {ok: false, free: free, y: Math.floor(mo / 12), m: mo % 12}; }
+  function invField(lab, node){ const l = el("label","inv-f"); l.appendChild(el("span", null, lab)); l.appendChild(node); return l; }
+  function invInput(type, val, ph){ const i = el("input"); i.type = type; if (val != null) i.value = val; if (ph) i.placeholder = ph; if (type === "number"){ i.inputMode = "decimal"; i.step = "any"; i.min = "0"; } return i; }
+  function invPlanEdit(){ const o = overlay("inv-dlg"), c = o.card, p = inv.plan || {amt: 3000, day: 15, what: ""};
+    c.appendChild(el("span","kick", LT("Investiční plán", "Investing plan"))); c.appendChild(el("h2", null, LT("Kolik a kdy pravidelně nakupuješ", "How much you buy regularly, and when")));
+    const a = invInput("number", p.amt), d = invInput("number", p.day), w = invInput("text", p.what || "", LT("např. globální akciový ETF", "e.g. a global stock ETF")); d.min = "1"; d.max = "28"; d.step = "1"; w.maxLength = 60;
+    c.appendChild(invField(LT("Měsíční částka (Kč)", "Monthly amount (CZK)"), a)); c.appendChild(invField(LT("Den v měsíci (1–28)", "Day of the month (1–28)"), d)); c.appendChild(invField(LT("Do čeho (nepovinné)", "Into what (optional)"), w));
+    c.appendChild(el("p","small muted", LT("Tape ti vklad jen připomene a zapíše. Peníze nikam neposílá a neradí, co koupit.", "Tape only reminds you of the deposit and records it. It sends no money anywhere and gives no advice on what to buy.")));
+    const r = el("div","row"), no = el("button", null, LT("Zrušit", "Cancel")), ok = el("button","primary", LT("Uložit plán", "Save the plan")); no.type = ok.type = "button"; no.addEventListener("click", o.close);
+    ok.addEventListener("click", () => { const amt = Math.round(Number(a.value)), day = Math.min(28, Math.max(1, Math.round(Number(d.value)) || 1)); if (!(amt > 0)){ toast(LT("Zadej měsíční částku.", "Enter the monthly amount.")); return; } inv.plan = {amt: amt, day: day, what: w.value.trim()}; invSave(); o.close(); invHome(); });
+    r.appendChild(no); r.appendChild(ok); c.appendChild(r); }
+  function invBuyAdd(after){ const o = overlay("inv-dlg"), c = o.card, p = inv.plan || {}, last = inv.buys.length ? inv.buys.slice().sort((x, y) => x.d < y.d ? 1 : -1)[0] : null; let kind = last ? last.kind : "etf";
+    c.appendChild(el("span","kick", LT("Deník investic", "Investing journal"))); c.appendChild(el("h2", null, LT("Zapsat nákup", "Record a purchase")));
+    const d = invInput("date", dayKey()), n = invInput("text", last ? last.name : (p.what || ""), LT("název nebo ticker", "name or ticker")), a = invInput("number", p.amt || ""), q = invInput("number", ""), cur = el("select"), ks = el("div","chips"), dl = el("datalist"); d.max = dayKey(); n.maxLength = 40;
+    ["CZK", "EUR", "USD"].forEach(x => { const op = el("option", null, x); op.value = x; cur.appendChild(op); }); cur.value = last ? last.cur || "CZK" : "CZK";
+    dl.id = "inv-names"; Array.from(new Set(inv.buys.map(b => b.name))).forEach(x => { const op = el("option"); op.value = x; dl.appendChild(op); }); n.setAttribute("list", "inv-names");
+    invKinds().forEach(k => { const b = el("button","chip", k[1]); b.type = "button"; b.setAttribute("aria-pressed", String(k[0] === kind)); b.addEventListener("click", () => { kind = k[0]; Array.prototype.forEach.call(ks.children, x => x.setAttribute("aria-pressed", String(x === b))); }); ks.appendChild(b); });
+    const two = el("div","inv-two"); two.appendChild(invField(LT("Zaplaceno celkem", "Total paid"), a)); two.appendChild(invField(LT("Měna", "Currency"), cur));
+    c.appendChild(invField(LT("Datum nákupu", "Purchase date"), d)); c.appendChild(invField(LT("Co jsi koupil", "What you bought"), n)); c.appendChild(dl); c.appendChild(ks); c.appendChild(two); c.appendChild(invField(LT("Počet kusů (nepovinné, pro průměrnou cenu)", "Units (optional, for the average price)"), q));
+    const r = el("div","row"), no = el("button", null, LT("Zrušit", "Cancel")), ok = el("button","primary", LT("Zapsat", "Record")); no.type = ok.type = "button"; no.addEventListener("click", o.close);
+    ok.addEventListener("click", () => { const amt = Number(a.value), qty = Number(q.value); if (!d.value || !n.value.trim() || !(amt > 0)){ toast(LT("Vyplň datum, název a částku.", "Fill in the date, the name and the amount.")); return; }
+      inv.buys.push({id: "b" + Date.now().toString(36), d: d.value, name: n.value.trim(), kind: kind, amt: amt, cur: cur.value, qty: qty > 0 ? qty : null}); invSave(); o.close(); invHome(); toast(LT("Nákup zapsán.", "Purchase recorded.")); if (after) after(); });
+    r.appendChild(no); r.appendChild(ok); c.appendChild(r); try { (n.value ? a : n).focus({preventScroll: true}); } catch(e){} }
+  function invJournal(){ const o = overlay("inv-jr"), c = o.card;
+    const draw = () => { clear(c); const h = el("div","row"), x = el("button","ck-del", LT("Zavřít", "Close")); x.type = "button"; x.addEventListener("click", o.close); h.appendChild(el("h2", null, LT("Deník investic", "Investing journal"))); h.appendChild(x); c.appendChild(h);
+      const tot = invTotals(), tiles = el("div","inv-out"), tile = (k, v, cls) => { const t = el("div","inv-kv " + (cls || "")); t.appendChild(el("span", null, k)); t.appendChild(el("b", null, v)); tiles.appendChild(t); };
+      tile(LT("Vloženo celkem", "Total deposited"), Object.keys(tot).length ? Object.keys(tot).map(k => invMoney(tot[k], k)).join(" + ") : "0 Kč", "t"); tile(LT("Nákupů", "Purchases"), String(inv.buys.length)); tile(LT("Měsíců v řadě", "Months in a row"), String(invStreak()), "g"); c.appendChild(tiles);
+      const add = el("button","primary", LT("Zapsat nákup", "Record a purchase")); add.type = "button"; add.addEventListener("click", () => invBuyAdd(draw)); c.appendChild(add);
+      if (!inv.buys.length){ c.appendChild(el("p","muted", LT("Zatím tu nic není. Zapiš první nákup a uvidíš průměrnou cenu i datum, kdy uplyne tříletý časový test.", "Nothing here yet. Record your first purchase and you will see the average price and the date the three-year holding test passes."))); return; }
+      const pos = {}; inv.buys.forEach(b => { const k = b.name + "|" + (b.cur || "CZK"), p = pos[k] = pos[k] || {name: b.name, cur: b.cur || "CZK", amt: 0, qty: 0, n: 0, allQ: true, free: 0}; p.amt += Number(b.amt) || 0; p.n++; if (b.qty) p.qty += Number(b.qty); else p.allQ = false; if (invTest(b).ok) p.free++; });
+      c.appendChild(el("span","kick advg", LT("Pozice", "Positions"))); const pl = el("div","inv-list");
+      Object.keys(pos).map(k => pos[k]).sort((a, b) => b.amt - a.amt).forEach(p => { const r = el("div","inv-row"), l = el("div"), rr = el("div","inv-r"); l.appendChild(el("b", null, p.name)); l.appendChild(el("span", null, p.n + LT(p.n === 1 ? " nákup" : p.n < 5 ? " nákupy" : " nákupů", p.n === 1 ? " purchase" : " purchases") + (p.allQ && p.qty ? " · " + LT("průměrná cena ", "average price ") + invMoney(p.amt / p.qty, p.cur) : "")));
+        rr.appendChild(el("b", null, invMoney(p.amt, p.cur))); rr.appendChild(el("span", p.free === p.n ? "ok" : "", p.free + LT(" z ", " of ") + p.n + LT(" po časovém testu", " past the holding test"))); r.appendChild(l); r.appendChild(rr); pl.appendChild(r); }); c.appendChild(pl);
+      c.appendChild(el("span","kick advg", LT("Nákupy", "Purchases"))); const bl = el("div","inv-list");
+      inv.buys.slice().sort((a, b) => a.d < b.d ? 1 : -1).forEach(b => { const r = el("div","inv-row"), l = el("div"), rr = el("div","inv-r"), t = invTest(b), del = el("button","inv-del", "×"); let arm = false; l.appendChild(el("b", null, b.name)); l.appendChild(el("span", null, invDay(b.d) + (b.qty ? " · " + invNum(b.qty, 6) + LT(" ks", " units") : "")));
+        rr.appendChild(el("b", null, invMoney(b.amt, b.cur))); rr.appendChild(el("span", t.ok ? "ok" : "", t.ok ? LT("časový test splněn", "holding test passed") : LT("test do ", "test until ") + t.free.toLocaleDateString(invLoc(), {day: "numeric", month: "numeric", year: "numeric"}) + " (" + [t.y ? t.y + LT(" r", " y") : "", t.m || !t.y ? t.m + LT(" m", " m") : ""].filter(Boolean).join(" ") + ")"));
+        del.type = "button"; del.title = LT("Smazat nákup", "Delete the purchase"); del.setAttribute("aria-label", del.title); del.addEventListener("click", () => { if (!arm){ arm = true; del.textContent = LT("Smazat?", "Delete?"); del.classList.add("arm"); setTimeout(() => { arm = false; del.textContent = "×"; del.classList.remove("arm"); }, 3000); return; } inv.buys = inv.buys.filter(y => y.id !== b.id); invSave(); draw(); invHome(); });
+        r.appendChild(l); r.appendChild(rr); r.appendChild(del); bl.appendChild(r); }); c.appendChild(bl);
+      c.appendChild(el("p","small muted", LT("Časový test je orientační: u cenných papírů i krypta je příjem z prodeje osvobozen, když od nákupu uplynou víc než tři roky. Pravidla se mění a mají výjimky, není to daňové poradenství. Tape nezná aktuální ceny, takže neukazuje hodnotu ani výnos.", "The holding test is a guide: for securities and crypto the sale income is exempt once more than three years have passed since the purchase. The rules change and have exceptions; this is not tax advice. Tape does not know current prices, so it shows no value or return."))); };
+    draw(); }
+  function invHome(){ const box = $("inv-home"); if (!box) return; const on = pathOf() === "investor"; box.hidden = !on; try { document.body.dataset.path = pathOf(); } catch(e){} if (!on) return; clear(box);
+    try { const hero = box.parentNode.querySelector(":scope > .herocard"); if (hero && hero.nextElementSibling !== box) hero.parentNode.insertBefore(box, hero.nextSibling); } catch(e){}
+    const hd = el("div","row"), p = inv.plan, now = new Date(), mk = dayKey().slice(0, 7), done = inv.buys.some(b => String(b.d).slice(0, 7) === mk); hd.appendChild(el("h2", null, LT("Investiční plán", "Investing plan")));
+    if (p){ const ed = el("button","pth-ch", LT("Upravit", "Edit")); ed.type = "button"; ed.addEventListener("click", invPlanEdit); hd.appendChild(ed); } box.appendChild(hd);
+    if (!p){ box.appendChild(el("p","muted", LT("Nastav si, kolik a kdy chceš pravidelně nakupovat. Tape ti vklad každý měsíc připomene a povede o nákupech deník.", "Set how much you want to buy regularly, and when. Tape reminds you of the deposit every month and keeps a journal of your purchases."))); const b = el("button","primary", LT("Nastavit plán", "Set up the plan")); b.type = "button"; b.addEventListener("click", invPlanEdit); box.appendChild(b);
+      if (inv.buys.length){ const j = el("button", null, LT("Deník investic", "Investing journal")); j.type = "button"; j.addEventListener("click", invJournal); box.appendChild(j); } return; }
+    const big = el("div","inv-big"); big.appendChild(el("b", null, invMoney(p.amt, "CZK"))); big.appendChild(el("span", null, LT("měsíčně, vždy ", "a month, on day ") + p.day + LT(".", "") + (p.what ? " · " + p.what : ""))); box.appendChild(big);
+    const due = now.getDate() >= p.day, st = el("div","inv-st " + (done ? "ok" : due ? "due" : "")), mon = invMon(now), Mon = mon.charAt(0).toUpperCase() + mon.slice(1);
+    st.innerHTML = done ? '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>' : '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>';
+    st.appendChild(el("span", null, done ? Mon + LT(": nákup je zapsaný.", ": the purchase is recorded.") : due ? Mon + LT(": termín vkladu už byl a nákup ještě není zapsaný.", ": the deposit day has passed and no purchase is recorded yet.") : Mon + LT(": vklad tě čeká ", ": the deposit is due on day ") + p.day + LT(".", "."))); box.appendChild(st);
+    const tot = invTotals(), tiles = el("div","inv-out"), tile = (k, v, cls) => { const t = el("div","inv-kv " + (cls || "")); t.appendChild(el("span", null, k)); t.appendChild(el("b", null, v)); tiles.appendChild(t); };
+    tile(LT("Vloženo celkem", "Total deposited"), Object.keys(tot).length ? Object.keys(tot).map(k => invMoney(tot[k], k)).join(" + ") : "0 Kč", "t"); tile(LT("Nákupů", "Purchases"), String(inv.buys.length)); tile(LT("Měsíců v řadě", "Months in a row"), String(invStreak()), "g"); box.appendChild(tiles);
+    const r = el("div","inv-act"), a = el("button","primary", LT("Zapsat nákup", "Record a purchase")), j = el("button", null, LT("Deník investic", "Investing journal")); a.type = j.type = "button"; a.addEventListener("click", () => invBuyAdd()); j.addEventListener("click", invJournal); r.appendChild(a); r.appendChild(j); box.appendChild(r);
+    // one gentle reminder a day once the deposit day has passed
+    if (due && !done){ let said = ""; try { said = sessionStorage.getItem("tape-inv-rem"); } catch(e){} if (said !== dayKey() && !document.querySelector(".ob,.gtour,.wel,.gate,.plans")){ try { sessionStorage.setItem("tape-inv-rem", dayKey()); } catch(e){} setTimeout(() => { try { toast(LT("Investiční plán: vklad za tento měsíc ještě není zapsaný.", "Investing plan: this month's deposit is not recorded yet.")); } catch(e){} }, 1800); } } }
+  { const _ra = refreshAll; refreshAll = function(){ _ra(); try { invHome(); } catch(e){ if (window.console) console.error(e); } }; try { invHome(); } catch(e){} }
+
   // ---------- plan on the profile button, and an upgrade button while a higher plan exists ----------
   const UP_IC = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V6M6 11.5L12 5.5l6 6"/></svg>';
   function planShown(){ return planOf(planNow()) || PLANS[0]; }

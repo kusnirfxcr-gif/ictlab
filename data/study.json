@@ -1313,6 +1313,108 @@
     "Kurzy.cz: Zdanění investic v ČR",
     "https://www.kurzy.cz/investice/zdaneni-investic-v-cr/"
    ]
+  ],
+  "exam": [
+   {
+    "q": "Která trojice nejlíp vystihuje, na čem stojí dlouhodobé investování?",
+    "opts": [
+     "Dlouhý horizont, rozložení rizika a nízké náklady",
+     "Načasování, páka a časté obchody",
+     "Tipy, zprávy a rychlé reakce"
+    ],
+    "ok": "Dlouhý horizont, rozložení rizika a nízké náklady",
+    "why": "Horizont, rozložení a náklady máš pod kontrolou. Načasování a tipy ne."
+   },
+   {
+    "q": "Vkládáš 3 000 Kč měsíčně. Proč je po 30 letech na účtu víc než dvojnásobek částky po 20 letech, i když jsi vložil jen o polovinu víc?",
+    "opts": [
+     "Výnosy z dřívějších let vydělávají další výnosy",
+     "Poslední roky mají vždy vyšší výnos",
+     "Banka přidává bonus za věrnost"
+    ],
+    "ok": "Výnosy z dřívějších let vydělávají další výnosy",
+    "why": "To je složené úročení. Největší část růstu přichází na konci."
+   },
+   {
+    "q": "Co znamená TER u fondu?",
+    "opts": [
+     "Celkové roční náklady, které platíš z celé investované částky",
+     "Zaručený roční výnos fondu",
+     "Poplatek jen při prodeji se ziskem"
+    ],
+    "ok": "Celkové roční náklady, které platíš z celé investované částky",
+    "why": "TER platíš každý rok z celé částky, ať se fondu daří, nebo ne."
+   },
+   {
+    "q": "Co ti dá široký indexový fond a co ne?",
+    "opts": [
+     "Sníží riziko jedné firmy, ale ne propad celého trhu",
+     "Ochrání tě před jakoukoli ztrátou",
+     "Zaručí vyšší výnos než jednotlivé akcie"
+    ],
+    "ok": "Sníží riziko jedné firmy, ale ne propad celého trhu",
+    "why": "Rozložení řeší riziko jednotlivé firmy. Když padá celý trh, padá i fond."
+   },
+   {
+    "q": "Při pravidelných nákupech za stejnou částku koupíš při nízké ceně…",
+    "opts": [
+     "víc kusů, takže průměrná nákupní cena vyjde pod průměrem cen",
+     "míň kusů, protože je trh rizikovější",
+     "stejný počet kusů jako vždy"
+    ],
+    "ok": "víc kusů, takže průměrná nákupní cena vyjde pod průměrem cen",
+    "why": "Stejná částka koupí při nižší ceně víc kusů. Proto průměrná nákupní cena vychází níž."
+   },
+   {
+    "q": "Máš větší částku najednou. Co o jejím rozložení do několika měsíců říkají data?",
+    "opts": [
+     "V průměru vychází hůř než vklad hned, ale zmírní lítost z propadu po vkladu",
+     "Vychází skoro vždy lépe než vklad hned",
+     "Výsledek je pokaždé stejný"
+    ],
+    "ok": "V průměru vychází hůř než vklad hned, ale zmírní lítost z propadu po vkladu",
+    "why": "Vklad hned dopadl lépe zhruba ve dvou třetinách období, protože jsou peníze na trhu déle."
+   },
+   {
+    "q": "Jak se má dlouhodobý investor dívat na Sell in May?",
+    "opts": [
+     "Jako na slabý a nejistý průměr, na kterém se plán nestaví",
+     "Jako na spolehlivý signál k prodeji každé jaro",
+     "Jako na pověru, ke které neexistují žádná data"
+    ],
+    "ok": "Jako na slabý a nejistý průměr, na kterém se plán nestaví",
+    "why": "Efekt v datech je, ale v jednotlivém roce platit nemusí a prodej stojí poplatky a daně."
+   },
+   {
+    "q": "Tvoje portfolio spadlo o 35 %. Co odpovídá plánu napsanému předem?",
+    "opts": [
+     "Držet se zvoleného poměru a pokračovat v pravidelných vkladech",
+     "Všechno prodat a počkat, až se trh uklidní",
+     "Zdvojnásobit vklady z půjčených peněz"
+    ],
+    "ok": "Držet se zvoleného poměru a pokračovat v pravidelných vkladech",
+    "why": "Propady k akciím patří. Nebezpečný je prodej v panice a investování na dluh."
+   },
+   {
+    "q": "Co zjistila studie domácností, které obchodovaly nejčastěji?",
+    "opts": [
+     "Vydělaly výrazně méně než trh",
+     "Porazily trh díky zkušenostem",
+     "Dopadly stejně jako ty nejméně aktivní"
+    ],
+    "ok": "Vydělaly výrazně méně než trh",
+    "why": "Nejaktivnější domácnosti vydělaly kolem 10 % ročně, trh ve stejné době přes 17 %."
+   },
+   {
+    "q": "Prodal jsi letos ETF za 150 000 Kč se ziskem 5 000 Kč a držel jsi je dva roky. Jak je to s osvobozením od daně?",
+    "opts": [
+     "Nesplnil jsi časový test ani limit 100 000 Kč, zisk se daní",
+     "Je osvobozeno, protože zisk je pod 100 000 Kč",
+     "Je osvobozeno, protože ETF se nedaní nikdy"
+    ],
+    "ok": "Nesplnil jsi časový test ani limit 100 000 Kč, zisk se daní",
+    "why": "Limit 100 000 Kč se počítá z příjmů z prodeje, ne ze zisku, a časový test vyžaduje víc než tři roky."
+   }
   ]
  },
  "crypto": {
@@ -1529,6 +1631,186 @@
    [
     "Dostupný advokát: Zdanění kryptoměn v roce 2026",
     "https://dostupnyadvokat.cz/blog/zdaneni-kryptomen"
+   ]
+  ],
+  "exam": [
+   {
+    "q": "Kolik bitcoinů může nejvýš vzniknout?",
+    "opts": [
+     "21 milionů",
+     "Neomezené množství",
+     "100 milionů"
+    ],
+    "ok": "21 milionů",
+    "why": "Počet je omezený na 21 milionů."
+   },
+   {
+    "q": "Co je halving?",
+    "opts": [
+     "Snížení odměny těžařům na polovinu zhruba každé čtyři roky",
+     "Rozdělení každého bitcoinu na dva",
+     "Pokles ceny o polovinu"
+    ],
+    "ok": "Snížení odměny těžařům na polovinu zhruba každé čtyři roky",
+    "why": "Halving snižuje tempo, jakým přibývají nové bitcoiny. O ceně sám nic neříká."
+   },
+   {
+    "q": "Proč je čtyřletý cyklus slabý podklad pro plán?",
+    "opts": [
+     "Stojí na čtyřech až pěti opakováních v různých podmínkách",
+     "Protože ho vymyslely burzy",
+     "Protože platí jen pro ethereum"
+    ],
+    "ok": "Stojí na čtyřech až pěti opakováních v různých podmínkách",
+    "why": "Pár opakování je malý vzorek a vzorec se může kdykoli změnit."
+   },
+   {
+    "q": "Chceš do krypta vložit 50 000 Kč. Kolik by zbylo po propadu kolem 80 %, jaký přišel v minulých cyklech?",
+    "opts": [
+     "Asi 10 000 Kč",
+     "Asi 40 000 Kč",
+     "Asi 25 000 Kč"
+    ],
+    "ok": "Asi 10 000 Kč",
+    "why": "Po propadu o 80 % zbude pětina. S tím má počítat velikost pozice."
+   },
+   {
+    "q": "Co je seed a jak s ním zacházet?",
+    "opts": [
+     "Záloha klíče z 12 nebo 24 slov, kterou nikdy nefotíš a nikam nezadáváš",
+     "Heslo k burze, které se posílá podpoře",
+     "Veřejná adresa, na kterou ti chodí platby"
+    ],
+    "ok": "Záloha klíče z 12 nebo 24 slov, kterou nikdy nefotíš a nikam nezadáváš",
+    "why": "Kdo zná seed, má tvoje peníze. Kdo ho ztratí, přišel o ně."
+   },
+   {
+    "q": "Co znamená „not your keys, not your coins“?",
+    "opts": [
+     "Krypto na burze ovládá burza, ty máš jen nárok vůči ní",
+     "Bez hardwarové peněženky nejde krypto koupit",
+     "Klíče musíš sdílet s burzou"
+    ],
+    "ok": "Krypto na burze ovládá burza, ty máš jen nárok vůči ní",
+    "why": "Skutečnou kontrolu má ten, kdo drží soukromý klíč."
+   },
+   {
+    "q": "Někdo ti nabízí 3 % měsíčně bez rizika. Co to nejspíš je?",
+    "opts": [
+     "Podvod nebo Ponziho schéma",
+     "Běžný výnos stablecoinu",
+     "Státem garantovaný produkt"
+    ],
+    "ok": "Podvod nebo Ponziho schéma",
+    "why": "Zaručený výnos bez rizika neexistuje."
+   },
+   {
+    "q": "Proč je páka u krypta zvlášť nebezpečná?",
+    "opts": [
+     "Pokles o 30 % za týden je běžný a pozici smaže dřív, než se trh otočí",
+     "Protože je páka v kryptu zakázaná",
+     "Protože zvyšuje poplatky za úschovu"
+    ],
+    "ok": "Pokles o 30 % za týden je běžný a pozici smaže dřív, než se trh otočí",
+    "why": "U tak rozkolísaného aktiva stačí k likvidaci pozice běžný pohyb."
+   },
+   {
+    "q": "Co je u krypta důležitější než den nákupu?",
+    "opts": [
+     "Velikost pozice vůči tomu, co můžeš celé ztratit",
+     "Počet tokenů v portfoliu",
+     "Barva svíčky v den nákupu"
+    ],
+    "ok": "Velikost pozice vůči tomu, co můžeš celé ztratit",
+    "why": "Rozhoduje, kolik peněz riziku vystavíš."
+   },
+   {
+    "q": "Vyměnil jsi bitcoin za ethereum. Jak se na to zpravidla dívají daňová pravidla v Česku?",
+    "opts": [
+     "Jako na prodej, podobně jako směna za koruny",
+     "Vůbec se to neeviduje",
+     "Daní se jen výměna za hotovost"
+    ],
+    "ok": "Jako na prodej, podobně jako směna za koruny",
+    "why": "Směna jedné kryptoměny za jinou se zpravidla počítá jako prodej. Aktuální výklad si ověř u Finanční správy."
+   }
+  ]
+ },
+ "start": {
+  "title": "Než začneš",
+  "intro": "Dvě krátké lekce, které je fér přečíst před první svíčkou: kolik obchodníků podle dat vydělává a co s tím můžeš dělat ty. Čísla jsou ze studií a od regulátora, odkazy najdeš dole.",
+  "lessons": [
+   {
+    "id": "start-cisla",
+    "title": "Kolik obchodníků opravdu vydělává",
+    "text": [
+     "Než se pustíš do první lekce, je fér vědět, jaká je šance. Nejlepší data máme z Brazílie. Výzkumníci tam sledovali všechny lidi, kteří v letech 2013 až 2015 začali intradenně obchodovat futures na hlavní akciový index.",
+     "Začalo jich 19 646. Déle než 300 obchodních dní vydrželo jen 1 551. Z těch, kteří vydrželi, 97 % prodělalo a jen 1,1 % vydělalo víc než minimální mzdu. Autoři nenašli důkaz, že by se lidé samotným obchodováním zlepšovali.",
+     "Na Tchaj-wanu vyšla data za 15 let podobně: po poplatcích dokázalo spolehlivě vydělávat méně než 1 % denních obchodníků. Evropský regulátor ESMA uvádí, že na CFD prodělává 74 až 89 % účtů drobných klientů.",
+     "U prop firem to není jiné. Data z 300 000 účtů u deseti firem ukazují, že hodnocením projde asi 14 % účtů a výplatu dostane kolem 7 %.",
+     "Neříkáme to, abychom tě odradili. Kdo ta čísla zná, riskuje málo, vede si záznamy a nevěří slibům rychlého zisku. Tape tě naučí číst graf a držet disciplínu. Zisk ti slíbit nemůže nikdo."
+    ],
+    "use": [
+     "Začni na demo účtu nebo s nejmenším kontraktem. Peníze, které potřebuješ na život, do obchodování nedávej.",
+     "Urči si předem částku, kterou jsi ochoten za učení zaplatit. Když ji ztratíš, zastav se a projdi deník.",
+     "Sleduj vlastní čísla v deníku, ne cizí screenshoty výher."
+    ],
+    "trap": "Kdo ti ukazuje jen ziskové obchody a prodává kurz nebo signály, vydělává na tobě, ne na trhu.",
+    "quiz": {
+     "q": "Kolik lidí z těch, kteří v brazilské studii vydrželi obchodovat déle než 300 dní, prodělalo?",
+     "opts": [
+      "97 %",
+      "Asi polovina",
+      "10 %"
+     ],
+     "ok": "97 %",
+     "why": "Prodělalo 97 % a jen 1,1 % vydělalo víc než minimální mzdu."
+    }
+   },
+   {
+    "id": "start-proc",
+    "title": "Proč většina prohrává a co s tím",
+    "text": [
+     "Před náklady je intradenní obchodování hra s nulovým součtem: co jeden vydělá, druhý ztratí. Za každý obchod ale platíš poplatek a spread, takže po nákladech je součet záporný a průměrný obchodník prodělává.",
+     "Druhý důvod je páka. Futures ti dovolí ovládat velkou pozici s malým účtem. Pár špatných obchodů s velkou pozicí smaže týdny práce.",
+     "Třetí je chování. Lidé obchodují moc často, po ztrátě zvyšují riziko a ztrátové obchody drží déle než ziskové. Data z Tchaj-wanu ukázala, že mnozí obchodují dál i po dlouhé řadě ztrát.",
+     "Co máš pod kontrolou: malé a stejné riziko na obchod, denní limit ztráty, jen setupy, které umíš popsat, a zápis každého obchodu. Výsledek jednotlivého obchodu pod kontrolou nemáš.",
+     "Počítej i s tím, že po poctivém pokusu zjistíš, že to pro tebe není. Když tě to stálo málo, je i to dobrý výsledek. Pro dlouhodobé zhodnocení peněz existuje klidnější cesta, pravidelné investování."
+    ],
+    "use": [
+     "Nastav si v Tape denní limit ztráty a riziko na obchod dřív, než otevřeš první pozici.",
+     "Po každých 20 obchodech se podívej do statistik, jestli ti čísla vycházejí i po poplatcích.",
+     "Když porušíš pravidlo, zapiš to. Počet porušení ti řekne víc než zisk za týden."
+    ],
+    "trap": "Jeden dobrý týden nic nedokazuje. Malý vzorek obchodů vypadá jako dovednost, i když je to náhoda.",
+    "quiz": {
+     "q": "Proč průměrný intradenní obchodník prodělává?",
+     "opts": [
+      "Zisky a ztráty se mezi obchodníky vyrovnají a navíc všichni platí poplatky",
+      "Protože trh vždy klesá",
+      "Protože burza obchody ruší"
+     ],
+     "ok": "Zisky a ztráty se mezi obchodníky vyrovnají a navíc všichni platí poplatky",
+     "why": "Před náklady je to hra s nulovým součtem, po poplatcích a spreadu se záporným."
+    }
+   }
+  ],
+  "sources": [
+   [
+    "Chague, De-Losso, Giovannetti: Day Trading for a Living?",
+    "https://ssrn.com/abstract=3423101"
+   ],
+   [
+    "Barber, Lee, Liu, Odean: The Cross-Section of Speculator Skill (Tchaj-wan 1992–2006)",
+    "https://www.escholarship.org/content/qt7k75v0qx/qt7k75v0qx.pdf?t=ohrd1z"
+   ],
+   [
+    "ESMA: omezení CFD a ztráty drobných klientů (27. 3. 2018)",
+    "https://www.esma.europa.eu/node/84933"
+   ],
+   [
+    "Finance Magnates: data FPFX Technology o prop firmách (22. 4. 2026)",
+    "https://www.financemagnates.com/forex/analysis/prop-firm-crypto-payouts-doubled-to-115-million-in-q1-2026-but-growth-has-stalled-since-december/"
    ]
   ]
  }
