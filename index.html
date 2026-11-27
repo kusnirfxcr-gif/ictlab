@@ -3656,7 +3656,7 @@ html[data-t="noc"] .fib-sf circle,html:not([data-t]) .fib-sf circle{fill:#f2b33d
 .pth-opt[aria-checked="true"]{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 8%,var(--bg));box-shadow:0 0 0 1px var(--accent),0 10px 30px -14px var(--accent)}
 .pth-opt[aria-checked="true"] .pth-ic{background:var(--accent);color:var(--bg)}
 .ob .card.pth-pick{max-width:560px}.ob .card.pth-pick .row{justify-content:flex-end;gap:10px}.ob .card.pth-pick .row button{width:auto}
-.ob .card:has(>.pth-grid){max-width:560px}
+.ob .card:has(.pth-grid){max-width:640px}
 .ob-inv [data-q="level"],.ob-inv [data-q="sym"]{display:none}
 .pf-path{display:flex;align-items:center;gap:10px;margin-top:14px;padding-top:14px;border-top:1px solid var(--line);font-size:13px;font-weight:600;color:var(--muted)}.pf-path .pth-ch{margin-left:auto}
 @media(max-width:520px){.pth-grid{grid-template-columns:1fr}.pth-opt{padding:10px 12px;align-items:center}.pth-tx span{font-size:11.5px}}
@@ -3701,9 +3701,39 @@ body.sync-wait .ob-first{visibility:hidden}
 .inv-row>div:first-child{display:grid;gap:2px;min-width:0;flex:1}.inv-row b{font-size:14.5px;overflow-wrap:anywhere}.inv-row span{font-size:12px;color:var(--muted)}
 .inv-r{display:grid;gap:2px;justify-items:end;text-align:right;flex:none;max-width:52%}.inv-r b{font-variant-numeric:tabular-nums}.inv-r span.ok{color:#36c98f}
 .inv-del{all:unset;cursor:pointer;flex:none;min-width:26px;height:26px;display:grid;place-items:center;border-radius:8px;color:var(--muted);font-size:16px;padding:0 4px}.inv-del:hover{color:var(--text);background:color-mix(in srgb,var(--text) 8%,transparent)}.inv-del.arm{font-size:12px;color:#ff6b6b;padding:0 8px}
-body[data-path="investor"] #v-prehled .logrow{display:none}
+body[data-pg="inv"] #v-prehled .logrow{display:none}
 .pf-bdg{align-items:center}
 #v-prehled>#inv-home{order:0!important}
+/* three directions of learning */
+.track{display:grid;gap:8px;margin:0 0 10px}
+.tk-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;padding:5px;border-radius:18px;border:1px solid var(--line);background:var(--surface)}
+.tk-opt{display:flex;align-items:center;gap:10px;min-width:0;padding:8px 10px;border-radius:13px;color:var(--muted);text-decoration:none;transition:background .2s,color .2s,box-shadow .2s}
+.tk-opt:hover{color:var(--text);background:color-mix(in srgb,var(--text) 4%,transparent)}
+.tk-opt .pth-ic{width:32px;height:32px;padding:7px;border-radius:10px;background:color-mix(in srgb,var(--accent) 10%,transparent);transition:background .2s,color .2s}
+.tk-tx{display:grid;gap:1px;min-width:0}.tk-tx small{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;opacity:.8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tk-tx b{font-size:14.5px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tk-opt[aria-current]{background:color-mix(in srgb,var(--accent) 13%,var(--bg));box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 55%,transparent);color:var(--text)}
+.tk-opt[aria-current] .pth-ic{background:var(--accent);color:var(--bg)}
+.tk-sty{display:flex;align-items:center;gap:10px;min-width:0;padding:0 4px}.tk-l{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.tk-seg{display:inline-flex;gap:2px;padding:3px;border-radius:12px;border:1px solid var(--line);background:var(--surface);flex:none}
+.tk-seg button{width:auto!important;min-height:0!important;padding:6px 12px!important;border:0!important;border-radius:9px!important;background:none!important;color:var(--muted)!important;font-size:13px!important;font-weight:600;box-shadow:none!important;white-space:nowrap}
+.tk-seg button:hover{color:var(--text)!important}.tk-seg button[aria-pressed="true"]{background:color-mix(in srgb,var(--accent) 16%,transparent)!important;color:var(--text)!important;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 50%,transparent)!important}
+.tk-sty em{font-style:normal;font-size:12.5px;color:var(--muted);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media(max-width:699px){.tk-opt{padding:8px 9px}.tk-opt .pth-ic{display:none}.tk-tx b{font-size:13.5px}.tk-tx small{font-size:9.5px;letter-spacing:.06em}.tk-sty em{display:none}.tk-sty{justify-content:space-between}.tk-seg{flex:1}.tk-seg button{flex:1;padding:6px 6px!important;font-size:12.5px!important}}
+.mc-tools{flex-direction:row!important;align-items:center;justify-content:space-between;gap:14px!important;flex-wrap:wrap}.mc-tools>div:first-child{display:grid;gap:4px;min-width:0;flex:1 1 260px}.mc-tools .inv-act{flex:0 1 auto}.mc-tools .inv-act button{flex:1 1 auto;width:auto}
+/* path picker in three groups */
+.pth-wrap{display:grid;gap:12px}.pth3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.pth3 .pth-opt{flex-direction:column;align-items:flex-start;gap:10px;padding:14px}.pth-k{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.pth-sty{display:grid;gap:8px;padding:12px;border-radius:14px;border:1px solid color-mix(in srgb,var(--accent) 35%,var(--line));background:color-mix(in srgb,var(--accent) 5%,var(--bg));animation:fade .25s ease both}
+.pth-sl{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.pth-seg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.pth-seg button{display:grid;gap:2px;text-align:left;width:100%;min-height:0;padding:9px 10px;border-radius:11px;border:1px solid var(--line);background:var(--bg);color:var(--text);cursor:pointer;transition:border-color .2s,background .2s}
+.pth-seg button b{font-size:13.5px}.pth-seg button span{font-size:11.5px;color:var(--muted)}
+.pth-seg button[aria-checked="true"]{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 10%,var(--bg));box-shadow:0 0 0 1px var(--accent)}
+.pth-sd{margin:0;font-size:12.5px;color:var(--muted);line-height:1.45}
+@media(max-width:560px){.pth3{grid-template-columns:1fr}.pth3 .pth-opt{flex-direction:row;align-items:center;padding:11px 12px}.pth3 .pth-tx>span{display:none}.pth3 .pth-opt[aria-checked="true"] .pth-tx>span{display:block}.pth-seg button{padding:8px}.pth-seg button span{font-size:11px}}
+body[data-view="akcie"] #subnav,body[data-view="krypto"] #subnav,body[data-view="akcie"] #lr,body[data-view="krypto"] #lr{display:none!important}
+@media(max-width:699px){.tk-opt{min-height:50px;align-items:center}.tk-tx b{white-space:normal;line-height:1.15;font-size:13px}.tk-tx small{font-size:9px}}
 </style>
 </head>
 <body>
@@ -3747,6 +3777,7 @@ body[data-path="investor"] #v-prehled .logrow{display:none}
 <div class="wrap">
   <div id="banner" role="status"></div>
   <header class="phead" id="phead" hidden></header>
+  <div class="track" id="track" hidden></div>
   <div class="subnav" id="subnav" hidden></div>
   <div id="lr" hidden></div>
 
@@ -3789,8 +3820,8 @@ body[data-path="investor"] #v-prehled .logrow{display:none}
   </section>
 
   <section class="view" id="v-studium">
-    <div class="card"><h2>Studium ICT</h2><p class="muted">Model 2022 krok za krokem s kvízem, shrnutí dvanácti měsíců core contentu ze soukromého mentorshipu, jeden obchodní den od přípravy po večerní kontrolu a časté omyly. K tomu dvě masterclass: dlouhodobé investování a krypto.</p>
-      <div class="chips" id="st-tabs"><button class="chip" type="button" data-t="start" aria-pressed="false">Než začneš</button><button class="chip" type="button" data-t="model2022" aria-pressed="true">Model 2022</button><button class="chip" type="button" data-t="core" aria-pressed="false">Core content</button><button class="chip" type="button" data-t="adv" aria-pressed="false">Pokročilé</button><button class="chip" type="button" data-t="day" aria-pressed="false">Den obchodníka</button><button class="chip" type="button" data-t="myths" aria-pressed="false">Časté omyly</button><button class="chip" type="button" data-t="invest" aria-pressed="false">Investování</button><button class="chip" type="button" data-t="crypto" aria-pressed="false">Krypto</button></div></div>
+    <div class="card"><h2>Studium ICT</h2><p class="muted">Model 2022 krok za krokem s kvízem, shrnutí dvanácti měsíců core contentu ze soukromého mentorshipu, jeden obchodní den od přípravy po večerní kontrolu a časté omyly.</p>
+      <div class="chips" id="st-tabs"><button class="chip" type="button" data-t="start" aria-pressed="false">Než začneš</button><button class="chip" type="button" data-t="model2022" aria-pressed="true">Model 2022</button><button class="chip" type="button" data-t="core" aria-pressed="false">Core content</button><button class="chip" type="button" data-t="adv" aria-pressed="false">Pokročilé</button><button class="chip" type="button" data-t="day" aria-pressed="false">Den obchodníka</button><button class="chip" type="button" data-t="myths" aria-pressed="false">Časté omyly</button></div></div>
     <div class="list" id="st-body"></div>
   </section>
 
@@ -4252,6 +4283,8 @@ body[data-path="investor"] #v-prehled .logrow{display:none}
     <div class="list" id="i-list"></div>
   </section>
 
+  <section class="view" id="v-akcie"><div class="list" id="ak-body"></div></section>
+  <section class="view" id="v-krypto"><div class="list" id="kr-body"></div></section>
   <section class="view" id="v-moros"><div id="mo"></div></section>
 
   <section class="view" id="v-laura">
@@ -4390,8 +4423,8 @@ body[data-path="investor"] #v-prehled .logrow{display:none}
   });
 
   // Views
-  const VIEWS = ["prehled","denik","kouc","laura","room","studium","moros","vice","nastroje","poznatky","model","strategie","backtest","napady","komunita","premium","nastaveni","napoveda","novinky","soukromi","pravni","uvod","lide"];
-  const GROUP = {prehled: "prehled", denik: "denik", kouc: "kouc", laura: "uceni", room: "uceni", studium: "uceni", moros: "uceni"};
+  const VIEWS = ["prehled","denik","kouc","laura","room","studium","moros","akcie","krypto","vice","nastroje","poznatky","model","strategie","backtest","napady","komunita","premium","nastaveni","napoveda","novinky","soukromi","pravni","uvod","lide"];
+  const GROUP = {prehled: "prehled", denik: "denik", kouc: "kouc", laura: "uceni", room: "uceni", studium: "uceni", moros: "uceni", akcie: "uceni", krypto: "uceni"};
   const SUBNAV = {uceni: [["laura","Obrázky a lekce"],["room","Kurz 12 týdnů"],["studium","Studium ICT"],["moros","MOROS"]]};
   const VTITLE = {lide: "Lidé a postup", premium: "Premium", komunita: "Komunita", nastroje: "Nástroje", poznatky: "Poznatky botů", model: "Model", strategie: "Pine Script", backtest: "Backtest a replay", napady: "Nápady", nastaveni: "Nastavení", napoveda: "Nápověda", novinky: "Co je nového", soukromi: "Soukromí a data", pravni: "Právní informace", uvod: "O aplikaci"};
   function route(){
@@ -4400,7 +4433,8 @@ body[data-path="investor"] #v-prehled .logrow{display:none}
     VIEWS.forEach(x => $("v-" + x).classList.toggle("on", x === v));
     document.querySelectorAll("[data-g]").forEach(a => { if (a.dataset.g === g) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current"); });
     const sn = $("subnav"); clear(sn);
-    if (SUBNAV[g]) SUBNAV[g].forEach(x => { const a = el("a", null, x[1]); a.href = "#" + x[0]; if (x[0] === v) a.setAttribute("aria-current","page"); sn.appendChild(a); });
+    try { trackPaint(v); } catch(e){}
+    if (SUBNAV[g] && v !== "akcie" && v !== "krypto") SUBNAV[g].forEach(x => { const a = el("a", null, x[1]); a.href = "#" + x[0]; if (x[0] === v) a.setAttribute("aria-current","page"); sn.appendChild(a); });
     else if (g === "vice" && v !== "vice"){ const a = el("a","back","‹ Více"); a.href = "#vice"; sn.appendChild(a); sn.appendChild(el("span", null, VTITLE[v] || "")); }
     sn.hidden = !sn.children.length;
   }
@@ -6028,25 +6062,38 @@ body[data-path="investor"] #v-prehled .logrow{display:none}
     day: {cz: "Day trader", en: "Day trader", dcz: "Jeden až dva obchody denně v newyorské seanci. Přes noc nic nedržíš.", den: "One or two trades a day in the New York session. You hold nothing overnight.", ic: '<circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M18.4 5.6L17 7M7 17l-1.4 1.4"/>', first: [], st: []},
     swing: {cz: "Swing trader", en: "Swing trader", dcz: "Obchody na dny až týdny. Méně času u grafu, rozhoduje denní a týdenní směr.", den: "Trades lasting days to weeks. Less screen time; the daily and weekly direction decides.", ic: '<path d="M3 16c3 0 3-8 6-8s3 8 6 8 3-8 6-8"/>',
       first: ["struktura","bos-mss","likvidita","premium-discount","fvg-up","fvg-down","ob-up","ob-down","ranni-priprava","rizeni-obchodu","psychologie"], st: [["adv","profil-tydne"],["adv","ipda"],["adv","irl"],["adv","gaps"],["adv","mmxm"],["adv","testovani"]]},
-    investor: {cz: "Investor", en: "Investor", dcz: "Pravidelné nákupy na roky. Místo intradenních modelů tě čeká Investing a Crypto masterclass.", den: "Regular purchases over years. Instead of intraday models you get the Investing and Crypto masterclass.", ic: '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>', only: true, first: ["struktura"]}
+    stocks: {cz: "Akcie a indexy", en: "Stocks and indices", grp: "inv", kcz: "Investování", ken: "Investing", dcz: "Dlouhodobě a pravidelně do akcií a indexových fondů. Složené úročení, ETF, poplatky a daně.", den: "Long-term, regular investing in stocks and index funds. Compound interest, ETFs, fees and taxes.", ic: '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>', order: ["invest", "crypto"]},
+    crypto: {cz: "Krypto", en: "Crypto", grp: "inv", kcz: "Investování", ken: "Investing", dcz: "Bitcoin a kryptoměny na dlouho. Propady, cykly, bezpečná úschova, podvody a daně.", den: "Bitcoin and cryptocurrencies for the long run. Drops, cycles, safe custody, scams and taxes.", ic: '<path d="M12 3.5l7.4 4.25v8.5L12 20.5l-7.4-4.25v-8.5z"/><path d="M12 3.5V20.5M4.6 7.75L12 12l7.4-4.25"/>', order: ["crypto", "invest"]}
   };
-  const PATH_KEYS = ["scalper", "day", "swing", "investor"];
-  function pathOf(){ return profile && PATHS[profile.path] ? profile.path : "day"; }
-  function pathEn(){ return cfg.lang === "en"; }
-  function pathIc(k){ const i = el("i","pth-ic"); i.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true">' + PATHS[k].ic + '</svg>'; return i; }
+  ["scalper", "day", "swing"].forEach(k => { PATHS[k].grp = "trade"; PATHS[k].kcz = "Trading"; PATHS[k].ken = "Trading"; });
+  PATHS.scalper.cz = PATHS.scalper.en = "Scalping"; PATHS.day.cz = PATHS.day.en = "Day trading"; PATHS.swing.cz = PATHS.swing.en = "Swing trading";
+  PATHS.scalper.scz = "Minuty, hodně rozhodnutí"; PATHS.scalper.sen = "Minutes, many decisions"; PATHS.day.scz = "1–2 obchody denně"; PATHS.day.sen = "1–2 trades a day"; PATHS.swing.scz = "Dny až týdny"; PATHS.swing.sen = "Days to weeks";
+  const TRADE = {cz: "Trading", en: "Trading", kcz: "Obchodování", ken: "Active trading", dcz: "Krátkodobé obchodování futures NQ a ES podle price action. Styl si vybereš podle toho, kolik máš času.", den: "Short-term trading of NQ and ES futures with price action. You pick a style by how much time you have.", ic: '<path d="M7 3v18M17 3v18"/><rect x="4.5" y="7" width="5" height="9" rx="1.2"/><rect x="14.5" y="5.5" width="5" height="8" rx="1.2"/>'};
+  function pathOf(){ let p = profile && profile.path; if (p === "investor") p = "stocks"; return PATHS[p] ? p : "day"; }
+  const pathGrp = k => (PATHS[k] || PATHS.day).grp;
+  function pathEn(){ try { return cfg.lang === "en"; } catch(e){ return false; } }
+  function pathLabel(k){ const p = PATHS[k] || PATHS.day; return (pathEn() ? p.ken : p.kcz) + " · " + (pathEn() ? p.en : p.cz); }
+  function pathIc(k){ const p = PATHS[k] || (k === "trade" ? TRADE : PATHS.day), i = el("i","pth-ic"); i.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true">' + p.ic + '</svg>'; return i; }
+  // the learning links in the menus lead straight to the chosen direction
+  function navUceni(){ const k = pathOf(), h = pathGrp(k) === "inv" ? (k === "crypto" ? "#krypto" : "#akcie") : "#laura"; document.querySelectorAll('a[data-g="uceni"]').forEach(a => { a.setAttribute("href", h); }); try { document.body.dataset.pg = pathGrp(k); document.body.dataset.path = k; } catch(e){} }
   function pathSet(k){ if (!PATHS[k]) return; if (!profile) profile = {level: cfg.mode === "student" ? "start" : "trade", sym: "NQ", syms: ["NQ"], goal: 10};
-    profile.path = k; try { document.body.dataset.path = k; } catch(e){} try { localStorage.setItem("knot-profile", JSON.stringify(profile)); } catch(e){} try { if (k === "investor") stTab = "invest"; else if (stTab === "invest" || stTab === "crypto") stTab = "model2022"; renderStudy(); } catch(e){} refreshAll(); }
-  function pathOpts(cur, onPick){ const g = el("div","pth-grid"); g.setAttribute("role", "radiogroup");
-    PATH_KEYS.forEach(k => { const p = PATHS[k], b = el("button","pth-opt"), w = el("span","pth-tx"); b.type = "button"; b.setAttribute("role", "radio"); b.setAttribute("aria-checked", String(k === cur)); b.dataset.k = k;
-      b.appendChild(pathIc(k)); w.appendChild(el("b", null, pathEn() ? p.en : p.cz)); w.appendChild(el("span", null, pathEn() ? p.den : p.dcz)); b.appendChild(w);
-      b.addEventListener("click", () => { Array.prototype.forEach.call(g.children, x => x.setAttribute("aria-checked", String(x === b))); onPick(k); }); g.appendChild(b); });
-    return g; }
+    profile.path = k; try { localStorage.setItem("knot-profile", JSON.stringify(profile)); } catch(e){} navUceni(); try { trackPaint(document.body.dataset.view); } catch(e){} refreshAll(); }
+  function pathOpts(cur, onPick){ const w = el("div","pth-wrap"), g = el("div","pth-grid pth3"), sty = el("div","pth-sty"), sd = el("p","pth-sd"), sr = el("div","pth-seg");
+    cur = PATHS[cur] ? cur : (cur === "investor" ? "stocks" : "day"); let sel = pathGrp(cur) === "trade" ? "trade" : cur, tk = pathGrp(cur) === "trade" ? cur : "day";
+    g.setAttribute("role", "radiogroup"); sr.setAttribute("role", "radiogroup"); const fire = () => onPick(sel === "trade" ? tk : sel);
+    const paint = () => { Array.prototype.forEach.call(g.children, b => b.setAttribute("aria-checked", String(b.dataset.k === sel))); sty.hidden = sel !== "trade"; Array.prototype.forEach.call(sr.children, b => b.setAttribute("aria-checked", String(b.dataset.k === tk))); sd.textContent = pathEn() ? PATHS[tk].den : PATHS[tk].dcz; };
+    [["stocks", PATHS.stocks], ["crypto", PATHS.crypto], ["trade", TRADE]].forEach(o => { const p = o[1], b = el("button","pth-opt"), t = el("span","pth-tx"); b.type = "button"; b.setAttribute("role", "radio"); b.dataset.k = o[0];
+      b.appendChild(pathIc(o[0])); t.appendChild(el("small","pth-k", pathEn() ? p.ken : p.kcz)); t.appendChild(el("b", null, pathEn() ? p.en : p.cz)); t.appendChild(el("span", null, pathEn() ? p.den : p.dcz)); b.appendChild(t);
+      b.addEventListener("click", () => { sel = o[0]; paint(); fire(); }); g.appendChild(b); });
+    ["scalper", "day", "swing"].forEach(k => { const b = el("button"), p = PATHS[k]; b.type = "button"; b.setAttribute("role", "radio"); b.dataset.k = k; b.appendChild(el("b", null, pathEn() ? p.en : p.cz)); b.appendChild(el("span", null, pathEn() ? p.sen : p.scz));
+      b.addEventListener("click", () => { tk = k; sel = "trade"; paint(); fire(); }); sr.appendChild(b); });
+    sty.appendChild(el("span","pth-sl", pathEn() ? "Your trading style" : "Tvůj styl tradingu")); sty.appendChild(sr); sty.appendChild(sd); w.appendChild(g); w.appendChild(sty); paint(); return w; }
   function pathPick(){ const o = overlay("pth-pick"), c = o.card; let pick = pathOf();
-    c.appendChild(el("span","kick", pathEn() ? "Your path" : "Tvoje cesta")); c.appendChild(el("h2", null, pathEn() ? "What do you want to be?" : "Čím chceš být?"));
+    c.appendChild(el("span","kick", pathEn() ? "Your path" : "Tvoje cesta")); c.appendChild(el("h2", null, pathEn() ? "What do you want to learn?" : "Co se chceš naučit?"));
     c.appendChild(el("p","small muted", pathEn() ? "Tape orders the lessons by your choice. You can change it at any time and nothing you have done is lost." : "Podle výběru ti Tape seřadí lekce. Můžeš ho kdykoli změnit a nic z toho, co máš hotové, se neztratí."));
     c.appendChild(pathOpts(pick, k => { pick = k; }));
     const row = el("div","row"), ok = el("button","primary", pathEn() ? "Save" : "Uložit"), no = el("button", null, pathEn() ? "Cancel" : "Zrušit"); ok.type = no.type = "button";
-    no.addEventListener("click", o.close); ok.addEventListener("click", () => { o.close(); pathSet(pick); try { toast((pathEn() ? "Path: " : "Cesta: ") + (pathEn() ? PATHS[pick].en : PATHS[pick].cz)); } catch(e){} });
+    no.addEventListener("click", o.close); ok.addEventListener("click", () => { o.close(); pathSet(pick); try { toast((pathEn() ? "Path: " : "Cesta: ") + pathLabel(pick)); } catch(e){} });
     row.appendChild(no); row.appendChild(ok); c.appendChild(row); }
   function pathSteps(){
     let sd = null; try { sd = study; } catch(e){}
@@ -6054,7 +6101,7 @@ body[data-path="investor"] #v-prehled .logrow{display:none}
     const paS = id => { const t = pa.find(x => x.id === id); if (t && !used[id]){ used[id] = 1; s.push({kind: "pa", id: t.id, title: t.title, done: !!seen[t.id]}); } };
     const stS = (tab, x) => s.push({kind: "st", tab: tab, id: x.id, title: x.title, done: !!sq["a-" + x.id]});
     const mcDone = k => { const b = (lp.mc || {})[k]; return !!(b && b.of && b.best / b.of >= 0.8); };
-    if (P.only){ if (!sd) return []; ["invest", "crypto"].forEach(k => { ((sd[k] || {}).lessons || []).forEach(x => stS(k, x)); if ((sd[k] || {}).exam) s.push({kind: "mx", tab: k, title: (cfg.lang === "en" ? "Exam: " : "Zkouška: ") + sd[k].title, done: mcDone(k)}); }); (P.first || []).forEach(paS); return s; }
+    if (P.grp === "inv"){ if (!sd) return []; P.order.forEach(k => { ((sd[k] || {}).lessons || []).forEach(x => stS(k, x)); if ((sd[k] || {}).exam) s.push({kind: "mx", tab: k, title: (cfg.lang === "en" ? "Exam: " : "Zkouška: ") + sd[k].title, done: mcDone(k)}); }); (P.first || []).forEach(paS); return s; }
     // traders read the honest numbers first; whoever is already well into the path is not sent back
     { const far = Object.keys(seen).length >= 3; ((sd && sd.start && sd.start.lessons) || []).forEach(x => s.push({kind: "st", tab: "start", id: x.id, title: x.title, done: far || !!sq["a-" + x.id]})); }
     (P.first || []).forEach(paS);
@@ -6069,8 +6116,8 @@ body[data-path="investor"] #v-prehled .logrow{display:none}
   function openTopic(id){ location.hash = "#laura"; paCur = id; paStep = 0; paBuild(); setTimeout(() => arriveAt($("pa-card")), 80); }
   function goStep(st){
     if (st.kind === "pa") openTopic(st.id);
-    else if (st.kind === "st"){ stTab = st.tab; stAdvOpen = st.id; location.hash = "#studium"; renderStudy(); setTimeout(() => { const d = document.querySelector('#st-body details[data-lid="' + st.id + '"]'); if (d){ d.open = true; arriveAt(d); } }, 120); }
-    else if (st.kind === "mx"){ stTab = st.tab; location.hash = "#studium"; renderStudy(); setTimeout(() => { const d = document.querySelector("#st-body .mcx-card"); if (d) arriveAt(d); }, 120); }
+    else if (st.kind === "st"){ const vw = st.tab === "invest" ? "akcie" : st.tab === "crypto" ? "krypto" : "studium"; if (vw === "studium") stTab = st.tab; stAdvOpen = st.id; location.hash = "#" + vw; renderStudy(); setTimeout(() => { const d = document.querySelector('#v-' + vw + ' details[data-lid="' + st.id + '"]'); if (d){ d.open = true; arriveAt(d); } }, 140); }
+    else if (st.kind === "mx"){ const vw = st.tab === "crypto" ? "krypto" : "akcie"; location.hash = "#" + vw; renderStudy(); setTimeout(() => { const d = document.querySelector("#v-" + vw + " .mcx-card"); if (d) arriveAt(d); }, 140); }
     else if (st.kind === "pr"){ location.hash = "#laura"; setTimeout(() => arriveAt($("pr-card")), 80); }
     else { location.hash = "#room"; openWeek = st.n; renderCourse(); setTimeout(() => { const r = courseRefs[st.n]; if (r) arriveAt(r.d); }, 80); }
   }
@@ -6078,11 +6125,11 @@ body[data-path="investor"] #v-prehled .logrow{display:none}
     const s = pathSteps(), cur = s.findIndex(x => !x.done), got = s.filter(x => x.done).length;
     document.querySelectorAll(".pathbox").forEach(box => {
       clear(box);
-      { const pk = pathOf(), hd = el("div","pth-hd"), chip = el("span","pth-chip"), ch = el("button","pth-ch", pathEn() ? "Change" : "Změnit"); chip.appendChild(pathIc(pk)); chip.appendChild(el("b", null, pathEn() ? PATHS[pk].en : PATHS[pk].cz)); ch.type = "button"; ch.addEventListener("click", pathPick); hd.appendChild(chip); hd.appendChild(ch); box.appendChild(hd); }
+      { const pk = pathOf(), hd = el("div","pth-hd"), chip = el("span","pth-chip"), ch = el("button","pth-ch", pathEn() ? "Change" : "Změnit"); chip.appendChild(pathIc(pk)); chip.appendChild(el("b", null, pathLabel(pk))); ch.type = "button"; ch.addEventListener("click", pathPick); hd.appendChild(chip); hd.appendChild(ch); box.appendChild(hd); }
       if (!s.length){ box.appendChild(el("p","small muted","Načítám…")); return; }
       const dots = el("div","pdots"); s.forEach((x, i) => { const d = el("i", x.done ? "d" : (i === cur ? "c" : "")); d.title = x.title; dots.appendChild(d); }); box.appendChild(dots);
       box.appendChild(el("span","small muted","Krok " + Math.min(got + 1, s.length) + " z " + s.length));
-      if (cur < 0){ box.appendChild(el("p", null, pathOf() === "investor" ? "Celá cesta je hotová. Teď už jen držet plán a jednou ročně ho zkontrolovat." : "Celá cesta je hotová. Teď už jen opakovat a vést deník.")); return; }
+      if (cur < 0){ box.appendChild(el("p", null, pathGrp(pathOf()) === "inv" ? "Celá cesta je hotová. Teď už jen držet plán a jednou ročně ho zkontrolovat." : "Celá cesta je hotová. Teď už jen opakovat a vést deník.")); return; }
       const a = el("button","go"), w = el("div"); a.type = "button"; w.appendChild(el("b", null, s[cur].title)); w.appendChild(el("span", null, s[cur].kind === "pa" ? "Téma v obrázcích, pár minut" : s[cur].kind === "st" ? "Lekce s kvízem, pár minut" : s[cur].kind === "pr" ? "Úlohy přímo na grafu" : "Deset otázek, složeno od osmi"));
       a.appendChild(w); a.appendChild(el("i", null, "›")); a.addEventListener("click", () => goStep(s[cur])); box.appendChild(a);
       if (s[cur + 1]) box.appendChild(el("span","small muted","Potom: " + s[cur + 1].title));
@@ -6122,7 +6169,7 @@ body[data-path="investor"] #v-prehled .logrow{display:none}
     if (profile || used) return;
     const ov = el("div","ob ob-first"), card = el("div","card"), ans = {level: "start", sym: "NQ", syms: ["NQ"], goal: 10, path: "day"};
     card.appendChild(el("span","kick","Vítej v Tape")); card.appendChild(el("h2", null, "Čtyři otázky a můžeš začít"));
-    card.appendChild(el("span","small muted","Čím chceš být? Podle toho ti seřadíme lekce.")); card.appendChild(pathOpts("day", k => { ans.path = k; card.classList.toggle("ob-inv", k === "investor"); }));
+    card.appendChild(el("span","small muted","Co se chceš naučit? Podle toho ti seřadíme lekce. Změnit to jde kdykoli.")); card.appendChild(pathOpts("day", k => { ans.path = k; card.classList.toggle("ob-inv", pathGrp(k) === "inv"); }));
     [["Kde teď jsi?", "level", [["start","Začínám od nuly"],["trade","Už obchoduji"]]], ["Které trhy obchoduješ? Můžeš vybrat víc.", "sym", [["NQ","NQ"],["ES","ES"],["MNQ","MNQ"],["MES","MES"]]], ["Kolik času denně na učení?", "goal", [[5,"5 minut"],[10,"10 minut"],[20,"20 minut"]]]].forEach(q => {
       const ql = el("span","small muted", q[0]), ch = el("div","chips"); ql.dataset.q = ch.dataset.q = q[1]; card.appendChild(ql);
       q[2].forEach(o => { const b = el("button","chip", o[1]); b.type = "button"; b.setAttribute("aria-pressed", String(ans[q[1]] === o[0]));
@@ -6132,7 +6179,7 @@ body[data-path="investor"] #v-prehled .logrow{display:none}
       card.appendChild(ch);
     });
     const go = el("button","primary","Začít"); go.type = "button";
-    go.addEventListener("click", () => { profile = ans; try { localStorage.setItem("knot-profile", JSON.stringify(profile)); } catch(e){} if (ans.path === "investor") ans.level = "start"; setMode(ans.level === "start" ? "student" : "trader"); ov.remove(); touchDay(); refreshAll(); if (ans.path === "investor"){ try { stTab = "invest"; renderStudy(); } catch(e){} location.hash = "#studium"; } else if (ans.level === "trade") location.hash = "#denik"; });
+    go.addEventListener("click", () => { profile = ans; try { localStorage.setItem("knot-profile", JSON.stringify(profile)); } catch(e){} if (pathGrp(ans.path) === "inv") ans.level = "start"; setMode(ans.level === "start" ? "student" : "trader"); ov.remove(); touchDay(); refreshAll(); navUceni(); if (pathGrp(ans.path) === "inv"){ location.hash = ans.path === "crypto" ? "#krypto" : "#akcie"; } else if (ans.level === "trade") location.hash = "#denik"; });
     card.appendChild(go); card.appendChild(el("span","small muted","Odpovědi zůstávají jen v tomto prohlížeči."));
     ov.appendChild(card); document.body.appendChild(ov);
   })();
@@ -6277,7 +6324,7 @@ body[data-path="investor"] #v-prehled .logrow{display:none}
     }
   }
   Array.prototype.forEach.call($("st-tabs").children, b => b.addEventListener("click", () => { stTab = b.dataset.t; renderStudy(); }));
-  fetch("data/study.json", {cache: "no-store"}).then(r => r.json()).then(v => { study = v; try { if (profile && profile.path === "investor") stTab = "invest"; } catch(e){} renderStudy(); try { renderPath(); } catch(e){} }).catch(() => { const box = $("st-body"); clear(box); const c = el("div","card"); c.appendChild(el("p","small","Studijní materiál se nepodařilo načíst.")); box.appendChild(c); });
+  fetch("data/study.json", {cache: "no-store"}).then(r => r.json()).then(v => { study = v; renderStudy(); try { renderPath(); } catch(e){} }).catch(() => { const box = $("st-body"); clear(box); const c = el("div","card"); c.appendChild(el("p","small","Studijní materiál se nepodařilo načíst.")); box.appendChild(c); });
 
 
   // =====================================================================================
@@ -8154,11 +8201,9 @@ body[data-path="investor"] #v-prehled .logrow{display:none}
         const sp = $("streak"), n = parseInt((sp.textContent.match(/\d+/) || ["0"])[0], 10); if (streakN != null && n > streakN){ sp.classList.remove("bump"); void sp.offsetWidth; sp.classList.add("bump"); confetti(sp, 14); } streakN = n; } catch(e){ if (window.console) console.error(e); } }; }
 
   // ---------- study: advanced lessons tab ----------
-  { const _renderStudyAdv = renderStudy; renderStudy = function(){ if ((stTab !== "adv" && stTab !== "invest" && stTab !== "crypto" && stTab !== "start") || !study || !study[stTab]) return _renderStudyAdv();
-      const box = $("st-body"), m = study[stTab], head = el("div","card"); clear(box); lp.sq = lp.sq || {};
-      Array.prototype.forEach.call($("st-tabs").children, b => b.setAttribute("aria-pressed", String(b.dataset.t === stTab)));
+  function mcRenderInto(K, box, kick){ const m = study[K], head = el("div","card"); clear(box); lp.sq = lp.sq || {};
       const okN = m.lessons.filter(x => lp.sq["a-" + x.id]).length, bar = el("div","bar"), bi = el("i"); bi.style.width = Math.round(100 * okN / m.lessons.length) + "%"; bar.appendChild(bi);
-      head.appendChild(el("span","kick", stTab === "adv" ? "Úroveň: pokročilá" : stTab === "start" ? "Poctivá čísla" : "Masterclass")); head.appendChild(el("h2", null, m.title)); head.appendChild(el("p", null, m.intro)); head.appendChild(el("span","small muted","Ověřeno kvízem: " + okN + " z " + m.lessons.length)); head.appendChild(bar); box.appendChild(head);
+      head.appendChild(el("span","kick", kick || (K === "adv" ? "Úroveň: pokročilá" : K === "start" ? "Poctivá čísla" : "Masterclass"))); head.appendChild(el("h2", null, m.title)); head.appendChild(el("p", null, m.intro)); head.appendChild(el("span","small muted","Ověřeno kvízem: " + okN + " z " + m.lessons.length)); head.appendChild(bar); box.appendChild(head);
       let advG = null;
       m.lessons.forEach((x, i) => { if (x.group && x.group !== advG){ advG = x.group; box.appendChild(el("span","kick advg", advG)); } const d = el("details","week" + (lp.sq["a-" + x.id] ? " done" : "")), sm = el("summary"), body = el("div","weekbody"), steps = el("ol","lsteps"), use = el("ul","stl ok"), trap = el("div","lkey trap"), cnt = el("span","cnt", lp.sq["a-" + x.id] ? "hotovo" : "lekce " + (i + 1));
         sm.appendChild(el("h3", null, x.title)); sm.appendChild(cnt); d.appendChild(sm); d.dataset.lid = x.id; if (stAdvOpen === x.id) d.open = true; d.addEventListener("toggle", () => { if (d.open) stAdvOpen = x.id; });
@@ -8166,10 +8211,13 @@ body[data-path="investor"] #v-prehled .logrow{display:none}
         trap.appendChild(el("b", null, "Pozor")); trap.appendChild(el("span", null, x.trap)); body.appendChild(trap);
         const q = el("div","box exam"), qb = el("div","exbody"); let answered = false; q.appendChild(el("b", null, "Ověř si to")); qb.appendChild(el("b","exq", x.quiz.q));
         const opts = shuffled(x.quiz.opts), btns = opts.map(o => { const b = el("button","exo", o); b.type = "button"; b.addEventListener("click", () => { if (answered) return; answered = true; const ok = o === x.quiz.ok; weakNote("a-" + x.id, x.quiz.q, x.quiz.opts, x.quiz.ok, x.quiz.why, x.title, ok); btns.forEach((y, j) => { y.disabled = true; if (opts[j] === x.quiz.ok) y.classList.add("ok"); }); if (!ok) b.classList.add("no");
-            qb.appendChild(el("span","small", (ok ? "Správně. " : "Tohle ne. ") + x.quiz.why)); if (ok && !lp.sq["a-" + x.id]){ lp.sq["a-" + x.id] = 1; persistLaura(); d.classList.add("done"); cnt.textContent = "hotovo"; confetti(b, 14); } }); qb.appendChild(b); return b; });
+            qb.appendChild(el("span","small", (ok ? "Správně. " : "Tohle ne. ") + x.quiz.why)); if (ok && !lp.sq["a-" + x.id]){ lp.sq["a-" + x.id] = 1; persistLaura(); d.classList.add("done"); cnt.textContent = "hotovo"; confetti(b, 14); if (m.exam && m.lessons.every(y => lp.sq["a-" + y.id])) setTimeout(() => { try { renderStudy(); } catch(e){} }, 1200); try { renderPath(); } catch(e){} } }); qb.appendChild(b); return b; });
         q.appendChild(qb); body.appendChild(q); d.appendChild(body); box.appendChild(d); });
-      if (m.exam && m.exam.length) try { box.appendChild(mcExamCard(stTab, m)); } catch(e){ if (window.console) console.error(e); }
-      box.appendChild(stSources(m.sources)); }; }
+      if (m.exam && m.exam.length) try { box.appendChild(mcExamCard(K, m)); } catch(e){ if (window.console) console.error(e); }
+      box.appendChild(stSources(m.sources)); }
+  { const _renderStudyAdv = renderStudy; renderStudy = function(){ if ((stTab !== "adv" && stTab !== "start") || !study || !study[stTab]) return _renderStudyAdv();
+      Array.prototype.forEach.call($("st-tabs").children, b => b.setAttribute("aria-pressed", String(b.dataset.t === stTab))); mcRenderInto(stTab, $("st-body")); }; }
+  { const _rsMc = renderStudy; renderStudy = function(){ _rsMc(); try { mcViews(); } catch(e){ if (window.console) console.error(e); } }; }
   // interactive figures for the Fibonacci lessons
   function stFig(kind){ const w = el("div","fibw");
     const num = (v, d) => v.toLocaleString(LT("cs-CZ", "en-US"), {minimumFractionDigits: d || 0, maximumFractionDigits: d || 0});
@@ -8392,7 +8440,7 @@ body[data-path="investor"] #v-prehled .logrow{display:none}
       {h: "denik", s: nav("denik"), t: "Deník", p: "Plán dne, všechny obchody a statistiky. Tady zjistíš, co ti funguje a kde chybuješ."},
       {h: "laura", s: nav("uceni"), t: "Učení", p: "Škola price action od nuly. Má vlastní barvy, takže hned poznáš, že jsi v ní."},
       {h: "laura", s: ["#lr"], t: "Tady jsi skončil", p: "Karta nahoře si pamatuje, kde ses učil naposledy. Jedno ťuknutí a jsi zpátky na stejném místě."},
-      {h: "laura", s: ["#subnav"], t: "Tři části učení", p: "Obrázky a lekce jsou krátká témata a kartičky. Kurz 12 týdnů je hlavní cesta lekci po lekci. Studium ICT jde do hloubky."},
+      {h: "laura", s: ["#track"], t: "Tři směry učení", p: "Akcie a indexy a Krypto jsou dlouhodobé investování. Trading je krátkodobé obchodování a v něm si vybereš styl: scalping, day trading nebo swing."},
       {h: "prehled", s: ["#orb"], t: "AI kouč", p: "Kulaté tlačítko otevře okno s koučem. Zeptej se na pojem, lekci nebo na svoje obchody."},
       {h: "prehled", s: ["#tb-acc"], t: "Účet", p: "Přihlášení a synchronizace. S účtem máš deník i postup na všech zařízeních."},
       {h: "prehled", s: nav("vice"), t: "Více", p: "Nástroje, backtest, nastavení a nápověda. Průvodce tu najdeš znovu pod Nápovědou. Teď si ještě vyber vzhled, ve kterém ti bude Tape nejvíc sedět."}
@@ -10119,7 +10167,7 @@ body[data-path="investor"] #v-prehled .logrow{display:none}
     const drawAv = () => { clear(avb); avb.appendChild(avEl(78)); const cam = el("i"); cam.innerHTML = AV_CAM; avb.appendChild(cam); }; drawAv(); avb.addEventListener("click", () => avPick(() => { drawAv(); again(); }));
     const top = el("div","pf-nm"); top.appendChild(nmEl); top.appendChild(el("span","lv-tag", lvTag())); tx.appendChild(top); tx.appendChild(el("span","small muted", auth.email || "")); hd.appendChild(avb); hd.appendChild(tx); box.appendChild(hd); rwFrameEl(hd);
     try { hd.appendChild(rwStrip(r.xp, L)); } catch(e){ if (window.console) console.error(e); }
-    try { const pk = pathOf(), pr2 = el("div","pf-path"), pl = el("span", null, LT("Cesta", "Path")), pn = el("span","pth-chip"), pb = el("button","pth-ch", LT("Změnit", "Change")); pn.appendChild(pathIc(pk)); pn.appendChild(el("b", null, LT(PATHS[pk].cz, PATHS[pk].en))); pb.type = "button"; pb.addEventListener("click", pathPick); pr2.appendChild(pl); pr2.appendChild(pn); pr2.appendChild(pb); box.appendChild(pr2); box.appendChild(mcBadgeRow()); } catch(e){ if (window.console) console.error(e); }
+    try { const pk = pathOf(), pr2 = el("div","pf-path"), pl = el("span", null, LT("Cesta", "Path")), pn = el("span","pth-chip"), pb = el("button","pth-ch", LT("Změnit", "Change")); pn.appendChild(pathIc(pk)); pn.appendChild(el("b", null, pathLabel(pk))); pb.type = "button"; pb.addEventListener("click", pathPick); pr2.appendChild(pl); pr2.appendChild(pn); pr2.appendChild(pb); box.appendChild(pr2); box.appendChild(mcBadgeRow()); } catch(e){ if (window.console) console.error(e); }
     try { const row = el("div","pf-look"), eb = el("button"), lk = el("div","pf-lookbox"); eb.type = "button"; eb.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l4-1 11-11-3-3L5 16z"/><path d="M14 7l3 3"/></svg>'; { const sp = el("span", null, LT("Banner a rámeček", "Banner and frame")); if (sp.firstChild) sp.firstChild.__en = sp.textContent; eb.appendChild(sp); } lk.hidden = !rwLookOpen; eb.setAttribute("aria-expanded", String(rwLookOpen));
       eb.addEventListener("click", () => { rwLookOpen = !rwLookOpen; lk.hidden = !rwLookOpen; eb.setAttribute("aria-expanded", String(rwLookOpen)); });
       const sec2 = (t, sub) => { const w = el("div"); w.style.display = "contents"; lk.appendChild(el("h3", null, t)); if (sub) lk.appendChild(el("p","small muted", sub)); lk.appendChild(w); return w; };
@@ -10684,12 +10732,32 @@ body[data-path="investor"] #v-prehled .logrow{display:none}
       if (!home){ home = document.createComment("tb-theme"); tb.parentNode.insertBefore(home, tb); }
       if (mq.matches){ if (tb.nextSibling !== lv) lv.parentNode.insertBefore(tb, lv); } else if (home.parentNode && home.nextSibling !== tb) home.parentNode.insertBefore(tb, home.nextSibling); };
     place(); setTimeout(place, 600); try { mq.addEventListener("change", place); } catch(e){ mq.addListener(place); } }
+  // ---------- three directions of learning: stocks and indices, crypto, trading ----------
+  const TRADE_VIEWS = ["laura", "room", "studium", "moros"];
+  function trackTl(cz, en){ try { return cfg.lang === "en" ? en : cz; } catch(e){ return cz; } }
+  function lastTradeV(){ let v = ""; try { v = sessionStorage.getItem("tape-trade-v") || ""; } catch(e){} return TRADE_VIEWS.indexOf(v) >= 0 ? v : "laura"; }
+  function trackPaint(v){ const t = $("track"); if (!t) return; if (GROUP[v] !== "uceni"){ t.hidden = true; return; }
+    const cur = v === "akcie" ? "stocks" : v === "krypto" ? "crypto" : "trade"; if (cur === "trade") try { sessionStorage.setItem("tape-trade-v", v); } catch(e){}
+    clear(t); const row = el("nav","tk-row"); row.setAttribute("aria-label", trackTl("Směr učení", "Learning direction"));
+    [["stocks", "#akcie", trackTl("Akcie a indexy", "Stocks and indices"), trackTl("Investování", "Investing")], ["crypto", "#krypto", trackTl("Krypto", "Crypto"), trackTl("Investování", "Investing")], ["trade", "#" + lastTradeV(), "Trading", trackTl("Obchodování", "Active trading")]].forEach(x => {
+      const a = el("a","tk-opt"), w = el("span","tk-tx"); a.href = x[1]; a.dataset.k = x[0]; if (x[0] === cur) a.setAttribute("aria-current", "page"); a.appendChild(pathIc(x[0])); w.appendChild(el("small", null, x[3])); w.appendChild(el("b", null, x[2])); a.appendChild(w); row.appendChild(a); });
+    t.appendChild(row);
+    if (cur === "trade"){ const sr = el("div","tk-sty"), pk = pathOf(), mine = pathGrp(pk) === "trade"; sr.appendChild(el("span","tk-l", trackTl("Styl", "Style"))); const seg = el("div","tk-seg");
+      ["scalper", "day", "swing"].forEach(k => { const b = el("button", null, PATHS[k].cz); b.type = "button"; b.setAttribute("aria-pressed", String(mine && pk === k)); b.title = trackTl(PATHS[k].dcz, PATHS[k].den);
+        b.addEventListener("click", () => { if (pk === k) return; pathSet(k); try { toast(trackTl("Styl: ", "Style: ") + PATHS[k].cz + trackTl(". Lekce v Tvé cestě se seřadily podle něj.", ". The lessons in Your path are now ordered for it.")); } catch(e){} }); seg.appendChild(b); });
+      sr.appendChild(seg); sr.appendChild(el("em", null, mine ? trackTl(PATHS[pk].dcz, PATHS[pk].den) : trackTl("Vyber si styl a lekce v Tvé cestě se seřadí podle něj.", "Pick a style and the lessons in Your path will be ordered for it."))); t.appendChild(sr); }
+    t.hidden = false; }
+  function mcTools(kind){ const c = el("div","card mc-tools"), tx = el("div"), r = el("div","inv-act"), a = el("button", null, trackTl("Investiční plán", "Investing plan")), j = el("button", null, trackTl("Deník investic", "Investing journal"));
+    tx.appendChild(el("b", null, trackTl("Tvoje investice", "Your investments"))); tx.appendChild(el("span","small muted", kind === "crypto" ? trackTl("Zapisuj nákupy krypta a hlídej si tříletý časový test i velikost pozice.", "Record your crypto purchases and keep an eye on the three-year holding test and position size.") : trackTl("Nastav si pravidelný vklad a zapisuj nákupy. Tape ti připomene termín a spočítá průměrnou cenu.", "Set a regular deposit and record purchases. Tape reminds you of the date and works out the average price.")));
+    a.type = j.type = "button"; a.addEventListener("click", () => invPlanEdit()); j.addEventListener("click", () => invJournal()); r.appendChild(a); r.appendChild(j); c.appendChild(tx); c.appendChild(r); return c; }
+  function mcViews(){ if (!study) return; [["invest", "ak-body", trackTl("Investování · Akcie a indexy", "Investing · Stocks and indices")], ["crypto", "kr-body", trackTl("Investování · Krypto", "Investing · Crypto")]].forEach(x => { const box = $(x[1]); if (!box || !study[x[0]]) return; mcRenderInto(x[0], box, x[2]); const h = box.firstChild; if (h) box.insertBefore(mcTools(x[0]), h.nextSibling); }); }
+  window.addEventListener("hashchange", () => { const v = document.body.dataset.view; if (v === "akcie" || v === "krypto") try { mcViews(); } catch(e){} });
   // ---------- masterclass exams and badges ----------
   function mcDef(){ return {invest: {cz: "Investing masterclass", en: "Investing masterclass", ic: '<path d="M6 17V11M10.5 17V7M15 17v-4M19 17H4.5"/>'}, crypto: {cz: "Crypto masterclass", en: "Crypto masterclass", ic: '<path d="M12 5.5l5.6 3.2v6.6L12 18.5l-5.6-3.2V8.7z"/><path d="M12 5.5v13M6.4 8.7L12 12l5.6-3.3"/>'}}; }
   function mcOk(k){ const b = (lp.mc || {})[k]; return !!(b && b.of && b.best / b.of >= 0.8); }
   function mcBadge(k, sz){ const i = el("i","mc-bdg mc-" + k + (mcOk(k) ? " on" : "")); i.style.setProperty("--sz", (sz || 40) + "px"); i.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true">' + mcDef()[k].ic + '</svg>'; i.title = LT(mcDef()[k].cz, mcDef()[k].en) + (mcOk(k) ? LT(": zkouška složena", ": exam passed") : LT(": zatím nesloženo", ": not passed yet")); return i; }
   function mcBadgeRow(){ const r = el("div","pf-path pf-bdg"), w = el("div","mc-bdgs"); r.appendChild(el("span", null, LT("Odznaky", "Badges")));
-    Object.keys(mcDef()).forEach(k => { const b = el("button","mc-bb"); b.type = "button"; b.setAttribute("aria-label", LT(mcDef()[k].cz, mcDef()[k].en)); b.appendChild(mcBadge(k, 34)); b.addEventListener("click", () => { stTab = k; location.hash = "#studium"; try { renderStudy(); } catch(e){} }); w.appendChild(b); });
+    Object.keys(mcDef()).forEach(k => { const b = el("button","mc-bb"); b.type = "button"; b.setAttribute("aria-label", LT(mcDef()[k].cz, mcDef()[k].en)); b.appendChild(mcBadge(k, 34)); b.addEventListener("click", () => { location.hash = k === "crypto" ? "#krypto" : "#akcie"; }); w.appendChild(b); });
     r.appendChild(w); return r; }
   function mcExamCard(tab, m){ const c = el("div","card mcx-card" + (mcOk(tab) ? " on" : "")), tx = el("div","mcx-tx"), b = el("button","primary"), okN = m.lessons.filter(x => (lp.sq || {})["a-" + x.id]).length, open = okN >= m.lessons.length, best = (lp.mc || {})[tab];
       c.appendChild(mcBadge(tab, 56)); tx.appendChild(el("span","kick", LT("Závěrečná zkouška", "Final exam"))); tx.appendChild(el("h3", null, mcOk(tab) ? LT("Složeno. Odznak máš v profilu.", "Passed. The badge is in your profile.") : LT("Deset otázek z celé masterclass", "Ten questions from the whole masterclass")));
@@ -10766,7 +10834,7 @@ body[data-path="investor"] #v-prehled .logrow{display:none}
         r.appendChild(l); r.appendChild(rr); r.appendChild(del); bl.appendChild(r); }); c.appendChild(bl);
       c.appendChild(el("p","small muted", LT("Časový test je orientační: u cenných papírů i krypta je příjem z prodeje osvobozen, když od nákupu uplynou víc než tři roky. Pravidla se mění a mají výjimky, není to daňové poradenství. Tape nezná aktuální ceny, takže neukazuje hodnotu ani výnos.", "The holding test is a guide: for securities and crypto the sale income is exempt once more than three years have passed since the purchase. The rules change and have exceptions; this is not tax advice. Tape does not know current prices, so it shows no value or return."))); };
     draw(); }
-  function invHome(){ const box = $("inv-home"); if (!box) return; const on = pathOf() === "investor"; box.hidden = !on; try { document.body.dataset.path = pathOf(); } catch(e){} if (!on) return; clear(box);
+  function invHome(){ const box = $("inv-home"); if (!box) return; const on = pathGrp(pathOf()) === "inv"; box.hidden = !on; try { document.body.dataset.path = pathOf(); document.body.dataset.pg = pathGrp(pathOf()); } catch(e){} if (!on) return; clear(box);
     try { const hero = box.parentNode.querySelector(":scope > .herocard"); if (hero && hero.nextElementSibling !== box) hero.parentNode.insertBefore(box, hero.nextSibling); } catch(e){}
     const hd = el("div","row"), p = inv.plan, now = new Date(), mk = dayKey().slice(0, 7), done = inv.buys.some(b => String(b.d).slice(0, 7) === mk); hd.appendChild(el("h2", null, LT("Investiční plán", "Investing plan")));
     if (p){ const ed = el("button","pth-ch", LT("Upravit", "Edit")); ed.type = "button"; ed.addEventListener("click", invPlanEdit); hd.appendChild(ed); } box.appendChild(hd);
@@ -10782,6 +10850,7 @@ body[data-path="investor"] #v-prehled .logrow{display:none}
     // one gentle reminder a day once the deposit day has passed
     if (due && !done){ let said = ""; try { said = sessionStorage.getItem("tape-inv-rem"); } catch(e){} if (said !== dayKey() && !document.querySelector(".ob,.gtour,.wel,.gate,.plans")){ try { sessionStorage.setItem("tape-inv-rem", dayKey()); } catch(e){} setTimeout(() => { try { toast(LT("Investiční plán: vklad za tento měsíc ještě není zapsaný.", "Investing plan: this month's deposit is not recorded yet.")); } catch(e){} }, 1800); } } }
   { const _ra = refreshAll; refreshAll = function(){ _ra(); try { invHome(); } catch(e){ if (window.console) console.error(e); } }; try { invHome(); } catch(e){} }
+  try { navUceni(); trackPaint(document.body.dataset.view); mcViews(); } catch(e){ if (window.console) console.error(e); }
 
   // ---------- plan on the profile button, and an upgrade button while a higher plan exists ----------
   const UP_IC = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V6M6 11.5L12 5.5l6 6"/></svg>';
