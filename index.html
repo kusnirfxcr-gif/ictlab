@@ -2810,6 +2810,14 @@ html body .empty.es{flex-direction:row;align-items:center;gap:18px;padding:20px 
 #l-body>p,#l-body>h3,#l-body>ul,#l-body>ol{max-width:var(--meas)}
 #l-body>p{line-height:1.72;margin:0 0 .15em}
 #l-body>h3:first-of-type{font-family:var(--display,inherit);font-size:clamp(21px,2.4vw,27px);line-height:1.2;letter-spacing:-.02em;font-weight:800;margin:4px 0 6px;text-wrap:balance}
+.l-nav{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:22px;padding-top:16px;border-top:1px solid var(--line)}
+.l-nav-b{display:flex;flex-direction:column;align-items:flex-start;gap:3px;min-height:56px;padding:11px 14px;text-align:left;border-radius:12px;width:100%}
+.l-nav-b.nx{grid-column:2;align-items:flex-end;text-align:right}
+.l-nav-b.on{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
+.l-nav-k{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:800}
+.l-nav-t{font-size:13.5px;font-weight:600;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.l-nav-d{font-size:11.5px;color:var(--muted)}
+@media (max-width:520px){.l-nav-t{font-size:12.5px}}
 #l-body>p.l-lead{font-size:17.5px;line-height:1.62;margin-top:6px}#l-body>p.l-p{line-height:1.72;max-width:66ch}
 #l-body>h3:not(:first-of-type){margin:22px 0 4px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:800}
 #v-room .weekbody p,#v-moros .mo-txt p,#st-body .card>p{line-height:1.68;max-width:68ch}
@@ -5135,6 +5143,13 @@ body[data-view="akcie"] #subnav,body[data-view="krypto"] #subnav,body[data-view=
     list.forEach(g => { const it = el("div","gm-it"), tg = el("span","gm-t", en ? (g.te || g.t) : g.t), tx = el("p","gm-x", en ? g.en : g.cs), sr = el("a","gm-s", g.src + " ↗"); [tg, tx, sr].forEach(n => { if (n.firstChild) n.firstChild.__en = n.firstChild.nodeValue; }); sr.href = g.url; sr.target = "_blank"; sr.rel = "noopener noreferrer"; it.appendChild(tg); it.appendChild(tx); it.appendChild(sr); w.appendChild(it); });
     const ft = el("span","gm-ft", en ? "Short summaries in our own words. Concepts to study, not trading signals." : "Krátká shrnutí vlastními slovy. Pojmy ke studiu, ne obchodní signály."); if (ft.firstChild) ft.firstChild.__en = ft.firstChild.nodeValue; w.appendChild(ft); return w; }
   fetch("data/gems.json", {cache: "no-store"}).then(r => r.json()).then(v => { GEMS = v; try { renderLesson(); } catch(e){} try { renderPaExtra(); } catch(e){} }).catch(() => {});
+  // previous / next lesson by its number, so the daily lessons can be read in order without the select
+  function lessonNav(l){ const en = cfg.lang === "en", ord = lessons.slice().sort((a, b) => (Number(a.n) || 0) - (Number(b.n) || 0)), i = ord.indexOf(l), pv = ord[i - 1], nx = ord[i + 1];
+    if (i < 0 || (!pv && !nx)) return null; const nav = el("div","l-nav"); nav.setAttribute("role", "navigation"); nav.setAttribute("aria-label", en ? "Other lessons" : "Další lekce");
+    const mk = (t, dir) => { const b = el("button","l-nav-b " + dir + (dir === "nx" && lp.read[l.id] ? " on" : "")), k = el("span","l-nav-k", dir === "pv" ? (en ? "‹ Previous lesson" : "‹ Předchozí lekce") : (en ? "Next lesson ›" : "Další lekce ›")), tt = el("span","l-nav-t", t.title || "");
+      if (k.firstChild) k.firstChild.__en = k.firstChild.nodeValue; b.type = "button"; b.appendChild(k); b.appendChild(tt); if (lp.read[t.id]) b.appendChild(el("span","l-nav-d", en ? "read" : "přečteno")); if (en){ const d = b.querySelector(".l-nav-d"); if (d && d.firstChild) d.firstChild.__en = d.firstChild.nodeValue; }
+      b.addEventListener("click", () => { curLesson = t.id; renderLesson(); const h = $("l-body"); if (h && h.scrollIntoView) h.scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start"}); }); return b; };
+    nav.appendChild(pv ? mk(pv, "pv") : el("span")); if (nx) nav.appendChild(mk(nx, "nx")); return nav; }
   function renderLesson(){
     const box = $("l-body"), pick = $("l-pick");
     box.style.minHeight = box.offsetHeight + "px"; requestAnimationFrame(() => { box.style.minHeight = ""; });
@@ -5168,6 +5183,7 @@ body[data-view="akcie"] #subnav,body[data-view="krypto"] #subnav,body[data-view=
       b.type = "button"; b.disabled = !!lp.read[l.id];
       b.addEventListener("click", () => { lp.read[l.id] = true; persistLaura(); renderLesson(); });
       box.appendChild(b);
+      { const nv = lessonNav(l); if (nv) box.appendChild(nv); }
       return;
     }
     const saved = lp.quiz[l.id];
@@ -5209,6 +5225,7 @@ body[data-view="akcie"] #subnav,body[data-view="krypto"] #subnav,body[data-view=
       row.appendChild(again); wrap.appendChild(row);
     }
     box.appendChild(wrap);
+    { const nv = lessonNav(l); if (nv) box.appendChild(nv); }
   }
   // Price action stepper: topics from data/priceaction.json. The figure and controls stay in place;
   // each step only swaps the drawing and the text, so the page never jumps.
