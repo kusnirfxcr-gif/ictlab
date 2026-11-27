@@ -3714,6 +3714,7 @@ body[data-pg="inv"] #v-prehled .logrow{display:none}
 .tk-tx b{font-size:14.5px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tk-opt[aria-current]{background:color-mix(in srgb,var(--accent) 13%,var(--bg));box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 55%,transparent);color:var(--text)}
 .tk-opt[aria-current] .pth-ic{background:var(--accent);color:var(--bg)}
+.tk-opt .tk-coins{width:54px;padding:7px 6px}.tk-coins svg{stroke-width:1.6}
 .tk-sty{display:flex;align-items:center;gap:10px;min-width:0;padding:0 4px}.tk-l{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .tk-seg{display:inline-flex;gap:2px;padding:3px;border-radius:12px;border:1px solid var(--line);background:var(--surface);flex:none}
 .tk-seg button{width:auto!important;min-height:0!important;padding:6px 12px!important;border:0!important;border-radius:9px!important;background:none!important;color:var(--muted)!important;font-size:13px!important;font-weight:600;box-shadow:none!important;white-space:nowrap}
@@ -10854,8 +10855,9 @@ body[data-view="akcie"] #subnav,body[data-view="krypto"] #subnav,body[data-view=
   function trackPaint(v){ const t = $("track"); if (!t) return; if (GROUP[v] !== "uceni"){ t.hidden = true; return; }
     const cur = v === "akcie" ? "stocks" : v === "krypto" ? "crypto" : "trade"; if (cur === "trade") try { sessionStorage.setItem("tape-trade-v", v); } catch(e){}
     clear(t); const row = el("nav","tk-row"); row.setAttribute("aria-label", trackTl("Směr učení", "Learning direction"));
-    [["stocks", "#akcie", trackTl("Akcie a indexy", "Stocks and indices"), trackTl("Investování", "Investing")], ["crypto", "#krypto", trackTl("Krypto", "Crypto"), trackTl("Investování", "Investing")], ["trade", "#" + lastTradeV(), "Trading", trackTl("Obchodování", "Active trading")]].forEach(x => {
-      const a = el("a","tk-opt"), w = el("span","tk-tx"); a.href = x[1]; a.dataset.k = x[0]; if (x[0] === cur) a.setAttribute("aria-current", "page"); a.appendChild(pathIc(x[0])); w.appendChild(el("small", null, x[3])); w.appendChild(el("b", null, x[2])); a.appendChild(w); row.appendChild(a); });
+    [["trade", "#" + lastTradeV(), "Trading", trackTl("Obchodování", "Active trading")], ["stocks", "#akcie", trackTl("Akcie a indexy", "Stocks and indices"), trackTl("Investování", "Investing")], ["crypto", "#krypto", trackTl("Krypto", "Crypto"), trackTl("Investování", "Investing")]].forEach(x => {
+      const a = el("a","tk-opt"), w = el("span","tk-tx"); a.href = x[1]; a.dataset.k = x[0]; if (x[0] === cur) a.setAttribute("aria-current", "page");
+      if (x[0] === "crypto"){ const ci = el("i","pth-ic tk-coins"); ci.title = "Bitcoin · Solana"; ci.innerHTML = '<svg viewBox="0 0 42 20" aria-hidden="true"><circle cx="10" cy="10" r="8.6"/><path d="M8 5.8h3a2 2 0 0 1 0 4.2H8m0 0h3.4a2.1 2.1 0 0 1 0 4.2H8V5.8M9.2 4.2v1.6M11.2 4.2v1.6M9.2 14.2v1.6M11.2 14.2v1.6"/><circle cx="32" cy="10" r="8.6"/><circle cx="32" cy="10" r="4"/></svg>'; a.appendChild(ci); } else a.appendChild(pathIc(x[0])); w.appendChild(el("small", null, x[3])); w.appendChild(el("b", null, x[2])); a.appendChild(w); row.appendChild(a); });
     t.appendChild(row);
     if (cur === "trade"){ const sr = el("div","tk-sty"), pk = pathOf(), mine = pathGrp(pk) === "trade"; sr.appendChild(el("span","tk-l", trackTl("Styl", "Style"))); const seg = el("div","tk-seg");
       ["scalper", "day", "swing"].forEach(k => { const b = el("button", null, PATHS[k].cz); b.type = "button"; b.setAttribute("aria-pressed", String(mine && pk === k)); b.title = trackTl(PATHS[k].dcz, PATHS[k].den);
