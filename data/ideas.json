@@ -1,5 +1,17 @@
 [
   {
+    "id": "fvg-kalkulacka-vstupu",
+    "ts": "2026-11-27T06:05:00Z",
+    "date": "2026-11-27",
+    "title": "Kalkulačka vstupu do FVG",
+    "area": "nástroje",
+    "value": 2,
+    "effort": 1,
+    "status": "new",
+    "what": "V kalkulačce přidat režim FVG: zadáš horní a dolní hranu mezery a swing low. Tape spočítá CE, vzdálenost stopu v bodech a riziko v dolarech pro NQ, MNQ, ES a MES a nabídne zapsat plán do deníku.",
+    "why": "Dnešní lekce ukazuje vstup na CE se stopem pod začátek pohybu. Ruční počítání poloviny mezery a rizika je zdroj chyb, kalkulačka to udělá za pár vteřin."
+  },
+  {
     "id": "premium-rozbor-dne-podle-cyklu",
     "ts": "2026-11-26T05:58:00Z",
     "date": "2026-11-26",

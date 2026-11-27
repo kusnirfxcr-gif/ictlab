@@ -534,6 +534,24 @@
 "url": "https://videohighlight.com/v/NXXanWVgauY"
 }
 ],
+"20261127-L18": [
+{
+"t": "zneplatnění FVG",
+"te": "FVG invalidation",
+"cs": "Mezera přestává platit, když tělo svíčky zavře přes její polovinu (CE). Knot přes CE ještě nic neruší.",
+"en": "A gap stops holding when a candle body closes through its middle (CE). A wick through CE does not cancel it yet.",
+"src": "TTrades · Understanding Fair Value Gaps (ICT Concepts)",
+"url": "https://sozai.app/transcript/understanding-fair-value-gaps-fvg-ict-concepts/"
+},
+{
+"t": "návrat do FVG",
+"te": "return into the FVG",
+"cs": "Po zlomu struktury ICT nevstupuje hned, ale čeká, až se cena vrátí do FVG, který při zlomu vznikl.",
+"en": "After a structure break ICT does not enter right away; he waits for price to return into the FVG created by the break.",
+"src": "ICT 2022 Mentorship · Episode 4",
+"url": "https://sozai.app/transcript/2022-ict-mentorship-episode-4/"
+}
+],
 "20261125-L16": [
 {
 "t": "displacement",

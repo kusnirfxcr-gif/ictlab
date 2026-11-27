@@ -1,13 +1,6 @@
 {
-  "updated": "2026-11-26T05:58:00Z",
+  "updated": "2026-11-27T06:05:00Z",
   "events": [
-    {
-      "date": "2026-11-26",
-      "time": "",
-      "title": "Den díkůvzdání: americké burzy zavřené",
-      "impact": 2,
-      "note": "Futures mají zkrácené obchodování a malý objem. Den bez obchodu."
-    },
     {
       "date": "2026-11-27",
       "time": "19:00",
@@ -70,6 +63,20 @@
       "title": "Maloobchodní tržby (USA), listopad",
       "impact": 2,
       "note": "První odhad útraty domácností. Termín potvrzen v kalendáři Census Bureau."
+    },
+    {
+      "date": "2026-12-24",
+      "time": "19:15",
+      "title": "Štědrý den: zkrácené obchodování",
+      "impact": 1,
+      "note": "Akciové burzy zavírají v 19:00 našeho času, futures ES a NQ v 19:15. Globex se znovu otevírá v neděli 27. 12. ve 0:00."
+    },
+    {
+      "date": "2026-12-25",
+      "time": "",
+      "title": "Vánoce: americké burzy i futures CME zavřené",
+      "impact": 1,
+      "note": "Den bez obchodu."
     }
   ],
   "posts": [
