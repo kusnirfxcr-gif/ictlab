@@ -7423,6 +7423,8 @@ body.fx-lite .tb-up,body.fx-lite .tb-up::after,body.fx-lite .tb-up svg,body.fx-l
 
   // ---------- session clock ----------
   const SESS = [["Asie", 1080, 150, "muted"], ["Londýn", 150, 420, "accent"], ["NY AM", 420, 720, "good"], ["Lunch", 720, 780, "muted"], ["NY PM", 780, 960, "amber"]], sessLen = x => ((x[2] - x[1]) % 1440 + 1440) % 1440, sessIn = (x, m) => x[1] < x[2] ? m >= x[1] && m < x[2] : m >= x[1] || m < x[2];
+  // session names in English: a label such as "Asie 23:00–07:30" has no Czech letters, so the page translator would leave it as it is
+  const sesName = n => cfg.lang === "en" ? ({"Asie": "Asia", "Londýn": "London"}[n] || n) : n;
   function renderClock(){
     const boxes = document.querySelectorAll(".clkbox"); if (!boxes.length) return;
     const ny = tzNow("America/New_York"), loc = new Date(), lm = loc.getHours() * 60 + loc.getMinutes(), off = ny ? ((lm - ny.mins) % 1440 + 1440) % 1440 : 0;
@@ -7430,13 +7432,13 @@ body.fx-lite .tb-up,body.fx-lite .tb-up::after,body.fx-lite .tb-up svg,body.fx-l
     let line = "Čas New Yorku se nepodařilo zjistit", sub = "";
     if (ny){ const closed = ny.dow === 6 || (ny.dow === 5 && ny.mins >= 1020) || (ny.dow === 0 && ny.mins < 1080), cur = SESS.find(s => sessIn(s, ny.mins));
       if (closed){ line = "Trh je zavřený"; sub = "Futures otevírají v neděli v 18:00 newyorského času, to je " + hm(1080 + off) + " našeho."; }
-      else if (cur){ line = cur[0]; sub = "Končí v " + hm(cur[2] + off) + ", za " + dur(((cur[2] - ny.mins) % 1440 + 1440) % 1440) + "."; }
-      else { const nx = SESS.map(s => [s, ((s[1] - ny.mins) % 1440 + 1440) % 1440]).sort((a, b) => a[1] - b[1])[0]; line = "Mezi seancemi"; sub = "Další je " + nx[0][0] + " v " + hm(nx[0][1] + off) + ", za " + dur(nx[1]) + "."; } }
+      else if (cur){ line = sesName(cur[0]); sub = "Končí v " + hm(cur[2] + off) + ", za " + dur(((cur[2] - ny.mins) % 1440 + 1440) % 1440) + "."; }
+      else { const nx = SESS.map(s => [s, ((s[1] - ny.mins) % 1440 + 1440) % 1440]).sort((a, b) => a[1] - b[1])[0]; line = cfg.lang === "en" ? "Between sessions" : "Mezi seancemi"; sub = cfg.lang === "en" ? "Next is " + sesName(nx[0][0]) + " at " + hm(nx[0][1] + off) + ", in " + dur(nx[1]) + "." : "Další je " + nx[0][0] + " v " + hm(nx[0][1] + off) + ", za " + dur(nx[1]) + "."; } }
     const ev = soonEvent();
     boxes.forEach(box => { clear(box); const h = el("div","row"), bar = el("div","clkbar"), lg = el("div","clklg"), now = el("u");
       h.appendChild(el("b","clkl", line)); h.appendChild(el("span","small muted", ny ? "New York " + hm(ny.mins) : "")); box.appendChild(h); if (sub) box.appendChild(el("span","small muted", sub));
       SESS.forEach(s => { const a = ((s[1] + off) % 1440) / 14.4, w = sessLen(s) / 14.4, put = (l, ww) => { const sg = el("i","c-" + s[3]); sg.style.left = l + "%"; sg.style.width = ww + "%"; bar.appendChild(sg); };
-        put(a, Math.min(w, 100 - a)); if (a + w > 100) put(0, a + w - 100); lg.appendChild(el("span","c-" + s[3], s[0] + " " + hm(s[1] + off) + "–" + hm(s[2] + off))); });
+        put(a, Math.min(w, 100 - a)); if (a + w > 100) put(0, a + w - 100); lg.appendChild(el("span","c-" + s[3], sesName(s[0]) + " " + hm(s[1] + off) + "–" + hm(s[2] + off))); });
       now.style.left = (lm / 14.4) + "%"; bar.appendChild(now); box.appendChild(bar); box.appendChild(lg);
       if (ev) box.appendChild(el("p","small neg", ev)); });
   }
