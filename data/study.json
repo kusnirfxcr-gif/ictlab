@@ -465,12 +465,24 @@
    [
     "Kdo zná model, deník nepotřebuje.",
     "Bez záznamů nevíš, jestli pravidla opravdu dodržuješ ani který setup ti vydělává. Většina chyb je v provedení, ne v teorii."
+   ],
+   [
+    "Ulita nautila je zlatá spirála.",
+    "Není. Je to logaritmická spirála, ale zhruba ztrojnásobí šířku za otáčku, zlatá by ji zvětšila skoro sedmkrát. Zlatý úhel opravdu platí u semen a listů rostlin, a ani tam ne vždy."
+   ],
+   [
+    "Úroveň 61,8 % má v grafu zvláštní sílu, protože ji používá příroda.",
+    "Testy nenašly u Fibonacciho úrovní víc obratů než u jiných poměrů. Malý efekt mají úrovně, které sleduje hodně lidí, a kulatá čísla."
+   ],
+   [
+    "ICT směrodatné odchylky jsou statistika.",
+    "Jsou to jen násobky výšky zvoleného pohybu, například −1, −2 nebo −4. Pravděpodobnost za nimi nikdo nezměřil."
    ]
   ]
  },
  "adv": {
   "title": "Pokročilé lekce",
-  "intro": "Sedmnáct témat, která navazují na dvanáctitýdenní kurz. Jsou rozdělená do bloků: detaily fair value gapu, otevření dne a zprávy, profily dne a týdne, další modely a nakonec lekce o tom, jak si kterýkoli koncept poctivě ověřit. Projdi je až ve chvíli, kdy základní model poznáš na grafu bez přemýšlení.",
+  "intro": "Dvacet témat, která navazují na dvanáctitýdenní kurz. Jsou rozdělená do bloků: detaily fair value gapu, otevření dne a zprávy, profily dne a týdne, další modely, lekci o tom, jak si kterýkoli koncept poctivě ověřit, a nakonec Fibonacciho čísla v přírodě a v grafu. Projdi je až ve chvíli, kdy základní model poznáš na grafu bez přemýšlení.",
   "lessons": [
    {
     "id": "fvg-ce",
@@ -918,6 +930,92 @@
      "ok": "Jak často se vrátí k náhodné úrovni ve stejné vzdálenosti",
      "why": "Bez srovnání s kontrolou číslo nic neříká. V testu vyšla náhodná úroveň stejně."
     }
+   },
+   {
+    "id": "fib-priroda",
+    "group": "Fibonacci",
+    "title": "Fibonacci v přírodě: slunečnice ano, šnek ne",
+    "text": [
+     "Fibonacciho řada je 1, 1, 2, 3, 5, 8, 13, 21, 34, 55… Každé číslo je součet dvou předchozích. Když dělíš sousední čísla, blížíš se k 1,618, takzvanému zlatému řezu. Jeho převrácená hodnota je 0,618.",
+     "Kde to v přírodě opravdu platí: v uspořádání semen a listů. Nový zárodek vyroste tam, kde mu starší nejméně překážejí. Vědci to popsali jako látku, kterou zárodky kolem sebe tlumí, a později našli konkrétní hormon, auxin. Z toho pravidla vyjde úhel asi 137,5° mezi dvěma po sobě jdoucími zárodky, takzvaný zlatý úhel.",
+     "Se zlatým úhlem se semena poskládají do spirál a počty spirál vyjdou jako sousední Fibonacciho čísla, třeba 21 a 34 nebo 34 a 55. Rostlina nic nepočítá, je to vedlejší produkt jednoduchého pravidla. Stejné spirály se dokonce samy objevily v pokusu s magnetickými kapkami v oleji, úplně bez biologie.",
+     "Neplatí to vždy. Ve velkém projektu, kde lidé fotili a počítali slunečnice, mělo běžná Fibonacciho čísla asi 74 % spočtených spirál a zhruba každá pátá vůbec ne. Poctivě tedy: tři slunečnice ze čtyř, ne všechny.",
+     "A šnek nebo nautilus? Jejich ulita roste ve spirále, ale ne ve zlaté. Ulita nautila za jednu otáčku zhruba ztrojnásobí svou šířku, zlatá spirála by ji zvětšila skoro sedmkrát. Stejně dopadá lidské tělo, Parthenon nebo galaxie: když hledáš 1,618, něco blízko vždycky najdeš, ale měření to nepotvrdí."
+    ],
+    "use": [
+     "Vyzkoušej si posuvník níž: při 137,5° se kruh vyplní rovnoměrně, při 135° vznikne osm paprsků s mezerami.",
+     "Když slyšíš, že něco „odpovídá zlatému řezu“, zeptej se, jaký je za tím mechanismus a jak přesně se to měřilo.",
+     "Zapamatuj si rozdíl: slunečnice má pro Fibonacciho vysvětlení, nautilus jen hezký příběh."
+    ],
+    "trap": "Fibonacci v rostlinách neznamená, že se jím řídí trh. Mezi semeny slunečnice a příkazy na burze žádné spojení není, k tomu se dostaneme v další lekci.",
+    "quiz": {
+     "q": "Proč mají semena slunečnice spirály s Fibonacciho počty?",
+     "opts": [
+      "Nový zárodek roste tam, kde je nejvíc místa, z toho vyjde úhel asi 137,5°",
+      "Rostlina si Fibonacciho čísla pamatuje v genech",
+      "Všechny spirály v přírodě jsou zlaté"
+     ],
+     "ok": "Nový zárodek roste tam, kde je nejvíc místa, z toho vyjde úhel asi 137,5°",
+     "why": "Fibonacciho počty jsou vedlejší produkt jednoduchého pravidla růstu. Neplatí u všech rostlin a nautilus zlatou spirálu nemá."
+    },
+    "fig": "sunflower"
+   },
+   {
+    "id": "fib-ict",
+    "group": "Fibonacci",
+    "title": "Co je na ICT Fibonacciho žebříčku opravdu ze zlatého řezu",
+    "text": [
+     "V tradingu se Fibonacciho nástroj táhne přes jeden pohyb, od swing low po swing high. Klasické úrovně jsou 23,6, 38,2, 50, 61,8 a 78,6 %. ICT stejný nástroj jen jinak popisuje: 50 % je equilibrium, nad ním je premium a pod ním discount.",
+     "OTE, optimal trade entry, je podle následovníků ICT pásmo 62 až 79 % návratu. Úroveň 70,5 % se tam nazývá „sweet spot“. Platí jen u pohybu, který začal výběrem likvidity nebo zlomem struktury. Pomalé překrývající se svíčky za platný pohyb nepovažují.",
+     "Co je z toho opravdu ze zlatého řezu: 0,62 (zaokrouhlených 0,618) a 0,79 (odmocnina z 0,618, tedy 0,786). Úroveň 50 % Fibonacciho poměr vůbec není, 70,5 % je jen střed mezi 62 a 79 % a cíle −1, −2 nebo −4 jsou celé násobky výšky pohybu. ICT jim říká směrodatné odchylky, se statistikou ale nemají nic společného.",
+     "Spojení s přírodou je jen historické. R. N. Elliott podle vlastních slov o Fibonaccim nevěděl, když svou vlnovou teorii vymyslel, a čísla k ní připojil až dodatečně v knize Nature's Law z roku 1946.",
+     "Nejdůležitější praktická věc: víc než přesnost poměrů rozhoduje, odkud nástroj táhneš. Posun spodního bodu o pár desítek bodů posune celé pásmo OTE. Zkus to na kalkulačce níž."
+    ],
+    "use": [
+     "Kotvu urči podle pravidla předem: například low svíčky, která vybrala likviditu, a high svíčky, která udělala zlom struktury.",
+     "Ber úrovně jako pravítko pro plán: kde vstoupit, kam dát stop a kde brát zisk.",
+     "Zapisuj si do deníku, kterou kotvu jsi použil, ať jde výsledek později ověřit."
+    ],
+    "trap": "Když si kotvu posouváš, dokud úroveň nesedí na odraz, který už proběhl, dokážeš si zpětně „potvrdit“ cokoli.",
+    "quiz": {
+     "q": "Která z těchto úrovní je opravdu odvozená ze zlatého řezu?",
+     "opts": [
+      "0,62",
+      "0,5 equilibrium",
+      "−2 směrodatná odchylka"
+     ],
+     "ok": "0,62",
+     "why": "0,62 je zaokrouhlených 0,618. Equilibrium 0,5 a násobky −1, −2 nebo −4 jsou konvence."
+    },
+    "fig": "fibcalc"
+   },
+   {
+    "id": "fib-dukazy",
+    "group": "Fibonacci",
+    "title": "Fungují Fibonacciho úrovně? Co říkají testy",
+    "text": [
+     "Fibonacciho úrovně se testují od sedmdesátých let. Na tisících akcií ani na indexu Dow Jones se ceny neotáčely u 38, 50 nebo 62 % častěji než u jiných poměrů.",
+     "Test na tickových datech měn porovnal Fibonacciho úrovně s náhodně zvolenými. Některé vyšly lépe, ale o méně než jeden procentní bod. Autor sám napsal, že je to ekonomicky bezvýznamné.",
+     "Malý efekt mají obecně úrovně, které sleduje hodně lidí. V jedné studii se kurz u zveřejněných podpor a rezistencí odrazil v 60,8 % případů, u náhodných úrovní v 56,2 %. Většina těch úrovní ale končila na kulatém čísle, takže sílu měly shluky příkazů, ne zlatý řez.",
+     "Nezávislý a poctivě spočítaný test ICT OTE na NQ nebo ES jsme nenašli. Čísla, která kolují na internetu, obvykle nemají jasná pravidla, poplatky ani ověření na datech mimo vzorek.",
+     "Pozor i na hustotu úrovní. Se sedmi úrovněmi a k tomu cíli leží čára skoro všude, takže cena je vždycky „u nějaké úrovně“. Samotný dotyk nic nedokazuje, dokud ho neporovnáš s náhodnou úrovní."
+    ],
+    "use": [
+     "Pokud chceš OTE používat, napiš si přesná pravidla vstupu, stopu a cíle.",
+     "V deníku zapisuj každý dotyk OTE, i ten, kdy cena pásmem prošla.",
+     "Po stovce případů porovnej výsledek se stejným vstupem bez Fibonacciho."
+    ],
+    "trap": "Snímky obchodů, které „sedly na 0,705“, jsou vybrané zpětně. Ty, které nesedly, nikdo nesdílí.",
+    "quiz": {
+     "q": "Co ukázaly testy Fibonacciho úrovní proti náhodným?",
+     "opts": [
+      "Rozdíl byl malý nebo žádný",
+      "Fibonacciho úrovně vyhrávají v 80 % případů",
+      "Úrovně fungují jen na NQ"
+     ],
+     "ok": "Rozdíl byl malý nebo žádný",
+     "why": "Testy od roku 1977 nenašly u Fibonacciho úrovní výhodu, která by po nákladech měla význam. Úrovně můžou pomoct s plánem, ne s předpovědí."
+    }
    }
   ],
   "sources": [
@@ -944,6 +1042,30 @@
    [
     "LuxAlgo Library: Opening Gap",
     "https://www.luxalgo.com/library/concept/opening-gap/"
+   ],
+   [
+    "Swinton & Ochu 2016: Turing's Sunflowers (Royal Society Open Science)",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC4892450"
+   ],
+   [
+    "Smith College: Phyllotaxis, Fibonacci a zlatý úhel",
+    "https://www.science.smith.edu/phyllo/About/fibogolden.html"
+   ],
+   [
+    "Science News: The Mysterious Nautilus (měření ulit)",
+    "https://www.sciencenews.org/?p=26206"
+   ],
+   [
+    "Gupta 2011: Fibonacciho úrovně proti náhodným (tickové FX)",
+    "https://core.ac.uk/download/46721086.pdf"
+   ],
+   [
+    "Osler 2000: Support for Resistance (NY Fed)",
+    "https://www.newyorkfed.org/medialibrary/media/research/epr/00v06n2/0007osle.html"
+   ],
+   [
+    "innercircletrader.net: ICT Fibonacci levels",
+    "https://innercircletrader.net/tutorials/ict-fibonacci-levels/"
    ]
   ]
  }

@@ -3626,6 +3626,17 @@ html body .pf-xp .lv-emb{flex:none;--sz:22px!important}html body .rw-mini .pf-xp
 .glpop .glp-a button{min-height:40px;padding:8px 12px;border-radius:10px;border:1px solid var(--line);background:none;color:var(--ink);font:inherit;font-size:13.5px;font-weight:600;cursor:pointer}
 .glpop .glp-a button:hover{border-color:var(--accent);color:var(--accent)}
 @media (prefers-reduced-motion:reduce){.glpop{animation:none}}
+.fibw{margin:6px 0 14px;padding:14px;border:1px solid var(--line);border-radius:16px;background:var(--bg);display:grid;gap:10px}
+.fib-sf{width:min(100%,300px);height:auto;justify-self:center;display:block}.fib-sf circle{fill:#f2b33d}
+html[data-t="noc"] .fib-sf circle,html:not([data-t]) .fib-sf circle{fill:#f2b33d}
+.fib-sf circle:nth-child(3n){fill:#d9892a}.fib-sf circle:nth-child(7n){fill:#8a5a1c}
+.fib-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.fib-row input[type=range]{flex:1 1 140px;accent-color:var(--accent)}
+.fib-row .chip{width:auto!important}.fib-ang{min-width:54px;font-variant-numeric:tabular-nums}
+.fib-in{display:grid;grid-template-columns:1fr 1fr;gap:10px}.fib-in label{display:grid;gap:4px}
+.fib-t{width:100%;border-collapse:collapse;font-size:13.5px}.fib-t th{text-align:left;font-size:11.5px;color:var(--muted);font-weight:700;padding:4px 6px;border-bottom:1px solid var(--line)}
+.fib-t td{padding:6px;border-bottom:1px solid var(--line)}.fib-t td.num{font-variant-numeric:tabular-nums;font-weight:700}
+.fib-t tr.ote td{background:color-mix(in srgb,var(--accent) 10%,transparent)}
+@media (max-width:480px){.fib-in{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -8034,13 +8045,42 @@ html body .pf-xp .lv-emb{flex:none;--sz:22px!important}html body .rw-mini .pf-xp
       let advG = null;
       m.lessons.forEach((x, i) => { if (x.group && x.group !== advG){ advG = x.group; box.appendChild(el("span","kick advg", advG)); } const d = el("details","week" + (lp.sq["a-" + x.id] ? " done" : "")), sm = el("summary"), body = el("div","weekbody"), steps = el("ol","lsteps"), use = el("ul","stl ok"), trap = el("div","lkey trap"), cnt = el("span","cnt", lp.sq["a-" + x.id] ? "hotovo" : "lekce " + (i + 1));
         sm.appendChild(el("h3", null, x.title)); sm.appendChild(cnt); d.appendChild(sm); if (stAdvOpen === x.id) d.open = true; d.addEventListener("toggle", () => { if (d.open) stAdvOpen = x.id; });
-        x.text.forEach(t => steps.appendChild(el("li", null, t))); body.appendChild(steps); body.appendChild(el("b","lgh","Jak s tím pracovat")); x.use.forEach(t => use.appendChild(el("li", null, t))); body.appendChild(use);
+        x.text.forEach(t => steps.appendChild(el("li", null, t))); body.appendChild(steps); if (x.fig) try { body.appendChild(stFig(x.fig)); } catch(e){ if (window.console) console.error(e); } body.appendChild(el("b","lgh","Jak s tím pracovat")); x.use.forEach(t => use.appendChild(el("li", null, t))); body.appendChild(use);
         trap.appendChild(el("b", null, "Pozor")); trap.appendChild(el("span", null, x.trap)); body.appendChild(trap);
         const q = el("div","box exam"), qb = el("div","exbody"); let answered = false; q.appendChild(el("b", null, "Ověř si to")); qb.appendChild(el("b","exq", x.quiz.q));
         const opts = shuffled(x.quiz.opts), btns = opts.map(o => { const b = el("button","exo", o); b.type = "button"; b.addEventListener("click", () => { if (answered) return; answered = true; const ok = o === x.quiz.ok; weakNote("a-" + x.id, x.quiz.q, x.quiz.opts, x.quiz.ok, x.quiz.why, x.title, ok); btns.forEach((y, j) => { y.disabled = true; if (opts[j] === x.quiz.ok) y.classList.add("ok"); }); if (!ok) b.classList.add("no");
             qb.appendChild(el("span","small", (ok ? "Správně. " : "Tohle ne. ") + x.quiz.why)); if (ok && !lp.sq["a-" + x.id]){ lp.sq["a-" + x.id] = 1; persistLaura(); d.classList.add("done"); cnt.textContent = "hotovo"; confetti(b, 14); } }); qb.appendChild(b); return b; });
         q.appendChild(qb); body.appendChild(q); d.appendChild(body); box.appendChild(d); });
       box.appendChild(stSources(m.sources)); }; }
+  // interactive figures for the Fibonacci lessons
+  function stFig(kind){ const w = el("div","fibw");
+    const num = (v, d) => v.toLocaleString(LT("cs-CZ", "en-US"), {minimumFractionDigits: d || 0, maximumFractionDigits: d || 0});
+    if (kind === "sunflower"){
+      const ns = "http://www.w3.org/2000/svg", sv = document.createElementNS(ns, "svg"); sv.setAttribute("viewBox", "-100 -100 200 200"); sv.setAttribute("class", "fib-sf"); sv.setAttribute("role", "img");
+      const N = 420, dots = []; for (let i = 0; i < N; i++){ const c = document.createElementNS(ns, "circle"); c.setAttribute("r", String(1.1 + 1.9 * Math.sqrt(i / N))); sv.appendChild(c); dots.push(c); }
+      const row = el("div","fib-row"), lab = el("b","fib-ang"), rng = el("input"); rng.type = "range"; rng.min = "130"; rng.max = "145"; rng.step = "0.1"; rng.value = "137.5"; rng.setAttribute("aria-label", LT("Úhel mezi semeny", "Angle between seeds"));
+      const cap = el("p","small muted");
+      const draw = a => { const r = a * Math.PI / 180; dots.forEach((c, i) => { const rr = 92 * Math.sqrt((i + .5) / N); c.setAttribute("cx", (rr * Math.cos(i * r)).toFixed(2)); c.setAttribute("cy", (rr * Math.sin(i * r)).toFixed(2)); });
+        lab.textContent = num(a, 1) + "°"; sv.setAttribute("aria-label", LT("Semena otočená o ", "Seeds turned by ") + num(a, 1) + "°");
+        cap.textContent = Math.abs(a - 137.5) < .06 ? LT("Zlatý úhel: semena vyplní kruh rovnoměrně a vytvoří spirály s Fibonacciho počty.", "Golden angle: the seeds fill the circle evenly and form spirals with Fibonacci counts.") : Math.abs(a - 135) < .06 ? LT("135° je přesně 3/8 otáčky: vznikne osm paprsků a mezi nimi prázdná místa.", "135° is exactly 3/8 of a turn: you get eight spokes with empty space between them.") : LT("Mimo zlatý úhel se semena řadí do paprsků a mezi nimi zůstávají mezery.", "Away from the golden angle the seeds line up in spokes with gaps between them."); };
+      rng.addEventListener("input", () => draw(Number(rng.value)));
+      const pb = (v, t) => { const b = el("button","chip", t); b.type = "button"; b.addEventListener("click", () => { rng.value = String(v); draw(v); }); return b; };
+      row.appendChild(lab); row.appendChild(rng); row.appendChild(pb(137.5, "137,5°")); row.appendChild(pb(135, "135°"));
+      w.appendChild(sv); w.appendChild(row); w.appendChild(cap); draw(137.5); return w; }
+    if (kind === "fibcalc"){
+      const g = el("div","fib-in"), mk = (lb, v) => { const l = el("label"), i = el("input"); i.type = "number"; i.step = "0.25"; i.value = String(v); l.appendChild(el("span","small muted", lb)); l.appendChild(i); g.appendChild(l); return i; };
+      const lo = mk(LT("Swing low (začátek pohybu)", "Swing low (start of the move)"), 20000), hi = mk(LT("Swing high (konec pohybu)", "Swing high (end of the move)"), 20400);
+      const srow = el("div","fib-row"), sl = el("input"), sv = el("b","fib-ang"); sl.type = "range"; sl.min = "-100"; sl.max = "100"; sl.step = "5"; sl.value = "0"; sl.setAttribute("aria-label", LT("Posun kotvy", "Anchor shift"));
+      srow.appendChild(el("span","small muted", LT("Posun swing low:", "Shift the swing low:"))); srow.appendChild(sl); srow.appendChild(sv);
+      const tb = el("table","fib-t"), note = el("p","small muted");
+      const LV = [[.5, "0,5 equilibrium", "0.5 equilibrium", LT("konvence", "convention")], [.62, "0,62 OTE", "0.62 OTE", LT("≈ 0,618 = 1/φ", "≈ 0.618 = 1/φ")], [.705, "0,705 sweet spot", "0.705 sweet spot", LT("střed pásma", "midpoint")], [.79, "0,79 OTE", "0.79 OTE", LT("≈ √0,618", "≈ √0.618")], [-.27, "−0,27", "−0.27", LT("≈ extenze 1,272", "≈ 1.272 extension")], [-.62, "−0,62", "−0.62", LT("≈ extenze 1,618", "≈ 1.618 extension")], [-1, "−1", "−1", LT("násobek pohybu", "multiple of the move")], [-2, "−2", "−2", LT("násobek pohybu", "multiple of the move")]];
+      const draw = () => { const sh = Number(sl.value) || 0, L0 = (Number(lo.value) || 0) + sh, H = Number(hi.value) || 0, R = H - L0; sv.textContent = (sh > 0 ? "+" : "") + sh + LT(" b.", " pts");
+        clear(tb); const hr = el("tr"); [LT("Úroveň", "Level"), LT("Cena", "Price"), LT("Původ", "Origin")].forEach(t => hr.appendChild(el("th", null, t))); tb.appendChild(hr);
+        LV.forEach(q => { const tr = el("tr", q[0] >= .62 && q[0] <= .79 ? "ote" : null); tr.appendChild(el("td", null, LT(q[1], q[2]))); tr.appendChild(el("td","num", num(H - q[0] * R, 2))); tr.appendChild(el("td","small muted", q[3])); tb.appendChild(tr); });
+        const base = (Number(hi.value) || 0) - .705 * ((Number(hi.value) || 0) - (Number(lo.value) || 0)); note.textContent = R > 0 ? LT("Výška pohybu " + num(R, 2) + " b. Sweet spot se proti původní kotvě posunul o " + num(H - .705 * R - base, 2) + " b.", "Move height " + num(R, 2) + " pts. The sweet spot moved by " + num(H - .705 * R - base, 2) + " pts against the original anchor.") : LT("Swing high musí být nad swing low.", "The swing high has to be above the swing low."); };
+      [lo, hi].forEach(i => i.addEventListener("input", draw)); sl.addEventListener("input", draw);
+      w.appendChild(g); w.appendChild(srow); w.appendChild(tb); w.appendChild(note); w.appendChild(el("p","small muted", LT("Ilustrace pro long. Záporné úrovně jsou cíle nad swing high. Není to obchodní doporučení.", "Illustration for a long. Negative levels are targets above the swing high. This is not trading advice."))); draw(); return w; }
+    return w; }
   let stAdvOpen = null, stCoreOpen = null;
   // ---------- coach: weekly report computed from the journal, no AI ----------
   function weeklyReport(){ const now = Date.now(), W = 7 * 864e5, all = jSorted(), cur = all.filter(t => now - new Date(t.ts) < W), prev = all.filter(t => { const a = now - new Date(t.ts); return a >= W && a < 2 * W; }), a = jStats(cur), b = jStats(prev), L = [];
