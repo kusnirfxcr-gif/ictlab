@@ -3637,6 +3637,34 @@ html[data-t="noc"] .fib-sf circle,html:not([data-t]) .fib-sf circle{fill:#f2b33d
 .fib-t td{padding:6px;border-bottom:1px solid var(--line)}.fib-t td.num{font-variant-numeric:tabular-nums;font-weight:700}
 .fib-t tr.ote td{background:color-mix(in srgb,var(--accent) 10%,transparent)}
 @media (max-width:480px){.fib-in{grid-template-columns:1fr}}
+/* learning paths and masterclass figures */
+.pth-hd{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.pth-chip{display:inline-flex;align-items:center;gap:7px;padding:5px 11px 5px 8px;border-radius:999px;border:1px solid color-mix(in srgb,var(--accent) 38%,var(--line));background:color-mix(in srgb,var(--accent) 9%,transparent);font-size:12.5px;color:var(--text)}
+.pth-chip b{font-weight:700;letter-spacing:.01em}
+.pth-ic{display:grid;place-items:center;flex:none;width:18px;height:18px;color:var(--accent)}.pth-ic svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.pth-ch{width:auto!important;min-height:0!important;padding:5px 11px!important;font-size:12.5px!important;border-radius:999px!important;background:transparent!important;border:1px solid var(--line)!important;color:var(--muted)!important;cursor:pointer;transition:color .2s,border-color .2s}
+.pth-ch:hover{color:var(--text)!important;border-color:var(--accent)!important}
+.pth-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pth-opt{display:flex;align-items:flex-start;gap:10px;text-align:left;width:100%;padding:12px;border-radius:14px;border:1px solid var(--line);background:var(--bg);color:var(--text);cursor:pointer;transition:border-color .2s,box-shadow .25s,transform .2s,background .2s;min-height:0}
+.pth-opt .pth-ic{width:30px;height:30px;padding:6px;border-radius:9px;background:color-mix(in srgb,var(--accent) 12%,transparent);transition:background .2s,color .2s}
+.pth-tx{display:grid;gap:3px;min-width:0}.pth-tx b{font-size:14px}.pth-tx span{font-size:12px;line-height:1.4;color:var(--muted)}
+.pth-opt:hover{border-color:color-mix(in srgb,var(--accent) 55%,var(--line));transform:translateY(-1px)}
+.pth-opt[aria-checked="true"]{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 8%,var(--bg));box-shadow:0 0 0 1px var(--accent),0 10px 30px -14px var(--accent)}
+.pth-opt[aria-checked="true"] .pth-ic{background:var(--accent);color:var(--bg)}
+.ob .card.pth-pick{max-width:560px}.ob .card.pth-pick .row{justify-content:flex-end;gap:10px}.ob .card.pth-pick .row button{width:auto}
+.ob .card:has(>.pth-grid){max-width:560px}
+.ob-inv [data-q="level"],.ob-inv [data-q="sym"]{display:none}
+.pf-path{display:flex;align-items:center;gap:10px;margin-top:14px;padding-top:14px;border-top:1px solid var(--line);font-size:13px;font-weight:600;color:var(--muted)}.pf-path .pth-ch{margin-left:auto}
+@media(max-width:520px){.pth-grid{grid-template-columns:1fr}.pth-opt{padding:10px 12px;align-items:center}.pth-tx span{font-size:11.5px}}
+.inv-in{display:grid;grid-template-columns:1fr auto;align-items:center;gap:4px 10px;font-size:13px;color:var(--muted)}.inv-in b{color:var(--text);font-variant-numeric:tabular-nums}.inv-in input{grid-column:1/-1;width:100%;accent-color:var(--accent)}
+.inv-ch{width:100%;height:auto;display:block;border-radius:12px;background:color-mix(in srgb,var(--accent) 4%,transparent)}
+.inv-l1{fill:none;stroke:var(--accent);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}.inv-l2{fill:none;stroke:var(--muted);stroke-width:1.4;stroke-dasharray:4 3}
+.inv-a1{fill:color-mix(in srgb,var(--accent) 20%,transparent)}.inv-a2{fill:color-mix(in srgb,var(--muted) 16%,transparent)}
+.inv-bar{fill:color-mix(in srgb,var(--accent) 55%,transparent)}.inv-avg{stroke:var(--text);stroke-width:1;stroke-dasharray:2 3;opacity:.7}
+.inv-out{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px}
+.inv-kv{display:grid;gap:2px;padding:9px 11px;border-radius:12px;border:1px solid var(--line)}.inv-kv span{font-size:11.5px;color:var(--muted)}.inv-kv b{font-size:15px;font-variant-numeric:tabular-nums}
+.inv-kv.t{border-color:color-mix(in srgb,var(--accent) 50%,var(--line));background:color-mix(in srgb,var(--accent) 7%,transparent)}.inv-kv.g b{color:var(--accent)}
+body.sync-wait .ob-first{visibility:hidden}
 </style>
 </head>
 <body>
@@ -3721,8 +3749,8 @@ html[data-t="noc"] .fib-sf circle,html:not([data-t]) .fib-sf circle{fill:#f2b33d
   </section>
 
   <section class="view" id="v-studium">
-    <div class="card"><h2>Studium ICT</h2><p class="muted">Model 2022 krok za krokem s kvízem, shrnutí dvanácti měsíců core contentu ze soukromého mentorshipu, jeden obchodní den od přípravy po večerní kontrolu a časté omyly.</p>
-      <div class="chips" id="st-tabs"><button class="chip" type="button" data-t="model2022" aria-pressed="true">Model 2022</button><button class="chip" type="button" data-t="core" aria-pressed="false">Core content</button><button class="chip" type="button" data-t="adv" aria-pressed="false">Pokročilé</button><button class="chip" type="button" data-t="day" aria-pressed="false">Den obchodníka</button><button class="chip" type="button" data-t="myths" aria-pressed="false">Časté omyly</button></div></div>
+    <div class="card"><h2>Studium ICT</h2><p class="muted">Model 2022 krok za krokem s kvízem, shrnutí dvanácti měsíců core contentu ze soukromého mentorshipu, jeden obchodní den od přípravy po večerní kontrolu a časté omyly. K tomu dvě masterclass: dlouhodobé investování a krypto.</p>
+      <div class="chips" id="st-tabs"><button class="chip" type="button" data-t="model2022" aria-pressed="true">Model 2022</button><button class="chip" type="button" data-t="core" aria-pressed="false">Core content</button><button class="chip" type="button" data-t="adv" aria-pressed="false">Pokročilé</button><button class="chip" type="button" data-t="day" aria-pressed="false">Den obchodníka</button><button class="chip" type="button" data-t="myths" aria-pressed="false">Časté omyly</button><button class="chip" type="button" data-t="invest" aria-pressed="false">Investování</button><button class="chip" type="button" data-t="crypto" aria-pressed="false">Krypto</button></div></div>
     <div class="list" id="st-body"></div>
   </section>
 
@@ -5954,8 +5982,41 @@ html[data-t="noc"] .fib-sf circle,html:not([data-t]) .fib-sf circle{fill:#f2b33d
 
   // ---------- learning path ----------
   const examOk = n => !!(lp.exam && lp.exam[n] && lp.exam[n].best / lp.exam[n].of >= 0.8);
+  const PATHS = {
+    scalper: {cz: "Scalper", en: "Scalper", dcz: "Obchody na minuty až desítky minut. Nejvíc rozhodnutí a největší nároky na disciplínu.", den: "Trades lasting minutes to tens of minutes. The most decisions and the highest demands on discipline.", ic: '<path d="M13 3L5 13h6l-1 8 8-10h-6z"/>',
+      first: ["struktura","bos-mss","likvidita","fvg-up","fvg-down","seance-cas","cisd","ifvg","model-2022-long","model-2022-short","rizeni-obchodu","psychologie","spatny-den"], st: [["adv","makra"],["adv","org"],["adv","fvg-first"],["adv","testovani"]]},
+    day: {cz: "Day trader", en: "Day trader", dcz: "Jeden až dva obchody denně v newyorské seanci. Přes noc nic nedržíš.", den: "One or two trades a day in the New York session. You hold nothing overnight.", ic: '<circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M18.4 5.6L17 7M7 17l-1.4 1.4"/>', first: [], st: []},
+    swing: {cz: "Swing trader", en: "Swing trader", dcz: "Obchody na dny až týdny. Méně času u grafu, rozhoduje denní a týdenní směr.", den: "Trades lasting days to weeks. Less screen time; the daily and weekly direction decides.", ic: '<path d="M3 16c3 0 3-8 6-8s3 8 6 8 3-8 6-8"/>',
+      first: ["struktura","bos-mss","likvidita","premium-discount","fvg-up","fvg-down","ob-up","ob-down","ranni-priprava","rizeni-obchodu","psychologie"], st: [["adv","profil-tydne"],["adv","ipda"],["adv","irl"],["adv","gaps"],["adv","mmxm"],["adv","testovani"]]},
+    investor: {cz: "Investor", en: "Investor", dcz: "Pravidelné nákupy na roky. Místo intradenních modelů tě čeká Investing a Crypto masterclass.", den: "Regular purchases over years. Instead of intraday models you get the Investing and Crypto masterclass.", ic: '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>', only: true, first: ["struktura"]}
+  };
+  const PATH_KEYS = ["scalper", "day", "swing", "investor"];
+  function pathOf(){ return profile && PATHS[profile.path] ? profile.path : "day"; }
+  function pathEn(){ return cfg.lang === "en"; }
+  function pathIc(k){ const i = el("i","pth-ic"); i.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true">' + PATHS[k].ic + '</svg>'; return i; }
+  function pathSet(k){ if (!PATHS[k]) return; if (!profile) profile = {level: cfg.mode === "student" ? "start" : "trade", sym: "NQ", syms: ["NQ"], goal: 10};
+    profile.path = k; try { localStorage.setItem("knot-profile", JSON.stringify(profile)); } catch(e){} try { if (k === "investor") stTab = "invest"; else if (stTab === "invest" || stTab === "crypto") stTab = "model2022"; renderStudy(); } catch(e){} refreshAll(); }
+  function pathOpts(cur, onPick){ const g = el("div","pth-grid"); g.setAttribute("role", "radiogroup");
+    PATH_KEYS.forEach(k => { const p = PATHS[k], b = el("button","pth-opt"), w = el("span","pth-tx"); b.type = "button"; b.setAttribute("role", "radio"); b.setAttribute("aria-checked", String(k === cur)); b.dataset.k = k;
+      b.appendChild(pathIc(k)); w.appendChild(el("b", null, pathEn() ? p.en : p.cz)); w.appendChild(el("span", null, pathEn() ? p.den : p.dcz)); b.appendChild(w);
+      b.addEventListener("click", () => { Array.prototype.forEach.call(g.children, x => x.setAttribute("aria-checked", String(x === b))); onPick(k); }); g.appendChild(b); });
+    return g; }
+  function pathPick(){ const o = overlay("pth-pick"), c = o.card; let pick = pathOf();
+    c.appendChild(el("span","kick", pathEn() ? "Your path" : "Tvoje cesta")); c.appendChild(el("h2", null, pathEn() ? "What do you want to be?" : "Čím chceš být?"));
+    c.appendChild(el("p","small muted", pathEn() ? "Tape orders the lessons by your choice. You can change it at any time and nothing you have done is lost." : "Podle výběru ti Tape seřadí lekce. Můžeš ho kdykoli změnit a nic z toho, co máš hotové, se neztratí."));
+    c.appendChild(pathOpts(pick, k => { pick = k; }));
+    const row = el("div","row"), ok = el("button","primary", pathEn() ? "Save" : "Uložit"), no = el("button", null, pathEn() ? "Cancel" : "Zrušit"); ok.type = no.type = "button";
+    no.addEventListener("click", o.close); ok.addEventListener("click", () => { o.close(); pathSet(pick); try { toast((pathEn() ? "Path: " : "Cesta: ") + (pathEn() ? PATHS[pick].en : PATHS[pick].cz)); } catch(e){} });
+    row.appendChild(no); row.appendChild(ok); c.appendChild(row); }
   function pathSteps(){
-    const s = pa.map(t => ({kind: "pa", id: t.id, title: t.title, done: !!(lp.seen || {})[t.id]}));
+    let sd = null; try { sd = study; } catch(e){}
+    const P = PATHS[pathOf()], seen = lp.seen || {}, sq = lp.sq || {}, s = [], used = {};
+    const paS = id => { const t = pa.find(x => x.id === id); if (t && !used[id]){ used[id] = 1; s.push({kind: "pa", id: t.id, title: t.title, done: !!seen[t.id]}); } };
+    const stS = (tab, x) => s.push({kind: "st", tab: tab, id: x.id, title: x.title, done: !!sq["a-" + x.id]});
+    if (P.only){ if (!sd) return []; ["invest", "crypto"].forEach(k => ((sd[k] || {}).lessons || []).forEach(x => stS(k, x))); (P.first || []).forEach(paS); return s; }
+    (P.first || []).forEach(paS);
+    (P.st || []).forEach(a => { const x = sd && ((sd[a[0]] || {}).lessons || []).find(y => y.id === a[1]); if (x) stS(a[0], x); });
+    pa.forEach(t => paS(t.id));
     if (pr.length) s.push({kind: "pr", title: "Najdi to na grafu", done: !!(lp.practice && lp.practice.runs)});
     if (course) course.weeks.forEach(w => s.push({kind: "ex", n: w.n, title: "Zkouška " + w.n + ". týdne", done: examOk(w.n)}));
     return s;
@@ -5965,17 +6026,20 @@ html[data-t="noc"] .fib-sf circle,html:not([data-t]) .fib-sf circle{fill:#f2b33d
   function openTopic(id){ location.hash = "#laura"; paCur = id; paStep = 0; paBuild(); setTimeout(() => arriveAt($("pa-card")), 80); }
   function goStep(st){
     if (st.kind === "pa") openTopic(st.id);
+    else if (st.kind === "st"){ stTab = st.tab; stAdvOpen = st.id; location.hash = "#studium"; renderStudy(); setTimeout(() => { const d = document.querySelector('#st-body details[data-lid="' + st.id + '"]'); if (d){ d.open = true; arriveAt(d); } }, 120); }
     else if (st.kind === "pr"){ location.hash = "#laura"; setTimeout(() => arriveAt($("pr-card")), 80); }
     else { location.hash = "#room"; openWeek = st.n; renderCourse(); setTimeout(() => { const r = courseRefs[st.n]; if (r) arriveAt(r.d); }, 80); }
   }
   function renderPath(){
     const s = pathSteps(), cur = s.findIndex(x => !x.done), got = s.filter(x => x.done).length;
     document.querySelectorAll(".pathbox").forEach(box => {
-      clear(box); if (!s.length){ box.appendChild(el("p","small muted","Načítám…")); return; }
+      clear(box);
+      { const pk = pathOf(), hd = el("div","pth-hd"), chip = el("span","pth-chip"), ch = el("button","pth-ch", pathEn() ? "Change" : "Změnit"); chip.appendChild(pathIc(pk)); chip.appendChild(el("b", null, pathEn() ? PATHS[pk].en : PATHS[pk].cz)); ch.type = "button"; ch.addEventListener("click", pathPick); hd.appendChild(chip); hd.appendChild(ch); box.appendChild(hd); }
+      if (!s.length){ box.appendChild(el("p","small muted","Načítám…")); return; }
       const dots = el("div","pdots"); s.forEach((x, i) => { const d = el("i", x.done ? "d" : (i === cur ? "c" : "")); d.title = x.title; dots.appendChild(d); }); box.appendChild(dots);
       box.appendChild(el("span","small muted","Krok " + Math.min(got + 1, s.length) + " z " + s.length));
-      if (cur < 0){ box.appendChild(el("p", null, "Celá cesta je hotová. Teď už jen opakovat a vést deník.")); return; }
-      const a = el("button","go"), w = el("div"); a.type = "button"; w.appendChild(el("b", null, s[cur].title)); w.appendChild(el("span", null, s[cur].kind === "pa" ? "Téma v obrázcích, pár minut" : s[cur].kind === "pr" ? "Úlohy přímo na grafu" : "Deset otázek, složeno od osmi"));
+      if (cur < 0){ box.appendChild(el("p", null, pathOf() === "investor" ? "Celá cesta je hotová. Teď už jen držet plán a jednou ročně ho zkontrolovat." : "Celá cesta je hotová. Teď už jen opakovat a vést deník.")); return; }
+      const a = el("button","go"), w = el("div"); a.type = "button"; w.appendChild(el("b", null, s[cur].title)); w.appendChild(el("span", null, s[cur].kind === "pa" ? "Téma v obrázcích, pár minut" : s[cur].kind === "st" ? "Lekce s kvízem, pár minut" : s[cur].kind === "pr" ? "Úlohy přímo na grafu" : "Deset otázek, složeno od osmi"));
       a.appendChild(w); a.appendChild(el("i", null, "›")); a.addEventListener("click", () => goStep(s[cur])); box.appendChild(a);
       if (s[cur + 1]) box.appendChild(el("span","small muted","Potom: " + s[cur + 1].title));
     });
@@ -6012,10 +6076,11 @@ html[data-t="noc"] .fib-sf circle,html:not([data-t]) .fib-sf circle{fill:#f2b33d
   (function onboarding(){
     const used = jr.trades.length || Object.keys(lp.seen || {}).length || Object.keys(done).length || Object.keys(act).length;
     if (profile || used) return;
-    const ov = el("div","ob"), card = el("div","card"), ans = {level: "start", sym: "NQ", syms: ["NQ"], goal: 10};
-    card.appendChild(el("span","kick","Vítej v Tape")); card.appendChild(el("h2", null, "Tři otázky a můžeš začít"));
+    const ov = el("div","ob ob-first"), card = el("div","card"), ans = {level: "start", sym: "NQ", syms: ["NQ"], goal: 10, path: "day"};
+    card.appendChild(el("span","kick","Vítej v Tape")); card.appendChild(el("h2", null, "Čtyři otázky a můžeš začít"));
+    card.appendChild(el("span","small muted","Čím chceš být? Podle toho ti seřadíme lekce.")); card.appendChild(pathOpts("day", k => { ans.path = k; card.classList.toggle("ob-inv", k === "investor"); }));
     [["Kde teď jsi?", "level", [["start","Začínám od nuly"],["trade","Už obchoduji"]]], ["Které trhy obchoduješ? Můžeš vybrat víc.", "sym", [["NQ","NQ"],["ES","ES"],["MNQ","MNQ"],["MES","MES"]]], ["Kolik času denně na učení?", "goal", [[5,"5 minut"],[10,"10 minut"],[20,"20 minut"]]]].forEach(q => {
-      card.appendChild(el("span","small muted", q[0])); const ch = el("div","chips");
+      const ql = el("span","small muted", q[0]), ch = el("div","chips"); ql.dataset.q = ch.dataset.q = q[1]; card.appendChild(ql);
       q[2].forEach(o => { const b = el("button","chip", o[1]); b.type = "button"; b.setAttribute("aria-pressed", String(ans[q[1]] === o[0]));
         b.addEventListener("click", () => {
           if (q[1] === "sym"){ const i = ans.syms.indexOf(o[0]); if (i >= 0){ if (ans.syms.length > 1) ans.syms.splice(i, 1); } else ans.syms.push(o[0]); ans.sym = ans.syms[0]; Array.prototype.forEach.call(ch.children, x => x.setAttribute("aria-pressed", String(ans.syms.indexOf(x.textContent) >= 0))); return; }
@@ -6023,7 +6088,7 @@ html[data-t="noc"] .fib-sf circle,html:not([data-t]) .fib-sf circle{fill:#f2b33d
       card.appendChild(ch);
     });
     const go = el("button","primary","Začít"); go.type = "button";
-    go.addEventListener("click", () => { profile = ans; try { localStorage.setItem("knot-profile", JSON.stringify(profile)); } catch(e){} setMode(ans.level === "start" ? "student" : "trader"); ov.remove(); touchDay(); refreshAll(); if (ans.level === "trade") location.hash = "#denik"; });
+    go.addEventListener("click", () => { profile = ans; try { localStorage.setItem("knot-profile", JSON.stringify(profile)); } catch(e){} if (ans.path === "investor") ans.level = "start"; setMode(ans.level === "start" ? "student" : "trader"); ov.remove(); touchDay(); refreshAll(); if (ans.path === "investor"){ try { stTab = "invest"; renderStudy(); } catch(e){} location.hash = "#studium"; } else if (ans.level === "trade") location.hash = "#denik"; });
     card.appendChild(go); card.appendChild(el("span","small muted","Odpovědi zůstávají jen v tomto prohlížeči."));
     ov.appendChild(card); document.body.appendChild(ov);
   })();
@@ -6168,7 +6233,7 @@ html[data-t="noc"] .fib-sf circle,html:not([data-t]) .fib-sf circle{fill:#f2b33d
     }
   }
   Array.prototype.forEach.call($("st-tabs").children, b => b.addEventListener("click", () => { stTab = b.dataset.t; renderStudy(); }));
-  fetch("data/study.json", {cache: "no-store"}).then(r => r.json()).then(v => { study = v; renderStudy(); }).catch(() => { const box = $("st-body"); clear(box); const c = el("div","card"); c.appendChild(el("p","small","Studijní materiál se nepodařilo načíst.")); box.appendChild(c); });
+  fetch("data/study.json", {cache: "no-store"}).then(r => r.json()).then(v => { study = v; try { if (profile && profile.path === "investor") stTab = "invest"; } catch(e){} renderStudy(); try { renderPath(); } catch(e){} }).catch(() => { const box = $("st-body"); clear(box); const c = el("div","card"); c.appendChild(el("p","small","Studijní materiál se nepodařilo načíst.")); box.appendChild(c); });
 
 
   // =====================================================================================
@@ -7622,20 +7687,21 @@ html[data-t="noc"] .fib-sf circle,html:not([data-t]) .fib-sf circle{fill:#f2b33d
   function syncState(){ try { return JSON.parse(localStorage.getItem(SYNC_KEY) || "null"); } catch(e){ return null; } }
   function syncMark(at, sig){ try { localStorage.setItem(SYNC_KEY, JSON.stringify({uid: auth.id, at: at, sig: sig})); } catch(e){} accLast = at; }
   async function accPush(){ const o = snap(), rows = await sbData("POST", "?on_conflict=user_id", {user_id: auth.id, data: o, updated_at: new Date().toISOString()}); syncMark(rows && rows[0] ? rows[0].updated_at : "", sigOf(o)); accConflict = null; }
-  function accPull(row){ const d = row.data || {}; SYNC_KEYS.forEach(k => { try { if (d[k] != null) localStorage.setItem(k, d[k]); else localStorage.removeItem(k); } catch(e){} }); syncMark(row.updated_at, sigOf(d)); accConflict = null; location.reload(); }
+  function accPull(row){ const d = row.data || {}; try { const cp = JSON.parse(d["knot-profile"] || "null"); if (cp && Object.keys(cp).length) localStorage.setItem("tape-tour", "1"); } catch(e){} SYNC_KEYS.forEach(k => { try { if (d[k] != null) localStorage.setItem(k, d[k]); else localStorage.removeItem(k); } catch(e){} }); syncMark(row.updated_at, sigOf(d)); accConflict = null; location.reload(); }
   async function syncNow(){
     if (!auth || syncing || accConflict || accMode === "newpass") return; syncing = true;
+    try { const s0 = syncState(); if (!(s0 && s0.uid === auth.id)) document.body.classList.add("sync-wait"); } catch(e){}
     try {
       const rows = await sbData("GET", "?select=data,updated_at&user_id=eq." + encodeURIComponent(auth.id)), row = rows && rows[0], o = snap(), sig = sigOf(o), st = syncState(), mine = st && st.uid === auth.id;
       const hasLocal = jr.trades.length || Object.keys(lp.seen || {}).length || Object.keys(done).length;
       if (!row) await accPush();
       else if (sigOf(row.data) === sig) syncMark(row.updated_at, sig);
       else if (mine && row.updated_at === st.at) await accPush();
-      else if ((mine && sig === st.sig) || (!mine && !hasLocal)){ if (!document.querySelector(".ob") && !softLock) accPull(row); }
+      else if ((mine && sig === st.sig) || (!mine && !hasLocal)){ if (!document.querySelector(".ob:not(.ob-first)") && !softLock) accPull(row); }
       else { accConflict = row; toast("Data v účtu a v tomhle zařízení se liší. Vyber v Nastavení, která platí."); }
       if (accMsg === "Synchronizace se nepovedla. Zkusím to znovu.") accMsg = "";
     } catch(e){ if (auth) accMsg = e.status === 404 ? "Účet funguje, ale úložiště dat ještě není připravené." : "Synchronizace se nepovedla. Zkusím to znovu."; }
-    syncing = false; accRender();
+    syncing = false; document.body.classList.remove("sync-wait"); accRender();
   }
   function accRender(){
     clear(accBox); let pfOk = false; if (auth && accMode !== "newpass"){ try { accProfile(accBox); pfOk = true; } catch(e){} } if (!pfOk) accBox.appendChild(el("h2", null, "Účet"));
@@ -8044,14 +8110,14 @@ html[data-t="noc"] .fib-sf circle,html:not([data-t]) .fib-sf circle{fill:#f2b33d
         const sp = $("streak"), n = parseInt((sp.textContent.match(/\d+/) || ["0"])[0], 10); if (streakN != null && n > streakN){ sp.classList.remove("bump"); void sp.offsetWidth; sp.classList.add("bump"); confetti(sp, 14); } streakN = n; } catch(e){ if (window.console) console.error(e); } }; }
 
   // ---------- study: advanced lessons tab ----------
-  { const _renderStudyAdv = renderStudy; renderStudy = function(){ if (stTab !== "adv" || !study || !study.adv) return _renderStudyAdv();
-      const box = $("st-body"), m = study.adv, head = el("div","card"); clear(box); lp.sq = lp.sq || {};
+  { const _renderStudyAdv = renderStudy; renderStudy = function(){ if ((stTab !== "adv" && stTab !== "invest" && stTab !== "crypto") || !study || !study[stTab]) return _renderStudyAdv();
+      const box = $("st-body"), m = study[stTab], head = el("div","card"); clear(box); lp.sq = lp.sq || {};
       Array.prototype.forEach.call($("st-tabs").children, b => b.setAttribute("aria-pressed", String(b.dataset.t === stTab)));
       const okN = m.lessons.filter(x => lp.sq["a-" + x.id]).length, bar = el("div","bar"), bi = el("i"); bi.style.width = Math.round(100 * okN / m.lessons.length) + "%"; bar.appendChild(bi);
-      head.appendChild(el("span","kick","Úroveň: pokročilá")); head.appendChild(el("h2", null, m.title)); head.appendChild(el("p", null, m.intro)); head.appendChild(el("span","small muted","Ověřeno kvízem: " + okN + " z " + m.lessons.length)); head.appendChild(bar); box.appendChild(head);
+      head.appendChild(el("span","kick", stTab === "adv" ? "Úroveň: pokročilá" : "Masterclass")); head.appendChild(el("h2", null, m.title)); head.appendChild(el("p", null, m.intro)); head.appendChild(el("span","small muted","Ověřeno kvízem: " + okN + " z " + m.lessons.length)); head.appendChild(bar); box.appendChild(head);
       let advG = null;
       m.lessons.forEach((x, i) => { if (x.group && x.group !== advG){ advG = x.group; box.appendChild(el("span","kick advg", advG)); } const d = el("details","week" + (lp.sq["a-" + x.id] ? " done" : "")), sm = el("summary"), body = el("div","weekbody"), steps = el("ol","lsteps"), use = el("ul","stl ok"), trap = el("div","lkey trap"), cnt = el("span","cnt", lp.sq["a-" + x.id] ? "hotovo" : "lekce " + (i + 1));
-        sm.appendChild(el("h3", null, x.title)); sm.appendChild(cnt); d.appendChild(sm); if (stAdvOpen === x.id) d.open = true; d.addEventListener("toggle", () => { if (d.open) stAdvOpen = x.id; });
+        sm.appendChild(el("h3", null, x.title)); sm.appendChild(cnt); d.appendChild(sm); d.dataset.lid = x.id; if (stAdvOpen === x.id) d.open = true; d.addEventListener("toggle", () => { if (d.open) stAdvOpen = x.id; });
         x.text.forEach(t => steps.appendChild(el("li", null, t))); body.appendChild(steps); if (x.fig) try { body.appendChild(stFig(x.fig)); } catch(e){ if (window.console) console.error(e); } body.appendChild(el("b","lgh","Jak s tím pracovat")); x.use.forEach(t => use.appendChild(el("li", null, t))); body.appendChild(use);
         trap.appendChild(el("b", null, "Pozor")); trap.appendChild(el("span", null, x.trap)); body.appendChild(trap);
         const q = el("div","box exam"), qb = el("div","exbody"); let answered = false; q.appendChild(el("b", null, "Ověř si to")); qb.appendChild(el("b","exq", x.quiz.q));
@@ -8074,6 +8140,29 @@ html[data-t="noc"] .fib-sf circle,html:not([data-t]) .fib-sf circle{fill:#f2b33d
       const pb = (v, t) => { const b = el("button","chip", t); b.type = "button"; b.addEventListener("click", () => { rng.value = String(v); draw(v); }); return b; };
       row.appendChild(lab); row.appendChild(rng); row.appendChild(pb(137.5, "137,5°")); row.appendChild(pb(135, "135°"));
       w.appendChild(sv); w.appendChild(row); w.appendChild(cap); draw(137.5); return w; }
+    if (kind === "compound"){
+      const ns = "http://www.w3.org/2000/svg", sv = document.createElementNS(ns, "svg"), out = el("div","inv-out"), W = 320, H = 150; sv.setAttribute("viewBox", "0 0 " + W + " " + H); sv.setAttribute("class", "inv-ch"); sv.setAttribute("role", "img");
+      const mk = (lab, min, max, step, val, fmt) => { const r = el("label","inv-in"), t = el("span", null, lab), b = el("b"), i = el("input"); i.type = "range"; i.min = String(min); i.max = String(max); i.step = String(step); i.value = String(val); i.setAttribute("aria-label", lab); r.appendChild(t); r.appendChild(b); r.appendChild(i); i.addEventListener("input", draw); i._fmt = () => { b.textContent = fmt(Number(i.value)); }; w.appendChild(r); return i; };
+      function draw(){ [iA, iY, iR].forEach(i => i._fmt()); const a = Number(iA.value), y = Number(iY.value), r = Number(iR.value) / 100 / 12, pts = [], dep = []; let v = 0;
+        for (let m = 0; m <= y * 12; m++){ if (m){ v = v * (1 + r) + a; } if (m % 12 === 0){ pts.push(v); dep.push(a * m); } }
+        const top = Math.max(pts[pts.length - 1], 1), X = i => 4 + (W - 8) * i / (pts.length - 1), Y = q => H - 6 - (H - 16) * q / top, line = arr => arr.map((q, i) => (i ? "L" : "M") + X(i).toFixed(1) + " " + Y(q).toFixed(1)).join(" ");
+        sv.innerHTML = '<path class="inv-a1" d="' + line(pts) + " L" + X(pts.length - 1).toFixed(1) + " " + (H - 6) + " L4 " + (H - 6) + ' Z"/><path class="inv-a2" d="' + line(dep) + " L" + X(dep.length - 1).toFixed(1) + " " + (H - 6) + " L4 " + (H - 6) + ' Z"/><path class="inv-l1" d="' + line(pts) + '"/><path class="inv-l2" d="' + line(dep) + '"/>';
+        const end = pts[pts.length - 1], put = a * y * 12; clear(out); [[LT("Vloženo", "Deposited"), put, "d"], [LT("Výnosy", "Returns"), Math.max(0, end - put), "g"], [LT("Hodnota na konci", "Value at the end"), end, "t"]].forEach(q => { const c = el("div","inv-kv " + q[2]); c.appendChild(el("span", null, q[0])); c.appendChild(el("b", null, num(Math.round(q[1] / 1000) * 1000) + " Kč")); out.appendChild(c); });
+        sv.setAttribute("aria-label", LT("Vklady a hodnota účtu v čase", "Deposits and account value over time")); }
+      const iA = mk(LT("Měsíční vklad", "Monthly deposit"), 500, 20000, 500, 3000, v => num(v) + " Kč"), iY = mk(LT("Počet let", "Years"), 5, 40, 1, 20, v => String(v)), iR = mk(LT("Průměrný roční výnos", "Average yearly return"), 0, 10, 0.5, 6, v => num(v, 1) + " %");
+      w.appendChild(sv); w.appendChild(out); w.appendChild(el("p","small muted", LT("Ilustrace s rovnoměrným výnosem. Skutečný trh kolísá a výnos není zaručený. Není to investiční doporučení.", "Illustration with an even return. The real market swings and a return is not guaranteed. This is not investment advice."))); draw(); return w; }
+    if (kind === "dca"){
+      const ns = "http://www.w3.org/2000/svg", sv = document.createElementNS(ns, "svg"), out = el("div","inv-out"), row = el("div","fib-row"), cap = el("p","small muted"), W = 320, H = 150, N = 24; sv.setAttribute("viewBox", "0 0 " + W + " " + H); sv.setAttribute("class", "inv-ch"); sv.setAttribute("role", "img");
+      const SC = {dip: [LT("Propad a návrat", "Drop and recovery"), i => 100 * (1 - .42 * Math.sin(Math.PI * Math.min(1, i / 17)) + .012 * i + .03 * Math.sin(i * 1.9))], up: [LT("Stálý růst", "Steady rise"), i => 100 * (1 + .022 * i + .03 * Math.sin(i * 1.7))], down: [LT("Dlouhý pokles", "Long decline"), i => 100 * (1 - .019 * i + .03 * Math.sin(i * 2.1))]}; let cur = "dip";
+      const draw = () => { const f = SC[cur][1], px = []; for (let i = 0; i < N; i++) px.push(f(i)); const A = 1000, units = px.map(p => A / p), tot = units.reduce((a, b) => a + b, 0), avgPaid = A * N / tot, avgPx = px.reduce((a, b) => a + b, 0) / N, last = px[N - 1], vD = tot * last, vL = A * N / px[0] * last;
+        const hi = Math.max.apply(null, px) * 1.06, lo = Math.min.apply(null, px) * .9, X = i => 8 + (W - 16) * i / (N - 1), Y = p => 8 + (H - 46) * (1 - (p - lo) / (hi - lo)), um = Math.max.apply(null, units);
+        let h = ""; units.forEach((u, i) => { const bh = 26 * u / um; h += '<rect class="inv-bar" x="' + (X(i) - 3.4).toFixed(1) + '" y="' + (H - 4 - bh).toFixed(1) + '" width="6.8" height="' + bh.toFixed(1) + '" rx="1.5"/>'; });
+        h += '<path class="inv-l1" d="' + px.map((p, i) => (i ? "L" : "M") + X(i).toFixed(1) + " " + Y(p).toFixed(1)).join(" ") + '"/><line class="inv-avg" x1="8" x2="' + (W - 8) + '" y1="' + Y(avgPaid).toFixed(1) + '" y2="' + Y(avgPaid).toFixed(1) + '"/>'; sv.innerHTML = h;
+        sv.setAttribute("aria-label", LT("Cena, měsíční nákupy a průměrná nákupní cena", "Price, monthly purchases and average purchase price"));
+        clear(out); [[LT("Průměr cen", "Average of prices"), num(avgPx, 1), "d"], [LT("Tvoje průměrná cena", "Your average price"), num(avgPaid, 1), "g"], [LT("Pravidelně", "Regular buying"), num(Math.round(vD / 100) * 100) + " Kč", "t"], [LT("Vše na začátku", "All at the start"), num(Math.round(vL / 100) * 100) + " Kč", "d"]].forEach(q => { const c = el("div","inv-kv " + q[2]); c.appendChild(el("span", null, q[0])); c.appendChild(el("b", null, q[1])); out.appendChild(c); });
+        cap.textContent = cur === "dip" ? LT("V propadu kupuješ za stejnou částku víc kusů (vyšší sloupce). Proto tvoje průměrná cena vyjde pod průměrem cen a pravidelné nákupy tady dopadnou lépe.", "In the drop you buy more units for the same amount (taller bars). That is why your average price comes out below the average of prices and regular buying does better here.") : cur === "up" ? LT("Když cena hlavně roste, vyhraje vklad na začátku: peníze jsou na trhu déle. To je nejčastější případ, proto jednorázový vklad v datech vychází lépe zhruba ve dvou třetinách období.", "When the price mostly rises, investing at the start wins: the money is in the market longer. That is the most common case, which is why a lump sum comes out ahead in roughly two thirds of periods in the data.") : LT("Při dlouhém poklesu ztrácíš obojím způsobem, pravidelnými nákupy méně. Průměrování ztrátu zmírní, ale nezabrání jí.", "In a long decline you lose either way, less with regular buying. Averaging softens the loss but does not prevent it."); };
+      Object.keys(SC).forEach(k => { const b = el("button","chip", SC[k][0]); b.type = "button"; b.setAttribute("aria-pressed", String(k === cur)); b.addEventListener("click", () => { cur = k; Array.prototype.forEach.call(row.children, x => x.setAttribute("aria-pressed", String(x === b))); draw(); }); row.appendChild(b); });
+      w.appendChild(row); w.appendChild(sv); w.appendChild(out); w.appendChild(cap); w.appendChild(el("p","small muted", LT("24 měsíčních nákupů po 1 000 Kč proti 24 000 Kč vloženým hned. Ceny jsou vymyšlené pro ukázku, nejsou to skutečná data ani doporučení.", "24 monthly purchases of CZK 1,000 against CZK 24,000 invested at once. The prices are made up for the demo; they are not real data or a recommendation."))); draw(); return w; }
     if (kind === "fibcalc"){
       const g = el("div","fib-in"), mk = (lb, v) => { const l = el("label"), i = el("input"); i.type = "number"; i.step = "0.25"; i.value = String(v); l.appendChild(el("span","small muted", lb)); l.appendChild(i); g.appendChild(l); return i; };
       const lo = mk(LT("Swing low (začátek pohybu)", "Swing low (start of the move)"), 20000), hi = mk(LT("Swing high (konec pohybu)", "Swing high (end of the move)"), 20400);
@@ -8273,7 +8362,7 @@ html[data-t="noc"] .fib-sf circle,html:not([data-t]) .fib-sf circle{fill:#f2b33d
           ring.style.transform = "translate3d(" + f(x) + "px," + f(y) + "px,0)"; ring.style.width = f(w) + "px"; ring.style.height = f(h) + "px"; ring.style.opacity = r.o == null ? "1" : String(r.o); R = r; }
         else { ring.style.opacity = "0"; R = null; }
         path.setAttribute("d", d); };
-      const rectOf = n => { const c = n.getBoundingClientRect(), p = 6; return {x: c.left - p, y: c.top - p, w: c.width + p * 2, h: c.height + p * 2, o: 1}; };
+      const rectOf = n => { const c = n.getBoundingClientRect(), p = 6, m = 8, x = Math.max(m, c.left - p), y = Math.max(m, c.top - p), r = Math.min(innerWidth - m, c.right + p), b = Math.min(innerHeight - m, c.bottom + p); return {x: x, y: y, w: Math.max(0, r - x), h: Math.max(0, b - y), o: 1}; };
       const mix = (p, q, t) => p + (q - p) * t;
       const glide = (to, ms, done) => { const id = ++anim, from = R; if (!from && !to){ paint(null); if (done) done(); return; }
         const p = from || {x: to.x + to.w / 2, y: to.y + to.h / 2, w: 0, h: 0, o: 0}, q = to || {x: p.x + p.w / 2, y: p.y + p.h / 2, w: 0, h: 0, o: 0};
@@ -8285,7 +8374,7 @@ html[data-t="noc"] .fib-sf circle,html:not([data-t]) .fib-sf circle{fill:#f2b33d
         if (!r) y = Math.max(20, vh / 2 - ch / 2); else { const below = r.y + r.h + 14, above = r.y - 14 - ch; y = below + ch < vh - 10 ? below : above > 10 ? above : Math.max(10, vh - ch - 10); }
         card.style.transform = "translate3d(-50%," + Math.round(y) + "px,0)"; };
       const sync = () => { if (busy || !tv) return; cancelAnimationFrame(raf); raf = requestAnimationFrame(() => { if (busy || !tv) return; anim++; const r = cur && cur.isConnected ? rectOf(cur) : null; paint(r); placeCard(r); }); };
-      const end = skipped => { if (!tv) return; try { localStorage.setItem(TK, "1"); } catch(e){} removeEventListener("resize", sync); removeEventListener("scroll", sync, true); anim++; seq++; tv = null; ov.classList.add("out"); setTimeout(() => ov.remove(), 280);
+      const end = skipped => { if (!tv) return; try { localStorage.setItem(TK, "1"); } catch(e){} try { if (profile && Object.keys(profile).length && !profile.tour){ profile.tour = 1; localStorage.setItem("knot-profile", JSON.stringify(profile)); } } catch(e){} removeEventListener("resize", sync); removeEventListener("scroll", sync, true); anim++; seq++; tv = null; ov.classList.add("out"); setTimeout(() => ov.remove(), 280);
         if (location.hash !== "#prehled") location.hash = "#prehled";
         // right after the tour: pick a look (the first time it leads on to the welcome)
         setTimeout(() => { try { if (document.body.classList.contains("sakura") || document.querySelector(".ob,.wel")) return; let asked = true; try { asked = localStorage.getItem(THEME_ASK) === "1"; } catch(e){}
@@ -8306,7 +8395,10 @@ html[data-t="noc"] .fib-sf circle,html:not([data-t]) .fib-sf circle{fill:#f2b33d
         if (turn) glide(null, 200, () => { if (my !== seq || !tv) return; location.hash = "#" + st.h; setTimeout(go, 150); }); else setTimeout(go, first ? 30 : 130); };
       paint(null); addEventListener("resize", sync); addEventListener("scroll", sync, true); ov.addEventListener("keydown", ev => { if (ev.key === "Escape"){ ev.stopPropagation(); end(true); } }); show(); }
     $("tour-start").addEventListener("click", tourStart);
-    let tries = 0, calm = 0; const auto = setInterval(() => { let seen = "1"; try { seen = localStorage.getItem(TK); } catch(e){} if (seen || (profile && !document.querySelector(".gate, .plans, .ob") && ++tries > 300)){ clearInterval(auto); return; }
+    let tries = 0, calm = 0, waitSync = 0; const auto = setInterval(() => { let seen = "1"; try { seen = localStorage.getItem(TK); } catch(e){} if (!seen && profile && profile.tour){ seen = "1"; try { localStorage.setItem(TK, "1"); } catch(e){} }
+      // signed in but the account's data has not arrived on this device yet: wait for it (it may say the tour is done)
+      if (!seen){ let fresh = false; try { const st = syncState(); fresh = !!(auth && auth.id && !(st && st.uid === auth.id)); } catch(e){} if (fresh && ++waitSync < 40){ calm = 0; return; } }
+      if (seen || (profile && !document.querySelector(".gate, .plans, .ob") && ++tries > 300)){ clearInterval(auto); return; }
       if (!profile || document.querySelector(".ob, .cmsg, .copop:not([hidden]), .gate, .plans") || document.body.classList.contains("modal")){ calm = 0; return; } if (++calm < 3) return; clearInterval(auto); tourStart(); }, 1200);
   }
 
@@ -8326,7 +8418,7 @@ html[data-t="noc"] .fib-sf circle,html:not([data-t]) .fib-sf circle{fill:#f2b33d
     function weakNow(id, w){ try { const k = id.slice(0, 2), key = id.slice(2); let q, o, a, why, src;
         if (k === "t-"){ const t = pa.find(x => x.id === key); if (t && t.check){ q = t.check.q; o = t.check.opts; a = t.check.ok; why = t.check.why; src = t.title; } }
         else if (k === "s-"){ const x = study && study.model2022 && (study.model2022.steps || []).find(y => String(y.n) === key); if (x && x.quiz){ q = x.quiz.q; o = x.quiz.opts; a = x.quiz.ok; why = x.quiz.why; src = x.title; } }
-        else if (k === "a-"){ const x = study && study.adv && (study.adv.lessons || []).find(y => String(y.id) === key); if (x && x.quiz){ q = x.quiz.q; o = x.quiz.opts; a = x.quiz.ok; why = x.quiz.why; src = x.title; } }
+        else if (k === "a-"){ const x = study && [].concat((study.adv || {}).lessons || [], (study.invest || {}).lessons || [], (study.crypto || {}).lessons || []).find(y => String(y.id) === key); if (x && x.quiz){ q = x.quiz.q; o = x.quiz.opts; a = x.quiz.ok; why = x.quiz.why; src = x.title; } }
         else if (k === "c-"){ let l = null; if (course) course.weeks.forEach(wk => wk.lessons.forEach(x => { if (String(x.id) === key) l = x; })); if (l && l.q){ q = l.q.q; o = l.q.o; a = l.q.o[l.q.ok]; why = l.q.why; src = l.title; } }
         if (q && Array.isArray(o) && o.length && a) return {q: q, o: o, a: a, why: why || "", src: src || ""};
       } catch(e){} return w; }
@@ -9981,6 +10073,7 @@ html[data-t="noc"] .fib-sf circle,html:not([data-t]) .fib-sf circle{fill:#f2b33d
     const drawAv = () => { clear(avb); avb.appendChild(avEl(78)); const cam = el("i"); cam.innerHTML = AV_CAM; avb.appendChild(cam); }; drawAv(); avb.addEventListener("click", () => avPick(() => { drawAv(); again(); }));
     const top = el("div","pf-nm"); top.appendChild(nmEl); top.appendChild(el("span","lv-tag", lvTag())); tx.appendChild(top); tx.appendChild(el("span","small muted", auth.email || "")); hd.appendChild(avb); hd.appendChild(tx); box.appendChild(hd); rwFrameEl(hd);
     try { hd.appendChild(rwStrip(r.xp, L)); } catch(e){ if (window.console) console.error(e); }
+    try { const pk = pathOf(), pr2 = el("div","pf-path"), pl = el("span", null, LT("Cesta", "Path")), pn = el("span","pth-chip"), pb = el("button","pth-ch", LT("Změnit", "Change")); pn.appendChild(pathIc(pk)); pn.appendChild(el("b", null, LT(PATHS[pk].cz, PATHS[pk].en))); pb.type = "button"; pb.addEventListener("click", pathPick); pr2.appendChild(pl); pr2.appendChild(pn); pr2.appendChild(pb); box.appendChild(pr2); } catch(e){ if (window.console) console.error(e); }
     try { const row = el("div","pf-look"), eb = el("button"), lk = el("div","pf-lookbox"); eb.type = "button"; eb.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l4-1 11-11-3-3L5 16z"/><path d="M14 7l3 3"/></svg>'; { const sp = el("span", null, LT("Banner a rámeček", "Banner and frame")); if (sp.firstChild) sp.firstChild.__en = sp.textContent; eb.appendChild(sp); } lk.hidden = !rwLookOpen; eb.setAttribute("aria-expanded", String(rwLookOpen));
       eb.addEventListener("click", () => { rwLookOpen = !rwLookOpen; lk.hidden = !rwLookOpen; eb.setAttribute("aria-expanded", String(rwLookOpen)); });
       const sec2 = (t, sub) => { const w = el("div"); w.style.display = "contents"; lk.appendChild(el("h3", null, t)); if (sub) lk.appendChild(el("p","small muted", sub)); lk.appendChild(w); return w; };

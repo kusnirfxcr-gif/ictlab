@@ -2441,5 +2441,12 @@
  "Platbu zpracovává společnost Stripe. Údaje o platební kartě provozovatel nevidí ani neukládá.": "Payments are processed by Stripe. The operator neither sees nor stores your card details.",
  "Předplatné se automaticky obnovuje na další období. Zrušit ho můžeš kdykoli a přístup ti zůstane do konce zaplaceného období.": "The subscription renews automatically for the next period. You can cancel it at any time and you keep access until the end of the paid period.",
  "Přístup se po zaplacení zapíná zpravidla do 24 hodin. Kdyby se tak nestalo, napiš provozovateli.": "Access is switched on after payment, usually within 24 hours. If that does not happen, write to the operator.",
- "První platbu ti do 14 dnů od zaplacení na požádání vrátíme celou, bez udání důvodu. Tím není dotčeno tvoje zákonné právo odstoupit od smlouvy uzavřené na dálku do 14 dnů.": "We refund your first payment in full on request within 14 days of payment, with no reason needed. This does not affect your statutory right to withdraw from a distance contract within 14 days."
+ "První platbu ti do 14 dnů od zaplacení na požádání vrátíme celou, bez udání důvodu. Tím není dotčeno tvoje zákonné právo odstoupit od smlouvy uzavřené na dálku do 14 dnů.": "We refund your first payment in full on request within 14 days of payment, with no reason needed. This does not affect your statutory right to withdraw from a distance contract within 14 days.",
+ "Model 2022 krok za krokem s kvízem, shrnutí dvanácti měsíců core contentu ze soukromého mentorshipu, jeden obchodní den od přípravy po večerní kontrolu a časté omyly. K tomu dvě masterclass: dlouhodobé investování a krypto.": "Model 2022 step by step with a quiz, a summary of the twelve months of core content from the private mentorship, one trading day from preparation to the evening review, and common mistakes. Plus two masterclasses: long-term investing and crypto.",
+ "Investování": "Investing",
+ "Krypto": "Crypto",
+ "Čtyři otázky a můžeš začít": "Four questions and you can start",
+ "Čím chceš být? Podle toho ti seřadíme lekce.": "What do you want to be? We order the lessons by that.",
+ "Lekce s kvízem, pár minut": "A lesson with a quiz, a few minutes",
+ "Celá cesta je hotová. Teď už jen držet plán a jednou ročně ho zkontrolovat.": "The whole path is done. Now just stick to the plan and check it once a year."
 }

@@ -1068,5 +1068,468 @@
     "https://innercircletrader.net/tutorials/ict-fibonacci-levels/"
    ]
   ]
+ },
+ "invest": {
+  "title": "Investing masterclass",
+  "intro": "Osm lekcí o dlouhodobém investování: proč investovat, jak funguje složené úročení, fondy a poplatky, pravidelné nákupy, sezonalita, propady, vlastní chování a daně v Česku. Je to vzdělávací obsah, ne investiční doporučení. Výnos není nikdy zaručený a o svých penězích rozhoduješ sám.",
+  "lessons": [
+   {
+    "id": "inv-proc",
+    "group": "Základy",
+    "title": "Investování není trading",
+    "text": [
+     "Trader hledá krátké pohyby ceny a obchod drží minuty až dny. Investor kupuje podíl na firmách nebo celý trh a drží ho roky. Nejde o lepší a horší cestu, jsou to dvě různé práce s jinými pravidly.",
+     "Akcie je podíl na firmě. Když firmy dlouhodobě vydělávají, roste i hodnota podílů a část zisku se vyplácí jako dividenda. Dluhopis je půjčka státu nebo firmě za úrok. Investor tedy vydělává na tom, že ekonomika pracuje, ne na tom, že uhodne zítřejší pohyb.",
+     "Peníze, které jen leží, ztrácejí hodnotu inflací. To je hlavní důvod, proč lidé investují. Výnos ale není zaručený: akcie umí spadnout o desítky procent a roky se z toho zvedat.",
+     "Investování proto stojí na třech věcech: dlouhý horizont, rozložení rizika a nízké náklady. Všechno ostatní v téhle masterclass je jen rozvedení těchto tří bodů."
+    ],
+    "use": [
+     "Napiš si, na co peníze jsou a kdy je budeš potřebovat. Co potřebuješ do pěti let, do akcií nepatří.",
+     "Nejdřív si vytvoř rezervu na několik měsíců výdajů, až potom investuj.",
+     "Odděl účet na trading od peněz na investování, ať jedno nepokryje ztráty druhého."
+    ],
+    "trap": "Tape je škola, ne poradce. Nic z toho není doporučení koupit konkrétní věc. O svých penězích rozhoduješ sám.",
+    "quiz": {
+     "q": "Na čem investor dlouhodobě vydělává?",
+     "opts": [
+      "Na tom, že firmy vydělávají a podíl na nich roste",
+      "Na uhodnutí zítřejšího pohybu",
+      "Na častém nakupování a prodávání"
+     ],
+     "ok": "Na tom, že firmy vydělávají a podíl na nich roste",
+     "why": "Investor drží podíl na firmách roky. Krátké pohyby pro něj nejsou podstatné."
+    }
+   },
+   {
+    "id": "inv-slozene",
+    "group": "Základy",
+    "title": "Složené úročení: čas dělá většinu práce",
+    "text": [
+     "Složené úročení znamená, že výnos vydělává další výnos. První roky to skoro není vidět, po dvaceti letech tvoří výnosy větší část účtu než vklady.",
+     "Ilustrace: 3 000 Kč měsíčně při průměrném výnosu 6 % ročně. Po 20 letech jsi vložil 720 000 Kč a na účtu je zhruba 1,39 milionu. Po 30 letech jsi vložil 1 080 000 Kč a na účtu jsou zhruba 3 miliony.",
+     "Těch 6 % je jen příklad pro výpočet. Skutečný výnos nikdo nezná, rok od roku se liší a může být i dlouho záporný. Pointa je jinde: deset let navíc udělalo víc než všechny vklady dohromady.",
+     "Proto je u investování důležitější začít brzy a vydržet než hledat nejlepší okamžik. Zkus si to na kalkulačce níž."
+    ],
+    "use": [
+     "Posuň v kalkulačce počet let a sleduj, jak roste podíl výnosů.",
+     "Zkus nižší výnos, třeba 3 %. Plán má dávat smysl i v horším scénáři.",
+     "Nastav si trvalý příkaz, ať investování nezávisí na náladě."
+    ],
+    "trap": "Kalkulačka počítá s rovnoměrným výnosem. Skutečný trh jde nahoru a dolů a výsledek může být výrazně nižší.",
+    "quiz": {
+     "q": "Proč je u složeného úročení tak důležitý čas?",
+     "opts": [
+      "Výnosy vydělávají další výnosy, takže pozdější roky přidají nejvíc",
+      "Protože první roky jsou nejvýnosnější",
+      "Protože po deseti letech je výnos zaručený"
+     ],
+     "ok": "Výnosy vydělávají další výnosy, takže pozdější roky přidají nejvíc",
+     "why": "Největší část růstu přichází na konci. Výnos ale zaručený není nikdy."
+    },
+    "fig": "compound"
+   },
+   {
+    "id": "inv-etf",
+    "group": "Základy",
+    "title": "Akcie, ETF a poplatky",
+    "text": [
+     "Vybrat jednu akcii, která porazí trh, je těžké i pro profesionály. Proto většina dlouhodobých investorů nekupuje jednotlivé firmy, ale celý trh najednou.",
+     "K tomu slouží indexový fond nebo ETF. Je to fond, který drží stovky až tisíce firem podle indexu, například S&P 500 nebo celosvětového indexu. Jedním nákupem máš kousek každé z nich. Když jedna firma zkrachuje, skoro to nepoznáš.",
+     "Druhá věc, kterou máš pod kontrolou, jsou poplatky. Rozdíl mezi fondem za 0,2 % ročně a fondem za 1,5 % vypadá malý. V příkladu z minulé lekce (3 000 Kč měsíčně, 30 let, 6 % před poplatky) ale znamená zhruba 2,9 milionu proti 2,3 milionu.",
+     "Poplatek platíš každý rok z celé částky, ať se fondu daří, nebo ne. Výnos neovlivníš, náklady ano."
+    ],
+    "use": [
+     "U každého fondu si najdi celkovou roční nákladovost (TER) a poplatky za nákup.",
+     "Podívej se, kolik firem a zemí fond drží. Širší znamená méně závislý na jednom odvětví.",
+     "Jednotlivé akcie ber jako malou část, kterou můžeš celou ztratit."
+    ],
+    "trap": "Ani široký fond tě neochrání před propadem celého trhu. Rozložení snižuje riziko jedné firmy, ne riziko akcií jako celku.",
+    "quiz": {
+     "q": "Co máš jako investor nejvíc pod kontrolou?",
+     "opts": [
+      "Náklady a rozložení",
+      "Výnos v příštím roce",
+      "Okamžik, kdy trh otočí"
+     ],
+     "ok": "Náklady a rozložení",
+     "why": "Výnos ani načasování neovlivníš. Poplatky a šíři portfolia ano."
+    }
+   },
+   {
+    "id": "inv-dca",
+    "group": "Jak nakupovat",
+    "title": "Pravidelné investování (DCA) a jednorázový vklad",
+    "text": [
+     "Dollar cost averaging, zkráceně DCA, znamená investovat stejnou částku v pravidelných intervalech, třeba každý měsíc. Když je cena nízko, koupíš za stejnou částku víc kusů, když je vysoko, méně. Průměrná nákupní cena ti proto vyjde níž než průměr cen v jednotlivých měsících.",
+     "Většina lidí investuje pravidelně prostě proto, že peníze dostává pravidelně, z výplaty. To je nejběžnější a rozumná podoba DCA. Nemusíš hlídat trh a nerozhoduješ se pod tlakem.",
+     "Jiná situace je, když máš větší částku najednou, třeba z dědictví. Vanguard porovnal obě cesty na datech z let 1976 až 2022: jednorázový vklad dopadl po roce lépe zhruba ve dvou třetinách případů. Důvod je jednoduchý, peníze jsou na trhu déle.",
+     "Rozložení větší částky do několika měsíců tedy v průměru něco stojí. Kupuješ si za to klid: když trh hned po vkladu spadne, nebolí to tolik. Která cesta je pro tebe lepší, záleží na tom, jak propad uneseš."
+    ],
+    "use": [
+     "Pravidelný měsíční vklad nastav trvalým příkazem a nepřemýšlej o načasování.",
+     "U jednorázové částky si předem napiš plán: buď hned, nebo ve stejných dílech do pevného data.",
+     "V poklesu vklady nepřerušuj. Právě tehdy kupuješ nejvíc kusů."
+    ],
+    "trap": "DCA neznamená dokupovat ztrátovou jednotlivou akcii pořád dál. Průměrování dává smysl u širokého fondu, ne u firmy, která může zkrachovat.",
+    "quiz": {
+     "q": "Co ukázalo srovnání jednorázového vkladu a postupného investování větší částky?",
+     "opts": [
+      "Jednorázový vklad dopadl lépe zhruba ve dvou třetinách případů",
+      "Postupné investování vyhrálo skoro vždy",
+      "Výsledek byl pokaždé stejný"
+     ],
+     "ok": "Jednorázový vklad dopadl lépe zhruba ve dvou třetinách případů",
+     "why": "Peníze investované dřív jsou na trhu déle. Postupné investování ale snižuje lítost z propadu hned po vkladu."
+    },
+    "fig": "dca"
+   },
+   {
+    "id": "inv-sezonnost",
+    "group": "Jak nakupovat",
+    "title": "Sezonalita: Sell in May a další kalendářní efekty",
+    "text": [
+     "Sezonalita je myšlenka, že některé měsíce bývají pro akcie lepší než jiné. Nejznámější je rčení Sell in May and go away: od listopadu do dubna prý trhy vynášejí víc než od května do října.",
+     "Není to jen pověra. Studie z roku 2002 našla slabší letní půlrok ve 36 z 37 zemí a rozdíl vydržel i na novějších datech. Kritici ale ukázali, že v USA efekt zmizí, když vynecháš dva měsíce, říjen 1987 a srpen 1998. A práce s 300 lety britských dat zjistila, že řada měsíčních vzorců platí jen v určitém období.",
+     "I kdyby efekt existoval, je to průměr přes desítky let. V jednotlivém roce může léto klidně vydělat víc než zima. Jedna ze studií uvádí, že strategie vychází zhruba ve dvou letech ze tří.",
+     "Pro dlouhodobého investora je navíc prodej na léto drahý: platíš poplatky, můžeš přijít o dividendy a v Česku si prodejem přerušíš tříletý časový test pro osvobození od daně. Sezonalita je zajímavost, ne nástroj na načasování."
+    ],
+    "use": [
+     "Ber sezonalitu jako kontext: ví se o ní, ale plán na ní nestav.",
+     "Než uvěříš kalendářnímu pravidlu, zeptej se, na kolika letech a zemích bylo ověřené a jestli platí i po odečtení nákladů.",
+     "Pravidelné vklady nech běžet po celý rok."
+    ],
+    "trap": "Vzorec nalezený v minulých datech nemusí pokračovat. Čím víc lidí ho zná a obchoduje, tím slabší bývá.",
+    "quiz": {
+     "q": "Proč není Sell in May dobrý nástroj pro dlouhodobého investora?",
+     "opts": [
+      "Je to průměr, který v jednotlivém roce nemusí platit, a prodej stojí poplatky a daně",
+      "Protože léto je vždy ziskovější než zima",
+      "Protože sezonalitu nikdo nikdy nezkoumal"
+     ],
+     "ok": "Je to průměr, který v jednotlivém roce nemusí platit, a prodej stojí poplatky a daně",
+     "why": "Efekt v datech je, ale slabý a nejistý. Vyskakování z trhu stojí víc, než kolik v průměru přinese."
+    }
+   },
+   {
+    "id": "inv-riziko",
+    "group": "Riziko a chování",
+    "title": "Propady patří k věci",
+    "text": [
+     "Akciový trh nejde nahoru rovně. Poklesy o 10 až 20 % přicházejí často a jednou za čas přijde propad o polovinu. Americký index S&P 500 ztratil v letech 2007 až 2009 víc než 50 % a trvalo roky, než se vrátil.",
+     "Riziko pro investora proto neznamená, že cena kolísá. Znamená to, že budeš muset prodat ve špatnou chvíli, protože peníze potřebuješ nebo protože to psychicky nevydržíš.",
+     "Proti prvnímu pomáhá rezerva a horizont: do akcií jen peníze, které nebudeš potřebovat mnoho let. Proti druhému pomáhá rozložení mezi akcie a klidnější části, například dluhopisy nebo hotovost.",
+     "Čím blíž jsi k době, kdy peníze potřebuješ, tím menší má být podíl akcií. Tomu se říká alokace a je to nejdůležitější rozhodnutí celého portfolia."
+    ],
+    "use": [
+     "Představ si, že tvoje investice spadne o polovinu. Kolik korun to je? Jestli to neuneseš, máš akcií moc.",
+     "Rozhodni si poměr akcií a klidnější části předem a jednou ročně ho srovnej zpět.",
+     "V propadu neotvírej aplikaci každý den."
+    ],
+    "trap": "Minulé zotavení trhu není záruka do budoucna. Některé trhy se na svá maxima nevrátily desítky let.",
+    "quiz": {
+     "q": "Co je pro dlouhodobého investora skutečné riziko?",
+     "opts": [
+      "Že bude muset prodat ve špatnou chvíli",
+      "Že cena během dne kolísá",
+      "Že nekoupil na úplném dně"
+     ],
+     "ok": "Že bude muset prodat ve špatnou chvíli",
+     "why": "Kolísání k akciím patří. Nebezpečný je vynucený prodej v propadu."
+    }
+   },
+   {
+    "id": "inv-chovani",
+    "group": "Riziko a chování",
+    "title": "Největší riziko je vlastní chování",
+    "text": [
+     "Výzkum opakovaně ukazuje, že investoři vydělají méně než fondy, které drží. Kupují po růstu, prodávají po poklesu a tím si výnos sami snižují.",
+     "Známá americká studie domácností zjistila, že ty, které obchodovaly nejčastěji, vydělaly ročně kolem 10 %, zatímco trh ve stejném období přes 17 %. Autoři to přisoudili přehnané sebedůvěře.",
+     "Trader má na chyby stop loss a deník. Investor má jiný nástroj: pravidla napsaná předem a co nejméně rozhodování. Pravidelný příkaz, pevný poměr akcií a jedna kontrola ročně.",
+     "Pokud tě baví trh aktivně sledovat, vyhraď si na to malou část peněz a zbytek nech běžet podle plánu. Tape ti pro tu aktivní část nabízí deník a statistiky, ať vidíš, jestli se ti vyplácí."
+    ],
+    "use": [
+     "Sepiš si na jednu stránku: kolik měsíčně, do čeho, kdy to kontroluješ a co uděláš při propadu o 30 %.",
+     "Nové nápady nech 30 dní uležet, než podle nich změníš portfolio.",
+     "Aktivní část odděl a veď si o ní deník jako o obchodech."
+    ],
+    "trap": "Zprávy a sociální sítě jsou stavěné tak, aby tě přiměly jednat. Většina dobrých investičních rozhodnutí je nudná.",
+    "quiz": {
+     "q": "Co ukázala studie nejaktivnějších domácností?",
+     "opts": [
+      "Vydělaly výrazně méně než trh",
+      "Vydělaly víc díky dobrému načasování",
+      "Dopadly stejně jako trh"
+     ],
+     "ok": "Vydělaly výrazně méně než trh",
+     "why": "Časté obchodování výnos snižovalo. Méně rozhodování bývá pro investora lepší."
+    }
+   },
+   {
+    "id": "inv-dane",
+    "group": "Praxe",
+    "title": "Daně a praxe v Česku",
+    "text": [
+     "U cenných papírů, tedy akcií a ETF, platí v Česku pro fyzické osoby časový test. Když je držíš déle než tři roky, příjem z prodeje je od daně osvobozený.",
+     "Druhá možnost je hodnotový test. Když tvoje příjmy z prodeje cenných papírů za celý rok nepřesáhnou 100 000 Kč, daň také neplatíš. Pozor, počítá se celá prodejní částka, ne jen zisk.",
+     "Když nesplníš ani jedno, zisk se daní v přiznání jako ostatní příjem. Dividendy mají vlastní pravidla a u zahraničních firem se část daně sráží už v cizině.",
+     "Pravidla se mění skoro každý rok, například limit pro osvobozené příjmy se v letech 2025 a 2026 upravoval. Ber tuhle lekci jako orientaci a aktuální stav si ověř na webu Finanční správy nebo u daňového poradce."
+    ],
+    "use": [
+     "Schovávej si výpisy o nákupech a prodejích, budeš je potřebovat pro časový test.",
+     "Než prodáš, podívej se, kdy jsi daný kus koupil a jestli už uplynuly tři roky.",
+     "Před koncem roku si spočítej, kolik jsi za rok prodal, kvůli limitu 100 000 Kč."
+    ],
+    "trap": "Tohle není daňové poradenství. Tvoje situace může být jiná, třeba když podnikáš nebo máš účet v zahraničí.",
+    "quiz": {
+     "q": "Jak dlouho musíš cenný papír držet, aby byl příjem z prodeje osvobozený časovým testem?",
+     "opts": [
+      "Déle než tři roky",
+      "Jeden rok",
+      "Deset let"
+     ],
+     "ok": "Déle než tři roky",
+     "why": "Časový test u cenných papírů je tři roky. Vedle něj existuje roční limit 100 000 Kč příjmů z prodeje."
+    }
+   }
+  ],
+  "sources": [
+   [
+    "Vanguard: Cost averaging vs lump sum (1976–2022)",
+    "https://vanguard.co.uk/professional/vanguard-365/financial-planning/financial-well-being/cost-averaging"
+   ],
+   [
+    "Bouman & Jacobsen: The Halloween Indicator, Sell in May and Go Away",
+    "https://www.tias.edu/docs/default-source/Kennisartikelen/ssrn-id76248.pdf?sfvrsn=2"
+   ],
+   [
+    "CFA Institute: Sell in May and go away (kritika a data mimo vzorek)",
+    "https://rpc.cfainstitute.org/blogs/enterprising-investor/2016/dumb-alpha-sell-in-may-and-go-away"
+   ],
+   [
+    "Barber & Odean: Trading Is Hazardous to Your Wealth",
+    "https://faculty.haas.berkeley.edu/odean/papers/returns/returns.html"
+   ],
+   [
+    "Kurzy.cz: Zdanění investic v ČR",
+    "https://www.kurzy.cz/investice/zdaneni-investic-v-cr/"
+   ]
+  ]
+ },
+ "crypto": {
+  "title": "Crypto masterclass",
+  "intro": "Sedm lekcí o kryptoměnách bez slibů: co bitcoin je, jak hluboké bývají propady, co víme o cyklech, jak krypto bezpečně držet, jak velkou pozici mít, jak poznat podvod a jak je to s daněmi. Krypto je vysoce rizikové a můžeš přijít o všechno, co do něj vložíš.",
+  "lessons": [
+   {
+    "id": "cry-co",
+    "group": "Základy",
+    "title": "Co je bitcoin a co ostatní kryptoměny",
+    "text": [
+     "Bitcoin je digitální měna bez centrální banky. Záznamy o tom, kdo kolik vlastní, jsou ve veřejné databázi zvané blockchain, kterou společně udržují tisíce počítačů.",
+     "Bitcoinů může vzniknout nejvýš 21 milionů. Nové přibývají jako odměna těžařům a tahle odměna se zhruba každé čtyři roky sníží na polovinu. Té události se říká halving.",
+     "Na rozdíl od akcie bitcoin negeneruje zisk ani dividendu. Jeho cena závisí jen na tom, kolik jsou za něj lidé ochotni zaplatit. Proto se hýbe mnohem víc než akcie.",
+     "Kromě bitcoinu existují tisíce dalších kryptoměn. Ethereum je platforma pro aplikace, stablecoiny se snaží držet kurz dolaru a pak je obrovské množství tokenů, z nichž většina časem zanikne. Čím menší a novější token, tím vyšší riziko, že o všechno přijdeš."
+    ],
+    "use": [
+     "Než cokoli koupíš, zkus jednou větou říct, co ten projekt dělá a proč by měl mít hodnotu.",
+     "Začni u toho největšího a nejdéle fungujícího, menší tokeny ber jako loterii.",
+     "Nevěř grafu výkonu za poslední rok. V kryptu se pořadí vítězů mění každý cyklus."
+    ],
+    "trap": "Krypto není chráněné jako vklad v bance. Když zkrachuje burza nebo pošleš peníze na špatnou adresu, nikdo ti je nevrátí.",
+    "quiz": {
+     "q": "Proč se cena bitcoinu hýbe víc než cena akcií?",
+     "opts": [
+      "Nestojí za ním zisky firmy, cena závisí jen na poptávce",
+      "Protože ho řídí centrální banka",
+      "Protože jich je neomezené množství"
+     ],
+     "ok": "Nestojí za ním zisky firmy, cena závisí jen na poptávce",
+     "why": "Bitcoin nemá zisky ani dividendy a jeho počet je omezený. Cenu určuje jen to, kolik lidé zaplatí."
+    }
+   },
+   {
+    "id": "cry-volatilita",
+    "group": "Základy",
+    "title": "Volatilita: propady o 80 % nejsou výjimka",
+    "text": [
+     "Bitcoin zatím v každém velkém cyklu ztratil většinu hodnoty. Po vrcholu v roce 2011 spadl o 93 %, po roce 2013 o 85 %, po roce 2017 o 84 % a po roce 2021 o 77 %.",
+     "Po vrcholu kolem 126 000 dolarů v říjnu 2025 klesl do poloviny roku 2026 zhruba o polovinu. A i během růstových období jsou běžné poklesy o 30 až 50 % během pár týdnů.",
+     "Podle jednoho rozboru strávil bitcoin víc než 80 % své historie aspoň 20 % pod předchozím maximem. Kdo krypto drží, je tedy většinu času ve ztrátě proti vrcholu. S tím je potřeba počítat předem.",
+     "Z toho plyne jediné rozumné pravidlo pro velikost: dávej do krypta jen tolik, aby tě ztráta 80 % nepoložila finančně ani psychicky. Menší kryptoměny padají ještě hlouběji a často se už nezvednou."
+    ],
+    "use": [
+     "Spočítej si, kolik korun znamená propad o 80 % z částky, kterou chceš vložit.",
+     "Nepoužívej páku. U aktiva, které umí spadnout o 30 % za týden, tě páka vymaže dřív, než se trh otočí.",
+     "Rozhodni si předem, co uděláš při poklesu o polovinu: držíš, dokupuješ podle plánu, nebo máš hranici, kde končíš."
+    ],
+    "trap": "To, že se bitcoin po minulých propadech vrátil, neznamená, že se vrátí i příště. A většina menších kryptoměn se nevrátila nikdy.",
+    "quiz": {
+     "q": "O kolik bitcoin spadl v medvědích trzích po letech 2013, 2017 a 2021?",
+     "opts": [
+      "Zhruba o 77 až 85 %",
+      "O 10 až 20 %",
+      "Nikdy neklesl o víc než 30 %"
+     ],
+     "ok": "Zhruba o 77 až 85 %",
+     "why": "Propady kolem 80 % přišly v každém velkém cyklu. Velikost pozice tomu má odpovídat."
+    }
+   },
+   {
+    "id": "cry-cykly",
+    "group": "Základy",
+    "title": "Halving, čtyřleté cykly a sezonalita v kryptu",
+    "text": [
+     "V kryptu se často mluví o čtyřletém cyklu. Po halvingu prý bitcoin 12 až 18 měsíců roste, udělá vrchol a pak přijde dlouhá kryptozima. Vrcholy z let 2013, 2017, 2021 a 2025 do toho schématu zapadají.",
+     "Zní to jako pravidlo, ale stojí na čtyřech nebo pěti opakováních. To je velmi malý vzorek. Navíc se každý cyklus odehrál v jiných podmínkách: jiné úrokové sazby, jiní hráči, jiná velikost trhu.",
+     "Část efektu může být sebenaplňující. Když dost lidí čeká vrchol v určitém roce, prodávají dřív a pomůžou ho vytvořit. Stejně tak může vzorec přestat platit, právě protože ho všichni znají.",
+     "Podobně je to s měsíčními vzorci, jako je „Uptober“. Bitcoin má jen patnáct let historie, takže každý měsíc v roce nastal jen patnáctkrát. Z toho se spolehlivé pravidlo udělat nedá."
+    ],
+    "use": [
+     "Ber cyklus jako popis toho, co se stalo, ne jako jízdní řád.",
+     "Když někdo tvrdí, že „po halvingu vždycky“, zeptej se, kolikrát to vždycky nastalo.",
+     "Plán nákupů nestav na datu halvingu, ale na částce, kterou si můžeš dovolit."
+    ],
+    "trap": "Graf, který přes sebe položí minulé cykly a dokreslí ten současný, vypadá přesvědčivě. Je to pořád jen pár křivek.",
+    "quiz": {
+     "q": "Proč je čtyřletý cyklus bitcoinu slabý podklad pro rozhodování?",
+     "opts": [
+      "Stojí jen na několika opakováních v různých podmínkách",
+      "Protože halving neexistuje",
+      "Protože bitcoin nikdy nerostl"
+     ],
+     "ok": "Stojí jen na několika opakováních v různých podmínkách",
+     "why": "Čtyři nebo pět cyklů je malý vzorek. Vzorec se může kdykoli změnit."
+    }
+   },
+   {
+    "id": "cry-uschova",
+    "group": "Praxe",
+    "title": "Úschova: burza, nebo vlastní peněženka",
+    "text": [
+     "Kryptoměnu vlastní ten, kdo má soukromý klíč. Když necháš krypto na burze, klíč drží burza a ty máš jen její slib, že ti ho vydá.",
+     "Ten slib se už několikrát nesplnil. Burza Mt. Gox zkrachovala v roce 2014 a FTX v roce 2022, zákazníci čekali na část peněz roky. Proto se říká „not your keys, not your coins“.",
+     "Vlastní peněženka dává klíč tobě. Hardwarová peněženka ho drží mimo internet. Zálohou je seed, obvykle 12 nebo 24 slov. Kdo ten seed zná, má tvoje peníze. Kdo ho ztratí, přišel o ně navždy.",
+     "Obě cesty mají riziko. U burzy riskuješ její pád nebo zablokování účtu. U vlastní peněženky riskuješ vlastní chybu. Pro malé částky je burza se zapnutým dvoufázovým ověřením rozumná, u větších stojí za to naučit se vlastní úschovu."
+    ],
+    "use": [
+     "Zapni dvoufázové ověření přes aplikaci, ne přes SMS.",
+     "Seed si napiš na papír nebo kov a ulož na bezpečné místo. Nikdy ho nefoť a nikam nezadávej.",
+     "Před větším převodem pošli nejdřív malou zkušební částku."
+    ],
+    "trap": "Nikdo z podpory, od burzy ani z peněženky, po tobě seed nikdy chtít nebude. Kdo se na něj ptá, je podvodník.",
+    "quiz": {
+     "q": "Kdo ovládá kryptoměnu, kterou necháš na burze?",
+     "opts": [
+      "Burza, protože drží soukromé klíče",
+      "Ty, protože máš heslo k účtu",
+      "Nikdo, je uložená v blockchainu"
+     ],
+     "ok": "Burza, protože drží soukromé klíče",
+     "why": "Na burze máš jen nárok vůči burze. Skutečnou kontrolu má ten, kdo drží klíč."
+    }
+   },
+   {
+    "id": "cry-dca",
+    "group": "Praxe",
+    "title": "Pravidelné nákupy krypta a velikost pozice",
+    "text": [
+     "Pravidelné nákupy za stejnou částku fungují u krypta stejně jako u akcií: při nízké ceně koupíš víc, při vysoké míň. U tak rozkolísaného aktiva to hlavně pomáhá psychicky, protože neřešíš, jestli je zrovna dobrý den.",
+     "Platí i stejné omezení. Když trh dlouhodobě roste, jednorázový nákup v průměru vychází lépe, protože jsou peníze na trhu déle. U krypta je ale propad o polovinu hned po nákupu běžný, a ten unese málokdo.",
+     "Důležitější než způsob nákupu je velikost. Krypto je vysoce rizikový doplněk, ne základ úspor. Rozumný rámec je malý podíl z peněz, které investuješ, a jen tolik, kolik můžeš ztratit celé.",
+     "Hlídej poplatky. U malých pravidelných nákupů umí poplatek burzy a rozdíl mezi nákupní a prodejní cenou sníst několik procent z každého vkladu."
+    ],
+    "use": [
+     "Urči si pevnou měsíční částku a nejvyšší podíl krypta ve svých investicích.",
+     "Porovnej celkové náklady nákupu u dvou nebo tří burz, včetně rozdílu nákupní a prodejní ceny.",
+     "Když podíl krypta po růstu výrazně přeroste tvůj limit, vrať ho zpátky."
+    ],
+    "trap": "Průměrování neopraví špatný výběr. U tokenu, který míří k nule, jen pravidelně přiléváš peníze.",
+    "quiz": {
+     "q": "Co je u krypta důležitější než způsob nákupu?",
+     "opts": [
+      "Velikost pozice vůči tomu, co můžeš ztratit",
+      "Přesný den v měsíci",
+      "Počet různých tokenů"
+     ],
+     "ok": "Velikost pozice vůči tomu, co můžeš ztratit",
+     "why": "Způsob nákupu výsledek mění málo. Rozhoduje, kolik peněz riziku vystavíš."
+    }
+   },
+   {
+    "id": "cry-podvody",
+    "group": "Riziko a chování",
+    "title": "Podvody a pasti",
+    "text": [
+     "V kryptu se pohybuje hodně podvodníků, protože platby nejdou vrátit a oběti se těžko brání. Většina podvodů se ale opakuje a dá se poznat.",
+     "Zaručený výnos. Kdo slibuje pevných pár procent měsíčně bez rizika, buď lže, nebo vyplácí staré klienty z peněz nových. Tak fungují Ponziho schémata.",
+     "Pump and dump. Skupina nakoupí neznámý token, rozhlásí ho na sítích, a když ostatní nakupují, prodá jim ho. Podobně dopadá většina memecoinů: pár lidí na začátku vydělá, zbytek zaplatí.",
+     "Falešná podpora a falešné weby. Někdo se ozve jako pracovník burzy nebo ti pošle odkaz na stránku, která vypadá jako tvoje peněženka. Cílem je vždy seed nebo přihlášení. A nakonec páka: burzy ji nabízejí rády, protože na likvidacích vydělávají."
+    ],
+    "use": [
+     "Když ti investici někdo nabízí sám od sebe, ber to jako varování, ne jako příležitost.",
+     "Adresu burzy nebo peněženky piš ručně nebo ze záložky, nikdy z odkazu ve zprávě.",
+     "Nepouštěj nikoho na dálku do svého počítače nebo telefonu."
+    ],
+    "trap": "Podvodníci cílí i na lidi, kteří už o peníze přišli, a slibují, že je za poplatek získají zpět. Je to druhý podvod.",
+    "quiz": {
+     "q": "Podle čeho nejspíš poznáš podvod?",
+     "opts": [
+      "Slibuje zaručený výnos bez rizika",
+      "Má vysoké poplatky",
+      "Vyžaduje ověření totožnosti"
+     ],
+     "ok": "Slibuje zaručený výnos bez rizika",
+     "why": "Zaručený výnos neexistuje. Poplatky a ověření totožnosti jsou u legálních služeb běžné."
+    }
+   },
+   {
+    "id": "cry-dane",
+    "group": "Praxe",
+    "title": "Krypto a daně v Česku",
+    "text": [
+     "Od 15. února 2025 platí pro fyzické osoby u kryptoměn podobná pravidla jako u cenných papírů. Jsou dvě cesty k osvobození od daně.",
+     "První je časový test: když mezi nákupem a prodejem uplynou víc než tři roky, příjem je osvobozený, nejvýš do 40 milionů korun ročně. Druhá je hodnotový test: když tvoje příjmy z prodeje krypta za rok nepřesáhnou 100 000 Kč. Počítá se celá prodejní částka, ne zisk, a limit je oddělený od limitu pro cenné papíry.",
+     "Pozor na to, co se počítá jako prodej. Není to jen výměna za koruny. Zpravidla i směna jedné kryptoměny za jinou nebo platba kryptem za zboží.",
+     "Když osvobození nesplníš, daníš zisk v přiznání jako ostatní příjem. Finanční správa k tomu vydává vlastní výklad a pravidla se vyvíjejí, proto si aktuální stav vždy ověř."
+    ],
+    "use": [
+     "Veď si záznam každého nákupu a směny: datum, množství, cena v korunách.",
+     "Exportuj si historii z burzy aspoň jednou ročně, burzy ji nemusí držet navždy.",
+     "Před prodejem zkontroluj, které kusy už mají tři roky."
+    ],
+    "trap": "Tohle není daňové poradenství. U těžby, stakingu nebo podnikání platí jiná pravidla.",
+    "quiz": {
+     "q": "Co se u hodnotového testu 100 000 Kč počítá?",
+     "opts": [
+      "Celé příjmy z prodeje za rok, ne jen zisk",
+      "Jen zisk po odečtení nákupní ceny",
+      "Jen prodeje za koruny nad milion"
+     ],
+     "ok": "Celé příjmy z prodeje za rok, ne jen zisk",
+     "why": "Limit se posuzuje podle příjmů z prodeje. Kdo prodá za 150 000 Kč se ziskem 5 000 Kč, limit překročil."
+    }
+   }
+  ],
+  "sources": [
+   [
+    "The Motley Fool (14. 7. 2026): propady bitcoinu v jednotlivých cyklech",
+    "https://www.fool.com/investing/2026/07/14/bitcoin-has-fallen-50-from-its-peak-history-points/"
+   ],
+   [
+    "Betashares: Analysing bitcoin drawdowns",
+    "https://www.livewiremarkets.com/wires/analysing-bitcoin-drawdowns"
+   ],
+   [
+    "NYDIG: Charting Drawdowns During Up Cycles",
+    "https://nydig.com/research/charting-drawdowns-during-up-cycles"
+   ],
+   [
+    "Finanční správa: informace ke zdanění kryptoaktiv",
+    "https://financnisprava.gov.cz/assets/cs/prilohy/d-placeni-dani/Krypto-29_4_2026.pdf"
+   ],
+   [
+    "Dostupný advokát: Zdanění kryptoměn v roce 2026",
+    "https://dostupnyadvokat.cz/blog/zdaneni-kryptomen"
+   ]
+  ]
  }
 }
