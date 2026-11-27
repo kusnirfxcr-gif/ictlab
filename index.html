@@ -3869,6 +3869,14 @@ body:not(.sakura) input,body:not(.sakura) select,body:not(.sakura) textarea{font
 body:not(.sakura) .wrap{gap:10px}body:not(.sakura) .list{gap:8px}
 @media(max-width:699px){body:not(.sakura) input,body:not(.sakura) select,body:not(.sakura) textarea{font-size:16px}}
 @media(max-width:699px){body:not(.sakura) .tk-tx small{letter-spacing:.02em;font-size:9px}}
+/* phone: the tool row is one slim line of icons; names stay for screen readers and as a tooltip */
+@media(max-width:859px){body:not(.sakura) .tb-tools{max-height:50px;padding-bottom:6px;margin-top:4px;gap:6px}
+body:not(.sakura) .tb-tools a{flex:1 0 40px;gap:0;position:relative}body:not(.sakura) .tb-tools a>span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+body:not(.sakura) .tb-tools a i{width:100%;max-width:56px;height:36px;border-radius:11px}
+body:not(.sakura) .tb-tools a i svg{width:18px;height:18px}}
+body:not(.sakura) .pf-nm{font-size:18px!important}body:not(.sakura) .dscore .tbig{font-size:32px!important}body:not(.sakura) .lesson-body h3{font-size:17px!important}
+body:not(.sakura) .fcard .fterm{font-size:20px!important}body:not(.sakura) .cm-pk strong{font-size:17px!important}
+body:not(.sakura) .rp-empty b{font-size:16px;font-weight:600}
 </style>
 </head>
 <body>
@@ -6855,7 +6863,7 @@ body:not(.sakura) .wrap{gap:10px}body:not(.sakura) .list{gap:8px}
       ops.concat(cur ? [cur] : []).forEach(op => { g.strokeStyle = op.c; g.fillStyle = op.c; g.lineWidth = Math.max(2, cv.width / 360); g.lineCap = "round";
         if (op.t === "line"){ g.beginPath(); g.moveTo(op.x1, op.y1); g.lineTo(op.x2, op.y2); g.stroke(); }
         else if (op.t === "rect"){ const x = Math.min(op.x1, op.x2), y = Math.min(op.y1, op.y2), w = Math.abs(op.x2 - op.x1), h = Math.abs(op.y2 - op.y1); g.globalAlpha = .18; g.fillRect(x, y, w, h); g.globalAlpha = 1; g.strokeRect(x, y, w, h); }
-        else { g.font = "700 " + Math.max(16, Math.round(cv.width / 34)) + "px 'Plus Jakarta Sans', system-ui, sans-serif"; g.lineWidth = Math.max(3, cv.width / 260); g.strokeStyle = "#09090b"; g.lineJoin = "round"; g.strokeText(op.s, op.x1, op.y1); g.fillText(op.s, op.x1, op.y1); } }); };
+        else { g.font = "700 " + Math.max(16, Math.round(cv.width / 34)) + "px Inter, system-ui, sans-serif"; g.lineWidth = Math.max(3, cv.width / 260); g.strokeStyle = "#09090b"; g.lineJoin = "round"; g.strokeText(op.s, op.x1, op.y1); g.fillText(op.s, op.x1, op.y1); } }); };
     const pos = ev => { const r = cv.getBoundingClientRect(); return {x: (ev.clientX - r.left) * cv.width / r.width, y: (ev.clientY - r.top) * cv.height / r.height}; };
     cv.addEventListener("pointerdown", ev => { if (!img) return; ev.preventDefault(); const p = pos(ev); msg.textContent = "";
       if (tool === "text"){ const s = txt.value.trim(); if (!s){ msg.textContent = "Nejdřív napiš text popisku."; return; } ops.push({t: "text", c: col, x1: p.x, y1: p.y, s: s}); redraw(); return; }
@@ -7071,7 +7079,7 @@ body:not(.sakura) .wrap{gap:10px}body:not(.sakura) .list{gap:8px}
   // v9: shareable cards (PNG) — single trade and period summary, three formats
   // =====================================================================================
   const CARD_FMT = {portrait: [1080, 1350, "Na výšku 4:5"], square: [1080, 1080, "Čtverec"], story: [1080, 1920, "Příběh 9:16"]};
-  const cardFont = (w, s) => w + " " + s + "px 'Plus Jakarta Sans', system-ui, sans-serif";
+  const cardFont = (w, s) => w + " " + s + "px Inter, system-ui, sans-serif";
   const siteMark = () => (location.host + location.pathname).replace(/\/(index\.html)?$/, "");
   const pnum = s => { const v = parseFloat(String(s).replace(/\s/g, "").replace(",", ".")); return isFinite(v) ? v : NaN; };
   function parseLevels(s){ const out = [], re = /([^,;\d][^,;]*?)\s+(\d[\d\s.,]*\d|\d)/g; let m; while ((m = re.exec(String(s || ""))) && out.length < 5){ const v = pnum(m[2]); if (isFinite(v)) out.push({name: m[1].trim().slice(0, 14), v: v}); } return out; }
@@ -7097,7 +7105,7 @@ body:not(.sakura) .wrap{gap:10px}body:not(.sakura) .list{gap:8px}
   }
   function cardFlag(g, x, y, r){ g.save(); g.beginPath(); g.arc(x, y, r, 0, 6.3); g.clip(); g.fillStyle = "#f4f4f7"; g.fillRect(x - r, y - r, 2 * r, 2 * r); const s = 2 * r / 13; g.fillStyle = "#d22f3d"; for (let i = 0; i < 13; i += 2) g.fillRect(x - r, y - r + i * s, 2 * r, s); g.fillStyle = "#2d3f8f"; g.fillRect(x - r, y - r, r * .94, 7 * s); g.restore(); }
   function cardHead(g, W, top, right){
-    g.textAlign = "left"; g.textBaseline = "alphabetic"; g.fillStyle = "#f5f5f6"; g.font = cardFont(800, 64); g.fillText("tape", 80, top + 132); const w = g.measureText("tape").width;
+    g.textAlign = "left"; g.textBaseline = "alphabetic"; g.fillStyle = "#f5f5f6"; g.font = "800 64px 'Plus Jakarta Sans', system-ui, sans-serif"; g.fillText("tape", 80, top + 132); const w = g.measureText("tape").width;
     if (brandImgOk()) g.drawImage(BRAND_IMG, 80 + w + 14, top + 84, 52, 52); else { g.fillStyle = "#3ddc97"; g.fillRect(80 + w + 12, top + 94, 11, 34); g.fillRect(80 + w + 16, top + 80, 3, 58); }
     g.fillStyle = "#8e8e98"; g.font = cardFont(500, 30); g.textAlign = "right"; g.fillText(right, W - 80, top + 128); g.textAlign = "left";
     try { cardLevel(g, 80 + w + (brandImgOk() ? 92 : 56), top + 70, W - 80 - g.measureText(right).width - 40); } catch(e){}
@@ -7327,7 +7335,7 @@ body:not(.sakura) .wrap{gap:10px}body:not(.sakura) .list{gap:8px}
     const head = el("div","row"), xb = el("button","ck-del","Zavřít"); xb.type = "button"; xb.addEventListener("click", o.close); head.appendChild(el("h2", null, title)); head.appendChild(xb); card.appendChild(head);
     const paint = async () => { const my = ++busy;
       Array.prototype.forEach.call(fmtBox.children, b => b.setAttribute("aria-pressed", String(b.dataset.v === cfg.card.fmt))); Array.prototype.forEach.call(unitBox.children, b => b.setAttribute("aria-pressed", String(b.dataset.v === cfg.card.unit)));
-      try { if (document.fonts && document.fonts.load) await document.fonts.load("800 60px 'Plus Jakarta Sans'"); } catch(e){}
+      try { if (document.fonts && document.fonts.load) await Promise.all(["800 60px 'Plus Jakarta Sans'", "800 60px Inter", "700 30px Inter", "600 24px Inter", "500 24px Inter"].map(f => document.fonts.load(f))); } catch(e){}
       Array.prototype.forEach.call(langBox2.children, b => b.setAttribute("aria-pressed", String(b.dataset.v === cardLang())));
       Array.prototype.forEach.call(lookBox.children, b => b.setAttribute("aria-pressed", String(b.dataset.v === (cfg.card.look || "glass"))));
       // the card speaks its own language: dates, numbers and generated words follow the card's language, not the app's
@@ -7694,7 +7702,7 @@ body:not(.sakura) .wrap{gap:10px}body:not(.sakura) .list{gap:8px}
   }
   async function drawCert(name){
     const W = 1600, H = 1130, c = document.createElement("canvas"), g = c.getContext("2d"), F = cardFont; c.width = W; c.height = H;
-    try { if (document.fonts && document.fonts.load) await document.fonts.load("800 60px 'Plus Jakarta Sans'"); } catch(e){}
+    try { if (document.fonts && document.fonts.load) await Promise.all(["800 60px 'Plus Jakarta Sans'", "800 60px Inter", "700 30px Inter", "600 24px Inter", "500 24px Inter"].map(f => document.fonts.load(f))); } catch(e){}
     g.fillStyle = "#09090b"; g.fillRect(0, 0, W, H);
     const gl = g.createRadialGradient(W / 2, 260, 20, W / 2, 260, 900); gl.addColorStop(0, "rgba(138,180,255,.16)"); gl.addColorStop(1, "rgba(9,9,11,0)"); g.fillStyle = gl; g.fillRect(0, 0, W, H);
     g.strokeStyle = "#3a3a43"; g.lineWidth = 3; rr(g, 40, 40, W - 80, H - 80, 36); g.stroke(); g.strokeStyle = "#26262c"; g.lineWidth = 2; rr(g, 62, 62, W - 124, H - 124, 26); g.stroke();
