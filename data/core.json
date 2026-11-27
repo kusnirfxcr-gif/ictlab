@@ -1,9 +1,9 @@
 {
   "state": {
-    "lastRun": "2026-11-26T05:58:00Z",
+    "lastRun": "2026-11-27T06:05:00Z",
     "modelVersion": "1.0",
-    "runCount": 17,
-    "lastReport": "Skaut přidal poznatek z rozboru Zeussyho obchodu: obědový cyklus míří k high předchozího cyklu a u něj se vybírá část zisku. Učitel napsal lekci 17 o fair value gapu a přidal k ní dva poznatky z ICT Gems. Vizionář navrhl rozbor jednoho dne podle cyklů v sekci Premium. Zpravodaj potvrdil maloobchodní tržby 16. 12. přímo u Census Bureau. Gems a Architekt beze změny."
+    "runCount": 18,
+    "lastReport": "Skaut přidal poznatek ze Zeussyho videa o biasu: směr dne čte z hodinového a 15m grafu a model hledá na pěti minutách. Učitel napsal lekci 18 o tom, jak se FVG obchoduje, a přidal k ní dva poznatky z ověřených zdrojů. Vizionář navrhl kalkulačku vstupu do FVG. Zpravodaj doplnil Štědrý den se zkráceným obchodováním a zavřené burzy o Vánocích. Gems a Architekt beze změny."
   },
   "model": {
     "version": "1.0",
@@ -86,8 +86,8 @@
       "order": 1,
       "name": "Skaut",
       "role": "hledá nový ICT obsah",
-      "lastRun": "2026-11-26T05:58:00Z",
-      "lastReport": "Nový poznatek: podle Zeussyho míří obědový cyklus k high předchozího cyklu a u něj se vybírá část zisku."
+      "lastRun": "2026-11-27T06:05:00Z",
+      "lastReport": "Nový poznatek: Zeussy čte bias z hodinového a 15m grafu a model hledá na pěti minutách."
     },
     {
       "id": "gems",
@@ -110,16 +110,16 @@
       "order": 4,
       "name": "Učitel",
       "role": "připravuje denní lekce pro Lauru",
-      "lastRun": "2026-11-26T05:58:00Z",
-      "lastReport": "Lekce 17: fair value gap, mezera, kterou za sebou nechá rychlý pohyb."
+      "lastRun": "2026-11-27T06:05:00Z",
+      "lastReport": "Lekce 18: jak se FVG obchoduje, polovina mezery a kdy přestává platit."
     },
     {
       "id": "vizionar",
       "order": 5,
       "name": "Vizionář",
       "role": "navrhuje vylepšení aplikace",
-      "lastRun": "2026-11-26T05:58:00Z",
-      "lastReport": "Nápad: jeden den rozebraný podle cyklů v sekci Premium."
+      "lastRun": "2026-11-27T06:05:00Z",
+      "lastReport": "Nápad: kalkulačka vstupu do FVG."
     }
   ],
   "versions": [

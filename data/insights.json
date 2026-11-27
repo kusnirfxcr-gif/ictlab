@@ -1,5 +1,18 @@
 [
   {
+    "id": "20261127-01",
+    "ts": "2026-11-27T06:05:00Z",
+    "date": "2026-11-27",
+    "bot": "skaut",
+    "concept": "bias",
+    "title": "Zeussy: bias dne čte z vyššího timeframu a model hledá na pěti minutách",
+    "source": "Video Highlight, shrnutí veřejného videa Zeussyho Intraday Bias Simplified | ICT 2022 Mentorship + MMXM",
+    "url": "https://videohighlight.com/v/ZNxQKHq58Dw",
+    "simple": "Podle shrnutí veřejného videa určuje Zeussy směr dne z hodinového a patnáctiminutového grafu. Na pěti minutách pak hledá market maker model ve stejném směru a vstup ladí na minutě. Modely jsou do sebe vnořené: velký model na hodinovém grafu se skládá z menších na pěti minutách.",
+    "takeaway": "Sell model hledá v klesajícím trendu a buy model v rostoucím. Obchod proti vyššímu timeframu podle něj jde, ale chce hodně zkušeností. Před vstupem čeká na potvrzení v ceně. Shrnutí je strojové a nepopisuje, kdy bias opustit, proto z něj nebereme víc než tento postup.",
+    "effect": "Model beze změny. Potvrzuje pravidlo brát vstupy jen ve směru biasu z 15m a začátečníkům nedoporučovat obchody proti němu."
+  },
+  {
     "id": "20261126-01",
     "ts": "2026-11-26T05:58:00Z",
     "date": "2026-11-26",

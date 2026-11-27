@@ -1,5 +1,62 @@
 [
   {
+    "id": "20261127-L18",
+    "ts": "2026-11-27T06:05:00Z",
+    "date": "2026-11-27",
+    "n": 18,
+    "week": 5,
+    "title": "Jak se FVG obchoduje: návrat, polovina mezery a kdy přestává platit",
+    "body": [
+      "Včera jsme si ukázali, jak fair value gap najdeš. Dnes jak se s ním pracuje. Krátce: po displacementu se čeká, až se cena do mezery vrátí, a vstupuje se ve směru původního pohybu.",
+      "Proč čekat na návrat? Když naskočíš do rozjeté svíčky, kupuješ draho a stop musí být daleko. Když počkáš na návrat do mezery, kupuješ levněji a víš přesně, kde se mýlíš.",
+      "Uprostřed mezery leží úroveň, které ICT říká consequent encroachment, zkráceně CE. Je to polovina mezi horní a dolní hranou. Silná mezera často drží už u horní hrany nebo kolem CE. Vstup se proto často dává limitním příkazem právě do mezery nebo na CE.",
+      "Stop patří za začátek pohybu, tedy pod swing low, ze kterého displacement vyrazil. U longu po sweepu je to pod low, které cena vybrala. Když trh půjde tam, původní nápad neplatí.",
+      "Kdy mezera selhala? Knot přes CE ještě nic neruší. Varováním je, když tělo svíčky zavře pod CE. Úplně neplatí, když cena projde celou mezerou a tělo zavře za její druhou hranou. Pak se z ní stává něco jiného, o tom bude řeč u inverzního FVG.",
+      "A ještě jedna věc: ne každá mezera se vyplní a ne do každé se vstupuje. Když cena odjede bez návratu, obchod prostě nebyl. Za zmeškaným pohybem se nehoní."
+    ],
+    "example": "Navážeme na včerejší příklad. Na NQ je fair value gap mezi 21 048 a 21 071, CE leží na 21 059,5. Swing low, ze kterého pohyb vyrazil, je 21 010. Dáš limitní nákup na 21 059,5 a stop na 21 004 pod swing low. Riziko je 55,5 bodu, u jednoho kontraktu MNQ po 2 dolarech za bod to dělá 111 dolarů. Cena se vrátí, knotem sáhne na 21 052 a zavře nad CE. Mezera drží. Kdyby tělo svíčky zavřelo pod 21 048, nápad je pryč a čeká se na nový setup.",
+    "remember": "Do FVG se vstupuje po návratu ceny, ve směru displacementu. Polovina mezery je CE. Tělo pod celou mezerou znamená, že selhala.",
+    "terms": [
+      "fvg",
+      "ce",
+      "displacement",
+      "limit-order",
+      "stop"
+    ],
+    "quiz": [
+      {
+        "q": "Co je consequent encroachment (CE)?",
+        "options": [
+          "Horní hrana mezery",
+          "Polovina mezery",
+          "Knot prostřední svíčky"
+        ],
+        "correct": 1,
+        "why": "CE je úroveň v půlce mezi horní a dolní hranou FVG."
+      },
+      {
+        "q": "Kam patří stop u longu z býčího FVG po sweepu?",
+        "options": [
+          "Pod swing low, ze kterého pohyb vyrazil",
+          "Těsně pod CE",
+          "Nad horní hranu mezery"
+        ],
+        "correct": 0,
+        "why": "Když cena půjde pod začátek pohybu, původní nápad neplatí."
+      },
+      {
+        "q": "Kdy býčí FVG úplně selhal?",
+        "options": [
+          "Když se knot dotkne CE",
+          "Když tělo svíčky zavře pod celou mezerou",
+          "Když se cena do mezery vůbec nevrátí"
+        ],
+        "correct": 1,
+        "why": "Knot nic neruší. Zavření těla za celou mezerou znamená, že nedržela. Když se cena nevrátí, obchod jen nevznikl."
+      }
+    ]
+  },
+  {
     "id": "20261126-L17",
     "ts": "2026-11-26T05:58:00Z",
     "date": "2026-11-26",
