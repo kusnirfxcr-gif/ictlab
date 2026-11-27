@@ -5858,6 +5858,18 @@ body:not(.sakura) .pf-nm>b,body:not(.sakura) .pf-nm b{font-size:18px!important}
     return box;
   }
 
+  // planned reward-to-risk from the target: which targets pay, and how often is the target reached?
+  function tgtTable(tr, unit){
+    const pr = t => { if (t.tp == null || t.entry == null || t.stop == null) return null; const e = +t.entry, rk = Math.abs(e - +t.stop), d = (t.dir === "short" ? -1 : 1) * (+t.tp - e); return rk > 0 && d > 0 && isFinite(d / rk) ? d / rk : null; };
+    const L = [LT("pod 1,5 R", "under 1.5 R"), LT("1,5–2,5 R", "1.5–2.5 R"), LT("2,5–4 R", "2.5–4 R"), LT("4 R a víc", "4 R and more")];
+    const lab = t => { const v = pr(t); return v == null ? null : v < 1.5 ? L[0] : v < 2.5 ? L[1] : v < 4 ? L[2] : L[3]; }, wt = tr.filter(t => pr(t) != null);
+    if (wt.length < 3) return null; const box = groupTable(LT("Plánovaný cíl", "Planned target"), tr, lab, L, unit); if (!box) return null;
+    const ex = wt.filter(t => t.exit != null), hit = ex.filter(t => t.dir === "short" ? +t.exit <= +t.tp : +t.exit >= +t.tp).length, avP = wt.reduce((s, t) => s + pr(t), 0) / wt.length, avG = wt.reduce((s, t) => s + (Number(t.r) || 0), 0) / wt.length, r1 = v => fnum(Math.round(v * 10) / 10);
+    const p = el("p","small muted", (ex.length ? LT("Cíl zasažen u " + hit + " z " + ex.length + " obchodů s cílem (" + Math.round(100 * hit / ex.length) + " %). ", "Target reached on " + hit + " of " + ex.length + " trades with a target (" + Math.round(100 * hit / ex.length) + " %). ") : "") + LT("V průměru plánuješ " + r1(avP) + " R a skutečně získáváš " + sgn(Math.round(avG * 10) / 10) + " R na obchod.", "On average you plan " + r1(avP).replace(",", ".") + " R and actually make " + sgn(Math.round(avG * 10) / 10).replace(",", ".") + " R per trade."));
+    p.style.marginTop = "8px"; box.appendChild(p);
+    return box;
+  }
+
   // ---------- daily plan ----------
   const P_BIAS = [["long","Long"],["short","Short"],["none","Nevím"]], P_ACT = [["up","Nahoru"],["down","Dolů"],["flat","Do strany"]];
   function planToday(){ const k = dayKey(); return jr.plans[k] || (jr.plans[k] = {bias: null, levels: "", note: "", actual: null}); }
@@ -7044,7 +7056,7 @@ body:not(.sakura) .pf-nm>b,body:not(.sakura) .pf-nm b{font-size:18px!important}
     if (tr.length){ const D = DAYS7(), hold = t => { if (!t.tsx) return null; const m = (new Date(t.tsx) - new Date(t.ts)) / 60000; return m < 0 ? null : m < 5 ? "do 5 min" : m < 15 ? "5–15 min" : m < 60 ? "15–60 min" : "přes hodinu"; };
       const bias = t => { const p = jr.plans[tDay(t)]; if (!p || !p.bias || p.bias === "none") return "Bez plánu"; return (p.bias === "long") === (t.dir !== "short") ? "Ve směru plánu" : "Proti plánu"; };
       [groupTable("Setup", tr, t => t.setup || "Jiný", null, unit), symsOf(tr) > 1 ? groupTable("Trh", tr, t => t.sym || "–", null, unit) : null, groupTable("Den", tr, t => D[(new Date(t.ts).getDay() + 6) % 7], D, unit),
-       groupTable("Hodina", tr, t => { const h = new Date(t.ts).getHours(); return isNaN(h) ? null : String(h).padStart(2, "0") + ":00"; }, Array.from({length: 24}, (x, i) => String(i).padStart(2, "0") + ":00"), unit), rankTable(tr, unit), prevTable(tr, unit),
+       groupTable("Hodina", tr, t => { const h = new Date(t.ts).getHours(); return isNaN(h) ? null : String(h).padStart(2, "0") + ":00"; }, Array.from({length: 24}, (x, i) => String(i).padStart(2, "0") + ":00"), unit), rankTable(tr, unit), prevTable(tr, unit), tgtTable(tr, unit),
        premOn() ? groupTable("Cyklus (New York)", tr, tradeCycle, CYCN.concat(["Londýn", "Asie", "Mimo cykly"]), unit) : null, groupTable("Směr", tr, t => t.dir === "short" ? "Short" : "Long", null, unit), groupTable("Plán dne", tr, bias, ["Ve směru plánu","Proti plánu","Bez plánu"], unit),
        groupTable("Seznam", tr, t => t.ck ? (t.ck.k === t.ck.n ? "Splněný" : "Nesplněný") : null, null, unit), groupTable("Chyba", tr, t => (t.tags && t.tags.length) ? t.tags : null, null, unit),
        groupTable("Před vstupem", tr, t => t.emo || null, EMO, unit), groupTable("Hodnocení", tr, t => t.grade ? gradeName(t.grade) : null, GRADES.map(x => x[1]), unit),
