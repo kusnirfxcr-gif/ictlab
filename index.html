@@ -40,14 +40,17 @@ return Promise.all([f0(u,o),f0("data/en/"+m[1]+".json").then(function(r){return 
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Tape","alternateName":"Tape Lab","url":"https://gettapelab.com/","applicationCategory":"EducationalApplication","operatingSystem":"Web","inLanguage":["cs","en"],"description":"Tape je česká škola ICT price action a obchodní deník pro NQ a ES futures. Lekce krok za krokem, každodenní čtení grafu, replay a rozbor vlastních chyb. Vzdělávání, ne investiční poradenství."}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" href="assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 /* Dark, single-theme. One column of rounded panels under a floating pill nav; big glowing numerals for the status tiles. */
+@font-face{font-family:"Inter";font-style:normal;font-weight:100 900;font-display:swap;src:url(assets/fonts/inter-latin-wght-normal.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Inter";font-style:normal;font-weight:100 900;font-display:swap;src:url(assets/fonts/inter-latin-ext-wght-normal.woff2) format("woff2");unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
 :root{
   --bg:#09090b; --surface:#131316; --surface2:#1b1b1f; --ink:#f5f5f6; --muted:#8e8e98; --line:#26262c;
   --accent:#8ab4ff; --accent-soft:rgba(138,180,255,.12); --amber:#f2b560; --good:#3ddc97; --bad:#ff6b6b;
-  --display:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --body:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --display:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
   --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
   color-scheme:dark;
 }
@@ -3842,6 +3845,30 @@ body.fx-lite .topbar,body.fx-lite .bottombar,body.fx-lite nav.tabs{-webkit-backd
 body.fx-lite:not(.sakura) .topbar{background:var(--bg)!important}
 body.fx-lite .tb-up::before,body.fx-lite .av[class*="fr-"]::before,body.fx-lite #rl-lv:has(>.rw-mini.bfx-theme)::before,body.fx-lite .bnr.bfx-theme>.bfr{animation:none!important}
 body.fx-lite .tb-up,body.fx-lite .tb-up::after,body.fx-lite .tb-up svg,body.fx-lite .pf-xp .xb i,body.fx-lite #streak.streak2.s3{animation:none!important}
+/* ===== Design B "Pro terminal": Inter, 14 px body, calm hierarchy, numbers in columns (not in Laura's room) ===== */
+body:not(.sakura){font-size:14px;line-height:1.5;letter-spacing:-.003em;font-feature-settings:"cv11","ss01";-webkit-font-smoothing:antialiased}
+body:not(.sakura) h1,body:not(.sakura) h2,body:not(.sakura) h3{font-stretch:normal;letter-spacing:-.015em}
+body:not(.sakura) .card{padding:16px;border-radius:14px}
+body:not(.sakura) .card h2,body:not(.sakura) h2{font-size:15px;font-weight:600}
+body:not(.sakura) h3{font-size:14px;font-weight:600}
+body:not(.sakura) .card p,body:not(.sakura) p{font-size:13px}
+body:not(.sakura) .small,body:not(.sakura) small{font-size:11.5px}
+body:not(.sakura) .kick{font-size:10.5px;letter-spacing:.07em}
+body:not(.sakura) h1{font-size:24px;font-weight:600;letter-spacing:-.025em}
+body:not(.sakura) .hero2 h1{font-size:24px!important;font-weight:600!important;letter-spacing:-.025em}
+body:not(.sakura) .hero2 h1 em{font-size:inherit!important}
+body:not(.sakura) .tile b,body:not(.sakura) .hero2 .h2-stats b,body:not(.sakura) .tk-r b,body:not(.sakura) #v-prehled b.pos,body:not(.sakura) #v-prehled b.neg{font-size:16px;font-weight:600}
+body:not(.sakura) .tile b,body:not(.sakura) .tk-r b,body:not(.sakura) .hero2 .h2-stats b,body:not(.sakura) td.num,body:not(.sakura) .num{font-variant-numeric:tabular-nums}
+body:not(.sakura) .topbar .brand{font-size:20px}
+body:not(.sakura) button,body:not(.sakura) .chip,body:not(.sakura) .abtn{font-size:12.5px;font-weight:600}
+body:not(.sakura) button{min-height:36px}
+body:not(.sakura) .bottombar a,body:not(.sakura) nav.tabs a{font-size:10.5px;font-weight:500}
+body:not(.sakura) .tb-tools a{font-size:10px}body:not(.sakura) .tb-tools a svg{width:18px;height:18px}
+body:not(.sakura) .lg-main{min-height:50px}body:not(.sakura) .lg-tx b{font-size:15px}body:not(.sakura) .lg-tx small{font-size:11px}
+body:not(.sakura) input,body:not(.sakura) select,body:not(.sakura) textarea{font-size:14px}
+body:not(.sakura) .wrap{gap:10px}body:not(.sakura) .list{gap:8px}
+@media(max-width:699px){body:not(.sakura) input,body:not(.sakura) select,body:not(.sakura) textarea{font-size:16px}}
+@media(max-width:699px){body:not(.sakura) .tk-tx small{letter-spacing:.02em;font-size:9px}}
 </style>
 </head>
 <body>
@@ -8425,13 +8452,13 @@ body.fx-lite .tb-up,body.fx-lite .tb-up::after,body.fx-lite .tb-up svg,body.fx-l
   // home trade cards draw their line only when the set of trades changes
   { let sig = null; const _rht = renderHomeTrades; renderHomeTrades = function(){ _rht(); const box = $("d-trades"); if (!box) return; const s = Array.prototype.map.call(box.children, (c, i) => i).length + ":" + jr.trades.length + ":" + (jr.trades.length ? jr.trades[jr.trades.length - 1].id : ""); box.classList.toggle("fresh", s !== sig); sig = s; }; }
   // ---------- font preview in settings: try another typeface on the whole app, nothing changes by default ----------
-  const FONTS = [["", "Plus Jakarta Sans", null, "současné"], ["geist", "Geist", "Geist:wght@400;500;600;700;800", "čisté, technické"], ["manrope", "Manrope", "Manrope:wght@400;500;600;700;800", "moderní, dobře čitelné"], ["outfit", "Outfit", "Outfit:wght@400;500;600;700;800", "kulatější, přátelské"], ["sora", "Sora", "Sora:wght@400;500;600;700;800", "široké, výrazné"], ["dmsans", "DM Sans", "DM+Sans:wght@400;500;600;700;800", "elegantní, klidné"], ["grotesk", "Space Grotesk", "Space+Grotesk:wght@400;500;600;700", "osobité, fintech"], ["quicksand", "Quicksand", "Quicksand:wght@400;500;600;700", "oblé, hodí se do Lauřina roomu"], ["nunito", "Nunito", "Nunito:wght@400;500;600;700;800", "měkké, oblé"]];
+  const FONTS = [["", "Inter", null, "výchozí, technické"], ["jakarta", "Plus Jakarta Sans", "local", "původní písmo Tape"], ["geist", "Geist", "Geist:wght@400;500;600;700;800", "čisté, technické"], ["manrope", "Manrope", "Manrope:wght@400;500;600;700;800", "moderní, dobře čitelné"], ["outfit", "Outfit", "Outfit:wght@400;500;600;700;800", "kulatější, přátelské"], ["sora", "Sora", "Sora:wght@400;500;600;700;800", "široké, výrazné"], ["dmsans", "DM Sans", "DM+Sans:wght@400;500;600;700;800", "elegantní, klidné"], ["grotesk", "Space Grotesk", "Space+Grotesk:wght@400;500;600;700", "osobité, fintech"], ["quicksand", "Quicksand", "Quicksand:wght@400;500;600;700", "oblé, hodí se do Lauřina roomu"], ["nunito", "Nunito", "Nunito:wght@400;500;600;700;800", "měkké, oblé"]];
   function applyFont(){ const f = FONTS.find(x => x[0] === (cfg.font || "")) || FONTS[0], root = document.documentElement.style; _mf = null;
     if (!f[2]){ root.removeProperty("--body"); root.removeProperty("--display"); return; }
-    if (!document.getElementById("gf-" + f[0])){ const l = document.createElement("link"); l.id = "gf-" + f[0]; l.rel = "stylesheet"; l.href = "https://fonts.googleapis.com/css2?family=" + f[2] + "&display=swap"; document.head.appendChild(l); }
+    if (f[2] !== "local" && !document.getElementById("gf-" + f[0])){ const l = document.createElement("link"); l.id = "gf-" + f[0]; l.rel = "stylesheet"; l.href = "https://fonts.googleapis.com/css2?family=" + f[2] + "&display=swap"; document.head.appendChild(l); }
     const st = '"' + f[1] + '",system-ui,-apple-system,"Segoe UI",sans-serif'; root.setProperty("--body", st); root.setProperty("--display", st); }
   const fontBox = el("div","card");
-  function renderFont(){ clear(fontBox); fontBox.appendChild(el("h2", null, "Písmo na zkoušku")); fontBox.appendChild(el("p","small muted","Klepni na písmo a celá aplikace se do něj přepne, ať vidíš, jak vypadá. Platí jen v tomhle zařízení a kdykoli se vrátíš k současnému."));
+  function renderFont(){ clear(fontBox); fontBox.appendChild(el("h2", null, "Písmo na zkoušku")); fontBox.appendChild(el("p","small muted","Klepni na písmo a celá aplikace se do něj přepne, ať vidíš, jak vypadá. Platí jen v tomhle zařízení a kdykoli se vrátíš k výchozímu Interu."));
     const r = el("div","chips"); FONTS.forEach(f => { const b = el("button","chip", f[1]); b.type = "button"; b.title = f[3]; b.setAttribute("aria-pressed", String((cfg.font || "") === f[0])); b.addEventListener("click", () => { cfg.font = f[0]; cfgStore(); applyFont(); renderFont(); }); r.appendChild(b); }); fontBox.appendChild(r);
     const cur = FONTS.find(x => x[0] === (cfg.font || "")) || FONTS[0], d = el("div","fontdemo"); d.appendChild(el("b", null, "Tape · +2,15 R · 21 345,50")); d.appendChild(el("span", null, cur[1] + ": " + cur[3] + ". Příliš žluťoučký kůň úpěl ďábelské ódy.")); fontBox.appendChild(d); }
   const _renderSettingsFont = renderSettings; renderSettings = function(){ _renderSettingsFont(); const box = $("set"); if (softLock) return; if (!fontBox.firstChild) renderFont(); if (fontBox.parentNode !== box) box.insertBefore(fontBox, accBox.parentNode === box ? accBox.nextSibling : box.firstChild); };
