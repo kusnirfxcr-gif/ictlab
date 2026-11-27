@@ -3812,6 +3812,20 @@ body[data-view="akcie"] #subnav,body[data-view="krypto"] #subnav,body[data-view=
 .ob:has(>.card.pay-ok){z-index:260}
 .pay-ck{display:grid!important;grid-template-columns:20px 1fr;column-gap:10px}.pay-ck input{width:18px!important;height:18px!important;min-height:0!important;padding:0!important;margin:2px 0 0!important}.pay-ck>span{min-width:0}
 .ob .card.pay-ok .row{flex-wrap:wrap}
+/* performance: the always-on decorations turn with transform (done by the graphics chip), not by repainting a gradient every frame under the blurred top bar */
+@keyframes tkRot{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(360deg)}}
+@keyframes tkSpin{to{transform:rotate(360deg)}}
+.tb-up::before{inset:auto!important;left:50%;top:50%;width:max(160%,140px);aspect-ratio:1;border-radius:0!important;background:conic-gradient(from 0deg,var(--accent),#f2c14e,#c58aff,var(--accent))!important;animation:tkRot 3.2s linear infinite!important;will-change:transform}
+.tb-up{animation-iteration-count:2!important}.tb-up::after{animation-iteration-count:2!important}
+.av[class*="fr-"]::before{animation:tkSpin 4s linear infinite;will-change:transform}
+#streak.streak2.s3{animation-iteration-count:3!important}.strip b{animation-iteration-count:3!important}
+#rl-lv:has(>.rw-mini.bfx-theme){overflow:hidden;border-radius:19px;isolation:isolate}
+#rl-lv:has(>.rw-mini.bfx-theme)::before{content:"";position:absolute;left:50%;top:50%;width:160%;aspect-ratio:1;z-index:0;pointer-events:none;background:conic-gradient(from 0deg,transparent 0 62%,color-mix(in srgb,var(--accent) 40%,transparent) 72%,var(--accent) 82%,#fff 85%,var(--accent) 88%,transparent 96%);animation:tkRot 5s linear infinite;will-change:transform}
+#rl-lv:has(>.rw-mini.bfx-theme)::after{inset:1.5px!important;padding:0!important;-webkit-mask:none!important;mask:none!important;background:var(--surface)!important;border-radius:17.5px!important;z-index:1!important;animation:none!important}
+#rl-lv>.rw-mini.bfx-theme{position:relative;z-index:2;margin:1.5px;border-radius:17.5px;overflow:hidden}
+@media (prefers-reduced-motion:reduce){.tb-up::before,.av[class*="fr-"]::before,#rl-lv:has(>.rw-mini.bfx-theme)::before{animation:none!important}}
+.pf-xp .xb i{animation-iteration-count:2!important}.pf-xp.gain .xb i{animation-iteration-count:2,1!important}
+.strip b{animation:none!important}.tb-up svg{animation-iteration-count:3!important}
 </style>
 </head>
 <body>
@@ -4448,6 +4462,18 @@ body[data-view="akcie"] #subnav,body[data-view="krypto"] #subnav,body[data-view=
 <a class="orb" id="orb" href="#kouc" aria-label="Otevřít AI kouče" title="AI kouč"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.500l1.700 4.300 4.300 1.700-4.300 1.700L12 16.500l-1.700-4.300L6 10.500l4.300-1.700z"/><path d="M18 15.500l.7 1.800 1.800.7-1.800.7-.7 1.800-.7-1.800-1.800-.7 1.800-.7z"/></svg></a>
 <script>var LOCD = document.documentElement.lang === "en" ? "en-GB" : "cs-CZ";</script>
 <script>
+// Speed: dates and numbers are formatted thousands of times per redraw; build each Intl formatter once and reuse it (same output as before).
+(function(){ if (!window.Intl) return; var C = new Map(), D = ["weekday","era","year","month","day","dateStyle"], T = ["hour","minute","second","timeStyle","dayPeriod","fractionalSecondDigits"];
+  function get(kind, loc, opt){ var k = kind + "|" + (Array.isArray(loc) ? loc.join(",") : (loc || "")) + "|" + (opt ? JSON.stringify(opt) : ""), f = C.get(k); if (!f){ f = kind === "n" ? new Intl.NumberFormat(loc, opt) : new Intl.DateTimeFormat(loc, opt); if (C.size > 400) C.clear(); C.set(k, f); } return f; }
+  function has(opt, keys){ if (!opt) return false; for (var i = 0; i < keys.length; i++) if (opt[keys[i]] !== undefined) return true; return false; }
+  var nT = Number.prototype.toLocaleString; Number.prototype.toLocaleString = function(loc, opt){ try { return get("n", loc, opt).format(+this); } catch(e){ return nT.call(this, loc, opt); } };
+  var dS = Date.prototype.toLocaleString, dD = Date.prototype.toLocaleDateString, dT = Date.prototype.toLocaleTimeString;
+  Date.prototype.toLocaleString = function(loc, opt){ if (!has(opt, D) && !has(opt, T) || isNaN(this)) return dS.call(this, loc, opt); try { return get("d", loc, opt).format(this); } catch(e){ return dS.call(this, loc, opt); } };
+  Date.prototype.toLocaleDateString = function(loc, opt){ if (!has(opt, D) || has(opt, T) || isNaN(this)) return dD.call(this, loc, opt); try { return get("d", loc, opt).format(this); } catch(e){ return dD.call(this, loc, opt); } };
+  Date.prototype.toLocaleTimeString = function(loc, opt){ if (!has(opt, T) || has(opt, D) || isNaN(this)) return dT.call(this, loc, opt); try { return get("d", loc, opt).format(this); } catch(e){ return dT.call(this, loc, opt); } };
+  window.__intlFmt = get; })();
+</script>
+<script>
 (function(){
   const $ = id => document.getElementById(id);
   const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = String(text); return n; };
@@ -4518,7 +4544,8 @@ body[data-view="akcie"] #subnav,body[data-view="krypto"] #subnav,body[data-view=
     else if (g === "vice" && v !== "vice"){ const a = el("a","back","‹ Více"); a.href = "#vice"; sn.appendChild(a); sn.appendChild(el("span", null, VTITLE[v] || "")); }
     sn.hidden = !sn.children.length;
   }
-  window.addEventListener("hashchange", () => { route(); refreshAll(); window.scrollTo(0, 0); }); route();
+  // switching pages: show the new page at once, rebuild the content right after it is painted (several quick taps rebuild only once)
+  let navT = 0; window.addEventListener("hashchange", () => { route(); window.scrollTo(0, 0); cancelAnimationFrame(navT); navT = requestAnimationFrame(() => { navT = requestAnimationFrame(() => { navT = 0; refreshAll(); }); }); }); route();
 
   const banner = msg => { const b = $("banner"); b.textContent = msg || ""; b.style.display = msg ? "block" : "none"; };
 
@@ -8998,7 +9025,7 @@ body[data-view="akcie"] #subnav,body[data-view="krypto"] #subnav,body[data-view=
   const tvSave = () => { try { localStorage.setItem(TVK, JSON.stringify(tvSt)); } catch(e){ $("tv-msg").textContent = "Na uložení není v prohlížeči místo, rozbor zůstane jen do zavření stránky."; } };
   const tvNum = v => { const x = String(v == null ? "" : v).trim().replace(/−/g, "-").replace(/\s/g, ""); if (!x) return NaN; return parseFloat(/,\d+$/.test(x) && !/\./.test(x) ? x.replace(",", ".") : x.replace(/,/g, "")); };
   function tvZoneOff(ms, tz){ // minutes to add to UTC to get wall time in tz
-    const p = {}; new Intl.DateTimeFormat("en-US", {timeZone: tz, hourCycle: "h23", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit"}).formatToParts(new Date(ms)).forEach(x => { p[x.type] = x.value; });
+    const p = {}; window.__intlFmt("d", "en-US", {timeZone: tz, hourCycle: "h23", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit"}).formatToParts(new Date(ms)).forEach(x => { p[x.type] = x.value; });
     return (Date.UTC(+p.year, +p.month - 1, +p.day, +p.hour % 24, +p.minute) - Math.floor(ms / 60000) * 60000) / 60000;
   }
   function tvWall(str, tz){ // wall time in tz -> wall time in New York {y,m,d,mn,dow,key}
