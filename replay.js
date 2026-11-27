@@ -173,7 +173,7 @@
     const cw = Math.round(W * dpr), ch = Math.round(H * dpr); if (cv.width !== cw || cv.height !== ch){ cv.width = cw; cv.height = ch; cv.style.width = W + "px"; cv.style.height = H + "px"; }
     const c = cv.getContext("2d"), P = pal(), A = agg(), a = A.a; c.setTransform(dpr, 0, 0, dpr, 0, 0);
     c.fillStyle = P.bg; c.fillRect(0, 0, W, H);
-    if (!S.B.length){ c.fillStyle = P.muted; c.font = "500 14px Inter,system-ui,sans-serif"; c.textAlign = "center"; c.fillText(T("Nahraj data nebo spusť ukázku", "Load data or start the demo"), W / 2, H / 2); return; }
+    if (!S.B.length){ if (ui.empty && !ui.empty.hidden) return; c.fillStyle = P.muted; c.font = "500 14px Inter,system-ui,sans-serif"; c.textAlign = "center"; c.fillText(T("Nahraj data nebo spusť ukázku", "Load data or start the demo"), W / 2, H / 2); return; }
     fitY();
     // grid and price axis
     const step = nice((yHi - yLo) / Math.max(3, PH / 70)); c.font = "500 11px Inter,system-ui,sans-serif"; c.textBaseline = "middle";
