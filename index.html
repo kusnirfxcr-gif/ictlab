@@ -5589,7 +5589,11 @@ html body .pf-xp .lv-emb{flex:none;--sz:22px!important}html body .rw-mini .pf-xp
   let fcQueue = [], fcIdx = 0, fcOpen = false, fcNote = "";
   const fcDue = () => { lp.cards = lp.cards || {}; const now = Date.now(); return glossary.filter(g => { const c = lp.cards[g.id]; return !c || c.due <= now; }); };
   const fcKnown = () => Object.keys(lp.cards || {}).filter(k => lp.cards[k].box >= 3).length;
-  function fcStart(){ fcQueue = shuffled(fcDue()).slice(0, 10); fcIdx = 0; fcOpen = false; renderFc(); }
+  function fcStart(){   // terms already in review come first, new terms follow the course order (week 1 first)
+    const cs = lp.cards || {}, due = fcDue(), wk = g => +g.week || 99;
+    const fresh = shuffled(due.filter(g => !cs[g.id])).sort((a,b) => wk(a) - wk(b));
+    fcQueue = shuffled(shuffled(due.filter(g => cs[g.id])).concat(fresh).slice(0, 10)); fcIdx = 0; fcOpen = false; renderFc(); }
+  const fcTag = g => (lp.cards || {})[g.id] ? LT(" · opakování", " · review") : (+g.week ? LT(" · nový pojem, týden " + g.week, " · new term, week " + g.week) : LT(" · nový pojem", " · new term"));
   let fcH = 0, fcW = 0, fcBoxW = 0;
   try { new ResizeObserver(() => { const w = $("fc-body").clientWidth; if (w && w !== fcBoxW){ fcBoxW = w; renderFc(); } }).observe($("fc-body")); } catch(e){}
   function renderFc(){
@@ -5601,7 +5605,8 @@ html body .pf-xp .lv-emb{flex:none;--sz:22px!important}html body .rw-mini .pf-xp
     if (fcIdx >= fcQueue.length){
       const due = fcDue().length;
       { const cs = lp.cards || {}, ks = Object.keys(cs), st = [glossary.length - ks.length, ks.filter(k => cs[k].box < 3).length, ks.filter(k => cs[k].box >= 3).length];
-        box.appendChild(el("p","small muted", "Nové " + st[0] + " · Opakuji " + st[1] + " · Umím " + st[2] + ". Co umíš, vrací se po 1, 3, 7, 14 a 30 dnech. Co neumíš, ještě dnes.")); }
+        box.appendChild(el("p","small muted", "Nové " + st[0] + " · Opakuji " + st[1] + " · Umím " + st[2] + ". Co umíš, vrací se po 1, 3, 7, 14 a 30 dnech. Co neumíš, ještě dnes."));
+        box.appendChild(el("p","small muted", LT("Nové pojmy přicházejí v pořadí kurzu, od prvního týdne. Pojmy k opakování mají přednost.", "New terms come in course order, starting with week one. Terms due for review come first."))); }
       fcNote = "";
       box.appendChild(el("p", null, fcQueue.length ? "Tahle sada je hotová." : (due ? "K opakování je připraveno " + due + " pojmů." : "Dnes není co opakovat. Pojmy se vrátí, až na ně přijde čas.")));
       if (due){ const b = el("button","primary", fcQueue.length ? "Další sada" : "Začít"); b.type = "button"; b.addEventListener("click", fcStart); const r = el("div","pa-ctl"); r.appendChild(el("span")); r.appendChild(b); box.appendChild(r); }
@@ -5609,16 +5614,16 @@ html body .pf-xp .lv-emb{flex:none;--sz:22px!important}html body .rw-mini .pf-xp
     }
     if (fcNote){ box.appendChild(el("p","small muted fcnote", fcNote)); }
     const g = fcQueue[fcIdx], card = el("div","fcard" + (fcOpen ? " open" : ""));
-    card.appendChild(el("span","pa-kicker", "Kartička " + (fcIdx + 1) + " z " + fcQueue.length));
+    { const k = el("span","pa-kicker", "Kartička " + (fcIdx + 1) + " z " + fcQueue.length); k.appendChild(el("span","fc-tag", fcTag(g))); card.appendChild(k); }
     card.appendChild(el("b","fterm", g.term || g.id));
     if (g.en && g.en !== g.term) card.appendChild(el("span","small muted", g.en));
     { const df = el("p","fdef", g.def || ""); card.appendChild(df); const tp = topicFor(g); let tb = null; if (tp){ tb = el("button", null, "Ukázat v obrázcích"); tb.type = "button"; tb.addEventListener("click", () => openTopic(tp.id)); card.appendChild(tb); }
       if (!fcOpen){ df.style.visibility = "hidden"; df.style.animation = "none"; df.setAttribute("aria-hidden","true"); if (tb){ tb.style.visibility = "hidden"; tb.tabIndex = -1; } } }
     box.appendChild(card);
     { const sig = box.clientWidth + ":" + fcQueue.length + ":" + (fcQueue[0] ? fcQueue[0].id : "") + ":" + document.body.classList.contains("sakura");   // one height for the whole set, measured once
-      if (box.clientWidth && sig !== fcW){ fcW = sig; fcH = 0; const pr = el("div","fcard"), k = el("span","pa-kicker","Kartička 00 z 00"), tm = el("b","fterm"), en = el("span","small muted"), df = el("p","fdef"), tb = el("button", null, "Ukázat v obrázcích");
+      if (box.clientWidth && sig !== fcW){ fcW = sig; fcH = 0; const pr = el("div","fcard"), k = el("span","pa-kicker","Kartička 00 z 00"), kt = el("span","fc-tag"), tm = el("b","fterm"), en = el("span","small muted"), df = el("p","fdef"), tb = el("button", null, "Ukázat v obrázcích");
         box.style.position = "relative"; pr.style.cssText = "position:absolute;left:0;right:0;top:0;visibility:hidden;animation:none;min-height:0"; df.style.animation = "none"; [k, tm, en, df, tb].forEach(x => pr.appendChild(x)); box.appendChild(pr);
-        fcQueue.forEach(q => { tm.textContent = q.term || q.id; en.textContent = q.en || ""; en.style.display = q.en && q.en !== q.term ? "" : "none"; df.textContent = q.def || ""; tb.style.display = topicFor(q) ? "" : "none"; fcH = Math.max(fcH, pr.offsetHeight); }); pr.remove(); }
+        k.appendChild(kt); fcQueue.forEach(q => { kt.textContent = fcTag(q); tm.textContent = q.term || q.id; en.textContent = q.en || ""; en.style.display = q.en && q.en !== q.term ? "" : "none"; df.textContent = q.def || ""; tb.style.display = topicFor(q) ? "" : "none"; fcH = Math.max(fcH, pr.offsetHeight); }); pr.remove(); }
       if (box.clientWidth && fcH) card.style.minHeight = fcH + "px"; }
     const shown = Date.now();
     const ctl = el("div","pa-ctl");
