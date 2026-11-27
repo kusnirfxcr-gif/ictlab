@@ -6999,7 +6999,7 @@ body[data-view="akcie"] #subnav,body[data-view="krypto"] #subnav,body[data-view=
     g.fillStyle = "#f5f5f6"; g.font = F(800, 44); g.fillText(t.sym || "", L0 + 72, top + 233); const symW = g.measureText(t.sym || "").width;
     const side = t.dir === "short" ? "SHORT" : "LONG"; g.font = F(700, 26); const sw = g.measureText(side).width + 40;
     g.fillStyle = t.dir === "short" ? "rgba(255,107,107,.16)" : "rgba(61,220,151,.16)"; rr(g, L0 + 72 + symW + 20, top + 194, sw, 50, 25); g.fill(); g.fillStyle = t.dir === "short" ? "#ff6b6b" : "#3ddc97"; g.fillText(side, L0 + 72 + symW + 40, top + 228);
-    g.fillStyle = "#8e8e98"; g.font = F(500, 30); g.fillText(t.setup || "", L0, top + 292);
+    { const chips = cardConf([t], 7); if (chips.length) cardChips(g, L0, top + 262, W - 2 * L0 - (opt.unit === "both" && net != null ? 230 : 0), chips); else { g.fillStyle = "#8e8e98"; g.font = F(500, 30); g.fillText(t.setup || "", L0, top + 292); } }
     if (opt.unit === "both" && net != null){ g.textAlign = "right"; g.fillStyle = col; g.font = F(700, 40); g.fillText(usd(net), W - L0, top + 292); g.textAlign = "left"; }
     g.fillStyle = col; g.shadowColor = col; g.shadowBlur = 50; fitText(g, useUsd ? usd(net) : sgn(r) + " R", L0 - 6, bigY, 800, sq ? 150 : 190, W - 2 * L0); g.shadowBlur = 0;
     const footY = H - 72 - (opt.fmt === "story" ? 150 : 0), cellsY = footY - 178, cx = 80, cy = bigY + (gl ? (sq ? 54 : 70) : (sq ? 48 : 70)), cw = W - 160, ch = cellsY - 30 - cy;
@@ -7037,12 +7037,62 @@ body[data-view="akcie"] #subnav,body[data-view="krypto"] #subnav,body[data-view=
     const a = new Date(n.getFullYear(), n.getMonth(), 1), b = new Date(n.getFullYear(), n.getMonth() + 1, 1), nm = a.toLocaleDateString(LOCD, {month: "long", year: "numeric"});
     return {a: a, b: b, title: nm.charAt(0).toUpperCase() + nm.slice(1)};
   }
+  // ---------- what the journal says about a trade, as calm pills on the shared card ----------
+  function cardConf(trs, max){ const seen = {}, out = [], add = (t, k) => { const v = String(t || "").trim(); if (!v || seen[v.toLowerCase()]) return; seen[v.toLowerCase()] = 1; out.push({t: v, k: k}); };
+    const cnt = (f) => { const m = {}; trs.forEach(t => (f(t) || []).forEach(v => { m[v] = (m[v] || 0) + 1; })); return Object.keys(m).sort((a, b) => m[b] - m[a]); };
+    cnt(t => t.setup ? [t.setup] : []).forEach(v => add(v, "setup")); cnt(t => { const s2 = t.sess || (typeof tkSession === "function" ? tkSession(t.ts) : null); return s2 ? [s2] : []; }).forEach(v => add(v, "sess"));
+    cnt(t => t.dol).forEach(v => add((cfg.lang === "en" ? "Target " : "Cíl ") + v, "dol")); cnt(t => t.conf).forEach(v => add(v, "conf")); cnt(t => t.cfm).forEach(v => add(v, "cfm"));
+    return out.slice(0, max || 7); }
+  function cardChips(g, x, y, maxW, items){ const F = cardFont, H = 46, gap = 10; let cx = x, shown = 0; g.textBaseline = "middle";
+    for (let i = 0; i < items.length; i++){ const it = items[i], label = it.t.length > 26 ? it.t.slice(0, 25) + "…" : it.t; g.font = F(it.k === "setup" ? 800 : 650, 23); const w = g.measureText(label).width + 40;
+      const restW = i < items.length - 1 ? 74 : 0; if (cx + w > x + maxW - (shown < items.length - 1 ? restW : 0) && shown){ const more = "+" + (items.length - shown); g.font = F(700, 23); const mw = g.measureText(more).width + 34; if (cx + mw <= x + maxW){ g.fillStyle = "rgba(255,255,255,.06)"; rr(g, cx, y, mw, H, H / 2); g.fill(); g.fillStyle = "#8e8e98"; g.fillText(more, cx + 17, y + H / 2 + 1); } break; }
+      const col = it.k === "setup" ? "#f5f5f6" : it.k === "cfm" ? "#3ddc97" : it.k === "dol" ? "#f2b560" : it.k === "sess" ? "#8e8e98" : "#e9e9ee";
+      g.fillStyle = it.k === "setup" ? "rgba(255,255,255,.14)" : it.k === "cfm" ? "rgba(61,220,151,.13)" : it.k === "dol" ? "rgba(242,181,96,.14)" : "rgba(255,255,255,.07)"; rr(g, cx, y, w, H, H / 2); g.fill();
+      g.strokeStyle = it.k === "setup" ? "rgba(255,255,255,.22)" : "rgba(255,255,255,.08)"; g.lineWidth = 1.5; g.stroke();
+      if (it.k === "cfm" || it.k === "dol"){ g.fillStyle = col; g.beginPath(); g.arc(cx + 18, y + H / 2, 4, 0, 6.3); g.fill(); g.fillStyle = col; g.fillText(label, cx + 30, y + H / 2 + 1); cx += w + 10 + gap; shown++; continue; }
+      g.fillStyle = col; g.fillText(label, cx + 20, y + H / 2 + 1); cx += w + gap; shown++; }
+    g.textBaseline = "alphabetic"; return H; }
+  // the whole day on one chart: real candles from your bar data with every trade marked; without bar data an honest running total in R
+  async function cardDayChart(g, trs, cx, cy, cw, ch, style, unit, val){ const F = cardFont, fm = v => v == null || !isFinite(v) ? "–" : v.toLocaleString("cs-CZ", {maximumFractionDigits: 2});
+    const own = trs.filter(t => isFinite(Date.parse(t.ts))).slice().sort((a, b) => Date.parse(a.ts) - Date.parse(b.ts)); if (!own.length) return false;
+    const day = pxWall(Date.parse(own[0].ts)).day; let bars = null; try { bars = await pxDayBars(day); } catch(e){}
+    const marks = []; for (const t of own){ let px = null; try { px = await cardBars(t); } catch(e){} const w = pxWall(Date.parse(t.ts)); marks.push({t: t, em: px ? px.em : w.mn, xm: px && px.xm != null ? px.xm : null, off: px ? px.off || 0 : 0, ok: !!px}); }
+    if (bars && bars.b && bars.b.length && marks.some(m => m.ok)){
+      const a0 = Math.min.apply(null, marks.map(m => m.em)) - 45, a1 = Math.max.apply(null, marks.map(m => (m.xm != null ? m.xm : m.em + 20))) + 40, off = (marks.find(m => m.ok) || {}).off || 0;
+      let win = bars.b.filter(r => r[0] >= a0 && r[0] <= a1).map(r => [r[0], r[1] + off, r[2] + off, r[3] + off, r[4] + off]); if (win.length < 8) return false;
+      const span = win[win.length - 1][0] - win[0][0], step = win.length > 1 ? Math.max(1, win[1][0] - win[0][0]) : 1, tf = [1, 2, 3, 5, 10, 15, 30, 60].find(v => v >= step && span / v <= 70) || 60, cs = pxAgg(win, tf);
+      let lo = Infinity, hi = -Infinity; cs.forEach(c => { lo = Math.min(lo, c[3]); hi = Math.max(hi, c[2]); }); own.forEach(t => [t.entry, t.exit, t.stop].forEach(v => { if (v != null && isFinite(v)){ lo = Math.min(lo, +v); hi = Math.max(hi, +v); } })); const pad = (hi - lo) * .08 || 1; lo -= pad; hi += pad;
+      const L = cx + 26, R = cx + cw - 30, T = cy + 34, B = cy + ch - 62, n = cs.length, sl = (R - L) / n, X = mn => L + ((mn - cs[0][0]) / tf + .5) * sl, Y = v => T + (hi - v) / (hi - lo) * (B - T);
+      g.save(); g.beginPath(); g.rect(cx, cy, cw, ch); g.clip();
+      g.strokeStyle = "rgba(255,255,255,.04)"; g.lineWidth = 1; for (let i = 1; i < 5; i++){ const y = T + (B - T) * i / 5; g.beginPath(); g.moveTo(cx, y); g.lineTo(cx + cw, y); g.stroke(); }
+      marks.forEach(m => { const t = m.t, e = +t.entry, x = +t.exit; if (!isFinite(e) || !isFinite(x)) return; const xE = X(Math.floor(m.em / tf) * tf), xX = m.xm != null ? X(Math.floor(m.xm / tf) * tf) : xE + sl * 4, good = (Number(t.r) || 0) >= 0;
+        g.fillStyle = good ? "rgba(61,220,151,.15)" : "rgba(255,107,107,.14)"; const y1 = Y(Math.max(e, x)), y2 = Y(Math.min(e, x)); g.fillRect(xE - sl * .5, y1, Math.max(sl, xX - xE + sl), Math.max(3, y2 - y1)); });
+      if (style === "line"){ const pts = cs.map(c => [X(c[0]), Y(c[4])]); g.lineJoin = "round"; g.lineWidth = 4; g.strokeStyle = "#c9c9d2"; g.beginPath(); pts.forEach((p, i) => { if (i) g.lineTo(p[0], p[1]); else g.moveTo(p[0], p[1]); }); g.stroke(); }
+      else { const bwid = Math.max(3, Math.min(sl * .66, 20)); cs.forEach(c => { const xc = X(c[0]), up = c[4] >= c[1], y1 = Y(Math.max(c[1], c[4])), y2 = Y(Math.min(c[1], c[4])); g.strokeStyle = g.fillStyle = up ? "#e9e9ee" : "#6e6e7a"; g.lineWidth = Math.max(1.5, Math.min(3, sl * .12)); g.beginPath(); g.moveTo(xc, Y(c[2])); g.lineTo(xc, Y(c[3])); g.stroke(); g.fillRect(xc - bwid / 2, y1, bwid, Math.max(2, y2 - y1)); }); }
+      marks.forEach((m, k) => { const t = m.t, e = +t.entry, x = +t.exit; if (!isFinite(e)) return; const d = t.dir === "short" ? -1 : 1, good = (Number(t.r) || 0) >= 0, col = good ? "#3ddc97" : "#ff6b6b", xE = X(Math.floor(m.em / tf) * tf), yE = Y(e);
+        g.fillStyle = "#09090b"; g.beginPath(); g.arc(xE, yE, 15, 0, 6.3); g.fill(); g.fillStyle = "#f5f5f6"; g.beginPath(); if (d > 0){ g.moveTo(xE, yE - 9); g.lineTo(xE + 9, yE + 7); g.lineTo(xE - 9, yE + 7); } else { g.moveTo(xE, yE + 9); g.lineTo(xE + 9, yE - 7); g.lineTo(xE - 9, yE - 7); } g.closePath(); g.fill();
+        if (isFinite(x) && m.xm != null){ const xX = X(Math.floor(m.xm / tf) * tf), yX = Y(x); g.strokeStyle = col; g.globalAlpha = .7; g.lineWidth = 2; g.setLineDash([6, 6]); g.beginPath(); g.moveTo(xE, yE); g.lineTo(xX, yX); g.stroke(); g.setLineDash([]); g.globalAlpha = 1; g.fillStyle = "#09090b"; g.beginPath(); g.arc(xX, yX, 14, 0, 6.3); g.fill(); g.fillStyle = col; g.beginPath(); g.arc(xX, yX, 9, 0, 6.3); g.fill(); }
+        const lab = (own.length > 1 ? (k + 1) + " · " : "") + (unit === "$" && tNet(t) != null ? usd(tNet(t)) : sgn(Number(t.r) || 0) + " R"); g.font = F(700, 21); const lw = g.measureText(lab).width + 22, ly = d > 0 ? yE + 26 : yE - 54; g.fillStyle = "rgba(9,9,11,.75)"; rr(g, xE - lw / 2, ly, lw, 32, 16); g.fill(); g.fillStyle = col; g.textAlign = "center"; g.fillText(lab, xE, ly + 23); g.textAlign = "left"; });
+      g.restore();
+      g.fillStyle = "#5c5c66"; g.font = F(500, 20); for (let i = 0; i <= 4; i++){ const c = cs[Math.round(i * (n - 1) / 4)]; if (!c) continue; g.textAlign = i === 0 ? "left" : i === 4 ? "right" : "center"; g.fillText(pxHM(c[0]), i === 0 ? L - 6 : i === 4 ? R : X(c[0]), B + 30); } g.textAlign = "left";
+      return tf + "m " + (style === "line" ? "graf" : "svíčky") + " · čas New York"; }
+    // no bar data for this day: the running total trade by trade, clearly labelled as such
+    const vs = own.map(t => val(t)).filter(v => v != null); if (!vs.length) return false; const pts = [0]; vs.forEach(v => pts.push(pts[pts.length - 1] + v));
+    let lo = Math.min.apply(null, pts), hi = Math.max.apply(null, pts); if (hi === lo){ hi += 1; lo -= 1; } const pad = (hi - lo) * .18; lo -= pad; hi += pad;
+    const L = cx + 60, R = cx + cw - 60, T = cy + 40, B = cy + ch - 74, X = i => L + i / (pts.length - 1) * (R - L), Y = v => T + (hi - v) / (hi - lo) * (B - T), end = pts[pts.length - 1], col = end >= 0 ? "#3ddc97" : "#ff6b6b";
+    g.strokeStyle = "#2c2c33"; g.lineWidth = 2; g.setLineDash([6, 8]); g.beginPath(); g.moveTo(cx + 26, Y(0)); g.lineTo(cx + cw - 26, Y(0)); g.stroke(); g.setLineDash([]);
+    const gr = g.createLinearGradient(0, T, 0, B); gr.addColorStop(0, end >= 0 ? "rgba(61,220,151,.22)" : "rgba(255,107,107,.05)"); gr.addColorStop(1, end >= 0 ? "rgba(61,220,151,0)" : "rgba(255,107,107,.22)");
+    g.beginPath(); pts.forEach((v, i) => { if (i) g.lineTo(X(i), Y(v)); else g.moveTo(X(i), Y(v)); }); g.lineTo(X(pts.length - 1), Y(0)); g.lineTo(X(0), Y(0)); g.closePath(); g.fillStyle = gr; g.fill();
+    g.lineJoin = "round"; g.lineWidth = 5; g.strokeStyle = col; g.beginPath(); pts.forEach((v, i) => { if (i) g.lineTo(X(i), Y(v)); else g.moveTo(X(i), Y(v)); }); g.stroke();
+    own.forEach((t, k) => { const v = val(t); if (v == null) return; const i = k + 1, c2 = v >= 0 ? "#3ddc97" : "#ff6b6b", xx = X(i), yy = Y(pts[i]); g.fillStyle = "#09090b"; g.beginPath(); g.arc(xx, yy, 14, 0, 6.3); g.fill(); g.fillStyle = c2; g.beginPath(); g.arc(xx, yy, 9, 0, 6.3); g.fill();
+      g.fillStyle = "#8e8e98"; g.font = F(600, 20); g.textAlign = "center"; g.fillText(new Date(t.ts).toLocaleTimeString(LOCD, {hour: "2-digit", minute: "2-digit"}), xx, B + 34); g.fillStyle = c2; g.font = F(700, 22); g.fillText(unit === "$" ? usd(v) : sgn(Math.round(v * 10) / 10), xx, yy - 24); g.textAlign = "left"; });
+    return cfg.lang === "en" ? "Running total trade by trade" : "Průběžný součet obchod po obchodu"; }
   async function drawPeriodCard(kind, opt){
     const fmt = CARD_FMT[opt.fmt] || CARD_FMT.portrait, W = fmt[0], H = fmt[1], c = document.createElement("canvas"); c.width = W; c.height = H;
     const g = c.getContext("2d"), F = cardFont, rg = periodRange(kind), unit = opt.unit === "$" ? "$" : "R", top = opt.fmt === "story" ? 220 : 0, sq = opt.fmt === "square";
     const tr = jSorted().filter(t => { const d = new Date(t.ts); return d >= rg.a && d < rg.b; }), st = jStats(tr, unit), col = st.total >= 0 ? "#3ddc97" : "#ff6b6b", val = t => unit === "$" ? tNet(t) : (Number(t.r) || 0);
     const byDay = {}; tr.forEach(t => { const v = val(t); if (v == null) return; const k = tDay(t); byDay[k] = (byDay[k] || 0) + v; });
-    const short = v => unit === "$" ? usd(v) : sgn(Math.round(v * 10) / 10);
+    const short = v => unit === "$" ? usd(v) : sgn(Math.round(v * 10) / 10); let dayNote = "";
     cardBase(g, W, H, st.total >= 0); cardHead(g, W, top, kind === "day" ? "Denní přehled" : kind === "week" ? "Týdenní přehled" : "Měsíční přehled");
     g.fillStyle = "#f5f5f6"; g.font = F(800, 46); g.fillText(rg.title, 80, top + 236);
     g.fillStyle = "#8e8e98"; g.font = F(500, 30); g.fillText(tr.length ? pl(st.n, "obchod", "obchody", "obchodů") + " · winrate " + Math.round(st.winrate) + " %" : "Bez obchodů", 80, top + 292);
@@ -7051,13 +7101,15 @@ body[data-view="akcie"] #subnav,body[data-view="krypto"] #subnav,body[data-view=
     g.fillStyle = "#101014"; rr(g, cx, cy, cw, ch, 30); g.fill(); g.strokeStyle = "#26262c"; g.lineWidth = 2; g.stroke();
     if (kind === "week" || kind === "day"){
       let names = cfg.lang === "en" ? ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"] : ["Po","Út","St","Čt","Pá","So","Ne"], days = [], nd;
-      if (kind === "day"){ const vs = tr.map(t => [new Date(t.ts).toLocaleTimeString(LOCD, {hour: "2-digit", minute: "2-digit"}), val(t)]).filter(x => x[1] != null).slice(-8); names = vs.map(x => x[0]); days = vs.map(x => x[1]); nd = Math.max(1, vs.length); }
+      if (kind === "day" && tr.length){ const chips = cardConf(tr, 8); let T0 = cy; if (chips.length){ cardChips(g, cx + 26, cy + 22, cw - 52, chips); T0 = cy + 72; }
+        const done = await cardDayChart(g, tr, cx, T0, cw, cy + ch - T0, (cfg.card && cfg.card.chart) === "cara" ? "line" : "candles", unit, val); if (done){ nd = -1; dayNote = done; } }
+      if (nd === -1){} else if (kind === "day"){ const vs = tr.map(t => [new Date(t.ts).toLocaleTimeString(LOCD, {hour: "2-digit", minute: "2-digit"}), val(t)]).filter(x => x[1] != null).slice(-8); names = vs.map(x => x[0]); days = vs.map(x => x[1]); nd = Math.max(1, vs.length); }
       else { for (let i = 0; i < 7; i++){ const d = new Date(rg.a); d.setDate(d.getDate() + i); days.push(byDay[dayKey(d)]); } nd = days[5] != null || days[6] != null ? 7 : 5; }
-      const mx = Math.max.apply(null, days.slice(0, nd).map(v => Math.abs(v || 0)).concat([0])) || 1, bw = (cw - 80) / nd, mid = cy + ch / 2, half = ch / 2 - 74;
+      if (nd !== -1){ const mx = Math.max.apply(null, days.slice(0, nd).map(v => Math.abs(v || 0)).concat([0])) || 1, bw = (cw - 80) / nd, mid = cy + ch / 2, half = ch / 2 - 74;
       g.strokeStyle = "#2c2c33"; g.lineWidth = 2; g.beginPath(); g.moveTo(cx + 30, mid); g.lineTo(cx + cw - 30, mid); g.stroke();
       for (let i = 0; i < nd; i++){ const v = days[i], x = cx + 40 + i * bw; g.textAlign = "center"; g.fillStyle = "#8e8e98"; g.font = F(600, 24); g.fillText(names[i] || "", x + bw / 2, cy + ch - 24);
         if (v != null){ const h = Math.max(6, Math.abs(v) / mx * half), up = v >= 0; g.fillStyle = up ? "#3ddc97" : "#ff6b6b"; const bwid = Math.min(bw * .6, 150); rr(g, x + (bw - bwid) / 2, up ? mid - h : mid, bwid, h, 10); g.fill(); g.font = F(700, 24); g.fillText(short(v), x + bw / 2, up ? mid - h - 12 : mid + h + 30); } }
-      g.textAlign = "left";
+      g.textAlign = "left"; }
     } else {
       const y = rg.a.getFullYear(), m = rg.a.getMonth(), first = (rg.a.getDay() + 6) % 7, nd = new Date(y, m + 1, 0).getDate(), rows = Math.ceil((first + nd) / 7), gap = 10, cwd = (cw - 40 - 6 * gap) / 7, chh = Math.min(cwd, (ch - 40 - (rows - 1) * gap) / rows), ox = cx + 20, oy = cy + (ch - (rows * chh + (rows - 1) * gap)) / 2;
       for (let d = 1; d <= nd; d++){ const i = first + d - 1, x = ox + (i % 7) * (cwd + gap), yy = oy + Math.floor(i / 7) * (chh + gap), v = byDay[dayKey(new Date(y, m, d))];
@@ -7067,7 +7119,7 @@ body[data-view="akcie"] #subnav,body[data-view="krypto"] #subnav,body[data-view=
     }
     const vals = Object.keys(byDay).map(k => byDay[k]), best = vals.length ? Math.max.apply(null, vals) : null;
     cardCells(g, W, cellsY, [["Obchodů", String(st.n)], ["Winrate", tr.length ? Math.round(st.winrate) + " %" : "–"], ["Profit factor", st.pf == null ? "–" : fnum(Math.round(st.pf * 100) / 100)], kind === "day" ? ["Průměr na obchod", tr.length ? short(st.avg) : "–"] : ["Nejlepší den", best == null ? "–" : short(best), best != null && best >= 0 ? "#3ddc97" : null]]);
-    cardFoot(g, W, footY, unit === "$" ? "Čistý výsledek po poplatcích" : "R je násobek rizika na obchod");
+    cardFoot(g, W, footY, dayNote || (unit === "$" ? "Čistý výsledek po poplatcích" : "R je násobek rizika na obchod"));
     return c;
   }
   function fitText2(g, text, x, y, size, maxW){ let s = size; g.font = cardFont(700, s); while (g.measureText(text).width > maxW && s > 12){ s -= 2; g.font = cardFont(700, s); } g.fillText(text, x, y); }
