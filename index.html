@@ -398,6 +398,18 @@ body[data-view="prehled"] .rail{display:flex}
 .rtrade>b{white-space:nowrap;flex:none} .rail .list>.pill{align-self:flex-start} .go b{color:var(--ink)}
 .rtrade div{display:flex;flex-direction:column;min-width:0}
 .rtrade span{font-size:12px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rtrade.rt2{display:flex;flex-direction:column;align-items:stretch;gap:5px;width:100%;padding:10px 12px;font:inherit;color:var(--ink);text-align:left;cursor:pointer;border-radius:14px;border:1px solid color-mix(in srgb,var(--ink) 9%,transparent);background:color-mix(in srgb,var(--ink) 3.5%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);transition:background .15s,border-color .15s}
+.rtrade.rt2:hover{background:color-mix(in srgb,var(--ink) 7%,transparent);border-color:color-mix(in srgb,var(--ink) 16%,transparent)}
+.rtrade.rt2:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.rt2 .rt-top,.rt2 .rt-bot{display:flex;flex-direction:row;align-items:center;justify-content:space-between;gap:8px;min-width:0}
+.rt2 .rt-sym{display:flex;flex-direction:row;align-items:center;gap:7px;min-width:0;overflow:visible;font-size:inherit;color:inherit}
+.rt2 .rt-sym b{font-size:15px;font-weight:800;letter-spacing:-.01em}
+.rt2 .rt-dir{display:block;width:12px;height:12px;flex:none;color:var(--muted)}.rt2 .rt-dir svg{display:block;width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.rt2 .symb{width:20px;height:20px;font-size:7.5px}
+.rt2 .rt-val{font-size:15px;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap}
+.rt2.l .rt-val{color:var(--muted)}
+.rt2 .rt-set{display:flex;flex-direction:row;gap:4px;min-width:0;font-size:12px;color:var(--muted)}.rt2 .rt-sn{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:inherit}.rt2 .rt-set em{flex:none;white-space:nowrap}.rt2 .rt-set em{font-style:normal;font-weight:700;color:var(--ink)}.rt2.l .rt-set em{color:var(--muted)}
+.rt2 .rt-when{flex:none;font-size:12px;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums}
 .go{display:flex;justify-content:space-between;align-items:center;gap:12px;text-decoration:none;color:var(--ink);padding:14px 16px;border:1px solid var(--line);border-radius:16px;background:var(--surface2);transition:border-color .2s,transform .2s}
 .go:hover{transform:translateY(-1px)}
 .go div{display:flex;flex-direction:column;gap:2px;min-width:0}
@@ -655,8 +667,8 @@ kbd{font-family:var(--mono);font-size:12.5px;padding:2px 7px;border-radius:6px;b
 .tb-acc b{font-size:15px;font-weight:800}
 .tlead{display:flex;align-items:center;gap:11px;min-width:0}
 .symb{flex:none;display:grid;place-items:center;width:34px;height:34px;border-radius:50%;font-style:normal;font-size:10.5px;font-weight:800;letter-spacing:-.02em;color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.25)}
-.symb.nq{background:linear-gradient(135deg,#19b6e6,#1272c9)}
-.symb.es{background:linear-gradient(135deg,#f0553f,#b3261e)}
+.symb.nq{background:radial-gradient(circle at 32% 26%,#24303c,#0c1117 72%);box-shadow:inset 0 0 0 1.5px rgba(34,184,207,.75),inset 0 1px 0 rgba(255,255,255,.18)}
+.symb.es{background:radial-gradient(circle at 32% 26%,#3a2626,#140c0c 72%);box-shadow:inset 0 0 0 1.5px rgba(240,85,63,.75),inset 0 1px 0 rgba(255,255,255,.18)}
 .symb.ot{background:#2a2a31}
 .nav1 a.brand{width:auto;padding:0 12px 0 14px;font-size:21px;display:flex}
 .nav1 a.brand span{position:static;width:auto;height:auto;overflow:visible;clip:auto}
@@ -1252,6 +1264,7 @@ details.lex .lxr b{color:var(--muted);font-size:12px;text-transform:uppercase;le
 .wel .wel-logo{display:flex;align-items:center;gap:7px;font-weight:800;font-size:1.15rem;letter-spacing:-.02em;color:var(--wi)}
 .wel .wel-logo i{display:block;width:6px;height:18px;border-radius:2px;background:linear-gradient(var(--w3),var(--w2));position:relative;box-shadow:0 0 14px var(--w3)}
 .wel .wel-logo i::before{content:"";position:absolute;left:2px;top:-6px;width:2px;height:30px;border-radius:1px;background:inherit}
+.wel .wel-logo i{width:22px;height:22px;border-radius:6px;background:url(icon.svg) center/cover no-repeat;box-shadow:0 2px 10px -2px rgba(168,85,247,.55)}.wel .wel-logo i::before{display:none}
 .wel .kick{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--wm)}
 .wel .wel-hi{margin:6px 0 0;font-size:1.05rem;font-weight:600;color:var(--wm);animation:welUp .6s .15s cubic-bezier(.2,.8,.2,1) both}
 .wel h2{margin:-6px 0 0;font-size:clamp(2.3rem,10vw,3.1rem);line-height:1.05;font-weight:800;letter-spacing:-.035em;background:linear-gradient(100deg,var(--wi) 0%,var(--w1) 25%,var(--wi) 45%,var(--w2) 65%,var(--w3) 85%,var(--wi) 100%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:welUp .7s .25s cubic-bezier(.2,.8,.2,1) both,welShine 5s linear .9s infinite;overflow-wrap:anywhere;padding-bottom:2px}
@@ -3142,6 +3155,10 @@ details.week.wk-lock>summary .cnt{font-weight:800;color:var(--accent)}
 .brand .cd{display:block;flex:none;position:relative;isolation:isolate;width:.2em;height:.4em;margin:.09em 0 0 .1em;border-radius:.065em;background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 55%,#fff) 0%,var(--accent) 55%,color-mix(in srgb,var(--accent) 80%,#000) 100%);box-shadow:0 0 .5em color-mix(in srgb,var(--accent) 50%,transparent),inset 0 .025em 0 rgba(255,255,255,.45);transition:height .35s cubic-bezier(.2,.8,.2,1),margin .35s cubic-bezier(.2,.8,.2,1)}
 .brand .cd::before{content:"";position:absolute;left:50%;width:.062em;margin-left:-.031em;top:-.15em;bottom:-.11em;border-radius:1em;background:var(--accent);opacity:.5;z-index:-1}
 a.brand:hover .cd{height:.43em;margin-top:.05em}
+.brand .cd{width:.8em;height:.8em;margin:.04em 0 0 .16em;border-radius:.21em;background:url(icon.svg) center/cover no-repeat;box-shadow:0 .1em .4em -.1em rgba(168,85,247,.55);transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.brand .cd::before{display:none}
+a.brand:hover .cd{height:.8em;margin-top:.04em;transform:rotate(-6deg) scale(1.05)}
+@media (prefers-reduced-motion:reduce){.brand .cd{transition:none}a.brand:hover .cd{transform:none}}
 .brand.gl{font-size:30px;padding:0;text-decoration:none}
 .plans-hd .brand.gl{display:inline-flex;font-size:26px}
 .gate-logo{display:inline-flex;align-items:center;gap:8px;font-weight:800;font-size:1.3rem;letter-spacing:-.02em;color:var(--ink)}
@@ -4405,6 +4422,8 @@ body[data-view="akcie"] #subnav,body[data-view="krypto"] #subnav,body[data-view=
   const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = String(text); return n; };
   const clear = n => { while (n.firstChild) n.removeChild(n.firstChild); };
   const fmtDate = v => { if (!v) return "—"; const d = new Date(v); return isNaN(d) ? String(v) : d.toLocaleDateString(LOCD, {day:"numeric", month:"numeric", year:"numeric"}); };
+  const BRAND_IMG = new Image(); try { BRAND_IMG.src = "icon.svg"; } catch(e){}
+  const brandImgOk = () => { try { return BRAND_IMG.complete && BRAND_IMG.naturalWidth > 0; } catch(e){ return false; } };
   const fmtDateTime = v => { if (!v) return "zatím neproběhl"; const d = new Date(v); return isNaN(d) ? String(v) : d.toLocaleString(LOCD, {day:"numeric", month:"numeric", hour:"2-digit", minute:"2-digit"}); };
   const BOT_NAMES = {skaut:"Skaut", gems:"Gems", architekt:"Architekt", ucitel:"Učitel", vizionar:"Vizionář"};
   const STATUS = {untested:["Neověřeno backtestem","warn"], testing:["V testování","info"], validated:["Ověřeno backtestem","good"], failing:["Backtest nevychází","bad"]};
@@ -5875,9 +5894,15 @@ body[data-view="akcie"] #subnav,body[data-view="krypto"] #subnav,body[data-view=
     const T = $("rr-trades"); clear(T);
     const tr = jSorted().reverse().slice(0, 6);
     if (!tr.length) T.appendChild(el("p","small muted","Zatím žádný obchod."));
-    tr.forEach(t => { const r = el("div","rtrade"), a = el("div"), v = Number(t.r) || 0;
-      a.appendChild(el("b", null, (t.dir === "short" ? "↘ " : "↗ ") + (t.sym || ""))); a.appendChild(el("span", null, (t.setup || "") + " · " + fmtDateTime(t.ts)));
-      r.appendChild(a); r.appendChild(el("b", v >= 0 ? "pos" : "neg", sgn(v) + " R")); T.appendChild(r); });
+    tr.forEach(t => { const en = cfg.lang === "en", v = Number(t.r) || 0, net = tNet(t), r = el("button","rtrade rt2 " + (v >= 0 ? "w" : "l")), top = el("div","rt-top"), bot = el("div","rt-bot"), nm = el("span","rt-sym"), ar = el("i","rt-dir");
+      r.type = "button"; ar.setAttribute("aria-hidden","true"); ar.innerHTML = t.dir === "short" ? '<svg viewBox="0 0 12 12"><path d="M3 3l6 6M9 4.5V9H4.5"/></svg>' : '<svg viewBox="0 0 12 12"><path d="M3 9l6-6M4.5 3H9v4.5"/></svg>';
+      nm.appendChild(ar); nm.appendChild(symBadge(t.sym)); nm.appendChild(el("b", null, t.sym || "")); top.appendChild(nm);
+      top.appendChild(el("b", "rt-val " + (v >= 0 ? "pos" : "neg"), net != null ? usd(net) : sgn(v) + " R"));
+      const d = new Date(t.ts), age = (Date.now() - d) / 864e5, hm = isNaN(d) ? "" : d.toLocaleTimeString(LOCD, {hour: "2-digit", minute: "2-digit"});
+      const when = isNaN(d) ? "" : (age < 6 && age >= 0 ? (w => w.charAt(0).toUpperCase() + w.slice(1))(d.toLocaleDateString(LOCD, {weekday: "long"})) : d.toLocaleDateString(LOCD, {day: "numeric", month: en ? "short" : "numeric"})) + " " + hm;
+      const s1 = el("span","rt-set"); s1.appendChild(el("span","rt-sn", t.setup || (en ? "No setup" : "Bez setupu"))); s1.appendChild(el("em", v >= 0 ? "pos" : "neg", "· " + sgn(v) + "R")); bot.appendChild(s1); bot.appendChild(el("span","rt-when", when));
+      r.appendChild(top); r.appendChild(bot); r.setAttribute("aria-label", (t.sym || "") + " " + (t.dir === "short" ? "Short" : "Long") + ", " + sgn(v) + " R, " + when);
+      r.addEventListener("click", () => { try { openTrade(t); } catch(e){} }); T.appendChild(r); });
   }
   function renderDash(){
     const tr = jSorted(), st = jStats(tr), d = new Date();
@@ -6941,9 +6966,9 @@ body[data-view="akcie"] #subnav,body[data-view="krypto"] #subnav,body[data-view=
   function cardFlag(g, x, y, r){ g.save(); g.beginPath(); g.arc(x, y, r, 0, 6.3); g.clip(); g.fillStyle = "#f4f4f7"; g.fillRect(x - r, y - r, 2 * r, 2 * r); const s = 2 * r / 13; g.fillStyle = "#d22f3d"; for (let i = 0; i < 13; i += 2) g.fillRect(x - r, y - r + i * s, 2 * r, s); g.fillStyle = "#2d3f8f"; g.fillRect(x - r, y - r, r * .94, 7 * s); g.restore(); }
   function cardHead(g, W, top, right){
     g.textAlign = "left"; g.textBaseline = "alphabetic"; g.fillStyle = "#f5f5f6"; g.font = cardFont(800, 64); g.fillText("tape", 80, top + 132); const w = g.measureText("tape").width;
-    g.fillStyle = "#3ddc97"; g.fillRect(80 + w + 12, top + 94, 11, 34); g.fillRect(80 + w + 16, top + 80, 3, 58);
+    if (brandImgOk()) g.drawImage(BRAND_IMG, 80 + w + 14, top + 84, 52, 52); else { g.fillStyle = "#3ddc97"; g.fillRect(80 + w + 12, top + 94, 11, 34); g.fillRect(80 + w + 16, top + 80, 3, 58); }
     g.fillStyle = "#8e8e98"; g.font = cardFont(500, 30); g.textAlign = "right"; g.fillText(right, W - 80, top + 128); g.textAlign = "left";
-    try { cardLevel(g, 80 + w + 56, top + 70, W - 80 - g.measureText(right).width - 40); } catch(e){}
+    try { cardLevel(g, 80 + w + (brandImgOk() ? 92 : 56), top + 70, W - 80 - g.measureText(right).width - 40); } catch(e){}
   }
   // your level on shared cards: the gem and the level name, with the chosen title under it
   function cardLevel(g, x, y, maxX){ const r = xpCalc(); if (!r || !r.xp) return; const L = lvOf(r.xp), tag = lvTag(), sz = 80;
@@ -7134,7 +7159,7 @@ body[data-view="akcie"] #subnav,body[data-view="krypto"] #subnav,body[data-view=
     card.appendChild(ctl); card.appendChild(el("p","small muted","Na telefonu tlačítko Sdílet otevře nabídku s Instagramem a dalšími aplikacemi. Na počítači se obrázek stáhne."));
     paint();
   }
-  function openCard(t){ const net = tNet(t); cardDialog("Karta obchodu", opt => drawCard(t, opt), "tape-" + String(t.ts).slice(0, 10) + ".png", net != null ? ["R", "$", "both"] : ["R"], (card, repaint) => pxControls(t, card, repaint)); }
+  function openCard(t){ brandImgOk(); const net = tNet(t); cardDialog("Karta obchodu", opt => drawCard(t, opt), "tape-" + String(t.ts).slice(0, 10) + ".png", net != null ? ["R", "$", "both"] : ["R"], (card, repaint) => pxControls(t, card, repaint)); }
   function openPeriodCard(kind){ const has = jSorted().some(t => tNet(t) != null); cardDialog(kind === "day" ? "Karta dne" : kind === "week" ? "Karta týdne" : "Karta měsíce", opt => drawPeriodCard(kind, opt), "tape-" + (kind === "day" ? "den" : kind === "week" ? "tyden" : "mesic") + "-" + dayKey() + ".png", has ? ["R", "$"] : ["R"]); }
 
   // =====================================================================================
@@ -7480,8 +7505,9 @@ body[data-view="akcie"] #subnav,body[data-view="krypto"] #subnav,body[data-view=
     g.fillStyle = "#09090b"; g.fillRect(0, 0, W, H);
     const gl = g.createRadialGradient(W / 2, 260, 20, W / 2, 260, 900); gl.addColorStop(0, "rgba(138,180,255,.16)"); gl.addColorStop(1, "rgba(9,9,11,0)"); g.fillStyle = gl; g.fillRect(0, 0, W, H);
     g.strokeStyle = "#3a3a43"; g.lineWidth = 3; rr(g, 40, 40, W - 80, H - 80, 36); g.stroke(); g.strokeStyle = "#26262c"; g.lineWidth = 2; rr(g, 62, 62, W - 124, H - 124, 26); g.stroke();
-    g.textAlign = "center"; g.textBaseline = "alphabetic"; g.fillStyle = "#f5f5f6"; g.font = F(800, 84); const bw = g.measureText("tape").width; g.fillText("tape", W / 2 - 14, 210);
-    g.fillStyle = "#3ddc97"; g.fillRect(W / 2 - 14 + bw / 2 + 14, 160, 14, 44); g.fillRect(W / 2 - 14 + bw / 2 + 19, 142, 4, 76);
+    g.textAlign = "center"; g.textBaseline = "alphabetic"; g.fillStyle = "#f5f5f6"; g.font = F(800, 84); const bw = g.measureText("tape").width;
+    if (brandImgOk()){ g.fillText("tape", W / 2 - 40, 210); g.drawImage(BRAND_IMG, W / 2 - 40 + bw / 2 + 16, 146, 64, 64); }
+    else { g.fillText("tape", W / 2 - 14, 210); g.fillStyle = "#3ddc97"; g.fillRect(W / 2 - 14 + bw / 2 + 14, 160, 14, 44); g.fillRect(W / 2 - 14 + bw / 2 + 19, 142, 4, 76); }
     g.fillStyle = "#8e8e98"; g.font = F(600, 28); try { g.letterSpacing = "8px"; } catch(e){} g.fillText("CERTIFIKÁT O ABSOLVOVÁNÍ", W / 2, 320); try { g.letterSpacing = "0px"; } catch(e){}
     g.fillStyle = "#f5f5f6"; let fs = 96; g.font = F(800, fs); while (g.measureText(name).width > W - 320 && fs > 44){ fs -= 4; g.font = F(800, fs); } g.fillText(name, W / 2, 500);
     g.strokeStyle = "#3a3a43"; g.lineWidth = 2; g.beginPath(); g.moveTo(W / 2 - 320, 540); g.lineTo(W / 2 + 320, 540); g.stroke();
@@ -7962,7 +7988,7 @@ body[data-view="akcie"] #subnav,body[data-view="krypto"] #subnav,body[data-view=
   route = function(){ _routeTb(); const v = document.body.dataset.view; let hit = false;
     document.querySelectorAll(".nav1 a[data-v]").forEach(a => { const on = a.dataset.v === v; if (on){ hit = true; a.setAttribute("aria-current","page"); } else a.removeAttribute("aria-current"); });
     if (hit) document.querySelectorAll(".nav1 a[data-g]").forEach(a => a.removeAttribute("aria-current")); };
-  function symBadge(sym){ const s = String(sym || "").toUpperCase(), nq = s === "NQ" || s === "MNQ", es = s === "ES" || s === "MES", b = el("i", "symb " + (nq ? "nq" : es ? "es" : "ot"), nq ? "100" : es ? "500" : (s.slice(0, 2) || "?")); b.setAttribute("aria-hidden","true"); b.title = nq ? "Nasdaq 100" : es ? "S&P 500" : s; return b; }
+  function symBadge(sym){ const s = String(sym || "").toUpperCase(), nq = s === "NQ" || s === "MNQ", es = s === "ES" || s === "MES", b = el("i", "symb " + (nq ? "nq" : es ? "es" : "ot"), nq ? "NQ" : es ? "ES" : (s.slice(0, 2) || "?")); b.setAttribute("aria-hidden","true"); b.title = nq ? "Nasdaq 100" : es ? "S&P 500" : s; return b; }
   const _tradeRowB = tradeRow; tradeRow = function(t){ const b = _tradeRowB(t), a = b.querySelector(".tinfo"); if (a){ const w = el("div","tlead"); b.insertBefore(w, a); w.appendChild(symBadge(t.sym)); w.appendChild(a); } return b; };
   function renderHomeTrades(){ const box = $("d-trades"); if (!box) return; clear(box); const tr = jSorted().filter(t => !t.missed).slice(0, 5);
     if (!tr.length){ box.appendChild(emptyState("journal", "Zatím tu není žádný obchod.", "První zapíšeš tlačítkem + Obchod.", "Zapsat obchod", () => openTradeForm())); return; }
