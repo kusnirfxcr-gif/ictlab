@@ -5809,6 +5809,18 @@ body.fx-lite .tb-up,body.fx-lite .tb-up::after,body.fx-lite .tb-up svg,body.fx-l
     return box;
   }
 
+  // result of the previous trade that day: does a loss drag the next trade down?
+  function prevTable(tr, unit){
+    const pv = new Map(), last = {}, val = t => unit === "$" ? tNet(t) : Number(t.r) || 0; jSorted().forEach(t => { const d = tDay(t); if (d in last) pv.set(t, last[d]); last[d] = val(t); });
+    const L = [LT("Po ziskovém", "After a win"), LT("Po ztrátovém", "After a loss"), LT("Po nulovém", "After breakeven")];
+    const lab = t => { if (!pv.has(t)) return null; const v = pv.get(t); return v == null ? null : v > 0 ? L[0] : v < 0 ? L[1] : L[2]; };
+    const box = groupTable(LT("Předchozí obchod dne", "Previous trade that day"), tr, lab, L, unit); if (!box) return null;
+    const aw = jStats(tr.filter(t => lab(t) === L[0]), unit), al = jStats(tr.filter(t => lab(t) === L[1]), unit);
+    if (aw.n >= 5 && al.n >= 5) box.appendChild(el("p","small muted", al.avg < aw.avg ? LT("Po ztrátě máš průměr dalšího obchodu " + fmtU(al.avg, unit) + ", po zisku " + fmtU(aw.avg, unit) + ". Po ztrátě se vyplatí pauza nebo přísnější seznam před vstupem.", "After a loss your next trade averages " + fmtU(al.avg, unit) + ", after a win " + fmtU(aw.avg, unit) + ". A break or a stricter checklist after a loss is worth it.") : LT("Obchody po ztrátě si zatím vedou stejně nebo lépe než po zisku.", "Trades after a loss are doing as well as or better than after a win so far.")));
+    const note = box.querySelector("p"); if (note) note.style.marginTop = "8px";
+    return box;
+  }
+
   // ---------- daily plan ----------
   const P_BIAS = [["long","Long"],["short","Short"],["none","Nevím"]], P_ACT = [["up","Nahoru"],["down","Dolů"],["flat","Do strany"]];
   function planToday(){ const k = dayKey(); return jr.plans[k] || (jr.plans[k] = {bias: null, levels: "", note: "", actual: null}); }
@@ -6995,7 +7007,7 @@ body.fx-lite .tb-up,body.fx-lite .tb-up::after,body.fx-lite .tb-up svg,body.fx-l
     if (tr.length){ const D = DAYS7(), hold = t => { if (!t.tsx) return null; const m = (new Date(t.tsx) - new Date(t.ts)) / 60000; return m < 0 ? null : m < 5 ? "do 5 min" : m < 15 ? "5–15 min" : m < 60 ? "15–60 min" : "přes hodinu"; };
       const bias = t => { const p = jr.plans[tDay(t)]; if (!p || !p.bias || p.bias === "none") return "Bez plánu"; return (p.bias === "long") === (t.dir !== "short") ? "Ve směru plánu" : "Proti plánu"; };
       [groupTable("Setup", tr, t => t.setup || "Jiný", null, unit), symsOf(tr) > 1 ? groupTable("Trh", tr, t => t.sym || "–", null, unit) : null, groupTable("Den", tr, t => D[(new Date(t.ts).getDay() + 6) % 7], D, unit),
-       groupTable("Hodina", tr, t => { const h = new Date(t.ts).getHours(); return isNaN(h) ? null : String(h).padStart(2, "0") + ":00"; }, Array.from({length: 24}, (x, i) => String(i).padStart(2, "0") + ":00"), unit), rankTable(tr, unit),
+       groupTable("Hodina", tr, t => { const h = new Date(t.ts).getHours(); return isNaN(h) ? null : String(h).padStart(2, "0") + ":00"; }, Array.from({length: 24}, (x, i) => String(i).padStart(2, "0") + ":00"), unit), rankTable(tr, unit), prevTable(tr, unit),
        premOn() ? groupTable("Cyklus (New York)", tr, tradeCycle, CYCN.concat(["Londýn", "Asie", "Mimo cykly"]), unit) : null, groupTable("Směr", tr, t => t.dir === "short" ? "Short" : "Long", null, unit), groupTable("Plán dne", tr, bias, ["Ve směru plánu","Proti plánu","Bez plánu"], unit),
        groupTable("Seznam", tr, t => t.ck ? (t.ck.k === t.ck.n ? "Splněný" : "Nesplněný") : null, null, unit), groupTable("Chyba", tr, t => (t.tags && t.tags.length) ? t.tags : null, null, unit),
        groupTable("Před vstupem", tr, t => t.emo || null, EMO, unit), groupTable("Hodnocení", tr, t => t.grade ? gradeName(t.grade) : null, GRADES.map(x => x[1]), unit),
