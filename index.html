@@ -3826,6 +3826,13 @@ body[data-view="akcie"] #subnav,body[data-view="krypto"] #subnav,body[data-view=
 @media (prefers-reduced-motion:reduce){.tb-up::before,.av[class*="fr-"]::before,#rl-lv:has(>.rw-mini.bfx-theme)::before{animation:none!important}}
 .pf-xp .xb i{animation-iteration-count:2!important}.pf-xp.gain .xb i{animation-iteration-count:2,1!important}
 .strip b{animation:none!important}.tb-up svg{animation-iteration-count:3!important}
+/* rail profile card: everything sits above the inner fill, and a softer, wider glint */
+#rl-lv:has(>.rw-mini.bfx-theme)>*{position:relative;z-index:2}
+#rl-lv:has(>.rw-mini.bfx-theme)::before{background:conic-gradient(from 0deg,transparent 0 34%,color-mix(in srgb,var(--accent) 12%,transparent) 50%,color-mix(in srgb,var(--accent) 55%,transparent) 68%,color-mix(in srgb,var(--accent) 80%,#fff) 80%,color-mix(in srgb,var(--accent) 55%,transparent) 90%,transparent 100%)!important;filter:blur(1.5px);animation-duration:6.5s!important}
+#rl-lv:has(>.rw-mini.bfx-theme)::after{inset:2px!important;border-radius:17px!important}
+#rl-lv>.rw-mini.bfx-theme{margin:2px;border-radius:17px}
+.tb-up.tb-top{color:#2a1d05!important}.tb-up.tb-top::before{background:conic-gradient(from 0deg,#e0a43a,#fff3c4,#f7d774,#c58aff,#e0a43a)!important}
+.tb-up.tb-top::after{background:linear-gradient(135deg,#f7d774,#e9b44c)!important}.tb-up.tb-top svg{color:#2a1d05;fill:currentColor;stroke:none}
 </style>
 </head>
 <body>
@@ -11176,7 +11183,9 @@ body[data-view="akcie"] #subnav,body[data-view="krypto"] #subnav,body[data-view=
     const act = a.parentNode, ub = act && act.querySelector(":scope > .tb-up"); if (ub) ub.remove();
     if (!auth || GATE_OFF) return; const p = planShown(), b = el("i", "pl-b", p.id === "beginner" ? LT("Free", "Free") : p.id === "pro" ? "Pro" : "Smart"); b.setAttribute("aria-hidden", "true"); if (b.firstChild) b.firstChild.__en = b.textContent;
     a.classList.add("pl-" + p.id); a.appendChild(b); a.setAttribute("aria-label", LT("Účet, plán ", "Account, plan ") + p.name); a.title = a.getAttribute("aria-label");
-    if (p.id !== "smart" && act) act.insertBefore(upBtn(), a); }
+    if (act){ if (p.id !== "smart") act.insertBefore(upBtn(), a); else { // top plan: the button stays in the bar, as a gold way to the plans
+      const b2 = el("button","tb-up tb-top"); b2.type = "button"; b2.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8l4 4 4-7 4 7 4-4-2 10H6z"/></svg>'; const t2 = el("span", null, LT("Plány", "Plans")); if (t2.firstChild) t2.firstChild.__en = t2.textContent; b2.appendChild(t2);
+      b2.setAttribute("aria-label", LT("Máš Smart Money. Zobrazit plány", "You have Smart Money. See the plans")); b2.title = b2.getAttribute("aria-label"); b2.addEventListener("click", ev => { ev.preventDefault(); ev.stopPropagation(); planOpen(true); }); act.insertBefore(b2, a); } } }
   { const _rab2 = renderAccBtn; renderAccBtn = function(){ _rab2(); try { tbPlanPaint(); } catch(e){ if (window.console) console.error(e); } }; }
   planRow = function(){ const old = accBox.querySelector(".pf-plan"); if (old) old.remove(); try { tbPlanPaint(); } catch(e){} if (!auth || GATE_OFF || accMode === "newpass") return;
     const p = planShown(), r = el("div", "pf-plan"), nm = el("b", "pl-name " + p.id, p.name); if (nm.firstChild) nm.firstChild.__en = nm.textContent;
