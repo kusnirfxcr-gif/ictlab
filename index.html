@@ -3160,6 +3160,9 @@ a.brand:hover .cd{height:.43em;margin-top:.05em}
 .gate-card{background:var(--surface);border:1px solid var(--line);border-radius:26px;padding:26px 24px 20px;box-shadow:0 34px 90px -46px rgba(0,0,0,.7)}
 .gate-card>h2{margin:0;font-size:1.45rem;letter-spacing:-.02em;color:var(--ink)}
 .gate-cs{margin:6px 0 16px;font-size:.92rem;line-height:1.45;color:var(--muted)}
+.gate-trust{list-style:none;margin:-6px 0 16px;padding:0;display:none;flex-wrap:wrap;gap:6px 14px}.gate.is-up .gate-trust{display:flex}
+.gate-trust li{display:flex;align-items:center;gap:6px;font-size:.8rem;font-weight:600;color:var(--ink)}
+.gate-trust svg{flex:none;width:15px;height:15px;fill:none;stroke:var(--good);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 .gate-slot>.card{margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:none!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;display:flex;flex-direction:column;gap:12px}
 .gate-slot>.card::before,.gate-slot>.card::after{display:none!important}
 .gate-slot>.card>h2,.gate-slot>.card>p.small.muted,.gate-slot .pf-th{display:none!important}
@@ -10434,7 +10437,10 @@ body.sync-wait .ob-first{visibility:hidden}
     [["up", "Nový účet", "New account", "zdarma", "free"], ["in", "Mám účet", "I have an account", "", ""]].forEach(o => { const b = el("button"), t = el("b", null, LT(o[1], o[2])); b.type = "button"; b.dataset.m = o[0]; b.setAttribute("role", "tab"); if (t.firstChild) t.firstChild.__en = t.textContent; b.appendChild(t); if (o[3]){ const sm = el("small", null, LT(o[3], o[4])); if (sm.firstChild) sm.firstChild.__en = sm.textContent; b.appendChild(sm); }
       b.addEventListener("click", () => { if (accMode === o[0]) return; accMode = o[0]; accMsg = ""; accRender(); }); seg.appendChild(b); });
     g._seg = seg; card.appendChild(seg);
-    g._h = el("h2"); g._s = el("p", "gate-cs"); g._slot = slot; card.appendChild(g._h); card.appendChild(g._s); card.appendChild(slot);
+    g._h = el("h2"); g._s = el("p", "gate-cs"); g._slot = slot; card.appendChild(g._h); card.appendChild(g._s);
+    // what a new account costs and keeps, said before the form (shown only on the sign-up tab)
+    { const tr = el("ul", "gate-trust"); [["Beginner zdarma napořád", "Beginner free forever"], ["Bez platební karty", "No payment card"], ["Zálohu deníku si kdykoli stáhneš", "Download your journal any time"]].forEach(t => { const li = el("li"); li.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7.5"/></svg>'; li.appendChild(gT("span", null, t[0], t[1])); tr.appendChild(li); }); card.appendChild(tr); }
+    card.appendChild(slot);
     inn.appendChild(head); inn.appendChild(card); inn.appendChild(more); g.appendChild(inn); g.setAttribute("role", "dialog"); g.setAttribute("aria-modal", "true"); g.setAttribute("aria-label", LT("Přihlášení do Tape", "Sign in to Tape"));
     document.body.appendChild(g); return g;
   }
