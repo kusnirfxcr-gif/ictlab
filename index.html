@@ -3217,6 +3217,7 @@ a.brand:hover .cd{height:.8em;margin-top:.04em;transform:rotate(-6deg) scale(1.0
 .plan h3{margin:0;font-size:1.3rem;letter-spacing:-.02em;color:var(--ink)}
 .pl-tag{margin:-8px 0 0;color:var(--muted);font-size:.88rem}
 .pl-price{display:flex;align-items:baseline;gap:7px;flex-wrap:wrap;margin-top:4px}.pl-price b{font-size:2rem;font-weight:800;letter-spacing:-.03em;color:var(--ink)}.pl-price span{color:var(--muted);font-size:.86rem}
+.pl-yr{margin:-8px 0 0;font-size:.84rem;color:var(--muted)}.pl-yr em{font-style:normal;font-weight:700;color:var(--good)}
 .pl-plan{margin:-8px 0 0;min-height:1.1em;font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 .plan ul{list-style:none;margin:4px 0 6px;padding:0;display:grid;gap:9px;flex:1;align-content:start}
 .plan li{display:flex;gap:9px;font-size:.92rem;line-height:1.38;color:var(--ink)}
@@ -10885,6 +10886,8 @@ body.fx-lite .tb-up,body.fx-lite .tb-up::after,body.fx-lite .tb-up svg,body.fx-l
       const nm = el("h3", null, p.name); nm.firstChild.__en = p.name; c.appendChild(nm); c.appendChild(gT("p", "pl-tag", p.tag[0], p.tag[1]));
       if (p.price){ const pb = el("b", null, p.price + LT(" Kč", " CZK")); pb.firstChild.__en = pb.textContent; pr.appendChild(pb); pr.appendChild(gT("span", null, "měsíčně", "a month")); } else pr.appendChild(gT("b", null, "Zdarma", "Free"));
       c.appendChild(pr);
+      // the yearly price and what it saves, next to the monthly one, while it can be bought or is still only planned
+      if (p.price && p.year && p.year < p.price * 12 && (yl || !link)){ const mo = Math.round((p.price * 12 - p.year) / p.price), yr = el("p", "pl-yr", LT("nebo " + p.year.toLocaleString("cs-CZ") + " Kč ročně · ", "or " + p.year.toLocaleString("en-GB") + " CZK a year · ")), em = el("em", null, LT(mo === 1 ? "1 měsíc zdarma" : mo + (mo < 5 ? " měsíce zdarma" : " měsíců zdarma"), mo === 1 ? "1 month free" : mo + " months free")); if (yr.firstChild) yr.firstChild.__en = yr.firstChild.nodeValue; if (em.firstChild) em.firstChild.__en = em.textContent; yr.appendChild(em); c.appendChild(yr); }
       let sub = el("p", "pl-plan"); if (mine && on && p.price && accRow && accRow.until){ sub.textContent = LT("Aktivní do ", "Active until ") + fmtDate(accRow.until); if (sub.firstChild) sub.firstChild.__en = sub.textContent; } else if (p.price && !link) sub = gT("p", "pl-plan", "Plánovaná cena", "Planned price"); c.appendChild(sub);
       p.items.forEach(it => { const li = el("li"); li.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7.5"/></svg>'; li.appendChild(gT("span", null, it[0], it[1])); ul.appendChild(li); }); c.appendChild(ul);
       b.type = "button"; b.textContent = mine && on ? LT("Tvůj plán", "Your plan") : !p.price ? (on ? LT("Zůstat u Beginner", "Stay on Beginner") : LT("Začít zdarma", "Start free")) : link ? LT("Předplatit", "Subscribe") : LT("Mám zájem, dejte mi vědět", "I'm interested, let me know"); if (b.firstChild) b.firstChild.__en = b.textContent; if (mine && on) b.disabled = true;
