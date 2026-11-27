@@ -3833,6 +3833,13 @@ body[data-view="akcie"] #subnav,body[data-view="krypto"] #subnav,body[data-view=
 #rl-lv>.rw-mini.bfx-theme{margin:2px;border-radius:17px}
 .tb-up.tb-top{color:#2a1d05!important}.tb-up.tb-top::before{background:conic-gradient(from 0deg,#e0a43a,#fff3c4,#f7d774,#c58aff,#e0a43a)!important}
 .tb-up.tb-top::after{background:linear-gradient(135deg,#f7d774,#e9b44c)!important}.tb-up.tb-top svg{color:#2a1d05;fill:currentColor;stroke:none}
+@keyframes cuS{from{transform:scaleX(var(--s0))}to{transform:scaleX(1)}}.h2-bar>i{transform-origin:left center;will-change:transform}
+.hero2 .h2-stats>div{contain:layout style}.hero2 .h2-stats b{font-variant-numeric:tabular-nums}
+/* economy mode (default on phones) and off: no endless decoration, no blur under the bars */
+body.fx-lite .topbar,body.fx-lite .bottombar,body.fx-lite nav.tabs{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+body.fx-lite:not(.sakura) .topbar{background:var(--bg)!important}
+body.fx-lite .tb-up::before,body.fx-lite .av[class*="fr-"]::before,body.fx-lite #rl-lv:has(>.rw-mini.bfx-theme)::before,body.fx-lite .bnr.bfx-theme>.bfr{animation:none!important}
+body.fx-lite .tb-up,body.fx-lite .tb-up::after,body.fx-lite .tb-up svg,body.fx-lite .pf-xp .xb i,body.fx-lite #streak.streak2.s3{animation:none!important}
 </style>
 </head>
 <body>
@@ -8974,7 +8981,7 @@ body[data-view="akcie"] #subnav,body[data-view="krypto"] #subnav,body[data-view=
     const fxApply = () => { const e = eff(), b = document.body; b.classList.toggle("fx-lite", e === "lite" || e === "off"); b.classList.toggle("fx-off", e === "off"); };
     fxApply(); document.addEventListener("visibilitychange", () => document.body.classList.toggle("fx-hidden", document.hidden));
     const box = el("div","card"); const _rsFx = renderSettings; renderSettings = function(){ _rsFx(); try { if (fontBox.parentNode && box.previousElementSibling !== fontBox) fontBox.parentNode.insertBefore(box, fontBox.nextSibling); } catch(e){} };
-    const fxRender = () => { clear(box); box.appendChild(el("h2", null, "Animace a výkon")); box.appendChild(el("p","small muted","Když se aplikace na telefonu seká, nech Úsporné nebo zvol Vypnuté. Na telefonu je Úsporné výchozí: méně padajících lístků, žádné rozmazané pozadí pod kartami. Platí jen pro tohle zařízení."));
+    const fxRender = () => { clear(box); box.appendChild(el("h2", null, "Animace a výkon")); box.appendChild(el("p","small muted","Když se aplikace na telefonu seká, nech Úsporné nebo zvol Vypnuté. Na telefonu je Úsporné výchozí: lišta bez rozmazaného pozadí, rámečky a tlačítka bez stálých animací, méně padajících lístků. Platí jen pro tohle zařízení."));
       const ch = el("div","chips"); LV.forEach(o => { const b = el("button","chip" + (fx === o[0] ? " on" : ""), o[1]); b.type = "button"; b.setAttribute("aria-pressed", String(fx === o[0])); b.addEventListener("click", () => { fx = o[0]; try { localStorage.setItem(FK, fx); } catch(e){} fxApply(); fxRender(); }); ch.appendChild(b); }); box.appendChild(ch);
       box.appendChild(el("span","small muted","Teď běží: " + ({full: "plné animace", lite: "úsporný režim", off: "animace vypnuté"})[eff()] + ".")); };
     fxRender();
@@ -9324,7 +9331,8 @@ body[data-view="akcie"] #subnav,body[data-view="krypto"] #subnav,body[data-view=
   }
   // ---------- numbers that count up and rings that fill, only when the value really changes ----------
   const cuSeen = {}, cuSt = {}; let cuReady = document.readyState === "complete" ? 0 : Infinity;
-  if (cuReady) window.addEventListener("load", () => { cuReady = performance.now() + 250; Object.keys(cuSt).forEach(k => { const o = cuSt[k]; if (o.t0 === Infinity) o.t0 = cuReady; }); });
+  if (cuReady) window.addEventListener("load", () => { const go = () => { cuReady = performance.now() + 60; Object.keys(cuSt).forEach(k => { const o = cuSt[k]; if (o.t0 === Infinity) o.t0 = cuReady; }); };
+    if (window.requestIdleCallback) requestIdleCallback(go, {timeout: 1400}); else setTimeout(go, 700); });
   function cuCalm(){ try { return document.body.classList.contains("fx-off") || window.matchMedia("(prefers-reduced-motion: reduce)").matches; } catch(e){ return false; } }
   const cuEase = p => 1 - Math.pow(1 - p, 3);
   // one animation per value: if the card is redrawn mid-way, the new copy carries on from the same moment
@@ -9333,13 +9341,13 @@ body[data-view="akcie"] #subnav,body[data-view="krypto"] #subnav,body[data-view=
     const st = {from: from, to: to, t0: o ? now : Math.max(now, cuReady), ms: cuCalm() || from === to ? 0 : (o ? 700 : ms || 1100)}; cuSt[key] = st; return st; }
   const cuAt = st => { const p = st.ms ? Math.max(0, Math.min(1, (performance.now() - st.t0) / st.ms)) : 1; return {p: p, v: st.from + (st.to - st.from) * cuEase(p)}; };
   function cuRun(node, key, to, fmt){ if (!node || !isFinite(to)) return; const st = cuPlan(key, to); let a = cuAt(st); node.textContent = fmt(a.p >= 1 ? to : a.v); if (a.p >= 1) return;
-    const step = () => { if (!node.isConnected) return; a = cuAt(st); node.textContent = fmt(a.p >= 1 ? to : a.v); if (a.p < 1) requestAnimationFrame(step); }; requestAnimationFrame(step); }
+    let last = node.textContent; const step = () => { if (!node.isConnected) return; a = cuAt(st); const t = fmt(a.p >= 1 ? to : a.v); if (t !== last){ node.textContent = t; last = t; } if (a.p < 1) requestAnimationFrame(step); }; requestAnimationFrame(step); }
   function cuRing(key, pct){ const C = 2 * Math.PI * 9, p = Math.max(0, Math.min(1, pct || 0)), st = cuPlan(key + ":r", p), w = el("i","cu-ring"), el2 = performance.now() - st.t0;
     w.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle class="bg" cx="12" cy="12" r="9"/><circle class="fg" cx="12" cy="12" r="9" stroke-dasharray="' + C.toFixed(2) + '"/></svg>';
     const fg = w.querySelector(".fg"); fg.style.setProperty("--o0", (C * (1 - st.from)).toFixed(2)); fg.style.setProperty("--o1", (C * (1 - p)).toFixed(2)); fg.style.strokeDashoffset = (C * (1 - p)).toFixed(2);
     if (st.ms && el2 < st.ms){ fg.style.animation = "cuDash " + st.ms + "ms cubic-bezier(.33,1,.68,1) " + (isFinite(el2) ? -el2 : 400).toFixed(0) + "ms both"; } return w; }
   function cuWidth(node, key, pc){ const st = cuPlan(key, pc), el2 = performance.now() - st.t0; node.style.width = pc + "%"; node.style.setProperty("--w0", st.from + "%"); node.style.setProperty("--w1", pc + "%");
-    if (st.ms && el2 < st.ms) node.style.animation = "cuW " + st.ms + "ms cubic-bezier(.33,1,.68,1) " + (isFinite(el2) ? -el2 : 400).toFixed(0) + "ms both"; }
+    node.style.setProperty("--s0", pc > 0 ? Math.max(0, Math.min(1, st.from / pc)).toFixed(3) : "1"); if (st.ms && el2 < st.ms) node.style.animation = "cuS " + st.ms + "ms cubic-bezier(.33,1,.68,1) " + (isFinite(el2) ? -el2 : 400).toFixed(0) + "ms both"; }
   function heroPaint(){
     const home = $("v-prehled"), old = home.querySelector(".herocard"), cta = $("d-cta"); if (!old) return;
     if (hero2.parentNode !== home) home.insertBefore(hero2, old);
@@ -11199,6 +11207,10 @@ body[data-view="akcie"] #subnav,body[data-view="krypto"] #subnav,body[data-view=
       const w = el("div","pf-sub"); if (site && /^https:\/\//.test(site.portal || "")){ const a = el("a","pf-subl", LT("Spravovat nebo zrušit předplatné", "Manage or cancel the subscription")); a.href = site.portal + (site.portal.indexOf("?") < 0 ? "?" : "&") + "prefilled_email=" + encodeURIComponent(auth.email || ""); a.target = "_blank"; a.rel = "noopener"; w.appendChild(a); }
       const wd = el("button","pf-subl", LT("Odstoupit od smlouvy", "Withdraw from the contract")); wd.type = "button"; wd.addEventListener("click", () => payWithdraw(p)); w.appendChild(wd); r.parentNode.insertBefore(w, r.nextSibling); } catch(e){ if (window.console) console.error(e); } }; }
   try { planRow(); } catch(e){}
+  // ---------- speed: pages you are not looking at are not rebuilt; they are rebuilt when you open them (every page switch refreshes) ----------
+  [["renderCommunity", "cm-feed"], ["renderCoach", "co-find"], ["renderPlaybook", "pb"], ["renderCosts", "j-costs"], ["renderLimits", "lim-n"], ["renderWeekly", "wc"], ["renderNews", "nw"]].forEach(x => {
+    try { const f = eval(x[0]); if (typeof f !== "function") return; const g = function(){ const box = document.getElementById(x[1]), v = box && box.closest(".view"); if (v && !v.classList.contains("on")) return; return f.apply(this, arguments); };
+      ({renderCommunity: () => { renderCommunity = g; }, renderCoach: () => { renderCoach = g; }, renderPlaybook: () => { renderPlaybook = g; }, renderCosts: () => { renderCosts = g; }, renderLimits: () => { renderLimits = g; }, renderWeekly: () => { renderWeekly = g; }, renderNews: () => { renderNews = g; }})[x[0]](); } catch(e){ if (window.console) console.error(e); } });
   // ---------- moving to a new address without losing data ----------
   // data/site.json: {"move": "https://new-address", "from": ["https://old-address"]}. The old site hands the data to the new one in a window the person opens.
   let site = {move: "", from: []};
