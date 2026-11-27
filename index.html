@@ -3587,6 +3587,20 @@ html body .pf-xp .lv-emb{flex:none;--sz:22px!important}html body .rw-mini .pf-xp
 .av.av-g{background:radial-gradient(circle at 50% 38%,#2a2d3a,#0b0c10 72%)!important}
 .av.av-g img.av-gem,.tb-acc.av-gt img.av-gem{width:100%;height:100%;object-fit:contain;transform:scale(.82);filter:drop-shadow(0 3px 6px rgba(0,0,0,.6))}
 .tb-acc.av-gt{background:radial-gradient(circle at 50% 38%,#2a2d3a,#0b0c10 72%)!important}
+/* the basic look every account has: banner and frame in the app theme */
+.bn-theme::before{background:radial-gradient(70% 140% at 100% 0%,color-mix(in srgb,var(--accent) 34%,transparent),transparent 62%),radial-gradient(60% 120% at 0% 100%,color-mix(in srgb,var(--accent) 14%,transparent),transparent 60%),radial-gradient(circle,color-mix(in srgb,var(--ink) 9%,transparent) 1px,transparent 1.4px) 0 0/16px 16px,linear-gradient(135deg,color-mix(in srgb,var(--accent) 7%,var(--surface)),var(--surface))}
+.bnr.bn-theme{color:var(--ink)}.bnr.bn-theme::after{background:none!important;animation:none!important}
+.bnr.bn-theme h2,.bnr.bn-theme b{color:var(--ink)}.bnr.bn-theme .small.muted,.bnr.bn-theme .muted{color:var(--muted)!important}
+.pf-hd.bnr.bn-theme .pf-nm b,.pf-hd.bnr.bn-theme .pf-nm .lv-tag,.pf-hd.bnr.bn-theme .small.muted{text-shadow:none}
+.pf-hd.bnr.bn-theme .pf-nm .lv-tag{color:var(--accent)}
+.bnr.bn-theme .pf-xp{background:color-mix(in srgb,var(--ink) 6%,var(--surface))!important;color:var(--ink)!important;border-top:1px solid var(--line)!important}
+.bnr.bfx-theme{border:1px solid var(--line);overflow:hidden}
+.bnr.bfx-theme>.bfr{display:block;inset:0;border-radius:inherit;padding:1.5px;background:conic-gradient(from var(--ua),transparent 0 62%,color-mix(in srgb,var(--accent) 40%,transparent) 72%,var(--accent) 82%,#fff 85%,var(--accent) 88%,transparent 96%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);animation:upSpin 5s linear infinite}
+.bnr.bfx-theme::before,.bnr.bfx-theme::after{inset:0}
+.av.fr-theme{--fr:conic-gradient(from 210deg,color-mix(in srgb,var(--accent) 35%,var(--surface)),var(--accent),color-mix(in srgb,var(--accent) 50%,#fff),var(--accent),color-mix(in srgb,var(--accent) 35%,var(--surface)))}
+.rw-t .bt-theme{background:radial-gradient(70% 140% at 100% 0%,color-mix(in srgb,var(--accent) 40%,transparent),transparent 62%),linear-gradient(135deg,color-mix(in srgb,var(--accent) 8%,var(--surface)),var(--surface));border:1px solid var(--line)}
+.rw-t .rw-fr.ft-theme{border:1.5px solid var(--accent);box-shadow:0 0 10px color-mix(in srgb,var(--accent) 40%,transparent)}
+@media (prefers-reduced-motion:reduce){.bnr.bfx-theme>.bfr{animation:none}}
 </style>
 </head>
 <body>
@@ -7219,7 +7233,7 @@ html body .pf-xp .lv-emb{flex:none;--sz:22px!important}html body .rw-mini .pf-xp
   function postEl(p, opts){
     const c = el("div","card post"), head = el("div","row"), who = el("div","tdh"), r = Number(p.r) || 0, big = el("div","tbig " + (r >= 0 ? "pos" : "neg"), sgn(r) + " R"), mine = !p.saved;
     const av = mine && profile && profile.avatar ? avEl(42) : el("span","pavatar", (p.author || "?").trim().charAt(0).toUpperCase()); who.appendChild(av);
-    const nm = el("div","tinfo"), nr = el("div","post-nm"); nr.appendChild(el("b", null, p.author || "Bez jména")); if (mine){ try { const L = lvOf(xpCalc().xp), ge = el("span","post-lv"); ge.innerHTML = gemImg(L.n); ge.title = "Level " + L.n + " · " + L.name; nr.appendChild(ge); nr.appendChild(el("span","lv-tag", lvTag())); } catch(e){} } nm.appendChild(nr);
+    const nm = el("div","tinfo"), nr = el("div","post-nm"); nr.appendChild(el("b", null, p.author || "Bez jména")); if (mine){ try { const L = lvOf(xpCalc().xp), ge = el("span","post-lv"); ge.innerHTML = gemSvg(L.n, false); ge.title = "Level " + L.n + " · " + L.name; nr.appendChild(ge); nr.appendChild(el("span","lv-tag", lvTag())); } catch(e){} } nm.appendChild(nr);
     nm.appendChild(el("span", null, (p.sym || "") + " · " + (p.dir === "short" ? "Short" : "Long") + (p.setup ? " · " + p.setup : "") + (p.ts && !isNaN(new Date(p.ts)) ? " · " + fmtDateTime(p.ts) : ""))); who.appendChild(nm);
     head.appendChild(who); head.appendChild(el("span","pill " + (p.saved ? "info" : "good"), p.saved ? "Uložený" : "Můj")); c.appendChild(head);
     if (p.usd != null) big.appendChild(el("span", null, usd(p.usd))); c.appendChild(big);
@@ -9596,14 +9610,14 @@ html body .pf-xp .lv-emb{flex:none;--sz:22px!important}html body .rw-mini .pf-xp
   // ---------- profile rewards: meme avatars, frames and banners (original drawings, cosmetic only) ----------
   const RW_AV = {};   // avatars are the cut gems of the level materials
   const RW_MAT = [["graphite", "Grafit", "Graphite", {"lv": 1}], ["bronze", "Bronz", "Bronze", {"lv": 2}], ["emerald", "Smaragd", "Emerald", {"lv": 3}], ["sapphire", "Safír", "Sapphire", {"lv": 4}], ["ruby", "Rubín", "Ruby", {"lv": 5}], ["amethyst", "Ametyst", "Amethyst", {"lv": 6}], ["obsidian", "Obsidián", "Obsidian", {"lv": 7}], ["gold", "Zlato", "Gold", {"lv": 8}], ["platinum", "Platina", "Platinum", {"lv": 9}], ["diamond", "Diamant", "Diamond", {"lv": 10}], ["smart", "Black Gold", "Black Gold", {"plan": "smart"}]];
-  const RW_FR = {none: {n: ["Bez rámečku", "No frame"], lv: 1}}, RW_BN = {};
+  const RW_FR = {theme: {n: ["Podle motivu", "Theme"], lv: 1}, none: {n: ["Bez rámečku", "No frame"], lv: 1}}, RW_BN = {theme: {n: ["Podle motivu", "Theme"], lv: 1}};
   RW_MAT.forEach((m, i) => { RW_BN[m[0]] = Object.assign({n: [m[1], m[2]]}, m[3]); if (m[0] !== "graphite") RW_FR[m[0]] = Object.assign({n: [m[1], m[2]]}, m[3]); if (i < 10) RW_AV[m[0]] = Object.assign({n: [m[1], m[2]], img: i + 1}, m[3]); });
   function rwHave(it, L, m){ try { if (it.plan) return RW_PLAN_RANK[planNowSafe()] >= RW_PLAN_RANK[it.plan]; if (it.ach === "streak7") return (m && m.best >= 7); if (it.ach === "replay10") return (m && m.rpN >= 10); return L.n >= (it.lv || 1); } catch(e){ return false; } }
   const RW_PLAN_RANK = {beginner: 0, pro: 1, smart: 2};
   function planNowSafe(){ try { return window.TapePlan && window.TapePlan.now ? window.TapePlan.now() : "beginner"; } catch(e){ return "beginner"; } }
   function rwNeed(it){ return it.plan ? LT("V plánu ", "In ") + (it.plan === "smart" ? "Smart Money" : "Pro") : it.ach === "streak7" ? LT("Série 7 dní", "7-day streak") : it.ach === "replay10" ? LT("10 dní v replayi", "10 days in replay") : "Level " + (it.lv || 1); }
   const rwSvg = k => RW_AV[k] && RW_AV[k].img ? '<img class="av-gem" src="assets/rw/lv-' + RW_AV[k].img + '.webp" alt="" draggable="false">' : RW_AV[k] && RW_AV[k].svg ? '<svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' + RW_AV[k].svg.replace(/ID_/g, k + "-") + "</svg>" : "";
-  function rwFrameCls(){ const f = profile && profile.frame; return f && RW_FR[f] && f !== "none" ? " fr-" + f : ""; }
+  function rwFrameCls(){ const f = rwFr(); return f !== "none" ? " fr-" + f : ""; }
   let rwSeenXp = null;
   function rwStrip(xp, L, from){ const xs = el("button","pf-xp"), xb = el("span","xb"), xi = el("i"), xn = el("span","xn", lvNum(xp) + " XP"); xs.type = "button"; xs.setAttribute("aria-label", LT("Levely a odměny", "Levels and rewards")); xs.appendChild(el("span","xl","LV " + L.n)); try { xs.appendChild(lvEmb(L.n, 22)); } catch(e){} xb.appendChild(xi); xs.appendChild(xb);
     if (L.next){ const sm = el("small", null, LT("do LV ", "to LV ") + (L.n + 1) + ": " + lvNum(L.left)); xn.appendChild(sm); } xs.appendChild(xn); xs.addEventListener("click", ev => { ev.stopPropagation(); lvPanel(); });
@@ -9613,23 +9627,24 @@ html body .pf-xp .lv-emb{flex:none;--sz:22px!important}html body .rw-mini .pf-xp
     top.appendChild(el("b", null, nickOf() || L.name)); top.appendChild(el("span","lv-tag", lvTag())); tx.appendChild(top); tx.appendChild(el("span","small muted", "Level " + L.n + " · " + L.name));
     hd.appendChild(avEl(sz || 84)); hd.appendChild(tx); rwFrameEl(hd); hd.appendChild(rwStrip(xp, L, from)); hd.addEventListener("click", () => lvPanel()); return hd; }
   function rwFrameEl(hd){ try { if (hd && !hd.querySelector(":scope > .bfr")){ const f = el("i","bfr"); f.setAttribute("aria-hidden","true"); hd.appendChild(f); } } catch(e){} }
-  function rwBannerCls(){ const b = (profile && profile.banner) || "graphite", f = profile && profile.frame; return " bn-" + (RW_BN[b] ? b : "graphite") + (f && f !== "none" && RW_FR[f] ? " bf-" + f : ""); }
+  const rwFr = () => { const f = profile && profile.frame; return f && RW_FR[f] ? f : "theme"; };
+  function rwBannerCls(){ const b = (profile && profile.banner) || "theme", f = rwFr(); return " bn-" + (RW_BN[b] ? b : "theme") + (f === "theme" ? " bfx-theme" : f !== "none" ? " bf-" + f : ""); }
   let rwLookOpen = false;
   function rwSections(sec, L, m, again, avRedraw, hdEl){
     const pick = (field, key) => { if (!profile) profile = {sym: "NQ", syms: ["NQ"], goal: 10, level: "start"}; profile[field] = key; profSave(); };
     const tile = (grid, on, lock, need, inner, label, fn) => { const b = el("button", "rw-t" + (on ? " on" : "") + (lock ? " lock" : "")); b.type = "button"; b.appendChild(inner); const t = el("span", null, label); if (t.firstChild) t.firstChild.__en = label; b.appendChild(t); if (lock){ const s = el("small", null, need); if (s.firstChild) s.firstChild.__en = need; b.appendChild(s); }
       b.addEventListener("click", () => { if (lock){ toast(LT("Odemkne se: ", "Unlocks with: ") + need + "."); return; } fn(); grid.querySelectorAll(".rw-t").forEach(z => z.classList.toggle("on", z === b)); }); grid.appendChild(b); };
-    const s1 = sec(LT("Profilovka", "Avatar"), LT("Broušený kámen v materiálu tvého levelu. Místo něj můžeš mít vlastní fotku.", "A cut gem in your level's material. You can use your own photo instead.")), g1 = el("div","rw-grid");
+    const s1 = sec(LT("Profilovka", "Avatar"), LT("Vlastní fotka, iniciála, nebo kámen odemčený levelem.", "Your own photo, your initial, or a gem unlocked by level.")), g1 = el("div","rw-grid");
     { const a = el("span","av"); a.style.setProperty("--sz", "52px"); if (profile && profile.avatar){ const i = el("img"); i.src = profile.avatar; i.alt = ""; a.appendChild(i); } else a.appendChild(el("b", null, (nickOf() || "T").charAt(0).toUpperCase()));
       tile(g1, !(profile && profile.avk), false, "", a, profile && profile.avatar ? LT("Moje fotka", "My photo") : LT("Iniciála", "Initial"), () => { pick("avk", ""); avRedraw(); again(); }); }
     Object.keys(RW_AV).forEach(k => { const it = RW_AV[k], lock = !rwHave(it, L, m), a = el("span","av av-g"); a.style.setProperty("--sz", "52px"); a.innerHTML = rwSvg(k);
       tile(g1, profile && profile.avk === k, lock, rwNeed(it), a, LT(it.n[0], it.n[1]), () => { pick("avk", k); avRedraw(); again(); }); }); s1.appendChild(g1);
-    const s2 = sec(LT("Rámeček", "Frame"), LT("Broušený rámeček kolem celého banneru a prstenec kolem profilovky.", "A cut-crystal frame around the whole banner and a ring around your avatar.")), g2 = el("div","rw-grid");
-    Object.keys(RW_FR).forEach(k => { const it = RW_FR[k], lock = !rwHave(it, L, m), a = el("span","rw-bn rw-fr" + (k === "none" ? "" : " ft-" + k));
-      tile(g2, ((profile && profile.frame) || "none") === k, lock, rwNeed(it), a, LT(it.n[0], it.n[1]), () => { pick("frame", k); avRedraw(); if (hdEl) hdEl.className = hdEl.className.replace(/ ?bf-\w+/g, "") + (k === "none" ? "" : " bf-" + k); again(); }); }); s2.appendChild(g2);
-    const s3 = sec(LT("Banner profilu", "Profile banner"), LT("Pozadí za tvým jménem v profilu. Vyšší level odemyká vzácnější materiál.", "The background behind your name in the profile. Higher levels unlock rarer materials.")), g3 = el("div","rw-grid");
+    const s2 = sec(LT("Rámeček", "Frame"), LT("Rámeček kolem banneru a profilovky. Základní ladí s motivem aplikace, materiály odemykáš levelem.", "A frame around the banner and your avatar. The basic one follows the app theme, materials unlock with levels.")), g2 = el("div","rw-grid");
+    Object.keys(RW_FR).forEach(k => { const it = RW_FR[k], lock = !rwHave(it, L, m), a = el("span","rw-bn rw-fr" + (k === "none" ? "" : k === "theme" ? " bt-theme ft-theme" : " ft-" + k));
+      tile(g2, rwFr() === k, lock, rwNeed(it), a, LT(it.n[0], it.n[1]), () => { pick("frame", k); avRedraw(); if (hdEl) hdEl.className = hdEl.className.replace(/ ?bfx?-\w+/g, "") + (k === "theme" ? " bfx-theme" : k === "none" ? "" : " bf-" + k); again(); }); }); s2.appendChild(g2);
+    const s3 = sec(LT("Banner profilu", "Profile banner"), LT("Pozadí karty profilu. Základní ladí s motivem aplikace, materiály jsou odměna za level.", "The background of your profile card. The basic one follows the app theme, materials are level rewards.")), g3 = el("div","rw-grid");
     Object.keys(RW_BN).forEach(k => { const it = RW_BN[k], lock = !rwHave(it, L, m), d = el("span","rw-bn bt-" + k);
-      tile(g3, ((profile && profile.banner) || "graphite") === k, lock, rwNeed(it), d, LT(it.n[0], it.n[1]), () => { pick("banner", k); if (hdEl) hdEl.className = hdEl.className.replace(/ ?bn-\w+/g, "") + " bn-" + k; again(); }); }); s3.appendChild(g3);
+      tile(g3, ((profile && profile.banner) || "theme") === k, lock, rwNeed(it), d, LT(it.n[0], it.n[1]), () => { pick("banner", k); if (hdEl) hdEl.className = hdEl.className.replace(/ ?bn-\w+/g, "") + " bn-" + k; again(); }); }); s3.appendChild(g3);
   }
   const LV = [[0, "Retail", "Retail", "Retail Rick"], [150, "Student", "Apprentice", "Larper"], [400, "Čtenář grafu", "Chart Reader", "Prop Firm Donor"], [800, "Lovec likvidity", "Liquidity Hunter", "Breakeven Bob"], [1400, "Stratég", "Strategist", "Demo Demon"], [2200, "Sniper", "Sniper", "Sweep Sniper"], [3300, "Risk manažer", "Risk Manager", "Funded Chad"], [4800, "Profík", "Pro", "Payout Enjoyer"], [6800, "Mentor", "Mentor", "Market Wizard"], [9500, "Smart Money", "Smart Money", "The Algorithm"]];
   const lvTag = () => { const t = profile && +profile.tag; return LV[(t >= 1 && t <= lvNow ? t : lvNow) - 1][3]; };
@@ -9699,9 +9714,9 @@ html body .pf-xp .lv-emb{flex:none;--sz:22px!important}html body .rw-mini .pf-xp
     return {xp: xp, S: S, m: {plN: plN, tr: own.length, byPlan: byPlanAll, cool: cool, best: sr.best, seen: seen, ex: ex, fc: fc, rpN: rpN, rpT: rp.length, cGot: courseGot, cAll: courseAll, prb: prb}};
   }
   function lvOf(xp){ let n = 1; for (let i = 0; i < LV.length; i++) if (xp >= LV[i][0]) n = i + 1; const cur = LV[n - 1][0], nx = n < LV.length ? LV[n][0] : null; return {n: n, name: lvName(n), cur: cur, next: nx, pct: nx ? Math.max(0, Math.min(1, (xp - cur) / (nx - cur))) : 1, left: nx ? nx - xp : 0}; }
-  function lvRewards(n){ const out = []; try { const mt = RW_MAT[n - 1]; if (mt) out.push(LT("odznak ", "badge ") + LT(mt[1], mt[2])); } catch(e){}
+  function lvRewards(n){ const out = []; if (n === 1 || lvTier(n) !== lvTier(n - 1)) out.push(LT(LV_TIER[lvTier(n)][0], LV_TIER[lvTier(n)][1]));
     THEMES.forEach(t => { if (t[6] === n) out.push(LT("vzhled ", "theme ") + thName(t)); }); Object.keys(FLAMES).forEach(k => { if (FLAMES[k].lv === n) out.push(LT("plamen série ", "streak flame ") + LT(FLAMES[k].n[0], FLAMES[k].n[1])); });
-    try { [[RW_AV, LT("profilovka ", "avatar ")], [RW_FR, LT("rámeček ", "frame ")], [RW_BN, LT("banner ", "banner ")]].forEach(g => Object.keys(g[0]).forEach(k => { const it = g[0][k]; if (it.lv === n && k !== "none" && !(n === 1 && k === "graphite")) out.push(g[1] + LT(it.n[0], it.n[1])); })); } catch(e){}
+    try { [[RW_AV, LT("profilovka ", "avatar ")], [RW_FR, LT("rámeček ", "frame ")], [RW_BN, LT("banner ", "banner ")]].forEach(g => Object.keys(g[0]).forEach(k => { const it = g[0][k]; if (it.lv === n && n > 1) out.push(g[1] + LT(it.n[0], it.n[1])); })); } catch(e){}
     out.push(LT("titul ", "title ") + LV[n - 1][3]); return out; }
   function lvAch(m){ const pal = (typeof pa !== "undefined" && pa.length) || 16, prl = (typeof pr !== "undefined" && pr.length) || 17;
     return [["plan1", "První plán", "First plan", "Napiš plán dne aspoň z poloviny.", "Fill in at least half of a daily plan.", m.plN, 1, "ck"], ["plan10", "Deset plánů", "Ten plans", "Deset dní s plánem.", "Ten days with a plan.", m.plN, 10, "ck"],
@@ -9768,16 +9783,16 @@ html body .pf-xp .lv-emb{flex:none;--sz:22px!important}html body .rw-mini .pf-xp
       else { const N = t === 1 ? 3 : t === 2 ? 6 : 8, base = t === 1 ? Math.PI / 2 : t === 2 ? Math.PI / 6 : Math.PI / 8, step = 2 * Math.PI / N; let want = Math.atan2(dy, dx) - base; want += Math.round((cA - want) / step) * step; tA = cA + (want - cA) * near; } // one corner points at the pointer, by the shortest turn
       kick(); }, {passive: true});
     document.addEventListener("mouseleave", () => { tA = 0; tT = 0; kick(); }); }
-  function lvEmb(n, sz){ const e = el("span","lv-emb t" + lvTier(n) + " g" + n); e.style.setProperty("--sz", (sz || 56) + "px"); e.innerHTML = gemImg(n); e._img = 1; e.setAttribute("aria-hidden", "true"); return e; }
+  function lvEmb(n, sz){ const e = el("span","lv-emb t" + lvTier(n)); e.style.setProperty("--sz", (sz || 56) + "px"); e.innerHTML = gemSvg(n); e.setAttribute("aria-hidden", "true"); return e; }
   function lvBar(L, xp){ const w = el("div","lv-bar"), i = el("i"); i.style.width = Math.max(3, Math.round(L.pct * 100)) + "%"; w.appendChild(i); w.setAttribute("role", "progressbar"); w.setAttribute("aria-valuenow", String(Math.round(L.pct * 100))); w.setAttribute("aria-label", LT("Postup k dalšímu levelu", "Progress to the next level")); return w; }
   const lvNum = v => Number(v).toLocaleString(cfg.lang === "en" ? "en-US" : "cs-CZ");
   const lvNextLine = (L) => L.next ? LT("Do levelu ", "To level ") + (L.n + 1) + " · " + lvName(L.n + 1) + LT(" zbývá ", ": ") + lvNum(L.left) + " XP" + LT("", " to go") : LT("Nejvyšší level. Teď už jen držet proces.", "Top level. Now just keep the process.");
 
   // ----- painting: top bar ring and the card on the home page -----
   function lvPaint(){
-    const L = lvOf(lvXp), T3 = LV_COL[L.n - 1] || LV_TIER[lvTier(L.n)][2];
+    const L = lvOf(lvXp), T3 = LV_TIER[lvTier(L.n)][2];
     if (!lvBtn){ const st = $("streak"); if (st){ lvBtn = el("button","tb-lvl"); lvBtn.type = "button"; lvBtn.id = "tb-lvl"; lvBtn.innerHTML = '<svg viewBox="0 0 36 36" aria-hidden="true"><defs><linearGradient id="tblvg" x1="0" y1="0" x2="1" y2="1"><stop offset="0"/><stop offset=".5"/><stop offset="1"/></linearGradient></defs><circle class="tr" cx="18" cy="18" r="15.500"/><circle class="pg" cx="18" cy="18" r="15.500" stroke="url(#tblvg)" transform="rotate(-90 18 18)"/></svg><b></b>'; lvBtn.dataset.n = ""; lvBtn.addEventListener("click", () => lvPanel()); st.parentNode.insertBefore(lvBtn, st); } }
-    if (lvBtn){ const C = 2 * Math.PI * 15.5, pg = lvBtn.querySelector(".pg"); pg.style.strokeDasharray = C.toFixed(2); pg.style.strokeDashoffset = (C * (1 - L.pct)).toFixed(2); lvBtn.querySelectorAll("stop").forEach((s, i) => s.setAttribute("stop-color", T3[i])); if (lvBtn.dataset.n !== String(L.n)){ lvBtn.dataset.n = String(L.n); lvBtn.querySelector("b").innerHTML = gemImg(L.n); } lvBtn.className = "tb-lvl t" + lvTier(L.n);
+    if (lvBtn){ const C = 2 * Math.PI * 15.5, pg = lvBtn.querySelector(".pg"); pg.style.strokeDasharray = C.toFixed(2); pg.style.strokeDashoffset = (C * (1 - L.pct)).toFixed(2); lvBtn.querySelectorAll("stop").forEach((s, i) => s.setAttribute("stop-color", T3[i])); if (lvBtn.dataset.n !== String(L.n)){ lvBtn.dataset.n = String(L.n); lvBtn.querySelector("b").innerHTML = gemSvg(L.n, false); } lvBtn.className = "tb-lvl t" + lvTier(L.n);
       const tt = "Level " + L.n + " · " + L.name + " · " + lvNum(lvXp) + " XP"; lvBtn.title = tt; lvBtn.setAttribute("aria-label", tt); }
     const home = $("v-prehled"); if (!home) return;
     if (!lvCard || !lvCard.isConnected){ lvCard = el("div","card lv-card"); lvCard.dataset.card = "level"; const promo = home.querySelector('[data-card="replay"]'); if (promo) home.insertBefore(lvCard, promo); else home.appendChild(lvCard); }
@@ -9829,7 +9844,7 @@ html body .pf-xp .lv-emb{flex:none;--sz:22px!important}html body .rw-mini .pf-xp
     f.style.left = Math.max(50, Math.min(innerWidth - 50, x)) + "px"; f.style.top = Math.max(70, y) + "px"; document.body.appendChild(f); setTimeout(() => f.remove(), 1900);
     if (lvBtn){ lvBtn.classList.remove("bump"); void lvBtn.offsetWidth; lvBtn.classList.add("bump"); } }
   function lvShow(q){
-    const L = lvOf(q.xp), ov = el("div","wel lvup"), c = el("div","lvup-c"); try { welTone(ov); } catch(e){} ov.style.setProperty("--lvc", (LV_COL[L.n - 1] || LV_TIER[lvTier(L.n)][2])[1]);
+    const L = lvOf(q.xp), ov = el("div","wel lvup"), c = el("div","lvup-c"); try { welTone(ov); } catch(e){} ov.style.setProperty("--lvc", LV_TIER[lvTier(L.n)][2][1]);
     let closed = false; const close = () => { if (closed) return; closed = true; ov.classList.add("out"); setTimeout(() => { ov.remove(); if (!document.querySelector(".ob,.wel")) document.body.classList.remove("modal"); setTimeout(lvPump, 300); }, 330); };
     const ring = el("div","lvup-ring"), emb = lvEmb(L.n, 144); ring.appendChild(emb); gemSpin(emb, L.n, 900);
     c.appendChild(el("p","lvup-k", q.intro ? LT("Tvůj level", "Your level") : LT("Nový level", "Level up"))); c.appendChild(ring); c.appendChild(el("p","lvup-n", "Level " + L.n)); c.appendChild(el("h2", null, L.name));
