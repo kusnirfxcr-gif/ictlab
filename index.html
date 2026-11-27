@@ -5428,7 +5428,7 @@ body[data-view="akcie"] #subnav,body[data-view="krypto"] #subnav,body[data-view=
     ck.items.forEach(it => {
       const row = el("div","ck-row" + (ckOn[it.id] ? " on" : "")), cb = el("input"), lb = el("label", null, it.text), del = el("button","ck-del","×");
       cb.type = "checkbox"; cb.id = "ck-" + it.id; cb.checked = !!ckOn[it.id]; lb.htmlFor = cb.id; del.type = "button"; del.setAttribute("aria-label", "Smazat otázku");
-      cb.addEventListener("change", () => { ckOn[it.id] = cb.checked; row.classList.toggle("on", cb.checked); ckVerdict(); });
+      cb.addEventListener("change", () => { ckOn[it.id] = cb.checked; row.classList.toggle("on", cb.checked); ckVerdict(); try { ptWarnPaint(); } catch(e){} });
       del.addEventListener("click", () => { ck.items = ck.items.filter(x => x.id !== it.id); delete ckOn[it.id]; ckStore(); renderCk(); });
       row.appendChild(cb); row.appendChild(lb); row.appendChild(del); box.appendChild(row);
     });
@@ -6391,6 +6391,9 @@ body[data-view="akcie"] #subnav,body[data-view="krypto"] #subnav,body[data-view=
     if (pv && isFinite(d.qty) && d.qty > 0) out.usd = Math.round(pts * pv * d.qty * 100) / 100;
     return out;
   }
+  // what the journal sees right now: repainted on every checklist tick, not only when the page is drawn
+  function ptWarnPaint(){ const w = $("pt-warn"); if (!w) return; clear(w); preTrade(null, null).forEach(x => w.appendChild(el("p","small ptl " + x[0], x[1])));
+    if (!w.children.length) w.appendChild(el("p","small ptl good","Nic nebrání vstupu. Rozhoduje setup.")); }
   function preTrade(dir, setup){
     const w = [], lm = limitState(), tr = jSorted(), td = todayTrades(), p = planToday(), R = t => Number(t.r) || 0;
     if (lm) w.push(["bad", lm]);
@@ -6757,8 +6760,7 @@ body[data-view="akcie"] #subnav,body[data-view="krypto"] #subnav,body[data-view=
     const box = $("j-today"), td = todayTrades().filter(t => cfg.acct === "all" || tAcct(t) === cfg.acct).sort((a, b) => String(b.ts).localeCompare(String(a.ts))); clear(box);
     $("j-today-sum").textContent = td.length ? sgn(td.reduce((s, t) => s + (Number(t.r) || 0), 0)) + " R" : "";
     if (!td.length) box.appendChild(el("p","small muted","Dnes zatím žádný obchod.")); td.forEach(t => box.appendChild(tradeRow(t)));
-    const w = $("pt-warn"); clear(w); preTrade(null, null).forEach(x => w.appendChild(el("p","small ptl " + x[0], x[1])));
-    if (!w.children.length) w.appendChild(el("p","small ptl good","Nic nebrání vstupu. Rozhoduje setup."));
+    ptWarnPaint();
     const p = planToday(), sk = $("p-skip"); if (document.activeElement !== sk) sk.value = p.skip || "";
     propGuard();
   }
@@ -9494,8 +9496,8 @@ body[data-view="akcie"] #subnav,body[data-view="krypto"] #subnav,body[data-view=
       [["Čas NY", d.ny + (d.ses ? " · " + d.ses : " · mimo seanci")], ["Dnes", d.w + " výher · " + d.l + " ztrát"]].forEach(x => { const q = el("div"); q.appendChild(el("span", null, x[0])); q.appendChild(el("b", null, x[1])); day.appendChild(q); });
       Array.prototype.forEach.call(list.children, bt => bt.classList.toggle("on", !!ckOn[bt.dataset.k])); const n = ck.items.length, k = ck.items.filter(i => ckOn[i.id]).length;
       verdict.className = "mo-verdict " + (d.stop ? "stop" : n && k === n ? "go" : "wait"); verdict.textContent = d.stop ? d.stop : n && k === n ? "Setup je kompletní." : "Splněno " + k + " z " + n + ". Podle plánu obchod neber."; try { renderCk(); } catch(e){} };
-    ck.items.forEach(it => { const bt = el("button","mo-ckb"), ic = el("i"); bt.type = "button"; ic.innerHTML = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.6 8.4 6.6 11.3 12.4 4.9"/></svg>'; bt.appendChild(ic); bt.appendChild(el("span", null, it.text)); bt.dataset.k = it.id; bt.addEventListener("click", () => { ckOn[it.id] = !ckOn[it.id]; paint(); }); list.appendChild(bt); });
-    rs.addEventListener("click", () => { ck.items.forEach(i => { ckOn[i.id] = false; }); paint(); }); w.appendChild(list); w.appendChild(verdict); w.appendChild(rs); paint(); return w;
+    ck.items.forEach(it => { const bt = el("button","mo-ckb"), ic = el("i"); bt.type = "button"; ic.innerHTML = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.6 8.4 6.6 11.3 12.4 4.9"/></svg>'; bt.appendChild(ic); bt.appendChild(el("span", null, it.text)); bt.dataset.k = it.id; bt.addEventListener("click", () => { ckOn[it.id] = !ckOn[it.id]; paint(); try { ptWarnPaint(); } catch(e){} }); list.appendChild(bt); });
+    rs.addEventListener("click", () => { ck.items.forEach(i => { ckOn[i.id] = false; }); paint(); try { ptWarnPaint(); } catch(e){} }); w.appendChild(list); w.appendChild(verdict); w.appendChild(rs); paint(); return w;
   }
   function openChecklist(){ const o = overlay("ckbox"), head = el("div","row"), x = el("button","ck-del","Zavřít"), sw = el("div","ck-sw"), body = el("div"), row = el("div","rp-ctl"); x.type = "button"; x.addEventListener("click", o.close);
     head.appendChild(el("h2", null, "Checklist před vstupem")); head.appendChild(x); o.card.appendChild(head); sw.setAttribute("role","group"); sw.setAttribute("aria-label","Druh checklistu");

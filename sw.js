@@ -1,5 +1,5 @@
 // Offline cache for Tape. Network first, cache as fallback, so new versions always win when online.
-const C = "tape-v193";
+const C = "tape-v194";
 const CORE = ["./", "index.html", "replay.js", "manifest.json", "icon.svg", "icon-192.png", "apple-touch-icon.png", "course.json", "strategy.txt",
   "data/core.json", "data/en.json", "data/insights.json", "data/concepts.json", "data/lessons.json", "data/glossary.json", "data/ideas.json", "data/priceaction.json", "data/practice.json", "data/news.json", "data/study.json", "data/site.json", "data/premium.json", "data/gems.json"];
 self.addEventListener("install", e => { self.skipWaiting(); e.waitUntil(caches.open(C).then(c => c.addAll(CORE)).catch(() => {})); });
