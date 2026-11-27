@@ -3584,6 +3584,9 @@ html body .pf-xp .lv-emb{flex:none;--sz:22px!important}html body .rw-mini .pf-xp
 .rw-mini .pf-nm b{font-size:18px!important}.rw-mini .pf-nm .lv-tag{font-size:13px!important}.rw-mini .small.muted{font-size:11.5px}
 .rw-mini .pf-xp{font-size:11.5px;padding:8px 10px!important;gap:7px}.rw-mini .pf-xp .xb{height:7px}.rw-mini .pf-xp .xn small{display:none}.rw-mini .pf-xp .lv-emb{--sz:18px!important}
 .rl-lvx2{display:block;padding:10px 14px 12px}
+.av.av-g{background:radial-gradient(circle at 50% 38%,#2a2d3a,#0b0c10 72%)!important}
+.av.av-g img.av-gem,.tb-acc.av-gt img.av-gem{width:100%;height:100%;object-fit:contain;transform:scale(.82);filter:drop-shadow(0 3px 6px rgba(0,0,0,.6))}
+.tb-acc.av-gt{background:radial-gradient(circle at 50% 38%,#2a2d3a,#0b0c10 72%)!important}
 </style>
 </head>
 <body>
@@ -9591,15 +9594,15 @@ html body .pf-xp .lv-emb{flex:none;--sz:22px!important}html body .rw-mini .pf-xp
   // ---------- levels: XP for the process (lessons, plans, journaling, replay, streak), never for profit ----------
   const LT = (cz, en) => cfg.lang === "en" ? en : cz;
   // ---------- profile rewards: meme avatars, frames and banners (original drawings, cosmetic only) ----------
-  const RW_AV = {};   // character avatars are held back until the owner approves the art
+  const RW_AV = {};   // avatars are the cut gems of the level materials
   const RW_MAT = [["graphite", "Grafit", "Graphite", {"lv": 1}], ["bronze", "Bronz", "Bronze", {"lv": 2}], ["emerald", "Smaragd", "Emerald", {"lv": 3}], ["sapphire", "Safír", "Sapphire", {"lv": 4}], ["ruby", "Rubín", "Ruby", {"lv": 5}], ["amethyst", "Ametyst", "Amethyst", {"lv": 6}], ["obsidian", "Obsidián", "Obsidian", {"lv": 7}], ["gold", "Zlato", "Gold", {"lv": 8}], ["platinum", "Platina", "Platinum", {"lv": 9}], ["diamond", "Diamant", "Diamond", {"lv": 10}], ["smart", "Black Gold", "Black Gold", {"plan": "smart"}]];
   const RW_FR = {none: {n: ["Bez rámečku", "No frame"], lv: 1}}, RW_BN = {};
-  RW_MAT.forEach(m => { RW_BN[m[0]] = Object.assign({n: [m[1], m[2]]}, m[3]); if (m[0] !== "graphite") RW_FR[m[0]] = Object.assign({n: [m[1], m[2]]}, m[3]); });
+  RW_MAT.forEach((m, i) => { RW_BN[m[0]] = Object.assign({n: [m[1], m[2]]}, m[3]); if (m[0] !== "graphite") RW_FR[m[0]] = Object.assign({n: [m[1], m[2]]}, m[3]); if (i < 10) RW_AV[m[0]] = Object.assign({n: [m[1], m[2]], img: i + 1}, m[3]); });
   function rwHave(it, L, m){ try { if (it.plan) return RW_PLAN_RANK[planNowSafe()] >= RW_PLAN_RANK[it.plan]; if (it.ach === "streak7") return (m && m.best >= 7); if (it.ach === "replay10") return (m && m.rpN >= 10); return L.n >= (it.lv || 1); } catch(e){ return false; } }
   const RW_PLAN_RANK = {beginner: 0, pro: 1, smart: 2};
   function planNowSafe(){ try { return window.TapePlan && window.TapePlan.now ? window.TapePlan.now() : "beginner"; } catch(e){ return "beginner"; } }
   function rwNeed(it){ return it.plan ? LT("V plánu ", "In ") + (it.plan === "smart" ? "Smart Money" : "Pro") : it.ach === "streak7" ? LT("Série 7 dní", "7-day streak") : it.ach === "replay10" ? LT("10 dní v replayi", "10 days in replay") : "Level " + (it.lv || 1); }
-  const rwSvg = k => RW_AV[k] ? '<svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' + RW_AV[k].svg.replace(/ID_/g, k + "-") + "</svg>" : "";
+  const rwSvg = k => RW_AV[k] && RW_AV[k].img ? '<img class="av-gem" src="assets/rw/lv-' + RW_AV[k].img + '.webp" alt="" draggable="false">' : RW_AV[k] && RW_AV[k].svg ? '<svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' + RW_AV[k].svg.replace(/ID_/g, k + "-") + "</svg>" : "";
   function rwFrameCls(){ const f = profile && profile.frame; return f && RW_FR[f] && f !== "none" ? " fr-" + f : ""; }
   let rwSeenXp = null;
   function rwStrip(xp, L, from){ const xs = el("button","pf-xp"), xb = el("span","xb"), xi = el("i"), xn = el("span","xn", lvNum(xp) + " XP"); xs.type = "button"; xs.setAttribute("aria-label", LT("Levely a odměny", "Levels and rewards")); xs.appendChild(el("span","xl","LV " + L.n)); try { xs.appendChild(lvEmb(L.n, 22)); } catch(e){} xb.appendChild(xi); xs.appendChild(xb);
@@ -9616,6 +9619,11 @@ html body .pf-xp .lv-emb{flex:none;--sz:22px!important}html body .rw-mini .pf-xp
     const pick = (field, key) => { if (!profile) profile = {sym: "NQ", syms: ["NQ"], goal: 10, level: "start"}; profile[field] = key; profSave(); };
     const tile = (grid, on, lock, need, inner, label, fn) => { const b = el("button", "rw-t" + (on ? " on" : "") + (lock ? " lock" : "")); b.type = "button"; b.appendChild(inner); const t = el("span", null, label); if (t.firstChild) t.firstChild.__en = label; b.appendChild(t); if (lock){ const s = el("small", null, need); if (s.firstChild) s.firstChild.__en = need; b.appendChild(s); }
       b.addEventListener("click", () => { if (lock){ toast(LT("Odemkne se: ", "Unlocks with: ") + need + "."); return; } fn(); grid.querySelectorAll(".rw-t").forEach(z => z.classList.toggle("on", z === b)); }); grid.appendChild(b); };
+    const s1 = sec(LT("Profilovka", "Avatar"), LT("Broušený kámen v materiálu tvého levelu. Místo něj můžeš mít vlastní fotku.", "A cut gem in your level's material. You can use your own photo instead.")), g1 = el("div","rw-grid");
+    { const a = el("span","av"); a.style.setProperty("--sz", "52px"); if (profile && profile.avatar){ const i = el("img"); i.src = profile.avatar; i.alt = ""; a.appendChild(i); } else a.appendChild(el("b", null, (nickOf() || "T").charAt(0).toUpperCase()));
+      tile(g1, !(profile && profile.avk), false, "", a, profile && profile.avatar ? LT("Moje fotka", "My photo") : LT("Iniciála", "Initial"), () => { pick("avk", ""); avRedraw(); again(); }); }
+    Object.keys(RW_AV).forEach(k => { const it = RW_AV[k], lock = !rwHave(it, L, m), a = el("span","av av-g"); a.style.setProperty("--sz", "52px"); a.innerHTML = rwSvg(k);
+      tile(g1, profile && profile.avk === k, lock, rwNeed(it), a, LT(it.n[0], it.n[1]), () => { pick("avk", k); avRedraw(); again(); }); }); s1.appendChild(g1);
     const s2 = sec(LT("Rámeček", "Frame"), LT("Broušený rámeček kolem celého banneru a prstenec kolem profilovky.", "A cut-crystal frame around the whole banner and a ring around your avatar.")), g2 = el("div","rw-grid");
     Object.keys(RW_FR).forEach(k => { const it = RW_FR[k], lock = !rwHave(it, L, m), a = el("span","rw-bn rw-fr" + (k === "none" ? "" : " ft-" + k));
       tile(g2, ((profile && profile.frame) || "none") === k, lock, rwNeed(it), a, LT(it.n[0], it.n[1]), () => { pick("frame", k); avRedraw(); if (hdEl) hdEl.className = hdEl.className.replace(/ ?bf-\w+/g, "") + (k === "none" ? "" : " bf-" + k); again(); }); }); s2.appendChild(g2);
@@ -9627,7 +9635,7 @@ html body .pf-xp .lv-emb{flex:none;--sz:22px!important}html body .rw-mini .pf-xp
   const lvTag = () => { const t = profile && +profile.tag; return LV[(t >= 1 && t <= lvNow ? t : lvNow) - 1][3]; };
   function profSave(){ try { localStorage.setItem("knot-profile", JSON.stringify(profile)); } catch(e){ toast(LT("Profil se nepodařilo uložit.", "Could not save the profile.")); } }
   const AV_CAM = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.500"/></svg>';
-  function avEl(sz){ const a = el("span","av" + rwFrameCls()), pf = profile || {}; a.style.setProperty("--sz", sz + "px"); if (pf.avk && RW_AV[pf.avk]){ a.innerHTML = rwSvg(pf.avk); return a; } if (pf.avatar){ const i = el("img"); i.src = pf.avatar; i.alt = ""; a.appendChild(i); } else a.appendChild(el("b", null, (nickOf() || "T").charAt(0).toUpperCase())); return a; }
+  function avEl(sz){ const a = el("span","av" + rwFrameCls()), pf = profile || {}; a.style.setProperty("--sz", sz + "px"); if (pf.avk && RW_AV[pf.avk]){ a.classList.add("av-g"); a.innerHTML = rwSvg(pf.avk); return a; } if (pf.avatar){ const i = el("img"); i.src = pf.avatar; i.alt = ""; a.appendChild(i); } else a.appendChild(el("b", null, (nickOf() || "T").charAt(0).toUpperCase())); return a; }
   function avPick(done){ const f = el("input"); f.type = "file"; f.accept = "image/*"; f.addEventListener("change", () => { const file = f.files && f.files[0]; if (!file) return; const im = new Image(), url = URL.createObjectURL(file);
       im.onload = () => { try { const S2 = 192, cv = document.createElement("canvas"), m = Math.min(im.naturalWidth, im.naturalHeight); cv.width = cv.height = S2; cv.getContext("2d").drawImage(im, (im.naturalWidth - m) / 2, (im.naturalHeight - m) / 2, m, m, 0, 0, S2, S2); if (!profile) profile = {sym: "NQ", syms: ["NQ"], goal: 10, level: "start"}; profile.avatar = cv.toDataURL("image/jpeg", .85); profSave(); toast(LT("Profilová fotka je uložená.", "Profile picture saved.")); done && done(); } catch(e){ toast(LT("Obrázek se nepodařilo načíst.", "Could not read the image.")); } URL.revokeObjectURL(url); };
       im.onerror = () => { toast(LT("Tenhle soubor není obrázek, který umím načíst.", "This file is not an image I can read.")); URL.revokeObjectURL(url); }; im.src = url; }); f.click(); }
@@ -9851,7 +9859,7 @@ html body .pf-xp .lv-emb{flex:none;--sz:22px!important}html body .rw-mini .pf-xp
   function xpSoon(){ clearTimeout(lvTm); lvTm = setTimeout(xpCheck, 450); }
   { const _pL = persist; persist = function(){ const r = _pL.apply(this, arguments); xpSoon(); return r; }; const _pLa = persistLaura; persistLaura = function(){ const r = _pLa.apply(this, arguments); xpSoon(); return r; };
     const _raLv = refreshAll; refreshAll = function(){ const r = _raLv.apply(this, arguments); xpSoon(); return r; }; }
-  { const _rab = renderAccBtn; renderAccBtn = function(){ _rab(); try { const a = $("tb-acc"); if (a && auth && profile && profile.avk && RW_AV[profile.avk]){ clear(a); a.innerHTML = rwSvg(profile.avk); a.classList.add("pic"); } else if (a && auth && profile && profile.avatar){ clear(a); const i = el("img"); i.src = profile.avatar; i.alt = ""; a.appendChild(i); a.classList.add("pic"); } else if (a) a.classList.remove("pic"); } catch(e){} };
+  { const _rab = renderAccBtn; renderAccBtn = function(){ _rab(); try { const a = $("tb-acc"); if (a) a.classList.remove("av-gt"); if (a && auth && profile && profile.avk && RW_AV[profile.avk]){ clear(a); a.innerHTML = rwSvg(profile.avk); a.classList.add("pic","av-gt"); } else if (a && auth && profile && profile.avatar){ clear(a); const i = el("img"); i.src = profile.avatar; i.alt = ""; a.appendChild(i); a.classList.add("pic"); } else if (a) a.classList.remove("pic"); } catch(e){} };
     const _rrE = renderRails; renderRails = function(){ _rrE(); try { const a = $("rr-edit"); if (a){ const pc = plProgress(planToday()).pct, sp = a.querySelector("span"), tx = pc >= 100 ? "Upravit plán" : pc > 0 ? "Dopsat plán" : "Napsat plán dne"; if (sp.textContent !== tx && sp.dataset.t !== tx){ sp.dataset.t = tx; sp.textContent = tx; } a.classList.toggle("todo", pc === 0); } } catch(e){} }; }
   try { flameApply(); lvPaint(); renderAccBtn(); } catch(e){ if (window.console) console.error(e); }
   setTimeout(xpCheck, 1600); setInterval(() => { if (!document.hidden) xpCheck(); }, 7000);
