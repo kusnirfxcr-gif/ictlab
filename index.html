@@ -5213,7 +5213,7 @@ body:not(.sakura) .pf-nm>b,body:not(.sakura) .pf-nm b{font-size:18px!important}
   // Laura: daily lessons, quizzes, glossary, questions for Claude
   let lessons = [], glossary = [], curLesson = null, saveLaura = null, lessonsLoaded = false;
   let lp = {read:{}, quiz:{}};
-  const attempt = {};
+  const attempt = {}, quizFix = {};
   const LS_LAURA = "ictlab-laura";
   try { const v = JSON.parse(localStorage.getItem(LS_LAURA) || "null"); if (v && typeof v === "object") lp = Object.assign({}, v, {read: v.read || {}, quiz: v.quiz || {}, seen: v.seen || {}}); } catch(e){}
   function persistLaura(){
@@ -5300,7 +5300,7 @@ body:not(.sakura) .pf-nm>b,body:not(.sakura) .pf-nm b{font-size:18px!important}
           if (j === correct) b.classList.add("ok"); else if (j === a) b.classList.add("no");
         } else b.addEventListener("click", () => {
           const cur = (attempt[l.id] || ans).slice(); cur[i] = j; attempt[l.id] = cur;
-          if (qz.every((x, k) => cur[k] != null)){
+          if (qz.every((x, k) => cur[k] != null) && !quizFix[l.id]){
             const sc = qz.filter((x, k) => cur[k] === Number(x.correct)).length;
             lp.quiz[l.id] = {score: sc, total: qz.length, answers: cur, ts: new Date().toISOString()};
             lp.read[l.id] = true; persistLaura();
@@ -5315,10 +5315,14 @@ body:not(.sakura) .pf-nm>b,body:not(.sakura) .pf-nm b{font-size:18px!important}
     });
     if (answered === qz.length){
       const row = el("div","row");
+      const en = cfg.lang === "en", fx = quizFix[l.id], miss = qz.length - right;
       row.appendChild(el("b", null, "Výsledek: " + right + " z " + qz.length));
+      if (miss){ const fb = el("button","primary", en ? "Retry the " + (miss === 1 ? "question" : miss + " questions") + " I missed" : (miss === 1 ? "Zopakovat chybnou otázku" : "Zopakovat jen chybné (" + miss + ")")); fb.type = "button"; if (en && fb.firstChild) fb.firstChild.__en = fb.firstChild.nodeValue;
+        fb.addEventListener("click", () => { quizFix[l.id] = true; attempt[l.id] = qz.map((x, k) => ans[k] === Number(x.correct) ? ans[k] : null); renderLesson(); const f = $("l-body").querySelector(".quiz .opt:not([disabled])"); if (f) f.focus(); }); row.appendChild(fb); }
       const again = el("button", null, "Zkusit znovu"); again.type = "button";
-      again.addEventListener("click", () => { attempt[l.id] = qz.map(() => null); renderLesson(); });
+      again.addEventListener("click", () => { delete quizFix[l.id]; attempt[l.id] = qz.map(() => null); renderLesson(); });
       row.appendChild(again); wrap.appendChild(row);
+      if (fx){ const nt = el("p","small muted", en ? "Mistakes retried. Your saved score stays from the full quiz." : "Opakování chyb. Uložené skóre zůstává z celého kvízu."); if (en && nt.firstChild) nt.firstChild.__en = nt.firstChild.nodeValue; wrap.appendChild(nt); }
     }
     box.appendChild(wrap);
     { const nv = lessonNav(l); if (nv) box.appendChild(nv); }
