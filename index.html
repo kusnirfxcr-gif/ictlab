@@ -5664,10 +5664,15 @@ body:not(.sakura) .pf-nm>b,body:not(.sakura) .pf-nm b{font-size:18px!important}
     rows.forEach(g => {
       const d = el("div"), dt = el("dt", null, g.term || g.id);
       if (g.en && g.en !== g.term) dt.appendChild(el("span", null, g.en));
-      d.appendChild(dt); d.appendChild(el("dd", null, g.def || "")); const tp = topicFor(g); if (tp){ const tb = el("button","ck-del","V obrázcích: " + tp.title); tb.type = "button"; tb.addEventListener("click", () => openTopic(tp.id)); d.appendChild(tb); } box.appendChild(d);
+      d.appendChild(dt); d.appendChild(el("dd", null, g.def || "")); const tp = topicFor(g); if (tp){ const tb = el("button","ck-del","V obrázcích: " + tp.title); tb.type = "button"; tb.addEventListener("click", () => openTopic(tp.id)); d.appendChild(tb); } glLesson(g, d); box.appendChild(d);
     });
   }
   $("g-q").addEventListener("input", renderGlossary);
+  // glossary: the daily lesson that first works with the term, one tap opens it
+  function glLesson(g, d){ try { const ls = lessons.filter(x => x && Array.isArray(x.terms) && x.terms.indexOf(g.id) >= 0).sort((a, b) => (Number(a.n) || 0) - (Number(b.n) || 0)); if (!ls.length) return; const fl = ls[0], en = cfg.lang === "en";
+    const lb = el("button","ck-del gl-les", (en ? "In lesson " : "V lekci ") + (fl.n ? fl.n + ": " : "") + (fl.title || "")); lb.type = "button"; if (en && lb.firstChild) lb.firstChild.__en = lb.firstChild.nodeValue;
+    lb.setAttribute("aria-label", (en ? "Open lesson " : "Otevřít lekci ") + (fl.n || "") + ": " + (fl.title || ""));
+    lb.addEventListener("click", () => { curLesson = fl.id; renderLesson(); const h = $("l-body"); if (h && h.scrollIntoView) h.scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start"}); }); d.appendChild(lb); } catch(e){ if (window.console) console.error(e); } }
 
   async function syncLaura(db){
     const note = $("l-save");
