@@ -1,5 +1,17 @@
 [
   {
+    "id": "replay-inverze-fvg",
+    "ts": "2026-11-28T05:55:00Z",
+    "date": "2026-11-28",
+    "title": "Inverze FVG v Replay",
+    "area": "replay",
+    "value": 2,
+    "effort": 2,
+    "status": "new",
+    "what": "Když si v Replay zakreslíš FVG a tělo svíčky zavře za jeho druhou hranou, zóna změní barvu a dostane štítek IFVG. Při dalším návratu ceny do ní Replay nabídne zapsat cvičný vstup na CE se stopem za vzdálenější hranou.",
+    "why": "Dnešní lekce ukazuje, že o inverzi rozhoduje zavření těla, ne knot. Začátečník to v živém grafu snadno přehlédne. Automatické přebarvení to naučí vidět na stovkách svíček."
+  },
+  {
     "id": "fvg-kalkulacka-vstupu",
     "ts": "2026-11-27T06:05:00Z",
     "date": "2026-11-27",

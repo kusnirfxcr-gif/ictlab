@@ -1,9 +1,9 @@
 {
   "state": {
-    "lastRun": "2026-11-27T06:05:00Z",
+    "lastRun": "2026-11-28T05:55:00Z",
     "modelVersion": "1.0",
-    "runCount": 18,
-    "lastReport": "Skaut přidal poznatek ze Zeussyho videa o biasu: směr dne čte z hodinového a 15m grafu a model hledá na pěti minutách. Učitel napsal lekci 18 o tom, jak se FVG obchoduje, a přidal k ní dva poznatky z ověřených zdrojů. Vizionář navrhl kalkulačku vstupu do FVG. Zpravodaj doplnil Štědrý den se zkráceným obchodováním a zavřené burzy o Vánocích. Gems a Architekt beze změny."
+    "runCount": 19,
+    "lastReport": "Skaut přidal poznatek o Reaper FVG, inverzní mezeře uvnitř breakeru. Nový doložený poznatek o Zeussym dnes nebyl, veřejná shrnutí jeho dalších videí se nenačetla. Učitel napsal lekci 19 o inverzním FVG a přidal k ní dva poznatky z ověřených zdrojů. Vizionář navrhl přebarvení proražených FVG v Replay. Zpravodaj doplnil třetí odhad HDP 23. 12. Gems a Architekt beze změny."
   },
   "model": {
     "version": "1.0",
@@ -86,8 +86,8 @@
       "order": 1,
       "name": "Skaut",
       "role": "hledá nový ICT obsah",
-      "lastRun": "2026-11-27T06:05:00Z",
-      "lastReport": "Nový poznatek: Zeussy čte bias z hodinového a 15m grafu a model hledá na pěti minutách."
+      "lastRun": "2026-11-28T05:55:00Z",
+      "lastReport": "Nový poznatek: Reaper FVG, inverzní mezera uvnitř breakeru."
     },
     {
       "id": "gems",
@@ -110,16 +110,16 @@
       "order": 4,
       "name": "Učitel",
       "role": "připravuje denní lekce pro Lauru",
-      "lastRun": "2026-11-27T06:05:00Z",
-      "lastReport": "Lekce 18: jak se FVG obchoduje, polovina mezery a kdy přestává platit."
+      "lastRun": "2026-11-28T05:55:00Z",
+      "lastReport": "Lekce 19: inverzní FVG, když proražená mezera změní stranu."
     },
     {
       "id": "vizionar",
       "order": 5,
       "name": "Vizionář",
       "role": "navrhuje vylepšení aplikace",
-      "lastRun": "2026-11-27T06:05:00Z",
-      "lastReport": "Nápad: kalkulačka vstupu do FVG."
+      "lastRun": "2026-11-28T05:55:00Z",
+      "lastReport": "Nápad: inverze FVG v Replay."
     }
   ],
   "versions": [

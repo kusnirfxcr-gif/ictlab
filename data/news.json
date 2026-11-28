@@ -1,13 +1,6 @@
 {
-  "updated": "2026-11-27T06:05:00Z",
+  "updated": "2026-11-28T05:55:00Z",
   "events": [
-    {
-      "date": "2026-11-27",
-      "time": "19:00",
-      "title": "Zkrácený den: akciové burzy zavírají v 19:00 našeho času",
-      "impact": 1,
-      "note": "Den po Díkůvzdání bývá objem malý."
-    },
     {
       "date": "2026-12-01",
       "time": "16:00",
@@ -63,6 +56,13 @@
       "title": "Maloobchodní tržby (USA), listopad",
       "impact": 2,
       "note": "První odhad útraty domácností. Termín potvrzen v kalendáři Census Bureau."
+    },
+    {
+      "date": "2026-12-23",
+      "time": "14:30",
+      "title": "HDP USA za 3. čtvrtletí, třetí odhad",
+      "impact": 2,
+      "note": "Bureau of Economic Analysis zveřejní třetí odhad HDP za 3. čtvrtletí 2026 ve 14:30 našeho času, dva dny před Vánoci, kdy bývá trh řidší."
     },
     {
       "date": "2026-12-24",

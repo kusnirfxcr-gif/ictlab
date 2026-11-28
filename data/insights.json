@@ -1,5 +1,18 @@
 [
   {
+    "id": "20261128-01",
+    "ts": "2026-11-28T05:55:00Z",
+    "date": "2026-11-28",
+    "bot": "skaut",
+    "concept": "ifvg",
+    "title": "Reaper FVG: inverzní mezera, která vznikne uvnitř breakeru",
+    "source": "Recapio, shrnutí veřejného videa ICT - The Reaper Fair Value Gap (JJTrades)",
+    "url": "https://recapio.com/digest/ict-the-reaper-fair-value-gap-by-jjtrades",
+    "simple": "Podle shrnutí veřejného videa je takzvaný Reaper FVG obyčejná inverzní mezera s jednou podmínkou navíc: proražení mezery proběhne právě při tvorbě breakeru. Medvědí verze vzniká, když se při vzniku medvědího breakeru obrátí mezera, která předtím držela cenu nahoře.",
+    "takeaway": "Autor ho bere za silnější variantu než samostatnou inverzi, protože se v jednom místě potkají dvě věci: zlom struktury a proražená mezera. Shrnutí neuvádí žádnou statistiku, takže to je jeho zkušenost, ne doložená výhoda.",
+    "effect": "Model beze změny. K lekci o inverzním FVG se hodí jako poznámka pro pokročilé: inverze, která vznikne při zlomu struktury, má větší váhu než inverze uprostřed konsolidace."
+  },
+  {
     "id": "20261127-01",
     "ts": "2026-11-27T06:05:00Z",
     "date": "2026-11-27",

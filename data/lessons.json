@@ -1,5 +1,62 @@
 [
   {
+    "id": "20261128-L19",
+    "ts": "2026-11-28T05:55:00Z",
+    "date": "2026-11-28",
+    "n": 19,
+    "week": 5,
+    "title": "Inverzní FVG: když proražená mezera změní stranu",
+    "body": [
+      "Včera jsme skončili tím, že mezera, za jejíž druhou hranou zavře tělo svíčky, se mění v něco jiného. Dnes to dopovíme. ICT jí říká inversion fair value gap, česky inverzní FVG.",
+      "Princip je jednoduchý. Býčí mezera měla cenu držet zespodu. Když ji cena projde a tělo zavře pod její spodní hranou, mezera selhala. Při dalším návratu zdola ale často funguje obráceně: jako strop. Z podpory se stal odpor. U medvědí mezery to platí zrcadlově.",
+      "Rozhoduje zavření těla, ne knot. Knot přes celou mezeru je jen výpad. Inverze vzniká až ve chvíli, kdy tělo svíčky zavře za druhou hranou. Do té doby je to pořád původní mezera, jen pod tlakem.",
+      "Proč to funguje? Kdo v mezeře kupoval, teď sedí ve ztrátě. Když se k ní cena vrátí, část z nich ráda vystoupí na nule, a to tlačí cenu dolů. Není to zákon, jen častý vzorec.",
+      "Vstup se hledá při návratu do inverzní mezery, nejčastěji kolem její poloviny, tedy CE. Stop patří za vzdálenější hranu mezery. Když tělo zavře zpátky nad ní, inverze neplatí a obchod končí.",
+      "Nejvíc váhy má inverze, která vznikne spolu se zlomem struktury, třeba při MSS po sweepu. Inverze uprostřed konsolidace, kde cena chodí sem a tam, znamená málo."
+    ],
+    "example": "Pokračujeme ve včerejším příkladu. Býčí FVG na NQ mezi 21 048 a 21 071 nevydržel: svíčka zavřela tělem na 21 039, pod celou mezerou. Mezera je teď inverzní a čeká se, jestli bude držet shora. Cena klesne k 21 015 a pak se vrátí nahoru. Limitní short dáš na CE 21 059,5, stop na 21 078 nad horní hranu. Riziko je 18,5 bodu, u jednoho MNQ po 2 dolarech za bod 37 dolarů. Kdyby tělo svíčky zavřelo nad 21 071, inverze neplatí a obchod je pryč.",
+    "remember": "Mezera proražená zavřením těla mění roli: z podpory je odpor a naopak. Vstup kolem CE, stop za vzdálenější hranou, platí jen do zavření těla zpět přes mezeru.",
+    "terms": [
+      "ifvg",
+      "fvg",
+      "ce",
+      "telo",
+      "mss"
+    ],
+    "quiz": [
+      {
+        "q": "Kdy vzniká inverzní FVG z býčí mezery?",
+        "options": [
+          "Když knot projde pod mezeru",
+          "Když tělo svíčky zavře pod spodní hranou mezery",
+          "Když se cena dotkne CE"
+        ],
+        "correct": 1,
+        "why": "Rozhoduje zavření těla za druhou hranou. Knot je jen výpad."
+      },
+      {
+        "q": "Jak se z býčí mezery po inverzi obvykle chová cena při návratu zdola?",
+        "options": [
+          "Mezera funguje jako odpor",
+          "Mezera dál funguje jako podpora",
+          "Mezera už nic neznamená"
+        ],
+        "correct": 0,
+        "why": "Proražená mezera mění roli. Z podpory se stává odpor."
+      },
+      {
+        "q": "Kdy short z inverzního FVG přestává platit?",
+        "options": [
+          "Když cena klesne k dalšímu low",
+          "Když knot sáhne nad CE",
+          "Když tělo svíčky zavře zpátky nad mezerou"
+        ],
+        "correct": 2,
+        "why": "Zavření těla zpět přes mezeru inverzi ruší. Knot nad CE ještě ne."
+      }
+    ]
+  },
+  {
     "id": "20261127-L18",
     "ts": "2026-11-27T06:05:00Z",
     "date": "2026-11-27",
