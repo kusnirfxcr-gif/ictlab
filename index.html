@@ -11011,20 +11011,20 @@ body.fs-l .view:not(#v-backtest):not(#v-laura):not(#v-moros){zoom:1.12}
       else { planSeen = uid; planOpen(false); }
     } catch(e){} finally { planBusy = false; } }
   function payUrl(link){ return link + (link.indexOf("?") < 0 ? "?" : "&") + "prefilled_email=" + encodeURIComponent(auth.email || "") + "&client_reference_id=" + encodeURIComponent(auth.id || ""); }
-  function planOpen(canClose, need){
+  function planOpen(canClose, need, fromUp){
     if (document.querySelector(".plans") || !auth) return; let pay = {}; try { pay = (site && site.pay) || {}; } catch(e){}
     const on = planLockOn(), act = on ? planNow() : "", ov = el("div", "plans"), inn = el("div", "plans-in"), hd = el("div", "plans-hd"), grid = el("div", "plans-grid"), pick = planGet(), okL = v => /^https:\/\//.test(v || "") ? v : "", np = need && planOf(need);
     ["b1", "b2", "b3"].forEach(k => ov.appendChild(el("i", "gate-blob " + k))); try { welTone(ov); } catch(e){}
     const close = () => { ov.classList.add("out"); setTimeout(() => { ov.remove(); gateModalOff(); }, 300); document.removeEventListener("keydown", esc); try { accRender(); } catch(e){} }, esc = ev => { if (ev.key === "Escape" && canClose) close(); };
     const lg = el("span", "brand gl"), lw = el("span", null, "tape"); lw.firstChild.__en = "tape"; lg.setAttribute("aria-label", "Tape"); lg.appendChild(lw); lg.appendChild(el("i", "cd")); hd.appendChild(lg);
-    const h2 = el("h2", null, np ? LT("Tohle je v plánu ", "This is in the ") + np.name + LT("", " plan") : LT("Vyber si plán", "Choose your plan")); h2.firstChild.__en = h2.textContent; hd.appendChild(h2);
+    const h2 = el("h2", null, np && !fromUp ? LT("Tohle je v plánu ", "This is in the ") + np.name + LT("", " plan") : LT("Vyber si plán", "Choose your plan")); h2.firstChild.__en = h2.textContent; hd.appendChild(h2);
     hd.appendChild(on ? gT("p", null, "Beginner je zdarma napořád. Placený plán zrušíš kdykoli a první platbu ti do 14 dnů na požádání vrátíme.", "Beginner is free forever. You can cancel a paid plan at any time and we refund the first payment within 14 days on request.") : gT("p", null, "Tape spouštíme postupně. Teď máš odemčené všechno, ať vybereš cokoli. Výběrem nám řekneš, o co máš zájem.", "Tape is launching step by step. Right now everything is unlocked whatever you choose. Your choice tells us what you are interested in."));
     let anyLink = false, needCard = null;
     PLANS.forEach(p => { const mine = on ? act === p.id : !!(pick && pick.id === p.id), c = el("div", "plan pl-" + p.id + (p.best ? " best" : "") + (mine ? " cur" : "")), pr = el("div", "pl-price"), ul = el("ul"), b = el("button", p.price ? "primary" : null), link = okL(pay[p.id]), yl = okL(pay[p.id + "_year"]);
       if (link || yl) anyLink = true;
       // opened from a locked feature: point at the cheapest plan that unlocks it and quiet the ones that do not
       const needIt = !!(np && !mine && p.id === np.id); if (np && !mine && RANK[p.id] < RANK[np.id]) c.classList.add("pl-short"); if (needIt){ c.classList.add("pl-need"); needCard = c; }
-      if (mine) c.appendChild(on ? gT("span", "pl-badge", "Tvůj plán", "Your plan") : gT("span", "pl-badge", "Tvůj výběr", "Your choice")); else if (needIt) c.appendChild(gT("span", "pl-badge", "Odemkne tohle", "Unlocks this")); else if (p.best) c.appendChild(gT("span", "pl-badge", "Doporučujeme", "Recommended"));
+      if (mine) c.appendChild(on ? gT("span", "pl-badge", "Tvůj plán", "Your plan") : gT("span", "pl-badge", "Tvůj výběr", "Your choice")); else if (needIt) c.appendChild(fromUp ? gT("span", "pl-badge", "Další krok", "Next step") : gT("span", "pl-badge", "Odemkne tohle", "Unlocks this")); else if (p.best) c.appendChild(gT("span", "pl-badge", "Doporučujeme", "Recommended"));
       if (p.id === "smart"){ c.appendChild(el("i", "pl-glow")); ["s1", "s2", "s3", "s4"].forEach(k => c.appendChild(el("i", "pl-spk " + k))); }
       const nm = el("h3", null, p.name); nm.firstChild.__en = p.name; c.appendChild(nm); c.appendChild(gT("p", "pl-tag", p.tag[0], p.tag[1]));
       if (p.price){ const pb = el("b", null, p.price + LT(" Kč", " CZK")); pb.firstChild.__en = pb.textContent; pr.appendChild(pb); pr.appendChild(gT("span", null, "měsíčně", "a month")); } else pr.appendChild(gT("b", null, "Zdarma", "Free"));
@@ -11357,7 +11357,7 @@ body.fs-l .view:not(#v-backtest):not(#v-laura):not(#v-moros){zoom:1.12}
   function upBtn(){ const cur = planNow(), to = cur === "beginner" ? "pro" : "smart", b = el("button", "tb-up"); b.type = "button"; b.innerHTML = UP_IC;
     const t = el("span", null, "Upgrade"); t.firstChild.__en = "Upgrade"; b.appendChild(t);
     b.setAttribute("aria-label", LT("Upgrade na plán ", "Upgrade to the ") + planOf(to).name + LT("", " plan")); b.title = b.getAttribute("aria-label");
-    b.addEventListener("click", ev => { ev.preventDefault(); ev.stopPropagation(); planOpen(true, to); }); return b; }
+    b.addEventListener("click", ev => { ev.preventDefault(); ev.stopPropagation(); planOpen(true, to, true); }); return b; }
   function tbPlanPaint(){ const a = $("tb-acc"); if (!a) return; const old = a.querySelector(".pl-b"); if (old) old.remove(); a.classList.remove("pl-beginner", "pl-pro", "pl-smart");
     const act = a.parentNode, ub = act && act.querySelector(":scope > .tb-up"); if (ub) ub.remove();
     if (!auth || GATE_OFF) return; const p = planShown(), b = el("i", "pl-b", p.id === "beginner" ? LT("Free", "Free") : p.id === "pro" ? "Pro" : "Smart"); b.setAttribute("aria-hidden", "true"); if (b.firstChild) b.firstChild.__en = b.textContent;
