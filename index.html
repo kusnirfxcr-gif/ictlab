@@ -3889,6 +3889,24 @@ body:not(.sakura) .pf-nm{font-size:18px!important}body:not(.sakura) .dscore .tbi
 body:not(.sakura) .fcard .fterm{font-size:20px!important}body:not(.sakura) .cm-pk strong{font-size:17px!important}
 body:not(.sakura) .rp-empty b{font-size:16px;font-weight:600}
 body:not(.sakura) .pf-nm>b,body:not(.sakura) .pf-nm b{font-size:18px!important}
+/* one spacing grid: 12px between cards everywhere, cards 16px inside with 14px corners */
+body:not(.sakura){--gap:12px}
+body:not(.sakura) .view{gap:var(--gap)}
+body:not(.sakura) .list:has(>.card),body:not(.sakura) #set,body:not(.sakura) #st-body,body:not(.sakura) #ak-body,body:not(.sakura) #kr-body{gap:var(--gap)}
+body:not(.sakura) .view>.card,body:not(.sakura) .view>div>.card,body:not(.sakura) .week{border-radius:14px}
+body:not(.sakura) #v-prehled>.card{border-radius:14px!important}body:not(.sakura) #v-prehled>.hero2,body:not(.sakura) #v-prehled>.logrow{border-radius:16px!important}body:not(.sakura) #v-prehled>.card:not(.logrow):not(.hero2){padding:16px!important}
+body:not(.sakura) .h-tier{margin-top:calc(var(--gap) - 4px)}
+body:not(.sakura) .cm-feedh{margin-top:0}
+body:not(.sakura) #ak-body>.kick,body:not(.sakura) #kr-body>.kick{margin-top:calc(var(--gap) - 4px)}
+/* label bubble after holding a tool icon */
+.tl-tip{position:fixed;z-index:400;transform:translate(-50%,-100%);padding:6px 10px;border-radius:9px;background:var(--ink);color:var(--bg);font:600 12px/1.2 var(--body);white-space:nowrap;pointer-events:none;box-shadow:0 6px 18px rgba(0,0,0,.28);animation:tlIn .14s ease-out}
+.tl-tip::after{content:"";position:absolute;left:50%;bottom:-4px;width:8px;height:8px;margin-left:-4px;background:inherit;transform:rotate(45deg)}
+@keyframes tlIn{from{opacity:0;transform:translate(-50%,-88%)}}
+.tb-tools a{-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
+/* text size (per device) */
+body.fs-s .view:not(#v-backtest):not(#v-laura):not(#v-moros){zoom:.92}
+body.fs-l .view:not(#v-backtest):not(#v-laura):not(#v-moros){zoom:1.12}
+@media(max-width:699px){body.fs-s:not(.sakura) .view input,body.fs-s:not(.sakura) .view select,body.fs-s:not(.sakura) .view textarea{font-size:17.5px}}
 </style>
 </head>
 <body>
@@ -9090,6 +9108,32 @@ body:not(.sakura) .pf-nm>b,body:not(.sakura) .pf-nm b{font-size:18px!important}
       const ch = el("div","chips"); LV.forEach(o => { const b = el("button","chip" + (fx === o[0] ? " on" : ""), o[1]); b.type = "button"; b.setAttribute("aria-pressed", String(fx === o[0])); b.addEventListener("click", () => { fx = o[0]; try { localStorage.setItem(FK, fx); } catch(e){} fxApply(); fxRender(); }); ch.appendChild(b); }); box.appendChild(ch);
       box.appendChild(el("span","small muted","Teď běží: " + ({full: "plné animace", lite: "úsporný režim", off: "animace vypnuté"})[eff()] + ".")); };
     fxRender();
+  }
+
+  // ---------- text size (per device, not synced) ----------
+  { const SK = "tape-fs", SV = [["s","Malé","Small"],["m","Střední","Medium"],["l","Velké","Large"]]; let fs = "m"; try { fs = localStorage.getItem(SK) || "m"; } catch(e){}
+    const fsApply = () => { const b = document.body; b.classList.toggle("fs-s", fs === "s"); b.classList.toggle("fs-l", fs === "l"); };
+    fsApply();
+    const sbox = el("div","card"); const _rsFs = renderSettings; renderSettings = function(){ _rsFs(); try { if (fontBox.parentNode && sbox.previousElementSibling !== fontBox) fontBox.parentNode.insertBefore(sbox, fontBox.nextSibling); } catch(e){} };
+    const fsRender = () => { const en = (()=>{ try { return cfg.lang === "en"; } catch(e){ return false; } })(); clear(sbox); sbox.appendChild(el("h2", null, en ? "Text size" : "Velikost písma")); sbox.appendChild(el("p","small muted", en ? "Makes the text and cards on every page smaller or larger. Charts keep their size. It applies only on this device." : "Zmenší nebo zvětší text a karty na všech stránkách. Grafy zůstanou stejné. Platí jen pro tohle zařízení."));
+      const ch = el("div","chips"); SV.forEach(o => { const b = el("button","chip" + (fs === o[0] ? " on" : ""), en ? o[2] : o[1]); b.type = "button"; b.setAttribute("aria-pressed", String(fs === o[0])); b.addEventListener("click", () => { fs = o[0]; try { localStorage.setItem(SK, fs); } catch(e){} fsApply(); fsRender(); }); ch.appendChild(b); }); sbox.appendChild(ch);
+      const d = el("div","fontdemo"); d.appendChild(el("b", null, en ? "Lesson 19 · +2.15 R" : "Lekce 19 · +2,15 R")); d.appendChild(el("span", null, en ? "This is how body text will look." : "Takhle bude vypadat běžný text.")); sbox.appendChild(d); };
+    fsRender(); const _rsFs2 = renderSettings; renderSettings = function(){ _rsFs2(); fsRender(); };
+  }
+
+  // ---------- hold a tool icon to see its name ----------
+  { let tm = 0, tip = null, held = false;
+    const hide = () => { clearTimeout(tm); if (tip) { tip.remove(); tip = null; } };
+    document.addEventListener("touchstart", e => { const a = e.target.closest && e.target.closest(".tb-tools a"); hide(); held = false; if (!a) return;
+      tm = setTimeout(() => { const t = (a.querySelector("span") || {}).textContent || a.getAttribute("aria-label") || a.title; if (!t) return; held = true; const r = (a.querySelector("i") || a).getBoundingClientRect();
+        tip = el("div","tl-tip", t.trim()); tip.setAttribute("role","tooltip"); document.body.appendChild(tip); const w = tip.offsetWidth / 2, x = Math.max(w + 6, Math.min(innerWidth - w - 6, r.left + r.width / 2)); tip.style.left = x + "px"; tip.style.top = (r.top - 8) + "px";
+        try { navigator.vibrate && navigator.vibrate(8); } catch(e){} }, 380); }, {passive: true});
+    document.addEventListener("touchmove", () => { if (!held) clearTimeout(tm); }, {passive: true});
+    document.addEventListener("touchend", () => { clearTimeout(tm); if (tip) setTimeout(hide, 900); }, {passive: true});
+    document.addEventListener("touchcancel", hide, {passive: true});
+    document.addEventListener("click", e => { if (held && e.target.closest && e.target.closest(".tb-tools a")) { e.preventDefault(); e.stopPropagation(); held = false; } }, true);
+    document.addEventListener("contextmenu", e => { if (e.target.closest && e.target.closest(".tb-tools a")) e.preventDefault(); });
+    addEventListener("scroll", hide, {passive: true});
   }
 
   // ---------- example trade for every course lesson (schematic chart, not market data) ----------
