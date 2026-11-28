@@ -97,7 +97,7 @@
     {
      "id": "1c",
      "title": "Timeframy: stejný trh, jiné přiblížení",
-     "text": "Denní svíčka je složená z 1 440 minutových. Vyšší timeframe (den, 4 hodiny, hodina) ukazuje, kam trh míří. Nižší (15 minut, 5 minut, 1 minuta) ukazuje, jak se tam dostává. Vždy začínej nahoře a postupně přibližuj, nikdy naopak.",
+     "text": "Denní svíčka NQ a ES je složená z 1 380 minutových, protože se tyto futures obchodují 23 hodin denně. Vyšší timeframe (den, 4 hodiny, hodina) ukazuje, kam trh míří. Nižší (15 minut, 5 minut, 1 minuta) ukazuje, jak se tam dostává. Vždy začínej nahoře a postupně přibližuj, nikdy naopak.",
      "key": "Vyšší timeframe ukazuje směr, nižší načasování. Vždy postupuj shora dolů.",
      "tf": {
       "s": "Analýzu je nejlepší začít na minutovém grafu a teprve pak otevřít denní.",
