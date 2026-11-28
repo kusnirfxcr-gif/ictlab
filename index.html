@@ -6177,11 +6177,12 @@ body:not(.sakura) .pf-nm>b,body:not(.sakura) .pf-nm b{font-size:18px!important}
     else head = mean > 0 ? "Zatím to vypadá dobře, ale ještě to není jisté" : "Výhoda zatím není vidět";
     box.className = "tv-verdict" + (cls ? " " + cls : ""); box.appendChild(el("b", null, head));
     const lines = [];
-    if (n >= 20) lines.push("S 95% jistotou je skutečný průměr " + (what || "obchodu") + " mezi " + sgn(Math.round((mean - 1.96 * se) * 100) / 100) + " R a " + sgn(Math.round((mean + 1.96 * se) * 100) / 100) + " R.");
+    if (n >= 20){ const ciLo = sgn(Math.round((mean - 1.96 * se) * 100) / 100), ciHi = sgn(Math.round((mean + 1.96 * se) * 100) / 100);
+      lines.push(cfg.lang === "en" ? {en: "With 95% confidence the true average " + (what === "tohoto setupu" ? "for this setup" : "per trade") + " is between " + ciLo + " R and " + ciHi + " R."} : "S 95% jistotou je skutečný průměr " + (what || "obchodu") + " mezi " + ciLo + " R a " + ciHi + " R."); }
     if (be != null && w.length && l.length) lines.push("Úspěšnost " + Math.round(100 * w.length / n) + " %, na nulu stačí " + Math.round(be) + " % (průměrná výhra +" + r2(aw) + " R, ztráta −" + r2(al) + " R).");
     if (n < 20) lines.push("Teď " + pl(n, "obchod", "obchody", "obchodů") + ". Verdikt se ukáže od 20, spolehlivý bývá kolem 50 až 100.");
     else if (tt < 2 && need && need > n) lines.push("Kdyby se průměr udržel, na potvrzení by bylo potřeba asi " + pl(need, "obchod", "obchody", "obchodů") + ", chybí " + (need - n) + ".");
-    lines.forEach(x => box.appendChild(el("span","small", x)));
+    lines.forEach(x => { const sp = el("span","small", x.en || x); if (x.en && sp.firstChild) sp.firstChild.__en = sp.firstChild.nodeValue; box.appendChild(sp); });
     return box;
   }
   function renderPlaybook(){
