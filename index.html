@@ -5874,6 +5874,14 @@ body.fs-l .view:not(#v-backtest):not(#v-laura):not(#v-moros){zoom:1.12}
     tb.appendChild(bd); wrap.appendChild(tb); return wrap;
   }
 
+  // result per calendar month, newest first (only when the trades span more than one month)
+  function monthTable(tr, unit){
+    const mk = t => { const d = new Date(t.ts); return isNaN(d) ? null : d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0"); }, ks = {};
+    tr.forEach(t => { const k = mk(t); if (k) ks[k] = 1; }); const keys = Object.keys(ks).sort().reverse(); if (keys.length < 2) return null;
+    const nm = {}; keys.forEach(k => { const v = new Date(Number(k.slice(0, 4)), Number(k.slice(5)) - 1, 1).toLocaleDateString(LOCD, {month: "long", year: "numeric"}); nm[k] = v.charAt(0).toUpperCase() + v.slice(1); });
+    return groupTable(LT("Měsíc", "Month"), tr, t => { const k = mk(t); return k ? nm[k] : null; }, keys.map(k => nm[k]), unit);
+  }
+
   // trade number within the day: does the result fade after the first trades?
   function rankTable(tr, unit){
     const rk = new Map(), cnt = {}; jSorted().forEach(t => { const d = tDay(t); cnt[d] = (cnt[d] || 0) + 1; rk.set(t, cnt[d]); });
@@ -7110,7 +7118,7 @@ body.fs-l .view:not(#v-backtest):not(#v-laura):not(#v-moros){zoom:1.12}
     const tb = $("j-tables"); clear(tb);
     if (tr.length){ const D = DAYS7(), hold = t => { if (!t.tsx) return null; const m = (new Date(t.tsx) - new Date(t.ts)) / 60000; return m < 0 ? null : m < 5 ? "do 5 min" : m < 15 ? "5–15 min" : m < 60 ? "15–60 min" : "přes hodinu"; };
       const bias = t => { const p = jr.plans[tDay(t)]; if (!p || !p.bias || p.bias === "none") return "Bez plánu"; return (p.bias === "long") === (t.dir !== "short") ? "Ve směru plánu" : "Proti plánu"; };
-      [groupTable("Setup", tr, t => t.setup || "Jiný", null, unit), symsOf(tr) > 1 ? groupTable("Trh", tr, t => t.sym || "–", null, unit) : null, groupTable("Den", tr, t => D[(new Date(t.ts).getDay() + 6) % 7], D, unit),
+      [groupTable("Setup", tr, t => t.setup || "Jiný", null, unit), symsOf(tr) > 1 ? groupTable("Trh", tr, t => t.sym || "–", null, unit) : null, monthTable(tr, unit), groupTable("Den", tr, t => D[(new Date(t.ts).getDay() + 6) % 7], D, unit),
        groupTable("Hodina", tr, t => { const h = new Date(t.ts).getHours(); return isNaN(h) ? null : String(h).padStart(2, "0") + ":00"; }, Array.from({length: 24}, (x, i) => String(i).padStart(2, "0") + ":00"), unit), rankTable(tr, unit), prevTable(tr, unit), tgtTable(tr, unit),
        premOn() ? groupTable("Cyklus (New York)", tr, tradeCycle, CYCN.concat(["Londýn", "Asie", "Mimo cykly"]), unit) : null, groupTable("Směr", tr, t => t.dir === "short" ? "Short" : "Long", null, unit), groupTable("Plán dne", tr, bias, ["Ve směru plánu","Proti plánu","Bez plánu"], unit),
        groupTable("Seznam", tr, t => t.ck ? (t.ck.k === t.ck.n ? "Splněný" : "Nesplněný") : null, null, unit), groupTable("Chyba", tr, t => (t.tags && t.tags.length) ? t.tags : null, null, unit),
