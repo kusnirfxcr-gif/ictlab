@@ -3196,6 +3196,11 @@ a.brand:hover .cd{height:.8em;margin-top:.04em;transform:rotate(-6deg) scale(1.0
 .gate-trust{list-style:none;margin:-6px 0 16px;padding:0;display:none;flex-wrap:wrap;gap:6px 14px}.gate.is-up .gate-trust{display:flex}
 .gate-trust li{display:flex;align-items:center;gap:6px;font-size:.8rem;font-weight:600;color:var(--ink)}
 .gate-trust svg{flex:none;width:15px;height:15px;fill:none;stroke:var(--good);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.acc-pwh{display:flex;align-items:center;gap:6px;margin:-2px 0 2px;font-size:.8rem;font-weight:600;color:var(--muted);transition:color .2s}
+.acc-pwh svg{flex:none;width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;opacity:.45;transition:opacity .2s}
+.acc-pwh.ok{color:var(--good)}
+.acc-pwh.ok svg{opacity:1}
+@media (prefers-reduced-motion:reduce){.acc-pwh,.acc-pwh svg{transition:none}}
 .gate-slot>.card{margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:none!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;display:flex;flex-direction:column;gap:12px}
 .gate-slot>.card::before,.gate-slot>.card::after{display:none!important}
 .gate-slot>.card>h2,.gate-slot>.card>p.small.muted,.gate-slot .pf-th{display:none!important}
@@ -8170,7 +8175,10 @@ body:not(.sakura) .pf-nm>b,body:not(.sakura) .pf-nm b{font-size:18px!important}
       accBox.appendChild(el("p","small muted", accMode === "up" ? "Založ si účet. Deník a postup v učení se pak uloží k němu a načtou se na telefonu i počítači." : accMode === "reset" ? "Napiš e-mail účtu. Pošleme ti odkaz, přes který si nastavíš nové heslo." : "Přihlas se a tvoje data budou na všech zařízeních. Bez účtu zůstávají jen v tomhle prohlížeči."));
       const f = el("form","tform"), e = inp("email", "", "E-mail"), p = inp("password", "", "Heslo"), b = el("button","primary", accMode === "up" ? "Založit účet" : accMode === "reset" ? "Poslat odkaz" : "Přihlásit se"), links = el("div","rp-ctl");
       e.autocomplete = "email"; e.required = true; e.setAttribute("aria-label","E-mail"); try { e.value = localStorage.getItem("tape-last-email") || ""; } catch(err){} p.autocomplete = accMode === "up" ? "new-password" : "current-password"; p.setAttribute("aria-label","Heslo"); b.type = "submit"; f.noValidate = true;
-      f.appendChild(e); if (accMode !== "reset") f.appendChild(p); f.appendChild(b); f.addEventListener("submit", ev => ev.preventDefault());
+      f.appendChild(e); if (accMode !== "reset") f.appendChild(p);
+      // a new account: say the password rule before the first try, and tick it once it is met
+      if (accMode === "up"){ const ph = el("span","acc-pwh"); ph.id = "acc-pwh"; ph.setAttribute("aria-live","polite"); ph.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5 10 17.5 19 7.5"/></svg>'; ph.appendChild(el("span", null, "Aspoň 8 znaků")); p.setAttribute("aria-describedby","acc-pwh"); const pc = () => ph.classList.toggle("ok", p.value.length >= 8); p.addEventListener("input", pc); pc(); f.appendChild(ph); }
+      f.appendChild(b); f.addEventListener("submit", ev => ev.preventDefault());
       run(b, async () => { const em = e.value.trim();
         if (!/^\S+@\S+\.\S+$/.test(em)){ accMsg = "Napiš platný e-mail."; return; }
         if (accMode === "reset"){ await sbAuth("recover?redirect_to=" + encodeURIComponent(accBack()), {email: em}); accMode = "in"; accMsg = "Pokud účet existuje, přišel ti e-mail s odkazem na nové heslo."; return; }
