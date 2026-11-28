@@ -351,6 +351,7 @@ button.ck-del:hover{color:var(--bad);border-color:var(--line)}
 figure.fig.pa-fig{padding:0;gap:0;align-items:stretch;overflow:hidden;border-color:#2c2c33;background:linear-gradient(180deg,#101014 0%,#0b0b0e 100%);touch-action:pan-y}
 .pa-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px 0 14px}
 .pa-kicker{color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media (max-width:520px){.pa-bar{flex-wrap:wrap;row-gap:6px}.pa-kicker{flex:1 1 auto;min-width:0}.pa-bar:has(>.zm-ctl)>.pa-kicker{flex-basis:100%}.pa-bar:has(>.zm-ctl)>.zm-fsb{margin-left:0}}
 button.pa-replay{flex:none;font-size:12px;padding:5px 10px;border-radius:999px;background:transparent;color:var(--muted);border-color:var(--line)}
 button.pa-replay:hover{color:var(--ink)}
 .pa-svg{padding:2px 6px 8px;min-height:60px}
